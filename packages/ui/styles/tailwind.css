@@ -712,8 +712,8 @@
 @font-face {
   font-family: 'TWK Lausanne';
   src:
-    url('./assets/fonts/TWKLausanne-300.woff') format('woff'),
-    url('./assets/fonts/TWKLausanne-300.woff2') format('woff2');
+    url('../assets/fonts/TWKLausanne-300.woff') format('woff'),
+    url('../assets/fonts/TWKLausanne-300.woff2') format('woff2');
   font-style: normal;
   font-weight: 300;
 }
@@ -721,8 +721,8 @@
 @font-face {
   font-family: 'TWK Lausanne';
   src:
-    url('./assets/fonts/TWKLausanne-400.woff') format('woff'),
-    url('./assets/fonts/TWKLausanne-400.woff2') format('woff2');
+    url('../assets/fonts/TWKLausanne-400.woff') format('woff'),
+    url('../assets/fonts/TWKLausanne-400.woff2') format('woff2');
   font-style: normal;
   font-weight: 400;
 }
@@ -730,8 +730,8 @@
 @font-face {
   font-family: 'TWK Lausanne';
   src:
-    url('./assets/fonts/TWKLausanne-500.woff') format('woff'),
-    url('./assets/fonts/TWKLausanne-500.woff2') format('woff2');
+    url('../assets/fonts/TWKLausanne-500.woff') format('woff'),
+    url('../assets/fonts/TWKLausanne-500.woff2') format('woff2');
   font-style: normal;
   font-weight: 500;
 }
@@ -739,18 +739,8 @@
 @font-face {
   font-family: 'TWK Lausanne';
   src:
-    url('./assets/fonts/TWKLausanne-600.woff') format('woff'),
-    url('./assets/fonts/TWKLausanne-600.woff2') format('woff2');
+    url('../assets/fonts/TWKLausanne-600.woff') format('woff'),
+    url('../assets/fonts/TWKLausanne-600.woff2') format('woff2');
   font-style: normal;
   font-weight: 600;
-}
-
-.equality iframe {
-  color-scheme: light;
-}
-
-/* This is needed to prevent edges from getting cut off*/
-.equality .react-flow__pane {
-  width: 320rem !important;
-  height: 320rem !important;
 }

@@ -17,6 +17,7 @@
   "files": [
     "dist",
     "styles/style.css",
+    "assets/fonts",
     "README.md"
   ],
   "sideEffects": [
