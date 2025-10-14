@@ -1,6 +1,6 @@
 const Header = () => {
   return (
-    <div className="space-y-6">
+    <div className="mx-auto max-w-7xl space-y-6">
       {/* Header */}
       <div className="border-border flex items-end justify-between border-b pb-4">
         <div className="space-y-2">
@@ -11,7 +11,7 @@ const Header = () => {
           </p>
         </div>
         <div className="text-muted-foreground flex items-center space-x-1">
-          <p className="text-sm">Latest Updates: October 14, 2025</p>
+          <p className="text-sm">Latest Updates: October 15, 2025</p>
         </div>
       </div>
 
