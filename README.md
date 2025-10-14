@@ -81,11 +81,11 @@ import '@eqtylab/equality/styles/style.css';
 import { Button, Card } from '@eqtylab/equality';
 ```
 
-4. Optional: wrap a top-level container with the `eqty` class to scope styles/utilities:
+4. Optional: wrap a top-level container with the `equality` class to scope styles/utilities:
 
 ```tsx
-<div className="eqty">
-  <App />
+<div className="equality">
+  <Button>Click me</Button>
 </div>
 ```
 
