@@ -1,18 +1,115 @@
-import { Button, Card, CardContent } from '@eqtylab/equality';
+import {
+  Button,
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+  PanelLabel,
+} from '@eqtylab/equality';
 
 export default function App() {
   return (
     <div className="space-y-6 p-8">
       <h1 className="text-2xl font-semibold">@eqtylab/equality demo</h1>
-      <Card onClick={() => alert('clicked')}>
-        <CardContent>
-          <p className="mb-4">Card content with blurred glass defaults.</p>
-          <div className="flex gap-3">
-            <Button>Primary</Button>
-            <Button variant="secondary">Secondary</Button>
+      {/* Card Components */}
+      <section id="cards" className="space-y-6">
+        <h3 className="border-border border-b pb-2 text-xl font-medium">Card Components</h3>
+
+        <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+          {/* Content-only Card */}
+          <div className="space-y-2">
+            <PanelLabel label="content only (most used)" />
+            <Card>
+              <CardContent>
+                <div className="space-y-2">
+                  <h4 className="font-medium">Content-only Card</h4>
+                  <p className="text-muted-foreground text-sm">
+                    This card only uses CardContent without header or footer.
+                  </p>
+                </div>
+              </CardContent>
+            </Card>
           </div>
-        </CardContent>
-      </Card>
+
+          {/* Only header Card */}
+          <div className="space-y-2">
+            <PanelLabel label="only header" />
+            <Card>
+              <CardHeader>
+                <CardTitle>Basic Card</CardTitle>
+                <CardDescription>A simple card only with header.</CardDescription>
+              </CardHeader>
+            </Card>
+          </div>
+
+          {/* Content-only Card Interactive */}
+          <div className="space-y-2">
+            <PanelLabel label="content only interactive (hover)" />
+            <Card onClick={() => console.log('Card clicked')}>
+              <CardContent>
+                <div className="space-y-2">
+                  <h4 className="font-medium">Content-only Card</h4>
+                  <p className="text-muted-foreground text-sm">
+                    This card only uses CardContent without header or footer.
+                  </p>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+
+          {/* Basic Card */}
+          <div className="space-y-2">
+            <PanelLabel label="basic card" />
+            <Card>
+              <CardHeader className="border-border border-b">
+                <CardTitle>Basic Card</CardTitle>
+                <CardDescription>A simple card with header and content</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <p className="text-sm">This is the main content area of the card.</p>
+              </CardContent>
+            </Card>
+          </div>
+
+          {/* Card with Footer */}
+          <div className="space-y-2">
+            <PanelLabel label="with footer" />
+            <Card>
+              <CardHeader className="border-border border-b">
+                <CardTitle>Card with Footer</CardTitle>
+                <CardDescription>Includes footer actions</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <p className="text-sm">This is the main content area of the card.</p>
+              </CardContent>
+              <CardFooter>
+                <Button variant="primary" size="sm">
+                  Action
+                </Button>
+                <Button variant="outline" size="sm" className="ml-2">
+                  Cancel
+                </Button>
+              </CardFooter>
+            </Card>
+          </div>
+
+          {/* Interactive Card */}
+          <div className="space-y-2">
+            <PanelLabel label="interactive (hover)" />
+            <Card onClick={() => console.log('Card clicked')}>
+              <CardHeader className="border-border border-b">
+                <CardTitle>Interactive Card</CardTitle>
+                <CardDescription>Clickable with hover effects</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <p className="text-sm">This card has hover effects and is clickable.</p>
+              </CardContent>
+            </Card>
+          </div>
+        </div>
+      </section>
 
       <section id="buttons" className="space-y-6">
         <h3 className="border-border border-b pb-2 text-xl font-medium">Buttons</h3>
