@@ -1,0 +1,23 @@
+# UI package ignores
+.DS_Store
+node_modules/
+dist/
+.cache/
+.tsup/
+.esbuild/
+coverage/
+
+# Env
+.env
+.env.*
+!.env.example
+
+# Logs
+*.log
+pnpm-debug.log*
+yarn-*.log*
+npm-debug.log*
+
+# TypeScript
+*.tsbuildinfo
+

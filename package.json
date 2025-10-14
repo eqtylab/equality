@@ -1,0 +1,18 @@
+{
+  "name": "equality",
+  "private": true,
+  "packageManager": "pnpm@9.12.3",
+  "scripts": {
+    "build": "pnpm -r run build",
+    "dev": "pnpm --filter demo dev",
+    "lint": "eslint src --ext .ts,.tsx --max-warnings=0",
+    "release": "pnpm --filter @eqtylab/equality run release",
+    "format": "prettier --write .",
+    "format:check": "prettier --check ."
+  },
+  "devDependencies": {
+    "@ianvs/prettier-plugin-sort-imports": "^4.7.0",
+    "prettier": "^3.6.2",
+    "prettier-plugin-tailwindcss": "^0.6.14"
+  }
+}

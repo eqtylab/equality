@@ -1,0 +1,50 @@
+# General
+.DS_Store
+Thumbs.db
+
+# Environment files
+.env
+.env.*
+!.env.example
+
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Node.js
+node_modules/
+.pnpm-store/
+
+# Build output
+dist/
+build/
+.esbuild/
+.tsup/
+.next/
+out/
+storybook-static/
+coverage/
+
+# Caches
+.cache/
+.vite/
+.parcel-cache/
+.turbo/
+.eslintcache
+.stylelintcache
+node_modules/.cache/
+
+# TypeScript
+*.tsbuildinfo
+
+# Editors
+.vscode/
+.idea/
+
+# Misc
+*.local
+

@@ -1,0 +1,6 @@
+@import 'tailwindcss';
+
+/* Optional demo-specific tweaks */
+body {
+  @apply bg-zinc-950 text-white;
+}
