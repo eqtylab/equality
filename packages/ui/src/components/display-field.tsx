@@ -1,28 +1,26 @@
 import * as React from 'react';
 import { cva, type VariantProps } from 'class-variance-authority';
-import { CircleCheck } from 'lucide-react';
+import { CircleCheck, CircleX } from 'lucide-react';
 
 import { cn } from '../lib/utils';
 
-const displayFieldVariants = cva(
-  'inline-flex items-center gap-2 text-sm font-medium transition-colors',
-  {
-    variants: {
-      variant: {
-        neutral: 'bg-dark-lilac',
-        success: 'bg-mint',
-        failure: 'bg-red',
-      },
+const displayFieldVariants = cva('', {
+  variants: {
+    variant: {
+      neutral: 'bg-lilac',
+      success: 'bg-mint',
+      failure: 'bg-red',
     },
-    defaultVariants: {
-      variant: 'neutral',
-    },
-  }
-);
+  },
+  defaultVariants: {
+    variant: 'neutral',
+  },
+});
 
 export interface DisplayFieldProps
   extends React.HTMLAttributes<HTMLDivElement>,
     VariantProps<typeof displayFieldVariants> {
+  variant?: 'neutral' | 'success' | 'failure';
   prefix?: string;
   truncate?: boolean;
 }
@@ -35,6 +33,16 @@ function DisplayField({
   truncate = false,
   ...props
 }: DisplayFieldProps) {
+  const getIcon = () => {
+    if (variant === 'success') {
+      return <CircleCheck className="w-4" />;
+    }
+    if (variant === 'failure') {
+      return <CircleX className="w-4" />;
+    }
+    return null;
+  };
+
   return (
     <div
       className={cn(
@@ -46,12 +54,12 @@ function DisplayField({
       {prefix && (
         <div
           className={cn(
-            'bg-dark-lilac flex gap-1 rounded-br-md rounded-tr-md px-2 text-white',
-            displayFieldVariants({ variant }),
+            'flex items-center gap-1 rounded-br-md rounded-tr-md px-2 text-sm font-medium text-black transition-colors',
+            displayFieldVariants({ variant: variant }),
             className
           )}
         >
-          <CircleCheck className="w-4" />
+          {getIcon()}
           {prefix}
         </div>
       )}

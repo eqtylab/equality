@@ -800,9 +800,6 @@
     .bg-compliant-secondary {
       background-color: hsl(var(--compliant-secondary));
     }
-    .bg-dark-lilac {
-      background-color: #9153c9;
-    }
     .bg-destructive {
       background-color: hsl(var(--destructive));
     }
