@@ -18,6 +18,7 @@ import {
   CardTitle,
   Checkbox,
   CodeBlock,
+  DisplayField,
   FilledTabs,
   IconCircle,
   IconSquare,
@@ -812,6 +813,79 @@ const StyleGuide = () => {
               </div>
             </section>
 
+            {/* Display Field */}
+            <section id="display-field" className="space-y-6">
+              <h3 className="border-border border-b pb-2 text-xl font-medium">Display Field</h3>
+              <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+                {/* Neutral (default) */}
+                <div className="space-y-2">
+                  <PanelLabel label="neutral (default)" />
+                  <DisplayField>zQ3shrGxRrYyWixJGrr45jJ1MEY76YQZ4KVbt9CYRsTWZ5MWV</DisplayField>
+                </div>
+
+                {/* Success */}
+                <div className="space-y-2">
+                  <PanelLabel label="success variant" />
+                  <DisplayField variant="success">
+                    zQ3shrGxRrYyWixJGrr45jJ1MEY76YQZ4KVbt9CYRsTWZ5MWV
+                  </DisplayField>
+                </div>
+
+                {/* Failure */}
+                <div className="space-y-2">
+                  <PanelLabel label="failure variant" />
+                  <DisplayField variant="failure">
+                    zQ3shrGxRrYyWixJGrr45jJ1MEY76YQZ4KVbt9CYRsTWZ5MWV
+                  </DisplayField>
+                </div>
+
+                {/* With Prefix - Neutral */}
+                <div className="space-y-2">
+                  <PanelLabel label="with prefix (neutral)" />
+                  <DisplayField prefix="DID">
+                    zQ3shrGxRrYyWixJGrr45jJ1MEY76YQZ4KVbt9CYRsTWZ5MWV
+                  </DisplayField>
+                </div>
+
+                {/* With Prefix - Success */}
+                <div className="space-y-2">
+                  <PanelLabel label="with prefix (success)" />
+                  <DisplayField prefix="DID" variant="success">
+                    zQ3shrGxRrYyWixJGrr45jJ1MEY76YQZ4KVbt9CYRsTWZ5MWV
+                  </DisplayField>
+                </div>
+
+                {/* With Prefix - Failure */}
+                <div className="space-y-2">
+                  <PanelLabel label="with prefix (failure)" />
+                  <DisplayField prefix="DID" variant="failure">
+                    zQ3shrGxRrYyWixJGrr45jJ1MEY76YQZ4KVbt9CYRsTWZ5MWV
+                  </DisplayField>
+                </div>
+
+                {/* Truncated */}
+                <div className="space-y-2">
+                  <PanelLabel label="truncate enabled" />
+                  <div className="max-w-xs">
+                    <DisplayField truncate>
+                      This is a very long text that will be truncated when it exceeds the container
+                      width
+                    </DisplayField>
+                  </div>
+                </div>
+
+                {/* Truncated with Prefix */}
+                <div className="space-y-2">
+                  <PanelLabel label="truncate with prefix" />
+                  <div className="max-w-xs">
+                    <DisplayField prefix="DID" truncate>
+                      very-long-api-key-that-should-be-truncated-12345678900987654321
+                    </DisplayField>
+                  </div>
+                </div>
+              </div>
+            </section>
+
             {/* Tables */}
             <section id="tables" className="space-y-6">
               <h3 className="border-border border-b pb-2 text-xl font-medium">Tables</h3>
@@ -852,14 +926,14 @@ const StyleGuide = () => {
                                       className="border-foreground/10 size-6 rounded-full border object-cover"
                                     />
                                   </div>
-                                  <span className="max-w-[140px] truncate overflow-hidden whitespace-nowrap">
+                                  <span className="max-w-[140px] overflow-hidden truncate whitespace-nowrap">
                                     {log.userName}
                                   </span>
                                 </TableCell>
-                                <TableCell className="max-w-[250px] truncate overflow-hidden whitespace-nowrap capitalize">
+                                <TableCell className="max-w-[250px] overflow-hidden truncate whitespace-nowrap capitalize">
                                   {log.action}
                                 </TableCell>
-                                <TableCell className="max-w-[100px] truncate overflow-hidden whitespace-nowrap">
+                                <TableCell className="max-w-[100px] overflow-hidden truncate whitespace-nowrap">
                                   <div className="flex flex-col">
                                     <span>
                                       {date}
@@ -1390,7 +1464,7 @@ const StyleGuide = () => {
           variant="primary"
           size="sm"
           onClick={scrollToTop}
-          className="fixed right-8 bottom-8 z-50"
+          className="fixed bottom-8 right-8 z-50"
         >
           <ArrowUp className="size-4" />
           Back to Top

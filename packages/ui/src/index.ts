@@ -13,6 +13,7 @@ export * from './components/command';
 // export * from './components/custom-text-area';
 export * from './components/date-range-picker';
 export * from './components/dialog';
+export * from './components/display-field';
 export * from './components/drawer';
 export * from './components/dropdown-menu';
 export * from './components/element-icon';
