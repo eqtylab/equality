@@ -37,12 +37,12 @@ function DisplayField({
   return (
     <div
       className={cn(
-        'border-border ring-offset-background ring-ring/70 w-full rounded-md border px-3 py-2 text-base focus-visible:ring-1 focus-visible:ring-offset-2 md:text-sm',
+        'border-border bg-background text-foreground ring-offset-background ring-ring/70 w-full rounded-md border px-3 py-2 text-base focus-visible:ring-1 focus-visible:ring-offset-2 md:text-sm',
         className
       )}
       {...props}
     >
-      {prefix && <div className="bg-red-500 text-white">{prefix}</div>}
+      {prefix && <div className="bg-[#ff0000] text-white">{prefix}</div>}
       <span className={cn(truncate && 'truncate')}>{children}</span>
     </div>
   );
