@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { cva, type VariantProps } from 'class-variance-authority';
+import { CircleCheck } from 'lucide-react';
 
 import { cn } from '../lib/utils';
 
@@ -8,8 +9,8 @@ const displayFieldVariants = cva(
   {
     variants: {
       variant: {
-        neutral: 'bg-lilac',
-        success: 'bg-green',
+        neutral: 'bg-dark-lilac',
+        success: 'bg-mint',
         failure: 'bg-red',
       },
     },
@@ -37,13 +38,31 @@ function DisplayField({
   return (
     <div
       className={cn(
-        'border-border bg-background text-foreground ring-offset-background ring-ring/70 w-full rounded-md border px-3 py-2 text-base focus-visible:ring-1 focus-visible:ring-offset-2 md:text-sm',
+        'border-border bg-black-5 text-foreground ring-offset-background ring-ring/70 flex w-full overflow-clip text-clip rounded-md border text-base focus-visible:ring-1 focus-visible:ring-offset-2 md:text-sm',
         className
       )}
       {...props}
     >
-      {prefix && <div className="bg-[#ff0000] text-white">{prefix}</div>}
-      <span className={cn(truncate && 'truncate')}>{children}</span>
+      {prefix && (
+        <div
+          className={cn(
+            'bg-dark-lilac flex gap-1 rounded-br-md rounded-tr-md px-2 text-white',
+            displayFieldVariants({ variant }),
+            className
+          )}
+        >
+          <CircleCheck className="w-4" />
+          {prefix}
+        </div>
+      )}
+      <span
+        className={cn(
+          'block w-full px-3 py-2 font-mono',
+          truncate ? 'truncate' : 'overflow-scroll'
+        )}
+      >
+        {children}
+      </span>
     </div>
   );
 }

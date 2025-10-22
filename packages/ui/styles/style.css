@@ -605,8 +605,14 @@
     .overflow-auto {
       overflow: auto;
     }
+    .overflow-clip {
+      overflow: clip;
+    }
     .overflow-hidden {
       overflow: hidden;
+    }
+    .overflow-scroll {
+      overflow: scroll;
     }
     .overflow-x-hidden {
       overflow-x: hidden;
@@ -639,9 +645,15 @@
       border-top-left-radius: 10px;
       border-top-right-radius: 10px;
     }
+    .rounded-tr-md {
+      border-top-right-radius: calc(var(--radius) - 2px);
+    }
     .rounded-b-md {
       border-bottom-right-radius: calc(var(--radius) - 2px);
       border-bottom-left-radius: calc(var(--radius) - 2px);
+    }
+    .rounded-br-md {
+      border-bottom-right-radius: calc(var(--radius) - 2px);
     }
     .border {
       border-style: var(--tw-border-style);
@@ -788,6 +800,9 @@
     .bg-compliant-secondary {
       background-color: hsl(var(--compliant-secondary));
     }
+    .bg-dark-lilac {
+      background-color: #9153c9;
+    }
     .bg-destructive {
       background-color: hsl(var(--destructive));
     }
@@ -836,6 +851,9 @@
     .bg-medium-lilac {
       background-color: #b5a3cc;
     }
+    .bg-mint {
+      background-color: hsl(var(--mint));
+    }
     .bg-muted {
       background-color: hsl(var(--muted));
     }
@@ -859,6 +877,9 @@
     }
     .bg-primary {
       background-color: hsl(var(--primary));
+    }
+    .bg-red {
+      background-color: hsl(var(--red));
     }
     .bg-rose-500\/10 {
       background-color: color-mix(in oklab, oklch(64.5% 0.246 16.439) 10%, transparent);
@@ -1176,6 +1197,9 @@
     .break-all {
       word-break: break-all;
     }
+    .text-clip {
+      text-overflow: clip;
+    }
     .whitespace-nowrap {
       white-space: nowrap;
     }
@@ -1315,6 +1339,12 @@
     .ring-0\! {
       --tw-ring-shadow: var(--tw-ring-inset,) 0 0 0 calc(0px + var(--tw-ring-offset-width)) var(--tw-ring-color, currentcolor) !important;
       box-shadow: var(--tw-inset-shadow), var(--tw-inset-ring-shadow), var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow) !important;
+    }
+    .ring-ring\/70 {
+      --tw-ring-color: hsl(var(--ring));
+      @supports (color: color-mix(in lab, red, red)) {
+        --tw-ring-color: color-mix(in oklab, hsl(var(--ring)) 70%, transparent);
+      }
     }
     .ring-offset-0\! {
       --tw-ring-offset-width: 0px !important;

@@ -866,22 +866,18 @@ const StyleGuide = () => {
                 {/* Truncated */}
                 <div className="space-y-2">
                   <PanelLabel label="truncate enabled" />
-                  <div className="max-w-xs">
-                    <DisplayField truncate>
-                      This is a very long text that will be truncated when it exceeds the container
-                      width
-                    </DisplayField>
-                  </div>
+                  <DisplayField truncate>
+                    This is a very long text that will be truncated when it exceeds the container
+                    width
+                  </DisplayField>
                 </div>
 
                 {/* Truncated with Prefix */}
                 <div className="space-y-2">
                   <PanelLabel label="truncate with prefix" />
-                  <div className="max-w-xs">
-                    <DisplayField prefix="DID" truncate>
-                      very-long-api-key-that-should-be-truncated-12345678900987654321
-                    </DisplayField>
-                  </div>
+                  <DisplayField prefix="DID" truncate>
+                    very-long-api-key-that-should-be-truncated-12345678900987654321
+                  </DisplayField>
                 </div>
               </div>
             </section>
