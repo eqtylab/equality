@@ -18,6 +18,7 @@ import {
   CardTitle,
   Checkbox,
   CodeBlock,
+  CopyButton,
   DisplayField,
   FilledTabs,
   IconButton,
@@ -368,6 +369,30 @@ const StyleGuide = () => {
                     target="_blank"
                     download
                   />
+                </div>
+              </div>
+            </section>
+
+            {/* Copy Button */}
+            <section id="copy-button" className="space-y-6">
+              <h3 className="border-border border-b pb-2 text-xl font-medium">Copy Button</h3>
+              <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+                {/* Small */}
+                <div className="space-y-2">
+                  <PanelLabel label="small" />
+                  <CopyButton value="zQ3shrGxRrYyWixJGrr45jJ1MEY76YQZ4KVbt9CYRsTWZ5MWV" size="sm" />
+                </div>
+
+                {/* Medium (default) */}
+                <div className="space-y-2">
+                  <PanelLabel label="medium (default)" />
+                  <CopyButton value="zQ3shrGxRrYyWixJGrr45jJ1MEY76YQZ4KVbt9CYRsTWZ5MWV" />
+                </div>
+
+                {/* Large */}
+                <div className="space-y-2">
+                  <PanelLabel label="large" />
+                  <CopyButton value="zQ3shrGxRrYyWixJGrr45jJ1MEY76YQZ4KVbt9CYRsTWZ5MWV" size="lg" />
                 </div>
               </div>
             </section>
