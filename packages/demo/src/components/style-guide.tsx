@@ -256,22 +256,6 @@ const StyleGuide = () => {
                   </div>
                 </div>
 
-                {/* Outline */}
-                <div className="space-y-2">
-                  <PanelLabel label="outline" />
-                  <div className="flex flex-col gap-2">
-                    <Button variant="outline" size="lg">
-                      Outline LG
-                    </Button>
-                    <Button variant="outline" size="md">
-                      Outline MD
-                    </Button>
-                    <Button variant="outline" size="sm">
-                      Outline SM
-                    </Button>
-                  </div>
-                </div>
-
                 {/* Secondary */}
                 <div className="space-y-2">
                   <PanelLabel label="secondary" />
@@ -300,22 +284,6 @@ const StyleGuide = () => {
                     </Button>
                     <Button variant="tertiary" size="sm">
                       Tertiary SM
-                    </Button>
-                  </div>
-                </div>
-
-                {/* Ghost */}
-                <div className="space-y-2">
-                  <PanelLabel label="ghost" />
-                  <div className="flex flex-col gap-2">
-                    <Button variant="ghost" size="lg">
-                      Ghost LG
-                    </Button>
-                    <Button variant="ghost" size="md">
-                      Ghost MD
-                    </Button>
-                    <Button variant="ghost" size="sm">
-                      Ghost SM
                     </Button>
                   </div>
                 </div>

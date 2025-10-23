@@ -12,13 +12,10 @@ const buttonVariants = cva(
         primary:
           'border-highlight/0 bg-highlight/50 text-foreground hover:border-highlight hover:bg-highlight/60 border',
         destructive: 'text-red hover:border-red hover:bg-red/10 border bg-black/60',
-        outline:
-          'border-border text-foreground hover:text-accent-foreground border bg-black/60 hover:bg-white/10',
         secondary:
           'border-foreground bg-foreground text-background hover:border-primary hover:bg-primary/80 border',
         tertiary:
-          'border-background text-secondary-foreground hover:border-foreground/70 hover:bg-background/80 border bg-black/60',
-        ghost: 'hover:bg-lilac-button',
+          'border-border text-foreground hover:text-accent-foreground border bg-black/60 hover:bg-white/10',
         link: 'text-lilac underline-offset-4 hover:underline',
       },
       size: {
