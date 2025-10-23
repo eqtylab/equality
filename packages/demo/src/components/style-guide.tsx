@@ -18,7 +18,10 @@ import {
   CardTitle,
   Checkbox,
   CodeBlock,
+  CopyButton,
+  DisplayField,
   FilledTabs,
+  IconButton,
   IconCircle,
   IconSquare,
   InfoCard,
@@ -304,21 +307,92 @@ const StyleGuide = () => {
                     Link SM
                   </Button>
                 </div>
+              </div>
+            </section>
 
-                {/* Icon */}
-                <div className="flex flex-col items-center gap-4">
-                  <Button variant="icon">
-                    <Grid3X3 className="h-4 w-4" />
-                  </Button>
-                  <Button variant="icon" size="lg">
-                    <Grid3X3 className="h-4 w-4" />
-                  </Button>
-                  <Button variant="icon" size="md">
-                    <Grid3X3 className="h-4 w-4" />
-                  </Button>
-                  <Button variant="icon" size="sm">
-                    <Grid3X3 className="h-4 w-4" />
-                  </Button>
+            {/* Icon Buttons */}
+            <section id="icon-buttons" className="space-y-6">
+              <h3 className="border-border border-b pb-2 text-xl font-medium">Icon Buttons</h3>
+              <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+                {/* Small (default) */}
+                <div className="space-y-2">
+                  <PanelLabel label="small (default)" />
+                  <IconButton
+                    name="Settings"
+                    label="Settings"
+                    size="sm"
+                    onClick={() => console.log('Settings clicked')}
+                  />
+                </div>
+
+                {/* Medium */}
+                <div className="space-y-2">
+                  <PanelLabel label="medium" />
+                  <IconButton
+                    name="Heart"
+                    label="Like"
+                    size="md"
+                    onClick={() => console.log('Like clicked')}
+                  />
+                </div>
+
+                {/* Large */}
+                <div className="space-y-2">
+                  <PanelLabel label="large" />
+                  <IconButton
+                    name="Share2"
+                    label="Share"
+                    size="lg"
+                    onClick={() => console.log('Share clicked')}
+                  />
+                </div>
+
+                {/* Disabled */}
+                <div className="space-y-2">
+                  <PanelLabel label="disabled" />
+                  <IconButton name="Trash2" label="Delete" disabled />
+                </div>
+
+                {/* As Link */}
+                <div className="space-y-2">
+                  <PanelLabel label="as link" />
+                  <IconButton name="ExternalLink" label="Open link" href="https://example.com" />
+                </div>
+
+                {/* As Link with Target */}
+                <div className="space-y-2">
+                  <PanelLabel label="link with target" />
+                  <IconButton
+                    name="Download"
+                    label="Download file"
+                    href="https://example.com/file.pdf"
+                    target="_blank"
+                    download
+                  />
+                </div>
+              </div>
+            </section>
+
+            {/* Copy Button */}
+            <section id="copy-button" className="space-y-6">
+              <h3 className="border-border border-b pb-2 text-xl font-medium">Copy Button</h3>
+              <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+                {/* Small (default) */}
+                <div className="space-y-2">
+                  <PanelLabel label="small (default)" />
+                  <CopyButton value="zQ3shrGxRrYyWixJGrr45jJ1MEY76YQZ4KVbt9CYRsTWZ5MWV" />
+                </div>
+
+                {/* Medium */}
+                <div className="space-y-2">
+                  <PanelLabel label="medium" />
+                  <CopyButton value="zQ3shrGxRrYyWixJGrr45jJ1MEY76YQZ4KVbt9CYRsTWZ5MWV" size="md" />
+                </div>
+
+                {/* Large */}
+                <div className="space-y-2">
+                  <PanelLabel label="large" />
+                  <CopyButton value="zQ3shrGxRrYyWixJGrr45jJ1MEY76YQZ4KVbt9CYRsTWZ5MWV" size="lg" />
                 </div>
               </div>
             </section>
@@ -812,6 +886,109 @@ const StyleGuide = () => {
               </div>
             </section>
 
+            {/* Display Field */}
+            <section id="display-field" className="space-y-6">
+              <h3 className="border-border border-b pb-2 text-xl font-medium">Display Field</h3>
+              <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+                {/* Neutral */}
+                <div className="space-y-2">
+                  <PanelLabel label="neutral" />
+                  <DisplayField>zQ3shrGxRrYyWixJGrr45jJ1MEY76YQZ4KVbt9CYRsTWZ5MWV</DisplayField>
+                </div>
+
+                {/* Neutral Truncated */}
+                <div className="space-y-2">
+                  <PanelLabel label="neutral truncated" />
+                  <DisplayField truncate>
+                    zQ3shrGxRrYyWixJGrr45jJ1MEY76YQZ4KVbt9CYRsTWZ5MWV
+                  </DisplayField>
+                </div>
+
+                {/* Neutral Middle Truncated */}
+                <div className="space-y-2">
+                  <PanelLabel label="neutral middle truncated" />
+                  <DisplayField truncate="middle">
+                    zQ3shrGxRrYyWixJGrr45jJ1MEY76YQZ4KVbt9CYRsTWZ5MWV
+                  </DisplayField>
+                </div>
+
+                {/* Success with Prefix */}
+                <div className="space-y-2">
+                  <PanelLabel label="success with prefix" />
+                  <DisplayField prefix="DID" variant="success">
+                    zQ3shrGxRrYyWixJGrr45jJ1MEY76YQZ4KVbt9CYRsTWZ5MWV
+                  </DisplayField>
+                </div>
+
+                {/* Failure with Prefix */}
+                <div className="space-y-2">
+                  <PanelLabel label="failure with prefix" />
+                  <DisplayField prefix="DID" variant="failure">
+                    zQ3shrGxRrYyWixJGrr45jJ1MEY76YQZ4KVbt9CYRsTWZ5MWV
+                  </DisplayField>
+                </div>
+
+                {/* Neutral with Prefix */}
+                <div className="space-y-2">
+                  <PanelLabel label="neutral with prefix" />
+                  <DisplayField prefix="DID">
+                    zQ3shrGxRrYyWixJGrr45jJ1MEY76YQZ4KVbt9CYRsTWZ5MWV
+                  </DisplayField>
+                </div>
+
+                {/* Without Copy Button */}
+                <div className="space-y-2">
+                  <PanelLabel label="without copy button" />
+                  <DisplayField copy={false}>
+                    zQ3shrGxRrYyWixJGrr45jJ1MEY76YQZ4KVbt9CYRsTWZ5MWV
+                  </DisplayField>
+                </div>
+
+                {/* With Additional Actions */}
+                <div className="space-y-2">
+                  <PanelLabel label="with additional actions" />
+                  <DisplayField
+                    actions={
+                      <>
+                        <IconButton
+                          name="ExternalLink"
+                          label="Open"
+                          size="sm"
+                          onClick={() => console.log('Open clicked')}
+                        />
+                        <IconButton
+                          name="Share2"
+                          label="Share"
+                          size="sm"
+                          onClick={() => console.log('Share clicked')}
+                        />
+                      </>
+                    }
+                  >
+                    zQ3shrGxRrYyWixJGrr45jJ1MEY76YQZ4KVbt9CYRsTWZ5MWV
+                  </DisplayField>
+                </div>
+
+                {/* Copy Disabled with Custom Actions */}
+                <div className="space-y-2">
+                  <PanelLabel label="copy disabled, custom actions" />
+                  <DisplayField
+                    copy={false}
+                    actions={
+                      <IconButton
+                        name="Download"
+                        label="Download"
+                        size="sm"
+                        onClick={() => console.log('Download clicked')}
+                      />
+                    }
+                  >
+                    zQ3shrGxRrYyWixJGrr45jJ1MEY76YQZ4KVbt9CYRsTWZ5MWV
+                  </DisplayField>
+                </div>
+              </div>
+            </section>
+
             {/* Tables */}
             <section id="tables" className="space-y-6">
               <h3 className="border-border border-b pb-2 text-xl font-medium">Tables</h3>
@@ -852,14 +1029,14 @@ const StyleGuide = () => {
                                       className="border-foreground/10 size-6 rounded-full border object-cover"
                                     />
                                   </div>
-                                  <span className="max-w-[140px] truncate overflow-hidden whitespace-nowrap">
+                                  <span className="max-w-[140px] overflow-hidden truncate whitespace-nowrap">
                                     {log.userName}
                                   </span>
                                 </TableCell>
-                                <TableCell className="max-w-[250px] truncate overflow-hidden whitespace-nowrap capitalize">
+                                <TableCell className="max-w-[250px] overflow-hidden truncate whitespace-nowrap capitalize">
                                   {log.action}
                                 </TableCell>
-                                <TableCell className="max-w-[100px] truncate overflow-hidden whitespace-nowrap">
+                                <TableCell className="max-w-[100px] overflow-hidden truncate whitespace-nowrap">
                                   <div className="flex flex-col">
                                     <span>
                                       {date}
@@ -1390,7 +1567,7 @@ const StyleGuide = () => {
           variant="primary"
           size="sm"
           onClick={scrollToTop}
-          className="fixed right-8 bottom-8 z-50"
+          className="fixed bottom-8 right-8 z-50"
         >
           <ArrowUp className="size-4" />
           Back to Top
