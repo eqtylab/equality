@@ -126,6 +126,9 @@ importers:
       '@radix-ui/react-tooltip':
         specifier: ^1.1.4
         version: 1.2.8(@types/react-dom@18.3.7(@types/react@18.3.26))(@types/react@18.3.26)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      '@re-dev/react-truncate':
+        specifier: ^0.5.2
+        version: 0.5.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       class-variance-authority:
         specifier: ^0.7.1
         version: 0.7.1
@@ -1158,6 +1161,12 @@ packages:
 
   '@radix-ui/rect@1.1.1':
     resolution: {integrity: sha512-HPwpGIzkl28mWyZqG52jiqDJ12waP11Pa1lGoiyUkIEuMLBP0oeK/C89esbXrxsky5we7dfd8U58nm0SgAWpVw==}
+
+  '@re-dev/react-truncate@0.5.2':
+    resolution: {integrity: sha512-OmmS/qA4d5ofnAiw7jjGh5eRpil+AQkUX0AD9XYTJ5TuI9Fu0ezXaggv3M2ZxTTNsGkaP1O48Tw2VDBtKlor2g==}
+    peerDependencies:
+      react: '>=19.0.0 || >=18.0.0 || >=17.0.0 || >=16.0.0'
+      react-dom: '>=19.0.0 || >=18.0.0 || >=17.0.0 || >=16.0.0'
 
   '@rolldown/pluginutils@1.0.0-beta.27':
     resolution: {integrity: sha512-+d0F4MKMCbeVUJwG96uQ4SgAznZNSq93I3V+9NHA4OpvqG8mRCpGdKmK8l/dl02h2CCDHwW2FqilnTyDcAnqjA==}
@@ -3215,6 +3224,11 @@ snapshots:
       '@types/react-dom': 18.3.7(@types/react@18.3.26)
 
   '@radix-ui/rect@1.1.1': {}
+
+  '@re-dev/react-truncate@0.5.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
+    dependencies:
+      react: 18.3.1
+      react-dom: 18.3.1(react@18.3.1)
 
   '@rolldown/pluginutils@1.0.0-beta.27': {}
 
