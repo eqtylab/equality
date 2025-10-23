@@ -569,11 +569,11 @@ const StyleGuide = () => {
                       <p className="text-sm">This is the main content area of the card.</p>
                     </CardContent>
                     <CardFooter>
-                      <Button variant="primary" size="sm">
-                        Action
-                      </Button>
                       <Button variant="tertiary" size="sm" className="ml-2">
                         Cancel
+                      </Button>
+                      <Button variant="primary" size="sm">
+                        Action
                       </Button>
                     </CardFooter>
                   </Card>
