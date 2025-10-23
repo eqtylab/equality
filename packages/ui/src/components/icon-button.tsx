@@ -64,6 +64,7 @@ function IconButton({
         target={target}
         download={download}
         aria-label={label}
+        rel={target === '_blank' ? 'noopener noreferrer' : undefined}
         className={cn(iconButtonVariants({ size }), className)}
       >
         {content}
