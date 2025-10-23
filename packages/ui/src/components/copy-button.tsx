@@ -9,7 +9,12 @@ export interface CopyButtonProps {
   className?: string;
 }
 
-function CopyButton({ value, label = 'Copy to clipboard', size = 'md', className }: CopyButtonProps) {
+function CopyButton({
+  value,
+  label = 'Copy to clipboard',
+  size = 'sm',
+  className,
+}: CopyButtonProps) {
   const [copied, setCopied] = React.useState(false);
 
   const handleCopy = async () => {

@@ -314,9 +314,9 @@ const StyleGuide = () => {
             <section id="icon-buttons" className="space-y-6">
               <h3 className="border-border border-b pb-2 text-xl font-medium">Icon Buttons</h3>
               <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
-                {/* Small */}
+                {/* Small (default) */}
                 <div className="space-y-2">
-                  <PanelLabel label="small" />
+                  <PanelLabel label="small (default)" />
                   <IconButton
                     name="Settings"
                     label="Settings"
@@ -325,9 +325,9 @@ const StyleGuide = () => {
                   />
                 </div>
 
-                {/* Medium (default) */}
+                {/* Medium */}
                 <div className="space-y-2">
-                  <PanelLabel label="medium (default)" />
+                  <PanelLabel label="medium" />
                   <IconButton
                     name="Heart"
                     label="Like"
@@ -377,16 +377,16 @@ const StyleGuide = () => {
             <section id="copy-button" className="space-y-6">
               <h3 className="border-border border-b pb-2 text-xl font-medium">Copy Button</h3>
               <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
-                {/* Small */}
+                {/* Small (default) */}
                 <div className="space-y-2">
-                  <PanelLabel label="small" />
-                  <CopyButton value="zQ3shrGxRrYyWixJGrr45jJ1MEY76YQZ4KVbt9CYRsTWZ5MWV" size="sm" />
+                  <PanelLabel label="small (default)" />
+                  <CopyButton value="zQ3shrGxRrYyWixJGrr45jJ1MEY76YQZ4KVbt9CYRsTWZ5MWV" />
                 </div>
 
-                {/* Medium (default) */}
+                {/* Medium */}
                 <div className="space-y-2">
-                  <PanelLabel label="medium (default)" />
-                  <CopyButton value="zQ3shrGxRrYyWixJGrr45jJ1MEY76YQZ4KVbt9CYRsTWZ5MWV" />
+                  <PanelLabel label="medium" />
+                  <CopyButton value="zQ3shrGxRrYyWixJGrr45jJ1MEY76YQZ4KVbt9CYRsTWZ5MWV" size="md" />
                 </div>
 
                 {/* Large */}
