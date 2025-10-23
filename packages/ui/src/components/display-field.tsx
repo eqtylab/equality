@@ -4,6 +4,7 @@ import { cva, type VariantProps } from 'class-variance-authority';
 import { CircleCheck, CircleX } from 'lucide-react';
 
 import { cn } from '../lib/utils';
+import { CopyButton } from './copy-button';
 
 const displayFieldVariants = cva('', {
   variants: {
@@ -24,6 +25,8 @@ export interface DisplayFieldProps
   variant?: 'neutral' | 'success' | 'failure';
   prefix?: string;
   truncate?: true | false | 'middle';
+  copy?: boolean;
+  actions?: React.ReactNode;
 }
 
 function DisplayField({
@@ -32,6 +35,8 @@ function DisplayField({
   children,
   prefix,
   truncate = false,
+  copy = true,
+  actions,
   ...props
 }: DisplayFieldProps) {
   const getIcon = () => {
@@ -57,29 +62,45 @@ function DisplayField({
     return 'overflow-x-scroll';
   };
 
+  const getValueForCopy = () => {
+    if (typeof children === 'string') {
+      return children;
+    }
+    return '';
+  };
+
+  const showActions = copy || actions;
+
   return (
-    <div
-      className={cn(
-        'border-border bg-black-5 text-foreground ring-offset-background ring-ring/70 h-9.5 flex w-full overflow-clip text-clip rounded-md border text-base focus-visible:ring-1 focus-visible:ring-offset-2 md:text-sm',
-        className
-      )}
-      {...props}
-    >
-      {prefix && (
-        <div
-          className={cn(
-            'flex items-center gap-1 rounded-br-md rounded-tr-md px-2 text-sm font-medium text-black transition-colors',
-            displayFieldVariants({ variant: variant }),
-            className
-          )}
+    <div className={cn('flex w-full items-center gap-2', className)} {...props}>
+      <div
+        className={cn(
+          'border-border bg-black-5 text-foreground ring-offset-background ring-ring/70 h-9.5 flex w-full overflow-clip text-clip rounded-md border text-base focus-visible:ring-1 focus-visible:ring-offset-2 md:text-sm'
+        )}
+      >
+        {prefix && (
+          <div
+            className={cn(
+              'flex items-center gap-1 rounded-br-md rounded-tr-md px-2 text-sm font-medium text-black transition-colors',
+              displayFieldVariants({ variant: variant })
+            )}
+          >
+            {getIcon()}
+            {prefix}
+          </div>
+        )}
+        <span
+          className={cn('block w-full overflow-y-clip px-3 py-2 font-mono', getTruncateClass())}
         >
-          {getIcon()}
-          {prefix}
-        </div>
-      )}
-      <span className={cn('block w-full overflow-y-clip px-3 py-2 font-mono', getTruncateClass())}>
-        {renderContent()}
-      </span>
+          {renderContent()}
+        </span>
+        {showActions && (
+          <div className="flex items-center">
+            {copy && <CopyButton value={getValueForCopy()} size="sm" />}
+            {actions}
+          </div>
+        )}
+      </div>
     </div>
   );
 }
