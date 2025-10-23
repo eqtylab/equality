@@ -817,66 +817,49 @@ const StyleGuide = () => {
             <section id="display-field" className="space-y-6">
               <h3 className="border-border border-b pb-2 text-xl font-medium">Display Field</h3>
               <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
-                {/* Neutral (default) */}
+                {/* Neutral */}
                 <div className="space-y-2">
-                  <PanelLabel label="neutral (default)" />
+                  <PanelLabel label="neutral" />
                   <DisplayField>zQ3shrGxRrYyWixJGrr45jJ1MEY76YQZ4KVbt9CYRsTWZ5MWV</DisplayField>
                 </div>
 
-                {/* Success */}
+                {/* Neutral Truncated */}
                 <div className="space-y-2">
-                  <PanelLabel label="success variant" />
-                  <DisplayField variant="success">
+                  <PanelLabel label="neutral truncated" />
+                  <DisplayField truncate>
                     zQ3shrGxRrYyWixJGrr45jJ1MEY76YQZ4KVbt9CYRsTWZ5MWV
                   </DisplayField>
                 </div>
 
-                {/* Failure */}
+                {/* Neutral Middle Truncated */}
                 <div className="space-y-2">
-                  <PanelLabel label="failure variant" />
-                  <DisplayField variant="failure">
+                  <PanelLabel label="neutral middle truncated" />
+                  <DisplayField truncate="middle">
                     zQ3shrGxRrYyWixJGrr45jJ1MEY76YQZ4KVbt9CYRsTWZ5MWV
                   </DisplayField>
                 </div>
 
-                {/* With Prefix - Neutral */}
+                {/* Success with Prefix */}
                 <div className="space-y-2">
-                  <PanelLabel label="with prefix (neutral)" />
-                  <DisplayField prefix="DID">
-                    zQ3shrGxRrYyWixJGrr45jJ1MEY76YQZ4KVbt9CYRsTWZ5MWV
-                  </DisplayField>
-                </div>
-
-                {/* With Prefix - Success */}
-                <div className="space-y-2">
-                  <PanelLabel label="with prefix (success)" />
+                  <PanelLabel label="success with prefix" />
                   <DisplayField prefix="DID" variant="success">
                     zQ3shrGxRrYyWixJGrr45jJ1MEY76YQZ4KVbt9CYRsTWZ5MWV
                   </DisplayField>
                 </div>
 
-                {/* With Prefix - Failure */}
+                {/* Failure with Prefix */}
                 <div className="space-y-2">
-                  <PanelLabel label="with prefix (failure)" />
+                  <PanelLabel label="failure with prefix" />
                   <DisplayField prefix="DID" variant="failure">
                     zQ3shrGxRrYyWixJGrr45jJ1MEY76YQZ4KVbt9CYRsTWZ5MWV
                   </DisplayField>
                 </div>
 
-                {/* Truncated */}
+                {/* Neutral with Prefix */}
                 <div className="space-y-2">
-                  <PanelLabel label="truncate enabled" />
-                  <DisplayField truncate>
-                    This is a very long text that will be truncated when it exceeds the container
-                    width
-                  </DisplayField>
-                </div>
-
-                {/* Truncated with Prefix */}
-                <div className="space-y-2">
-                  <PanelLabel label="truncate with prefix" />
-                  <DisplayField prefix="DID" truncate>
-                    very-long-api-key-that-should-be-truncated-12345678900987654321
+                  <PanelLabel label="neutral with prefix" />
+                  <DisplayField prefix="DID">
+                    zQ3shrGxRrYyWixJGrr45jJ1MEY76YQZ4KVbt9CYRsTWZ5MWV
                   </DisplayField>
                 </div>
               </div>

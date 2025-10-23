@@ -274,6 +274,9 @@
     .h-9 {
       height: calc(0.25rem * 9);
     }
+    .h-9\.5 {
+      height: calc(0.25rem * 9.5);
+    }
     .h-10 {
       height: calc(0.25rem * 10);
     }
@@ -611,14 +614,17 @@
     .overflow-hidden {
       overflow: hidden;
     }
-    .overflow-scroll {
-      overflow: scroll;
-    }
     .overflow-x-hidden {
       overflow-x: hidden;
     }
+    .overflow-x-scroll {
+      overflow-x: scroll;
+    }
     .overflow-y-auto {
       overflow-y: auto;
+    }
+    .overflow-y-clip {
+      overflow-y: clip;
     }
     .rounded {
       border-radius: 0.25rem;
