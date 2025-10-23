@@ -288,6 +288,22 @@ const StyleGuide = () => {
                   </div>
                 </div>
 
+                {/* Outline */}
+                <div className="space-y-2">
+                  <PanelLabel label="outline" />
+                  <div className="flex flex-col gap-2">
+                    <Button variant="outline" size="lg">
+                      Outline LG
+                    </Button>
+                    <Button variant="outline" size="md">
+                      Outline MD
+                    </Button>
+                    <Button variant="outline" size="sm">
+                      Outline SM
+                    </Button>
+                  </div>
+                </div>
+
                 {/* Link */}
                 <div className="space-y-2">
                   <PanelLabel label="link" />
@@ -332,22 +348,6 @@ const StyleGuide = () => {
                     </Button>
                     <Button variant="primary" size="sm" suffix={<ArrowUp />}>
                       Suffix SM
-                    </Button>
-                  </div>
-                </div>
-
-                {/* With Both Icons */}
-                <div className="space-y-2">
-                  <PanelLabel label="prefix and suffix" />
-                  <div className="flex flex-col gap-2">
-                    <Button variant="primary" size="lg" prefix={<Grid3X3 />} suffix={<ArrowUp />}>
-                      Both LG
-                    </Button>
-                    <Button variant="primary" size="md" prefix={<Grid3X3 />} suffix={<ArrowUp />}>
-                      Both MD
-                    </Button>
-                    <Button variant="primary" size="sm" prefix={<Grid3X3 />} suffix={<ArrowUp />}>
-                      Both SM
                     </Button>
                   </div>
                 </div>

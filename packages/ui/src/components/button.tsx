@@ -17,6 +17,8 @@ const buttonVariants = cva(
           'border-foreground bg-foreground text-background hover:not-disabled:border-primary hover:not-disabled:bg-primary/80 border',
         tertiary:
           'border-border text-foreground hover:not-disabled:text-accent-foreground hover:not-disabled:bg-white/10 border bg-black/60',
+        outline:
+          'border-border text-foreground hover:text-accent-foreground bg-black/60 hover:border hover:bg-white/10',
         link: 'text-lilac hover:not-disabled:underline underline-offset-4',
       },
       size: {
