@@ -10,6 +10,7 @@ const displayFieldVariants = cva('', {
   variants: {
     variant: {
       neutral: 'bg-lilac',
+      neutralCheck: 'bg-lilac',
       success: 'bg-mint',
       failure: 'bg-red',
     },
@@ -22,7 +23,7 @@ const displayFieldVariants = cva('', {
 export interface DisplayFieldProps
   extends React.HTMLAttributes<HTMLDivElement>,
     VariantProps<typeof displayFieldVariants> {
-  variant?: 'neutral' | 'success' | 'failure';
+  variant?: 'neutral' | 'success' | 'neutralCheck' | 'failure';
   prefix?: string;
   truncate?: true | false | 'middle';
   copy?: boolean;
@@ -40,7 +41,7 @@ function DisplayField({
   ...props
 }: DisplayFieldProps) {
   const getIcon = () => {
-    if (variant === 'success') {
+    if (variant === 'success' || variant === 'neutralCheck') {
       return <CircleCheck className="w-4" />;
     }
     if (variant === 'failure') {
