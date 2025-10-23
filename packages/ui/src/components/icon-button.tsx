@@ -15,7 +15,7 @@ const iconButtonVariants = cva(
       },
     },
     defaultVariants: {
-      size: 'md',
+      size: 'sm',
     },
   }
 );
@@ -38,7 +38,7 @@ export interface IconButtonProps
 
 function IconButton({
   className,
-  size = 'md',
+  size = 'sm',
   name,
   label,
   href,
@@ -48,7 +48,7 @@ function IconButton({
   ...props
 }: IconButtonProps) {
   const Icon = LucideIcons[name] as LucideIcons.LucideIcon;
-  const iconSize = iconSizeMap[size || 'md'];
+  const iconSize = iconSizeMap[size || 'sm'];
 
   if (!Icon) {
     console.warn(`Icon "${name}" not found in lucide-react`);
