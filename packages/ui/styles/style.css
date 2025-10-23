@@ -1597,30 +1597,6 @@
         }
       }
     }
-    .hover\:border-primary {
-      &:hover {
-        @media (hover: hover) {
-          border-color: hsl(var(--primary));
-        }
-      }
-    }
-    .hover\:border-red {
-      &:hover {
-        @media (hover: hover) {
-          border-color: hsl(var(--red));
-        }
-      }
-    }
-    .hover\:bg-highlight\/60 {
-      &:hover {
-        @media (hover: hover) {
-          background-color: hsl(var(--highlight));
-          @supports (color: color-mix(in lab, red, red)) {
-            background-color: color-mix(in oklab, hsl(var(--highlight)) 60%, transparent);
-          }
-        }
-      }
-    }
     .hover\:bg-lilac-button {
       &:hover {
         @media (hover: hover) {
@@ -1639,26 +1615,6 @@
       &:hover {
         @media (hover: hover) {
           background-color: color-mix(in oklab, #e2ccff 90%, transparent);
-        }
-      }
-    }
-    .hover\:bg-primary\/80 {
-      &:hover {
-        @media (hover: hover) {
-          background-color: hsl(var(--primary));
-          @supports (color: color-mix(in lab, red, red)) {
-            background-color: color-mix(in oklab, hsl(var(--primary)) 80%, transparent);
-          }
-        }
-      }
-    }
-    .hover\:bg-red\/60 {
-      &:hover {
-        @media (hover: hover) {
-          background-color: hsl(var(--red));
-          @supports (color: color-mix(in lab, red, red)) {
-            background-color: color-mix(in oklab, hsl(var(--red)) 60%, transparent);
-          }
         }
       }
     }
@@ -1711,13 +1667,6 @@
         }
       }
     }
-    .hover\:underline {
-      &:hover {
-        @media (hover: hover) {
-          text-decoration-line: underline;
-        }
-      }
-    }
     .hover\:opacity-70 {
       &:hover {
         @media (hover: hover) {
@@ -1737,6 +1686,96 @@
         @media (hover: hover) {
           --tw-shadow: 0 1px 3px 0 var(--tw-shadow-color, rgb(0 0 0 / 0.1)), 0 1px 2px -1px var(--tw-shadow-color, rgb(0 0 0 / 0.1));
           box-shadow: var(--tw-inset-shadow), var(--tw-inset-ring-shadow), var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow);
+        }
+      }
+    }
+    .hover\:not-disabled\:border-highlight {
+      &:hover {
+        @media (hover: hover) {
+          &:not(*:disabled) {
+            border-color: hsl(var(--highlight));
+          }
+        }
+      }
+    }
+    .hover\:not-disabled\:border-primary {
+      &:hover {
+        @media (hover: hover) {
+          &:not(*:disabled) {
+            border-color: hsl(var(--primary));
+          }
+        }
+      }
+    }
+    .hover\:not-disabled\:border-red {
+      &:hover {
+        @media (hover: hover) {
+          &:not(*:disabled) {
+            border-color: hsl(var(--red));
+          }
+        }
+      }
+    }
+    .hover\:not-disabled\:bg-highlight\/60 {
+      &:hover {
+        @media (hover: hover) {
+          &:not(*:disabled) {
+            background-color: hsl(var(--highlight));
+            @supports (color: color-mix(in lab, red, red)) {
+              background-color: color-mix(in oklab, hsl(var(--highlight)) 60%, transparent);
+            }
+          }
+        }
+      }
+    }
+    .hover\:not-disabled\:bg-primary\/80 {
+      &:hover {
+        @media (hover: hover) {
+          &:not(*:disabled) {
+            background-color: hsl(var(--primary));
+            @supports (color: color-mix(in lab, red, red)) {
+              background-color: color-mix(in oklab, hsl(var(--primary)) 80%, transparent);
+            }
+          }
+        }
+      }
+    }
+    .hover\:not-disabled\:bg-red\/60 {
+      &:hover {
+        @media (hover: hover) {
+          &:not(*:disabled) {
+            background-color: hsl(var(--red));
+            @supports (color: color-mix(in lab, red, red)) {
+              background-color: color-mix(in oklab, hsl(var(--red)) 60%, transparent);
+            }
+          }
+        }
+      }
+    }
+    .hover\:not-disabled\:bg-white\/10 {
+      &:hover {
+        @media (hover: hover) {
+          &:not(*:disabled) {
+            background-color: color-mix(in oklab, #fff 10%, transparent);
+          }
+        }
+      }
+    }
+    .hover\:not-disabled\:text-accent-foreground {
+      &:hover {
+        @media (hover: hover) {
+          &:not(*:disabled) {
+            color: hsl(var(--accent-foreground));
+          }
+        }
+      }
+    }
+    .hover\:not-disabled\:underline {
+      &:hover {
+        @media (hover: hover) {
+          &:not(*:disabled) {
+            text-decoration-line: underline;
+          }
         }
       }
     }

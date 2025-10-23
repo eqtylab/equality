@@ -10,14 +10,14 @@ const buttonVariants = cva(
     variants: {
       variant: {
         primary:
-          'border-highlight/0 bg-highlight/50 text-foreground not-disabled:hover:border-highlight not-disabled:hover:bg-highlight/60 border',
+          'border-highlight/0 bg-highlight/50 text-foreground hover:not-disabled:border-highlight hover:not-disabled:bg-highlight/60 border',
         destructive:
-          'border-red/0 bg-red/50 text-foreground not-disabled:hover:border-red not-disabled:hover:bg-red/60 border',
+          'border-red/0 bg-red/50 text-foreground hover:not-disabled:border-red hover:not-disabled:bg-red/60 border',
         secondary:
-          'border-foreground bg-foreground text-background not-disabled:hover:border-primary not-disabled:hover:bg-primary/80 border',
+          'border-foreground bg-foreground text-background hover:not-disabled:border-primary hover:not-disabled:bg-primary/80 border',
         tertiary:
-          'border-border text-foreground not-disabled:hover:text-accent-foreground not-disabled:hover:bg-white/10 border bg-black/60',
-        link: 'text-lilac not-disabled:hover:underline underline-offset-4',
+          'border-border text-foreground hover:not-disabled:text-accent-foreground hover:not-disabled:bg-white/10 border bg-black/60',
+        link: 'text-lilac hover:not-disabled:underline underline-offset-4',
       },
       size: {
         sm: 'h-7 rounded-md px-2 text-xs',

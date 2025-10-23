@@ -532,7 +532,7 @@ const StyleGuide = () => {
                       <Button variant="primary" size="sm">
                         Action
                       </Button>
-                      <Button variant="outline" size="sm" className="ml-2">
+                      <Button variant="tertiary" size="sm" className="ml-2">
                         Cancel
                       </Button>
                     </CardFooter>
@@ -1132,7 +1132,7 @@ const StyleGuide = () => {
                         <TableCell>alice@example.com</TableCell>
                         <TableCell>Admin</TableCell>
                         <TableCell className="text-right">
-                          <Button variant="outline" size="sm">
+                          <Button variant="tertiary" size="sm">
                             View
                           </Button>
                         </TableCell>
@@ -1142,7 +1142,7 @@ const StyleGuide = () => {
                         <TableCell>charlie@example.com</TableCell>
                         <TableCell>User</TableCell>
                         <TableCell className="text-right">
-                          <Button variant="outline" size="sm">
+                          <Button variant="tertiary" size="sm">
                             View
                           </Button>
                         </TableCell>
@@ -1295,7 +1295,7 @@ const StyleGuide = () => {
                 </div>
                 <div className="space-y-2">
                   <PanelLabel label="Expand/Collapse all" />
-                  <Button variant="outline" onClick={() => setIsExpanded(!isExpanded)}>
+                  <Button variant="tertiary" onClick={() => setIsExpanded(!isExpanded)}>
                     <UnfoldVertical className="h-4 w-4" />
                     {isExpanded ? 'Collapse All' : 'Expand All'}
                   </Button>
@@ -1417,7 +1417,7 @@ const StyleGuide = () => {
                 <TooltipProvider>
                   <Tooltip>
                     <TooltipTrigger asChild>
-                      <Button variant="outline" size="sm">
+                      <Button variant="tertiary" size="sm">
                         Hover me
                       </Button>
                     </TooltipTrigger>
@@ -1437,7 +1437,7 @@ const StyleGuide = () => {
                   <PanelLabel label="Default" />
                   <Popover>
                     <PopoverTrigger asChild>
-                      <Button variant="outline" size="sm">
+                      <Button variant="tertiary" size="sm">
                         Click me
                       </Button>
                     </PopoverTrigger>
@@ -1450,7 +1450,7 @@ const StyleGuide = () => {
                   <PanelLabel label="Align: start" />
                   <Popover>
                     <PopoverTrigger asChild>
-                      <Button variant="outline" size="sm">
+                      <Button variant="tertiary" size="sm">
                         Click me
                       </Button>
                     </PopoverTrigger>
@@ -1463,7 +1463,7 @@ const StyleGuide = () => {
                   <PanelLabel label="Align: end" />
                   <Popover>
                     <PopoverTrigger asChild>
-                      <Button variant="outline" size="sm">
+                      <Button variant="tertiary" size="sm">
                         Click me
                       </Button>
                     </PopoverTrigger>
