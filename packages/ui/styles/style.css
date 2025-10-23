@@ -703,9 +703,6 @@
       --tw-border-style: none;
       border-style: none;
     }
-    .border-background {
-      border-color: hsl(var(--background));
-    }
     .border-border {
       border-color: hsl(var(--border));
     }
@@ -750,6 +747,12 @@
     }
     .border-red {
       border-color: hsl(var(--red));
+    }
+    .border-red\/0 {
+      border-color: hsl(var(--red));
+      @supports (color: color-mix(in lab, red, red)) {
+        border-color: color-mix(in oklab, hsl(var(--red)) 0%, transparent);
+      }
     }
     .border-rose-500\/30 {
       border-color: color-mix(in oklab, oklch(64.5% 0.246 16.439) 30%, transparent);
@@ -882,6 +885,12 @@
     }
     .bg-red {
       background-color: hsl(var(--red));
+    }
+    .bg-red\/50 {
+      background-color: hsl(var(--red));
+      @supports (color: color-mix(in lab, red, red)) {
+        background-color: color-mix(in oklab, hsl(var(--red)) 50%, transparent);
+      }
     }
     .bg-rose-500\/10 {
       background-color: color-mix(in oklab, oklch(64.5% 0.246 16.439) 10%, transparent);
@@ -1581,16 +1590,6 @@
         }
       }
     }
-    .hover\:border-foreground\/70 {
-      &:hover {
-        @media (hover: hover) {
-          border-color: hsl(var(--foreground));
-          @supports (color: color-mix(in lab, red, red)) {
-            border-color: color-mix(in oklab, hsl(var(--foreground)) 70%, transparent);
-          }
-        }
-      }
-    }
     .hover\:border-highlight {
       &:hover {
         @media (hover: hover) {
@@ -1609,16 +1608,6 @@
       &:hover {
         @media (hover: hover) {
           border-color: hsl(var(--red));
-        }
-      }
-    }
-    .hover\:bg-background\/80 {
-      &:hover {
-        @media (hover: hover) {
-          background-color: hsl(var(--background));
-          @supports (color: color-mix(in lab, red, red)) {
-            background-color: color-mix(in oklab, hsl(var(--background)) 80%, transparent);
-          }
         }
       }
     }
@@ -1663,12 +1652,12 @@
         }
       }
     }
-    .hover\:bg-red\/10 {
+    .hover\:bg-red\/60 {
       &:hover {
         @media (hover: hover) {
           background-color: hsl(var(--red));
           @supports (color: color-mix(in lab, red, red)) {
-            background-color: color-mix(in oklab, hsl(var(--red)) 10%, transparent);
+            background-color: color-mix(in oklab, hsl(var(--red)) 60%, transparent);
           }
         }
       }

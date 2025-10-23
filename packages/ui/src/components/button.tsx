@@ -5,18 +5,19 @@ import { cva, type VariantProps } from 'class-variance-authority';
 import { cn } from '../lib/utils';
 
 const buttonVariants = cva(
-  'ring-offset-background focus-visible:ring-ring focus-visible:outline-hidden inline-flex items-center justify-center gap-1 whitespace-nowrap rounded-md text-sm font-medium transition-all duration-300 focus-visible:ring-2 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0',
+  'ring-offset-background focus-visible:ring-ring focus-visible:outline-hidden inline-flex items-center justify-center gap-1 whitespace-nowrap rounded-md text-sm font-medium transition-all duration-300 focus-visible:ring-2 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0',
   {
     variants: {
       variant: {
         primary:
-          'border-highlight/0 bg-highlight/50 text-foreground hover:border-highlight hover:bg-highlight/60 border',
-        destructive: 'text-red hover:border-red hover:bg-red/10 border bg-black/60',
+          'border-highlight/0 bg-highlight/50 text-foreground not-disabled:hover:border-highlight not-disabled:hover:bg-highlight/60 border',
+        destructive:
+          'border-red/0 bg-red/50 text-foreground not-disabled:hover:border-red not-disabled:hover:bg-red/60 border',
         secondary:
-          'border-foreground bg-foreground text-background hover:border-primary hover:bg-primary/80 border',
+          'border-foreground bg-foreground text-background not-disabled:hover:border-primary not-disabled:hover:bg-primary/80 border',
         tertiary:
-          'border-border text-foreground hover:text-accent-foreground border bg-black/60 hover:bg-white/10',
-        link: 'text-lilac underline-offset-4 hover:underline',
+          'border-border text-foreground not-disabled:hover:text-accent-foreground not-disabled:hover:bg-white/10 border bg-black/60',
+        link: 'text-lilac not-disabled:hover:underline underline-offset-4',
       },
       size: {
         sm: 'h-7 rounded-md px-2 text-xs',
