@@ -346,6 +346,9 @@
     .w-5 {
       width: calc(0.25rem * 5);
     }
+    .w-8 {
+      width: calc(0.25rem * 8);
+    }
     .w-9 {
       width: calc(0.25rem * 9);
     }
@@ -354,6 +357,9 @@
     }
     .w-11 {
       width: calc(0.25rem * 11);
+    }
+    .w-12 {
+      width: calc(0.25rem * 12);
     }
     .w-48 {
       width: calc(0.25rem * 48);
@@ -1962,6 +1968,12 @@
           outline: 2px solid transparent;
           outline-offset: 2px;
         }
+      }
+    }
+    .focus-visible\:outline-none {
+      &:focus-visible {
+        --tw-outline-style: none;
+        outline-style: none;
       }
     }
     .active\:scale-95 {

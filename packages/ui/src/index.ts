@@ -23,6 +23,7 @@ export * from './components/filled-tabs';
 export * from './components/filter-badge';
 export * from './components/filter-dropdown-menu';
 export * from './components/form';
+export * from './components/icon-button';
 export * from './components/icon-circle';
 export * from './components/icon-square';
 export * from './components/info-card';
