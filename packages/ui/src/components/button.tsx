@@ -34,19 +34,64 @@ const buttonVariants = cva(
   }
 );
 
-export interface ButtonProps
-  extends Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, 'prefix'>,
-    VariantProps<typeof buttonVariants> {
-  asChild?: boolean;
-  prefix?: React.ReactNode;
-  suffix?: React.ReactNode;
-}
+type ButtonBaseProps = Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, 'prefix'>;
+type AnchorBaseProps = Omit<React.AnchorHTMLAttributes<HTMLAnchorElement>, 'prefix'>;
 
-const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
+export type ButtonProps = VariantProps<typeof buttonVariants> &
+  (
+    | (ButtonBaseProps & {
+        asChild?: boolean;
+        href?: never;
+        prefix?: React.ReactNode;
+        suffix?: React.ReactNode;
+      })
+    | (AnchorBaseProps & {
+        asChild?: never;
+        href: string;
+        prefix?: React.ReactNode;
+        suffix?: React.ReactNode;
+        target?: string;
+        rel?: string;
+        download?: string | boolean;
+      })
+  );
+
+const Button = React.forwardRef<HTMLButtonElement | HTMLAnchorElement, ButtonProps>(
   ({ className, variant, size, asChild = false, prefix, suffix, children, ...props }, ref) => {
+    const isLink = 'href' in props && props.href;
+
+    if (isLink) {
+      const { href, target, rel, download, ...anchorProps } = props as AnchorBaseProps & {
+        href: string;
+        target?: string;
+        rel?: string;
+        download?: string | boolean;
+      };
+
+      return (
+        <a
+          href={href}
+          target={target}
+          rel={rel}
+          download={download}
+          className={cn(buttonVariants({ variant, size, className }))}
+          ref={ref as React.Ref<HTMLAnchorElement>}
+          {...anchorProps}
+        >
+          {prefix}
+          {children}
+          {suffix}
+        </a>
+      );
+    }
+
     const Comp = asChild ? Slot : 'button';
     return (
-      <Comp className={cn(buttonVariants({ variant, size, className }))} ref={ref} {...props}>
+      <Comp
+        className={cn(buttonVariants({ variant, size, className }))}
+        ref={ref as React.Ref<HTMLButtonElement>}
+        {...(props as ButtonBaseProps)}
+      >
         {prefix}
         {children}
         {suffix}

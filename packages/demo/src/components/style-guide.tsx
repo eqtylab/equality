@@ -352,6 +352,46 @@ const StyleGuide = () => {
                   </div>
                 </div>
 
+                {/* As Link */}
+                <div className="space-y-2">
+                  <PanelLabel label="as link" />
+                  <div className="flex flex-col gap-2">
+                    <Button variant="primary" size="lg" href="https://example.com">
+                      Link LG
+                    </Button>
+                    <Button variant="primary" size="md" href="https://example.com">
+                      Link MD
+                    </Button>
+                    <Button variant="primary" size="sm" href="https://example.com">
+                      Link SM
+                    </Button>
+                  </div>
+                </div>
+
+                {/* As Link with Target */}
+                <div className="space-y-2">
+                  <PanelLabel label="link with target" />
+                  <div className="flex flex-col gap-2">
+                    <Button
+                      variant="secondary"
+                      size="md"
+                      href="https://example.com"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      Open in New Tab
+                    </Button>
+                    <Button
+                      variant="tertiary"
+                      size="md"
+                      href="https://example.com/file.pdf"
+                      download
+                    >
+                      Download File
+                    </Button>
+                  </div>
+                </div>
+
                 {/* Disabled */}
                 <div className="space-y-2">
                   <PanelLabel label="disabled" />
