@@ -1,7 +1,7 @@
 import { Grid3X3, List } from 'lucide-react';
 
 import { cn } from '../lib/utils';
-import { Button } from './button';
+import { IconButton } from './icon-button';
 
 export type ViewMode = 'grid' | 'list';
 
@@ -30,9 +30,9 @@ export const ListOrGridViewToggle = ({
   return (
     <div className={cn('border-lilac/10 overflow-hidden rounded-md border', className)}>
       <div className="flex">
-        <Button
-          variant="icon"
+        <IconButton
           size="sm"
+          name="Grid3X3"
           className={cn(
             'rounded-none border-0',
             isGridView
@@ -40,12 +40,10 @@ export const ListOrGridViewToggle = ({
               : 'bg-background/50 text-muted-foreground hover:text-foreground'
           )}
           onClick={handleGridClick}
-        >
-          <Grid3X3 className="h-4 w-4" />
-        </Button>
-        <Button
-          variant="icon"
+        ></IconButton>
+        <IconButton
           size="sm"
+          name="List"
           className={cn(
             'rounded-none border-0',
             isListView
@@ -53,9 +51,7 @@ export const ListOrGridViewToggle = ({
               : 'bg-background/50 text-muted-foreground hover:text-foreground'
           )}
           onClick={handleListClick}
-        >
-          <List className="h-4 w-4" />
-        </Button>
+        ></IconButton>
       </div>
     </div>
   );
