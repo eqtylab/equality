@@ -110,7 +110,7 @@ export const Pagination = ({
       pageButtons.push(
         <Button
           key={i}
-          variant={currentPage === i ? 'default' : 'outline'}
+          variant={currentPage === i ? 'primary' : 'outline'}
           size="sm"
           onClick={() => handlePageChange(i)}
         >
