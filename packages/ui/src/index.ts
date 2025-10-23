@@ -10,6 +10,7 @@ export * from './components/checkbox';
 export * from './components/code-block';
 // export * from './components/code-editor';
 export * from './components/command';
+export * from './components/copy-button';
 // export * from './components/custom-text-area';
 export * from './components/date-range-picker';
 export * from './components/dialog';
