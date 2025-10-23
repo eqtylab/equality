@@ -935,6 +935,57 @@ const StyleGuide = () => {
                     zQ3shrGxRrYyWixJGrr45jJ1MEY76YQZ4KVbt9CYRsTWZ5MWV
                   </DisplayField>
                 </div>
+
+                {/* Without Copy Button */}
+                <div className="space-y-2">
+                  <PanelLabel label="without copy button" />
+                  <DisplayField copy={false}>
+                    zQ3shrGxRrYyWixJGrr45jJ1MEY76YQZ4KVbt9CYRsTWZ5MWV
+                  </DisplayField>
+                </div>
+
+                {/* With Additional Actions */}
+                <div className="space-y-2">
+                  <PanelLabel label="with additional actions" />
+                  <DisplayField
+                    actions={
+                      <>
+                        <IconButton
+                          name="ExternalLink"
+                          label="Open"
+                          size="sm"
+                          onClick={() => console.log('Open clicked')}
+                        />
+                        <IconButton
+                          name="Share2"
+                          label="Share"
+                          size="sm"
+                          onClick={() => console.log('Share clicked')}
+                        />
+                      </>
+                    }
+                  >
+                    zQ3shrGxRrYyWixJGrr45jJ1MEY76YQZ4KVbt9CYRsTWZ5MWV
+                  </DisplayField>
+                </div>
+
+                {/* Copy Disabled with Custom Actions */}
+                <div className="space-y-2">
+                  <PanelLabel label="copy disabled, custom actions" />
+                  <DisplayField
+                    copy={false}
+                    actions={
+                      <IconButton
+                        name="Download"
+                        label="Download"
+                        size="sm"
+                        onClick={() => console.log('Download clicked')}
+                      />
+                    }
+                  >
+                    zQ3shrGxRrYyWixJGrr45jJ1MEY76YQZ4KVbt9CYRsTWZ5MWV
+                  </DisplayField>
+                </div>
               </div>
             </section>
 
