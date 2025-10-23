@@ -30,7 +30,7 @@ export interface IconButtonProps
   extends Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, 'name'>,
     VariantProps<typeof iconButtonVariants> {
   name: keyof typeof LucideIcons;
-  label: string;
+  label?: string;
   href?: string;
   target?: string;
   download?: string | boolean;
