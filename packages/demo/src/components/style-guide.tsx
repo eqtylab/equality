@@ -306,21 +306,68 @@ const StyleGuide = () => {
                     Link SM
                   </Button>
                 </div>
+              </div>
+            </section>
 
-                {/* Icon */}
-                <div className="flex flex-col items-center gap-4">
-                  <Button variant="icon">
-                    <Grid3X3 className="h-4 w-4" />
-                  </Button>
-                  <Button variant="icon" size="lg">
-                    <Grid3X3 className="h-4 w-4" />
-                  </Button>
-                  <Button variant="icon" size="md">
-                    <Grid3X3 className="h-4 w-4" />
-                  </Button>
-                  <Button variant="icon" size="sm">
-                    <Grid3X3 className="h-4 w-4" />
-                  </Button>
+            {/* Icon Buttons */}
+            <section id="icon-buttons" className="space-y-6">
+              <h3 className="border-border border-b pb-2 text-xl font-medium">Icon Buttons</h3>
+              <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+                {/* Small */}
+                <div className="space-y-2">
+                  <PanelLabel label="small" />
+                  <IconButton
+                    name="Settings"
+                    label="Settings"
+                    size="sm"
+                    onClick={() => console.log('Settings clicked')}
+                  />
+                </div>
+
+                {/* Medium (default) */}
+                <div className="space-y-2">
+                  <PanelLabel label="medium (default)" />
+                  <IconButton
+                    name="Heart"
+                    label="Like"
+                    size="md"
+                    onClick={() => console.log('Like clicked')}
+                  />
+                </div>
+
+                {/* Large */}
+                <div className="space-y-2">
+                  <PanelLabel label="large" />
+                  <IconButton
+                    name="Share2"
+                    label="Share"
+                    size="lg"
+                    onClick={() => console.log('Share clicked')}
+                  />
+                </div>
+
+                {/* Disabled */}
+                <div className="space-y-2">
+                  <PanelLabel label="disabled" />
+                  <IconButton name="Trash2" label="Delete" disabled />
+                </div>
+
+                {/* As Link */}
+                <div className="space-y-2">
+                  <PanelLabel label="as link" />
+                  <IconButton name="ExternalLink" label="Open link" href="https://example.com" />
+                </div>
+
+                {/* As Link with Target */}
+                <div className="space-y-2">
+                  <PanelLabel label="link with target" />
+                  <IconButton
+                    name="Download"
+                    label="Download file"
+                    href="https://example.com/file.pdf"
+                    target="_blank"
+                    download
+                  />
                 </div>
               </div>
             </section>
@@ -449,69 +496,6 @@ const StyleGuide = () => {
                 <div className="space-y-2">
                   <PanelLabel label="Icon Circle" />
                   <IconCircle icon={Shield} />
-                </div>
-              </div>
-            </section>
-
-            {/* Icon Buttons */}
-            <section id="icon-buttons" className="space-y-6">
-              <h3 className="border-border border-b pb-2 text-xl font-medium">Icon Buttons</h3>
-              <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
-                {/* Small */}
-                <div className="space-y-2">
-                  <PanelLabel label="small" />
-                  <IconButton
-                    name="Settings"
-                    label="Settings"
-                    size="sm"
-                    onClick={() => console.log('Settings clicked')}
-                  />
-                </div>
-
-                {/* Medium (default) */}
-                <div className="space-y-2">
-                  <PanelLabel label="medium (default)" />
-                  <IconButton
-                    name="Heart"
-                    label="Like"
-                    size="md"
-                    onClick={() => console.log('Like clicked')}
-                  />
-                </div>
-
-                {/* Large */}
-                <div className="space-y-2">
-                  <PanelLabel label="large" />
-                  <IconButton
-                    name="Share2"
-                    label="Share"
-                    size="lg"
-                    onClick={() => console.log('Share clicked')}
-                  />
-                </div>
-
-                {/* Disabled */}
-                <div className="space-y-2">
-                  <PanelLabel label="disabled" />
-                  <IconButton name="Trash2" label="Delete" disabled />
-                </div>
-
-                {/* As Link */}
-                <div className="space-y-2">
-                  <PanelLabel label="as link" />
-                  <IconButton name="ExternalLink" label="Open link" href="https://example.com" />
-                </div>
-
-                {/* As Link with Target */}
-                <div className="space-y-2">
-                  <PanelLabel label="link with target" />
-                  <IconButton
-                    name="Download"
-                    label="Download file"
-                    href="https://example.com/file.pdf"
-                    target="_blank"
-                    download
-                  />
                 </div>
               </div>
             </section>
