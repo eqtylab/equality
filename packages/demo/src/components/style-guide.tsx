@@ -569,12 +569,14 @@ const StyleGuide = () => {
                       <p className="text-sm">This is the main content area of the card.</p>
                     </CardContent>
                     <CardFooter>
-                      <Button variant="tertiary" size="sm" className="ml-2">
-                        Cancel
-                      </Button>
-                      <Button variant="primary" size="sm">
-                        Action
-                      </Button>
+                      <div className="flex w-full justify-between gap-2">
+                        <Button variant="tertiary" size="sm">
+                          Cancel
+                        </Button>
+                        <Button variant="primary" size="sm">
+                          Primary Action
+                        </Button>
+                      </div>
                     </CardFooter>
                   </Card>
                 </div>
