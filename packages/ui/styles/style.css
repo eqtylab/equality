@@ -850,9 +850,6 @@
     .bg-lilac\/20 {
       background-color: color-mix(in oklab, #e2ccff 20%, transparent);
     }
-    .bg-lilac\/30 {
-      background-color: color-mix(in oklab, #e2ccff 30%, transparent);
-    }
     .bg-medium-lilac {
       background-color: #b5a3cc;
     }
