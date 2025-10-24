@@ -223,89 +223,189 @@ const StyleGuide = () => {
             {/* Buttons */}
             <section id="buttons" className="space-y-6">
               <h3 className="border-border border-b pb-2 text-xl font-medium">Buttons</h3>
-              <div className="grid grid-cols-7 gap-6">
-                {/* Default */}
-                <div className="flex flex-col gap-4">
-                  <Button variant="default">Default</Button>
-                  <Button variant="default" size="lg">
-                    Default LG
-                  </Button>
-                  <Button variant="default" size="md">
-                    Default MD
-                  </Button>
-                  <Button variant="default" size="sm">
-                    Default SM
-                  </Button>
-                </div>
-
-                {/* Outline */}
-                <div className="flex flex-col gap-4">
-                  <Button variant="outline">Outline</Button>
-                  <Button variant="outline" size="lg">
-                    Outline LG
-                  </Button>
-                  <Button variant="outline" size="md">
-                    Outline MD
-                  </Button>
-                  <Button variant="outline" size="sm">
-                    Outline SM
-                  </Button>
-                </div>
-
+              <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
                 {/* Primary */}
-                <div className="flex flex-col gap-4">
-                  <Button variant="primary">Primary</Button>
-                  <Button variant="primary" size="lg">
-                    Primary LG
-                  </Button>
-                  <Button variant="primary" size="md">
-                    Primary MD
-                  </Button>
-                  <Button variant="primary" size="sm">
-                    Primary SM
-                  </Button>
-                </div>
-
-                {/* Secondary */}
-                <div className="flex flex-col gap-4">
-                  <Button variant="secondary">Secondary</Button>
-                  <Button variant="secondary" size="lg">
-                    Secondary LG
-                  </Button>{' '}
-                  <Button variant="secondary" size="md">
-                    Secondary MD
-                  </Button>
-                  <Button variant="secondary" size="sm">
-                    Secondary SM
-                  </Button>
+                <div className="space-y-2">
+                  <PanelLabel label="primary (default)" />
+                  <div className="flex flex-col gap-2">
+                    <Button variant="primary" size="lg">
+                      Primary LG
+                    </Button>
+                    <Button variant="primary" size="md">
+                      Primary MD
+                    </Button>
+                    <Button variant="primary" size="sm">
+                      Primary SM
+                    </Button>
+                  </div>
                 </div>
 
                 {/* Destructive */}
-                <div className="flex flex-col gap-4">
-                  <Button variant="destructive">Destructive</Button>
-                  <Button variant="destructive" size="lg">
-                    Destructive LG
-                  </Button>
-                  <Button variant="destructive" size="md">
-                    Destructive MD
-                  </Button>
-                  <Button variant="destructive" size="sm">
-                    Destructive SM
-                  </Button>
+                <div className="space-y-2">
+                  <PanelLabel label="destructive" />
+                  <div className="flex flex-col gap-2">
+                    <Button variant="destructive" size="lg">
+                      Destructive LG
+                    </Button>
+                    <Button variant="destructive" size="md">
+                      Destructive MD
+                    </Button>
+                    <Button variant="destructive" size="sm">
+                      Destructive SM
+                    </Button>
+                  </div>
+                </div>
+
+                {/* Secondary */}
+                <div className="space-y-2">
+                  <PanelLabel label="secondary" />
+                  <div className="flex flex-col gap-2">
+                    <Button variant="secondary" size="lg">
+                      Secondary LG
+                    </Button>
+                    <Button variant="secondary" size="md">
+                      Secondary MD
+                    </Button>
+                    <Button variant="secondary" size="sm">
+                      Secondary SM
+                    </Button>
+                  </div>
+                </div>
+
+                {/* Tertiary */}
+                <div className="space-y-2">
+                  <PanelLabel label="tertiary" />
+                  <div className="flex flex-col gap-2">
+                    <Button variant="tertiary" size="lg">
+                      Tertiary LG
+                    </Button>
+                    <Button variant="tertiary" size="md">
+                      Tertiary MD
+                    </Button>
+                    <Button variant="tertiary" size="sm">
+                      Tertiary SM
+                    </Button>
+                  </div>
+                </div>
+
+                {/* Outline */}
+                <div className="space-y-2">
+                  <PanelLabel label="outline" />
+                  <div className="flex flex-col gap-2">
+                    <Button variant="outline" size="lg">
+                      Outline LG
+                    </Button>
+                    <Button variant="outline" size="md">
+                      Outline MD
+                    </Button>
+                    <Button variant="outline" size="sm">
+                      Outline SM
+                    </Button>
+                  </div>
                 </div>
 
                 {/* Link */}
-                <div className="flex flex-col gap-4">
-                  <Button variant="link">Link</Button>
-                  <Button variant="link" size="lg">
-                    Link LG
-                  </Button>
-                  <Button variant="link" size="md">
-                    Link MD
-                  </Button>
-                  <Button variant="link" size="sm">
-                    Link SM
-                  </Button>
+                <div className="space-y-2">
+                  <PanelLabel label="link" />
+                  <div className="flex flex-col gap-2">
+                    <Button variant="link" size="lg">
+                      Link LG
+                    </Button>
+                    <Button variant="link" size="md">
+                      Link MD
+                    </Button>
+                    <Button variant="link" size="sm">
+                      Link SM
+                    </Button>
+                  </div>
+                </div>
+
+                {/* With Prefix Icon */}
+                <div className="space-y-2">
+                  <PanelLabel label="with prefix icon" />
+                  <div className="flex flex-col gap-2">
+                    <Button variant="primary" size="lg" prefix={<Grid3X3 />}>
+                      Prefix LG
+                    </Button>
+                    <Button variant="primary" size="md" prefix={<Grid3X3 />}>
+                      Prefix MD
+                    </Button>
+                    <Button variant="primary" size="sm" prefix={<Grid3X3 />}>
+                      Prefix SM
+                    </Button>
+                  </div>
+                </div>
+
+                {/* With Suffix Icon */}
+                <div className="space-y-2">
+                  <PanelLabel label="with suffix icon" />
+                  <div className="flex flex-col gap-2">
+                    <Button variant="primary" size="lg" suffix={<ArrowUp />}>
+                      Suffix LG
+                    </Button>
+                    <Button variant="primary" size="md" suffix={<ArrowUp />}>
+                      Suffix MD
+                    </Button>
+                    <Button variant="primary" size="sm" suffix={<ArrowUp />}>
+                      Suffix SM
+                    </Button>
+                  </div>
+                </div>
+
+                {/* As Link */}
+                <div className="space-y-2">
+                  <PanelLabel label="as link" />
+                  <div className="flex flex-col gap-2">
+                    <Button variant="primary" size="lg" href="https://example.com">
+                      Link LG
+                    </Button>
+                    <Button variant="primary" size="md" href="https://example.com">
+                      Link MD
+                    </Button>
+                    <Button variant="primary" size="sm" href="https://example.com">
+                      Link SM
+                    </Button>
+                  </div>
+                </div>
+
+                {/* As Link with Target */}
+                <div className="space-y-2">
+                  <PanelLabel label="link with target" />
+                  <div className="flex flex-col gap-2">
+                    <Button
+                      variant="secondary"
+                      size="md"
+                      href="https://example.com"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      Open in New Tab
+                    </Button>
+                    <Button
+                      variant="tertiary"
+                      size="md"
+                      href="https://example.com/file.pdf"
+                      download
+                    >
+                      Download File
+                    </Button>
+                  </div>
+                </div>
+
+                {/* Disabled */}
+                <div className="space-y-2">
+                  <PanelLabel label="disabled" />
+                  <div className="flex flex-col gap-2">
+                    <Button variant="primary" size="lg" disabled>
+                      Disabled LG
+                    </Button>
+                    <Button variant="primary" size="md" disabled>
+                      Disabled MD
+                    </Button>
+                    <Button variant="primary" size="sm" disabled>
+                      Disabled SM
+                    </Button>
+                  </div>
                 </div>
               </div>
             </section>
@@ -469,12 +569,14 @@ const StyleGuide = () => {
                       <p className="text-sm">This is the main content area of the card.</p>
                     </CardContent>
                     <CardFooter>
-                      <Button variant="primary" size="sm">
-                        Action
-                      </Button>
-                      <Button variant="outline" size="sm" className="ml-2">
-                        Cancel
-                      </Button>
+                      <div className="flex w-full justify-between gap-2">
+                        <Button variant="tertiary" size="sm">
+                          Cancel
+                        </Button>
+                        <Button variant="primary" size="sm">
+                          Primary Action
+                        </Button>
+                      </div>
                     </CardFooter>
                   </Card>
                 </div>
@@ -1072,7 +1174,7 @@ const StyleGuide = () => {
                         <TableCell>alice@example.com</TableCell>
                         <TableCell>Admin</TableCell>
                         <TableCell className="text-right">
-                          <Button variant="outline" size="sm">
+                          <Button variant="tertiary" size="sm">
                             View
                           </Button>
                         </TableCell>
@@ -1082,7 +1184,7 @@ const StyleGuide = () => {
                         <TableCell>charlie@example.com</TableCell>
                         <TableCell>User</TableCell>
                         <TableCell className="text-right">
-                          <Button variant="outline" size="sm">
+                          <Button variant="tertiary" size="sm">
                             View
                           </Button>
                         </TableCell>
@@ -1235,7 +1337,7 @@ const StyleGuide = () => {
                 </div>
                 <div className="space-y-2">
                   <PanelLabel label="Expand/Collapse all" />
-                  <Button variant="outline" onClick={() => setIsExpanded(!isExpanded)}>
+                  <Button variant="tertiary" onClick={() => setIsExpanded(!isExpanded)}>
                     <UnfoldVertical className="h-4 w-4" />
                     {isExpanded ? 'Collapse All' : 'Expand All'}
                   </Button>
@@ -1357,7 +1459,7 @@ const StyleGuide = () => {
                 <TooltipProvider>
                   <Tooltip>
                     <TooltipTrigger asChild>
-                      <Button variant="outline" size="sm">
+                      <Button variant="tertiary" size="sm">
                         Hover me
                       </Button>
                     </TooltipTrigger>
@@ -1377,7 +1479,7 @@ const StyleGuide = () => {
                   <PanelLabel label="Default" />
                   <Popover>
                     <PopoverTrigger asChild>
-                      <Button variant="outline" size="sm">
+                      <Button variant="tertiary" size="sm">
                         Click me
                       </Button>
                     </PopoverTrigger>
@@ -1390,7 +1492,7 @@ const StyleGuide = () => {
                   <PanelLabel label="Align: start" />
                   <Popover>
                     <PopoverTrigger asChild>
-                      <Button variant="outline" size="sm">
+                      <Button variant="tertiary" size="sm">
                         Click me
                       </Button>
                     </PopoverTrigger>
@@ -1403,7 +1505,7 @@ const StyleGuide = () => {
                   <PanelLabel label="Align: end" />
                   <Popover>
                     <PopoverTrigger asChild>
-                      <Button variant="outline" size="sm">
+                      <Button variant="tertiary" size="sm">
                         Click me
                       </Button>
                     </PopoverTrigger>

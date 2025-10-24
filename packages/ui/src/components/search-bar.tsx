@@ -27,7 +27,7 @@ const SearchBar = ({
 
   return (
     <div className={cn('relative', className)}>
-      <Search className="text-muted-foreground absolute top-1/2 left-3 size-4 -translate-y-1/2" />
+      <Search className="text-muted-foreground absolute left-3 top-1/2 size-4 -translate-y-1/2" />
       <Input
         placeholder={placeholder}
         value={searchQuery}
@@ -36,10 +36,10 @@ const SearchBar = ({
       />
       {searchQuery && (
         <Button
-          variant="ghost"
+          variant="outline"
           size="sm"
           onClick={handleClear}
-          className="absolute top-1/2 right-2 size-6 -translate-y-1/2"
+          className="absolute right-2 top-1/2 size-6 -translate-y-1/2"
           aria-label="Clear search"
         >
           <X />

@@ -34,7 +34,7 @@ const FilterBadge = ({ label, handleRemove, colors, btnColors }: FilterBadgeProp
         displayLabel
       )}
       <Button
-        variant="ghost"
+        variant="outline"
         size="sm"
         onPointerDown={handlePointerDown}
         onClick={handleRemove}
