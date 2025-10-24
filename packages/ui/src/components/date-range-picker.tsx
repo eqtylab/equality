@@ -166,17 +166,17 @@ export const DateRangePicker = ({ dateRange, onSelect, className }: DateRangePic
               className
             )}
           >
-            <CalendarDays className="text-muted-foreground absolute top-1/2 left-3 size-4 -translate-y-1/2" />
+            <CalendarDays className="text-muted-foreground absolute left-3 top-1/2 size-4 -translate-y-1/2" />
             <span className="flex-1">{formatRange(dateRange)}</span>
           </Button>
         </PopoverTrigger>
 
         {hasSelection && (
           <Button
-            variant="ghost"
+            variant="outline"
             size="sm"
             onClick={handleClearClick}
-            className="absolute top-1/2 right-2 size-6 -translate-y-1/2"
+            className="absolute right-2 top-1/2 size-6 -translate-y-1/2"
             aria-label="Clear search"
           >
             <X />
@@ -188,7 +188,7 @@ export const DateRangePicker = ({ dateRange, onSelect, className }: DateRangePic
           {/* Header with month navigation */}
           <div className="flex items-center justify-between">
             <Button
-              variant="ghost"
+              variant="outline"
               size="sm"
               className="text-muted-foreground hover:text-foreground size-8 p-0"
               onClick={goToPreviousMonth}
@@ -208,7 +208,7 @@ export const DateRangePicker = ({ dateRange, onSelect, className }: DateRangePic
             </div>
 
             <Button
-              variant="ghost"
+              variant="outline"
               size="sm"
               className="text-muted-foreground hover:text-foreground size-8 p-0"
               onClick={goToNextMonth}
@@ -242,7 +242,7 @@ export const DateRangePicker = ({ dateRange, onSelect, className }: DateRangePic
               return (
                 <Button
                   key={index}
-                  variant="ghost"
+                  variant="outline"
                   className={cn(
                     'size-9 rounded-md p-0 text-sm font-normal transition-colors',
                     isSelected && 'bg-lilac text-background hover:bg-lilac/90',

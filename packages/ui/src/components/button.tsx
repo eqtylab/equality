@@ -5,49 +5,97 @@ import { cva, type VariantProps } from 'class-variance-authority';
 import { cn } from '../lib/utils';
 
 const buttonVariants = cva(
-  'ring-offset-background focus-visible:ring-ring focus-visible:outline-hidden inline-flex items-center justify-center gap-1 whitespace-nowrap rounded-md text-sm font-medium transition-all duration-300 focus-visible:ring-2 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0',
+  'ring-offset-background focus-visible:ring-ring focus-visible:outline-hidden inline-flex items-center justify-center gap-1 whitespace-nowrap rounded-md text-sm font-medium transition-all duration-300 focus-visible:ring-2 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0',
   {
     variants: {
       variant: {
-        default:
-          'border-highlight/0 bg-highlight/50 text-foreground hover:border-highlight hover:bg-highlight/60 border',
-        destructive: 'text-red hover:border-red hover:bg-red/10 border bg-black/60',
-        outline:
-          'border-border text-foreground hover:text-accent-foreground border bg-black/60 hover:bg-white/10',
         primary:
-          'border-foreground bg-foreground text-background hover:border-primary hover:bg-primary/80 border',
+          'border-highlight/0 bg-highlight/50 text-foreground hover:not-disabled:border-highlight hover:not-disabled:bg-highlight/60 border',
+        destructive:
+          'border-red/0 bg-red/50 text-foreground hover:not-disabled:border-red hover:not-disabled:bg-red/60 border',
         secondary:
-          'border-background text-secondary-foreground hover:border-foreground/70 hover:bg-background/80 border bg-black/60',
+          'border-foreground bg-foreground text-background hover:not-disabled:border-primary hover:not-disabled:bg-primary/80 border',
         tertiary:
-          'bg-lilac/30 text-foreground hover:border-foreground/70 border border-transparent',
-        ghost: 'hover:bg-lilac-button',
-        link: 'text-lilac underline-offset-4 hover:underline',
+          'border-border text-foreground hover:not-disabled:text-accent-foreground hover:not-disabled:bg-white/10 border bg-black/60',
+        outline:
+          'border-border text-foreground hover:text-accent-foreground bg-black/60 hover:border hover:bg-white/10',
+        link: 'text-lilac hover:not-disabled:underline underline-offset-4',
       },
       size: {
-        default: 'h-10 rounded-full px-4 py-2',
         sm: 'h-7 rounded-md px-2 text-xs',
         md: 'h-10 rounded-md px-3 py-2',
         lg: 'h-11 rounded-md px-8',
       },
     },
     defaultVariants: {
-      variant: 'default',
-      size: 'default',
+      variant: 'primary',
+      size: 'md',
     },
   }
 );
 
-export interface ButtonProps
-  extends React.ButtonHTMLAttributes<HTMLButtonElement>,
-    VariantProps<typeof buttonVariants> {
-  asChild?: boolean;
-}
+type ButtonBaseProps = Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, 'prefix'>;
+type AnchorBaseProps = Omit<React.AnchorHTMLAttributes<HTMLAnchorElement>, 'prefix'>;
 
-const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
-  ({ className, variant, size, asChild = false, ...props }, ref) => {
+export type ButtonProps = VariantProps<typeof buttonVariants> &
+  (
+    | (ButtonBaseProps & {
+        asChild?: boolean;
+        href?: never;
+        prefix?: React.ReactNode;
+        suffix?: React.ReactNode;
+      })
+    | (AnchorBaseProps & {
+        asChild?: never;
+        href: string;
+        prefix?: React.ReactNode;
+        suffix?: React.ReactNode;
+        target?: string;
+        rel?: string;
+        download?: string | boolean;
+      })
+  );
+
+const Button = React.forwardRef<HTMLButtonElement | HTMLAnchorElement, ButtonProps>(
+  ({ className, variant, size, asChild = false, prefix, suffix, children, ...props }, ref) => {
+    const isLink = 'href' in props && props.href;
+
+    if (isLink) {
+      const { href, target, rel, download, ...anchorProps } = props as AnchorBaseProps & {
+        href: string;
+        target?: string;
+        rel?: string;
+        download?: string | boolean;
+      };
+
+      return (
+        <a
+          href={href}
+          target={target}
+          rel={rel}
+          download={download}
+          className={cn(buttonVariants({ variant, size, className }))}
+          ref={ref as React.Ref<HTMLAnchorElement>}
+          {...anchorProps}
+        >
+          {prefix}
+          {children}
+          {suffix}
+        </a>
+      );
+    }
+
     const Comp = asChild ? Slot : 'button';
     return (
-      <Comp className={cn(buttonVariants({ variant, size, className }))} ref={ref} {...props} />
+      <Comp
+        className={cn(buttonVariants({ variant, size, className }))}
+        ref={ref as React.Ref<HTMLButtonElement>}
+        {...(props as ButtonBaseProps)}
+      >
+        {prefix}
+        {children}
+        {suffix}
+      </Comp>
     );
   }
 );
