@@ -92,6 +92,7 @@ function DisplayField({
         )}
         <span
           className={cn('block w-full overflow-y-clip px-3 py-2 font-mono', getTruncateClass())}
+          style={{ scrollbarWidth: 'thin' }}
         >
           {renderContent()}
         </span>
