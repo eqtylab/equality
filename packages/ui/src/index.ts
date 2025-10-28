@@ -1,3 +1,5 @@
+/* COMPONENTS */
+
 export * from './components/alert';
 export * from './components/alert-dialog';
 export * from './components/avatar';
@@ -25,7 +27,7 @@ export * from './components/filter-badge';
 export * from './components/filter-dropdown-menu';
 export * from './components/form';
 export * from './components/icon-button';
-export * from './components/icon-circle';
+export * from './components/icon-circle/icon-circle';
 export * from './components/icon-square';
 export * from './components/info-card';
 export * from './components/input';
@@ -33,7 +35,7 @@ export * from './components/label';
 export * from './components/list-or-grid-view-toggle';
 export * from './components/loading-icon';
 export * from './components/loading-overlay';
-export * from './components/metric-card';
+export * from './components/metric-card/metric-card';
 export * from './components/motion-collapsible';
 export * from './components/page-not-found';
 export * from './components/pagination';
@@ -64,3 +66,6 @@ export * from './components/textarea';
 export * from './components/toast';
 export * from './components/tooltip';
 export * from './components/truncated-description';
+
+/* THEME */
+export * from './theme/theme-provider';

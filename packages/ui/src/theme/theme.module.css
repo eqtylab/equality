@@ -1,0 +1,566 @@
+@import 'tailwindcss';
+
+@theme inline {
+  /* ===== Derived (Tailwind token names) =====
+     This enables @apply bg-primary, text-foreground, etc. INSIDE CSS Modules. */
+  /* COLORS */
+  --color-background: hsl(var(--background));
+  --color-foreground: hsl(var(--foreground));
+  --color-card: hsl(var(--card));
+  --color-card-foreground: hsl(var(--card-foreground));
+  --color-popover: hsl(var(--popover));
+  --color-popover-foreground: hsl(var(--popover-foreground));
+  --color-primary: hsl(var(--primary));
+  --color-primary-foreground: hsl(var(--primary-foreground));
+  --color-secondary: hsl(var(--secondary));
+  --color-secondary-foreground: hsl(var(--secondary-foreground));
+  --color-muted: hsl(var(--muted));
+  --color-muted-foreground: hsl(var(--muted-foreground));
+  --color-accent: hsl(var(--accent));
+  --color-accent-foreground: hsl(var(--accent-foreground));
+  --color-destructive: hsl(var(--destructive));
+  --color-destructive-foreground: hsl(var(--destructive-foreground));
+  --color-border: hsl(var(--border));
+  --color-input: hsl(var(--input));
+  --color-ring: hsl(var(--ring));
+  --color-chart-1: hsl(var(--chart-1));
+  --color-chart-2: hsl(var(--chart-2));
+  --color-chart-3: hsl(var(--chart-3));
+  --color-chart-4: hsl(var(--chart-4));
+  --color-chart-5: hsl(var(--chart-5));
+  --color-sidebar: hsl(var(--sidebar));
+  --color-sidebar-foreground: hsl(var(--sidebar-foreground));
+  --color-sidebar-primary: hsl(var(--sidebar-primary));
+  --color-sidebar-primary-foreground: hsl(var(--sidebar-primary-foreground));
+  --color-sidebar-accent: hsl(var(--sidebar-accent));
+  --color-sidebar-accent-foreground: hsl(var(--sidebar-accent-foreground));
+  --color-sidebar-border: hsl(var(--sidebar-border));
+  --color-sidebar-ring: hsl(var(--sidebar-ring));
+  /* Control Status Badges */
+  --color-not-started: hsl(var(--not-started));
+  --color-not-started-secondary: hsl(var(--not-started-secondary));
+  --color-in-progress: hsl(var(--in-progress));
+  --color-in-progress-secondary: hsl(var(--in-progress-secondary));
+  --color-ready-for-review: hsl(var(--ready-for-review));
+  --color-ready-for-review-secondary: hsl(var(--ready-for-review-secondary));
+  --color-in-review: hsl(var(--in-review));
+  --color-in-review-secondary: hsl(var(--in-review-secondary));
+  --color-compliant: hsl(var(--compliant));
+  --color-compliant-secondary: hsl(var(--compliant-secondary));
+  --color-non-compliant: hsl(var(--non-compliant));
+  --color-non-compliant-secondary: hsl(var(--non-compliant-secondary));
+  /* Comment Types */
+  --color-not-applicable: hsl(var(--not-applicable));
+  --color-not-applicable-secondary: hsl(var(--not-applicable-secondary));
+  --color-completed: hsl(var(--completed));
+  --color-completed-secondary: hsl(var(--completed-secondary));
+  --color-questioned: hsl(var(--questioned));
+  --color-questioned-secondary: hsl(var(--questioned-secondary));
+  --color-comment: hsl(var(--comment));
+  --color-comment-secondary: hsl(var(--comment-secondary));
+  --color-accepted: hsl(var(--accepted));
+  --color-accepted-secondary: hsl(var(--accepted-secondary));
+  --color-general: hsl(var(--general));
+  --color-general-secondary: hsl(var(--general-secondary));
+  --color-monitor: hsl(var(--monitor));
+  --color-monitor-secondary: hsl(var(--monitor-secondary));
+  /* Policy Type Badges */
+  --color-regulatory: hsl(var(--regulatory));
+  --color-regulatory-secondary: hsl(var(--regulatory-secondary));
+  --color-internal: hsl(var(--internal));
+  --color-internal-secondary: hsl(var(--internal-secondary));
+  --color-risk: hsl(var(--risk));
+  --color-risk-secondary: hsl(var(--risk-secondary));
+  --color-custom: hsl(var(--custom));
+  --color-custom-secondary: hsl(var(--custom-secondary));
+  /* Primary colors */
+  --color-highlight: hsl(var(--highlight));
+  --color-mint: hsl(var(--mint));
+  --color-red: hsl(var(--red));
+  --color-light-blue: hsl(var(--light-blue));
+  --color-yellow: hsl(var(--yellow));
+  --color-purple: #a88bfa;
+  --color-lilac: #e2ccff;
+  --color-lilac-medium: #7f738f;
+  --color-lilac-dark: #887a99;
+  --color-medium-lilac: #b5a3cc;
+  --color-dark-lilac: #9153c9;
+  --color-lilac-box-bkg: #222025;
+  --color-lilac-button: #4d4656;
+  --color-lime: #d5e672;
+  --color-sky-blue: #6697e4;
+  --color-gold: #ffe4b8;
+  --color-black: #0d0d0d;
+  --color-black-5: #191919;
+  --color-black-10: #3e3e3e;
+  --color-grey: #454545;
+  /* Node colors */
+  --color-node-agent: #1069ff;
+  --color-node-dataset: #753dfd;
+  --color-node-model: #2135b0;
+  --color-node-code: #ffa309;
+  --color-node-document: #ff5c0e;
+  --color-node-prompt: #128441;
+  --color-node-token: #c02d5d;
+  --color-node-inference: #f73887;
+  --color-node-tools: #82a3b2;
+  --color-node-benchmarks: #8f3f18;
+  --color-node-guards: #8f3f18;
+  --color-node-computation: #fede31;
+
+  /* FONT FAMILY */
+  --font-sans: 'TWK Lausanne', 'Inter', sans-serif;
+
+  /* FONT SIZE */
+  --text-xxs: 0.625rem;
+
+  /* BORDER RADIUS */
+  --radius-lg: var(--radius);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-sm: calc(var(--radius) - 4px);
+
+  /* Animation */
+  --animate-fade-in: fade-in 800ms ease-in-out backwards;
+
+  @keyframes fade-in {
+    0% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
+}
+
+/* =========================================================
+   THEME PROVIDER (scoped via data-eqty-theme)
+   ========================================================= */
+
+/* Light theme */
+.root {
+  /* ===== Tokens (HSL tuples) ===== */
+  --background: 240, 10%, 4%;
+  --foreground: 210 40% 98%;
+  --card: 0 0% 85%;
+  --card-foreground: 0 0% 98%;
+  --popover: 222.2 84% 4.9%;
+  --popover-foreground: 210 40% 98%;
+  --primary: 210 40% 98%;
+  --primary-foreground: 222.2 47.4% 11.2%;
+  --secondary: 217.2 32.6% 17.5%;
+  --secondary-foreground: 210 40% 98%;
+  --muted: 240 4% 16%;
+  --muted-foreground: 240 5% 65%;
+  --accent: 217.2 32.6% 17.5%;
+  --accent-foreground: 210 40% 98%;
+  --destructive: 0 62.8% 30.6%;
+  --destructive-foreground: 210 40% 98%;
+  --border: 240 4% 25%;
+  --input: 217.2 32.6% 17.5%;
+  --ring: 212.7 26.8% 83.9%;
+  --chart-1: 220 70% 50%;
+  --chart-2: 160 60% 45%;
+  --chart-3: 30 80% 55%;
+  --chart-4: 280 65% 60%;
+  --chart-5: 340 75% 55%;
+  --sidebar-background: 0 0% 0%;
+  --sidebar-foreground: 240 4.8% 95.9%;
+  --sidebar-primary: 224.3 76.3% 48%;
+  --sidebar-primary-foreground: 0 0% 100%;
+  --sidebar-accent: 240 3.7% 15.9%;
+  --sidebar-accent-foreground: 240 4.8% 95.9%;
+  --sidebar-border: 240 3.7% 15.9%;
+  --sidebar-ring: 217.2 91.2% 59.8%;
+
+  /* Control Status Badges */
+  --not-started: 220, 13%, 75%;
+  --not-started-secondary: 220, 13%, 75%, 0.2;
+
+  --in-progress: 45, 100%, 68%;
+  --in-progress-secondary: 45, 100%, 68%, 0.2;
+
+  --ready-for-review: 213, 94%, 68%;
+  --ready-for-review-secondary: 213, 94%, 68%, 0.2;
+
+  --in-review: 262, 83%, 75%;
+  --in-review-secondary: 262, 83%, 75%, 0.2;
+
+  --compliant: 142, 72%, 64%;
+  --compliant-secondary: 142, 72%, 64%, 0.2;
+
+  --non-compliant: 340, 94%, 65%;
+  --non-compliant-secondary: 340, 94%, 65%, 0.2;
+
+  --not-applicable: 180, 20%, 55%;
+  --not-applicable-secondary: 180, 20%, 55%, 0.2;
+
+  --comment: 24, 95%, 70%;
+  --comment-secondary: 24, 95%, 70%, 0.2;
+
+  --completed: 24 100% 70%;
+  --completed-secondary: 24 100% 30%;
+
+  --monitor: 239 84% 67%;
+  --monitor-secondary: 239 84% 47%;
+
+  --accepted: 142, 72%, 64%;
+  --accepted-secondary: 142, 72%, 64%, 0.2;
+
+  /* Comment Types */
+  --accepted: 156, 72%, 74%;
+  --accepted-secondary: 156, 72%, 74%, 0.2;
+
+  --questioned: 36, 100%, 74%;
+  --questioned-secondary: 36, 100%, 74%, 0.2;
+
+  --general: 275, 90%, 76%;
+  --general-secondary: 275, 90%, 76%, 0.2;
+
+  /* Policy Type Badges */
+  --regulatory: 217, 56%, 68%;
+  --regulatory-secondary: 217, 56%, 68%, 0.2;
+
+  --internal: 256, 73%, 78%;
+  --internal-secondary: 256, 73%, 78%, 0.2;
+
+  --risk: 51, 93%, 82%;
+  --risk-secondary: 51, 93%, 82%, 0.2;
+
+  --custom: 210, 14%, 83%;
+  --custom-secondary: 210, 14%, 83%, 0.2;
+
+  /* Primary */
+  --highlight: 266 100% 90%;
+  --mint: 142 69% 58%;
+  --red: 342 96% 65%;
+  --light-blue: 203 100% 70%;
+  --yellow: 51 100% 73%;
+
+  --radius: 0.5rem;
+}
+
+/* Dark theme */
+.root[data-eqty-theme='dark'] {
+  --background: 240, 10%, 4%;
+  --foreground: 210 40% 98%;
+  --card: 0 0% 85%;
+  --card-foreground: 0 0% 98%;
+  --popover: 222.2 84% 4.9%;
+  --popover-foreground: 210 40% 98%;
+  --primary: 210 40% 98%;
+  --primary-foreground: 222.2 47.4% 11.2%;
+  --secondary: 217.2 32.6% 17.5%;
+  --secondary-foreground: 210 40% 98%;
+  --muted: 240 4% 16%;
+  --muted-foreground: 240 5% 65%;
+  --accent: 217.2 32.6% 17.5%;
+  --accent-foreground: 210 40% 98%;
+  --destructive: 0 62.8% 30.6%;
+  --destructive-foreground: 210 40% 98%;
+  --border: 240 4% 25%;
+  --input: 217.2 32.6% 17.5%;
+  --ring: 212.7 26.8% 83.9%;
+  --chart-1: 220 70% 50%;
+  --chart-2: 160 60% 45%;
+  --chart-3: 30 80% 55%;
+  --chart-4: 280 65% 60%;
+  --chart-5: 340 75% 55%;
+  --sidebar-background: 0 0% 0%;
+  --sidebar-foreground: 240 4.8% 95.9%;
+  --sidebar-primary: 224.3 76.3% 48%;
+  --sidebar-primary-foreground: 0 0% 100%;
+  --sidebar-accent: 240 3.7% 15.9%;
+  --sidebar-accent-foreground: 240 4.8% 95.9%;
+  --sidebar-border: 240 3.7% 15.9%;
+  --sidebar-ring: 217.2 91.2% 59.8%;
+}
+
+@layer base {
+  /* =========================================================
+   SCOPED PREFLIGHT (kept intact; selectors retargeted)
+   ========================================================= */
+
+  /* 1) Box model + resets + border-color */
+  :global([data-eqty-theme]),
+  :global([data-eqty-theme]) *,
+  :global([data-eqty-theme]) ::after,
+  :global([data-eqty-theme]) ::before,
+  :global([data-eqty-theme]) ::backdrop,
+  :global([data-eqty-theme]) ::file-selector-button {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    border: 0 solid;
+    border-color: hsl(var(--border));
+  }
+
+  /* Cursor for buttons */
+  :global([data-eqty-theme]) button {
+    cursor: pointer;
+  }
+
+  /* Typography + platform defaults */
+  :global([data-eqty-theme]) {
+    line-height: 1.5;
+    -webkit-text-size-adjust: 100%;
+    tab-size: 4;
+    font-family: var(--font-sans);
+    -webkit-tap-highlight-color: transparent;
+    font-synthesis: none;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* Horizontal rule */
+  :global([data-eqty-theme]) hr {
+    height: 0;
+    color: inherit;
+    border-top-width: 1px;
+  }
+
+  /* Abbr */
+  :global([data-eqty-theme]) abbr:where([title]) {
+    -webkit-text-decoration: underline dotted;
+    text-decoration: underline dotted;
+  }
+
+  /* Headings reset */
+  :global([data-eqty-theme]) h1,
+  :global([data-eqty-theme]) h2,
+  :global([data-eqty-theme]) h3,
+  :global([data-eqty-theme]) h4,
+  :global([data-eqty-theme]) h5,
+  :global([data-eqty-theme]) h6 {
+    font-size: inherit;
+    font-weight: inherit;
+  }
+
+  /* Links */
+  :global([data-eqty-theme]) a {
+    color: inherit;
+    -webkit-text-decoration: inherit;
+    text-decoration: inherit;
+  }
+
+  /* Strong */
+  :global([data-eqty-theme]) b,
+  :global([data-eqty-theme]) strong {
+    font-weight: bolder;
+  }
+
+  /* Code fonts */
+  :global([data-eqty-theme]) code,
+  :global([data-eqty-theme]) kbd,
+  :global([data-eqty-theme]) samp,
+  :global([data-eqty-theme]) pre {
+    font-family:
+      ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New',
+      monospace;
+    font-size: 1em;
+  }
+
+  /* Small */
+  :global([data-eqty-theme]) small {
+    font-size: 80%;
+  }
+
+  /* Sub/Sup */
+  :global([data-eqty-theme]) sub,
+  :global([data-eqty-theme]) sup {
+    font-size: 75%;
+    line-height: 0;
+    position: relative;
+    vertical-align: baseline;
+  }
+  :global([data-eqty-theme]) sub {
+    bottom: -0.25em;
+  }
+  :global([data-eqty-theme]) sup {
+    top: -0.5em;
+  }
+
+  /* Tables */
+  :global([data-eqty-theme]) table {
+    text-indent: 0;
+    border-color: inherit;
+    border-collapse: collapse;
+  }
+
+  /* Firefox focus */
+  :global([data-eqty-theme]) :-moz-focusring {
+    outline: auto;
+  }
+
+  /* Progress baseline */
+  :global([data-eqty-theme]) progress {
+    vertical-align: baseline;
+  }
+
+  /* Summary display */
+  :global([data-eqty-theme]) summary {
+    display: list-item;
+  }
+
+  /* Lists unstyled */
+  :global([data-eqty-theme]) ol,
+  :global([data-eqty-theme]) ul,
+  :global([data-eqty-theme]) menu {
+    list-style: none;
+  }
+
+  /* Replaced elements */
+  :global([data-eqty-theme]) img,
+  :global([data-eqty-theme]) svg,
+  :global([data-eqty-theme]) video,
+  :global([data-eqty-theme]) canvas,
+  :global([data-eqty-theme]) audio,
+  :global([data-eqty-theme]) iframe,
+  :global([data-eqty-theme]) embed,
+  :global([data-eqty-theme]) object {
+    display: block;
+    vertical-align: middle;
+  }
+
+  /* Media constraints */
+  :global([data-eqty-theme]) img,
+  :global([data-eqty-theme]) video {
+    max-width: 100%;
+    height: auto;
+  }
+
+  /* Form element normalizations */
+  :global([data-eqty-theme]) button,
+  :global([data-eqty-theme]) input,
+  :global([data-eqty-theme]) select,
+  :global([data-eqty-theme]) optgroup,
+  :global([data-eqty-theme]) textarea,
+  :global([data-eqty-theme]) ::file-selector-button {
+    font: inherit;
+    font-feature-settings: inherit;
+    font-variation-settings: inherit;
+    letter-spacing: inherit;
+    color: inherit;
+    border-radius: 0;
+    background-color: transparent;
+    opacity: 1;
+  }
+
+  /* Select optgroup weight */
+  :global([data-eqty-theme]) :where(select:is([multiple], [size])) optgroup {
+    font-weight: bolder;
+  }
+
+  /* Select optgroup option indent */
+  :global([data-eqty-theme]) :where(select:is([multiple], [size])) optgroup option {
+    padding-inline-start: 20px;
+  }
+
+  /* File button spacing */
+  :global([data-eqty-theme]) ::file-selector-button {
+    margin-inline-end: 4px;
+  }
+
+  /* Placeholder */
+  :global([data-eqty-theme]) ::placeholder {
+    opacity: 1;
+  }
+
+  @supports (not (-webkit-appearance: -apple-pay-button)) or (contain-intrinsic-size: 1px) {
+    :global([data-eqty-theme]) ::placeholder {
+      color: color-mix(in oklab, currentcolor 50%, transparent);
+    }
+  }
+
+  /* Textarea resize */
+  :global([data-eqty-theme]) textarea {
+    resize: vertical;
+  }
+
+  /* WebKit search decoration */
+  :global([data-eqty-theme]) ::-webkit-search-decoration {
+    -webkit-appearance: none;
+  }
+
+  /* iOS date/time */
+  :global([data-eqty-theme]) ::-webkit-date-and-time-value {
+    min-height: 1lh;
+    text-align: inherit;
+  }
+
+  :global([data-eqty-theme]) ::-webkit-datetime-edit {
+    display: inline-flex;
+  }
+
+  :global([data-eqty-theme]) ::-webkit-datetime-edit-fields-wrapper {
+    padding: 0;
+  }
+
+  :global([data-eqty-theme]) ::-webkit-datetime-edit,
+  :global([data-eqty-theme]) ::-webkit-datetime-edit-year-field,
+  :global([data-eqty-theme]) ::-webkit-datetime-edit-month-field,
+  :global([data-eqty-theme]) ::-webkit-datetime-edit-day-field,
+  :global([data-eqty-theme]) ::-webkit-datetime-edit-hour-field,
+  :global([data-eqty-theme]) ::-webkit-datetime-edit-minute-field,
+  :global([data-eqty-theme]) ::-webkit-datetime-edit-second-field,
+  :global([data-eqty-theme]) ::-webkit-datetime-edit-millisecond-field,
+  :global([data-eqty-theme]) ::-webkit-datetime-edit-meridiem-field {
+    padding-block: 0;
+  }
+
+  :global([data-eqty-theme]) ::-webkit-calendar-picker-indicator {
+    line-height: 1;
+  }
+
+  /* Firefox invalid */
+  :global([data-eqty-theme]) :-moz-ui-invalid {
+    box-shadow: none;
+  }
+
+  /* Button appearances */
+  :global([data-eqty-theme]) button,
+  :global([data-eqty-theme]) input:where([type='button'], [type='reset'], [type='submit']),
+  :global([data-eqty-theme]) ::file-selector-button {
+    appearance: button;
+  }
+
+  /* Safari spin buttons */
+  :global([data-eqty-theme]) ::-webkit-inner-spin-button,
+  :global([data-eqty-theme]) ::-webkit-outer-spin-button {
+    height: auto;
+  }
+
+  /* Hidden */
+  :global([data-eqty-theme]) [hidden]:where(:not([hidden='until-found'])) {
+    display: none !important;
+  }
+
+  /* =========================================================
+   UTILITIES & COMPONENTS (scoped)
+   ========================================================= */
+
+  /* Scrollbar styles (scoped) */
+  :global([data-eqty-theme]) .styled-horizontal-scrollbar::-webkit-scrollbar {
+    width: 100%;
+    height: 0.375rem;
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 999px;
+  }
+
+  :global([data-eqty-theme]) .styled-horizontal-scrollbar::-webkit-scrollbar-thumb {
+    background-color: #4e4758;
+    border-radius: 999px;
+  }
+
+  :global([data-eqty-theme]) .styled-vertical-scrollbar::-webkit-scrollbar {
+    height: 100%;
+    width: 0.375rem;
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 999px;
+  }
+
+  :global([data-eqty-theme]) .styled-vertical-scrollbar::-webkit-scrollbar-thumb {
+    background-color: #4e4758;
+    border-radius: 999px;
+  }
+}

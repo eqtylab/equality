@@ -1,6 +1,7 @@
 import { forwardRef } from 'react';
 
-import { cn } from '../lib/utils';
+import { cn } from '../../lib/utils';
+import styles from './icon-circle.module.css';
 
 export interface IconCircleProps {
   className?: string;
@@ -14,15 +15,8 @@ const IconCircle = forwardRef<HTMLDivElement, IconCircleProps>(
     const IconElement = icon as React.ElementType;
 
     return (
-      <div
-        ref={ref}
-        className={cn(
-          'bg-foreground/10 text-foreground flex size-9 shrink-0 items-center justify-center rounded-full',
-          className
-        )}
-        {...props}
-      >
-        <IconElement className="size-5" />
+      <div ref={ref} className={cn(styles.container, className)} {...props}>
+        <IconElement className={styles.icon} />
       </div>
     );
   }
