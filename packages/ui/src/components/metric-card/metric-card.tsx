@@ -1,8 +1,8 @@
 import { LucideIcon } from 'lucide-react';
 
-import { cn } from '../../lib/utils';
-import { IconCircle } from '../icon-circle/icon-circle';
-import styles from './metric-card.module.css';
+import { IconCircle } from '@/components/icon-circle/icon-circle';
+import styles from '@/components/metric-card/metric-card.module.css';
+import { cn } from '@/lib/utils';
 
 type ColorVariant = 'default' | 'red' | 'lilac' | 'green' | 'yellow';
 

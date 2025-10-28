@@ -1,7 +1,7 @@
 import { forwardRef } from 'react';
 
-import { cn } from '../../lib/utils';
-import styles from './icon-circle.module.css';
+import styles from '@/components/icon-circle/icon-circle.module.css';
+import { cn } from '@/lib/utils';
 
 export interface IconCircleProps {
   className?: string;

@@ -1,4 +1,4 @@
-import StyleGuide from './style-guide';
+import StyleGuide from '@/components/style-guide';
 
 const UiExample = () => {
   return (
