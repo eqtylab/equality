@@ -1,6 +1,7 @@
 import * as React from 'react';
 
-import { cn } from '../lib/utils';
+import styles from '@/components/card/card.module.css';
+import { cn } from '@/lib/utils';
 
 const Card = React.forwardRef<
   HTMLDivElement,
@@ -11,22 +12,11 @@ const Card = React.forwardRef<
   return (
     <div
       ref={ref}
-      className={cn(
-        'group border-border bg-card/2 text-foreground @container/card relative overflow-hidden rounded-lg border shadow-sm',
-        shouldHaveHoverStyle &&
-          'hover:border-highlight active:border-highlight cursor-pointer transition-colors',
-        className
-      )}
+      className={cn(styles.card, shouldHaveHoverStyle && styles['card-hover'], className)}
       {...props}
     >
       {shouldHaveHoverStyle && (
-        <div
-          className={cn(
-            'from-highlight/0 to-highlight/10 pointer-events-none absolute inset-0 bg-linear-to-br opacity-0',
-            'transition-opacity duration-700 group-hover:opacity-100 group-active:opacity-100',
-            hoverGradientClassName
-          )}
-        />
+        <div className={cn(styles['card-hover-gradient'], hoverGradientClassName)} />
       )}
       {props.children}
     </div>
@@ -36,33 +26,35 @@ Card.displayName = 'Card';
 
 const CardHeader = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElement>>(
   ({ className, ...props }, ref) => (
-    <div ref={ref} className={cn('flex flex-col space-y-1.5 px-3 py-4', className)} {...props} />
+    <div ref={ref} className={cn(styles['card-header'], className)} {...props} />
   )
 );
 CardHeader.displayName = 'CardHeader';
 
 const CardTitle = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElement>>(
   ({ className, ...props }, ref) => (
-    <div ref={ref} className={cn('text-2xl font-medium', className)} {...props} />
+    <div ref={ref} className={cn(styles['card-title'], className)} {...props} />
   )
 );
 CardTitle.displayName = 'CardTitle';
 
 const CardDescription = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElement>>(
   ({ className, ...props }, ref) => (
-    <div ref={ref} className={cn('text-muted-foreground text-sm', className)} {...props} />
+    <div ref={ref} className={cn(styles['card-description'], className)} {...props} />
   )
 );
 CardDescription.displayName = 'CardDescription';
 
 const CardContent = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElement>>(
-  ({ className, ...props }, ref) => <div ref={ref} className={cn('p-3', className)} {...props} />
+  ({ className, ...props }, ref) => (
+    <div ref={ref} className={cn(styles['card-content'], className)} {...props} />
+  )
 );
 CardContent.displayName = 'CardContent';
 
 const CardFooter = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElement>>(
   ({ className, ...props }, ref) => (
-    <div ref={ref} className={cn('flex items-center p-3 pt-0', className)} {...props} />
+    <div ref={ref} className={cn(styles['card-footer'], className)} {...props} />
   )
 );
 CardFooter.displayName = 'CardFooter';

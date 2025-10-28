@@ -1,0 +1,5 @@
+@import '../../theme/theme.module.css';
+
+.container {
+  @apply absolute inset-0 size-full;
+}

@@ -1,6 +1,7 @@
 import { LucideIcon } from 'lucide-react';
 
-import { Card, CardContent } from './card';
+import { Card, CardContent } from '@/components/card/card';
+
 import { IconSquare } from './icon-square';
 
 interface InfoCardProps {

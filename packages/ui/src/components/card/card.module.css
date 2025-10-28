@@ -1,0 +1,44 @@
+@import '../../theme/theme.module.css';
+
+.card {
+  @apply @container/card relative;
+  @apply text-foreground;
+  @apply border-border border;
+  @apply bg-card/2 overflow-hidden rounded-lg shadow-sm;
+}
+
+.card-hover {
+  @apply hover:border-highlight active:border-highlight;
+  @apply cursor-pointer transition-colors;
+}
+
+.card-hover-gradient {
+  @apply pointer-events-none absolute inset-0 opacity-0;
+  @apply transition-opacity duration-700;
+  @apply from-highlight/0 to-highlight/10 bg-linear-to-br;
+}
+
+.card:hover .card-hover-gradient,
+.card:active .card-hover-gradient {
+  @apply opacity-100;
+}
+
+.card-header {
+  @apply flex flex-col space-y-1.5 px-3 py-4;
+}
+
+.card-title {
+  @apply text-2xl font-medium;
+}
+
+.card-description {
+  @apply text-muted-foreground text-sm;
+}
+
+.card-content {
+  @apply p-3;
+}
+
+.card-footer {
+  @apply flex items-center p-3 pt-0;
+}

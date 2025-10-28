@@ -1,7 +1,9 @@
 @import '../../theme/theme.module.css';
 
 .container {
-  @apply bg-foreground/10 text-foreground flex size-9 shrink-0 items-center justify-center rounded-full;
+  @apply bg-foreground/10 text-foreground;
+  @apply size-9 rounded-full;
+  @apply flex shrink-0 items-center justify-center;
 }
 
 .icon {

@@ -1,5 +1,7 @@
 import { useEffect, useRef } from 'react';
 
+import styles from '@/components/bg-gradient/bg-gradient.module.css';
+
 const getThemeColour = (theme: 'gold' | 'blue' | 'lilac') => {
   switch (theme) {
     case 'gold':
@@ -122,7 +124,7 @@ const BgGradient = ({
     };
   }, [theme, placement]);
 
-  return <canvas ref={canvasRef} className="absolute inset-0 size-full" />;
+  return <canvas ref={canvasRef} className={styles.container} />;
 };
 
 export default BgGradient;

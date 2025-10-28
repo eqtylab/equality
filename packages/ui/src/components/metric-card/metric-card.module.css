@@ -1,7 +1,8 @@
 @import '../../theme/theme.module.css';
 
 .container {
-  @apply bg-foreground/5 flex flex-col justify-between rounded-md p-3;
+  @apply bg-foreground/5 rounded-md p-3;
+  @apply flex flex-col justify-between;
 }
 
 .value-container {
