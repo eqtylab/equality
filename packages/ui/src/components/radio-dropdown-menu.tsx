@@ -1,7 +1,7 @@
 import { Check, ChevronDown } from 'lucide-react';
 
 import { cn } from '../lib/utils';
-import { Button } from './button';
+import { Button } from './button/button';
 import {
   DropdownMenu,
   DropdownMenuCheckboxItem,
@@ -46,7 +46,7 @@ export const RadioDropdown = ({
         <Button
           variant="outline"
           className={cn(
-            'flex min-w-auto items-center justify-between rounded-md transition-all duration-200 hover:shadow-sm',
+            'min-w-auto flex items-center justify-between rounded-md transition-all duration-200 hover:shadow-sm',
             className
           )}
         >
@@ -65,7 +65,7 @@ export const RadioDropdown = ({
         align="end"
         className={cn('border-border max-h-80 overflow-auto border shadow-lg', contentWidth)}
       >
-        <div className="border-border flex items-center justify-between border-b px-3 pt-2 pb-2">
+        <div className="border-border flex items-center justify-between border-b px-3 pb-2 pt-2">
           <span className="text-foreground text-sm font-semibold">{label}</span>
         </div>
         {filteredOptions.map((option) => {
@@ -79,7 +79,7 @@ export const RadioDropdown = ({
               onCheckedChange={() => onSelect(option.value)}
               className="hover:bg-lilac-button focus:bg-lilac-button relative cursor-pointer px-3 py-1.5 pl-9 text-sm transition-colors [&>span:first-child]:hidden"
             >
-              <span className="absolute top-1/2 left-3 flex size-4 -translate-y-1/2 items-center justify-center">
+              <span className="absolute left-3 top-1/2 flex size-4 -translate-y-1/2 items-center justify-center">
                 <div
                   className={cn(
                     'flex size-4 items-center justify-center rounded-full border-2 transition-colors',

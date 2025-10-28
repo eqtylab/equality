@@ -1,7 +1,7 @@
 import { forwardRef } from 'react';
 
 import { cn } from '../lib/utils';
-import { Button } from './button';
+import { Button } from './button/button';
 import { IconCircle } from './icon-circle';
 
 export interface CardContentHeaderProps {
@@ -40,7 +40,7 @@ const CardContentHeader = forwardRef<HTMLDivElement, CardContentHeaderProps>(
           <h3
             className={cn(
               'text-card-foreground grow text-lg',
-              onButtonClick && 'w-full @sm/card:w-auto'
+              onButtonClick && '@sm/card:w-auto w-full'
             )}
           >
             {heading}

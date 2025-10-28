@@ -1,7 +1,7 @@
 import { Check, ChevronDown } from 'lucide-react';
 
 import { cn } from '../lib/utils';
-import { Button } from './button';
+import { Button } from './button/button';
 import {
   DropdownMenu,
   DropdownMenuCheckboxItem,
@@ -67,7 +67,7 @@ export const FilterDropdown = ({
         align="end"
         className={cn('border-border max-h-80 overflow-auto border shadow-lg', contentWidth)}
       >
-        <div className="border-border flex items-center justify-between border-b px-3 pt-2 pb-2">
+        <div className="border-border flex items-center justify-between border-b px-3 pb-2 pt-2">
           <span className="text-foreground text-sm font-semibold">Filters</span>
           {hasSelectedFilters && (
             <Button variant="link" size="sm" onClick={onClearAll} className="h-auto p-0">
@@ -86,7 +86,7 @@ export const FilterDropdown = ({
               onSelect={(e) => e.preventDefault()}
               className="hover:bg-lilac-button focus:bg-lilac-button relative cursor-pointer px-3 py-1.5 pl-9 text-sm transition-colors [&>span:first-child]:hidden"
             >
-              <span className="absolute top-1/2 left-3 flex size-4 -translate-y-1/2 items-center justify-center">
+              <span className="absolute left-3 top-1/2 flex size-4 -translate-y-1/2 items-center justify-center">
                 <div
                   className={cn(
                     'flex size-4 items-center justify-center rounded-sm border transition-colors',

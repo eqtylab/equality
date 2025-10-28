@@ -1669,7 +1669,7 @@ const StyleGuide = () => {
           variant="primary"
           size="sm"
           onClick={scrollToTop}
-          className="fixed bottom-8 right-8 z-50"
+          className="fixed bottom-8 right-8 z-50 w-max"
         >
           <ArrowUp className="size-4" />
           Back to Top

@@ -1,7 +1,7 @@
 import { Check, ChevronDown } from 'lucide-react';
 
 import { cn } from '../lib/utils';
-import { Button } from './button';
+import { Button } from './button/button';
 import {
   DropdownMenu,
   DropdownMenuCheckboxItem,
@@ -79,7 +79,7 @@ export function SortSelector({
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="border-border w-48 border shadow-lg">
-        <div className="border-border flex items-center justify-between border-b px-3 pt-2 pb-2">
+        <div className="border-border flex items-center justify-between border-b px-3 pb-2 pt-2">
           <span className="text-foreground text-sm font-semibold">Sort By</span>
           {!isDefaultSort && (
             <Button variant="link" size="sm" onClick={handleReset} className="h-auto p-0">
@@ -98,7 +98,7 @@ export function SortSelector({
               onSelect={(e) => e.preventDefault()}
               className="hover:bg-lilac-button focus:bg-lilac-button relative cursor-pointer px-3 py-1.5 pl-9 text-sm transition-colors [&>span:first-child]:hidden"
             >
-              <span className="absolute top-1/2 left-3 flex size-4 -translate-y-1/2 items-center justify-center">
+              <span className="absolute left-3 top-1/2 flex size-4 -translate-y-1/2 items-center justify-center">
                 <div
                   className={cn(
                     'flex size-4 items-center justify-center rounded-full border-2 transition-colors',

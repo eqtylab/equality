@@ -1,6 +1,6 @@
 import { AlertTriangle, Home } from 'lucide-react';
 
-import { Button } from './button';
+import { Button } from './button/button';
 
 interface NotFoundProps {
   title?: string;

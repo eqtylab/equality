@@ -2,7 +2,7 @@ import { X } from 'lucide-react';
 
 import { cn } from '../lib/utils';
 import { Badge } from './badge';
-import { Button } from './button';
+import { Button } from './button/button';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from './tooltip';
 
 interface FilterBadgeProps {

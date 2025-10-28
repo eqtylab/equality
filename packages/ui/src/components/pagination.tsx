@@ -1,6 +1,6 @@
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 
-import { Button } from './button';
+import { Button } from './button/button';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from './select';
 
 interface PaginationProps {
