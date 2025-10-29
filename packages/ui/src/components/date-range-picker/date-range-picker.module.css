@@ -1,0 +1,95 @@
+@import '../../theme/theme.module.css';
+
+.popover-header {
+  @apply relative w-auto;
+}
+
+.popover-trigger {
+  @apply justify-start;
+  @apply w-full rounded-md px-10;
+  @apply text-base font-normal md:text-sm;
+}
+
+.text-foreground {
+  @apply text-foreground;
+}
+
+.calendar-icon {
+  @apply text-muted-foreground;
+  @apply absolute left-3 top-1/2 size-4 -translate-y-1/2;
+}
+
+.flex-1 {
+  @apply flex-1;
+}
+
+.clear-button {
+  @apply absolute right-2 top-1/2 size-6 -translate-y-1/2;
+}
+
+.popover-content {
+  @apply w-auto p-0;
+}
+
+.popover-content-inner {
+  @apply space-y-4 p-4;
+}
+
+.month-navigation {
+  @apply flex items-center justify-between;
+}
+
+.month-navigation-button {
+  @apply text-muted-foreground hover:text-foreground size-8 p-0;
+}
+
+.month-date-display {
+  @apply flex-1 text-center;
+}
+
+.month-date-display-title {
+  @apply text-foreground text-sm font-semibold;
+}
+
+.month-date-display-subtitle {
+  @apply text-muted-foreground text-xs;
+  @apply mt-1;
+}
+
+.day-headers {
+  @apply mb-2;
+  @apply grid grid-cols-7 gap-1;
+}
+
+.day-headers-inner {
+  @apply h-4;
+  @apply text-muted-foreground text-xs font-medium;
+  @apply flex items-center justify-center;
+}
+
+.calendar-grid {
+  @apply grid grid-cols-7 gap-1;
+}
+
+.calendar-day-button {
+  @apply text-sm font-normal transition-colors;
+  @apply size-9 rounded-md p-0;
+}
+
+.selected {
+  @apply bg-lilac hover:bg-lilac/90;
+  @apply text-background;
+}
+
+.not-selected {
+  @apply hover:bg-lilac/20;
+}
+
+.today {
+  @apply text-lilac font-semibold;
+  @apply border-lilac/30 border;
+}
+
+.in-range {
+  @apply bg-lilac/10 text-lilac;
+}

@@ -1,0 +1,21 @@
+@import '../../theme/theme.module.css';
+
+.container {
+  @apply flex items-center justify-between gap-2;
+}
+
+.wrap {
+  @apply flex-wrap;
+}
+
+.button {
+  @apply @sm/card:order-3;
+}
+
+.title {
+  @apply text-card-foreground grow text-lg;
+}
+
+.title-width {
+  @apply @sm/card:w-auto w-full;
+}

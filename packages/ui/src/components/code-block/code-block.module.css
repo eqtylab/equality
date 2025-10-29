@@ -1,0 +1,41 @@
+@import '../../theme/theme.module.css';
+
+.container {
+  @apply border-border overflow-hidden rounded-md border;
+}
+
+.header {
+  @apply bg-background;
+  @apply px-3 py-2;
+  @apply flex items-center justify-between;
+}
+
+.title {
+  @apply text-muted-foreground text-sm font-medium;
+}
+
+.content {
+  @apply bg-foreground/5 rounded-b-md border;
+  @apply p-3;
+  @apply font-mono text-xs;
+}
+
+.border-mint {
+  @apply border-mint;
+}
+
+.border-lilac {
+  @apply border-lilac;
+}
+
+.scroll-container {
+  @apply max-h-64 overflow-y-auto;
+}
+
+.code-label {
+  @apply text-muted-foreground mb-1;
+}
+
+.code {
+  @apply whitespace-pre-wrap break-all;
+}

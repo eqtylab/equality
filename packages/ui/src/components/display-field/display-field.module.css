@@ -1,0 +1,50 @@
+@import '../../theme/theme.module.css';
+
+.bg-neutral {
+  @apply bg-lilac;
+}
+
+.bg-success {
+  @apply bg-mint;
+}
+
+.bg-failure {
+  @apply bg-red;
+}
+
+.icon-width {
+  @apply w-4;
+}
+
+.truncate {
+  @apply truncate;
+}
+
+.overflow-x-scroll {
+  @apply overflow-x-scroll;
+}
+
+.container {
+  @apply border-border bg-black-5 rounded-md border;
+  @apply text-foreground text-clip text-base md:text-sm;
+  @apply h-9.5 flex w-full overflow-clip;
+  @apply ring-offset-background ring-ring/70;
+  @apply focus-visible:ring-1 focus-visible:ring-offset-2;
+}
+
+.prefix {
+  @apply flex items-center gap-1;
+  @apply px-2;
+  @apply text-sm font-medium text-black transition-colors;
+  @apply rounded-br-md rounded-tr-md;
+}
+
+.content {
+  @apply block w-full overflow-y-clip;
+  @apply font-mono;
+  @apply px-3 py-2;
+}
+
+.actions {
+  @apply flex items-center;
+}

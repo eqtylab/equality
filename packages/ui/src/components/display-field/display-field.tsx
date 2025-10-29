@@ -3,16 +3,17 @@ import { MiddleTruncate } from '@re-dev/react-truncate';
 import { cva, type VariantProps } from 'class-variance-authority';
 import { CircleCheck, CircleX } from 'lucide-react';
 
-import { cn } from '../lib/utils';
-import { CopyButton } from './copy-button';
+import { CopyButton } from '@/components/copy-button/copy-button';
+import styles from '@/components/display-field/display-field.module.css';
+import { cn } from '@/lib/utils';
 
 const displayFieldVariants = cva('', {
   variants: {
     variant: {
-      neutral: 'bg-lilac',
-      neutralCheck: 'bg-lilac',
-      success: 'bg-mint',
-      failure: 'bg-red',
+      neutral: styles['bg-neutral'],
+      neutralCheck: styles['bg-neutral'],
+      success: styles['bg-success'],
+      failure: styles['bg-failure'],
     },
   },
   defaultVariants: {
@@ -42,10 +43,10 @@ function DisplayField({
 }: DisplayFieldProps) {
   const getIcon = () => {
     if (variant === 'success' || variant === 'neutralCheck') {
-      return <CircleCheck className="w-4" />;
+      return <CircleCheck className={styles['icon-width']} />;
     }
     if (variant === 'failure') {
-      return <CircleX className="w-4" />;
+      return <CircleX className={styles['icon-width']} />;
     }
     return null;
   };
@@ -59,8 +60,8 @@ function DisplayField({
 
   const getTruncateClass = () => {
     if (truncate === 'middle') return '';
-    if (truncate === true) return 'truncate';
-    return 'overflow-x-scroll';
+    if (truncate === true) return styles['truncate'];
+    return styles['overflow-x-scroll'];
   };
 
   const getValueForCopy = () => {
@@ -73,36 +74,25 @@ function DisplayField({
   const showActions = copy || actions;
 
   return (
-    <div className={cn('flex w-full items-center gap-2', className)} {...props}>
-      <div
-        className={cn(
-          'border-border bg-black-5 text-foreground ring-offset-background ring-ring/70 h-9.5 flex w-full overflow-clip text-clip rounded-md border text-base focus-visible:ring-1 focus-visible:ring-offset-2 md:text-sm'
-        )}
+    <div className={cn(styles['container'], className)} {...props}>
+      {prefix && (
+        <div className={cn(styles['prefix'], displayFieldVariants({ variant: variant }))}>
+          {getIcon()}
+          {prefix}
+        </div>
+      )}
+      <span
+        className={cn(styles['content'], getTruncateClass())}
+        style={{ scrollbarWidth: 'thin' }}
       >
-        {prefix && (
-          <div
-            className={cn(
-              'flex items-center gap-1 rounded-br-md rounded-tr-md px-2 text-sm font-medium text-black transition-colors',
-              displayFieldVariants({ variant: variant })
-            )}
-          >
-            {getIcon()}
-            {prefix}
-          </div>
-        )}
-        <span
-          className={cn('block w-full overflow-y-clip px-3 py-2 font-mono', getTruncateClass())}
-          style={{ scrollbarWidth: 'thin' }}
-        >
-          {renderContent()}
-        </span>
-        {showActions && (
-          <div className="flex items-center">
-            {copy && <CopyButton value={getValueForCopy()} size="sm" />}
-            {actions}
-          </div>
-        )}
-      </div>
+        {renderContent()}
+      </span>
+      {showActions && (
+        <div className={styles['actions']}>
+          {copy && <CopyButton value={getValueForCopy()} size="sm" />}
+          {actions}
+        </div>
+      )}
     </div>
   );
 }

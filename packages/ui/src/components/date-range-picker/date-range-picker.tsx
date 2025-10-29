@@ -1,9 +1,10 @@
 import { useState } from 'react';
 import { CalendarDays, ChevronLeft, ChevronRight, X } from 'lucide-react';
 
-import { cn } from '../lib/utils';
-import { Button } from './button/button';
-import { Popover, PopoverContent, PopoverTrigger } from './popover';
+import { Button } from '@/components/button/button';
+import styles from '@/components/date-range-picker/date-range-picker.module.css';
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/popover';
+import { cn } from '@/lib/utils';
 
 interface DateRange {
   from?: Date;
@@ -156,18 +157,18 @@ export const DateRangePicker = ({ dateRange, onSelect, className }: DateRangePic
 
   return (
     <Popover>
-      <div className="relative w-auto">
+      <div className={styles['popover-header']}>
         <PopoverTrigger asChild>
           <Button
             variant="outline"
             className={cn(
-              'w-full justify-start rounded-md px-10 text-base font-normal md:text-sm',
-              dateRange.from && dateRange.to && 'text-foreground',
+              styles['popover-trigger'],
+              dateRange.from && dateRange.to && styles['text-foreground'],
               className
             )}
           >
-            <CalendarDays className="text-muted-foreground absolute left-3 top-1/2 size-4 -translate-y-1/2" />
-            <span className="flex-1">{formatRange(dateRange)}</span>
+            <CalendarDays className={styles['calendar-icon']} />
+            <span className={styles['flex-1']}>{formatRange(dateRange)}</span>
           </Button>
         </PopoverTrigger>
 
@@ -176,32 +177,32 @@ export const DateRangePicker = ({ dateRange, onSelect, className }: DateRangePic
             variant="outline"
             size="sm"
             onClick={handleClearClick}
-            className="absolute right-2 top-1/2 size-6 -translate-y-1/2"
+            className={styles['clear-button']}
             aria-label="Clear search"
           >
             <X />
           </Button>
         )}
       </div>
-      <PopoverContent className="w-auto p-0" align="end">
-        <div className="space-y-4 p-4">
+      <PopoverContent className={styles['popover-content']} align="end">
+        <div className={styles['popover-content-inner']}>
           {/* Header with month navigation */}
-          <div className="flex items-center justify-between">
+          <div className={styles['month-navigation']}>
             <Button
               variant="outline"
               size="sm"
-              className="text-muted-foreground hover:text-foreground size-8 p-0"
+              className={styles['month-navigation-button']}
               onClick={goToPreviousMonth}
             >
               <ChevronLeft />
             </Button>
 
-            <div className="flex-1 text-center">
-              <div className="text-foreground text-sm font-semibold">
+            <div className={styles['month-date-display']}>
+              <div className={styles['month-date-display-title']}>
                 {`${MONTHS[displayedMonth]} ${displayedYear}`}
               </div>
               {selecting && (
-                <div className="text-muted-foreground mt-1 text-xs">
+                <div className={styles['month-date-display-subtitle']}>
                   {selecting === 'from' ? 'Select start date' : 'Select end date'}
                 </div>
               )}
@@ -210,7 +211,7 @@ export const DateRangePicker = ({ dateRange, onSelect, className }: DateRangePic
             <Button
               variant="outline"
               size="sm"
-              className="text-muted-foreground hover:text-foreground size-8 p-0"
+              className={styles['month-navigation-button']}
               onClick={goToNextMonth}
             >
               <ChevronRight />
@@ -218,19 +219,16 @@ export const DateRangePicker = ({ dateRange, onSelect, className }: DateRangePic
           </div>
 
           {/* Day headers */}
-          <div className="mb-2 grid grid-cols-7 gap-1">
+          <div className={styles['day-headers']}>
             {DAY_HEADERS.map((day) => (
-              <div
-                key={day}
-                className="text-muted-foreground flex h-4 items-center justify-center text-xs font-medium"
-              >
+              <div key={day} className={styles['day-headers-inner']}>
                 {day}
               </div>
             ))}
           </div>
 
           {/* Calendar grid */}
-          <div className="grid grid-cols-7 gap-1">
+          <div className={styles['calendar-grid']}>
             {paddingDays.map((_, index) => (
               <div key={`padding-${index}`} />
             ))}
@@ -244,11 +242,11 @@ export const DateRangePicker = ({ dateRange, onSelect, className }: DateRangePic
                   key={index}
                   variant="outline"
                   className={cn(
-                    'size-9 rounded-md p-0 text-sm font-normal transition-colors',
-                    isSelected && 'bg-lilac text-background hover:bg-lilac/90',
-                    !isSelected && 'hover:bg-lilac/20',
-                    isToday && !isSelected && 'border-lilac/30 text-lilac border font-semibold',
-                    inRange && !isSelected && 'bg-lilac/10 text-lilac'
+                    styles['calendar-day-button'],
+                    isSelected && styles['selected'],
+                    !isSelected && styles['not-selected'],
+                    isToday && !isSelected && styles['today'],
+                    inRange && !isSelected && styles['in-range']
                   )}
                   onClick={() => handleDateSelect(day)}
                 >

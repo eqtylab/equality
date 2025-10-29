@@ -1,8 +1,9 @@
 import { forwardRef } from 'react';
 
-import { cn } from '../lib/utils';
-import { Button } from './button/button';
-import { IconCircle } from './icon-circle';
+import { Button } from '@/components/button/button';
+import styles from '@/components/card-content-header/card-content-header.module.css';
+import { IconCircle } from '@/components/icon-circle/icon-circle';
+import { cn } from '@/lib/utils';
 
 export interface CardContentHeaderProps {
   className?: string;
@@ -23,28 +24,17 @@ const CardContentHeader = forwardRef<HTMLDivElement, CardContentHeaderProps>(
     return (
       <div
         ref={ref}
-        className={cn(
-          'flex items-center justify-between gap-2',
-          shouldWrap && 'flex-wrap',
-          className
-        )}
+        className={cn(styles.container, shouldWrap && styles.wrap, className)}
         {...props}
       >
         <IconCircle icon={icon} />
         {onButtonClick && (
-          <Button className="@sm/card:order-3" variant="outline" size="sm" onClick={onButtonClick}>
+          <Button className={styles.button} variant="outline" size="sm" onClick={onButtonClick}>
             See All
           </Button>
         )}
         {heading && (
-          <h3
-            className={cn(
-              'text-card-foreground grow text-lg',
-              onButtonClick && '@sm/card:w-auto w-full'
-            )}
-          >
-            {heading}
-          </h3>
+          <h3 className={cn(styles.title, onButtonClick && styles['title-width'])}>{heading}</h3>
         )}
       </div>
     );

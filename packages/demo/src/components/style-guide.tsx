@@ -1448,7 +1448,282 @@ const StyleGuide = () => {
             {/* Code Block */}
             <section id="code-block" className="space-y-6">
               <h3 className="border-border border-b pb-2 text-xl font-medium">Code Block</h3>
-              <CodeBlock title="Code Block" code="console.log('Hello, world!');" />
+              <div className="grid grid-cols-2 gap-4">
+                <div className="space-y-2">
+                  <PanelLabel label="Color variant: default" />
+                  <CodeBlock
+                    title="Code Block"
+                    code={`import React, { useState, useEffect, useCallback, useMemo } from 'react';
+import { useRouter } from 'next/router';
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useForm } from 'react-hook-form';
+import * as z from 'zod';
+
+interface User {
+  id: string;
+  name: string;
+  email: string;
+  role: 'admin' | 'user' | 'guest';
+  createdAt: Date;
+  updatedAt: Date;
+  preferences: {
+    theme: 'light' | 'dark';
+    notifications: boolean;
+    language: string;
+  };
+}
+
+const userSchema = z.object({
+  name: z.string().min(1, 'Name is required').max(100, 'Name is too long'),
+  email: z.string().email('Invalid email address'),
+  role: z.enum(['admin', 'user', 'guest']),
+  preferences: z.object({
+    theme: z.enum(['light', 'dark']),
+    notifications: z.boolean(),
+    language: z.string(),
+  }),
+});
+
+type UserFormData = z.infer<typeof userSchema>;
+
+export const UserProfileComponent = () => {
+  const router = useRouter();
+  const queryClient = useQueryClient();
+  const [isEditing, setIsEditing] = useState(false);
+  const [saveError, setSaveError] = useState<string | null>(null);
+
+  const { data: user, isLoading, error } = useQuery<User>({
+    queryKey: ['user', router.query.id],
+    queryFn: async () => {
+      const response = await fetch(\`/api/users/\${router.query.id}\`);
+      if (!response.ok) throw new Error('Failed to fetch user');
+      return response.json();
+    },
+  });
+
+  const updateUserMutation = useMutation({
+    mutationFn: async (data: UserFormData) => {
+      const response = await fetch(\`/api/users/\${router.query.id}\`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data),
+      });
+      if (!response.ok) throw new Error('Failed to update user');
+      return response.json();
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['user', router.query.id] });
+      setIsEditing(false);
+      setSaveError(null);
+    },
+    onError: (error: Error) => {
+      setSaveError(error.message);
+    },
+  });
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting },
+    reset,
+    watch,
+  } = useForm<UserFormData>({
+    resolver: zodResolver(userSchema),
+    defaultValues: useMemo(() => {
+      if (!user) return undefined;
+      return {
+        name: user.name,
+        email: user.email,
+        role: user.role,
+        preferences: user.preferences,
+      };
+    }, [user]),
+  });
+
+  useEffect(() => {
+    if (user) {
+      reset({
+        name: user.name,
+        email: user.email,
+        role: user.role,
+        preferences: user.preferences,
+      });
+    }
+  }, [user, reset]);
+
+  const onSubmit = useCallback(
+    (data: UserFormData) => {
+      updateUserMutation.mutate(data);
+    },
+    [updateUserMutation]
+  );
+
+  const watchedTheme = watch('preferences.theme');
+
+  useEffect(() => {
+    document.documentElement.classList.toggle('dark', watchedTheme === 'dark');
+  }, [watchedTheme]);
+
+  if (isLoading) {
+    return (
+      <div className="flex items-center justify-center min-h-screen">
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500" />
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="p-4 bg-red-50 border border-red-200 rounded-md">
+        <p className="text-red-800">Error loading user: {error.message}</p>
+      </div>
+    );
+  }
+
+  if (!user) {
+    return (
+      <div className="p-4 bg-yellow-50 border border-yellow-200 rounded-md">
+        <p className="text-yellow-800">User not found</p>
+      </div>
+    );
+  }
+
+  return (
+    <div className="max-w-4xl mx-auto p-6 space-y-6">
+      <div className="flex items-center justify-between">
+        <h1 className="text-3xl font-bold">User Profile</h1>
+        <button
+          onClick={() => setIsEditing(!isEditing)}
+          className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition-colors"
+        >
+          {isEditing ? 'Cancel' : 'Edit'}
+        </button>
+      </div>
+
+      <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+        <div className="bg-white rounded-lg shadow-md p-6 space-y-4">
+          <h2 className="text-xl font-semibold mb-4">Personal Information</h2>
+          
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">
+              Name
+            </label>
+            <input
+              {...register('name')}
+              disabled={!isEditing}
+              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:bg-gray-100"
+            />
+            {errors.name && (
+              <p className="mt-1 text-sm text-red-600">{errors.name.message}</p>
+            )}
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">
+              Email
+            </label>
+            <input
+              type="email"
+              {...register('email')}
+              disabled={!isEditing}
+              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:bg-gray-100"
+            />
+            {errors.email && (
+              <p className="mt-1 text-sm text-red-600">{errors.email.message}</p>
+            )}
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">
+              Role
+            </label>
+            <select
+              {...register('role')}
+              disabled={!isEditing}
+              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:bg-gray-100"
+            >
+              <option value="admin">Admin</option>
+              <option value="user">User</option>
+              <option value="guest">Guest</option>
+            </select>
+            {errors.role && (
+              <p className="mt-1 text-sm text-red-600">{errors.role.message}</p>
+            )}
+          </div>
+        </div>
+
+        <div className="bg-white rounded-lg shadow-md p-6 space-y-4">
+          <h2 className="text-xl font-semibold mb-4">Preferences</h2>
+          
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">
+              Theme
+            </label>
+            <select
+              {...register('preferences.theme')}
+              disabled={!isEditing}
+              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:bg-gray-100"
+            >
+              <option value="light">Light</option>
+              <option value="dark">Dark</option>
+            </select>
+          </div>
+
+          <div className="flex items-center">
+            <input
+              type="checkbox"
+              {...register('preferences.notifications')}
+              disabled={!isEditing}
+              className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded disabled:opacity-50"
+            />
+            <label className="ml-2 block text-sm text-gray-700">
+              Enable notifications
+            </label>
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">
+              Language
+            </label>
+            <select
+              {...register('preferences.language')}
+              disabled={!isEditing}
+              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:bg-gray-100"
+            >
+              <option value="en">English</option>
+              <option value="es">Spanish</option>
+              <option value="fr">French</option>
+              <option value="de">German</option>
+            </select>
+          </div>
+        </div>
+
+        {isEditing && (
+          <div className="flex items-center justify-end space-x-4">
+            {saveError && (
+              <p className="text-sm text-red-600">{saveError}</p>
+            )}
+            <button
+              type="submit"
+              disabled={isSubmitting}
+              className="px-6 py-2 bg-green-500 text-white rounded-md hover:bg-green-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              {isSubmitting ? 'Saving...' : 'Save Changes'}
+            </button>
+          </div>
+        )}
+      </form>
+    </div>
+  );
+                    };`}
+                  />
+                </div>
+                <div className="space-y-2">
+                  <PanelLabel label="Color variant: mint" />
+                  <CodeBlock title="Code Block" code="console.log('Hello, world!');" color="mint" />
+                </div>
+              </div>
             </section>
 
             {/* Tooltip */}
