@@ -10,8 +10,9 @@ import {
 import * as LabelPrimitive from '@radix-ui/react-label';
 import { Slot } from '@radix-ui/react-slot';
 
-import { cn } from '../lib/utils';
-import { Label } from './label';
+import styles from '@/components/form/form.module.css';
+import { Label } from '@/components/label/label';
+import { cn } from '@/lib/utils';
 
 const Form = FormProvider;
 
@@ -72,7 +73,7 @@ const FormItem = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivEl
 
     return (
       <FormItemContext.Provider value={{ id }}>
-        <div ref={ref} className={cn('space-y-2', className)} {...props} />
+        <div ref={ref} className={cn(styles['form-item'], className)} {...props} />
       </FormItemContext.Provider>
     );
   }
@@ -88,7 +89,7 @@ const FormLabel = React.forwardRef<
   return (
     <Label
       ref={ref}
-      className={cn(error && 'text-destructive', className)}
+      className={cn(error && styles['form-label--failure'], className)}
       htmlFor={formItemId}
       {...props}
     />
@@ -124,7 +125,7 @@ const FormDescription = React.forwardRef<
     <p
       ref={ref}
       id={formDescriptionId}
-      className={cn('text-muted-foreground text-sm', className)}
+      className={cn(styles['form-description'], className)}
       {...props}
     />
   );
@@ -143,12 +144,7 @@ const FormMessage = React.forwardRef<
   }
 
   return (
-    <p
-      ref={ref}
-      id={formMessageId}
-      className={cn('text-destructive text-sm font-medium', className)}
-      {...props}
-    >
+    <p ref={ref} id={formMessageId} className={cn(styles['form-message'], className)} {...props}>
       {body}
     </p>
   );

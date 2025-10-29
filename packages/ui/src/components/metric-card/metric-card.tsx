@@ -47,7 +47,7 @@ const MetricCard = ({
   const variant = COLOR_VARIANTS[colorVariant];
 
   return (
-    <div className={cn(styles.container, className)}>
+    <div className={cn(styles['metric-card'], className)}>
       <div className={styles['value-container']}>
         <p className={cn(styles.value, variant.text)}>{value}</p>
         <IconCircle icon={icon} className={cn(variant.iconBg, variant.text)} />

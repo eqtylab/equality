@@ -4,16 +4,16 @@ import { cva, type VariantProps } from 'class-variance-authority';
 import styles from '@/components/badge/badge.module.css';
 import { cn } from '@/lib/utils';
 
-const badgeVariants = cva(styles.container, {
+const badgeVariants = cva(styles['badge'], {
   variants: {
     variant: {
-      default: styles.default,
-      primary: styles.primary,
-      secondary: styles.secondary,
-      destructive: styles.destructive,
-      outline: styles.outline,
-      neutral: styles.neutral,
-      success: styles.success,
+      default: styles['badge--default'],
+      primary: styles['badge--primary'],
+      secondary: styles['badge--secondary'],
+      destructive: styles['badge--destructive'],
+      outline: styles['badge--outline'],
+      neutral: styles['badge--neutral'],
+      success: styles['badge--success'],
     },
   },
   defaultVariants: {

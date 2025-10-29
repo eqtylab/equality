@@ -24,7 +24,11 @@ const CardContentHeader = forwardRef<HTMLDivElement, CardContentHeaderProps>(
     return (
       <div
         ref={ref}
-        className={cn(styles.container, shouldWrap && styles.wrap, className)}
+        className={cn(
+          styles['card-content-header'],
+          shouldWrap && styles['card-content-header--wrap'],
+          className
+        )}
         {...props}
       >
         <IconCircle icon={icon} />
@@ -34,7 +38,9 @@ const CardContentHeader = forwardRef<HTMLDivElement, CardContentHeaderProps>(
           </Button>
         )}
         {heading && (
-          <h3 className={cn(styles.title, onButtonClick && styles['title-width'])}>{heading}</h3>
+          <h3 className={cn(styles.title, onButtonClick && styles['title--button-click'])}>
+            {heading}
+          </h3>
         )}
       </div>
     );

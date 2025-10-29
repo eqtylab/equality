@@ -1,11 +1,13 @@
 import { motion } from 'framer-motion';
 
+import styles from '@/components/loading-icon/loading-icon.module.css';
+
 interface LoadingIconProps {
   className?: string;
   pathStroke?: string;
 }
 
-const LoadingIcon = ({ className, pathStroke = 'stroke-white' }: LoadingIconProps) => {
+const LoadingIcon = ({ className, pathStroke = styles['path'] }: LoadingIconProps) => {
   return (
     <motion.svg
       className={className}

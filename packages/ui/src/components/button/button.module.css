@@ -1,6 +1,6 @@
 @import '../../theme/theme.module.css';
 
-.container {
+.button {
   @apply ring-offset-background rounded-md;
   @apply whitespace-nowrap text-sm font-medium;
   @apply transition-all duration-300;
@@ -10,50 +10,50 @@
   @apply [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0;
 }
 
-.primary {
+.button--primary {
   @apply border-highlight/0 bg-highlight/50 border;
   @apply text-foreground;
   @apply hover:not-disabled:border-highlight hover:not-disabled:bg-highlight/60;
 }
 
-.destructive {
+.button--destructive {
   @apply border-red/0 bg-red/50 border;
   @apply text-foreground;
   @apply hover:not-disabled:border-red hover:not-disabled:bg-red/60 border;
 }
 
-.secondary {
+.button--secondary {
   @apply border-foreground bg-foreground border;
   @apply text-background;
   @apply hover:not-disabled:border-primary hover:not-disabled:bg-primary/80;
 }
 
-.tertiary {
+.button--tertiary {
   @apply border-border border bg-black/60;
   @apply text-foreground;
   @apply hover:not-disabled:text-accent-foreground hover:not-disabled:bg-white/10;
 }
 
-.outline {
+.button--outline {
   @apply border-border bg-black/60;
   @apply text-foreground;
   @apply hover:text-accent-foreground hover:border hover:bg-white/10;
 }
 
-.link {
+.button--link {
   @apply text-lilac;
   @apply hover:not-disabled:underline underline-offset-4;
 }
 
-.sm {
+.size--sm {
   @apply h-7 rounded-md px-2;
   @apply text-xs;
 }
 
-.md {
+.size--md {
   @apply h-10 rounded-md px-3 py-2;
 }
 
-.lg {
+.size--lg {
   @apply h-11 rounded-md px-8;
 }

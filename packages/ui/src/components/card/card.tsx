@@ -12,7 +12,7 @@ const Card = React.forwardRef<
   return (
     <div
       ref={ref}
-      className={cn(styles.card, shouldHaveHoverStyle && styles['card-hover'], className)}
+      className={cn(styles.card, shouldHaveHoverStyle && styles['card--hover'], className)}
       {...props}
     >
       {shouldHaveHoverStyle && (

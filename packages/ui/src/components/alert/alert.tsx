@@ -4,11 +4,11 @@ import { cva, type VariantProps } from 'class-variance-authority';
 import styles from '@/components/alert/alert.module.css';
 import { cn } from '@/lib/utils';
 
-const alertVariants = cva(styles.container, {
+const alertVariants = cva(styles['alert'], {
   variants: {
     variant: {
-      default: styles.default,
-      destructive: styles.destructive,
+      default: styles['alert--default'],
+      destructive: styles['alert--destructive'],
     },
   },
   defaultVariants: {

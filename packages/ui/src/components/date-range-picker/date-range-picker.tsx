@@ -163,12 +163,12 @@ export const DateRangePicker = ({ dateRange, onSelect, className }: DateRangePic
             variant="outline"
             className={cn(
               styles['popover-trigger'],
-              dateRange.from && dateRange.to && styles['text-foreground'],
+              dateRange.from && dateRange.to && styles['popover-trigger--active'],
               className
             )}
           >
             <CalendarDays className={styles['calendar-icon']} />
-            <span className={styles['flex-1']}>{formatRange(dateRange)}</span>
+            <span className={styles['date-range']}>{formatRange(dateRange)}</span>
           </Button>
         </PopoverTrigger>
 
@@ -177,7 +177,7 @@ export const DateRangePicker = ({ dateRange, onSelect, className }: DateRangePic
             variant="outline"
             size="sm"
             onClick={handleClearClick}
-            className={styles['clear-button']}
+            className={styles['clear-btn']}
             aria-label="Clear search"
           >
             <X />
@@ -191,7 +191,7 @@ export const DateRangePicker = ({ dateRange, onSelect, className }: DateRangePic
             <Button
               variant="outline"
               size="sm"
-              className={styles['month-navigation-button']}
+              className={styles['month-navigation-btn']}
               onClick={goToPreviousMonth}
             >
               <ChevronLeft />
@@ -211,7 +211,7 @@ export const DateRangePicker = ({ dateRange, onSelect, className }: DateRangePic
             <Button
               variant="outline"
               size="sm"
-              className={styles['month-navigation-button']}
+              className={styles['month-navigation-btn']}
               onClick={goToNextMonth}
             >
               <ChevronRight />
@@ -242,11 +242,11 @@ export const DateRangePicker = ({ dateRange, onSelect, className }: DateRangePic
                   key={index}
                   variant="outline"
                   className={cn(
-                    styles['calendar-day-button'],
-                    isSelected && styles['selected'],
-                    !isSelected && styles['not-selected'],
-                    isToday && !isSelected && styles['today'],
-                    inRange && !isSelected && styles['in-range']
+                    styles['calendar-day-btn'],
+                    isSelected && styles['calendar-day-btn--selected'],
+                    !isSelected && styles['calendar-day-btn--not-selected'],
+                    isToday && !isSelected && styles['calendar-day-btn--today'],
+                    inRange && !isSelected && styles['calendar-day-btn--in-range']
                   )}
                   onClick={() => handleDateSelect(day)}
                 >

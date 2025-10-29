@@ -1,13 +1,14 @@
 import { Check, ChevronDown } from 'lucide-react';
 
-import { cn } from '../lib/utils';
-import { Button } from './button/button';
+import { Button } from '@/components/button/button';
 import {
   DropdownMenu,
   DropdownMenuCheckboxItem,
   DropdownMenuContent,
   DropdownMenuTrigger,
-} from './dropdown-menu/dropdown-menu';
+} from '@/components/dropdown-menu/dropdown-menu';
+import styles from '@/components/filter-dropdown-menu/filter-dropdown-menu.module.css';
+import { cn } from '@/lib/utils';
 
 interface FilterOption {
   value: string;
@@ -31,7 +32,7 @@ export const FilterDropdown = ({
   onToggleFilter,
   onClearAll,
   className,
-  contentWidth = 'w-56',
+  contentWidth = 'w-56', // TODO: Sort out - should be a className
 }: FilterDropdownProps) => {
   const hasSelectedFilters = selectedFilters.length > 0;
   const filteredOptions = options
@@ -47,30 +48,28 @@ export const FilterDropdown = ({
         <Button
           variant="outline"
           className={cn(
-            'flex min-w-32 items-center justify-between rounded-md transition-all duration-200 hover:shadow-sm',
-            hasSelectedFilters && 'border-lilac/30 bg-lilac/5 shadow-sm',
+            styles['selector-button'],
+            hasSelectedFilters && styles['selector-button--selected'],
             className
           )}
         >
-          <span className="flex items-center gap-1">
+          <span className={styles['selector-button-inner']}>
             {label}
             {hasSelectedFilters && (
-              <span className="bg-lilac/20 text-lilac rounded-full px-2 py-0.5 text-xs font-medium">
-                {selectedFilters.length}
-              </span>
+              <span className={styles['selected-filters-count']}>{selectedFilters.length}</span>
             )}
           </span>
-          <ChevronDown className="text-muted-foreground" />
+          <ChevronDown className={styles['text-muted-foreground']} />
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent
         align="end"
-        className={cn('border-border max-h-80 overflow-auto border shadow-lg', contentWidth)}
+        className={cn(styles['dropdown-menu-content'], contentWidth)}
       >
-        <div className="border-border flex items-center justify-between border-b px-3 pb-2 pt-2">
-          <span className="text-foreground text-sm font-semibold">Filters</span>
+        <div className={styles['dropdown-menu-content-header']}>
+          <span className={styles['header-title']}>Filters</span>
           {hasSelectedFilters && (
-            <Button variant="link" size="sm" onClick={onClearAll} className="h-auto p-0">
+            <Button variant="link" size="sm" onClick={onClearAll} className={styles['clear-btn']}>
               Clear all
             </Button>
           )}
@@ -84,19 +83,22 @@ export const FilterDropdown = ({
               checked={isSelected}
               onCheckedChange={() => onToggleFilter(option.value)}
               onSelect={(e) => e.preventDefault()}
-              className="hover:bg-lilac-button focus:bg-lilac-button relative cursor-pointer px-3 py-1.5 pl-9 text-sm transition-colors [&>span:first-child]:hidden"
+              className={styles['dropdown-menu-item']}
             >
-              <span className="absolute left-3 top-1/2 flex size-4 -translate-y-1/2 items-center justify-center">
+              <span className={styles['dropdown-menu-item-indicator']}>
+                {/* TODO: Check if this extra wrapper is needed */}
                 <div
                   className={cn(
-                    'flex size-4 items-center justify-center rounded-sm border transition-colors',
-                    isSelected ? 'border-lilac bg-lilac' : 'border-muted-foreground bg-muted/30'
+                    styles['indicator-inner'],
+                    isSelected
+                      ? styles['indicator-inner--selected']
+                      : styles['indicator-inner--not-selected']
                   )}
                 >
-                  {isSelected && <Check className="text-background size-4" />}
+                  {isSelected && <Check className={styles['check-icon']} />}
                 </div>
               </span>
-              <span className="text-foreground">{option.label}</span>
+              <span className={styles['dropdown-menu-item-label']}>{option.label}</span>
             </DropdownMenuCheckboxItem>
           );
         })}

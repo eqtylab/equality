@@ -1,0 +1,20 @@
+@import '../../theme/theme.module.css';
+
+.icon-btn {
+  @apply rounded-md transition-colors;
+  @apply inline-flex items-center justify-center;
+  @apply disabled:cursor-not-allowed disabled:opacity-50;
+  @apply focus-visible:ring-ring focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2;
+}
+
+.size--sm {
+  @apply size-8;
+}
+
+.size--md {
+  @apply size-10;
+}
+
+.size--lg {
+  @apply size-12;
+}

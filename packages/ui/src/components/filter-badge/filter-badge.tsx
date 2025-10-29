@@ -1,9 +1,10 @@
 import { X } from 'lucide-react';
 
-import { cn } from '../lib/utils';
-import { Badge } from './badge/badge';
-import { Button } from './button/button';
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from './tooltip';
+import { Badge } from '@/components/badge/badge';
+import { Button } from '@/components/button/button';
+import styles from '@/components/filter-badge/filter-badge.module.css';
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/tooltip';
+import { cn } from '@/lib/utils';
 
 interface FilterBadgeProps {
   label: string;
@@ -22,12 +23,12 @@ const FilterBadge = ({ label, handleRemove, colors, btnColors }: FilterBadgeProp
   };
 
   return (
-    <Badge className={cn('flex items-center gap-1', colors ?? 'bg-lilac/20 text-lilac')}>
+    <Badge className={cn(styles['filters-badge'], colors ?? styles['filters-badge--colors'])}>
       {isTruncated ? (
         <TooltipProvider>
           <Tooltip>
             <TooltipTrigger>{displayLabel}</TooltipTrigger>
-            <TooltipContent className="max-w-xs break-words">{label}</TooltipContent>
+            <TooltipContent className={styles['tooltip']}>{label}</TooltipContent>
           </Tooltip>
         </TooltipProvider>
       ) : (
@@ -38,7 +39,7 @@ const FilterBadge = ({ label, handleRemove, colors, btnColors }: FilterBadgeProp
         size="sm"
         onPointerDown={handlePointerDown}
         onClick={handleRemove}
-        className={cn('size-4 p-0 [&_svg]:size-3', btnColors)}
+        className={cn(styles['remove-btn'], btnColors)}
       >
         <X />
       </Button>

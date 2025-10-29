@@ -10,10 +10,10 @@ import { cn } from '@/lib/utils';
 const displayFieldVariants = cva('', {
   variants: {
     variant: {
-      neutral: styles['bg-neutral'],
-      neutralCheck: styles['bg-neutral'],
-      success: styles['bg-success'],
-      failure: styles['bg-failure'],
+      neutral: styles['display-field--neutral'],
+      neutralCheck: styles['display-field--neutral'],
+      success: styles['display-field--success'],
+      failure: styles['display-field--failure'],
     },
   },
   defaultVariants: {
@@ -74,7 +74,7 @@ function DisplayField({
   const showActions = copy || actions;
 
   return (
-    <div className={cn(styles['container'], className)} {...props}>
+    <div className={cn(styles['display-field'], className)} {...props}>
       {prefix && (
         <div className={cn(styles['prefix'], displayFieldVariants({ variant: variant }))}>
           {getIcon()}

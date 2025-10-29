@@ -1,6 +1,6 @@
 @import '../../theme/theme.module.css';
 
-.container {
+.alert {
   @apply [&>svg]:text-foreground [&>svg+div]:translate-y-[-3px] [&>svg]:absolute [&>svg]:left-4 [&>svg]:top-4 [&>svg~*]:pl-7;
   @apply relative w-full;
   @apply rounded-lg border;
@@ -8,12 +8,12 @@
   @apply text-sm;
 }
 
-.default {
+.alert--default {
   @apply bg-background;
   @apply text-foreground;
 }
 
-.destructive {
+.alert--destructive {
   @apply text-destructive [&>svg]:text-destructive;
   @apply border-destructive/50 dark:border-destructive;
 }

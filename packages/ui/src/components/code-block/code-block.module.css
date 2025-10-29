@@ -1,6 +1,6 @@
 @import '../../theme/theme.module.css';
 
-.container {
+.code-block {
   @apply border-border overflow-hidden rounded-md border;
 }
 

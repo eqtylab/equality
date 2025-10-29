@@ -20,7 +20,7 @@ const CodeBlock = ({
   copy,
 }: CodeBlockProps) => {
   return (
-    <div className={cn(styles.container, className)}>
+    <div className={cn(styles['code-block'], className)}>
       <div className={styles.header}>
         <span className={styles.title}>{title}</span>
         <CopyButton value={copy || code} size="sm" />

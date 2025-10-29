@@ -2,23 +2,21 @@ import * as React from 'react';
 import { cva, type VariantProps } from 'class-variance-authority';
 import * as LucideIcons from 'lucide-react';
 
-import { cn } from '../lib/utils';
+import styles from '@/components/icon-button/icon-button.module.css';
+import { cn } from '@/lib/utils';
 
-const iconButtonVariants = cva(
-  'focus-visible:ring-ring inline-flex items-center justify-center rounded-md transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50',
-  {
-    variants: {
-      size: {
-        sm: 'h-8 w-8',
-        md: 'h-10 w-10',
-        lg: 'h-12 w-12',
-      },
+const iconButtonVariants = cva(styles['icon-btn'], {
+  variants: {
+    size: {
+      sm: styles['size--sm'],
+      md: styles['size--md'],
+      lg: styles['size--lg'],
     },
-    defaultVariants: {
-      size: 'sm',
-    },
-  }
-);
+  },
+  defaultVariants: {
+    size: 'sm',
+  },
+});
 
 const iconSizeMap = {
   sm: 16,

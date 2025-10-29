@@ -22,12 +22,18 @@ export const ElementIcon = ({ iconUrl, className }: ElementIconProps) => {
 
   // If we have a component, render it directly
   if (IconComponent) {
-    return <IconComponent className={cn('h-full w-full', className)} />;
+    return <IconComponent className={cn(styles['icon'], className)} />;
   }
 
   // Otherwise treat it as an image URL
   return (
-    <div className={cn(styles['element-icon'], !iconUrl && styles['with-background'], className)}>
+    <div
+      className={cn(
+        styles['element-icon'],
+        !iconUrl && styles['element-icon--background'],
+        className
+      )}
+    >
       {iconUrl && <img src={iconUrl} alt="" className={styles['image']} />}
     </div>
   );

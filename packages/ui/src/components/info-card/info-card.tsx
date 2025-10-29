@@ -1,8 +1,8 @@
 import { LucideIcon } from 'lucide-react';
 
 import { Card, CardContent } from '@/components/card/card';
-
-import { IconSquare } from './icon-square';
+import { IconSquare } from '@/components/icon-square/icon-square';
+import styles from '@/components/info-card/info-card.module.css';
 
 interface InfoCardProps {
   label: string;
@@ -23,11 +23,11 @@ const InfoCard = ({
   return (
     <Card className={className} onClick={onClick} {...props}>
       <CardContent>
-        <div className="flex items-center gap-3">
+        <div className={styles['info-card-content']}>
           <IconSquare icon={Icon} size="sm" />
-          <div className="flex-1">
-            <p className="text-muted-foreground text-xs">{label}</p>
-            <div className="text-foreground text-sm font-semibold">{description}</div>
+          <div className={styles['copy-container']}>
+            <p className={styles['label']}>{label}</p>
+            <div className={styles['description']}>{description}</div>
           </div>
         </div>
       </CardContent>

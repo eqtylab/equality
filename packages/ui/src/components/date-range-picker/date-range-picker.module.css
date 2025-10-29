@@ -10,7 +10,7 @@
   @apply text-base font-normal md:text-sm;
 }
 
-.text-foreground {
+.popover-trigger--active {
   @apply text-foreground;
 }
 
@@ -19,11 +19,11 @@
   @apply absolute left-3 top-1/2 size-4 -translate-y-1/2;
 }
 
-.flex-1 {
+.date-range {
   @apply flex-1;
 }
 
-.clear-button {
+.clear-btn {
   @apply absolute right-2 top-1/2 size-6 -translate-y-1/2;
 }
 
@@ -39,7 +39,7 @@
   @apply flex items-center justify-between;
 }
 
-.month-navigation-button {
+.month-navigation-btn {
   @apply text-muted-foreground hover:text-foreground size-8 p-0;
 }
 
@@ -71,25 +71,25 @@
   @apply grid grid-cols-7 gap-1;
 }
 
-.calendar-day-button {
+.calendar-day-btn {
   @apply text-sm font-normal transition-colors;
   @apply size-9 rounded-md p-0;
 }
 
-.selected {
+.calendar-day-btn--selected {
   @apply bg-lilac hover:bg-lilac/90;
   @apply text-background;
 }
 
-.not-selected {
+.calendar-day-btn--not-selected {
   @apply hover:bg-lilac/20;
 }
 
-.today {
+.calendar-day-btn--today {
   @apply text-lilac font-semibold;
   @apply border-lilac/30 border;
 }
 
-.in-range {
+.calendar-day-btn--in-range {
   @apply bg-lilac/10 text-lilac;
 }

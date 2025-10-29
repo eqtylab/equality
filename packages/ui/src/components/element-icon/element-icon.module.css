@@ -6,10 +6,14 @@
   @apply border-border rounded-full border;
 }
 
-.with-background {
+.element-icon--background {
   @apply bg-white;
 }
 
 .image {
   @apply object-cover;
+}
+
+.icon {
+  @apply size-full;
 }

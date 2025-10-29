@@ -27,6 +27,7 @@ import {
   InfoCard,
   Input,
   Label,
+  ListOrGridViewToggle,
   LoadingIcon,
   MetricCard,
   PanelLabel,
@@ -601,7 +602,7 @@ const StyleGuide = () => {
             <section id="info-cards" className="space-y-6">
               <h3 className="border-border border-b pb-2 text-xl font-medium">Info Cards</h3>
               <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
-                <InfoCard label="Policy Type" description="Custom" icon={Shield} />
+                <InfoCard label="Policy Type test color" description="Custom" icon={Shield} />
                 <InfoCard label="Version" description="v1.0.0" icon={Tag} />
                 <InfoCard label="Total Controls" description="24" icon={Layers} />
                 <InfoCard label="Created" description="Jul 26, 2025" icon={Calendar} />
@@ -1932,6 +1933,20 @@ export const UserProfileComponent = () => {
               <div className="grid grid-cols-3 gap-4">
                 <LoadingIcon className="size-5" />
               </div>
+            </div>
+          </section>
+
+          {/* List or Grid View Toggle */}
+          <section id="list-or-grid-view-toggle" className="space-y-6">
+            <h3 className="border-border border-b pb-2 text-xl font-medium">
+              List or Grid View Toggle
+            </h3>
+            <div className="space-y-2">
+              <PanelLabel label="Default" />
+              <ListOrGridViewToggle
+                viewMode="grid"
+                onViewModeChange={(mode) => console.log(mode)}
+              />
             </div>
           </section>
         </div>

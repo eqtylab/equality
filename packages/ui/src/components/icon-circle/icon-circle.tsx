@@ -15,7 +15,7 @@ const IconCircle = forwardRef<HTMLDivElement, IconCircleProps>(
     const IconElement = icon as React.ElementType;
 
     return (
-      <div ref={ref} className={cn(styles.container, className)} {...props}>
+      <div ref={ref} className={cn(styles['icon-circle'], className)} {...props}>
         <IconElement className={styles.icon} />
       </div>
     );

@@ -1,5 +1,5 @@
 @import '../../theme/theme.module.css';
 
-.container {
+.bg-gradient {
   @apply absolute inset-0 size-full;
 }

@@ -5,20 +5,20 @@ import { cva, type VariantProps } from 'class-variance-authority';
 import styles from '@/components/button/button.module.css';
 import { cn } from '@/lib/utils';
 
-const buttonVariants = cva(styles.container, {
+const buttonVariants = cva(styles['button'], {
   variants: {
     variant: {
-      primary: styles.primary,
-      destructive: styles.destructive,
-      secondary: styles.secondary,
-      tertiary: styles.tertiary,
-      outline: styles.outline,
-      link: styles.link,
+      primary: styles['button--primary'],
+      destructive: styles['button--destructive'],
+      secondary: styles['button--secondary'],
+      tertiary: styles['button--tertiary'],
+      outline: styles['button--outline'],
+      link: styles['button--link'],
     },
     size: {
-      sm: styles.sm,
-      md: styles.md,
-      lg: styles.lg,
+      sm: styles['size--sm'],
+      md: styles['size--md'],
+      lg: styles['size--lg'],
     },
   },
   defaultVariants: {

@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import { IconButton } from '@/components/icon-button';
+import { IconButton } from '@/components/icon-button/icon-button';
 
 export interface CopyButtonProps {
   value: string;

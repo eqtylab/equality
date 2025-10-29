@@ -1,0 +1,18 @@
+@import '../../theme/theme.module.css';
+
+.icon-square {
+  @apply bg-foreground/10;
+  @apply w-max rounded-lg p-2;
+}
+
+.size--sm {
+  @apply size-4;
+}
+
+.size--md {
+  @apply size-5;
+}
+
+.icon {
+  @apply text-foreground;
+}

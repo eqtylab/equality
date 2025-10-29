@@ -1,10 +1,10 @@
 @import '../../theme/theme.module.css';
 
-.container {
+.card-content-header {
   @apply flex items-center justify-between gap-2;
 }
 
-.wrap {
+.card-content-header--wrap {
   @apply flex-wrap;
 }
 
@@ -16,6 +16,6 @@
   @apply text-card-foreground grow text-lg;
 }
 
-.title-width {
+.title--button-click {
   @apply @sm/card:w-auto w-full;
 }
