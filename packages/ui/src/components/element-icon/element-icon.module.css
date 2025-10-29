@@ -1,0 +1,15 @@
+@import '../../theme/theme.module.css';
+
+.element-icon {
+  @apply flex overflow-hidden transition-all;
+  @apply aspect-square w-10 min-w-10;
+  @apply border-border rounded-full border;
+}
+
+.with-background {
+  @apply bg-white;
+}
+
+.image {
+  @apply object-cover;
+}

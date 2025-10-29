@@ -1,4 +1,4 @@
-// TODO: Add CodeEditor component
+// TODO: Check if this component is needed in library
 
 // import { useState } from "react";
 // import Editor from "react-simple-code-editor";

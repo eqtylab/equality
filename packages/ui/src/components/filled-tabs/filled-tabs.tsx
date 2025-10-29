@@ -1,7 +1,8 @@
 import { motion } from 'framer-motion';
 
-import { cn } from '../lib/utils';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from './tabs';
+import styles from '@/components/filled-tabs/filled-tabs.module.css';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/tabs';
+import { cn } from '@/lib/utils';
 
 interface FilledTabsProps {
   activeTab: string;
@@ -21,8 +22,12 @@ const FilledTabs = ({ items, onValueChange, activeTab, className }: FilledTabsPr
   };
 
   return (
-    <Tabs value={activeTab} onValueChange={handleValueChange} className={cn('w-full', className)}>
-      <TabsList className="relative w-full overflow-hidden rounded-md bg-white/10 p-1">
+    <Tabs
+      value={activeTab}
+      onValueChange={handleValueChange}
+      className={cn(styles['tabs'], className)}
+    >
+      <TabsList className={styles['tabs-list']}>
         {items.map(({ label, value, icon: Icon }) => {
           const isActive = activeTab === value;
 
@@ -30,14 +35,14 @@ const FilledTabs = ({ items, onValueChange, activeTab, className }: FilledTabsPr
             <TabsTrigger
               key={value}
               value={value}
-              className="text-muted-foreground relative z-10 flex w-full gap-2 border-r border-b-0 border-white/10 px-3 py-1.5 text-sm font-medium last:border-r-0 data-[state=active]:border-transparent data-[state=active]:text-black"
+              className={styles['tabs-trigger']}
               data-tour={`${value}-tab-overview`}
             >
-              <Icon className="h-4 w-4" />
+              <Icon className={styles['icon']} />
               {label}
               {isActive && (
                 <motion.span
-                  className="bg-medium-lilac absolute inset-0 -z-1 h-full w-full rounded-sm"
+                  className={styles['active-tab-indicator']}
                   initial={false}
                   layoutId="filled-tabs-tab"
                 />
@@ -48,7 +53,7 @@ const FilledTabs = ({ items, onValueChange, activeTab, className }: FilledTabsPr
       </TabsList>
 
       {items.map(({ value, content }) => (
-        <TabsContent value={value} key={value} className="mt-5 space-y-6">
+        <TabsContent value={value} key={value} className={styles['content']}>
           {content}
         </TabsContent>
       ))}

@@ -1,0 +1,93 @@
+@import '../../theme/theme.module.css';
+
+.dropdown-menu-trigger {
+  @apply rounded-sm px-2 py-1.5;
+  @apply text-sm;
+  @apply outline-hidden cursor-default select-none;
+  @apply flex items-center gap-2;
+  @apply focus:bg-white/20 data-[state=open]:bg-white/20;
+  @apply [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0;
+}
+
+.dropdown-menu-inset {
+  @apply pl-8;
+}
+
+.dropdown-menu-sub-content {
+  @apply z-50 rounded-md p-1;
+  @apply min-w-32 overflow-hidden;
+  @apply bg-popover text-popover-foreground border shadow-lg;
+  @apply origin-(--radix-dropdown-menu-content-transform-origin);
+  @apply data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2;
+  @apply data-[state=open]:animate-in data-[state=open]:fade-in-0 data-[state=open]:zoom-in-95;
+  @apply data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95;
+}
+
+.dropdown-menu-content {
+  @apply bg-background text-foreground border border-white/20 shadow-md;
+  @apply z-50 rounded-md p-1;
+  @apply overflow-y-auto overflow-x-hidden;
+  @apply max-h-(--radix-dropdown-menu-content-available-height) min-w-32;
+  @apply origin-(--radix-dropdown-menu-content-transform-origin);
+  @apply data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2;
+  @apply data-[state=open]:animate-in data-[state=open]:fade-in-0 data-[state=open]:zoom-in-95;
+  @apply data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95;
+}
+
+.dropdown-menu-item {
+  @apply text-sm transition-colors;
+  @apply px-2 py-1.5;
+  @apply relative rounded-sm;
+  @apply outline-hidden cursor-default select-none;
+  @apply flex items-center gap-2;
+  @apply hover:bg-white/20 focus:bg-white/20;
+  @apply data-disabled:pointer-events-none data-disabled:opacity-50;
+  @apply [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0;
+}
+
+.dropdown-menu-checkbox-item {
+  @apply flex items-center;
+  @apply text-sm transition-colors;
+  @apply relative rounded-sm;
+  @apply outline-hidden cursor-default select-none;
+  @apply py-1.5 pl-8 pr-2;
+  @apply focus:bg-white/20;
+  @apply data-disabled:pointer-events-none data-disabled:opacity-50;
+}
+
+.dropdown-menu-item-indicator {
+  @apply absolute left-2 size-3.5;
+  @apply flex items-center justify-center;
+}
+
+.icon-size {
+  @apply size-4;
+}
+
+.dropdown-menu-radio-item {
+  @apply relative rounded-sm;
+  @apply outline-hidden cursor-default select-none;
+  @apply flex items-center;
+  @apply py-1.5 pl-8 pr-2;
+  @apply text-sm transition-colors;
+  @apply focus:bg-accent focus:text-accent-foreground;
+  @apply data-disabled:pointer-events-none data-disabled:opacity-50;
+}
+
+.radio-icon {
+  @apply size-2 fill-current;
+}
+
+.dropdown-menu-label {
+  @apply px-2 py-1.5 text-sm font-semibold;
+}
+
+.dropdown-menu-separator {
+  @apply bg-muted;
+  @apply -mx-1 my-1 h-px;
+}
+
+.dropdown-menu-shortcut {
+  @apply text-xs tracking-widest opacity-60;
+  @apply ml-auto;
+}

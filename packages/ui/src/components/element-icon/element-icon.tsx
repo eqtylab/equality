@@ -1,6 +1,7 @@
 import { ElementType, useMemo } from 'react';
 
-import { cn } from '../lib/utils';
+import styles from '@/components/element-icon/element-icon.module.css';
+import { cn } from '@/lib/utils';
 
 interface ElementIconProps {
   iconUrl?: string;
@@ -26,14 +27,8 @@ export const ElementIcon = ({ iconUrl, className }: ElementIconProps) => {
 
   // Otherwise treat it as an image URL
   return (
-    <div
-      className={cn(
-        'border-grey200 flex aspect-square w-10 min-w-10 overflow-hidden rounded-full border transition-all',
-        !iconUrl && 'bg-white',
-        className
-      )}
-    >
-      {iconUrl && <img src={iconUrl} alt="" className="object-cover" />}
+    <div className={cn(styles['element-icon'], !iconUrl && styles['with-background'], className)}>
+      {iconUrl && <img src={iconUrl} alt="" className={styles['image']} />}
     </div>
   );
 };

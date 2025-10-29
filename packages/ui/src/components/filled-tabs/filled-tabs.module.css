@@ -1,0 +1,33 @@
+@import '../../theme/theme.module.css';
+
+.tabs {
+  @apply w-full;
+}
+
+.tabs-list {
+  @apply relative overflow-hidden;
+  @apply bg-white/10 p-1;
+  @apply w-full rounded-md;
+}
+
+.tabs-trigger {
+  @apply text-muted-foreground text-sm font-medium;
+  @apply relative z-10;
+  @apply border-b-0 border-r border-white/10 last:border-r-0;
+  @apply flex gap-2;
+  @apply w-full;
+  @apply px-3 py-1.5;
+  @apply data-[state=active]:border-transparent data-[state=active]:text-black;
+}
+
+.icon {
+  @apply size-4;
+}
+
+.active-tab-indicator {
+  @apply bg-medium-lilac -z-1 absolute inset-0 h-full w-full rounded-sm;
+}
+
+.content {
+  @apply mt-5 space-y-6;
+}

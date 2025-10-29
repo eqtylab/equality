@@ -7,7 +7,7 @@ import {
   DropdownMenuCheckboxItem,
   DropdownMenuContent,
   DropdownMenuTrigger,
-} from './dropdown-menu';
+} from './dropdown-menu/dropdown-menu';
 
 export type SortField = 'name' | 'type' | 'createdAt' | 'updatedAt' | 'controls';
 export type SortOrder = 'asc' | 'desc';

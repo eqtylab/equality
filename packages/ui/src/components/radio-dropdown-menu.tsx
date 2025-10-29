@@ -7,7 +7,7 @@ import {
   DropdownMenuCheckboxItem,
   DropdownMenuContent,
   DropdownMenuTrigger,
-} from './dropdown-menu';
+} from './dropdown-menu/dropdown-menu';
 
 interface FilterOption {
   value: string;
