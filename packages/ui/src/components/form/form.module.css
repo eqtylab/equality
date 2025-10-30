@@ -1,4 +1,4 @@
-@import '../../theme/theme.module.css';
+@reference '../../theme/theme.module.css';
 
 .form-item {
   @apply space-y-2;

@@ -1,4 +1,4 @@
-@import '../../theme/theme.module.css';
+@reference '../../theme/theme.module.css';
 
 .dropdown-menu-trigger {
   @apply rounded-sm px-2 py-1.5;

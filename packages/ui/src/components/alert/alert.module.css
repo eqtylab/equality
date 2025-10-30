@@ -1,4 +1,4 @@
-@import '../../theme/theme.module.css';
+@reference '../../theme/theme.module.css';
 
 .alert {
   @apply [&>svg]:text-foreground [&>svg+div]:translate-y-[-3px] [&>svg]:absolute [&>svg]:left-4 [&>svg]:top-4 [&>svg~*]:pl-7;

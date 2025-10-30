@@ -1,4 +1,4 @@
-@import '../../theme/theme.module.css';
+@reference '../../theme/theme.module.css';
 
 .section-heading--right-content {
   @apply border-border border-b;

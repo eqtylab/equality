@@ -1,4 +1,4 @@
-@import '../../theme/theme.module.css';
+@reference '../../theme/theme.module.css';
 
 .drawer-overlay {
   @apply fixed inset-0 z-50 bg-black/80;

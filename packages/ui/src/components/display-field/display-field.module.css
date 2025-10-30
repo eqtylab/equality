@@ -1,4 +1,4 @@
-@import '../../theme/theme.module.css';
+@reference '../../theme/theme.module.css';
 
 .display-field {
   @apply border-border bg-black-5 rounded-md border;

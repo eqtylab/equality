@@ -1,4 +1,4 @@
-@import '../../theme/theme.module.css';
+@reference '../../theme/theme.module.css';
 
 .toast-viewport {
   @apply flex flex-col-reverse sm:flex-col;

@@ -1,4 +1,4 @@
-@import '../../theme/theme.module.css';
+@reference '../../theme/theme.module.css';
 
 .list-or-grid-view-toggle {
   @apply border-lilac/10 border;

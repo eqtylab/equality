@@ -1,4 +1,4 @@
-@import '../../theme/theme.module.css';
+@reference '../../theme/theme.module.css';
 
 .element-icon {
   @apply flex overflow-hidden transition-all;

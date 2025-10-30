@@ -1,4 +1,4 @@
-@import '../../theme/theme.module.css';
+@reference '../../theme/theme.module.css';
 
 .shimmer-skeleton {
   @apply relative overflow-hidden;

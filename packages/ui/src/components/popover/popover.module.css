@@ -1,4 +1,4 @@
-@import '../../theme/theme.module.css';
+@reference '../../theme/theme.module.css';
 
 .popover-content {
   @apply bg-black-5 text-popover-foreground outline-hidden border shadow-md;

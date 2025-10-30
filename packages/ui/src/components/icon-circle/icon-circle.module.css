@@ -1,4 +1,4 @@
-@import '../../theme/theme.module.css';
+@reference '../../theme/theme.module.css';
 
 .icon-circle {
   @apply bg-foreground/10 text-foreground;

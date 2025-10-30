@@ -1,4 +1,4 @@
-@import '../../theme/theme.module.css';
+@reference '../../theme/theme.module.css';
 
 .dialog-overlay {
   @apply data-[state=open]:animate-in data-[state=open]:fade-in-0;

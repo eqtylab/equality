@@ -1,4 +1,4 @@
-@import '../../theme/theme.module.css';
+@reference '../../theme/theme.module.css';
 
 .card-content-header {
   @apply flex items-center justify-between gap-2;

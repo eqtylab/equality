@@ -1,4 +1,4 @@
-@import '../../theme/theme.module.css';
+@reference '../../theme/theme.module.css';
 
 .panel-label {
   @apply text-xxs font-semibold uppercase tracking-[0.5px];

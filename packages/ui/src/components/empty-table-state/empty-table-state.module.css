@@ -1,4 +1,4 @@
-@import '../../theme/theme.module.css';
+@reference '../../theme/theme.module.css';
 
 .empty-table-state {
   @apply flex flex-col items-center justify-center gap-1;
