@@ -1,13 +1,14 @@
 import { Check, ChevronDown } from 'lucide-react';
 
-import { cn } from '../lib/utils';
-import { Button } from './button/button';
+import { Button } from '@/components/button/button';
 import {
   DropdownMenu,
   DropdownMenuCheckboxItem,
   DropdownMenuContent,
   DropdownMenuTrigger,
-} from './dropdown-menu/dropdown-menu';
+} from '@/components/dropdown-menu/dropdown-menu';
+import styles from '@/components/radio-dropdown-menu/radio-dropdown-menu.module.css';
+import { cn } from '@/lib/utils';
 
 interface FilterOption {
   value: string;
@@ -24,13 +25,13 @@ interface RadioDropdownProps {
   contentWidth?: string;
 }
 
-export const RadioDropdown = ({
+const RadioDropdown = ({
   label,
   options,
   selectedValue,
   onSelect,
   className,
-  contentWidth = 'min-w-36 w-auto',
+  contentWidth = 'min-w-36 w-auto', // TODO: check this
 }: RadioDropdownProps) => {
   const selectedOption = options.find((opt) => opt.value === selectedValue);
   const hasSelectedCount = selectedOption?.count !== undefined;
@@ -43,30 +44,22 @@ export const RadioDropdown = ({
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button
-          variant="outline"
-          className={cn(
-            'min-w-auto flex items-center justify-between rounded-md transition-all duration-200 hover:shadow-sm',
-            className
-          )}
-        >
-          <span className="flex items-center gap-1 capitalize">
+        <Button variant="outline" className={cn(styles['selector-button'], className)}>
+          <span className={styles['selector-button-inner']}>
             {selectedOption?.label || label}
             {hasSelectedCount && (
-              <span className="bg-lilac/20 text-lilac rounded-full px-2 py-0.5 text-xs font-medium">
-                {selectedOption.count}
-              </span>
+              <span className={styles['selected-count']}>{selectedOption.count}</span>
             )}
           </span>
-          <ChevronDown className="text-muted-foreground" />
+          <ChevronDown className={styles['chevron-icon']} />
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent
         align="end"
-        className={cn('border-border max-h-80 overflow-auto border shadow-lg', contentWidth)}
+        className={cn(styles['dropdown-menu-content'], contentWidth)}
       >
-        <div className="border-border flex items-center justify-between border-b px-3 pb-2 pt-2">
-          <span className="text-foreground text-sm font-semibold">{label}</span>
+        <div className={styles['dropdown-menu-content-header']}>
+          <span className={styles['header-title']}>{label}</span>
         </div>
         {filteredOptions.map((option) => {
           const isSelected = selectedValue === option.value;
@@ -77,19 +70,21 @@ export const RadioDropdown = ({
               key={option.value}
               checked={isSelected}
               onCheckedChange={() => onSelect(option.value)}
-              className="hover:bg-lilac-button focus:bg-lilac-button relative cursor-pointer px-3 py-1.5 pl-9 text-sm transition-colors [&>span:first-child]:hidden"
+              className={styles['dropdown-menu-item']}
             >
-              <span className="absolute left-3 top-1/2 flex size-4 -translate-y-1/2 items-center justify-center">
+              <span className={styles['dropdown-menu-item-indicator']}>
                 <div
                   className={cn(
-                    'flex size-4 items-center justify-center rounded-full border-2 transition-colors',
-                    isSelected ? 'border-lilac bg-lilac' : 'border-muted-foreground bg-muted/30'
+                    styles['indicator-inner'],
+                    isSelected
+                      ? styles['indicator-inner--selected']
+                      : styles['indicator-inner--not-selected']
                   )}
                 >
-                  {isSelected && <Check className="text-background size-3" />}
+                  {isSelected && <Check className={styles['check-icon']} />}
                 </div>
               </span>
-              <span className="text-foreground">
+              <span className={styles['dropdown-menu-item-label']}>
                 {option.label}
                 {hasCount && ` (${option.count})`}
               </span>
@@ -100,3 +95,5 @@ export const RadioDropdown = ({
     </DropdownMenu>
   );
 };
+
+export { RadioDropdown };

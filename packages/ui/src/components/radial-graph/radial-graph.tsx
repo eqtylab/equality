@@ -1,6 +1,7 @@
 import { forwardRef } from 'react';
 
-import { cn } from '../lib/utils';
+import styles from '@/components/radial-graph/radial-graph.module.css';
+import { cn } from '@/lib/utils';
 
 export interface RadialGraphProps {
   percentage: number;
@@ -16,8 +17,8 @@ const RadialGraph = forwardRef<HTMLDivElement, RadialGraphProps>(
     const label = displayLabel ?? `${Math.round(percentage)}%`;
 
     return (
-      <div ref={ref} className={cn('relative aspect-square w-full', className)} {...props}>
-        <div className="absolute inset-0 translate-x-1/2">
+      <div ref={ref} className={cn(styles['radial-graph'], className)} {...props}>
+        <div className={styles['bars-container']}>
           {bars.map((_, i) => {
             const isActive = i < percentage;
             const delay = `${i * 10}ms`;
@@ -25,28 +26,26 @@ const RadialGraph = forwardRef<HTMLDivElement, RadialGraphProps>(
             return (
               <div
                 key={i}
-                className="absolute h-1/2 w-[2px] origin-bottom"
+                className={styles['bar']}
                 style={{
                   transform: `rotate(${i * 3.6}deg)`,
                 }}
               >
                 <div
                   className={cn(
-                    'absolute top-0 right-0 left-0 h-3/4 overflow-hidden rounded-full transition-transform',
-                    isActive
-                      ? 'animate-grow-in scale-y-100 will-change-transform'
-                      : 'scale-y-[0.75]'
+                    styles['bar-inner'],
+                    isActive ? styles['bar-inner--active'] : styles['bar-inner--inactive']
                   )}
                   style={{
                     transitionDelay: delay,
                     animationDelay: delay,
                   }}
                 >
-                  <div className="from-muted-foreground/50 absolute inset-0 bg-linear-to-b to-50%" />
+                  <div className={styles['bar-background']} />
                   <div
                     className={cn(
-                      'from-highlight absolute inset-0 bg-linear-to-b to-50% transition-opacity',
-                      isActive ? 'will-change-opacity animate-fade-in opacity-100' : 'opacity-0'
+                      styles['bar-gradient'],
+                      isActive ? styles['bar-gradient--active'] : styles['bar-gradient--inactive']
                     )}
                     style={{
                       transitionDelay: delay,
@@ -58,9 +57,9 @@ const RadialGraph = forwardRef<HTMLDivElement, RadialGraphProps>(
             );
           })}
         </div>
-        <div className="absolute inset-0 flex flex-col items-center justify-center">
-          <p className={cn('text-5xl font-medium', labelClassName)}>{label}</p>
-          {subLabel && <p className="text-sm">{subLabel}</p>}
+        <div className={styles['label-container']}>
+          <p className={cn(styles['label'], labelClassName)}>{label}</p>
+          {subLabel && <p className={styles['sub-label']}>{subLabel}</p>}
         </div>
       </div>
     );

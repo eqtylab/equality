@@ -1,0 +1,5 @@
+@import '../../theme/theme.module.css';
+
+.motion-collapsible {
+  @apply overflow-hidden;
+}

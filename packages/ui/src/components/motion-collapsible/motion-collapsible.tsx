@@ -1,13 +1,16 @@
 import { ReactNode, useEffect, useRef, useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 
+import styles from '@/components/motion-collapsible/motion-collapsible.module.css';
+import { cn } from '@/lib/utils';
+
 interface MotionCollapsibleContentProps {
   isOpen: boolean;
   children: ReactNode;
   className?: string;
 }
 
-export const MotionCollapsibleContent = ({
+const MotionCollapsibleContent = ({
   isOpen,
   children,
   className,
@@ -40,7 +43,7 @@ export const MotionCollapsibleContent = ({
           animate={{ height: contentHeight, opacity: 1 }}
           exit={{ height: 0, opacity: 0 }}
           transition={{ duration: 0.3, ease: 'easeInOut' }}
-          className={`overflow-hidden ${className}`}
+          className={cn(styles['motion-collapsible'], className)}
         >
           <div ref={contentRef}>{children}</div>
         </motion.div>
@@ -48,3 +51,5 @@ export const MotionCollapsibleContent = ({
     </AnimatePresence>
   );
 };
+
+export { MotionCollapsibleContent };

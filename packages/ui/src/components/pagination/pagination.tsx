@@ -1,7 +1,9 @@
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 
-import { Button } from './button/button';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from './select';
+import { Button } from '@/components/button/button';
+import styles from '@/components/pagination/pagination.module.css';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/select';
+import { cn } from '@/lib/utils';
 
 interface PaginationProps {
   currentPage: number;
@@ -18,7 +20,7 @@ interface PaginationProps {
   scrollTargetRef?: React.RefObject<HTMLElement> | string;
 }
 
-export const Pagination = ({
+const Pagination = ({
   currentPage,
   totalItems,
   filteredItems,
@@ -123,20 +125,24 @@ export const Pagination = ({
   };
 
   return (
-    <div className={`relative mt-4 flex items-center justify-between ${className}`}>
+    <div className={cn(styles['pagination'], className)}>
       {/* Left side: Info text with inline dropdown */}
-      <div className="flex items-center gap-2">
+      <div className={styles['info-container']}>
         {showInfo && hasFilteredItems && (
-          <div className="text-muted-foreground flex items-center gap-1 text-sm">
+          <div className={styles['info-text']}>
             <span>Showing {startItem} to</span>
             {onItemsPerPageChange ? (
               <Select value={itemsPerPage.toString()} onValueChange={handleItemsPerPageChange}>
-                <SelectTrigger className="border-border hover:text-accent-foreground h-7 w-auto gap-0.5 rounded-md border bg-black/60 px-2 text-sm hover:bg-white/10">
+                <SelectTrigger className={styles['select-trigger']}>
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
                   {itemsPerPageOptions.map((option) => (
-                    <SelectItem key={option} value={option.toString()} className="cursor-pointer">
+                    <SelectItem
+                      key={option}
+                      value={option.toString()}
+                      className={styles['select-item']}
+                    >
                       {option}
                     </SelectItem>
                   ))}
@@ -153,7 +159,7 @@ export const Pagination = ({
       </div>
 
       {/* Right side: Page navigation */}
-      <div className="flex gap-1">
+      <div className={styles['page-navigation-container']}>
         <Button
           variant="outline"
           size="sm"
@@ -161,7 +167,7 @@ export const Pagination = ({
           disabled={isFirstPage}
           aria-label="Previous page"
         >
-          <ChevronLeft className="h-4 w-4" />
+          <ChevronLeft className={styles['icon']} />
         </Button>
 
         {getVisiblePages()}
@@ -173,9 +179,11 @@ export const Pagination = ({
           disabled={isLastPage}
           aria-label="Next page"
         >
-          <ChevronRight className="h-4 w-4" />
+          <ChevronRight className={styles['icon']} />
         </Button>
       </div>
     </div>
   );
 };
+
+export { Pagination };

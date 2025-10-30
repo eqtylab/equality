@@ -121,7 +121,17 @@
   --radius-sm: calc(var(--radius) - 4px);
 
   /* Animation */
+  --animate-grow-in: grow-in 800ms ease-in-out backwards;
   --animate-fade-in: fade-in 800ms ease-in-out backwards;
+
+  @keyframes grow-in {
+    from {
+      transform: scaleY(0.75);
+    }
+    to {
+      transform: scaleY(1);
+    }
+  }
 
   @keyframes fade-in {
     0% {

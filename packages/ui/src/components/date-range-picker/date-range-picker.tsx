@@ -3,7 +3,7 @@ import { CalendarDays, ChevronLeft, ChevronRight, X } from 'lucide-react';
 
 import { Button } from '@/components/button/button';
 import styles from '@/components/date-range-picker/date-range-picker.module.css';
-import { Popover, PopoverContent, PopoverTrigger } from '@/components/popover';
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/popover/popover';
 import { cn } from '@/lib/utils';
 
 interface DateRange {
