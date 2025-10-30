@@ -127,4 +127,4 @@ const BgGradient = ({
   return <canvas ref={canvasRef} className={styles['bg-gradient']} />;
 };
 
-export default BgGradient;
+export { BgGradient };

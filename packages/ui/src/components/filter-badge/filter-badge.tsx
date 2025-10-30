@@ -47,4 +47,4 @@ const FilterBadge = ({ label, handleRemove, colors, btnColors }: FilterBadgeProp
   );
 };
 
-export default FilterBadge;
+export { FilterBadge };

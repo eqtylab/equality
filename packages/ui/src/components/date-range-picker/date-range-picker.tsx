@@ -17,7 +17,7 @@ interface DateRangePickerProps {
   className?: string;
 }
 
-export const DateRangePicker = ({ dateRange, onSelect, className }: DateRangePickerProps) => {
+const DateRangePicker = ({ dateRange, onSelect, className }: DateRangePickerProps) => {
   const [selecting, setSelecting] = useState<'from' | 'to' | null>(null);
   const [displayedMonth, setDisplayedMonth] = useState(new Date().getMonth());
   const [displayedYear, setDisplayedYear] = useState(new Date().getFullYear());
@@ -260,3 +260,5 @@ export const DateRangePicker = ({ dateRange, onSelect, className }: DateRangePic
     </Popover>
   );
 };
+
+export { DateRangePicker };

@@ -13,7 +13,7 @@ interface EmptyTableStateProps {
   className?: string;
 }
 
-export const EmptyTableState = ({
+const EmptyTableState = ({
   icon,
   title,
   description,
@@ -43,3 +43,5 @@ export const EmptyTableState = ({
     </div>
   );
 };
+
+export { EmptyTableState };

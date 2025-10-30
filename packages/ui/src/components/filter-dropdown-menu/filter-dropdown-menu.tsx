@@ -25,7 +25,7 @@ interface FilterDropdownProps {
   contentWidth?: string;
 }
 
-export const FilterDropdown = ({
+const FilterDropdown = ({
   label,
   options,
   selectedFilters,
@@ -106,3 +106,5 @@ export const FilterDropdown = ({
     </DropdownMenu>
   );
 };
+
+export { FilterDropdown };

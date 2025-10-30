@@ -8,7 +8,7 @@ interface ElementIconProps {
   className?: string;
 }
 
-export const ElementIcon = ({ iconUrl, className }: ElementIconProps) => {
+const ElementIcon = ({ iconUrl, className }: ElementIconProps) => {
   const IconComponent = useMemo(() => {
     // Check if the icon is an SVG component (imported directly)
     if (typeof iconUrl === 'object' && (iconUrl as ElementType)) {
@@ -39,4 +39,4 @@ export const ElementIcon = ({ iconUrl, className }: ElementIconProps) => {
   );
 };
 
-export default ElementIcon;
+export { ElementIcon };

@@ -7,7 +7,7 @@ interface LoadingOverlayProps {
   message?: string;
 }
 
-export function LoadingOverlay({ isVisible, message = 'Loading...' }: LoadingOverlayProps) {
+function LoadingOverlay({ isVisible, message = 'Loading...' }: LoadingOverlayProps) {
   if (!isVisible) return null;
 
   return (
@@ -19,3 +19,5 @@ export function LoadingOverlay({ isVisible, message = 'Loading...' }: LoadingOve
     </div>
   );
 }
+
+export { LoadingOverlay };
