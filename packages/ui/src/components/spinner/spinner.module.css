@@ -1,0 +1,7 @@
+@import '../../theme/theme.module.css';
+
+.spinner {
+  @apply border-t-transparent;
+  @apply rounded-full;
+  @apply animate-spin;
+}

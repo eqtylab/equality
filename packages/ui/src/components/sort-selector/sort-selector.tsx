@@ -1,13 +1,14 @@
 import { Check, ChevronDown } from 'lucide-react';
 
-import { cn } from '../lib/utils';
-import { Button } from './button/button';
+import { Button } from '@/components/button/button';
 import {
   DropdownMenu,
   DropdownMenuCheckboxItem,
   DropdownMenuContent,
   DropdownMenuTrigger,
-} from './dropdown-menu/dropdown-menu';
+} from '@/components/dropdown-menu/dropdown-menu';
+import styles from '@/components/sort-selector/sort-selector.module.css';
+import { cn } from '@/lib/utils';
 
 export type SortField = 'name' | 'type' | 'createdAt' | 'updatedAt' | 'controls';
 export type SortOrder = 'asc' | 'desc';
@@ -22,7 +23,7 @@ interface SortSelectorProps {
   className?: string;
 }
 
-export function SortSelector({
+function SortSelector({
   sortField,
   sortOrder,
   setSortField,
@@ -67,22 +68,16 @@ export function SortSelector({
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button
-          variant="outline"
-          className={cn(
-            'flex min-w-32 items-center justify-between rounded-md transition-all duration-200 hover:shadow-sm',
-            className
-          )}
-        >
+        <Button variant="outline" className={cn(styles['sort-selector-trigger'], className)}>
           <span>{currentLabel}</span>
-          <ChevronDown className="text-muted-foreground" />
+          <ChevronDown className={styles['chevron-down-icon']} />
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent align="end" className="border-border w-48 border shadow-lg">
-        <div className="border-border flex items-center justify-between border-b px-3 pb-2 pt-2">
-          <span className="text-foreground text-sm font-semibold">Sort By</span>
+      <DropdownMenuContent align="end" className={styles['dropdown-menu-content']}>
+        <div className={styles['dropdown-menu-content-header']}>
+          <span className={styles['header-title']}>Sort By</span>
           {!isDefaultSort && (
-            <Button variant="link" size="sm" onClick={handleReset} className="h-auto p-0">
+            <Button variant="link" size="sm" onClick={handleReset} className={styles['reset-btn']}>
               Reset
             </Button>
           )}
@@ -96,19 +91,21 @@ export function SortSelector({
               checked={isSelected}
               onCheckedChange={() => handleChange(option.value)}
               onSelect={(e) => e.preventDefault()}
-              className="hover:bg-lilac-button focus:bg-lilac-button relative cursor-pointer px-3 py-1.5 pl-9 text-sm transition-colors [&>span:first-child]:hidden"
+              className={styles['dropdown-menu-item']}
             >
-              <span className="absolute left-3 top-1/2 flex size-4 -translate-y-1/2 items-center justify-center">
+              <span className={styles['dropdown-menu-item-indicator']}>
                 <div
                   className={cn(
-                    'flex size-4 items-center justify-center rounded-full border-2 transition-colors',
-                    isSelected ? 'border-lilac bg-lilac' : 'border-muted-foreground bg-muted/30'
+                    styles['indicator-inner'],
+                    isSelected
+                      ? styles['indicator-inner--selected']
+                      : styles['indicator-inner--not-selected']
                   )}
                 >
-                  {isSelected && <Check className="text-background size-3" />}
+                  {isSelected && <Check className={styles['check-icon']} />}
                 </div>
               </span>
-              <span className="text-foreground">{option.label}</span>
+              <span className={styles['dropdown-menu-item-label']}>{option.label}</span>
             </DropdownMenuCheckboxItem>
           );
         })}
@@ -116,3 +113,5 @@ export function SortSelector({
     </DropdownMenu>
   );
 }
+
+export { SortSelector };

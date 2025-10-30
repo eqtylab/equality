@@ -1,7 +1,7 @@
 import { motion } from 'framer-motion';
 
 import styles from '@/components/filled-tabs/filled-tabs.module.css';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/tabs';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/tabs/tabs';
 import { cn } from '@/lib/utils';
 
 interface FilledTabsProps {

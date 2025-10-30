@@ -1,7 +1,8 @@
 import { useState } from 'react';
 
-import { cn } from '../lib/utils';
-import { Button } from './button/button';
+import { Button } from '@/components/button/button';
+import styles from '@/components/truncated-description/truncated-description.module.css';
+import { cn } from '@/lib/utils';
 
 interface TruncatedDescriptionProps {
   className?: string;
@@ -30,10 +31,10 @@ const TruncatedDescription = ({
   };
 
   return (
-    <div className={cn('text-sm', className)}>
+    <div className={cn(styles['truncated-description'], className)}>
       <div dangerouslySetInnerHTML={{ __html: displayDescription }} />
       {isLongDescription && (
-        <Button variant="link" size="sm" className="h-max p-0 text-xs" onClick={handleToggle}>
+        <Button variant="link" size="sm" className={styles['show-btn']} onClick={handleToggle}>
           {expanded ? 'Show less' : 'Show more'}
         </Button>
       )}
@@ -46,4 +47,4 @@ const removeHtmlTags = (html: string): string => {
   return html.replace(/<[^>]*>/g, '');
 };
 
-export default TruncatedDescription;
+export { TruncatedDescription };

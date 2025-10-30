@@ -1,7 +1,8 @@
 import * as React from 'react';
 import * as TooltipPrimitive from '@radix-ui/react-tooltip';
 
-import { cn } from '../lib/utils';
+import styles from '@/components/tooltip/tooltip.module.css';
+import { cn } from '@/lib/utils';
 
 const TooltipProvider = TooltipPrimitive.Provider;
 
@@ -17,18 +18,11 @@ const TooltipContent = React.forwardRef<
     <TooltipPrimitive.Content
       ref={ref}
       sideOffset={sideOffset}
-      className={cn(
-        'border-border text-foreground animate-in fade-in-0 zoom-in-95 data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 z-9999 origin-(--radix-tooltip-content-transform-origin) overflow-hidden rounded-md border bg-black px-3 py-1.5 text-sm shadow-md',
-        className
-      )}
+      className={cn(styles['tooltip-content'], className)}
       {...props}
     >
       {props.children}
-      <TooltipPrimitive.Arrow
-        width={18}
-        height={6}
-        className="fill-border stroke-border stroke-1"
-      />
+      <TooltipPrimitive.Arrow width={18} height={6} className={styles['tooltip-arrow']} />
     </TooltipPrimitive.Content>
   </TooltipPrimitive.Portal>
 ));

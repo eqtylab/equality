@@ -1,0 +1,95 @@
+@import '../../theme/theme.module.css';
+
+.toast-viewport {
+  @apply flex flex-col-reverse sm:flex-col;
+  @apply p-4;
+  @apply z-100 fixed top-0 sm:bottom-0 sm:right-0 sm:top-auto;
+  @apply max-h-screen w-full md:max-w-[420px];
+}
+
+.toast {
+  @apply pointer-events-auto relative transition-all;
+  @apply flex items-center justify-between;
+  @apply bg-background border shadow-lg backdrop-blur-sm;
+  @apply w-full overflow-hidden;
+  @apply space-x-4 rounded-md p-4 pr-8;
+  @apply data-[state=open]:animate-in data-[state=open]:slide-in-from-top-full sm:data-[state=open]:slide-in-from-bottom-full;
+  @apply data-[state=closed]:animate-out data-[state=closed]:fade-out-80 data-[state=closed]:slide-out-to-right-full;
+  @apply data-[swipe=end]:animate-out data-[swipe=end]:translate-x-(--radix-toast-swipe-end-x);
+  @apply data-[swipe=move]:translate-x-(--radix-toast-swipe-move-x) data-[swipe=move]:transition-none;
+  @apply data-[swipe=cancel]:translate-x-0;
+  @apply before:absolute before:inset-0 before:rounded-md;
+}
+
+.toast--default {
+  @apply border-lilac text-lilac before:bg-lilac/20;
+}
+
+.toast--destructive {
+  @apply border-red text-red before:bg-red/20;
+}
+
+.toast--warning {
+  @apply border-yellow text-yellow before:bg-yellow/20;
+}
+
+.toast--success {
+  @apply border-mint text-mint before:bg-mint/20;
+}
+
+.toast-action {
+  @apply px-3;
+  @apply text-sm font-medium transition-colors;
+  @apply h-8 shrink-0 rounded-md;
+  @apply ring-offset-background border bg-transparent;
+  @apply inline-flex items-center justify-center;
+  @apply hover:bg-secondary;
+  @apply focus:ring-ring focus:outline-hidden focus:ring-2 focus:ring-offset-2;
+  @apply disabled:pointer-events-none disabled:opacity-50;
+}
+
+.toast--destructive .toast-action {
+  @apply border-muted/40;
+}
+
+.toast--destructive:hover .toast-action {
+  @apply border-destructive/30 bg-destructive text-destructive-foreground;
+}
+
+.toast--destructive:focus .toast-action {
+  @apply ring-destructive;
+}
+
+.toast-close {
+  @apply text-foreground/50;
+  @apply rounded-md;
+  @apply p-1;
+  @apply opacity-0 transition-opacity;
+  @apply absolute right-2 top-2;
+  @apply hover:text-foreground;
+  @apply focus:outline-hidden focus:opacity-100 focus:ring-2;
+}
+
+.toast:hover .toast-close {
+  @apply opacity-100;
+}
+
+.toast--destructive .toast-close {
+  @apply text-red;
+}
+
+.toast--destructive:focus .toast-close {
+  @apply ring-red ring-offset-red-600;
+}
+
+.toast-close-icon {
+  @apply size-4;
+}
+
+.toast-title {
+  @apply text-sm font-semibold;
+}
+
+.toast-description {
+  @apply text-muted-foreground text-sm;
+}

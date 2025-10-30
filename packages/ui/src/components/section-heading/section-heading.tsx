@@ -1,4 +1,5 @@
-import { cn } from '../lib/utils';
+import styles from '@/components/section-heading/section-heading.module.css';
+import { cn } from '@/lib/utils';
 
 interface SectionHeadingProps {
   className?: string;
@@ -16,15 +17,10 @@ const SectionHeading = ({
   const hasRightContent = !!renderRightContent;
 
   return (
-    <div
-      className={cn(
-        hasRightContent && 'border-border flex items-center justify-between border-b pb-2',
-        className
-      )}
-    >
-      <div className="space-y-1">
-        <h3 className="text-xl font-medium">{heading}</h3>
-        {description && <p className="text-muted-foreground text-sm">{description}</p>}
+    <div className={cn(hasRightContent && styles['section-heading--right-content'], className)}>
+      <div className={styles['content']}>
+        <h3 className={styles['heading']}>{heading}</h3>
+        {description && <p className={styles['description']}>{description}</p>}
       </div>
       {hasRightContent && renderRightContent()}
     </div>

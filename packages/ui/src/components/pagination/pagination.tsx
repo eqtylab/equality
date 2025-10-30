@@ -2,7 +2,13 @@ import { ChevronLeft, ChevronRight } from 'lucide-react';
 
 import { Button } from '@/components/button/button';
 import styles from '@/components/pagination/pagination.module.css';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/select';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/select/select';
 import { cn } from '@/lib/utils';
 
 interface PaginationProps {

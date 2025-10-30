@@ -1,9 +1,13 @@
+import styles from '@/components/spinner/spinner.module.css';
+import { cn } from '@/lib/utils';
+
 interface SpinnerProps {
   size?: number;
   color?: string;
   borderWidth?: number;
 }
 
+// TODO: Optimize to take variants for size - Color should always be dark/light
 export const Spinner = ({
   size = 40,
   color = 'border-gray-400',
@@ -15,10 +19,5 @@ export const Spinner = ({
     borderWidth: `${borderWidth}px`,
   };
 
-  return (
-    <div
-      className={`animate-spin rounded-full border-t-transparent ${color}`}
-      style={spinnerStyle}
-    />
-  );
+  return <div className={cn(styles['spinner'], color)} style={spinnerStyle} />;
 };

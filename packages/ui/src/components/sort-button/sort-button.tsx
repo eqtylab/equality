@@ -1,5 +1,7 @@
 import { ArrowDown, ArrowUp, ArrowUpDown } from 'lucide-react';
 
+import styles from '@/components/sort-button/sort-button.module.css';
+
 interface SortButtonProps<T extends string> {
   field: T;
   children: React.ReactNode;
@@ -9,7 +11,7 @@ interface SortButtonProps<T extends string> {
   onSort: (field: T) => void;
 }
 
-export function SortButton<T extends string>({
+function SortButton<T extends string>({
   field,
   children,
   icon,
@@ -25,14 +27,10 @@ export function SortButton<T extends string>({
   };
 
   return (
-    <button
-      type="button"
-      onClick={handleClick}
-      className="group hover:text-lilac flex items-center gap-2 text-left font-medium transition-colors [&>svg]:size-4"
-    >
+    <button type="button" onClick={handleClick} className={styles['sort-button']}>
       {icon}
       {children}
-      <div className="flex items-center [&>svg]:size-3">
+      <div className={styles['arrow-container']}>
         {isActive ? (
           isAscending ? (
             <ArrowUp />
@@ -40,9 +38,11 @@ export function SortButton<T extends string>({
             <ArrowDown />
           )
         ) : (
-          <ArrowUpDown className="opacity-0 transition-opacity group-hover:opacity-50" />
+          <ArrowUpDown className={styles['arrow-up-down-icon']} />
         )}
       </div>
     </button>
   );
 }
+
+export { SortButton };

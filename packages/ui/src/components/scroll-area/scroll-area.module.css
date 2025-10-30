@@ -1,0 +1,30 @@
+@import '../../theme/theme.module.css';
+
+.scroll-area {
+  @apply relative overflow-hidden;
+}
+
+.scroll-area-viewport {
+  @apply h-full w-full rounded-[inherit];
+}
+
+.scroll-bar {
+  @apply flex transition-colors;
+  @apply touch-none select-none;
+}
+
+.scroll-bar--vertical {
+  @apply border-l border-l-transparent;
+  @apply h-full w-2.5 p-px;
+}
+
+.scroll-bar--horizontal {
+  @apply border-t border-t-transparent;
+  @apply flex-col;
+  @apply h-2.5 p-px;
+}
+
+.scroll-area-thumb {
+  @apply bg-border rounded-full;
+  @apply relative flex-1;
+}

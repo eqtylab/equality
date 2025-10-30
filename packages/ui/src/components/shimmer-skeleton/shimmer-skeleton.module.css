@@ -1,0 +1,11 @@
+@import '../../theme/theme.module.css';
+
+.shimmer-skeleton {
+  @apply relative overflow-hidden;
+}
+
+.content {
+  @apply bg-linear-to-r from-transparent via-white/10 to-transparent;
+  /* @apply animate-shimmer; */ /* TODO: This doens't exist in the theme (???) */
+  @apply absolute inset-0 -translate-x-full;
+}

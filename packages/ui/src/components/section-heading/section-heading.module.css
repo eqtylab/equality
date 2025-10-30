@@ -1,0 +1,19 @@
+@import '../../theme/theme.module.css';
+
+.section-heading--right-content {
+  @apply border-border border-b;
+  @apply flex items-center justify-between;
+  @apply pb-2;
+}
+
+.content {
+  @apply space-y-1;
+}
+
+.heading {
+  @apply text-xl font-medium;
+}
+
+.description {
+  @apply text-muted-foreground text-sm;
+}

@@ -3,7 +3,12 @@ import { X } from 'lucide-react';
 import { Badge } from '@/components/badge/badge';
 import { Button } from '@/components/button/button';
 import styles from '@/components/filter-badge/filter-badge.module.css';
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/tooltip';
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from '@/components/tooltip/tooltip';
 import { cn } from '@/lib/utils';
 
 interface FilterBadgeProps {

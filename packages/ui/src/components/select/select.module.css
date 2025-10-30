@@ -1,0 +1,77 @@
+@import '../../theme/theme.module.css';
+
+.select-trigger {
+  @apply text-sm;
+  @apply px-3 py-2;
+  @apply h-10 w-full rounded-md;
+  @apply border-border border bg-zinc-950;
+  @apply flex items-center justify-between;
+  @apply ring-offset-background;
+  @apply focus:ring-ring/70 focus:outline-hidden focus:ring-1;
+  @apply data-placeholder:text-muted-foreground;
+  @apply disabled:cursor-not-allowed disabled:opacity-50;
+  @apply [&>span]:line-clamp-1;
+}
+
+.select-icon {
+  @apply size-4;
+}
+
+.select-icon--low-opacity {
+  @apply opacity-50;
+}
+
+.select-scroll-button {
+  @apply cursor-default py-1;
+  @apply flex items-center justify-center;
+}
+
+.select-content {
+  @apply text-popover-foreground;
+  @apply border border-white/20 bg-black shadow-md;
+  @apply relative z-50;
+  @apply overflow-y-auto overflow-x-hidden;
+  @apply max-h-(--radix-select-content-available-height) min-w-32 rounded-md;
+  @apply origin-(--radix-select-content-transform-origin);
+  @apply data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2;
+  @apply data-[state=open]:animate-in data-[state=open]:fade-in-0 data-[state=open]:zoom-in-95;
+  @apply data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95;
+}
+
+.select-content--popper {
+  @apply data-[side=bottom]:translate-y-1 data-[side=left]:-translate-x-1 data-[side=right]:translate-x-1 data-[side=top]:-translate-y-1;
+}
+
+.select-viewport {
+  @apply p-1;
+}
+
+.select-viewport--popper {
+  @apply h-(--radix-select-trigger-height) min-w-(--radix-select-trigger-width) w-full;
+}
+
+.select-label {
+  @apply text-sm font-semibold;
+  @apply py-1.5 pl-8 pr-2;
+}
+
+.select-item {
+  @apply relative w-full rounded-sm;
+  @apply text-sm;
+  @apply py-1.5 pl-7 pr-2;
+  @apply flex items-center;
+  @apply outline-hidden cursor-default select-none;
+  @apply data-disabled:pointer-events-none data-disabled:opacity-50;
+  @apply focus:text-accent-foreground focus:bg-white/20;
+}
+
+.select-item-indicator {
+  @aaply absolute left-2;
+  @apply flex items-center justify-center;
+  @apply size-3.5;
+}
+
+.select-separator {
+  @apply bg-muted;
+  @apply -mx-1 my-1 h-px;
+}

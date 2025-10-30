@@ -1,0 +1,6 @@
+@import '../../theme/theme.module.css';
+
+.skeleton {
+  @apply bg-muted rounded-md;
+  @apply animate-pulse;
+}

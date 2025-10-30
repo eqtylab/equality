@@ -1,8 +1,9 @@
 import { Search, X } from 'lucide-react';
 
-import { cn } from '../lib/utils';
-import { Button } from './button/button';
-import { Input } from './input/input';
+import { Button } from '@/components/button/button';
+import { Input } from '@/components/input/input';
+import styles from '@/components/search-bar/search-bar.module.css';
+import { cn } from '@/lib/utils';
 
 interface SearchBarProps {
   className?: string;
@@ -26,20 +27,20 @@ const SearchBar = ({
   };
 
   return (
-    <div className={cn('relative', className)}>
-      <Search className="text-muted-foreground absolute left-3 top-1/2 size-4 -translate-y-1/2" />
+    <div className={cn(styles['search-bar'], className)}>
+      <Search className={styles['search-icon']} />
       <Input
         placeholder={placeholder}
         value={searchQuery}
         onChange={handleChange}
-        className="px-10"
+        className={styles['input']}
       />
       {searchQuery && (
         <Button
           variant="outline"
           size="sm"
           onClick={handleClear}
-          className="absolute right-2 top-1/2 size-6 -translate-y-1/2"
+          className={styles['clear-button']}
           aria-label="Clear search"
         >
           <X />
