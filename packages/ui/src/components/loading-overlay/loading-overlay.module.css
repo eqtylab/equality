@@ -1,0 +1,17 @@
+@reference '../../theme/theme.module.css';
+
+.loading-overlay {
+  @apply backdrop-blur-xs fixed inset-0 z-50 flex items-center justify-center bg-black/60;
+}
+
+.content {
+  @apply flex flex-col items-center rounded-lg bg-zinc-950 p-6 shadow-xl;
+}
+
+.icon {
+  @apply text-purple h-10 w-10 animate-spin;
+}
+
+.message {
+  @apply text-foreground mt-4 text-lg font-medium;
+}

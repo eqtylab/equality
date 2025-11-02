@@ -1,0 +1,17 @@
+@reference '../../theme/theme.module.css';
+
+.form-item {
+  @apply space-y-2;
+}
+
+.form-label--failure {
+  @apply text-destructive;
+}
+
+.form-description {
+  @apply text-muted-foreground text-sm;
+}
+
+.form-message {
+  @apply text-destructive text-sm font-medium;
+}

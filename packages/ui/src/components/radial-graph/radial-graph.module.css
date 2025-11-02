@@ -1,0 +1,63 @@
+@reference '../../theme/theme.module.css';
+
+.radial-graph {
+  @apply relative;
+  @apply aspect-square w-full;
+}
+
+.bars-container {
+  @apply absolute inset-0 translate-x-1/2;
+}
+
+.bar {
+  @apply absolute;
+  @apply h-1/2 w-[2px];
+  @apply origin-bottom;
+}
+
+.bar-inner {
+  @apply absolute left-0 right-0 top-0;
+  @apply h-3/4 overflow-hidden rounded-full;
+  @apply transition-transform;
+}
+
+.bar-inner--active {
+  @apply scale-y-100;
+  @apply animate-grow-in will-change-transform;
+}
+
+.bar-inner--inactive {
+  @apply scale-y-[0.75];
+}
+
+.bar-background {
+  @apply absolute inset-0;
+  @apply from-muted-foreground/50 bg-linear-to-b to-50%;
+}
+
+.bar-gradient {
+  @apply absolute inset-0;
+  @apply from-highlight bg-linear-to-b to-50% transition-opacity;
+}
+
+.bar-gradient--active {
+  @apply opacity-100;
+  @apply animate-fade-in will-change-[opacity];
+}
+
+.bar-gradient--inactive {
+  @apply opacity-0;
+}
+
+.label-container {
+  @apply absolute inset-0;
+  @apply flex flex-col items-center justify-center;
+}
+
+.label {
+  @apply text-5xl font-medium;
+}
+
+.sub-label {
+  @apply text-sm;
+}

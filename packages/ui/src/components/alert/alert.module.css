@@ -1,0 +1,28 @@
+@reference '../../theme/theme.module.css';
+
+.alert {
+  @apply [&>svg]:text-foreground [&>svg+div]:translate-y-[-3px] [&>svg]:absolute [&>svg]:left-4 [&>svg]:top-4 [&>svg~*]:pl-7;
+  @apply relative w-full;
+  @apply rounded-lg border;
+  @apply px-4 py-3;
+  @apply text-sm;
+}
+
+.alert--default {
+  @apply bg-background;
+  @apply text-foreground;
+}
+
+.alert--destructive {
+  @apply text-destructive [&>svg]:text-destructive;
+  @apply border-destructive/50 dark:border-destructive;
+}
+
+.alert-title {
+  @apply font-medium leading-none tracking-tight;
+  @apply mb-1;
+}
+
+.alert-description {
+  @apply text-sm [&_p]:leading-relaxed;
+}

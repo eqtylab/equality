@@ -1,0 +1,20 @@
+@reference '../../theme/theme.module.css';
+
+.search-bar {
+  @apply relative;
+}
+
+.search-icon {
+  @apply absolute left-3 top-1/2 -translate-y-1/2;
+  @apply text-muted-foreground;
+  @apply size-4;
+}
+
+.input {
+  @apply px-10;
+}
+
+.clear-button {
+  @apply absolute right-2 top-1/2 -translate-y-1/2;
+  @apply size-6;
+}

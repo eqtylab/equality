@@ -2,9 +2,10 @@ import { fileURLToPath, URL } from 'node:url';
 import react from '@vitejs/plugin-react';
 import { defineConfig } from 'vite';
 
-const uiSrc = fileURLToPath(new URL('../ui/src', import.meta.url));
+const uiDist = fileURLToPath(new URL('../ui/dist', import.meta.url));
 const uiStyles = fileURLToPath(new URL('../ui/styles', import.meta.url));
 const demoRoot = fileURLToPath(new URL('.', import.meta.url));
+const demoSrc = fileURLToPath(new URL('./src', import.meta.url));
 
 export default defineConfig({
   plugins: [react()],
@@ -13,23 +14,16 @@ export default defineConfig({
     alias: [
       // keep CSS import working
       { find: '@eqtylab/equality/styles', replacement: uiStyles },
-      // point main entry to source for HMR
-      { find: '@eqtylab/equality', replacement: uiSrc },
+      // point main entry to built package
+      { find: '@eqtylab/equality', replacement: uiDist },
+      // add @ alias for demo src directory
+      { find: '@', replacement: demoSrc },
     ],
   },
   optimizeDeps: {
     exclude: ['@eqtylab/equality'],
   },
   server: {
-    fs: { allow: [demoRoot, uiSrc, uiStyles] },
+    fs: { allow: [demoRoot, uiDist, uiStyles, demoSrc] },
   },
 });
-
-// - Keep your existing imports in the demo:
-// - Components: `import { Button, Card } from '@eqtylab/equality'`
-// - CSS: `import '@eqtylab/equality/styles/style.css'`
-// - Result: Edits in `packages/ui/src/*` hot-reload the demo.
-
-// Note: if you change the UI’s Tailwind/CSS files, you’ll also need a CSS watcher (e.g., add a `watch:css` script that runs PostCSS with `-w`) or rebuild CSS.
-
-// - Edits proposed: add a Vite alias in `packages/demo/vite.config.ts` or run the UI `watch` script in parallel.

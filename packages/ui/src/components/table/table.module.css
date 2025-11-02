@@ -1,0 +1,47 @@
+@reference '../../theme/theme.module.css';
+
+.table {
+  @apply relative;
+  @apply w-full overflow-auto;
+}
+
+.table-inner {
+  @apply w-full;
+  @apply caption-bottom text-sm;
+}
+
+.table-header {
+  @apply [&_tr]:border-b;
+}
+
+.table-body {
+  @apply [&_tr:last-child]:border-0;
+}
+
+.table-footer {
+  @apply bg-muted/50 border-t last:[&>tr]:border-b-0;
+  @apply font-medium;
+}
+
+.table-row {
+  @apply border-b transition-colors;
+  @apply hover:bg-lilac-button;
+  @apply data-[state=selected]:bg-lilac-button;
+}
+
+.table-head {
+  @apply h-12;
+  @apply px-4 align-middle;
+  @apply text-muted-foreground text-left font-medium transition-colors;
+  @apply [&:has([role=checkbox])]:pr-0;
+}
+
+.table-cell {
+  @apply px-4 py-3;
+  @apply align-middle;
+  @apply [&:has([role=checkbox])]:pr-0;
+}
+
+.table-caption {
+  @apply text-muted-foreground mt-4 text-sm;
+}
