@@ -1,1 +1,19 @@
-<aside class="h-screen sticky top-0 w-xs border-r bg-black"></aside>
+---
+import NavList from './nav-list.astro';
+
+const gettingStartedLinks = [
+  { text: 'Home', href: '/' },
+  { text: 'Installation', href: '/getting-started/installation' },
+  { text: 'Usage', href: '/getting-started/usage' },
+  { text: 'Themes', href: '/getting-started/themes' },
+];
+
+const componentsLinks = [{ text: 'Card', href: '/components/card' }];
+---
+
+<aside class="h-screen sticky top-0 pt-14 z-40 w-xs border-r bg-black overflow-y-auto">
+  <nav class="py-10 px-4 space-y-10">
+    <NavList label="Getting Started" list={gettingStartedLinks} />
+    <NavList label="Components" list={componentsLinks} />
+  </nav>
+</aside>

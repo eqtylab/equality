@@ -19,7 +19,9 @@ import Sidebar from '../components/sidebar.astro';
     <Header />
     <main class="grid grid-cols-[auto_1fr]">
       <Sidebar />
-      <slot />
+      <section class="pt-14 px-8">
+        <slot />
+      </section>
     </main>
   </body>
 </html>
