@@ -1,7 +1,126 @@
 ---
+import Code from '../../components/ui/code.astro';
+import Description from '../../components/ui/description.astro';
+import Heading from '../../components/ui/heading.astro';
 import Layout from '../../layouts/layout.astro';
 ---
 
 <Layout>
-  <h1 class="my-10">Installation</h1>
+  <div class="my-10 space-y-14">
+    <Heading>Installation</Heading>
+
+    <section class="space-y-4">
+      <Heading as="h2" displayAs="2">Using the library in your app</Heading>
+
+      <div class="space-y-2">
+        <Description>
+          Install the package inside your app’s workspace using your preferred package manager:
+        </Description>
+
+        <Code
+          code=`pnpm add @eqtylab/equality
+# or
+npm install @eqtylab/equality
+# or
+yarn add @eqtylab/equality
+# or
+bun add @eqtylab/equality`
+        />
+      </div>
+    </section>
+
+    <section class="space-y-10">
+      <div class="space-y-4">
+        <Heading as="h2" displayAs="2">Access</Heading>
+
+        <Description>
+          This is a <b>private GitHub package</b> published under the <a
+            href="https://github.com/eqtylab"
+            target="_blank"
+            rel="noopener noreferrer">EQTY Lab</a
+          > organization. Make sure your npm or GitHub account has permission to access <a
+            href="https://github.com/orgs/eqtylab/packages/npm/package/equality"
+            target="_blank"
+            rel="noopener noreferrer">this package</a
+          >.</Description
+        >
+      </div>
+
+      <div class="space-y-4">
+        <Heading as="h3" displayAs="3">1. Authenticate with GitHub Packages</Heading>
+        <Description>
+          You will need a <b>Personal Access Token (PAT)</b> with at least the
+          <code>read:packages</code> scope.
+          <br />
+          <br />
+          Create one at: <a
+            href="https://github.com/settings/tokens"
+            target="_blank"
+            rel="noopener noreferrer">https://github.com/settings/tokens</a
+          >
+        </Description>
+      </div>
+
+      <div class="space-y-4">
+        <Heading as="h3" displayAs="3">2. Add your GitHub token to npm</Heading>
+        <Description>
+          Add your token to npm config so it can authenticate to GitHub’s registry.
+        </Description>
+        <div class="space-y-2">
+          <Heading as="h4" displayAs="4">Option A — via npm CLI (recommended):</Heading>
+          <Code code="npm config set //npm.pkg.github.com/:_authToken=YOUR_GITHUB_TOKEN" />
+        </div>
+        <div class="space-y-2">
+          <Heading as="h4" displayAs="4">
+            Option B — via <code>.npmrc</code> file:
+          </Heading>
+          <Description>
+            Create or edit a <code>.npmrc</code> file in your project root and add:
+          </Description>
+          <Code
+            code={`@eqtylab:registry=https://npm.pkg.github.com
+//npm.pkg.github.com/:_authToken=YOUR_GITHUB_TOKEN`}
+          />
+        </div>
+      </div>
+      <div class="space-y-4">
+        <Heading as="h3" displayAs="3">3. Verify access</Heading>
+        <Description>Run this to check if you can access the package:</Description>
+        <Code code="npm view @eqtylab/equality" />
+        <Description> If that command returns package details, you’re good to go. </Description>
+      </div>
+
+      <div class="space-y-4">
+        <Heading as="h3" displayAs="3">4. Troubleshooting</Heading>
+        <Description
+          >If you run into a <code>404</code> or <code>ERR_PNPM_FETCH_404</code> error:</Description
+        >
+        <ul class="list-disc list-inside space-y-2 text-muted-foreground">
+          <li>
+            <Description>
+              Double-check your GitHub token includes the <code>read:packages</code> permission.</Description
+            >
+          </li>
+          <li>
+            <Description
+              >Make sure your <code>.npmrc</code> file is in the same directory where you’re installing.</Description
+            >
+          </li>
+          <li>
+            <Description
+              >Confirm the registry line points to <code>https://npm.pkg.github.com</code
+              >.</Description
+            >
+          </li>
+          <li>
+            <Description>
+              If you’re in a monorepo, also add the <code>.npmrc</code> file to the repo root.</Description
+            >
+          </li>
+          <li>Try clearing the npm cache:</li>
+          <Code code="npm cache clean --force" />
+        </ul>
+      </div>
+    </section>
+  </div>
 </Layout>
