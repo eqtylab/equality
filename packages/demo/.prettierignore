@@ -1,0 +1,11 @@
+node_modules
+dist
+coverage
+.turbo
+.next
+*.log
+*.lock
+packages/ui/dist
+packages/demo/dist
+
+
