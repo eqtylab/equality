@@ -1,0 +1,200 @@
+---
+import Code from '../../components/ui/code.astro';
+import Description from '../../components/ui/description.astro';
+import Heading from '../../components/ui/heading.astro';
+import Layout from '../../layouts/layout.astro';
+---
+
+<Layout>
+  <section class="my-10 space-y-14">
+    <Heading>Component Architecture</Heading>
+    <Description
+      >This section explains how the Equality UI library is structured under the hood — how
+      components use <b>Tailwind</b>, <b>CSS Modules</b>, and the <b>theme system</b> to stay fully scoped,
+      reusable, and conflict-free.</Description
+    >
+
+    <section class="space-y-4">
+      <Heading as="h2" displayAs="2">Overview</Heading>
+      <div class="space-y-2">
+        <Description>Each UI component in the library is built to be:</Description>
+        <ul class="list-disc list-inside space-y-2 text-muted-foreground">
+          <li>
+            <Description><b>Self-contained</b> – no global CSS imports or leaks</Description>
+            <li>
+              <Description
+                ><b>Themed</b> – all tokens resolve via the active <code>{`<ThemeProvider>`}</code
+                ></Description
+              >
+            </li>
+            <li>
+              <Description
+                ><b>Composable</b> – extendable through the <code>className</code> prop</Description
+              >
+            </li>
+          </li>
+        </ul>
+        <Description>Internally, every component follows this structure:</Description>
+        <Code
+          code={`src/
+  components/
+    button/
+      button.tsx
+      button.module.css`}
+        />
+      </div>
+    </section>
+
+    <section class="space-y-4">
+      <Heading as="h2" displayAs="2">CSS Modules + Tailwind</Heading>
+      <div class="space-y-2">
+        <Description
+          >Every component imports its own <code>.module.css</code> file. Inside that file, Tailwind
+          utilities are applied using the <code>@apply</code> directive.</Description
+        >
+        <Code
+          code={`@reference '../../theme/theme.module.css';
+
+.button {
+  @apply ring-offset-background rounded-md;
+  @apply whitespace-nowrap text-sm font-medium;
+  @apply transition-all duration-300;
+  @apply inline-flex items-center justify-center gap-1;
+  @apply focus-visible:ring-ring focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-offset-2;
+  @apply disabled:cursor-not-allowed disabled:opacity-50;
+  @apply [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0;
+}`}
+        />
+        <Description
+          >The <code>@tailwindcss/postcss</code> plugin processes these files during build, generating
+          scoped class names automatically (e.g.<code>_button_container__abc123</code
+          >).</Description
+        >
+        <Description>And then it's used like this:</Description>
+        <Code
+          code={`import styles from "./button.module.css";
+
+export function Button({ className, ...props }) {
+  return (
+    <button className={cn(styles['button'], className)} {...props} />
+  );
+}`}
+        />
+        <Description
+          >Because Tailwind runs at build time, there’s no runtime overhead — just static CSS.</Description
+        >
+      </div>
+    </section>
+
+    <section class="space-y-4">
+      <Heading as="h2" displayAs="2">Theme system</Heading>
+      <div class="space-y-2">
+        <Description
+          >At the root level, the <code>{`<ThemeProvider>`}</code>
+          injects all design tokens as CSS custom properties:
+        </Description>
+        <Code
+          code={`--color-primary: hsl(210 40% 98%);
+--color-foreground: hsl(240 4% 16%);
+--text-xxs: 0.625rem;`}
+        />
+        <Description
+          >Tailwind utilities in the components reference these tokens, so <code>bg-primary</code> maps
+          directly to <code>--color-primary</code>.</Description
+        >
+        <Description>When you change the theme via:</Description>
+        <Code code={`<ThemeProvider theme="dark">`} />
+        <Description
+          >…the provider updates those variables, and every component automatically restyles itself
+          — no rebuilds, no extra logic.</Description
+        >
+      </div>
+    </section>
+
+    <section class="space-y-4">
+      <Heading as="h2" displayAs="2">Build process</Heading>
+      <div class="space-y-2">
+        <Description
+          >The library uses Vite in library mode (or <code>tsup</code> if preferred) to compile everything
+          cleanly:</Description
+        >
+        {/* TODO: Check decimals missing */}
+        <ol class="list-decimal list-inside space-y-2 text-muted-foreground">
+          <li><Description><b>TypeScript</b> builds the component logic.</Description></li>
+          <li>
+            <Description
+              ><b>PostCSS + Tailwind</b> transform <code>.module.css</code> files.</Description
+            >
+          </li>
+          <li>
+            <Description
+              ><b>CSS Modules</b> scope the output so class names never collide.</Description
+            >
+          </li>
+          <li>
+            <Description
+              ><b>Theme tokens</b> are embedded and exposed through the provider.</Description
+            >
+          </li>
+          <li>
+            <Description
+              >Output goes into <code>/dist</code> as both ESM and CJS modules.</Description
+            >
+          </li>
+        </ol>
+        <Description
+          >This setup means host apps can import components without any Tailwind setup of their own.</Description
+        >
+      </div>
+    </section>
+
+    <section class="space-y-4">
+      <Heading as="h2" displayAs="2">Layered isolation</Heading>
+      <div class="overflow-x-auto">
+        <table class="w-full border-collapse">
+          <thead>
+            <tr class="border-b [&>th]:text-left">
+              <th class="p-3 font-semibold">Layer</th>
+              <th class="p-3 font-semibold">Responsibility</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="border-b">
+              <td class="p-3">ThemeProvider</td>
+              <td class="p-3 text-muted-foreground"
+                >Injects design tokens & controls light/dark modes</td
+              >
+            </tr>
+            <tr class="border-b">
+              <td class="p-3">Component CSS Module</td>
+              <td class="p-3 text-muted-foreground"
+                >Handles structure & layout with Tailwind utilities</td
+              >
+            </tr>
+            <tr class="border-b">
+              <td class="p-3">className Prop</td>
+              <td class="p-3 text-muted-foreground">Allows host-level overrides per instance</td>
+            </tr>
+            <tr class="border-b">
+              <td class="p-3">Build Pipeline</td>
+              <td class="p-3 text-muted-foreground"
+                >Compiles, scopes, and tree-shakes for minimal bundle size</td
+              >
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="space-y-4">
+      <Heading as="h2" displayAs="2">Benefits</Heading>
+      <ul class="list-disc list-inside space-y-2 text-muted-foreground">
+        <li>Zero global CSS collisions</li>
+        <li>Fully theme-aware via CSS variables</li>
+        <li>Reusable across multiple projects</li>
+        <li>Works out of the box in any Vite or React setup</li>
+        <li>Easy to extend at the component or theme level</li>
+      </ul>
+    </section>
+  </section>
+</Layout>
