@@ -1,10 +1,12 @@
 ---
 import Code from '../../components/ui/code.astro';
+import ContentWrapper from '../../components/ui/content-wrapper.astro';
 import Description from '../../components/ui/description.astro';
 import Heading from '../../components/ui/heading.astro';
 import List from '../../components/ui/list.astro';
 import PageHeader from '../../components/ui/page-header.astro';
 import PageWrapper from '../../components/ui/page-wrapper.astro';
+import SectionWrapper from '../../components/ui/section-wrapper.astro';
 import Table from '../../components/ui/table.astro';
 ---
 
@@ -16,9 +18,9 @@ import Table from '../../components/ui/table.astro';
     and conflict-free.`}
   />
 
-  <section class="space-y-4">
+  <SectionWrapper>
     <Heading as="h2" displayAs="2">Overview</Heading>
-    <div class="space-y-2">
+    <ContentWrapper>
       <Description>Each UI component in the library is built to be:</Description>
       <List
         items={[
@@ -35,12 +37,12 @@ import Table from '../../components/ui/table.astro';
       button.tsx
       button.module.css`}
       />
-    </div>
-  </section>
+    </ContentWrapper>
+  </SectionWrapper>
 
-  <section class="space-y-4">
+  <SectionWrapper>
     <Heading as="h2" displayAs="2">CSS Modules + Tailwind</Heading>
-    <div class="space-y-2">
+    <ContentWrapper>
       <Description
         >Every component imports its own <code>.module.css</code> file. Inside that file, Tailwind utilities
         are applied using the <code>@apply</code> directive.</Description
@@ -58,8 +60,8 @@ import Table from '../../components/ui/table.astro';
   @apply [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0;
 }`}
       />
-    </div>
-    <div class="space-y-2">
+    </ContentWrapper>
+    <ContentWrapper>
       <Description
         >The <code>@tailwindcss/postcss</code> plugin processes these files during build, generating
         scoped class names automatically (e.g.<code>_button_container__abc123</code>).</Description
@@ -77,12 +79,12 @@ export function Button({ className, ...props }) {
       <Description
         >Because Tailwind runs at build time, there’s no runtime overhead — just static CSS.</Description
       >
-    </div>
-  </section>
+    </ContentWrapper>
+  </SectionWrapper>
 
-  <section class="space-y-4">
+  <SectionWrapper>
     <Heading as="h2" displayAs="2">Theme system</Heading>
-    <div class="space-y-2">
+    <ContentWrapper>
       <Description
         >At the root level, the <code>{`<ThemeProvider>`}</code>
         injects all design tokens as CSS custom properties:
@@ -92,8 +94,8 @@ export function Button({ className, ...props }) {
 --color-foreground: hsl(240 4% 16%);
 --text-xxs: 0.625rem;`}
       />
-    </div>
-    <div class="space-y-2">
+    </ContentWrapper>
+    <ContentWrapper>
       <Description
         >Tailwind utilities in the components reference these tokens, so <code>bg-primary</code> maps
         directly to <code>--color-primary</code>.</Description
@@ -104,12 +106,12 @@ export function Button({ className, ...props }) {
         >…the provider updates those variables, and every component automatically restyles itself —
         no rebuilds, no extra logic.</Description
       >
-    </div>
-  </section>
+    </ContentWrapper>
+  </SectionWrapper>
 
-  <section class="space-y-4">
+  <SectionWrapper>
     <Heading as="h2" displayAs="2">Build process</Heading>
-    <div class="space-y-2">
+    <ContentWrapper>
       <Description
         >The library uses Vite in library mode (or <code>tsup</code> if preferred) to compile everything
         cleanly:</Description
@@ -127,10 +129,10 @@ export function Button({ className, ...props }) {
       <Description
         >This setup means host apps can import components without any Tailwind setup of their own.</Description
       >
-    </div>
-  </section>
+    </ContentWrapper>
+  </SectionWrapper>
 
-  <section class="space-y-4">
+  <SectionWrapper>
     <Heading as="h2" displayAs="2">Layered isolation</Heading>
     <Table
       columns={['Layer', 'Responsibility']}
@@ -162,9 +164,9 @@ export function Button({ className, ...props }) {
         ],
       ]}
     />
-  </section>
+  </SectionWrapper>
 
-  <section class="space-y-4">
+  <SectionWrapper>
     <Heading as="h2" displayAs="2">Benefits</Heading>
     <List
       items={[
@@ -175,5 +177,5 @@ export function Button({ className, ...props }) {
         'Easy to extend at the component or theme level',
       ]}
     />
-  </section>
+  </SectionWrapper>
 </PageWrapper>

@@ -1,20 +1,22 @@
 ---
 import Code from '../../components/ui/code.astro';
+import ContentWrapper from '../../components/ui/content-wrapper.astro';
 import Description from '../../components/ui/description.astro';
 import Heading from '../../components/ui/heading.astro';
 import Link from '../../components/ui/link.astro';
 import List from '../../components/ui/list.astro';
 import PageHeader from '../../components/ui/page-header.astro';
 import PageWrapper from '../../components/ui/page-wrapper.astro';
+import SectionWrapper from '../../components/ui/section-wrapper.astro';
 ---
 
 <PageWrapper>
   <PageHeader heading="Installation" />
 
-  <section class="space-y-4">
+  <SectionWrapper>
     <Heading as="h2" displayAs="2">Using the library in your app</Heading>
 
-    <div class="space-y-2">
+    <ContentWrapper>
       <Description>
         Install the package inside your app’s workspace using your preferred package manager:
       </Description>
@@ -28,11 +30,11 @@ yarn add @eqtylab/equality
 # or
 bun add @eqtylab/equality`
       />
-    </div>
-  </section>
+    </ContentWrapper>
+  </SectionWrapper>
 
-  <section class="space-y-10">
-    <div class="space-y-4">
+  <SectionWrapper spacing="xl">
+    <ContentWrapper spacing="md">
       <Heading as="h2" displayAs="2">Access</Heading>
 
       <Description>
@@ -44,9 +46,9 @@ bun add @eqtylab/equality`
           external>this package</Link
         >.</Description
       >
-    </div>
+    </ContentWrapper>
 
-    <div class="space-y-4">
+    <ContentWrapper spacing="md">
       <Heading as="h3" displayAs="3">1. Authenticate with GitHub Packages</Heading>
       <Description>
         You will need a <b>Personal Access Token (PAT)</b> with at least the
@@ -57,18 +59,18 @@ bun add @eqtylab/equality`
           >https://github.com/settings/tokens</Link
         >
       </Description>
-    </div>
+    </ContentWrapper>
 
-    <div class="space-y-4">
+    <ContentWrapper spacing="md">
       <Heading as="h3" displayAs="3">2. Add your GitHub token to npm</Heading>
       <Description>
         Add your token to npm config so it can authenticate to GitHub’s registry.
       </Description>
-      <div class="space-y-2">
+      <ContentWrapper>
         <Heading as="h4" displayAs="4">Option A — via npm CLI (recommended):</Heading>
         <Code code="npm config set //npm.pkg.github.com/:_authToken=YOUR_GITHUB_TOKEN" />
-      </div>
-      <div class="space-y-2">
+      </ContentWrapper>
+      <ContentWrapper>
         <Heading as="h4" displayAs="4">
           Option B — via <code>.npmrc</code> file:
         </Heading>
@@ -79,16 +81,16 @@ bun add @eqtylab/equality`
           code={`@eqtylab:registry=https://npm.pkg.github.com
 //npm.pkg.github.com/:_authToken=YOUR_GITHUB_TOKEN`}
         />
-      </div>
-    </div>
-    <div class="space-y-4">
+      </ContentWrapper>
+    </ContentWrapper>
+    <ContentWrapper spacing="md">
       <Heading as="h3" displayAs="3">3. Verify access</Heading>
       <Description>Run this to check if you can access the package:</Description>
       <Code code="npm view @eqtylab/equality" />
       <Description> If that command returns package details, you’re good to go. </Description>
-    </div>
+    </ContentWrapper>
 
-    <div class="space-y-4">
+    <ContentWrapper spacing="md">
       <Heading as="h3" displayAs="3">4. Troubleshooting</Heading>
       <Description
         >If you run into a <code>404</code> or <code>ERR_PNPM_FETCH_404</code> error:</Description
@@ -103,6 +105,6 @@ bun add @eqtylab/equality`
         ]}
       />
       <Code code="npm cache clean --force" />
-    </div>
-  </section>
+    </ContentWrapper>
+  </SectionWrapper>
 </PageWrapper>

@@ -1,18 +1,20 @@
 ---
 import Code from '../../components/ui/code.astro';
+import ContentWrapper from '../../components/ui/content-wrapper.astro';
 import Description from '../../components/ui/description.astro';
 import Heading from '../../components/ui/heading.astro';
 import List from '../../components/ui/list.astro';
 import PageHeader from '../../components/ui/page-header.astro';
 import PageWrapper from '../../components/ui/page-wrapper.astro';
+import SectionWrapper from '../../components/ui/section-wrapper.astro';
 ---
 
 <PageWrapper>
   <PageHeader heading="Customizing" />
 
-  <section class="space-y-4">
+  <SectionWrapper>
     <Heading as="h2" displayAs="2">Custom variables</Heading>
-    <div class="space-y-2">
+    <ContentWrapper>
       <Description>
         You can override specific tokens using the <code>customVars</code> prop on <code
           >ThemeProvider</code
@@ -30,12 +32,12 @@ import PageWrapper from '../../components/ui/page-wrapper.astro';
 </ThemeProvider>`}
       />
       <Description>Perfect for brand-specific adjustments or white-label versions.</Description>
-    </div>
-  </section>
+    </ContentWrapper>
+  </SectionWrapper>
 
-  <section class="space-y-4">
+  <SectionWrapper>
     <Heading as="h2" displayAs="2">Extending Tailwind</Heading>
-    <div class="space-y-2">
+    <ContentWrapper>
       <Description
         >Because Equality’s theme uses Tailwind’s native tokens (<code>bg-primary</code>, <code
           >text-foreground</code
@@ -46,10 +48,10 @@ import PageWrapper from '../../components/ui/page-wrapper.astro';
   Custom Block
 </div>`}
       />
-    </div>
-  </section>
+    </ContentWrapper>
+  </SectionWrapper>
 
-  <section class="space-y-4">
+  <SectionWrapper>
     <Heading as="h2" displayAs="2">Best practices</Heading>
     <List
       items={[
@@ -58,5 +60,5 @@ import PageWrapper from '../../components/ui/page-wrapper.astro';
         'Use HSL values for easy opacity and dynamic color blending',
       ]}
     />
-  </section>
+  </SectionWrapper>
 </PageWrapper>
