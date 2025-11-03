@@ -2,23 +2,22 @@
 import Code from '../../components/ui/code.astro';
 import Description from '../../components/ui/description.astro';
 import Heading from '../../components/ui/heading.astro';
-import Layout from '../../layouts/layout.astro';
+import PageWrapper from '../../components/ui/page-wrapper.astro';
 ---
 
-<Layout>
-  <section class="my-10 space-y-14">
-    <Heading>Customizing</Heading>
+<PageWrapper>
+  <Heading>Customizing</Heading>
 
-    <section class="space-y-4">
-      <Heading as="h2" displayAs="2">Custom variables</Heading>
-      <div class="space-y-2">
-        <Description>
-          You can override specific tokens using the <code>customVars</code> prop on <code
-            >ThemeProvider</code
-          >:
-        </Description>
-        <Code
-          code={`<ThemeProvider
+  <section class="space-y-4">
+    <Heading as="h2" displayAs="2">Custom variables</Heading>
+    <div class="space-y-2">
+      <Description>
+        You can override specific tokens using the <code>customVars</code> prop on <code
+          >ThemeProvider</code
+        >:
+      </Description>
+      <Code
+        code={`<ThemeProvider
   theme="light"
   customVars={{
     "--color-primary": "hsl(280 75% 60%)",
@@ -27,13 +26,14 @@ import Layout from '../../layouts/layout.astro';
 >
   <App />
 </ThemeProvider>`}
-        />
-        <Description>Perfect for brand-specific adjustments or white-label versions.</Description>
-      </div>
-    </section>
+      />
+      <Description>Perfect for brand-specific adjustments or white-label versions.</Description>
+    </div>
+  </section>
 
-    <section class="space-y-4">
-      <Heading as="h2" displayAs="2">Extending Tailwind</Heading>
+  <section class="space-y-4">
+    <Heading as="h2" displayAs="2">Extending Tailwind</Heading>
+    <div class="space-y-2">
       <Description
         >Because Equality’s theme uses Tailwind’s native tokens (<code>bg-primary</code>, <code
           >text-foreground</code
@@ -44,21 +44,21 @@ import Layout from '../../layouts/layout.astro';
   Custom Block
 </div>`}
       />
-    </section>
-
-    <section class="space-y-4">
-      <Heading as="h2" displayAs="2">Best practices</Heading>
-      <ul class="list-disc list-inside space-y-2 text-muted-foreground">
-        <li>
-          <Description
-            >Keep overrides scoped inside your <code>{`<ThemeProvider />`}</code></Description
-          >
-          <li><Description>Avoid redefining tokens globally in the host app</Description></li>
-          <li>
-            <Description>Use HSL values for easy opacity and dynamic color blending</Description>
-          </li>
-        </li>
-      </ul>
-    </section>
+    </div>
   </section>
-</Layout>
+
+  <section class="space-y-4">
+    <Heading as="h2" displayAs="2">Best practices</Heading>
+    <ul class="list-disc list-inside space-y-2 text-muted-foreground">
+      <li>
+        <Description
+          >Keep overrides scoped inside your <code>{`<ThemeProvider />`}</code></Description
+        >
+        <li><Description>Avoid redefining tokens globally in the host app</Description></li>
+        <li>
+          <Description>Use HSL values for easy opacity and dynamic color blending</Description>
+        </li>
+      </li>
+    </ul>
+  </section>
+</PageWrapper>

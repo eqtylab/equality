@@ -2,55 +2,52 @@
 import Code from '../../components/ui/code.astro';
 import Description from '../../components/ui/description.astro';
 import Heading from '../../components/ui/heading.astro';
-import Layout from '../../layouts/layout.astro';
+import PageWrapper from '../../components/ui/page-wrapper.astro';
 ---
 
-<Layout>
-  <section class="my-10 space-y-14">
-    <Heading>Themes</Heading>
+<PageWrapper>
+  <Heading>Themes</Heading>
 
-    <section class="space-y-4">
-      <Heading as="h2" displayAs="2">Built-in themes</Heading>
-      <div class="space-y-2">
-        <Description>Equality ships with two built-in themes: </Description>
-        <ul class="list-disc list-inside space-y-2 text-muted-foreground">
-          <li><Description><code>light</code></Description></li>
-          <li><Description><code>dark</code></Description></li>
-        </ul>
-        <Description
-          >You can set them through the <code>theme</code> prop on the <code>ThemeProvider</code
-          >:</Description
-        >
-        <Code
-          code={`<ThemeProvider theme="dark">
+  <section class="space-y-4">
+    <Heading as="h2" displayAs="2">Built-in themes</Heading>
+    <div class="space-y-2">
+      <Description>Equality ships with two built-in themes: </Description>
+      <ul class="list-disc list-inside space-y-2 text-muted-foreground">
+        <li><Description><code>light</code></Description></li>
+        <li><Description><code>dark</code></Description></li>
+      </ul>
+      <Description
+        >You can set them through the <code>theme</code> prop on the <code>ThemeProvider</code
+        >:</Description
+      >
+      <Code
+        code={`<ThemeProvider theme="dark">
   <App />
 </ThemeProvider>`}
-        />
-        <Description
-          >Switching themes automatically updates all Tailwind semantic tokens (<code
-            >bg-primary</code
-          >,
-          <code>text-muted</code>, etc.) at runtime — no reloads or extra configuration.</Description
-        >
-      </div>
-    </section>
-
-    <section class="space-y-4">
-      <Heading as="h2" displayAs="2">Default variables</Heading>
-      <div class="space-y-2">
-        <Description
-          >Each theme includes its own palette of colors. You don’t need to import or configure
-          these — they’re injected automatically by the provider.</Description
-        >
-        <Code
-          code={`--color-primary: hsl(210 40% 98%);
---color-muted: hsl(240 4% 16%);`}
-        />
-        <Description
-          >You can inspect the applied tokens directly in DevTools by selecting the root element
-          wrapped by <code>ThemeProvider</code>.</Description
-        >
-      </div>
-    </section>
+      />
+      <Description
+        >Switching themes automatically updates all Tailwind semantic tokens (<code>bg-primary</code
+        >,
+        <code>text-muted</code>, etc.) at runtime — no reloads or extra configuration.</Description
+      >
+    </div>
   </section>
-</Layout>
+
+  <section class="space-y-4">
+    <Heading as="h2" displayAs="2">Default variables</Heading>
+    <div class="space-y-2">
+      <Description
+        >Each theme includes its own palette of colors. You don’t need to import or configure these
+        — they’re injected automatically by the provider.</Description
+      >
+      <Code
+        code={`--color-primary: hsl(210 40% 98%);
+--color-muted: hsl(240 4% 16%);`}
+      />
+      <Description
+        >You can inspect the applied tokens directly in DevTools by selecting the root element
+        wrapped by <code>ThemeProvider</code>.</Description
+      >
+    </div>
+  </section>
+</PageWrapper>
