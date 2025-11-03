@@ -20,6 +20,4 @@ const finalTarget = external ? '_blank' : target;
 const finalRel = external ? 'noopener noreferrer' : rel;
 ---
 
-<a href={href} class={linkClasses} target={finalTarget} rel={finalRel}>
-  <slot />
-</a>
+<a href={href} class={linkClasses} target={finalTarget} rel={finalRel}><slot /></a>
