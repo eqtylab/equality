@@ -2,16 +2,17 @@
 import Code from '../../components/ui/code.astro';
 import Description from '../../components/ui/description.astro';
 import Heading from '../../components/ui/heading.astro';
+import PageHeader from '../../components/ui/page-header.astro';
 import PageWrapper from '../../components/ui/page-wrapper.astro';
 ---
 
 <PageWrapper>
-  <Heading>Component Architecture</Heading>
-  <Description
-    >This section explains how the Equality UI library is structured under the hood — how components
+  <PageHeader
+    heading="Component Architecture"
+    description={`This section explains how the Equality UI library is structured under the hood — how components
     use <b>Tailwind</b>, <b>CSS Modules</b>, and the <b>theme system</b> to stay fully scoped, reusable,
-    and conflict-free.</Description
-  >
+    and conflict-free.`}
+  />
 
   <section class="space-y-4">
     <Heading as="h2" displayAs="2">Overview</Heading>
