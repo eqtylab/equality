@@ -1,8 +1,114 @@
 ---
-import Homepage from '../components/homepage.astro';
-import Layout from '../layouts/layout.astro';
+import Code from '../components/ui/code.astro';
+import ContentWrapper from '../components/ui/content-wrapper.astro';
+import Description from '../components/ui/description.astro';
+import Heading from '../components/ui/heading.astro';
+import Link from '../components/ui/link.astro';
+import List from '../components/ui/list.astro';
+import PageHeader from '../components/ui/page-header.astro';
+import PageWrapper from '../components/ui/page-wrapper.astro';
+import SectionWrapper from '../components/ui/section-wrapper.astro';
 ---
 
-<Layout>
-  <Homepage />
-</Layout>
+<PageWrapper>
+  <!-- Hero Section -->
+  <PageHeader
+    heading="Equality UI"
+    description="A theme-driven component library for EQTY Lab projects"
+  />
+
+  <SectionWrapper>
+    <Heading as="h2" displayAs="2">Introduction</Heading>
+    <Description>
+      Equality UI is a shared React component library built with <b>Vite, Tailwind v4, Radix UI,</b>
+      and
+      <b>Framer Motion</b> — designed to unify styles, motion, and accessibility across all EQTY Lab
+      applications. <br />It provides a consistent visual system, fully scoped components, and a
+      flexible theming layer that allows each host app to maintain brand individuality without
+      reinventing base UI patterns.
+    </Description>
+  </SectionWrapper>
+
+  <SectionWrapper>
+    <Heading as="h2" displayAs="2">What’s inside</Heading>
+    <ContentWrapper>
+      <List
+        items={[
+          '<b>Composable React components</b> powered by Radix primitives',
+          '<b>Scoped styling</b> with Tailwind v4 + CSS Modules — no global leaks',
+          '<b>Dynamic theming</b> through the <code>ThemeProvider</code> (light, dark, custom)',
+          '<b>Framer Motion animations</b> for polished, consistent interactions',
+          '<b>Built for reuse</b> across EQTY Lab products — from dashboards to marketing sites',
+        ]}
+      />
+    </ContentWrapper>
+  </SectionWrapper>
+
+  <SectionWrapper>
+    <Heading as="h2" displayAs="2">Design philosophy</Heading>
+    <ContentWrapper>
+      <Description>Equality UI is built around three core principles:</Description>
+      <List
+        type="decimal"
+        items={[
+          '<b>Isolation by default</b><br/>Every component manages its own scoped styles — nothing leaks, nothing collides.',
+          '<b>Token-driven theming</b><br/>Colors, spacing, and typography are defined as design tokens via CSS variables and Tailwind tokens.',
+          '<b>Motion as language</b><br />Animation supports communication — subtle, meaningful, and consistent across products.',
+        ]}
+      />
+    </ContentWrapper>
+  </SectionWrapper>
+
+  <SectionWrapper>
+    <Heading as="h2" displayAs="2">Getting started</Heading>
+    <ContentWrapper>
+      <Description>Install directly from GitHub Packages:</Description>
+      <Code code={`npm install @eqtylab/equality`} />
+      <Description
+        >Then head to the <Link href="/getting-started/installation">Installation</Link> page to configure
+        authentication and start using components.</Description
+      >
+    </ContentWrapper>
+  </SectionWrapper>
+
+  <SectionWrapper>
+    <Heading as="h2" displayAs="2">Documentation structure</Heading>
+    <ul class="list list-disc">
+      <li>
+        <Link href="/getting-started/installation">Installation</Link> — setup and authentication
+      </li>
+      <li>
+        <Link href="/getting-started/usage">Usage</Link> — wrapping your app and using components
+      </li>
+      <li><Link href="/getting-started/themes">Themes</Link> — light/dark system</li>
+      <li>
+        <Link href="/getting-started/customizing">Customization</Link> — overrides and brand tokens
+      </li>
+      <li>
+        <Link href="/getting-started/component-architecture">Component Architecture</Link> — how everything
+        works internally
+      </li>
+    </ul>
+  </SectionWrapper>
+
+  <SectionWrapper>
+    <Heading as="h2" displayAs="2">For developers</Heading><Description
+      >Equality UI is framework-agnostic — it works seamlessly in <b>Vite</b>, <b>Next.js</b>, and <b
+        >Astro</b
+      >
+      environments. Just wrap your app with the <code>{`<ThemeProvider>`}</code>
+      and import the components you need — everything else is automatic.
+    </Description>
+  </SectionWrapper>
+
+  <SectionWrapper>
+    <Heading as="h2" displayAs="2">About & Purpose</Heading><Description
+      >Equality UI was created to <b>unify the design language</b> across EQTY Lab products like Governance
+      Studio, Lineage Explorer, and VCOMP. <br /> It simplifies collaboration between design and engineering
+      by turning shared patterns, brand tokens, and motion principles into reusable, theme-driven components.<br
+      />
+      The goal is simple:
+      <b>build once, use everywhere</b> — without sacrificing craft, performance, or individuality.
+    </Description>
+  </SectionWrapper>
+</PageWrapper>
