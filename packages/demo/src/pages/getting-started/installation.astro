@@ -85,9 +85,13 @@ bun add @eqtylab/equality`
     </ContentWrapper>
     <ContentWrapper spacing="md">
       <Heading as="h3" displayAs="3">3. Verify access</Heading>
-      <Description>Run this to check if you can access the package:</Description>
-      <Code code="npm view @eqtylab/equality" />
-      <Description> If that command returns package details, you’re good to go. </Description>
+      <ContentWrapper>
+        <Description>Run this to check if you can access the package:</Description>
+        <Code code="npm view @eqtylab/equality" />
+        <Description>
+          If that command returns package details, you’re good to go.
+        </Description></ContentWrapper
+      >
     </ContentWrapper>
 
     <ContentWrapper spacing="md">
