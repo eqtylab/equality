@@ -48,4 +48,13 @@
   .list {
     @apply text-muted-foreground space-y-1 pl-4 [&>li]:text-base/7 [&>li>p]:align-top;
   }
+
+  .label {
+    @apply text-xs tracking-wider uppercase;
+  }
+
+  .tree-view-item {
+    @apply w-full cursor-pointer border-l py-1.5 text-left transition-all duration-300;
+    @apply text-muted-foreground hover:border-foreground hover:text-foreground;
+  }
 }
