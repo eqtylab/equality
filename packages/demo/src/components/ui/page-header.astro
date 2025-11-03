@@ -7,5 +7,12 @@ const { heading, description } = Astro.props;
 
 <section class="pb-4 border-b space-y-3">
   <Heading>{heading}</Heading>
-  {description && <Description set:html={description} class="max-w-3xl" />}
+  {
+    description && (
+      <p
+        class="text-lg text-muted-foreground [&>b]:text-foreground [&>b]:font-medium max-w-4xl"
+        set:html={description}
+      />
+    )
+  }
 </section>
