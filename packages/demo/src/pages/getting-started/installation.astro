@@ -2,6 +2,7 @@
 import Code from '../../components/ui/code.astro';
 import Description from '../../components/ui/description.astro';
 import Heading from '../../components/ui/heading.astro';
+import List from '../../components/ui/list.astro';
 import PageHeader from '../../components/ui/page-header.astro';
 import PageWrapper from '../../components/ui/page-wrapper.astro';
 ---
@@ -95,31 +96,16 @@ bun add @eqtylab/equality`
       <Description
         >If you run into a <code>404</code> or <code>ERR_PNPM_FETCH_404</code> error:</Description
       >
-      <ul class="list-disc list-inside space-y-2 text-muted-foreground">
-        <li>
-          <Description>
-            Double-check your GitHub token includes the <code>read:packages</code> permission.</Description
-          >
-        </li>
-        <li>
-          <Description
-            >Make sure your <code>.npmrc</code> file is in the same directory where you’re installing.</Description
-          >
-        </li>
-        <li>
-          <Description
-            >Confirm the registry line points to <code>https://npm.pkg.github.com</code
-            >.</Description
-          >
-        </li>
-        <li>
-          <Description>
-            If you’re in a monorepo, also add the <code>.npmrc</code> file to the repo root.</Description
-          >
-        </li>
-        <li>Try clearing the npm cache:</li>
-        <Code code="npm cache clean --force" />
-      </ul>
+      <List
+        items={[
+          'Double-check your GitHub token includes the <code>read:packages</code> permission.',
+          'Make sure your <code>.npmrc</code> file is in the same directory where you’re installing.',
+          'Confirm the registry line points to <code>https://npm.pkg.github.com</code>.',
+          'If you’re in a monorepo, also add the <code>.npmrc</code> file to the repo root.',
+          'Try clearing the npm cache:',
+        ]}
+      />
+      <Code code="npm cache clean --force" />
     </div>
   </section>
 </PageWrapper>

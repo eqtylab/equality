@@ -2,6 +2,7 @@
 import Code from '../../components/ui/code.astro';
 import Description from '../../components/ui/description.astro';
 import Heading from '../../components/ui/heading.astro';
+import List from '../../components/ui/list.astro';
 import PageHeader from '../../components/ui/page-header.astro';
 import PageWrapper from '../../components/ui/page-wrapper.astro';
 ---
@@ -13,10 +14,7 @@ import PageWrapper from '../../components/ui/page-wrapper.astro';
     <Heading as="h2" displayAs="2">Built-in themes</Heading>
     <div class="space-y-2">
       <Description>Equality ships with two built-in themes: </Description>
-      <ul class="list-disc list-inside space-y-2 text-muted-foreground">
-        <li><Description><code>light</code></Description></li>
-        <li><Description><code>dark</code></Description></li>
-      </ul>
+      <List items={['<code>light</code>', '<code>dark</code>']} />
       <Description
         >You can set them through the <code>theme</code> prop on the <code>ThemeProvider</code
         >:</Description

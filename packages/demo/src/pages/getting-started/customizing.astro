@@ -2,6 +2,7 @@
 import Code from '../../components/ui/code.astro';
 import Description from '../../components/ui/description.astro';
 import Heading from '../../components/ui/heading.astro';
+import List from '../../components/ui/list.astro';
 import PageHeader from '../../components/ui/page-header.astro';
 import PageWrapper from '../../components/ui/page-wrapper.astro';
 ---
@@ -50,16 +51,12 @@ import PageWrapper from '../../components/ui/page-wrapper.astro';
 
   <section class="space-y-4">
     <Heading as="h2" displayAs="2">Best practices</Heading>
-    <ul class="list-disc list-inside space-y-2 text-muted-foreground">
-      <li>
-        <Description
-          >Keep overrides scoped inside your <code>{`<ThemeProvider />`}</code></Description
-        >
-        <li><Description>Avoid redefining tokens globally in the host app</Description></li>
-        <li>
-          <Description>Use HSL values for easy opacity and dynamic color blending</Description>
-        </li>
-      </li>
-    </ul>
+    <List
+      items={[
+        'Keep overrides scoped inside your <code>ThemeProvider</code>',
+        'Avoid redefining tokens globally in the host app',
+        'Use HSL values for easy opacity and dynamic color blending',
+      ]}
+    />
   </section>
 </PageWrapper>

@@ -2,6 +2,7 @@
 import Code from '../../components/ui/code.astro';
 import Description from '../../components/ui/description.astro';
 import Heading from '../../components/ui/heading.astro';
+import List from '../../components/ui/list.astro';
 import PageHeader from '../../components/ui/page-header.astro';
 import PageWrapper from '../../components/ui/page-wrapper.astro';
 ---
@@ -18,22 +19,13 @@ import PageWrapper from '../../components/ui/page-wrapper.astro';
     <Heading as="h2" displayAs="2">Overview</Heading>
     <div class="space-y-2">
       <Description>Each UI component in the library is built to be:</Description>
-      <ul class="list-disc list-inside space-y-2 text-muted-foreground">
-        <li>
-          <Description><b>Self-contained</b> – no global CSS imports or leaks</Description>
-          <li>
-            <Description
-              ><b>Themed</b> – all tokens resolve via the active <code>{`<ThemeProvider>`}</code
-              ></Description
-            >
-          </li>
-          <li>
-            <Description
-              ><b>Composable</b> – extendable through the <code>className</code> prop</Description
-            >
-          </li>
-        </li>
-      </ul>
+      <List
+        items={[
+          '<b>Self-contained</b> – no global CSS imports or leaks',
+          '<b>Themed</b> – all tokens resolve via the active <code>ThemeProvider</code>',
+          '<b>Composable</b> – extendable through the <code>className</code> prop',
+        ]}
+      />
       <Description>Internally, every component follows this structure:</Description>
       <Code
         code={`src/
@@ -121,29 +113,16 @@ export function Button({ className, ...props }) {
         >The library uses Vite in library mode (or <code>tsup</code> if preferred) to compile everything
         cleanly:</Description
       >
-      {/* TODO: Check decimals missing */}
-      <ol class="list-decimal list-inside space-y-2 text-muted-foreground">
-        <li><Description><b>TypeScript</b> builds the component logic.</Description></li>
-        <li>
-          <Description
-            ><b>PostCSS + Tailwind</b> transform <code>.module.css</code> files.</Description
-          >
-        </li>
-        <li>
-          <Description
-            ><b>CSS Modules</b> scope the output so class names never collide.</Description
-          >
-        </li>
-        <li>
-          <Description
-            ><b>Theme tokens</b> are embedded and exposed through the provider.</Description
-          >
-        </li>
-        <li>
-          <Description>Output goes into <code>/dist</code> as both ESM and CJS modules.</Description
-          >
-        </li>
-      </ol>
+      <List
+        type="decimal"
+        items={[
+          '<b>TypeScript</b> builds the component logic.',
+          '<b>PostCSS + Tailwind</b> transform <code>.module.css</code> files.',
+          '<b>CSS Modules</b> scope the output so class names never collide.',
+          '<b>Theme tokens</b> are embedded and exposed through the provider.',
+          'Output goes into <code>/dist</code> as both ESM and CJS modules.',
+        ]}
+      />
       <Description
         >This setup means host apps can import components without any Tailwind setup of their own.</Description
       >
@@ -190,12 +169,14 @@ export function Button({ className, ...props }) {
 
   <section class="space-y-4">
     <Heading as="h2" displayAs="2">Benefits</Heading>
-    <ul class="list-disc list-inside space-y-2 text-muted-foreground">
-      <li>Zero global CSS collisions</li>
-      <li>Fully theme-aware via CSS variables</li>
-      <li>Reusable across multiple projects</li>
-      <li>Works out of the box in any Vite or React setup</li>
-      <li>Easy to extend at the component or theme level</li>
-    </ul>
+    <List
+      items={[
+        'Zero global CSS collisions',
+        'Fully theme-aware via CSS variables',
+        'Reusable across multiple projects',
+        'Works out of the box in any Vite or React setup',
+        'Easy to extend at the component or theme level',
+      ]}
+    />
   </section>
 </PageWrapper>
