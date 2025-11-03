@@ -5,6 +5,7 @@ import Heading from '../../components/ui/heading.astro';
 import List from '../../components/ui/list.astro';
 import PageHeader from '../../components/ui/page-header.astro';
 import PageWrapper from '../../components/ui/page-wrapper.astro';
+import Table from '../../components/ui/table.astro';
 ---
 
 <PageWrapper>
@@ -131,40 +132,36 @@ export function Button({ className, ...props }) {
 
   <section class="space-y-4">
     <Heading as="h2" displayAs="2">Layered isolation</Heading>
-    <div class="overflow-x-auto">
-      <table class="w-full border-collapse">
-        <thead>
-          <tr class="border-b [&>th]:text-left">
-            <th class="p-3 font-semibold">Layer</th>
-            <th class="p-3 font-semibold">Responsibility</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr class="border-b">
-            <td class="p-3">ThemeProvider</td>
-            <td class="p-3 text-muted-foreground"
-              >Injects design tokens & controls light/dark modes</td
-            >
-          </tr>
-          <tr class="border-b">
-            <td class="p-3">Component CSS Module</td>
-            <td class="p-3 text-muted-foreground"
-              >Handles structure & layout with Tailwind utilities</td
-            >
-          </tr>
-          <tr class="border-b">
-            <td class="p-3">className Prop</td>
-            <td class="p-3 text-muted-foreground">Allows host-level overrides per instance</td>
-          </tr>
-          <tr class="border-b">
-            <td class="p-3">Build Pipeline</td>
-            <td class="p-3 text-muted-foreground"
-              >Compiles, scopes, and tree-shakes for minimal bundle size</td
-            >
-          </tr>
-        </tbody>
-      </table>
-    </div>
+    <Table
+      columns={['Layer', 'Responsibility']}
+      rows={[
+        [
+          'ThemeProvider',
+          {
+            content: 'Injects design tokens & controls light/dark modes',
+            class: 'text-muted-foreground',
+          },
+        ],
+        [
+          'Component CSS Module',
+          {
+            content: 'Handles structure & layout with Tailwind utilities',
+            class: 'text-muted-foreground',
+          },
+        ],
+        [
+          'className Prop',
+          { content: 'Allows host-level overrides per instance', class: 'text-muted-foreground' },
+        ],
+        [
+          'Build Pipeline',
+          {
+            content: 'Compiles, scopes, and tree-shakes for minimal bundle size',
+            class: 'text-muted-foreground',
+          },
+        ],
+      ]}
+    />
   </section>
 
   <section class="space-y-4">
