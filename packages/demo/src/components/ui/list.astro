@@ -10,12 +10,7 @@ interface Props {
 const { items, type = 'disc' } = Astro.props;
 ---
 
-<ul
-  class={cn(
-    'list-inside space-y-2 text-muted-foreground',
-    type === 'decimal' ? 'list-decimal' : 'list-disc'
-  )}
->
+<ul class={cn('list', type === 'decimal' ? 'list-decimal' : 'list-disc')}>
   {
     items.map((item) => (
       <li>

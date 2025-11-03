@@ -43,3 +43,9 @@
     @apply bg-background text-foreground font-sans transition-colors;
   }
 }
+
+@layer components {
+  .list {
+    @apply text-muted-foreground space-y-1 pl-4 [&>li]:text-base/7 [&>li>p]:align-top;
+  }
+}
