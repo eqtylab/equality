@@ -30,7 +30,7 @@ const registryCode = `@eqtylab:registry=https://npm.pkg.github.com
     <PageHeader heading="Installation" />
 
     <SectionWrapper>
-      <Heading as="h2" displayAs="2" id="using-the-library-in-your-app"
+      <Heading as="h2" id="using-the-library-in-your-app"
         >Using the library in your app</Heading
       >
 
@@ -46,7 +46,7 @@ const registryCode = `@eqtylab:registry=https://npm.pkg.github.com
 
     <SectionWrapper spacing="xl">
       <ContentWrapper spacing="md">
-        <Heading as="h2" displayAs="2" id="access">Access</Heading>
+        <Heading as="h2" id="access">Access</Heading>
 
         <Description>
           This is a <b>private GitHub package</b> published under the <Link
@@ -62,7 +62,7 @@ const registryCode = `@eqtylab:registry=https://npm.pkg.github.com
       </ContentWrapper>
 
       <ContentWrapper spacing="md">
-        <Heading as="h3" displayAs="3" id="authenticate-with-github-packages"
+        <Heading as="h3" id="authenticate-with-github-packages"
           >1. Authenticate with GitHub Packages</Heading
         >
         <Description>
@@ -78,7 +78,7 @@ const registryCode = `@eqtylab:registry=https://npm.pkg.github.com
       </ContentWrapper>
 
       <ContentWrapper spacing="md">
-        <Heading as="h3" displayAs="3" id="add-your-github-token-to-npm"
+        <Heading as="h3" id="add-your-github-token-to-npm"
           >2. Add your GitHub token to npm</Heading
         >
         <Description>
@@ -86,15 +86,13 @@ const registryCode = `@eqtylab:registry=https://npm.pkg.github.com
           registry.
         </Description>
         <ContentWrapper>
-          <Heading as="h4" displayAs="4"
-            >Option A — via npm CLI (recommended):</Heading
-          >
+          <Heading as="h4">Option A — via npm CLI (recommended):</Heading>
           <Code
             code="npm config set //npm.pkg.github.com/:_authToken=YOUR_GITHUB_TOKEN"
           />
         </ContentWrapper>
         <ContentWrapper>
-          <Heading as="h4" displayAs="4">
+          <Heading as="h4">
             Option B — via <code>.npmrc</code> file:
           </Heading>
           <Description>
@@ -104,9 +102,7 @@ const registryCode = `@eqtylab:registry=https://npm.pkg.github.com
         </ContentWrapper>
       </ContentWrapper>
       <ContentWrapper spacing="md">
-        <Heading as="h3" displayAs="3" id="verify-access"
-          >3. Verify access</Heading
-        >
+        <Heading as="h3" id="verify-access">3. Verify access</Heading>
         <ContentWrapper>
           <Description
             >Run this to check if you can access the package:</Description
@@ -119,9 +115,7 @@ const registryCode = `@eqtylab:registry=https://npm.pkg.github.com
       </ContentWrapper>
 
       <ContentWrapper spacing="md">
-        <Heading as="h3" displayAs="3" id="troubleshooting"
-          >4. Troubleshooting</Heading
-        >
+        <Heading as="h3" id="troubleshooting">4. Troubleshooting</Heading>
         <Description
           >If you run into a <code>404</code> or <code>ERR_PNPM_FETCH_404</code>
           error:</Description
