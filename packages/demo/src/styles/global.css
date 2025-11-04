@@ -21,8 +21,6 @@
   --color-input: #09090b;
   --color-black-5: #191919;
   --color-lilac-gradient: rgba(179, 136, 236, 1);
-
-  --font-sans: 'TWK Lausanne', sans-serif;
 }
 
 @layer base {
