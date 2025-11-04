@@ -1,0 +1,16 @@
+@reference '../../theme/theme.module.css';
+
+.progress {
+  @apply bg-white/10;
+  @apply relative overflow-hidden;
+  @apply h-1.5 w-full rounded-full;
+}
+
+.progress-indicator {
+  @apply size-full flex-1;
+  @apply transition-all;
+}
+
+.progress-indicator--color {
+  @apply bg-primary;
+}

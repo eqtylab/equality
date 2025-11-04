@@ -1,0 +1,13 @@
+@reference '../../theme/theme.module.css';
+
+.separator {
+  @apply bg-border shrink-0;
+}
+
+.separator--horizontal {
+  @apply h-px w-full;
+}
+
+.separator--vertical {
+  @apply h-full w-px;
+}

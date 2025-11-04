@@ -1,0 +1,41 @@
+@reference '../../theme/theme.module.css';
+
+.page-not-found {
+  @apply flex items-center justify-center;
+  @apply px-8 py-16;
+  @apply text-foreground;
+}
+
+.page-not-found-inner {
+  @apply max-w-xl;
+  @apply space-y-6 px-4;
+  @apply text-center;
+}
+
+.icon-container {
+  @apply text-red border-red bg-red/20 border shadow-lg;
+  @apply flex items-center justify-center;
+  @apply mx-auto size-20 rounded-full;
+}
+
+.alert-icon {
+  @apply size-10;
+  @apply animate-pulse;
+}
+
+.title {
+  @apply text-3xl font-semibold sm:text-4xl;
+}
+
+.description {
+  @apply text-muted-foreground;
+}
+
+.actions {
+  @apply flex flex-col items-center justify-center gap-3 sm:flex-row;
+  @apply pt-2;
+}
+
+.home-icon {
+  @apply size-4;
+}

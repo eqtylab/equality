@@ -1,0 +1,59 @@
+@reference '../../theme/theme.module.css';
+
+.button {
+  @apply ring-offset-background rounded-md;
+  @apply whitespace-nowrap text-sm font-medium;
+  @apply transition-all duration-300;
+  @apply inline-flex items-center justify-center gap-1;
+  @apply focus-visible:ring-ring focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-offset-2;
+  @apply disabled:cursor-not-allowed disabled:opacity-50;
+  @apply [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0;
+}
+
+.button--primary {
+  @apply border-highlight/0 bg-highlight/50 border;
+  @apply text-foreground;
+  @apply hover:not-disabled:border-highlight hover:not-disabled:bg-highlight/60;
+}
+
+.button--destructive {
+  @apply border-red/0 bg-red/50 border;
+  @apply text-foreground;
+  @apply hover:not-disabled:border-red hover:not-disabled:bg-red/60 border;
+}
+
+.button--secondary {
+  @apply border-foreground bg-foreground border;
+  @apply text-background;
+  @apply hover:not-disabled:border-primary hover:not-disabled:bg-primary/80;
+}
+
+.button--tertiary {
+  @apply border-border border bg-black/60;
+  @apply text-foreground;
+  @apply hover:not-disabled:text-accent-foreground hover:not-disabled:bg-white/10;
+}
+
+.button--outline {
+  @apply border-border bg-black/60;
+  @apply text-foreground;
+  @apply hover:text-accent-foreground hover:border hover:bg-white/10;
+}
+
+.button--link {
+  @apply text-lilac;
+  @apply hover:not-disabled:underline underline-offset-4;
+}
+
+.size--sm {
+  @apply h-7 rounded-md px-2;
+  @apply text-xs;
+}
+
+.size--md {
+  @apply h-10 rounded-md px-3 py-2;
+}
+
+.size--lg {
+  @apply h-11 rounded-md px-8;
+}

@@ -1,6 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 export default {
-  // Scope all utilities under `.equality` so library styles don’t leak
-  important: '.equality',
+  // Scope all utilities under `[data-eqty-theme]` to match theme CSS
+  important: '[data-eqty-theme]',
   content: ['./src/**/*.{ts,tsx}'],
 };

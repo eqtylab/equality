@@ -1,11 +1,8 @@
-// Import the library CSS once
-import '@eqtylab/equality/styles/style.css';
-
-import StyleGuide from './style-guide';
+import StyleGuide from '@/components/style-guide';
 
 const UiExample = () => {
   return (
-    <div className="equality">
+    <div>
       <StyleGuide />
     </div>
   );

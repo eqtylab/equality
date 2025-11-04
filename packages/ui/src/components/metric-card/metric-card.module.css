@@ -1,0 +1,58 @@
+@reference '../../theme/theme.module.css';
+
+.metric-card {
+  @apply bg-foreground/5 rounded-md p-3;
+  @apply flex flex-col justify-between;
+}
+
+.value-container {
+  @apply flex items-center justify-between gap-2;
+}
+
+.value {
+  @apply text-2xl font-medium;
+}
+
+.label {
+  @apply text-foreground text-sm;
+}
+
+.text-default {
+  @apply text-foreground;
+}
+
+.text-red {
+  @apply text-red;
+}
+
+.text-lilac {
+  @apply text-lilac;
+}
+
+.text-green {
+  @apply text-mint;
+}
+
+.text-yellow {
+  @apply text-yellow;
+}
+
+.bg-default {
+  @apply bg-foreground/20;
+}
+
+.bg-red {
+  @apply bg-non-compliant-secondary;
+}
+
+.bg-lilac {
+  @apply bg-lilac/20;
+}
+
+.bg-green {
+  @apply bg-compliant-secondary;
+}
+
+.bg-yellow {
+  @apply bg-yellow/20;
+}

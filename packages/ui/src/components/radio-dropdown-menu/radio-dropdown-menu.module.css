@@ -1,0 +1,74 @@
+@reference '../../theme/theme.module.css';
+
+.selector-button {
+  @apply min-w-auto rounded-md;
+  @apply transition-all duration-200;
+  @apply flex items-center justify-between;
+  @apply hover:shadow-sm;
+}
+
+.selector-button-inner {
+  @apply flex items-center gap-1;
+  @apply capitalize;
+}
+
+.selected-count {
+  @apply bg-lilac/20 text-lilac;
+  @apply text-xs font-medium;
+  @apply rounded-full px-2 py-0.5;
+}
+
+.chevron-icon {
+  @apply text-muted-foreground;
+}
+
+.dropdown-menu-content {
+  @apply border-border border shadow-lg;
+  @apply max-h-80 overflow-auto;
+}
+
+.dropdown-menu-content-header {
+  @apply border-border border-b;
+  @apply flex items-center justify-between;
+  @apply px-3 pb-2 pt-2;
+}
+
+.header-title {
+  @apply text-foreground text-sm font-semibold;
+}
+
+.dropdown-menu-item {
+  @apply text-sm transition-colors;
+  @apply relative cursor-pointer;
+  @apply px-3 py-1.5 pl-9;
+  @apply hover:bg-lilac-button focus:bg-lilac-button;
+  @apply [&>span:first-child]:hidden;
+}
+
+.dropdown-menu-item-indicator {
+  @apply absolute left-3 top-1/2 -translate-y-1/2;
+  @apply size-4;
+  @apply flex items-center justify-center;
+}
+
+.indicator-inner {
+  @apply border-2 transition-colors;
+  @apply size-4 rounded-full;
+  @apply flex items-center justify-center;
+}
+
+.indicator-inner--selected {
+  @apply border-lilac bg-lilac;
+}
+
+.indicator-inner--not-selected {
+  @apply border-muted-foreground bg-muted/30;
+}
+
+.check-icon {
+  @apply text-background size-3;
+}
+
+.dropdown-menu-item-label {
+  @apply text-foreground;
+}

@@ -1,0 +1,30 @@
+@reference '../../theme/theme.module.css';
+
+.empty-table-state {
+  @apply flex flex-col items-center justify-center gap-1;
+  @apply text-center;
+}
+
+.icon-and-title-container {
+  @apply text-foreground flex flex-col items-center gap-2;
+}
+
+.icon-container {
+  @apply bg-foreground/10 mb-2 rounded-full p-3;
+}
+
+.icon {
+  @apply *:size-5;
+}
+
+.title {
+  @apply text-sm font-medium;
+}
+
+.description {
+  @apply text-muted-foreground text-sm;
+}
+
+.clear-button {
+  @apply mt-2;
+}

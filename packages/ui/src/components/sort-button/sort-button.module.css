@@ -1,0 +1,20 @@
+@reference '../../theme/theme.module.css';
+
+.sort-button {
+  @apply text-left font-medium transition-colors;
+  @apply flex items-center gap-2;
+  @apply hover:text-lilac;
+  @apply [&>svg]:size-4;
+}
+
+.sort-button:hover .arrow-up-down-icon {
+  @apply opacity-50;
+}
+
+.arrow-container {
+  @apply flex items-center [&>svg]:size-3;
+}
+
+.arrow-up-down-icon {
+  @apply opacity-0 transition-opacity;
+}

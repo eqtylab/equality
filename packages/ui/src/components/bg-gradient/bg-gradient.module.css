@@ -1,0 +1,5 @@
+@reference '../../theme/theme.module.css';
+
+.bg-gradient {
+  @apply absolute inset-0 size-full;
+}
