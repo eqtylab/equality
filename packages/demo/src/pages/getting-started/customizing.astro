@@ -1,14 +1,14 @@
 ---
-import Code from "../../components/ui/code.astro";
-import ContentWrapper from "../../components/ui/content-wrapper.astro";
-import Description from "../../components/ui/description.astro";
-import Heading from "../../components/ui/heading.astro";
-import List from "../../components/ui/list.astro";
-import PageHeader from "../../components/ui/page-header.astro";
-import PageWrapper from "../../components/ui/page-wrapper.astro";
-import SectionWrapper from "../../components/ui/section-wrapper.astro";
-import PageContentWrapper from "../../components/ui/page-content-wrapper.astro";
-import TreeView from "../../components/ui/tree-view.astro";
+import Code from "@/components/ui/code.astro";
+import ContentWrapper from "@/components/ui/content-wrapper.astro";
+import Description from "@/components/ui/description.astro";
+import Heading from "@/components/ui/heading.astro";
+import List from "@/components/ui/list.astro";
+import PageHeader from "@/components/ui/page-header.astro";
+import PageWrapper from "@/components/ui/page-wrapper.astro";
+import SectionWrapper from "@/components/ui/section-wrapper.astro";
+import PageContentWrapper from "@/components/ui/page-content-wrapper.astro";
+import TreeView from "@/components/ui/tree-view.astro";
 
 const customVariablesCode = `<ThemeProvider
   theme="light"
@@ -30,9 +30,7 @@ const extendingTailwindCode = `<div className="bg-primary text-accent hover:bg-p
     <PageHeader heading="Customizing" />
 
     <SectionWrapper>
-      <Heading as="h2" displayAs="2" id="custom-variables"
-        >Custom variables</Heading
-      >
+      <Heading as="h2" id="custom-variables">Custom variables</Heading>
       <ContentWrapper>
         <Description>
           You can override specific tokens using the <code>customVars</code> prop
@@ -46,9 +44,7 @@ const extendingTailwindCode = `<div className="bg-primary text-accent hover:bg-p
     </SectionWrapper>
 
     <SectionWrapper>
-      <Heading as="h2" displayAs="2" id="extending-tailwind"
-        >Extending Tailwind</Heading
-      >
+      <Heading as="h2" id="extending-tailwind">Extending Tailwind</Heading>
       <ContentWrapper>
         <Description
           >Because Equality’s theme uses Tailwind’s native tokens (<code
@@ -61,8 +57,7 @@ const extendingTailwindCode = `<div className="bg-primary text-accent hover:bg-p
     </SectionWrapper>
 
     <SectionWrapper>
-      <Heading as="h2" displayAs="2" id="best-practices">Best practices</Heading
-      >
+      <Heading as="h2" id="best-practices">Best practices</Heading>
       <List
         items={[
           "Keep overrides scoped inside your <code>ThemeProvider</code>",

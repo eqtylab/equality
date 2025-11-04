@@ -1,5 +1,5 @@
 @reference '../../theme/theme.module.css';
 
 .label {
-  @apply text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70;
+  @apply text-sm leading-none font-medium peer-disabled:cursor-not-allowed peer-disabled:opacity-70;
 }

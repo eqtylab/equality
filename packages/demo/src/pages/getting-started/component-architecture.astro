@@ -1,15 +1,15 @@
 ---
-import Code from "../../components/ui/code.astro";
-import ContentWrapper from "../../components/ui/content-wrapper.astro";
-import Description from "../../components/ui/description.astro";
-import Heading from "../../components/ui/heading.astro";
-import List from "../../components/ui/list.astro";
-import PageHeader from "../../components/ui/page-header.astro";
-import PageWrapper from "../../components/ui/page-wrapper.astro";
-import SectionWrapper from "../../components/ui/section-wrapper.astro";
-import Table from "../../components/ui/table.astro";
-import PageContentWrapper from "../../components/ui/page-content-wrapper.astro";
-import TreeView from "../../components/ui/tree-view.astro";
+import Code from "@/components/ui/code.astro";
+import ContentWrapper from "@/components/ui/content-wrapper.astro";
+import Description from "@/components/ui/description.astro";
+import Heading from "@/components/ui/heading.astro";
+import List from "@/components/ui/list.astro";
+import PageHeader from "@/components/ui/page-header.astro";
+import PageWrapper from "@/components/ui/page-wrapper.astro";
+import SectionWrapper from "@/components/ui/section-wrapper.astro";
+import Table from "@/components/ui/table.astro";
+import PageContentWrapper from "@/components/ui/page-content-wrapper.astro";
+import TreeView from "@/components/ui/tree-view.astro";
 
 const componentStructureCode = `src/
   components/
@@ -52,7 +52,7 @@ const themeCode = `--color-primary: hsl(210 40% 98%);
     />
 
     <SectionWrapper>
-      <Heading as="h2" displayAs="2" id="overview">Overview</Heading>
+      <Heading as="h2" id="overview">Overview</Heading>
       <ContentWrapper>
         <Description
           >Each UI component in the library is built to be:</Description
@@ -72,7 +72,7 @@ const themeCode = `--color-primary: hsl(210 40% 98%);
     </SectionWrapper>
 
     <SectionWrapper>
-      <Heading as="h2" displayAs="2" id="css-modules-plus-tailwind"
+      <Heading as="h2" id="css-modules-plus-tailwind"
         >CSS Modules + Tailwind</Heading
       >
       <ContentWrapper>
@@ -100,7 +100,7 @@ const themeCode = `--color-primary: hsl(210 40% 98%);
     </SectionWrapper>
 
     <SectionWrapper>
-      <Heading as="h2" displayAs="2" id="theme-system">Theme system</Heading>
+      <Heading as="h2" id="theme-system">Theme system</Heading>
       <ContentWrapper>
         <Description
           >At the root level, the <code>{`<ThemeProvider>`}</code>
@@ -124,7 +124,7 @@ const themeCode = `--color-primary: hsl(210 40% 98%);
     </SectionWrapper>
 
     <SectionWrapper>
-      <Heading as="h2" displayAs="2" id="build-process">Build process</Heading>
+      <Heading as="h2" id="build-process">Build process</Heading>
       <ContentWrapper>
         <Description
           >The library uses Vite in library mode (or <code>tsup</code> if preferred)
@@ -148,35 +148,33 @@ const themeCode = `--color-primary: hsl(210 40% 98%);
     </SectionWrapper>
 
     <SectionWrapper>
-      <Heading as="h2" displayAs="2" id="layered-isolation"
-        >Layered isolation</Heading
-      >
+      <Heading as="h2" id="layered-isolation">Layered isolation</Heading>
       <Table
         columns={["Layer", "Responsibility"]}
         rows={[
           [
-            "ThemeProvider",
+            { content: "ThemeProvider" },
             {
               content: "Injects design tokens & controls light/dark modes",
               class: "text-muted-foreground",
             },
           ],
           [
-            "Component CSS Module",
+            { content: "Component CSS Module" },
             {
               content: "Handles structure & layout with Tailwind utilities",
               class: "text-muted-foreground",
             },
           ],
           [
-            "className Prop",
+            { content: "className Prop" },
             {
               content: "Allows host-level overrides per instance",
               class: "text-muted-foreground",
             },
           ],
           [
-            "Build Pipeline",
+            { content: "Build Pipeline" },
             {
               content:
                 "Compiles, scopes, and tree-shakes for minimal bundle size",
@@ -188,7 +186,7 @@ const themeCode = `--color-primary: hsl(210 40% 98%);
     </SectionWrapper>
 
     <SectionWrapper>
-      <Heading as="h2" displayAs="2" id="benefits">Benefits</Heading>
+      <Heading as="h2" id="benefits">Benefits</Heading>
       <List
         items={[
           "Zero global CSS collisions",

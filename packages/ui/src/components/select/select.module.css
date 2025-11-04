@@ -7,7 +7,7 @@
   @apply border-border border bg-zinc-950;
   @apply flex items-center justify-between;
   @apply ring-offset-background;
-  @apply focus:ring-ring/70 focus:outline-hidden focus:ring-1;
+  @apply focus:ring-ring/70 focus:ring-1 focus:outline-hidden;
   @apply data-placeholder:text-muted-foreground;
   @apply disabled:cursor-not-allowed disabled:opacity-50;
   @apply [&>span]:line-clamp-1;
@@ -30,7 +30,7 @@
   @apply text-popover-foreground;
   @apply border border-white/20 bg-black shadow-md;
   @apply relative z-50;
-  @apply overflow-y-auto overflow-x-hidden;
+  @apply overflow-x-hidden overflow-y-auto;
   @apply max-h-(--radix-select-content-available-height) min-w-32 rounded-md;
   @apply origin-(--radix-select-content-transform-origin);
   @apply data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2;
@@ -47,20 +47,20 @@
 }
 
 .select-viewport--popper {
-  @apply h-(--radix-select-trigger-height) min-w-(--radix-select-trigger-width) w-full;
+  @apply h-(--radix-select-trigger-height) w-full min-w-(--radix-select-trigger-width);
 }
 
 .select-label {
   @apply text-sm font-semibold;
-  @apply py-1.5 pl-8 pr-2;
+  @apply py-1.5 pr-2 pl-8;
 }
 
 .select-item {
   @apply relative w-full rounded-sm;
   @apply text-sm;
-  @apply py-1.5 pl-7 pr-2;
+  @apply py-1.5 pr-2 pl-7;
   @apply flex items-center;
-  @apply outline-hidden cursor-default select-none;
+  @apply cursor-default outline-hidden select-none;
   @apply data-disabled:pointer-events-none data-disabled:opacity-50;
   @apply focus:text-accent-foreground focus:bg-white/20;
 }

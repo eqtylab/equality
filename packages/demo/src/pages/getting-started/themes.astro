@@ -1,14 +1,14 @@
 ---
-import Code from "../../components/ui/code.astro";
-import ContentWrapper from "../../components/ui/content-wrapper.astro";
-import Description from "../../components/ui/description.astro";
-import Heading from "../../components/ui/heading.astro";
-import List from "../../components/ui/list.astro";
-import PageHeader from "../../components/ui/page-header.astro";
-import PageWrapper from "../../components/ui/page-wrapper.astro";
-import SectionWrapper from "../../components/ui/section-wrapper.astro";
-import TreeView from "../../components/ui/tree-view.astro";
-import PageContentWrapper from "../../components/ui/page-content-wrapper.astro";
+import Code from "@/components/ui/code.astro";
+import ContentWrapper from "@/components/ui/content-wrapper.astro";
+import Description from "@/components/ui/description.astro";
+import Heading from "@/components/ui/heading.astro";
+import List from "@/components/ui/list.astro";
+import PageHeader from "@/components/ui/page-header.astro";
+import PageWrapper from "@/components/ui/page-wrapper.astro";
+import SectionWrapper from "@/components/ui/section-wrapper.astro";
+import TreeView from "@/components/ui/tree-view.astro";
+import PageContentWrapper from "@/components/ui/page-content-wrapper.astro";
 
 const themeProviderCode = `<ThemeProvider theme="dark">
   <App />
@@ -23,9 +23,7 @@ const variablesCode = `--color-primary: hsl(210 40% 98%);
     <PageHeader heading="Themes" />
 
     <SectionWrapper>
-      <Heading as="h2" displayAs="2" id="built-in-themes"
-        >Built-in themes</Heading
-      >
+      <Heading as="h2" id="built-in-themes">Built-in themes</Heading>
       <ContentWrapper>
         <Description>Equality ships with two built-in themes: </Description>
         <List items={["<code>light</code>", "<code>dark</code>"]} />
@@ -46,9 +44,7 @@ const variablesCode = `--color-primary: hsl(210 40% 98%);
     </SectionWrapper>
 
     <SectionWrapper>
-      <Heading as="h2" displayAs="2" id="default-variables"
-        >Default variables</Heading
-      >
+      <Heading as="h2" id="default-variables">Default variables</Heading>
       <ContentWrapper>
         <Description
           >Each theme includes its own palette of colors. You don’t need to

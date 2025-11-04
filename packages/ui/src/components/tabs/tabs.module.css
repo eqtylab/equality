@@ -13,12 +13,12 @@
   @apply ring-offset-background border-b-2 border-transparent;
   @apply inline-flex items-center justify-center;
   @apply data-[state=active]:border-dark-lilac data-[state=active]:text-foreground data-[state=active]:shadow-sm;
-  @apply focus-visible:ring-ring focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-offset-2;
+  @apply focus-visible:ring-ring focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-hidden;
   @apply disabled:pointer-events-none disabled:opacity-50;
 }
 
 .tabs-content {
   @apply ring-offset-background;
   @apply mt-2;
-  @apply focus-visible:ring-ring focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-offset-2;
+  @apply focus-visible:ring-ring focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-hidden;
 }

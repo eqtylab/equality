@@ -1,5 +1,5 @@
 ---
-import { cn } from '../../lib/utils';
+import { cn } from "@/lib/utils";
 
 interface Column {
   label: string;
@@ -13,29 +13,33 @@ interface Cell {
 
 interface Props {
   columns: (string | Column)[];
-  rows: (string[] | Cell[])[];
+  rows: Cell[][];
   tableClass?: string;
 }
 
 const { columns, rows, tableClass } = Astro.props;
 
 const normalizeColumn = (col: string | Column): Column => {
-  return typeof col === 'string' ? { label: col } : col;
+  return typeof col === "string" ? { label: col } : col;
 };
 
 const normalizeCell = (cell: string | Cell): Cell => {
-  return typeof cell === 'string' ? { content: cell } : cell;
+  return typeof cell === "string" ? { content: cell } : cell;
 };
 ---
 
 <div class="overflow-x-auto">
-  <table class={cn('w-full border-collapse', tableClass)}>
+  <table class={cn("w-full border-collapse", tableClass)}>
     <thead>
       <tr class="border-b [&>th]:text-left">
         {
           columns.map((col) => {
             const column = normalizeColumn(col);
-            return <th class={cn('p-3 font-semibold', column.class)}>{column.label}</th>;
+            return (
+              <th class={cn("p-3 font-semibold", column.class)}>
+                {column.label}
+              </th>
+            );
           })
         }
       </tr>
@@ -46,7 +50,11 @@ const normalizeCell = (cell: string | Cell): Cell => {
           <tr class="border-b">
             {row.map((cell) => {
               const normalizedCell = normalizeCell(cell);
-              return <td class={cn('p-3', normalizedCell.class)}>{normalizedCell.content}</td>;
+              return (
+                <td class={cn("p-3", normalizedCell.class)}>
+                  {normalizedCell.content}
+                </td>
+              );
             })}
           </tr>
         ))
