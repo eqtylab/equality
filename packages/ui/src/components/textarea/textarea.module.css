@@ -7,6 +7,6 @@
   @apply bg-background border-border ring-offset-background border;
   @apply text-foreground text-base md:text-sm;
   @apply placeholder:text-muted-foreground;
-  @apply focus-visible:ring-ring/70 focus-visible:outline-hidden focus-visible:ring-1 focus-visible:ring-offset-2;
+  @apply focus-visible:ring-ring/70 focus-visible:ring-1 focus-visible:ring-offset-2 focus-visible:outline-hidden;
   @apply disabled:cursor-not-allowed disabled:opacity-50;
 }

@@ -17,5 +17,5 @@
 }
 
 .title--button-click {
-  @apply @sm/card:w-auto w-full;
+  @apply w-full @sm/card:w-auto;
 }

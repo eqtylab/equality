@@ -29,7 +29,7 @@
 }
 
 .drawer-title {
-  @apply text-lg font-semibold leading-none tracking-tight;
+  @apply text-lg leading-none font-semibold tracking-tight;
 }
 
 .drawer-description {

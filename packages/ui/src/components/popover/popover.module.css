@@ -1,7 +1,7 @@
 @reference '../../theme/theme.module.css';
 
 .popover-content {
-  @apply bg-black-5 text-popover-foreground outline-hidden border shadow-md;
+  @apply bg-black-5 text-popover-foreground border shadow-md outline-hidden;
   @apply z-50 w-72 rounded-md p-4;
   @apply origin-(--radix-popover-content-transform-origin);
   @apply data-[state=open]:animate-in data-[state=open]:fade-in-0 data-[state=open]:zoom-in-95;

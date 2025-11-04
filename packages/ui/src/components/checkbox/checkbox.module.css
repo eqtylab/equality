@@ -4,7 +4,7 @@
   @apply size-4 shrink-0;
   @apply border-primary ring-offset-background rounded-sm border;
   @apply data-[state=checked]:bg-primary data-[state=checked]:text-primary-foreground;
-  @apply focus-visible:ring-ring focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-offset-2;
+  @apply focus-visible:ring-ring focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-hidden;
   @apply disabled:cursor-not-allowed disabled:opacity-50;
 }
 
