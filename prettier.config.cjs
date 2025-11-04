@@ -13,8 +13,17 @@ module.exports = {
   plugins: [
     require.resolve('@ianvs/prettier-plugin-sort-imports'),
     require.resolve('prettier-plugin-tailwindcss'),
+    require.resolve('prettier-plugin-astro'),
   ],
   importOrder: ['^react', '<THIRD_PARTY_MODULES>', '', '^@/(.*)$', '', '^[./]'],
   importOrderParserPlugins: ['typescript', 'jsx', 'decorators-legacy'],
   tailwindFunctions: ['cn', 'cva'],
+  overrides: [
+    {
+      files: '*.astro',
+      options: {
+        parser: 'astro',
+      },
+    },
+  ],
 };

@@ -1,0 +1,172 @@
+---
+import Code from "../../components/ui/code.astro";
+import ContentWrapper from "../../components/ui/content-wrapper.astro";
+import Description from "../../components/ui/description.astro";
+import Heading from "../../components/ui/heading.astro";
+import Link from "../../components/ui/link.astro";
+import List from "../../components/ui/list.astro";
+import PageHeader from "../../components/ui/page-header.astro";
+import PageWrapper from "../../components/ui/page-wrapper.astro";
+import SectionWrapper from "../../components/ui/section-wrapper.astro";
+import PageContentWrapper from "../../components/ui/page-content-wrapper.astro";
+import TreeView from "../../components/ui/tree-view.astro";
+
+const installCode = `pnpm add @eqtylab/equality
+# or
+npm install @eqtylab/equality
+# or
+yarn add @eqtylab/equality
+# or
+bun add @eqtylab/equality
+`;
+
+const registryCode = `@eqtylab:registry=https://npm.pkg.github.com
+//npm.pkg.github.com/:_authToken=YOUR_GITHUB_TOKEN
+`;
+---
+
+<PageWrapper>
+  <PageContentWrapper>
+    <PageHeader heading="Installation" />
+
+    <SectionWrapper>
+      <Heading as="h2" displayAs="2" id="using-the-library-in-your-app"
+        >Using the library in your app</Heading
+      >
+
+      <ContentWrapper>
+        <Description>
+          Install the package inside your app’s workspace using your preferred
+          package manager:
+        </Description>
+
+        <Code code={installCode} />
+      </ContentWrapper>
+    </SectionWrapper>
+
+    <SectionWrapper spacing="xl">
+      <ContentWrapper spacing="md">
+        <Heading as="h2" displayAs="2" id="access">Access</Heading>
+
+        <Description>
+          This is a <b>private GitHub package</b> published under the <Link
+            href="https://github.com/eqtylab"
+            external>EQTY Lab</Link
+          > organization. Make sure your npm or GitHub account has permission to
+          access
+          <Link
+            href="https://github.com/orgs/eqtylab/packages/npm/package/equality"
+            external>this package</Link
+          >.</Description
+        >
+      </ContentWrapper>
+
+      <ContentWrapper spacing="md">
+        <Heading as="h3" displayAs="3" id="authenticate-with-github-packages"
+          >1. Authenticate with GitHub Packages</Heading
+        >
+        <Description>
+          You will need a <b>Personal Access Token (PAT)</b> with at least the
+          <code>read:packages</code> scope.
+          <br />
+          <br />
+          Create one at: <Link
+            href="https://github.com/settings/tokens"
+            external>https://github.com/settings/tokens</Link
+          >
+        </Description>
+      </ContentWrapper>
+
+      <ContentWrapper spacing="md">
+        <Heading as="h3" displayAs="3" id="add-your-github-token-to-npm"
+          >2. Add your GitHub token to npm</Heading
+        >
+        <Description>
+          Add your token to npm config so it can authenticate to GitHub’s
+          registry.
+        </Description>
+        <ContentWrapper>
+          <Heading as="h4" displayAs="4"
+            >Option A — via npm CLI (recommended):</Heading
+          >
+          <Code
+            code="npm config set //npm.pkg.github.com/:_authToken=YOUR_GITHUB_TOKEN"
+          />
+        </ContentWrapper>
+        <ContentWrapper>
+          <Heading as="h4" displayAs="4">
+            Option B — via <code>.npmrc</code> file:
+          </Heading>
+          <Description>
+            Create or edit a <code>.npmrc</code> file in your project root and add:
+          </Description>
+          <Code code={registryCode} />
+        </ContentWrapper>
+      </ContentWrapper>
+      <ContentWrapper spacing="md">
+        <Heading as="h3" displayAs="3" id="verify-access"
+          >3. Verify access</Heading
+        >
+        <ContentWrapper>
+          <Description
+            >Run this to check if you can access the package:</Description
+          >
+          <Code code="npm view @eqtylab/equality" />
+          <Description>
+            If that command returns package details, you’re good to go.
+          </Description></ContentWrapper
+        >
+      </ContentWrapper>
+
+      <ContentWrapper spacing="md">
+        <Heading as="h3" displayAs="3" id="troubleshooting"
+          >4. Troubleshooting</Heading
+        >
+        <Description
+          >If you run into a <code>404</code> or <code>ERR_PNPM_FETCH_404</code>
+          error:</Description
+        >
+        <List
+          items={[
+            "Double-check your GitHub token includes the <code>read:packages</code> permission.",
+            "Make sure your <code>.npmrc</code> file is in the same directory where you’re installing.",
+            "Confirm the registry line points to <code>https://npm.pkg.github.com</code>.",
+            "If you’re in a monorepo, also add the <code>.npmrc</code> file to the repo root.",
+            "Try clearing the npm cache:",
+          ]}
+        />
+        <Code code="npm cache clean --force" />
+      </ContentWrapper>
+    </SectionWrapper>
+  </PageContentWrapper>
+  <TreeView
+    items={[
+      {
+        label: "Using the library in your app",
+        id: "using-the-library-in-your-app",
+      },
+      {
+        label: "Access",
+        id: "access",
+        children: [
+          {
+            label: "Authenticate with GitHub Packages",
+            id: "authenticate-with-github-packages",
+          },
+          {
+            label: "Add your GitHub token to npm",
+            id: "add-your-github-token-to-npm",
+          },
+          {
+            label: "Verify access",
+            id: "verify-access",
+          },
+          {
+            label: "Troubleshooting",
+            id: "troubleshooting",
+          },
+        ],
+      },
+    ]}
+  />
+</PageWrapper>

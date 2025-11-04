@@ -1,0 +1,83 @@
+---
+import Code from "../../components/ui/code.astro";
+import ContentWrapper from "../../components/ui/content-wrapper.astro";
+import Description from "../../components/ui/description.astro";
+import Heading from "../../components/ui/heading.astro";
+import List from "../../components/ui/list.astro";
+import PageHeader from "../../components/ui/page-header.astro";
+import PageWrapper from "../../components/ui/page-wrapper.astro";
+import SectionWrapper from "../../components/ui/section-wrapper.astro";
+import PageContentWrapper from "../../components/ui/page-content-wrapper.astro";
+import TreeView from "../../components/ui/tree-view.astro";
+
+const customVariablesCode = `<ThemeProvider
+  theme="light"
+  customVars={{
+    "--color-primary": "hsl(280 75% 60%)",
+    "--color-accent": "hsl(50 100% 70%)",
+  }}
+>
+  <App />
+</ThemeProvider>`;
+
+const extendingTailwindCode = `<div className="bg-primary text-accent hover:bg-primary/80 transition-all">
+  Custom Block
+</div>`;
+---
+
+<PageWrapper>
+  <PageContentWrapper>
+    <PageHeader heading="Customizing" />
+
+    <SectionWrapper>
+      <Heading as="h2" displayAs="2" id="custom-variables"
+        >Custom variables</Heading
+      >
+      <ContentWrapper>
+        <Description>
+          You can override specific tokens using the <code>customVars</code> prop
+          on <code>ThemeProvider</code>:
+        </Description>
+        <Code code={customVariablesCode} />
+        <Description
+          >Perfect for brand-specific adjustments or white-label versions.</Description
+        >
+      </ContentWrapper>
+    </SectionWrapper>
+
+    <SectionWrapper>
+      <Heading as="h2" displayAs="2" id="extending-tailwind"
+        >Extending Tailwind</Heading
+      >
+      <ContentWrapper>
+        <Description
+          >Because Equality’s theme uses Tailwind’s native tokens (<code
+            >bg-primary</code
+          >, <code>text-foreground</code>, etc.), you can safely add custom
+          Tailwind classes in your host app without conflicts:</Description
+        >
+        <Code code={extendingTailwindCode} />
+      </ContentWrapper>
+    </SectionWrapper>
+
+    <SectionWrapper>
+      <Heading as="h2" displayAs="2" id="best-practices">Best practices</Heading
+      >
+      <List
+        items={[
+          "Keep overrides scoped inside your <code>ThemeProvider</code>",
+          "Avoid redefining tokens globally in the host app",
+          "Use HSL values for easy opacity and dynamic color blending",
+        ]}
+      />
+    </SectionWrapper>
+  </PageContentWrapper>
+
+  <TreeView
+    items={[
+      { label: "Custom variables", id: "custom-variables" },
+      { label: "Extending Tailwind", id: "extending-tailwind" },
+      { label: "Best practices", id: "best-practices" },
+    ]}
+  />
+</PageWrapper>

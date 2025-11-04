@@ -1,0 +1,124 @@
+---
+import { cn } from "../../lib/utils";
+
+interface TreeItem {
+  label: string;
+  id?: string;
+  children?: TreeItem[];
+}
+
+interface Props {
+  items: TreeItem[];
+  class?: string;
+}
+
+const { items, class: className } = Astro.props;
+---
+
+<aside class={cn("space-y-3 w-xs sticky top-24 h-[80vh]", className)}>
+  <h3 class="label">On this page</h3>
+  <ul class="tree-view">
+    {
+      items.map((item) => {
+        const itemId = item.id;
+        const hasChildren = item.children && item.children.length > 0;
+
+        return (
+          <li>
+            <button
+              class="tree-view-item px-4"
+              data-id={itemId}
+              data-has-children={hasChildren ? "true" : "false"}
+            >
+              {item.label}
+            </button>
+            {hasChildren && (
+              <ul>
+                {item.children!.map((child) => {
+                  const childId = child.id;
+
+                  return (
+                    <li>
+                      <button
+                        class="tree-view-item pr-4 pl-8"
+                        data-id={childId}
+                      >
+                        {child.label}
+                      </button>
+                    </li>
+                  );
+                })}
+              </ul>
+            )}
+          </li>
+        );
+      })
+    }
+  </ul>
+</aside>
+
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const treeItems = document.querySelectorAll(".tree-view-item");
+
+    treeItems.forEach((item) => {
+      item.addEventListener("click", (e) => {
+        const target = e.currentTarget as HTMLElement;
+        const sectionId = target.getAttribute("data-id");
+
+        if (sectionId) {
+          const section = document.getElementById(sectionId);
+          if (section) {
+            section.scrollIntoView({
+              behavior: "smooth",
+              block: "start",
+            });
+
+            // Update active state
+            treeItems.forEach((i) => {
+              i.classList.remove("text-foreground", "border-foreground");
+              i.classList.add("text-muted-foreground");
+            });
+            target.classList.remove("text-muted-foreground");
+            target.classList.add("text-foreground", "border-foreground");
+          }
+        }
+      });
+    });
+
+    // Update active state on scroll
+    const observerOptions = {
+      root: null,
+      rootMargin: "-20% 0px -70% 0px",
+      threshold: 0,
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          const id = entry.target.id;
+          if (id) {
+            treeItems.forEach((item) => {
+              const itemId = item.getAttribute("data-id");
+              if (itemId === id) {
+                treeItems.forEach((i) => {
+                  i.classList.remove("text-foreground", "border-foreground");
+                  i.classList.add("text-muted-foreground");
+                });
+                item.classList.remove("text-muted-foreground");
+                item.classList.add("text-foreground", "border-foreground");
+              }
+            });
+          }
+        }
+      });
+    }, observerOptions);
+
+    // Observe all headings with IDs
+    document
+      .querySelectorAll("h1[id], h2[id], h3[id], h4[id], h5[id], h6[id]")
+      .forEach((heading) => {
+        observer.observe(heading);
+      });
+  });
+</script>

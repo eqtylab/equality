@@ -1,0 +1,58 @@
+@import 'tailwindcss';
+
+@theme {
+  --color-lilac: #e2ccff;
+  --color-lilac-dark: #887a99;
+  --color-mint: #4ade80;
+  --color-red: hsl(342 96% 65%);
+  --color-blue: #1069ff;
+  --color-yellow: #ffea75;
+  --color-border: rgba(255, 255, 255, 0.1);
+  --color-black: #0d0d0d;
+  --color-background: #141415;
+  --color-foreground: #ffffff;
+  --color-gray: hsl(220, 13%, 75%);
+  --color-gray-medium: #4b5563;
+  --color-gray-light: #d1d5db;
+  --color-gold: #ffe4b8;
+  --color-white: #ffffff;
+  --color-muted-foreground: rgba(255, 255, 255, 0.6);
+  --color-card: rgba(217, 217, 217, 0.05);
+  --color-input: #09090b;
+  --color-black-5: #191919;
+  --color-lilac-gradient: rgba(179, 136, 236, 1);
+}
+
+@layer base {
+  *,
+  ::after,
+  ::before,
+  ::backdrop,
+  ::file-selector-button {
+    border-color: var(--border, currentcolor);
+  }
+
+  * {
+    @apply border-border;
+    @apply antialiased;
+  }
+
+  body {
+    @apply bg-background text-foreground font-sans transition-colors;
+  }
+}
+
+@layer components {
+  .list {
+    @apply text-muted-foreground space-y-1 pl-4 [&>li]:text-base/7 [&>li>p]:align-top;
+  }
+
+  .label {
+    @apply text-xs tracking-wider uppercase;
+  }
+
+  .tree-view-item {
+    @apply w-full cursor-pointer border-l py-1.5 text-left transition-all duration-300;
+    @apply text-muted-foreground hover:border-foreground hover:text-foreground;
+  }
+}

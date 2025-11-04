@@ -1,0 +1,35 @@
+---
+import { cn } from '../../lib/utils';
+
+interface Props {
+  displayAs?: 1 | 2 | 3 | 4 | 5 | 6;
+  as?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6';
+  id?: string;
+}
+
+const { displayAs, as = 'h1', id } = Astro.props;
+
+// Map displayAs (1-6) to Tailwind classes
+const displayClasses = {
+  1: 'text-4xl font-bold [&>code]:text-3xl',
+  2: 'text-2xl font-semibold [&>code]:text-xl',
+  3: 'text-xl font-medium [&>code]:text-lg',
+  4: 'text-lg font-medium [&>code]:text-base',
+  5: 'text-base font-medium [&>code]:text-sm',
+  6: 'text-sm font-medium [&>code]:text-xs',
+};
+
+const displayClass = displayClasses[displayAs as keyof typeof displayClasses] || displayClasses[1];
+const HeadingTag = as as 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6';
+---
+
+<HeadingTag
+  id={id}
+  class={cn(
+    displayClass,
+    '[&>code]:bg-card [&>code]:text-foreground [&>code]:p-1 [&>code]:rounded-sm',
+    id && 'scroll-mt-24'
+  )}
+>
+  <slot />
+</HeadingTag>
