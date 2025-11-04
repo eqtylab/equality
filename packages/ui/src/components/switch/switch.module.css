@@ -1,0 +1,36 @@
+@reference '../../theme/theme.module.css';
+
+.switch {
+  @apply cursor-pointer rounded-full;
+  @apply transition-colors;
+  @apply inline-flex shrink-0 items-center;
+  @apply border-2 border-transparent;
+  @apply focus-visible:ring-ring focus-visible:ring-offset-background focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-offset-2;
+  @apply disabled:cursor-not-allowed disabled:opacity-50;
+}
+
+.switch--default {
+  @apply h-6 w-11;
+  @apply data-[state=checked]:bg-lilac data-[state=unchecked]:bg-lilac-button;
+}
+
+.switch--small {
+  @apply h-5 w-9;
+  @apply data-[state=checked]:bg-lilac data-[state=unchecked]:bg-lilac-button;
+}
+
+.thumb {
+  @apply bg-background shadow-lg ring-0;
+  @apply transition-transform;
+  @apply block rounded-full;
+  @apply pointer-events-none;
+  @apply data-[state=unchecked]:translate-x-0;
+}
+
+.thumb--default {
+  @apply size-5 data-[state=checked]:translate-x-5;
+}
+
+.thumb--small {
+  @apply size-4 data-[state=checked]:translate-x-4;
+}

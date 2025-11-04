@@ -11,18 +11,13 @@
       "types": "./dist/index.d.ts",
       "import": "./dist/index.js",
       "require": "./dist/index.cjs"
-    },
-    "./styles/style.css": "./styles/style.css"
+    }
   },
   "files": [
     "dist",
-    "styles/style.css",
-    "assets/fonts",
     "README.md"
   ],
-  "sideEffects": [
-    "styles/style.css"
-  ],
+  "sideEffects": false,
   "dependencies": {
     "@radix-ui/react-accordion": "^1.2.3",
     "@radix-ui/react-alert-dialog": "^1.1.2",
@@ -71,9 +66,8 @@
     "typescript": "^5.6.0"
   },
   "scripts": {
-    "build": "pnpm run build:css && pnpm run build:lib",
+    "build": "pnpm run build:lib",
     "build:lib": "tsup src/index.ts --dts --format esm,cjs --clean",
-    "build:css": "postcss styles/tailwind.css -o styles/style.css",
     "watch": "tsup src/index.ts --dts --format esm,cjs --watch",
     "release": "pnpm run build && pnpm publish --access public"
   }

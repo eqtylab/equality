@@ -1,0 +1,18 @@
+@reference '../../theme/theme.module.css';
+
+.checkbox {
+  @apply size-4 shrink-0;
+  @apply border-primary ring-offset-background rounded-sm border;
+  @apply data-[state=checked]:bg-primary data-[state=checked]:text-primary-foreground;
+  @apply focus-visible:ring-ring focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-offset-2;
+  @apply disabled:cursor-not-allowed disabled:opacity-50;
+}
+
+.indicator {
+  @apply flex items-center justify-center;
+  @apply text-current;
+}
+
+.check {
+  @apply size-4;
+}

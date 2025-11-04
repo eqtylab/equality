@@ -1,0 +1,80 @@
+@reference '../../theme/theme.module.css';
+
+.sheet-overlay {
+  @apply bg-black/80;
+  @apply fixed inset-0 z-50;
+  @apply data-[state=open]:animate-in data-[state=open]:fade-in-0;
+  @apply data-[state=closed]:animate-out data-[state=closed]:fade-out-0;
+}
+
+.sheet-content {
+  @apply bg-background shadow-lg;
+  @apply fixed z-50 gap-4 p-6;
+  @apply transition ease-in-out;
+  @apply data-[state=open]:animate-in data-[state=open]:duration-500;
+  @apply data-[state=closed]:animate-out data-[state=closed]:duration-300;
+}
+
+.sheet-content--side-top {
+  @apply border-b;
+  @apply inset-x-0 top-0;
+  @apply data-[state=closed]:slide-out-to-top data-[state=open]:slide-in-from-top;
+}
+
+.sheet-content--side-bottom {
+  @apply border-t;
+  @apply inset-x-0 bottom-0;
+  @apply data-[state=closed]:slide-out-to-bottom data-[state=open]:slide-in-from-bottom;
+}
+
+.sheet-content--side-left {
+  @apply border-r;
+  @apply inset-y-0 left-0;
+  @apply h-full w-3/4 sm:max-w-sm;
+  @apply data-[state=closed]:slide-out-to-left data-[state=open]:slide-in-from-left;
+}
+
+.sheet-content--side-right {
+  @apply border-l;
+  @apply inset-y-0 right-0;
+  @apply h-full w-3/4 sm:max-w-sm;
+  @apply data-[state=closed]:slide-out-to-right data-[state=open]:slide-in-from-right;
+}
+
+.sheet-close {
+  @apply rounded-sm;
+  @apply absolute right-4 top-4;
+  @apply opacity-70 transition-opacity;
+  @apply ring-offset-background;
+  @apply focus:ring-ring focus:outline-hidden focus:ring-2 focus:ring-offset-2;
+  @apply hover:opacity-100;
+  @apply data-[state=open]:bg-secondary;
+  @apply disabled:pointer-events-none;
+}
+
+.sheet-close-icon {
+  @apply size-4;
+}
+
+.sheet-close-text {
+  @apply sr-only;
+}
+
+.sheet-header {
+  @apply flex flex-col;
+  @apply space-y-2;
+  @apply text-center sm:text-left;
+}
+
+.sheet-footer {
+  @apply flex flex-col-reverse sm:flex-row sm:justify-end;
+  @apply sm:space-x-2;
+}
+
+.sheet-title {
+  @apply text-foreground text-lg font-medium;
+}
+
+.sheet-description {
+  @apply text-muted-foreground text-sm;
+}

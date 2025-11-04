@@ -69,35 +69,49 @@ pnpm -F demo dev
 pnpm add @eqtylab/equality
 ```
 
-2. Import the library CSS once (ideally in your app entry):
+2. Import `ThemeProvider` in your app entry:
 
 ```ts
-import '@eqtylab/equality/styles/style.css';
+import React from 'react';
+import { createRoot } from 'react-dom/client';
+import { ThemeProvider } from '@eqtylab/equality';
+
+import App from './App';
+
+createRoot(document.getElementById('root')!).render(
+  <React.StrictMode>
+    <ThemeProvider>
+      <App />
+    </ThemeProvider>
+  </React.StrictMode>
+);
 ```
 
 3. Import and use components:
 
 ```ts
 import { Button, Card } from '@eqtylab/equality';
-```
 
-4. Optional: wrap a top-level container with the `equality` class to scope styles/utilities:
-
-```tsx
-<div className="equality">
-  <Button>Click me</Button>
-</div>
+const Test = () => {
+  return (
+    <Card>
+      <CardContent>
+        <p>This is a test card with button</p>
+        <Button>Click me</Button>
+      </CardContent>
+    </Card>
+  )
+}
 ```
 
 Notes:
 
-- The library is built with Tailwind v4. If your app uses Tailwind, use v4 for best compatibility.
 - The prebuilt CSS works without configuring Tailwind in the consuming app.
 
 ## Developing the UI library
 
 - Source: `packages/ui/src` (components under `src/components`, exports in `src/index.ts`)
-- Styles/Tokens: `packages/ui/styles/tailwind.css` (compiled to `styles/style.css`)
+- Styles/Tokens: `packages/ui/src/theme/theme.module.css`
 
 Build the library locally:
 

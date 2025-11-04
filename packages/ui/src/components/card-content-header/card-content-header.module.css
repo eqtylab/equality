@@ -1,0 +1,21 @@
+@reference '../../theme/theme.module.css';
+
+.card-content-header {
+  @apply flex items-center justify-between gap-2;
+}
+
+.card-content-header--wrap {
+  @apply flex-wrap;
+}
+
+.button {
+  @apply @sm/card:order-3;
+}
+
+.title {
+  @apply text-card-foreground grow text-lg;
+}
+
+.title--button-click {
+  @apply @sm/card:w-auto w-full;
+}

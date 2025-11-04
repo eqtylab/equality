@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 
-import Header from './components/header';
-import UiExample from './components/ui-example';
+import Header from '@/components/header';
+import UiExample from '@/components/ui-example';
 
 export default function App() {
   useEffect(() => {

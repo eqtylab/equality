@@ -1,0 +1,44 @@
+@reference '../../theme/theme.module.css';
+
+.badge {
+  @apply focus:ring-ring focus:outline-hidden focus:ring-2 focus:ring-offset-2;
+  @apply inline-flex items-center;
+  @apply px-2 py-0.5;
+  @apply text-xs font-medium transition-colors;
+  @apply rounded-full border;
+}
+
+.badge--default {
+  @apply bg-primary border-transparent;
+  @apply text-primary-foreground;
+}
+
+.badge--primary {
+  @apply bg-lilac/20 border-transparent;
+  @apply text-lilac;
+}
+
+.badge--secondary {
+  @apply bg-secondary border-transparent;
+  @apply text-secondary-foreground;
+}
+
+.badge--destructive {
+  @apply bg-destructive border-transparent;
+  @apply text-destructive-foreground;
+}
+
+.badge--outline {
+  @apply text-foreground;
+}
+
+.badge--neutral {
+  @apply bg-foreground/10 border-transparent;
+  @apply text-muted-foreground font-medium;
+  @apply flex items-center gap-1;
+}
+
+.badge--success {
+  @apply bg-compliant-secondary border-transparent;
+  @apply text-compliant;
+}

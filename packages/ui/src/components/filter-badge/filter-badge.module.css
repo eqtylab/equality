@@ -1,0 +1,17 @@
+@reference '../../theme/theme.module.css';
+
+.filters-badge {
+  @apply flex items-center gap-1;
+}
+
+.filters-badge--colors {
+  @apply bg-lilac/20 text-lilac;
+}
+
+.tooltip {
+  @apply max-w-xs break-words;
+}
+
+.remove-btn {
+  @apply size-4 p-0 [&_svg]:size-3;
+}

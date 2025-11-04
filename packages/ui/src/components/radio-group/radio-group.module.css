@@ -1,0 +1,22 @@
+@reference '../../theme/theme.module.css';
+
+.radio-group {
+  @apply grid gap-2;
+}
+
+.radio-group-item {
+  @apply border-primary text-primary border;
+  @apply aspect-square size-4 rounded-full;
+  @apply ring-offset-background;
+  @apply focus-visible:ring-ring focus:outline-hidden focus-visible:ring-2 focus-visible:ring-offset-2;
+  @apply disabled:cursor-not-allowed disabled:opacity-50;
+}
+
+.radio-group-item-indicator {
+  @apply flex items-center justify-center;
+}
+
+.indicator-icon {
+  @apply size-2.5;
+  @apply fill-current text-current;
+}
