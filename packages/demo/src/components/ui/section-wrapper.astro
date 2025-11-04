@@ -1,25 +1,26 @@
 ---
-import { cn } from '../../lib/utils';
+import { cn } from "../../lib/utils";
+import type { HTMLAttributes } from "astro/types";
 
-interface Props extends astroHTML.JSX.HTMLAttributes<'section'> {
+interface Props extends HTMLAttributes<"section"> {
   class?: string;
-  spacing?: 'sm' | 'md' | 'lg' | 'xl';
+  spacing?: "sm" | "md" | "lg" | "xl";
 }
 
-const { class: className, spacing = 'sm', ...props } = Astro.props;
+const { class: className, spacing = "sm", ...props } = Astro.props;
 
 const spacingClass = (() => {
   switch (spacing) {
-    case 'sm':
-      return 'space-y-4';
-    case 'md':
-      return 'space-y-6';
-    case 'lg':
-      return 'space-y-8';
-    case 'xl':
-      return 'space-y-10';
+    case "sm":
+      return "space-y-4";
+    case "md":
+      return "space-y-6";
+    case "lg":
+      return "space-y-8";
+    case "xl":
+      return "space-y-10";
     default:
-      return 'space-y-4';
+      return "space-y-4";
   }
 })();
 ---
