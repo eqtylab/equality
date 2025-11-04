@@ -5,6 +5,8 @@ import { resolve } from "path";
 
 import tailwindcss from "@tailwindcss/vite";
 
+import mdx from "@astrojs/mdx";
+
 const __dirname = fileURLToPath(new URL(".", import.meta.url));
 
 // https://astro.build/config
@@ -22,4 +24,5 @@ export default defineConfig({
       },
     },
   },
+  integrations: [mdx()],
 });
