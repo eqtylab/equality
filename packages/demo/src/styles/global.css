@@ -44,6 +44,10 @@
   pre {
     @apply bg-card! text-foreground! overflow-x-auto rounded-sm p-3 text-sm;
   }
+
+  pre > code {
+    @apply break-all whitespace-pre-wrap;
+  }
 }
 
 @layer components {
@@ -60,7 +64,7 @@
     @apply text-muted-foreground hover:border-foreground hover:text-foreground;
   }
 
-  .markdown-content {
+  #markdown-content {
     h1 {
       @apply text-4xl font-bold [&>code]:text-3xl;
       @apply mt-12 mb-4;
