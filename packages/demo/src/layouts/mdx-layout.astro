@@ -1,0 +1,34 @@
+---
+import PageHeader from "@/components/ui/page-header.astro";
+import PageWrapper from "@/components/ui/page-wrapper.astro";
+import PageContentWrapper from "@/components/ui/page-content-wrapper.astro";
+import TreeView from "@/components/ui/tree-view.astro";
+
+interface TreeItem {
+  label: string;
+  id?: string;
+  children?: TreeItem[];
+}
+
+interface Props {
+  frontmatter?: {
+    heading?: string;
+    description?: string;
+    treeItems?: TreeItem[];
+  };
+}
+
+const { frontmatter = {} } = Astro.props;
+const { heading, description, treeItems = [] } = frontmatter;
+---
+
+<PageWrapper>
+  <PageContentWrapper>
+    {heading && <PageHeader heading={heading} description={description} />}
+    <section class="markdown-content">
+      <slot />
+    </section>
+  </PageContentWrapper>
+
+  {treeItems.length > 0 && <TreeView items={treeItems} />}
+</PageWrapper>
