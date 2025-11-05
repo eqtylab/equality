@@ -1,64 +1,90 @@
----
-import { cn } from "@/lib/utils";
-
-interface TreeItem {
-  label: string;
-  id?: string;
-  children?: TreeItem[];
-}
-
-interface Props {
-  items: TreeItem[];
-  class?: string;
-}
-
-const { items, class: className } = Astro.props;
----
-
-<aside class={cn("space-y-3 w-xs sticky top-24 h-[80vh]", className)}>
+<aside class="sticky top-24 h-[80vh] w-xs space-y-3">
   <h3 class="label">On this page</h3>
-  <ul class="tree-view">
-    {
-      items.map((item) => {
-        const itemId = item.id;
-        const hasChildren = item.children && item.children.length > 0;
-
-        return (
-          <li>
-            <button
-              class="tree-view-item px-4"
-              data-id={itemId}
-              data-has-children={hasChildren ? "true" : "false"}
-            >
-              {item.label}
-            </button>
-            {hasChildren && (
-              <ul>
-                {item.children!.map((child) => {
-                  const childId = child.id;
-
-                  return (
-                    <li>
-                      <button
-                        class="tree-view-item pr-4 pl-8"
-                        data-id={childId}
-                      >
-                        {child.label}
-                      </button>
-                    </li>
-                  );
-                })}
-              </ul>
-            )}
-          </li>
-        );
-      })
-    }
-  </ul>
+  <ul class="tree-view"></ul>
 </aside>
 
 <script>
+  interface TreeItem {
+    label: string;
+    id?: string;
+    children?: TreeItem[];
+  }
+
+  function buildTreeFromHeadings(): TreeItem[] {
+    const markdownContent = document.getElementById("markdown-content");
+    if (!markdownContent) return [];
+
+    const headings = markdownContent.querySelectorAll("h2, h3");
+
+    const tree: TreeItem[] = [];
+    let currentH2: TreeItem | null = null;
+
+    headings.forEach((heading) => {
+      const id = heading.id;
+      const label = heading.textContent || "";
+      const level = heading.tagName.toLowerCase();
+
+      if (level === "h2") {
+        currentH2 = {
+          label,
+          id,
+          children: [],
+        };
+        tree.push(currentH2);
+      } else if (level === "h3" && currentH2) {
+        currentH2.children!.push({
+          label,
+          id,
+        });
+      }
+    });
+
+    return tree;
+  }
+
+  function renderTreeView(tree: TreeItem[], container: HTMLElement) {
+    container.innerHTML = "";
+
+    tree.forEach((item) => {
+      const itemId = item.id;
+      const hasChildren = item.children && item.children.length > 0;
+
+      const li = document.createElement("li");
+      const button = document.createElement("button");
+      button.className = "tree-view-item px-4";
+      button.setAttribute("data-id", itemId || "");
+      button.textContent = item.label;
+      li.appendChild(button);
+
+      if (hasChildren) {
+        const ul = document.createElement("ul");
+        item.children!.forEach((child) => {
+          const childLi = document.createElement("li");
+          const childButton = document.createElement("button");
+          childButton.className = "tree-view-item pr-4 pl-8 text-sm";
+          childButton.setAttribute("data-id", child.id || "");
+          childButton.textContent = child.label;
+          childLi.appendChild(childButton);
+          ul.appendChild(childLi);
+        });
+        li.appendChild(ul);
+      }
+
+      container.appendChild(li);
+    });
+  }
+
   document.addEventListener("DOMContentLoaded", () => {
+    const treeViewContainer = document.querySelector(
+      ".tree-view",
+    ) as HTMLElement;
+    if (!treeViewContainer) return;
+
+    // Build tree from headings and render it
+    const tree = buildTreeFromHeadings();
+    renderTreeView(tree, treeViewContainer);
+
+    // Set up event listeners after rendering
     const treeItems = document.querySelectorAll(".tree-view-item");
 
     treeItems.forEach((item) => {
