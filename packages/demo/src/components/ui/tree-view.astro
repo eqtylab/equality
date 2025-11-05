@@ -61,7 +61,7 @@
         item.children!.forEach((child) => {
           const childLi = document.createElement("li");
           const childButton = document.createElement("button");
-          childButton.className = "tree-view-item pr-4 pl-8";
+          childButton.className = "tree-view-item pr-4 pl-8 text-sm";
           childButton.setAttribute("data-id", child.id || "");
           childButton.textContent = child.label;
           childLi.appendChild(childButton);
