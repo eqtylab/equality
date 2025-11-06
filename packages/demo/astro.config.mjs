@@ -7,12 +7,17 @@ import tailwindcss from "@tailwindcss/vite";
 
 import mdx from "@astrojs/mdx";
 
+import react from "@astrojs/react";
+
 const __dirname = fileURLToPath(new URL(".", import.meta.url));
 
 // https://astro.build/config
 export default defineConfig({
   vite: {
     plugins: [tailwindcss()],
+    ssr: {
+      noExternal: ["@eqtylab/equality"],
+    },
     resolve: {
       alias: {
         "@": resolve(__dirname, "./src"),
@@ -24,5 +29,5 @@ export default defineConfig({
       },
     },
   },
-  integrations: [mdx()],
+  integrations: [mdx(), react()],
 });

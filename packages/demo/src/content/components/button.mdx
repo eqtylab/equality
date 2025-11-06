@@ -1,0 +1,183 @@
+---
+layout: "@/layouts/mdx-layout.astro"
+heading: "Button"
+description: "Button with sizes and variants"
+---
+
+import React from "react";
+import { Button } from "@eqtylab/equality";
+import { ArrowUp, Grid3X3 } from "lucide-react";
+
+## Buttons
+
+### Primary (default)
+
+<div className="flex gap-2">
+  <Button variant="primary" size="lg">
+    Primary LG
+  </Button>
+  <Button variant="primary" size="md">
+    Primary MD
+  </Button>
+  <Button variant="primary" size="sm">
+    Primary SM
+  </Button>
+</div>
+
+### Destructive
+
+<div className="flex gap-2">
+  <Button variant="destructive" size="lg">
+    Destructive LG
+  </Button>
+  <Button variant="destructive" size="md">
+    Destructive MD
+  </Button>
+  <Button variant="destructive" size="sm">
+    Destructive SM
+  </Button>
+</div>
+
+### Secondary
+
+<div className="flex gap-2">
+  <Button variant="secondary" size="lg">
+    Secondary LG
+  </Button>
+  <Button variant="secondary" size="md">
+    Secondary MD
+  </Button>
+  <Button variant="secondary" size="sm">
+    Secondary SM
+  </Button>
+</div>
+
+### Tertiary
+
+<div className="flex gap-2">
+  <Button variant="tertiary" size="lg">
+    Tertiary LG
+  </Button>
+  <Button variant="tertiary" size="md">
+    Tertiary MD
+  </Button>
+  <Button variant="tertiary" size="sm">
+    Tertiary SM
+  </Button>
+</div>
+
+### Outline
+
+<div className="flex gap-2">
+  <Button variant="outline" size="lg">
+    Outline LG
+  </Button>
+  <Button variant="outline" size="md">
+    Outline MD
+  </Button>
+  <Button variant="outline" size="sm">
+    Outline SM
+  </Button>
+</div>
+
+### Link
+
+<div className="flex gap-2">
+  <Button variant="link" size="lg">
+    Link LG
+  </Button>
+  <Button variant="link" size="md">
+    Link MD
+  </Button>
+  <Button variant="link" size="sm">
+    Link SM
+  </Button>
+</div>
+
+### With Prefix Icon
+
+{(() => {
+const prefixIcon = React.createElement(Grid3X3);
+return (
+
+<div className="flex gap-2">
+  <Button variant="primary" size="lg" prefix={prefixIcon}>
+    Prefix LG
+  </Button>
+  <Button variant="primary" size="md" prefix={prefixIcon}>
+    Prefix MD
+  </Button>
+  <Button variant="primary" size="sm" prefix={prefixIcon}>
+    Prefix SM
+  </Button>
+</div>
+); })()}
+
+### With Suffix Icon
+
+{(() => {
+const suffixIcon = React.createElement(ArrowUp);
+return (
+
+<div className="flex gap-2">
+  <Button variant="primary" size="lg" suffix={suffixIcon}>
+    Suffix LG
+  </Button>
+  <Button variant="primary" size="md" suffix={suffixIcon}>
+    Suffix MD
+  </Button>
+  <Button variant="primary" size="sm" suffix={suffixIcon}>
+    Suffix SM
+  </Button>
+</div>
+); })()}
+
+### As Link
+
+<div className="flex gap-2">
+  <Button variant="primary" size="lg" href="https://example.com">
+    Link LG
+  </Button>
+  <Button variant="primary" size="md" href="https://example.com">
+    Link MD
+  </Button>
+  <Button variant="primary" size="sm" href="https://example.com">
+    Link SM
+  </Button>
+</div>
+
+### As Link with Target
+
+<div className="flex gap-2">
+  <Button
+    variant="secondary"
+    size="md"
+    href="https://example.com"
+    target="_blank"
+    rel="noopener noreferrer"
+  >
+    Open in New Tab
+  </Button>
+  <Button
+    variant="tertiary"
+    size="md"
+    href="https://example.com/file.pdf"
+    download
+  >
+    Download File
+  </Button>
+</div>
+
+### Disabled
+
+<div className="flex gap-2">
+  <Button variant="primary" size="lg" disabled>
+    Disabled LG
+  </Button>
+  <Button variant="primary" size="md" disabled>
+    Disabled MD
+  </Button>
+  <Button variant="primary" size="sm" disabled>
+    Disabled SM
+  </Button>
+</div>

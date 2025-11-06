@@ -10,7 +10,11 @@
       "@/lib/*": ["src/lib/*"],
       "@/layouts/*": ["src/layouts/*"],
       "@/pages/*": ["src/pages/*"],
-      "@/styles/*": ["src/styles/*"]
-    }
+      "@/styles/*": ["src/styles/*"],
+      "@eqtylab/equality": ["../ui/src"],
+      "@eqtylab/equality/*": ["../ui/src/*"]
+    },
+    "jsx": "react-jsx",
+    "jsxImportSource": "react"
   }
 }
