@@ -1,0 +1,27 @@
+---
+layout: "@/layouts/mdx-layout.astro"
+heading: "Progress"
+description: "Progress with sizes and variants"
+---
+
+import { Progress } from "@eqtylab/equality";
+
+## Percentage: 0%
+
+<Progress value={0} />
+
+## Percentage: 75%
+
+<Progress value={75} />
+
+## Percentage: 100%
+
+<Progress value={100} />
+
+## Color prop
+
+<Progress value={50} color="bg-lilac" />
+
+## Color prop
+
+<Progress value={50} color="bg-mint" />

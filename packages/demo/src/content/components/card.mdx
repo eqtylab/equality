@@ -16,6 +16,8 @@ import {
 
 ## Content only (most used)
 
+{
+
 <Card>
   <CardContent>
     <div className="space-y-2">
@@ -26,8 +28,11 @@ import {
     </div>
   </CardContent>
 </Card>
+}
 
 ## Header only
+
+{
 
 <Card>
   <CardHeader>
@@ -35,8 +40,11 @@ import {
     <CardDescription>A simple card only with header.</CardDescription>
   </CardHeader>
 </Card>
+}
 
 ## Content only interactive (hover)
+
+{
 
 <Card onClick={() => console.log("Card clicked")}>
   <CardContent>
@@ -48,8 +56,11 @@ import {
     </div>
   </CardContent>
 </Card>
+}
 
 ## Basic card
+
+{
 
 <Card>
   <CardHeader className="border-border border-b">
@@ -60,8 +71,11 @@ import {
     <p className="text-sm">This is the main content area of the card.</p>
   </CardContent>
 </Card>
+}
 
 ## With footer
+
+{
 
 <Card>
   <CardHeader className="border-border border-b">
@@ -82,8 +96,11 @@ import {
     </div>
   </CardFooter>
 </Card>
+}
 
 ## Interactive (hover)
+
+{
 
 <Card onClick={() => console.log("Card clicked")}>
   <CardHeader className="border-border border-b">
@@ -94,3 +111,4 @@ import {
     <p className="text-sm">This card has hover effects and is clickable.</p>
   </CardContent>
 </Card>
+}

@@ -1,0 +1,77 @@
+---
+layout: "@/layouts/mdx-layout.astro"
+heading: "DisplayField"
+description: "DisplayField with sizes and variants"
+---
+
+import React from "react";
+import { DisplayField, CopyButton, IconButton } from "@eqtylab/equality";
+import { DisplayFieldWithActionsDemo } from "@/components/demo/display-field";
+
+## Neutral
+
+{
+
+<DisplayField>zQ3shrGxRrYyWixJGrr45jJ1MEY76YQZ4KVbt9CYRsTWZ5MWV</DisplayField>}
+
+## Neutral Truncated
+
+{
+
+<DisplayField truncate>
+  zQ3shrGxRrYyWixJGrr45jJ1MEY76YQZ4KVbt9CYRsTWZ5MWV
+</DisplayField>
+}
+
+## Neutral Middle Truncated
+
+{
+
+<DisplayField truncate="middle">
+  zQ3shrGxRrYyWixJGrr45jJ1MEY76YQZ4KVbt9CYRsTWZ5MWV
+</DisplayField>
+}
+
+## Success with Prefix
+
+{
+
+<DisplayField prefix="DID" variant="success">
+  zQ3shrGxRrYyWixJGrr45jJ1MEY76YQZ4KVbt9CYRsTWZ5MWV
+</DisplayField>
+}
+
+## Failure with Prefix
+
+{
+
+<DisplayField prefix="DID" variant="failure">
+  zQ3shrGxRrYyWixJGrr45jJ1MEY76YQZ4KVbt9CYRsTWZ5MWV
+</DisplayField>
+}
+
+## Neutral with Prefix
+
+{
+
+<DisplayField prefix="DID">
+  zQ3shrGxRrYyWixJGrr45jJ1MEY76YQZ4KVbt9CYRsTWZ5MWV
+</DisplayField>
+}
+
+## Without Copy Button
+
+{
+
+<DisplayField copy={false}>
+  zQ3shrGxRrYyWixJGrr45jJ1MEY76YQZ4KVbt9CYRsTWZ5MWV
+</DisplayField>
+}
+
+## With Additional Action
+
+<DisplayFieldWithActionsDemo client:load />
+
+## Copy Disabled with Custom Actions
+
+<DisplayFieldWithActionsDemo client:load copy={false} />

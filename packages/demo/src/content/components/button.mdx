@@ -8,9 +8,9 @@ import React from "react";
 import { Button } from "@eqtylab/equality";
 import { ArrowUp, Grid3X3 } from "lucide-react";
 
-## Buttons
+## Primary (default)
 
-### Primary (default)
+{
 
 <div className="flex gap-2">
   <Button variant="primary" size="lg">
@@ -23,8 +23,11 @@ import { ArrowUp, Grid3X3 } from "lucide-react";
     Primary SM
   </Button>
 </div>
+}
 
-### Destructive
+## Destructive
+
+{
 
 <div className="flex gap-2">
   <Button variant="destructive" size="lg">
@@ -37,8 +40,11 @@ import { ArrowUp, Grid3X3 } from "lucide-react";
     Destructive SM
   </Button>
 </div>
+}
 
-### Secondary
+## Secondary
+
+{
 
 <div className="flex gap-2">
   <Button variant="secondary" size="lg">
@@ -51,8 +57,11 @@ import { ArrowUp, Grid3X3 } from "lucide-react";
     Secondary SM
   </Button>
 </div>
+}
 
-### Tertiary
+## Tertiary
+
+{
 
 <div className="flex gap-2">
   <Button variant="tertiary" size="lg">
@@ -65,8 +74,11 @@ import { ArrowUp, Grid3X3 } from "lucide-react";
     Tertiary SM
   </Button>
 </div>
+}
 
-### Outline
+## Outline
+
+{
 
 <div className="flex gap-2">
   <Button variant="outline" size="lg">
@@ -79,8 +91,11 @@ import { ArrowUp, Grid3X3 } from "lucide-react";
     Outline SM
   </Button>
 </div>
+}
 
-### Link
+## Link
+
+{
 
 <div className="flex gap-2">
   <Button variant="link" size="lg">
@@ -93,8 +108,9 @@ import { ArrowUp, Grid3X3 } from "lucide-react";
     Link SM
   </Button>
 </div>
+}
 
-### With Prefix Icon
+## With Prefix Icon
 
 {(() => {
 const prefixIcon = React.createElement(Grid3X3);
@@ -113,7 +129,7 @@ return (
 </div>
 ); })()}
 
-### With Suffix Icon
+## With Suffix Icon
 
 {(() => {
 const suffixIcon = React.createElement(ArrowUp);
@@ -132,7 +148,9 @@ return (
 </div>
 ); })()}
 
-### As Link
+## As Link
+
+{
 
 <div className="flex gap-2">
   <Button variant="primary" size="lg" href="https://example.com">
@@ -145,8 +163,11 @@ return (
     Link SM
   </Button>
 </div>
+}
 
-### As Link with Target
+## As Link with Target
+
+{
 
 <div className="flex gap-2">
   <Button
@@ -167,8 +188,11 @@ return (
     Download File
   </Button>
 </div>
+}
 
-### Disabled
+## Disabled
+
+{
 
 <div className="flex gap-2">
   <Button variant="primary" size="lg" disabled>
@@ -181,3 +205,4 @@ return (
     Disabled SM
   </Button>
 </div>
+}
