@@ -7,7 +7,7 @@ export default defineConfig({
   sourcemap: true,
   clean: true,
   treeshake: true,
-  external: ['react', 'react-dom', 'framer-motion', '@radix-ui/react-slot'],
+  external: ['react', 'react-dom', 'motion/react', '@radix-ui/react-slot'],
   // Include CSS files in the bundle
   loader: {
     '.css': 'copy',

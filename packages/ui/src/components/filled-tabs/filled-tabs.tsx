@@ -1,4 +1,4 @@
-import { motion } from 'framer-motion';
+import { motion } from 'motion/react';
 
 import styles from '@/components/filled-tabs/filled-tabs.module.css';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/tabs/tabs';

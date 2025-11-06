@@ -1,5 +1,5 @@
 import { ReactNode, useEffect, useRef, useState } from 'react';
-import { AnimatePresence, motion } from 'framer-motion';
+import { AnimatePresence, motion } from 'motion/react';
 
 import styles from '@/components/motion-collapsible/motion-collapsible.module.css';
 import { cn } from '@/lib/utils';
