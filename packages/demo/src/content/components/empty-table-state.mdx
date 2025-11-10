@@ -1,0 +1,49 @@
+---
+layout: "@/layouts/mdx-layout.astro"
+heading: "Empty Table State"
+description: "Empty Table State with sizes and variants"
+---
+
+import { EmptyTableState } from "@eqtylab/equality";
+import { SearchX } from "lucide-react";
+import React from "react";
+
+## Variants
+
+### Default
+
+{(() => {
+const icon = React.createElement(SearchX);
+return (
+
+<EmptyTableState
+  icon={icon}
+  title="No Members Available"
+  description="Members will appear here once they are available to be added."
+/>
+)} )()}
+
+### Without description
+
+{(() => {
+const icon = React.createElement(SearchX);
+return (
+
+<EmptyTableState icon={icon} title="No Members Available" />
+)} )()}
+
+### With Clear Button
+
+{(() => {
+const icon = React.createElement(SearchX);
+
+return (
+
+<EmptyTableState
+  icon={icon}
+  title="No External Users Found"
+  description="Try refining your search terms or clearing filters."
+  showClearButton
+  onClear={() => {}}
+/>
+)} )()}

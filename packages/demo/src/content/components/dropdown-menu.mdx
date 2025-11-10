@@ -1,0 +1,37 @@
+---
+layout: "@/layouts/mdx-layout.astro"
+heading: "Dropdown Menu"
+description: "Dropdown Menu with sizes and variants"
+---
+
+import { DropdownMenuDemo } from "@/components/demo/dropdown-menu";
+
+## Variants
+
+### Default
+
+<DropdownMenuDemo client:load />
+
+### With Separators and Labels
+
+<DropdownMenuDemo client:load variant="with-separators" />
+
+### With Checkboxes
+
+<DropdownMenuDemo client:load variant="with-checkboxes" />
+
+### With Radio Items
+
+<DropdownMenuDemo client:load variant="with-radio" />
+
+### With Shortcuts
+
+<DropdownMenuDemo client:load variant="with-shortcuts" />
+
+### With Submenu
+
+<DropdownMenuDemo client:load variant="with-submenu" />
+
+### With Groups
+
+<DropdownMenuDemo client:load variant="with-groups" />
