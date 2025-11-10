@@ -1,0 +1,29 @@
+---
+layout: "@/layouts/mdx-layout.astro"
+heading: "Switch"
+description: "Switch with sizes and variants"
+---
+
+import { SwitchDemo } from "@/components/demo/switch";
+
+## Variants
+
+### Default Off
+
+<SwitchDemo client:load />
+
+### Default On
+
+<SwitchDemo client:load variant="default-on" />
+
+### Small
+
+<SwitchDemo client:load variant="small" />
+
+### Disabled On
+
+<SwitchDemo client:load variant="disabled-on" />
+
+### Disabled Off
+
+<SwitchDemo client:load variant="disabled-off" />
