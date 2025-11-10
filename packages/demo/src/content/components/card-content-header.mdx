@@ -1,0 +1,34 @@
+---
+layout: "@/layouts/mdx-layout.astro"
+heading: "Card Content Header"
+description: "Card Content Header with sizes and variants"
+---
+
+import { SquareChartGantt } from "lucide-react";
+import {
+  CardContentHeader,
+  Card,
+  CardContent,
+  CardDescription,
+} from "@eqtylab/equality";
+
+### Default
+
+<CardContentHeader
+  icon={SquareChartGantt}
+  heading="Activity Logs"
+  onButtonClick={() => {}}
+/>
+
+### Inside Card
+
+<Card>
+  <CardContent className="space-y-2">
+    <CardContentHeader
+      icon={SquareChartGantt}
+      heading="Activity Logs"
+      onButtonClick={() => {}}
+    />
+    <CardDescription>Card with CardContentHeader</CardDescription>
+  </CardContent>
+</Card>
