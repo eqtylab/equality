@@ -1,0 +1,23 @@
+---
+layout: "@/layouts/mdx-layout.astro"
+heading: "Alert"
+description: "Alert with sizes and variants"
+---
+
+import { Alert, AlertTitle, AlertDescription } from "@eqtylab/equality";
+
+## Variants
+
+### Default
+
+<Alert>
+  <AlertTitle>Alert title</AlertTitle>
+  <AlertDescription>This is an alert description</AlertDescription>
+</Alert>
+
+### Destructive
+
+<Alert variant="destructive">
+  <AlertTitle>Alert title</AlertTitle>
+  <AlertDescription>This is an alert description</AlertDescription>
+</Alert>

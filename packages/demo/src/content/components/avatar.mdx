@@ -1,0 +1,17 @@
+---
+layout: "@/layouts/mdx-layout.astro"
+heading: "Avatar"
+description: "Avatar with sizes and variants"
+---
+
+import { AvatarDemo } from "@/components/demo/avatar";
+
+## Variants
+
+### Default
+
+<AvatarDemo client:load />
+
+### Fallback
+
+<AvatarDemo client:load variant="fallback" />
