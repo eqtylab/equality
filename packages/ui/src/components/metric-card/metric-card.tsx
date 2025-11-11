@@ -1,3 +1,4 @@
+import * as React from 'react';
 import { LucideIcon } from 'lucide-react';
 
 import { IconCircle } from '@/components/icon-circle/icon-circle';
@@ -45,12 +46,13 @@ const MetricCard = ({
   className,
 }: MetricCardProps) => {
   const variant = COLOR_VARIANTS[colorVariant];
+  const IconComponent = icon as React.ElementType;
 
   return (
     <div className={cn(styles['metric-card'], className)}>
       <div className={styles['value-container']}>
         <p className={cn(styles.value, variant.text)}>{value}</p>
-        <IconCircle icon={icon} className={cn(variant.iconBg, variant.text)} />
+        <IconCircle icon={IconComponent} className={cn(variant.iconBg, variant.text)} />
       </div>
       <p className={styles.label}>{label}</p>
     </div>

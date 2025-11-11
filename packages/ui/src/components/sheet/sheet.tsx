@@ -6,6 +6,8 @@ import { X } from 'lucide-react';
 import styles from '@/components/sheet/sheet.module.css';
 import { cn } from '@/lib/utils';
 
+const XIcon = X as React.ComponentType<{ className?: string }>;
+
 const Sheet = SheetPrimitive.Root;
 
 const SheetTrigger = SheetPrimitive.Trigger;
@@ -49,7 +51,7 @@ const SheetContent = React.forwardRef<
     <SheetPrimitive.Content ref={ref} className={cn(sheetVariants({ side }), className)} {...props}>
       {children}
       <SheetPrimitive.Close className={styles['sheet-close']}>
-        <X className={styles['sheet-close-icon']} />
+        <XIcon className={styles['sheet-close-icon']} />
         <span className={styles['sheet-close-text']}>Close</span>
       </SheetPrimitive.Close>
     </SheetPrimitive.Content>

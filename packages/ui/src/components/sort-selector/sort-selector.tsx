@@ -1,3 +1,4 @@
+import * as React from 'react';
 import { Check, ChevronDown } from 'lucide-react';
 
 import { Button } from '@/components/button/button';
@@ -9,6 +10,9 @@ import {
 } from '@/components/dropdown-menu/dropdown-menu';
 import styles from '@/components/sort-selector/sort-selector.module.css';
 import { cn } from '@/lib/utils';
+
+const CheckIcon = Check as React.ComponentType<{ className?: string }>;
+const ChevronDownIcon = ChevronDown as React.ComponentType<{ className?: string }>;
 
 export type SortField = 'name' | 'type' | 'createdAt' | 'updatedAt' | 'controls';
 export type SortOrder = 'asc' | 'desc';
@@ -70,7 +74,7 @@ function SortSelector({
       <DropdownMenuTrigger asChild>
         <Button variant="outline" className={cn(styles['sort-selector-trigger'], className)}>
           <span>{currentLabel}</span>
-          <ChevronDown className={styles['chevron-down-icon']} />
+          <ChevronDownIcon className={styles['chevron-down-icon']} />
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className={styles['dropdown-menu-content']}>
@@ -102,7 +106,7 @@ function SortSelector({
                       : styles['indicator-inner--not-selected']
                   )}
                 >
-                  {isSelected && <Check className={styles['check-icon']} />}
+                  {isSelected && <CheckIcon className={styles['check-icon']} />}
                 </div>
               </span>
               <span className={styles['dropdown-menu-item-label']}>{option.label}</span>

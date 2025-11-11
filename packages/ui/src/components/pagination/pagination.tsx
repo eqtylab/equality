@@ -1,3 +1,4 @@
+import * as React from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 
 import { Button } from '@/components/button/button';
@@ -10,6 +11,9 @@ import {
   SelectValue,
 } from '@/components/select/select';
 import { cn } from '@/lib/utils';
+
+const ChevronLeftIcon = ChevronLeft as React.ComponentType<{ className?: string }>;
+const ChevronRightIcon = ChevronRight as React.ComponentType<{ className?: string }>;
 
 interface PaginationProps {
   currentPage: number;
@@ -173,7 +177,7 @@ const Pagination = ({
           disabled={isFirstPage}
           aria-label="Previous page"
         >
-          <ChevronLeft className={styles['icon']} />
+          <ChevronLeftIcon className={styles['icon']} />
         </Button>
 
         {getVisiblePages()}
@@ -185,7 +189,7 @@ const Pagination = ({
           disabled={isLastPage}
           aria-label="Next page"
         >
-          <ChevronRight className={styles['icon']} />
+          <ChevronRightIcon className={styles['icon']} />
         </Button>
       </div>
     </div>

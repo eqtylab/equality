@@ -5,6 +5,10 @@ import { Check, ChevronDown, ChevronUp } from 'lucide-react';
 import styles from '@/components/select/select.module.css';
 import { cn } from '@/lib/utils';
 
+const CheckIcon = Check as React.ComponentType<{ className?: string }>;
+const ChevronDownIcon = ChevronDown as React.ComponentType<{ className?: string }>;
+const ChevronUpIcon = ChevronUp as React.ComponentType<{ className?: string }>;
+
 const Select = SelectPrimitive.Root;
 
 const SelectGroup = SelectPrimitive.Group;
@@ -18,7 +22,7 @@ const SelectTrigger = React.forwardRef<
   <SelectPrimitive.Trigger ref={ref} className={cn(styles['select-trigger'], className)} {...props}>
     {children}
     <SelectPrimitive.Icon asChild>
-      <ChevronDown className={cn(styles['select-icon'], styles['select-icon--low-opacity'])} />
+      <ChevronDownIcon className={cn(styles['select-icon'], styles['select-icon--low-opacity'])} />
     </SelectPrimitive.Icon>
   </SelectPrimitive.Trigger>
 ));
@@ -33,7 +37,7 @@ const SelectScrollUpButton = React.forwardRef<
     className={cn(styles['select-scroll-button'], className)}
     {...props}
   >
-    <ChevronUp className={styles['select-icon']} />
+    <ChevronUpIcon className={styles['select-icon']} />
   </SelectPrimitive.ScrollUpButton>
 ));
 SelectScrollUpButton.displayName = SelectPrimitive.ScrollUpButton.displayName;
@@ -47,7 +51,7 @@ const SelectScrollDownButton = React.forwardRef<
     className={cn(styles['select-scroll-button'], className)}
     {...props}
   >
-    <ChevronDown className={styles['select-icon']} />
+    <ChevronDownIcon className={styles['select-icon']} />
   </SelectPrimitive.ScrollDownButton>
 ));
 SelectScrollDownButton.displayName = SelectPrimitive.ScrollDownButton.displayName;
@@ -97,7 +101,7 @@ const SelectItem = React.forwardRef<
   <SelectPrimitive.Item ref={ref} className={cn(styles['select-item'], className)} {...props}>
     <span className={styles['select-item-indicator']}>
       <SelectPrimitive.ItemIndicator>
-        <Check className={styles['select-icon']} />
+        <CheckIcon className={styles['select-icon']} />
       </SelectPrimitive.ItemIndicator>
     </span>
 

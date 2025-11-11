@@ -1,6 +1,11 @@
+import * as React from 'react';
 import { ArrowDown, ArrowUp, ArrowUpDown } from 'lucide-react';
 
 import styles from '@/components/sort-button/sort-button.module.css';
+
+const ArrowDownIcon = ArrowDown as React.ComponentType<{ className?: string }>;
+const ArrowUpIcon = ArrowUp as React.ComponentType<{ className?: string }>;
+const ArrowUpDownIcon = ArrowUpDown as React.ComponentType<{ className?: string }>;
 
 interface SortButtonProps<T extends string> {
   field: T;
@@ -33,12 +38,12 @@ function SortButton<T extends string>({
       <div className={styles['arrow-container']}>
         {isActive ? (
           isAscending ? (
-            <ArrowUp />
+            <ArrowUpIcon />
           ) : (
-            <ArrowDown />
+            <ArrowDownIcon />
           )
         ) : (
-          <ArrowUpDown className={styles['arrow-up-down-icon']} />
+          <ArrowUpDownIcon className={styles['arrow-up-down-icon']} />
         )}
       </div>
     </button>

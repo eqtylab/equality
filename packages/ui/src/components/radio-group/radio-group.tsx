@@ -5,6 +5,8 @@ import { Circle } from 'lucide-react';
 import styles from '@/components/radio-group/radio-group.module.css';
 import { cn } from '@/lib/utils';
 
+const CircleIcon = Circle as React.ComponentType<{ className?: string }>;
+
 const RadioGroup = React.forwardRef<
   React.ElementRef<typeof RadioGroupPrimitive.Root>,
   React.ComponentPropsWithoutRef<typeof RadioGroupPrimitive.Root>
@@ -30,7 +32,7 @@ const RadioGroupItem = React.forwardRef<
       {...props}
     >
       <RadioGroupPrimitive.Indicator className={styles['radio-group-item-indicator']}>
-        <Circle className={styles['indicator-icon']} />
+        <CircleIcon className={styles['indicator-icon']} />
       </RadioGroupPrimitive.Indicator>
     </RadioGroupPrimitive.Item>
   );

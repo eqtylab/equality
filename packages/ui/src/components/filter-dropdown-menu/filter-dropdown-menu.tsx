@@ -1,3 +1,4 @@
+import * as React from 'react';
 import { Check, ChevronDown } from 'lucide-react';
 
 import { Button } from '@/components/button/button';
@@ -9,6 +10,9 @@ import {
 } from '@/components/dropdown-menu/dropdown-menu';
 import styles from '@/components/filter-dropdown-menu/filter-dropdown-menu.module.css';
 import { cn } from '@/lib/utils';
+
+const CheckIcon = Check as React.ComponentType<{ className?: string }>;
+const ChevronDownIcon = ChevronDown as React.ComponentType<{ className?: string }>;
 
 interface FilterOption {
   value: string;
@@ -59,7 +63,7 @@ const FilterDropdown = ({
               <span className={styles['selected-filters-count']}>{selectedFilters.length}</span>
             )}
           </span>
-          <ChevronDown className={styles['text-muted-foreground']} />
+          <ChevronDownIcon className={styles['text-muted-foreground']} />
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent
@@ -95,7 +99,7 @@ const FilterDropdown = ({
                       : styles['indicator-inner--not-selected']
                   )}
                 >
-                  {isSelected && <Check className={styles['check-icon']} />}
+                  {isSelected && <CheckIcon className={styles['check-icon']} />}
                 </div>
               </span>
               <span className={styles['dropdown-menu-item-label']}>{option.label}</span>
