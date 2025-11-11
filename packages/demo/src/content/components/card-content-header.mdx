@@ -12,17 +12,21 @@ import {
   CardDescription,
 } from "@eqtylab/equality";
 
+## Variants
+
 ### Default
 
-<CardContentHeader
-  icon={SquareChartGantt}
-  heading="Activity Logs"
-  onButtonClick={() => {}}
-/>
+<CardContent client:only="react">
+  <CardContentHeader
+    icon={SquareChartGantt}
+    heading="Activity Logs"
+    onButtonClick={() => {}}
+  />
+</CardContent>
 
 ### Inside Card
 
-<Card>
+<Card client:only="react">
   <CardContent className="space-y-2">
     <CardContentHeader
       icon={SquareChartGantt}
