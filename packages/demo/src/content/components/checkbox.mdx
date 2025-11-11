@@ -8,16 +8,26 @@ import { Checkbox } from "@eqtylab/equality";
 
 ## Default Unchecked
 
-<Checkbox id="checkbox-default" checked={false} />
+<Checkbox id="checkbox-default" checked={false} client:only="react" />
 
 ## Checked
 
-<Checkbox id="checkbox-checked" checked={true} />
+<Checkbox id="checkbox-checked" checked={true} client:only="react" />
 
 ## Disabled Unchecked
 
-<Checkbox id="checkbox-disabled-unchecked" checked={false} disabled />
+<Checkbox
+  id="checkbox-disabled-unchecked"
+  checked={false}
+  disabled
+  client:only="react"
+/>
 
 ## Disabled Checked
 
-<Checkbox id="checkbox-disabled-checked" checked={true} disabled />
+<Checkbox
+  id="checkbox-disabled-checked"
+  checked={true}
+  disabled
+  client:only="react"
+/>
