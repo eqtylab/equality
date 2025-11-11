@@ -5,13 +5,15 @@ import { Check } from 'lucide-react';
 import styles from '@/components/checkbox/checkbox.module.css';
 import { cn } from '@/lib/utils';
 
+const CheckIcon = Check as React.ComponentType<{ className?: string }>;
+
 const Checkbox = React.forwardRef<
   React.ElementRef<typeof CheckboxPrimitive.Root>,
   React.ComponentPropsWithoutRef<typeof CheckboxPrimitive.Root>
 >(({ className, ...props }, ref) => (
   <CheckboxPrimitive.Root ref={ref} className={cn(styles.checkbox, className)} {...props}>
     <CheckboxPrimitive.Indicator className={styles.indicator}>
-      <Check className={styles.check} />
+      <CheckIcon className={styles.check} />
     </CheckboxPrimitive.Indicator>
   </CheckboxPrimitive.Root>
 ));

@@ -5,6 +5,8 @@ import { X } from 'lucide-react';
 import styles from '@/components/dialog/dialog.module.css';
 import { cn } from '@/lib/utils';
 
+const XIcon = X as React.ComponentType<{ className?: string }>;
+
 const Dialog = DialogPrimitive.Root;
 
 const DialogTrigger = DialogPrimitive.Trigger;
@@ -42,7 +44,7 @@ const DialogContent = React.forwardRef<
     >
       {children}
       <DialogPrimitive.Close className={styles['dialog-close']}>
-        <X className={styles['dialog-close-icon']} />
+        <XIcon className={styles['dialog-close-icon']} />
         <span className={styles['dialog-close-text']}>Close</span>
       </DialogPrimitive.Close>
     </DialogPrimitive.Content>

@@ -1,0 +1,35 @@
+---
+layout: "@/layouts/mdx-layout.astro"
+heading: "Textarea"
+description: "Textarea with sizes and variants"
+---
+
+import { Textarea } from "@eqtylab/equality";
+
+## Variants
+
+### Default
+
+<Textarea
+  id="textarea-default"
+  placeholder="Enter your message here..."
+  value=""
+  onChange={() => {}}
+/>
+
+### Disabled
+
+<Textarea
+  id="textarea-disabled"
+  placeholder="Disabled textarea"
+  disabled
+  value="This textarea is disabled"
+/>
+
+### Large Textarea
+
+<Textarea
+  id="textarea-large"
+  placeholder="Large textarea for longer content..."
+  className="min-h-[120px]"
+/>

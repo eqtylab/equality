@@ -5,6 +5,10 @@ import { Check, ChevronRight, Circle } from 'lucide-react';
 import styles from '@/components/dropdown-menu/dropdown-menu.module.css';
 import { cn } from '@/lib/utils';
 
+const CheckIcon = Check as React.ComponentType<{ className?: string }>;
+const ChevronRightIcon = ChevronRight as React.ComponentType<{ className?: string }>;
+const CircleIcon = Circle as React.ComponentType<{ className?: string }>;
+
 const DropdownMenu = DropdownMenuPrimitive.Root;
 
 const DropdownMenuTrigger = DropdownMenuPrimitive.Trigger;
@@ -33,7 +37,7 @@ const DropdownMenuSubTrigger = React.forwardRef<
     {...props}
   >
     {children}
-    <ChevronRight className="ml-auto" />
+    <ChevronRightIcon className="ml-auto" />
   </DropdownMenuPrimitive.SubTrigger>
 ));
 DropdownMenuSubTrigger.displayName = DropdownMenuPrimitive.SubTrigger.displayName;
@@ -91,7 +95,7 @@ const DropdownMenuCheckboxItem = React.forwardRef<
   >
     <span className={styles['dropdown-menu-item-indicator']}>
       <DropdownMenuPrimitive.ItemIndicator>
-        <Check className={styles['icon-size']} />
+        <CheckIcon className={styles['icon-size']} />
       </DropdownMenuPrimitive.ItemIndicator>
     </span>
     {children}
@@ -110,7 +114,7 @@ const DropdownMenuRadioItem = React.forwardRef<
   >
     <span className={styles['dropdown-menu-item-indicator']}>
       <DropdownMenuPrimitive.ItemIndicator>
-        <Circle className={styles['radio-icon']} />
+        <CircleIcon className={styles['radio-icon']} />
       </DropdownMenuPrimitive.ItemIndicator>
     </span>
     {children}

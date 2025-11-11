@@ -1,0 +1,19 @@
+---
+layout: "@/layouts/mdx-layout.astro"
+heading: "Separator"
+description: "Separator with sizes and variants"
+---
+
+import { Separator } from "@eqtylab/equality";
+
+## Variants
+
+### Orientation: horizontal
+
+<Separator client:only="react" />
+
+### Orientation: vertical
+
+<div className="h-12">
+  <Separator client:only="react" orientation="vertical" />
+</div>

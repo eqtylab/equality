@@ -1,0 +1,46 @@
+---
+layout: "@/layouts/mdx-layout.astro"
+heading: "Display Field"
+description: "Display Field with sizes and variants"
+---
+
+import {
+  DisplayFieldDemo,
+  DisplayFieldWithActionsDemo,
+} from "@/components/demo/display-field";
+
+## Neutral
+
+<DisplayFieldDemo client:only="react" />
+
+## Neutral Truncated
+
+<DisplayFieldDemo truncate client:only="react" />
+
+## Neutral Middle Truncated
+
+<DisplayFieldDemo truncate="middle" client:only="react" />
+
+## Success with Prefix
+
+<DisplayFieldDemo prefix="DID" variant="success" client:only="react" />
+
+## Failure with Prefix
+
+<DisplayFieldDemo prefix="DID" variant="failure" client:only="react" />
+
+## Neutral with Prefix
+
+<DisplayFieldDemo prefix="DID" client:only="react" />
+
+## Without Copy Button
+
+<DisplayFieldDemo copy={false} client:only="react" />
+
+## With Additional Action
+
+<DisplayFieldWithActionsDemo client:only="react" />
+
+## Copy Disabled with Custom Actions
+
+<DisplayFieldWithActionsDemo client:only="react" copy={false} />

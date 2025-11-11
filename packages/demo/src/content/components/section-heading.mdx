@@ -1,0 +1,27 @@
+---
+layout: "@/layouts/mdx-layout.astro"
+heading: "Section Heading"
+description: "Section Heading with sizes and variants"
+---
+
+import { SectionHeading, Button } from "@eqtylab/equality";
+import { UserPlus } from "lucide-react";
+import { SectionHeadingDemo } from "@/components/demo/section-heading";
+
+## Variants
+
+### Default
+
+<SectionHeading heading="Filter Results" />
+
+### With Description
+
+<SectionHeading heading="Filter Results" description="This is a description" />
+
+### With right content
+
+<SectionHeadingDemo client:load />
+
+### With description and right content
+
+<SectionHeadingDemo client:load withDescription />

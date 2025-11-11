@@ -6,6 +6,8 @@ import { X } from 'lucide-react';
 import styles from '@/components/toast/toast.module.css';
 import { cn } from '@/lib/utils';
 
+const XIcon = X as React.ComponentType<{ className?: string }>;
+
 const ToastProvider = ToastPrimitives.Provider;
 
 const ToastViewport = React.forwardRef<
@@ -60,13 +62,8 @@ const ToastClose = React.forwardRef<
   React.ElementRef<typeof ToastPrimitives.Close>,
   React.ComponentPropsWithoutRef<typeof ToastPrimitives.Close>
 >(({ className, ...props }, ref) => (
-  <ToastPrimitives.Close
-    ref={ref}
-    className={cn(styles['toast-close'], className)}
-    toast-close=""
-    {...props}
-  >
-    <X className={styles['toast-close-icon']} />
+  <ToastPrimitives.Close ref={ref} className={cn(styles['toast-close'], className)} {...props}>
+    <XIcon className={styles['toast-close-icon']} />
   </ToastPrimitives.Close>
 ));
 ToastClose.displayName = ToastPrimitives.Close.displayName;

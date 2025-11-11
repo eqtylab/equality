@@ -1,0 +1,23 @@
+---
+layout: "@/layouts/mdx-layout.astro"
+heading: "Truncated Description"
+---
+
+import { TruncatedDescription } from "@eqtylab/equality";
+
+## Variants
+
+### Default (120 chars)
+
+<TruncatedDescription
+  client:only="react"
+  description="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque sit amet urna id urna dictum dapibus. Mauris dictum, massa et sagittis tincidunt, risus sem pulvinar libero, ac commodo erat turpis vitae augue. In hac habitasse platea dictumst. Curabitur vel eleifend turpis. Proin quis erat egestas, vulputate diam sed, tempor ex. Suspendisse lacinia turpis vitae eros dictum, at facilisis elit accumsan. Nulla facilisi. Integer posuere, sem eu commodo aliquam, nibh libero cursus nulla, nec euismod nulla dolor ac erat. Sed ultrices, magna nec gravida sagittis, urna lacus cursus massa, ut pretium est diam in nibh."
+/>
+
+### Custom length (300 chars)
+
+<TruncatedDescription
+  client:only="react"
+  maxLength="300"
+  description="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque sit amet urna id urna dictum dapibus. Mauris dictum, massa et sagittis tincidunt, risus sem pulvinar libero, ac commodo erat turpis vitae augue. In hac habitasse platea dictumst. Curabitur vel eleifend turpis. Proin quis erat egestas, vulputate diam sed, tempor ex. Suspendisse lacinia turpis vitae eros dictum, at facilisis elit accumsan. Nulla facilisi. Integer posuere, sem eu commodo aliquam, nibh libero cursus nulla, nec euismod nulla dolor ac erat. Sed ultrices, magna nec gravida sagittis, urna lacus cursus massa, ut pretium est diam in nibh."
+/>

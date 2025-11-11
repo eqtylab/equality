@@ -1,0 +1,54 @@
+---
+layout: "@/layouts/mdx-layout.astro"
+heading: "Input"
+description: "Input with sizes and variants"
+---
+
+import { Input } from "@eqtylab/equality";
+
+## Default
+
+<Input
+  id="input-default"
+  type="text"
+  placeholder="Enter text here..."
+  value="Default input"
+/>
+
+## Disabled Input
+
+<Input
+  id="input-disabled"
+  type="text"
+  placeholder="Disabled input"
+  disabled
+  value="Disabled value"
+/>
+
+## Error State Input
+
+<Input
+  id="input-error"
+  type="text"
+  placeholder="Invalid input"
+  className="border-red focus-visible:ring-red"
+  value="Invalid value"
+/>
+
+## Email Input
+
+<Input id="input-email" type="email" placeholder="user@example.com" />
+
+## Password Input
+
+<Input id="input-password" type="password" placeholder="Enter password" />
+
+## Number Input
+
+<Input
+  id="input-number"
+  type="number"
+  placeholder="Enter number"
+  min="0"
+  max="100"
+/>

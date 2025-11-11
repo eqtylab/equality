@@ -1,0 +1,21 @@
+---
+layout: "@/layouts/mdx-layout.astro"
+heading: "Select"
+description: "Select with sizes and variants"
+---
+
+import { SelectDemo } from "@/components/demo/select";
+
+## Variants
+
+### Default Select
+
+<SelectDemo client:only="react" />
+
+### Disabled Select
+
+<SelectDemo client:only="react" variant="disabled" />
+
+### Pre-selected Select
+
+<SelectDemo client:only="react" variant="pre-selected" />

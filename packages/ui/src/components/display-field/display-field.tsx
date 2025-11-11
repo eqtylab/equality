@@ -7,6 +7,13 @@ import { CopyButton } from '@/components/copy-button/copy-button';
 import styles from '@/components/display-field/display-field.module.css';
 import { cn } from '@/lib/utils';
 
+const CircleCheckIcon = CircleCheck as React.ComponentType<{ className?: string }>;
+const CircleXIcon = CircleX as React.ComponentType<{ className?: string }>;
+const MiddleTruncateComponent = MiddleTruncate as React.ComponentType<{
+  end?: number;
+  children?: React.ReactNode;
+}>;
+
 const displayFieldVariants = cva('', {
   variants: {
     variant: {
@@ -43,17 +50,17 @@ function DisplayField({
 }: DisplayFieldProps) {
   const getIcon = () => {
     if (variant === 'success' || variant === 'neutralCheck') {
-      return <CircleCheck className={styles['icon-width']} />;
+      return <CircleCheckIcon className={styles['icon-width']} />;
     }
     if (variant === 'failure') {
-      return <CircleX className={styles['icon-width']} />;
+      return <CircleXIcon className={styles['icon-width']} />;
     }
     return null;
   };
 
   const renderContent = () => {
     if (truncate === 'middle' && typeof children === 'string') {
-      return <MiddleTruncate end={8}>{children}</MiddleTruncate>;
+      return <MiddleTruncateComponent end={8}>{children}</MiddleTruncateComponent>;
     }
     return children;
   };

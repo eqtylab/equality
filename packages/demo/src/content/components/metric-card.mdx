@@ -1,0 +1,34 @@
+---
+layout: "@/layouts/mdx-layout.astro"
+heading: "Metric Card"
+description: "Metric Card with sizes and variants"
+---
+
+import { MetricCard } from "@eqtylab/equality";
+import { Layers, CheckCircle2, Clock, AlertTriangle } from "lucide-react";
+
+## Default
+
+<MetricCard label="Total" value={100} icon={Layers} />
+
+## Color variant: green
+
+<MetricCard
+  label="Success"
+  value={20}
+  colorVariant="green"
+  icon={CheckCircle2}
+/>
+
+## Color variant: yellow
+
+<MetricCard label="Pending" value={45} colorVariant="yellow" icon={Clock} />
+
+## Color variant: red
+
+<MetricCard
+  label="Failure"
+  value={80}
+  colorVariant="red"
+  icon={AlertTriangle}
+/>

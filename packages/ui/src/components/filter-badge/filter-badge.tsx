@@ -1,3 +1,4 @@
+import * as React from 'react';
 import { X } from 'lucide-react';
 
 import { Badge } from '@/components/badge/badge';
@@ -10,6 +11,8 @@ import {
   TooltipTrigger,
 } from '@/components/tooltip/tooltip';
 import { cn } from '@/lib/utils';
+
+const XIcon = X as React.ComponentType<{ className?: string }>;
 
 interface FilterBadgeProps {
   label: string;
@@ -46,7 +49,7 @@ const FilterBadge = ({ label, handleRemove, colors, btnColors }: FilterBadgeProp
         onClick={handleRemove}
         className={cn(styles['remove-btn'], btnColors)}
       >
-        <X />
+        <XIcon />
       </Button>
     </Badge>
   );

@@ -1,0 +1,312 @@
+---
+layout: "@/layouts/mdx-layout.astro"
+heading: "Table"
+description: "Table with sizes and variants"
+---
+
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+  Card,
+  CardContent,
+  Button,
+} from "@eqtylab/equality";
+
+## Table within card component
+
+### Activity Logs Table
+
+{(() => {
+
+const exampleActivityLogs = [{
+id: 1,
+projectName: 'Project Alpha',
+organizationId: 1,
+userId: 'user1',
+userName: 'John Doe',
+userEmail: 'john.doe@example.com',
+userPicture:
+'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
+action: 'updated control configuration',
+createdAt: new Date('2024-01-15T14:30:00Z'),
+},
+{
+id: 2,
+projectName: 'Project Beta',
+organizationId: 1,
+userId: 'user2',
+userName: 'Jane Smith',
+userEmail: 'jane.smith@example.com',
+userPicture:
+'https://images.unsplash.com/photo-1494790108755-2616b612b786?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
+action: 'created new policy',
+createdAt: new Date('2024-01-15T13:15:00Z'),
+},
+{
+id: 3,
+projectName: 'Project Gamma',
+organizationId: 1,
+userId: 'user3',
+userName: 'Mike Johnson',
+userEmail: 'mike.johnson@example.com',
+userPicture:
+'https://images.unsplash.com/photo-1519244703995-f4e0f30006d5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
+action: 'completed compliance audit',
+createdAt: new Date('2024-01-15T11:45:00Z'),
+},
+{
+id: 4,
+projectName: 'Project Delta',
+organizationId: 1,
+userId: 'user4',
+userName: 'Sarah Wilson',
+userEmail: 'sarah.wilson@example.com',
+userPicture:
+'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
+action: 'modified evaluation criteria',
+createdAt: new Date('2024-01-14T16:20:00Z'),
+},
+{
+id: 5,
+projectName: 'Project Epsilon',
+organizationId: 1,
+userId: 'user5',
+userName: 'David Brown',
+userEmail: 'david.brown@example.com',
+userPicture:
+'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
+action: 'initiated incident response',
+createdAt: new Date('2024-01-14T09:30:00Z'),
+},
+
+];
+
+return (
+
+<Card>
+    <CardContent>
+        <Table className="[&_td]:px-2 [&_td]:py-2.5 [&_th]:px-2 [&_th]:py-4">
+        <TableHeader className="text-muted-foreground text-left text-xs font-medium">
+            <TableRow>
+            <TableHead>User</TableHead>
+            <TableHead>Action</TableHead>
+            <TableHead>Date</TableHead>
+            </TableRow>
+        </TableHeader>
+        <TableBody className="divide-foreground/10 divide-y text-xs">
+            {exampleActivityLogs.slice(0, 5).map((log) => {
+            const date = log.createdAt?.toLocaleDateString('en-US', {
+                month: 'short',
+                day: 'numeric',
+                year: 'numeric',
+            });
+            const time = log.createdAt?.toLocaleTimeString('en-US', {
+                hour: 'numeric',
+                minute: '2-digit',
+            });
+
+            return (
+                <TableRow key={log.id} className="hover:bg-lilac-button">
+                <TableCell className="flex items-center gap-2">
+                    <div className="relative shrink-0">
+                    <img
+                        src={log.userPicture}
+                        alt={log.userName}
+                        className="border-foreground/10 size-6 rounded-full border object-cover"
+                    />
+                    </div>
+                    <span className="max-w-[140px] overflow-hidden truncate whitespace-nowrap">
+                    {log.userName}
+                    </span>
+                </TableCell>
+                <TableCell className="max-w-[250px] overflow-hidden truncate whitespace-nowrap capitalize">
+                    {log.action}
+                </TableCell>
+                <TableCell className="max-w-[100px] overflow-hidden truncate whitespace-nowrap">
+                    <div className="flex flex-col">
+                    <span>
+                        {date}
+                        {time && ','}
+                    </span>
+                    <span>{time}</span>
+                    </div>
+                </TableCell>
+                </TableRow>
+            );
+            })}
+        </TableBody>
+        </Table>
+
+    </CardContent>
+
+</Card>   
+)
+})()
+
+}
+
+## Table with Actions
+
+{
+
+<Table>
+
+  <TableHeader>
+    <TableRow>
+      <TableHead>User</TableHead>
+      <TableHead>Email</TableHead>
+      <TableHead>Role</TableHead>
+      <TableHead className="text-right">Actions</TableHead>
+    </TableRow>
+  </TableHeader>
+  <TableBody>
+    <TableRow className="hover:bg-lilac-button">
+      <TableCell className="font-medium">Alice Cooper</TableCell>
+      <TableCell>alice@example.com</TableCell>
+      <TableCell>Admin</TableCell>
+      <TableCell className="text-right">
+        <Button variant="tertiary" size="sm">
+          View
+        </Button>
+      </TableCell>
+    </TableRow>
+    <TableRow className="hover:bg-lilac-button">
+      <TableCell className="font-medium">Charlie Brown</TableCell>
+      <TableCell>charlie@example.com</TableCell>
+      <TableCell>User</TableCell>
+      <TableCell className="text-right">
+        <Button variant="tertiary" size="sm">
+          View
+        </Button>
+      </TableCell>
+    </TableRow>
+  </TableBody>
+</Table>
+}
+
+## Outside Card Table
+
+### Control Table
+
+{
+
+<div className="border-border overflow-hidden rounded-md border">
+  <Table>
+    <TableHeader className="bg-muted">
+      <TableRow>
+        <TableHead className="hover:text-lilac cursor-pointer">
+          <div className="flex items-center">Control Code</div>
+        </TableHead>
+        <TableHead className="hover:text-lilac cursor-pointer">
+          <div className="flex items-center">Name</div>
+        </TableHead>
+        <TableHead className="hover:text-lilac cursor-pointer">
+          <div className="flex items-center">Description</div>
+        </TableHead>
+        <TableHead className="hover:text-lilac cursor-pointer">
+          <div className="flex items-center">Status</div>
+        </TableHead>
+      </TableRow>
+    </TableHeader>
+    <TableBody>
+      <TableRow className="cursor-pointer">
+        <TableCell className="w-[100px] font-medium">AC-1</TableCell>
+        <TableCell className="w-[200px]">Access Control Policy</TableCell>
+        <TableCell className="w-[300px]">
+          <div className="relative max-w-[400px]">
+            <div className="line-clamp-2 overflow-hidden">
+              The organization develops, documents, and disseminates an access
+              control policy that addresses purpose, scope, roles,
+              responsibilities, and compliance requirements.
+            </div>
+            <Button variant="link" size="sm" className="mt-1 h-auto p-0">
+              Show more
+            </Button>
+          </div>
+        </TableCell>
+        <TableCell className="w-[100px]">
+          {/* <ControlStatusBadge status="Compliant" hasIcon /> */}
+        </TableCell>
+      </TableRow>
+      <TableRow className="cursor-pointer">
+        <TableCell className="w-[100px] font-medium">SC-8</TableCell>
+        <TableCell className="w-[200px]">
+          Transmission Confidentiality
+        </TableCell>
+        <TableCell className="w-[300px]">
+          <div className="relative max-w-[400px]">
+            <div className="line-clamp-2 overflow-hidden">
+              The information system protects the confidentiality of transmitted
+              information.
+            </div>
+          </div>
+        </TableCell>
+        <TableCell className="w-[100px]">
+          {/* <ControlStatusBadge status="In Progress" hasIcon /> */}
+        </TableCell>
+      </TableRow>
+      <TableRow className="cursor-pointer">
+        <TableCell className="w-[100px] font-medium">AU-2</TableCell>
+        <TableCell className="w-[200px]">Audit Events</TableCell>
+        <TableCell className="w-[300px]">
+          <div className="relative max-w-[400px]">
+            <div className="line-clamp-2 overflow-hidden">
+              The organization determines that the information system is capable
+              of auditing events and identifies the types of events that may be
+              of interest.
+            </div>
+            <Button variant="link" size="sm" className="mt-1 h-auto p-0">
+              Show more
+            </Button>
+          </div>
+        </TableCell>
+        <TableCell className="w-[100px]">
+          {/* <ControlStatusBadge status="Non-Compliant" hasIcon /> */}
+        </TableCell>
+      </TableRow>
+      <TableRow className="cursor-pointer">
+        <TableCell className="w-[100px] font-medium">MP-3</TableCell>
+        <TableCell className="w-[200px]">Media Marking</TableCell>
+        <TableCell className="w-[300px]">
+          <div className="relative max-w-[400px]">
+            <div className="line-clamp-2 overflow-hidden">
+              The organization marks information system media indicating the
+              distribution limitations, handling caveats, and applicable
+              security markings.
+            </div>
+            <Button variant="link" size="sm" className="mt-1 h-auto p-0">
+              Show more
+            </Button>
+          </div>
+        </TableCell>
+        <TableCell className="w-[100px]">
+          {/* <ControlStatusBadge status="Ready For Review" hasIcon /> */}
+        </TableCell>
+      </TableRow>
+      <TableRow className="cursor-pointer">
+        <TableCell className="w-[100px] font-medium">IR-4</TableCell>
+        <TableCell className="w-[200px]">Incident Handling</TableCell>
+        <TableCell className="w-[300px]">
+          <div className="relative max-w-[400px]">
+            <div className="line-clamp-2 overflow-hidden">
+              The organization implements an incident handling capability for
+              security incidents that includes preparation, detection, analysis,
+              containment, eradication, and recovery.
+            </div>
+            <Button variant="link" size="sm" className="mt-1 h-auto p-0">
+              Show more
+            </Button>
+          </div>
+        </TableCell>
+        <TableCell className="w-[100px]">
+          {/* <ControlStatusBadge status="Not Started" hasIcon /> */}
+        </TableCell>
+      </TableRow>
+    </TableBody>
+  </Table>
+</div>
+}

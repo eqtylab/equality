@@ -1,0 +1,15 @@
+---
+layout: "@/layouts/mdx-layout.astro"
+heading: "Radial Graph"
+description: "Radial Graph with sizes and variants"
+---
+
+import { RadialGraph } from "@eqtylab/equality";
+
+## Default
+
+<RadialGraph percentage={100} />
+
+## Variant: with sub label
+
+<RadialGraph percentage={75} displayLabel="75%" subLabel="Compliant" />

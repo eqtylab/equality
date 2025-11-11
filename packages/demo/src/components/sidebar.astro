@@ -1,6 +1,11 @@
 ---
 import NavList from "@/components/ui/nav-list.astro";
 
+import { getCollection } from "astro:content";
+const components = (await getCollection("components")).sort((a: any, b: any) =>
+  a.data.heading.localeCompare(b.data.heading),
+);
+
 const gettingStartedLinks = [
   { text: "Home", href: "/" },
   { text: "Installation", href: "/getting-started/installation" },
@@ -13,7 +18,10 @@ const gettingStartedLinks = [
   },
 ];
 
-const componentsLinks = [{ text: "Card", href: "/components/card" }];
+const componentsLinks = components.map((component: any) => ({
+  text: component.data.heading,
+  href: `/components/${component.id}`,
+}));
 ---
 
 <aside

@@ -1,0 +1,114 @@
+---
+layout: "@/layouts/mdx-layout.astro"
+heading: "Card"
+description: "Card with sizes and variants"
+---
+
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+  CardDescription,
+  CardFooter,
+  Button,
+} from "@eqtylab/equality";
+
+## Content only (most used)
+
+{
+
+<Card>
+  <CardContent>
+    <div className="space-y-2">
+      <h4 className="font-medium">Content-only Card</h4>
+      <p className="text-muted-foreground text-sm">
+        This card only uses CardContent without header or footer.
+      </p>
+    </div>
+  </CardContent>
+</Card>
+}
+
+## Header only
+
+{
+
+<Card>
+  <CardHeader>
+    <CardTitle>Basic Card</CardTitle>
+    <CardDescription>A simple card only with header.</CardDescription>
+  </CardHeader>
+</Card>
+}
+
+## Content only interactive (hover)
+
+{
+
+<Card onClick={() => console.log("Card clicked")}>
+  <CardContent>
+    <div className="space-y-2">
+      <h4 className="font-medium">Content-only Card</h4>
+      <p className="text-muted-foreground text-sm">
+        This card only uses CardContent without header or footer.
+      </p>
+    </div>
+  </CardContent>
+</Card>
+}
+
+## Basic card
+
+{
+
+<Card>
+  <CardHeader className="border-border border-b">
+    <CardTitle>Basic Card</CardTitle>
+    <CardDescription>A simple card with header and content</CardDescription>
+  </CardHeader>
+  <CardContent>
+    <p className="text-sm">This is the main content area of the card.</p>
+  </CardContent>
+</Card>
+}
+
+## With footer
+
+{
+
+<Card>
+  <CardHeader className="border-border border-b">
+    <CardTitle>Card with Footer</CardTitle>
+    <CardDescription>Includes footer actions</CardDescription>
+  </CardHeader>
+  <CardContent>
+    <p className="text-sm">This is the main content area of the card.</p>
+  </CardContent>
+  <CardFooter>
+    <div className="flex w-full justify-between gap-2">
+      <Button variant="tertiary" size="sm">
+        Cancel
+      </Button>
+      <Button variant="primary" size="sm">
+        Primary Action
+      </Button>
+    </div>
+  </CardFooter>
+</Card>
+}
+
+## Interactive (hover)
+
+{
+
+<Card onClick={() => console.log("Card clicked")}>
+  <CardHeader className="border-border border-b">
+    <CardTitle>Interactive Card</CardTitle>
+    <CardDescription>Clickable with hover effects</CardDescription>
+  </CardHeader>
+  <CardContent>
+    <p className="text-sm">This card has hover effects and is clickable.</p>
+  </CardContent>
+</Card>
+}

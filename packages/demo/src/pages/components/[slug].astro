@@ -1,0 +1,29 @@
+---
+import { getEntry, render } from "astro:content";
+import type { APIContext } from "astro";
+import { ThemeProvider } from "@eqtylab/equality";
+
+export async function getStaticPaths() {
+  // Pre-generate a page for every entry
+  const { getCollection } = await import("astro:content");
+  const entries = await getCollection("components");
+  return entries.map((e) => ({ params: { slug: e.id } }));
+}
+
+export async function GET(ctx: APIContext) {
+  return ctx.redirect(`/components/${ctx.params.slug}/`); // optional nicety
+}
+
+const slug = Astro.params.slug!;
+const entry = await getEntry("components", slug);
+if (!entry) throw new Error(`Component not found: ${slug}`);
+
+const { Content } = await render(entry); // MD/MDX → HTML + <Content/>
+---
+
+<ThemeProvider>
+  <article>
+    <Content />
+    {/* renders your MDX, including React islands */}
+  </article>
+</ThemeProvider>

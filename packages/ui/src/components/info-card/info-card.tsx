@@ -1,3 +1,4 @@
+import * as React from 'react';
 import { LucideIcon } from 'lucide-react';
 
 import { Card, CardContent } from '@/components/card/card';
@@ -20,11 +21,12 @@ const InfoCard = ({
   onClick,
   ...props
 }: InfoCardProps) => {
+  const IconComponent = Icon as React.ElementType;
   return (
     <Card className={className} onClick={onClick} {...props}>
       <CardContent>
         <div className={styles['info-card-content']}>
-          <IconSquare icon={Icon} size="sm" />
+          <IconSquare icon={IconComponent} size="sm" />
           <div className={styles['copy-container']}>
             <p className={styles['label']}>{label}</p>
             <div className={styles['description']}>{description}</div>

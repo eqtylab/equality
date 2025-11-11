@@ -1,10 +1,16 @@
 import { useState } from 'react';
+import * as React from 'react';
 import { CalendarDays, ChevronLeft, ChevronRight, X } from 'lucide-react';
 
 import { Button } from '@/components/button/button';
 import styles from '@/components/date-range-picker/date-range-picker.module.css';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/popover/popover';
 import { cn } from '@/lib/utils';
+
+const CalendarDaysIcon = CalendarDays as React.ComponentType<{ className?: string }>;
+const XIcon = X as React.ComponentType<{ className?: string }>;
+const ChevronLeftIcon = ChevronLeft as React.ComponentType<{ className?: string }>;
+const ChevronRightIcon = ChevronRight as React.ComponentType<{ className?: string }>;
 
 interface DateRange {
   from?: Date;
@@ -167,7 +173,7 @@ const DateRangePicker = ({ dateRange, onSelect, className }: DateRangePickerProp
               className
             )}
           >
-            <CalendarDays className={styles['calendar-icon']} />
+            <CalendarDaysIcon className={styles['calendar-icon']} />
             <span className={styles['date-range']}>{formatRange(dateRange)}</span>
           </Button>
         </PopoverTrigger>
@@ -180,7 +186,7 @@ const DateRangePicker = ({ dateRange, onSelect, className }: DateRangePickerProp
             className={styles['clear-btn']}
             aria-label="Clear search"
           >
-            <X />
+            <XIcon />
           </Button>
         )}
       </div>
@@ -194,7 +200,7 @@ const DateRangePicker = ({ dateRange, onSelect, className }: DateRangePickerProp
               className={styles['month-navigation-btn']}
               onClick={goToPreviousMonth}
             >
-              <ChevronLeft />
+              <ChevronLeftIcon />
             </Button>
 
             <div className={styles['month-date-display']}>
@@ -214,7 +220,7 @@ const DateRangePicker = ({ dateRange, onSelect, className }: DateRangePickerProp
               className={styles['month-navigation-btn']}
               onClick={goToNextMonth}
             >
-              <ChevronRight />
+              <ChevronRightIcon />
             </Button>
           </div>
 

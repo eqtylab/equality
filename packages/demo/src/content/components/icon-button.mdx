@@ -1,0 +1,61 @@
+---
+layout: "@/layouts/mdx-layout.astro"
+heading: "Icon Button"
+description: "Icon Button with sizes and variants"
+---
+
+import { IconButton } from "@eqtylab/equality";
+
+## Small (default)
+
+<IconButton
+  name="Settings"
+  label="Settings"
+  size="sm"
+  onClick={() => console.log("Settings clicked")}
+  client:only="react"
+/>
+
+## Medium
+
+<IconButton
+  name="Heart"
+  label="Like"
+  size="md"
+  onClick={() => console.log("Like clicked")}
+  client:only="react"
+/>
+
+## Large
+
+<IconButton
+  name="Share2"
+  label="Share"
+  size="lg"
+  onClick={() => console.log("Share clicked")}
+  client:only="react"
+/>
+
+## Disabled
+
+<IconButton name="Trash2" label="Delete" disabled client:only="react" />
+
+## As Link
+
+<IconButton
+  name="ExternalLink"
+  label="Open link"
+  href="https://example.com"
+  client:only="react"
+/>
+
+## As Link with Target
+
+<IconButton
+  name="Download"
+  label="Download file"
+  href="https://example.com/file.pdf"
+  target="_blank"
+  download
+  client:only="react"
+/>

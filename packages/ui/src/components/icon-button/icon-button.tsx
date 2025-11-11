@@ -47,13 +47,14 @@ function IconButton({
 }: IconButtonProps) {
   const Icon = LucideIcons[name] as LucideIcons.LucideIcon;
   const iconSize = iconSizeMap[size || 'sm'];
+  const IconComponent = Icon as React.ComponentType<{ size?: number }>;
 
   if (!Icon) {
     console.warn(`Icon "${name}" not found in lucide-react`);
     return null;
   }
 
-  const content = <Icon size={iconSize} />;
+  const content = <IconComponent size={iconSize} />;
 
   if (href && !disabled) {
     return (
