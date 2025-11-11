@@ -4,74 +4,43 @@ heading: "Display Field"
 description: "Display Field with sizes and variants"
 ---
 
-import React from "react";
-import { DisplayField, CopyButton, IconButton } from "@eqtylab/equality";
-import { DisplayFieldWithActionsDemo } from "@/components/demo/display-field";
+import {
+  DisplayFieldDemo,
+  DisplayFieldWithActionsDemo,
+} from "@/components/demo/display-field";
 
 ## Neutral
 
-{
-
-<DisplayField>zQ3shrGxRrYyWixJGrr45jJ1MEY76YQZ4KVbt9CYRsTWZ5MWV</DisplayField>}
+<DisplayFieldDemo client:only="react" />
 
 ## Neutral Truncated
 
-{
-
-<DisplayField truncate>
-  zQ3shrGxRrYyWixJGrr45jJ1MEY76YQZ4KVbt9CYRsTWZ5MWV
-</DisplayField>
-}
+<DisplayFieldDemo truncate client:only="react" />
 
 ## Neutral Middle Truncated
 
-{
-
-<DisplayField truncate="middle">
-  zQ3shrGxRrYyWixJGrr45jJ1MEY76YQZ4KVbt9CYRsTWZ5MWV
-</DisplayField>
-}
+<DisplayFieldDemo truncate="middle" client:only="react" />
 
 ## Success with Prefix
 
-{
-
-<DisplayField prefix="DID" variant="success">
-  zQ3shrGxRrYyWixJGrr45jJ1MEY76YQZ4KVbt9CYRsTWZ5MWV
-</DisplayField>
-}
+<DisplayFieldDemo prefix="DID" variant="success" client:only="react" />
 
 ## Failure with Prefix
 
-{
-
-<DisplayField prefix="DID" variant="failure">
-  zQ3shrGxRrYyWixJGrr45jJ1MEY76YQZ4KVbt9CYRsTWZ5MWV
-</DisplayField>
-}
+<DisplayFieldDemo prefix="DID" variant="failure" client:only="react" />
 
 ## Neutral with Prefix
 
-{
-
-<DisplayField prefix="DID">
-  zQ3shrGxRrYyWixJGrr45jJ1MEY76YQZ4KVbt9CYRsTWZ5MWV
-</DisplayField>
-}
+<DisplayFieldDemo prefix="DID" client:only="react" />
 
 ## Without Copy Button
 
-{
-
-<DisplayField copy={false}>
-  zQ3shrGxRrYyWixJGrr45jJ1MEY76YQZ4KVbt9CYRsTWZ5MWV
-</DisplayField>
-}
+<DisplayFieldDemo copy={false} client:only="react" />
 
 ## With Additional Action
 
-<DisplayFieldWithActionsDemo client:load />
+<DisplayFieldWithActionsDemo client:only="react" />
 
 ## Copy Disabled with Custom Actions
 
-<DisplayFieldWithActionsDemo client:load copy={false} />
+<DisplayFieldWithActionsDemo client:only="react" copy={false} />
