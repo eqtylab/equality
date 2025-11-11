@@ -1,5 +1,5 @@
-import { Pagination, SearchBar } from "@eqtylab/equality";
-import React, { useState, useMemo, useEffect, useRef } from "react";
+import { Pagination } from "@eqtylab/equality";
+import React, { useState, useMemo, useRef } from "react";
 
 // Generate mock items
 const generateItems = (count: number) => {

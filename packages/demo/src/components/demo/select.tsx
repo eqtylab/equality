@@ -1,6 +1,5 @@
 import { useState } from "react";
 import {
-  SearchBar,
   SelectContent,
   SelectValue,
   Select,

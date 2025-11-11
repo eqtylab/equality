@@ -1,5 +1,5 @@
 import { Button, MotionCollapsibleContent } from "@eqtylab/equality";
-import React, { useState } from "react";
+import { useState } from "react";
 
 export const MotionCollapsibleContentDemo = () => {
   const [isOpen, setIsOpen] = useState(false);
