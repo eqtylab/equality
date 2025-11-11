@@ -1,0 +1,36 @@
+---
+layout: "@/layouts/mdx-layout.astro"
+heading: "Toast"
+description: "Toast with sizes and variants"
+---
+
+import { ToastDemo } from "@/components/demo/toast";
+import { ToastRootDemo } from "@/components/demo/toast-root";
+
+<ToastRootDemo client:only="react" />
+
+## Variants
+
+### Default
+
+<ToastDemo client:only="react" />
+
+### Destructive
+
+<ToastDemo client:only="react" variant="destructive" />
+
+### Warning
+
+<ToastDemo client:only="react" variant="warning" />
+
+### Success
+
+<ToastDemo client:only="react" variant="success" />
+
+### With Title
+
+<ToastDemo client:only="react" variant="with-title" />
+
+### With Action
+
+<ToastDemo client:only="react" variant="with-action" />
