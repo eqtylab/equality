@@ -1,0 +1,21 @@
+---
+layout: "@/layouts/mdx-layout.astro"
+heading: "Form"
+description: "Form components built on top of react-hook-form"
+---
+
+import { FormDemo } from "@/components/demo/form";
+
+## Examples
+
+### Default Form
+
+<FormDemo client:only="react" />
+
+### Form with Validation Errors
+
+<FormDemo client:only="react" variant="with-errors" />
+
+### Form with Description
+
+<FormDemo client:only="react" variant="with-description" />
