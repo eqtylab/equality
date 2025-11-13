@@ -27,21 +27,8 @@
   --color-destructive: hsl(var(--destructive));
   --color-destructive-foreground: hsl(var(--destructive-foreground));
   --color-border: hsl(var(--border));
-  --color-input: hsl(var(--input));
   --color-ring: hsl(var(--ring));
-  --color-chart-1: hsl(var(--chart-1));
-  --color-chart-2: hsl(var(--chart-2));
-  --color-chart-3: hsl(var(--chart-3));
-  --color-chart-4: hsl(var(--chart-4));
-  --color-chart-5: hsl(var(--chart-5));
-  --color-sidebar: hsl(var(--sidebar));
-  --color-sidebar-foreground: hsl(var(--sidebar-foreground));
-  --color-sidebar-primary: hsl(var(--sidebar-primary));
-  --color-sidebar-primary-foreground: hsl(var(--sidebar-primary-foreground));
-  --color-sidebar-accent: hsl(var(--sidebar-accent));
-  --color-sidebar-accent-foreground: hsl(var(--sidebar-accent-foreground));
-  --color-sidebar-border: hsl(var(--sidebar-border));
-  --color-sidebar-ring: hsl(var(--sidebar-ring));
+
   /* Control Status Badges */
   --color-not-started: hsl(var(--not-started));
   --color-not-started-secondary: hsl(var(--not-started-secondary));
@@ -83,17 +70,13 @@
   --color-highlight: hsl(var(--highlight));
   --color-mint: hsl(var(--mint));
   --color-red: hsl(var(--red));
-  --color-light-blue: hsl(var(--light-blue));
   --color-yellow: hsl(var(--yellow));
   --color-purple: #a88bfa;
   --color-lilac: #e2ccff;
-  --color-lilac-medium: #7f738f;
   --color-lilac-dark: #887a99;
   --color-medium-lilac: #b5a3cc;
   --color-dark-lilac: #9153c9;
-  --color-lilac-box-bkg: #222025;
   --color-lilac-button: #4d4656;
-  --color-lime: #d5e672;
   --color-sky-blue: #6697e4;
   --color-gold: #ffe4b8;
   --color-black: #0d0d0d;
@@ -119,11 +102,6 @@
 
   /* FONT SIZE */
   --text-xxs: 0.625rem;
-
-  /* BORDER RADIUS */
-  --radius-lg: var(--radius);
-  --radius-md: calc(var(--radius) - 2px);
-  --radius-sm: calc(var(--radius) - 4px);
 
   /* Animation */
   --animate-grow-in: grow-in 800ms ease-in-out backwards;
@@ -172,21 +150,7 @@
   --destructive: 0 62.8% 30.6%;
   --destructive-foreground: 210 40% 98%;
   --border: 240 4% 25%;
-  --input: 217.2 32.6% 17.5%;
   --ring: 212.7 26.8% 83.9%;
-  --chart-1: 220 70% 50%;
-  --chart-2: 160 60% 45%;
-  --chart-3: 30 80% 55%;
-  --chart-4: 280 65% 60%;
-  --chart-5: 340 75% 55%;
-  --sidebar-background: 0 0% 0%;
-  --sidebar-foreground: 240 4.8% 95.9%;
-  --sidebar-primary: 224.3 76.3% 48%;
-  --sidebar-primary-foreground: 0 0% 100%;
-  --sidebar-accent: 240 3.7% 15.9%;
-  --sidebar-accent-foreground: 240 4.8% 95.9%;
-  --sidebar-border: 240 3.7% 15.9%;
-  --sidebar-ring: 217.2 91.2% 59.8%;
 
   /* Control Status Badges */
   --not-started: 220, 13%, 75%;
@@ -249,10 +213,7 @@
   --highlight: 266 100% 90%;
   --mint: 142 69% 58%;
   --red: 342 96% 65%;
-  --light-blue: 203 100% 70%;
   --yellow: 51 100% 73%;
-
-  --radius: 0.5rem;
 }
 
 /* Dark theme */
@@ -274,21 +235,7 @@
   --destructive: 0 62.8% 30.6%;
   --destructive-foreground: 210 40% 98%;
   --border: 240 4% 25%;
-  --input: 217.2 32.6% 17.5%;
   --ring: 212.7 26.8% 83.9%;
-  --chart-1: 220 70% 50%;
-  --chart-2: 160 60% 45%;
-  --chart-3: 30 80% 55%;
-  --chart-4: 280 65% 60%;
-  --chart-5: 340 75% 55%;
-  --sidebar-background: 0 0% 0%;
-  --sidebar-foreground: 240 4.8% 95.9%;
-  --sidebar-primary: 224.3 76.3% 48%;
-  --sidebar-primary-foreground: 0 0% 100%;
-  --sidebar-accent: 240 3.7% 15.9%;
-  --sidebar-accent-foreground: 240 4.8% 95.9%;
-  --sidebar-border: 240 3.7% 15.9%;
-  --sidebar-ring: 217.2 91.2% 59.8%;
 }
 
 @layer base {
