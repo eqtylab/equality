@@ -19,7 +19,11 @@ function formatCssGroup(obj) {
           const colorSpace = colorValue.colorSpace || 'display-p3';
           const [r, g, b] = colorValue.components;
           const hex = colorValue.hex;
-          tokens.push(`--color-${name}: color(${colorSpace} ${r} ${g} ${b}, ${hex});`);
+          const color =
+            colorSpace && colorValue.components?.length > 0
+              ? `color(${colorSpace} ${r} ${g} ${b})`
+              : hex;
+          tokens.push(`--color-${name}: ${color};`);
         } else {
           traverse(token, currentPath);
         }
