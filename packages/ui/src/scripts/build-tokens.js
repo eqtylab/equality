@@ -23,7 +23,7 @@ function formatCssGroup(obj) {
             colorSpace && colorValue.components?.length > 0
               ? `color(${colorSpace} ${r} ${g} ${b})`
               : hex;
-          tokens.push(`--color-${name}: ${color};`);
+          tokens.push(`--${name}: ${color};`);
         } else {
           traverse(token, currentPath);
         }

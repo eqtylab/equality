@@ -2,7 +2,7 @@
   --color-background: color(display-p3 0.0861 0.0861 0.0861);
   --color-border: color(display-p3 0.1792 0.1792 0.1792);
   --color-focus-ring: color(display-p3 0.7319 0.6108 0.8873);
-  --color-primary: color(display-p3 1 1 1);
-  --color-secondary: color(display-p3 0.7432 0.7432 0.7432);
-  --color-tertiary: color(display-p3 0.5021 0.5021 0.5021);
+  --color-text-primary: color(display-p3 1 1 1);
+  --color-text-secondary: color(display-p3 0.7432 0.7432 0.7432);
+  --color-text-tertiary: color(display-p3 0.5021 0.5021 0.5021);
 }
