@@ -36,13 +36,39 @@ function formatCssGroup(obj) {
   return tokens.sort().join('\n') + '\n';
 }
 
+function formatTailwindGroup(obj) {
+  const tokens = [];
+
+  function traverse(obj, path) {
+    for (const [key, token] of Object.entries(obj)) {
+      if (key === '$type' || key === '$value') continue;
+
+      const currentPath = path ? [...path, key] : [key];
+
+      if (token && typeof token === 'object') {
+        const colorValue = token.$value;
+        if (colorValue) {
+          const name = currentPath.join('-').toLowerCase();
+          tokens.push(`--${name}: var(--${name});`);
+        } else {
+          traverse(token, currentPath);
+        }
+      }
+    }
+  }
+
+  traverse(obj);
+
+  return tokens.sort().join('\n') + '\n';
+}
+
 sd.registerFormat({
-  name: 'css/tailwind-dark',
+  name: 'css/dark',
   format: async ({ dictionary }) => {
     const tokens = formatCssGroup(dictionary.tokens.Dark);
 
     return await prettier.format(
-      `@theme inline {
+      `.root[data-eqty-theme='dark'] {
       ${tokens}
     }`,
       { parser: 'css' }
@@ -51,9 +77,23 @@ sd.registerFormat({
 });
 
 sd.registerFormat({
-  name: 'css/tailwind-light',
+  name: 'css/light',
   format: async ({ dictionary }) => {
     const tokens = formatCssGroup(dictionary.tokens.Light);
+
+    return await prettier.format(
+      `.root {
+      ${tokens}
+    }`,
+      { parser: 'css' }
+    );
+  },
+});
+
+sd.registerFormat({
+  name: 'tailwind',
+  format: async ({ dictionary }) => {
+    const tokens = formatTailwindGroup(dictionary.tokens.Light);
 
     return await prettier.format(
       `@theme inline {

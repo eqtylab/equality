@@ -1,4 +1,4 @@
-@theme inline {
+.root[data-eqty-theme='dark'] {
   --color-background: color(display-p3 0.0355 0.0355 0.0427);
   --color-border: color(display-p3 0.1792 0.1792 0.1792);
   --color-card-background: color(display-p3 0.0861 0.0861 0.0861);

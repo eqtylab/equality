@@ -7,11 +7,15 @@
       "files": [
         {
           "destination": "light-tokens.css",
-          "format": "css/tailwind-light"
+          "format": "css/light"
         },
         {
           "destination": "dark-tokens.css",
-          "format": "css/tailwind-dark"
+          "format": "css/dark"
+        },
+        {
+          "destination": "tailwind-tokens.css",
+          "format": "tailwind"
         }
       ]
     }

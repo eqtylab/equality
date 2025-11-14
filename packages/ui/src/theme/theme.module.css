@@ -6,11 +6,13 @@
 
 @config '../../tailwind.config.js';
 
+@import './tokens.css';
+
 @theme inline {
   /* ===== Derived (Tailwind token names) =====
      This enables @apply bg-primary, text-foreground, etc. INSIDE CSS Modules. */
   /* COLORS */
-  --color-background: hsl(var(--background));
+  /* --color-background: hsl(var(--background)); */
   --color-foreground: hsl(var(--foreground));
   --color-card: hsl(var(--card));
   --color-card-foreground: hsl(var(--card-foreground));
@@ -30,42 +32,11 @@
   --color-ring: hsl(var(--ring));
 
   /* Control Status Badges */
-  --color-not-started: hsl(var(--not-started));
-  --color-not-started-secondary: hsl(var(--not-started-secondary));
-  --color-in-progress: hsl(var(--in-progress));
-  --color-in-progress-secondary: hsl(var(--in-progress-secondary));
-  --color-ready-for-review: hsl(var(--ready-for-review));
-  --color-ready-for-review-secondary: hsl(var(--ready-for-review-secondary));
-  --color-in-review: hsl(var(--in-review));
-  --color-in-review-secondary: hsl(var(--in-review-secondary));
   --color-compliant: hsl(var(--compliant));
   --color-compliant-secondary: hsl(var(--compliant-secondary));
   --color-non-compliant: hsl(var(--non-compliant));
   --color-non-compliant-secondary: hsl(var(--non-compliant-secondary));
-  /* Comment Types */
-  --color-not-applicable: hsl(var(--not-applicable));
-  --color-not-applicable-secondary: hsl(var(--not-applicable-secondary));
-  --color-completed: hsl(var(--completed));
-  --color-completed-secondary: hsl(var(--completed-secondary));
-  --color-questioned: hsl(var(--questioned));
-  --color-questioned-secondary: hsl(var(--questioned-secondary));
-  --color-comment: hsl(var(--comment));
-  --color-comment-secondary: hsl(var(--comment-secondary));
-  --color-accepted: hsl(var(--accepted));
-  --color-accepted-secondary: hsl(var(--accepted-secondary));
-  --color-general: hsl(var(--general));
-  --color-general-secondary: hsl(var(--general-secondary));
-  --color-monitor: hsl(var(--monitor));
-  --color-monitor-secondary: hsl(var(--monitor-secondary));
-  /* Policy Type Badges */
-  --color-regulatory: hsl(var(--regulatory));
-  --color-regulatory-secondary: hsl(var(--regulatory-secondary));
-  --color-internal: hsl(var(--internal));
-  --color-internal-secondary: hsl(var(--internal-secondary));
-  --color-risk: hsl(var(--risk));
-  --color-risk-secondary: hsl(var(--risk-secondary));
-  --color-custom: hsl(var(--custom));
-  --color-custom-secondary: hsl(var(--custom-secondary));
+
   /* Primary colors */
   --color-highlight: hsl(var(--highlight));
   --color-mint: hsl(var(--mint));
@@ -83,19 +54,6 @@
   --color-black-5: #191919;
   --color-black-10: #3e3e3e;
   --color-grey: #454545;
-  /* Node colors */
-  --color-node-agent: #1069ff;
-  --color-node-dataset: #753dfd;
-  --color-node-model: #2135b0;
-  --color-node-code: #ffa309;
-  --color-node-document: #ff5c0e;
-  --color-node-prompt: #128441;
-  --color-node-token: #c02d5d;
-  --color-node-inference: #f73887;
-  --color-node-tools: #82a3b2;
-  --color-node-benchmarks: #8f3f18;
-  --color-node-guards: #8f3f18;
-  --color-node-computation: #fede31;
 
   /* FONT FAMILY */
   --font-sans: 'TWK Lausanne', 'Inter', sans-serif;
@@ -133,7 +91,7 @@
 /* Light theme */
 .root {
   /* ===== Tokens (HSL tuples) ===== */
-  --background: 240, 10%, 4%;
+  /* --background: 240, 10%, 4%; */
   --foreground: 210 40% 98%;
   --card: 0 0% 85%;
   --card-foreground: 0 0% 98%;
@@ -153,61 +111,11 @@
   --ring: 212.7 26.8% 83.9%;
 
   /* Control Status Badges */
-  --not-started: 220, 13%, 75%;
-  --not-started-secondary: 220, 13%, 75%, 0.2;
-
-  --in-progress: 45, 100%, 68%;
-  --in-progress-secondary: 45, 100%, 68%, 0.2;
-
-  --ready-for-review: 213, 94%, 68%;
-  --ready-for-review-secondary: 213, 94%, 68%, 0.2;
-
-  --in-review: 262, 83%, 75%;
-  --in-review-secondary: 262, 83%, 75%, 0.2;
-
   --compliant: 142, 72%, 64%;
   --compliant-secondary: 142, 72%, 64%, 0.2;
 
   --non-compliant: 340, 94%, 65%;
   --non-compliant-secondary: 340, 94%, 65%, 0.2;
-
-  --not-applicable: 180, 20%, 55%;
-  --not-applicable-secondary: 180, 20%, 55%, 0.2;
-
-  --comment: 24, 95%, 70%;
-  --comment-secondary: 24, 95%, 70%, 0.2;
-
-  --completed: 24 100% 70%;
-  --completed-secondary: 24 100% 30%;
-
-  --monitor: 239 84% 67%;
-  --monitor-secondary: 239 84% 47%;
-
-  --accepted: 142, 72%, 64%;
-  --accepted-secondary: 142, 72%, 64%, 0.2;
-
-  /* Comment Types */
-  --accepted: 156, 72%, 74%;
-  --accepted-secondary: 156, 72%, 74%, 0.2;
-
-  --questioned: 36, 100%, 74%;
-  --questioned-secondary: 36, 100%, 74%, 0.2;
-
-  --general: 275, 90%, 76%;
-  --general-secondary: 275, 90%, 76%, 0.2;
-
-  /* Policy Type Badges */
-  --regulatory: 217, 56%, 68%;
-  --regulatory-secondary: 217, 56%, 68%, 0.2;
-
-  --internal: 256, 73%, 78%;
-  --internal-secondary: 256, 73%, 78%, 0.2;
-
-  --risk: 51, 93%, 82%;
-  --risk-secondary: 51, 93%, 82%, 0.2;
-
-  --custom: 210, 14%, 83%;
-  --custom-secondary: 210, 14%, 83%, 0.2;
 
   /* Primary */
   --highlight: 266 100% 90%;
@@ -218,7 +126,7 @@
 
 /* Dark theme */
 .root[data-eqty-theme='dark'] {
-  --background: 240, 10%, 4%;
+  /* --background: 240, 10%, 4%; */
   --foreground: 210 40% 98%;
   --card: 0 0% 85%;
   --card-foreground: 0 0% 98%;
