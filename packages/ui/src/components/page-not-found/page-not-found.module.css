@@ -3,7 +3,7 @@
 .page-not-found {
   @apply flex items-center justify-center;
   @apply px-8 py-16;
-  @apply text-foreground;
+  @apply text-text-primary;
 }
 
 .page-not-found-inner {

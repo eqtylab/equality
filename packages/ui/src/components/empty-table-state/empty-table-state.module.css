@@ -6,7 +6,7 @@
 }
 
 .icon-and-title-container {
-  @apply text-foreground flex flex-col items-center gap-2;
+  @apply text-text-primary flex flex-col items-center gap-2;
 }
 
 .icon-container {

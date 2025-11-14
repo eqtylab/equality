@@ -11,12 +11,12 @@
 }
 
 .popover-trigger--active {
-  @apply text-foreground;
+  @apply text-text-primary;
 }
 
 .calendar-icon {
   @apply text-muted-foreground;
-  @apply absolute top-1/2 left-3 size-4 -translate-y-1/2;
+  @apply absolute left-3 top-1/2 size-4 -translate-y-1/2;
 }
 
 .date-range {
@@ -24,7 +24,7 @@
 }
 
 .clear-btn {
-  @apply absolute top-1/2 right-2 size-6 -translate-y-1/2;
+  @apply absolute right-2 top-1/2 size-6 -translate-y-1/2;
 }
 
 .popover-content {
@@ -40,7 +40,7 @@
 }
 
 .month-navigation-btn {
-  @apply text-muted-foreground hover:text-foreground size-8 p-0;
+  @apply text-muted-foreground hover:text-text-primary size-8 p-0;
 }
 
 .month-date-display {
@@ -48,7 +48,7 @@
 }
 
 .month-date-display-title {
-  @apply text-foreground text-sm font-semibold;
+  @apply text-text-primary text-sm font-semibold;
 }
 
 .month-date-display-subtitle {

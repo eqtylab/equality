@@ -14,5 +14,5 @@
 }
 
 .icon {
-  @apply text-foreground;
+  @apply text-text-primary;
 }

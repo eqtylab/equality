@@ -14,11 +14,11 @@
 }
 
 .label {
-  @apply text-foreground text-sm;
+  @apply text-text-primary text-sm;
 }
 
 .text-default {
-  @apply text-foreground;
+  @apply text-text-primary;
 }
 
 .text-red {

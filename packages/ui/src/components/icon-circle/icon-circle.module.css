@@ -1,7 +1,7 @@
 @reference '../../theme/theme.module.css';
 
 .icon-circle {
-  @apply bg-foreground/10 text-foreground;
+  @apply bg-foreground/10 text-text-primary;
   @apply size-9 rounded-full;
   @apply flex shrink-0 items-center justify-center;
 }

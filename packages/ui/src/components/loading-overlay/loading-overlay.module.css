@@ -1,7 +1,7 @@
 @reference '../../theme/theme.module.css';
 
 .loading-overlay {
-  @apply fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-xs;
+  @apply backdrop-blur-xs fixed inset-0 z-50 flex items-center justify-center bg-black/60;
 }
 
 .content {
@@ -13,5 +13,5 @@
 }
 
 .message {
-  @apply text-foreground mt-4 text-lg font-medium;
+  @apply text-text-primary mt-4 text-lg font-medium;
 }

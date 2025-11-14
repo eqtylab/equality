@@ -1,7 +1,7 @@
 @reference '../../theme/theme.module.css';
 
 .badge {
-  @apply focus:ring-ring focus:ring-2 focus:ring-offset-2 focus:outline-hidden;
+  @apply focus:ring-ring focus:outline-hidden focus:ring-2 focus:ring-offset-2;
   @apply inline-flex items-center;
   @apply px-2 py-0.5;
   @apply text-xs font-medium transition-colors;
@@ -29,7 +29,7 @@
 }
 
 .badge--outline {
-  @apply text-foreground;
+  @apply text-text-primary;
 }
 
 .badge--neutral {

@@ -15,5 +15,5 @@
 }
 
 .icon-button--inactive {
-  @apply bg-background/50 text-muted-foreground hover:text-foreground;
+  @apply bg-background/50 text-muted-foreground hover:text-text-primary;
 }

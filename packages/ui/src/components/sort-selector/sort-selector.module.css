@@ -19,11 +19,11 @@
 .dropdown-menu-content-header {
   @apply border-border border-b;
   @apply flex items-center justify-between;
-  @apply px-3 pt-2 pb-2;
+  @apply px-3 pb-2 pt-2;
 }
 
 .header-title {
-  @apply text-foreground text-sm font-semibold;
+  @apply text-text-primary text-sm font-semibold;
 }
 
 .reset-btn {
@@ -43,7 +43,7 @@
 .dropdown-menu-item-indicator {
   @apply size-4;
   @apply flex items-center justify-center;
-  @apply absolute top-1/2 left-3 -translate-y-1/2;
+  @apply absolute left-3 top-1/2 -translate-y-1/2;
 }
 
 .indicator-inner {
@@ -65,5 +65,5 @@
 }
 
 .dropdown-menu-item-label {
-  @apply text-foreground;
+  @apply text-text-primary;
 }
