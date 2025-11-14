@@ -29,9 +29,9 @@
 }
 
 .drawer-title {
-  @apply text-lg leading-none font-semibold tracking-tight;
+  @apply text-lg font-semibold leading-none tracking-tight;
 }
 
 .drawer-description {
-  @apply text-muted-foreground text-sm;
+  @apply text-text-secondary text-sm;
 }

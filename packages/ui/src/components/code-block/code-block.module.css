@@ -11,7 +11,7 @@
 }
 
 .title {
-  @apply text-muted-foreground text-sm font-medium;
+  @apply text-text-secondary text-sm font-medium;
 }
 
 .content {
@@ -33,9 +33,9 @@
 }
 
 .code-label {
-  @apply text-muted-foreground mb-1;
+  @apply text-text-secondary mb-1;
 }
 
 .code {
-  @apply break-all whitespace-pre-wrap;
+  @apply whitespace-pre-wrap break-all;
 }

@@ -6,7 +6,7 @@
   @apply min-h-[80px] w-full rounded-md;
   @apply bg-background border-border ring-offset-background border;
   @apply text-text-primary text-base md:text-sm;
-  @apply placeholder:text-muted-foreground;
+  @apply placeholder:text-text-secondary;
   @apply focus-visible:ring-ring/70 focus-visible:outline-hidden focus-visible:ring-1 focus-visible:ring-offset-2;
   @apply disabled:cursor-not-allowed disabled:opacity-50;
 }

@@ -19,7 +19,7 @@
 }
 
 .chevron-icon {
-  @apply text-muted-foreground;
+  @apply text-text-secondary;
 }
 
 .dropdown-menu-content {

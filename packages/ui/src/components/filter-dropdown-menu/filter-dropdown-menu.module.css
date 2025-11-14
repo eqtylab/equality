@@ -20,8 +20,8 @@
   @apply text-xs font-medium;
 }
 
-.text-muted-foreground {
-  @apply text-muted-foreground;
+.text-text-secondary {
+  @apply text-text-secondary;
 }
 
 .dropdown-menu-content {

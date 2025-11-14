@@ -91,5 +91,5 @@
 }
 
 .toast-description {
-  @apply text-muted-foreground text-sm;
+  @apply text-text-secondary text-sm;
 }

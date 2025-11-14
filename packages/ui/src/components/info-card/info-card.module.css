@@ -9,7 +9,7 @@
 }
 
 .label {
-  @apply text-muted-foreground text-xs;
+  @apply text-text-secondary text-xs;
 }
 
 .description {

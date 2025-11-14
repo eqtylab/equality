@@ -10,7 +10,7 @@
 }
 
 .info-text {
-  @apply text-muted-foreground text-sm;
+  @apply text-text-secondary text-sm;
   @apply flex items-center gap-1;
 }
 

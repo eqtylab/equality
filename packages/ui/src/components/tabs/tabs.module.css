@@ -1,7 +1,7 @@
 @reference '../../theme/theme.module.css';
 
 .tabs-list {
-  @apply text-muted-foreground;
+  @apply text-text-secondary;
   @apply h-10;
   @apply inline-flex items-center justify-center;
 }

@@ -28,7 +28,7 @@
 }
 
 .description {
-  @apply text-muted-foreground;
+  @apply text-text-secondary;
 }
 
 .actions {
