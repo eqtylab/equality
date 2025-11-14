@@ -200,39 +200,76 @@
       function groupColors(colors) {
         const groups = {};
 
-        Object.keys(colors).forEach((key) => {
-          const color = colors[key];
+        // Access the color object within the theme
+        const colorObj = colors.color || colors;
 
-          if (color.$type === 'color' && color.$value) {
-            // Single color
-            if (!groups['Single Colors']) {
-              groups['Single Colors'] = [];
-            }
-            groups['Single Colors'].push({
-              name: key,
-              hex: color.$value.hex,
-              components: color.$value.components,
-            });
-          } else if (typeof color === 'object' && color !== null) {
-            // Color palette (100, 200, etc.)
-            const paletteName = key.charAt(0).toUpperCase() + key.slice(1);
-            if (!groups[paletteName]) {
-              groups[paletteName] = [];
-            }
+        function processColorObject(obj, prefix = '') {
+          Object.keys(obj).forEach((key) => {
+            const value = obj[key];
+            const fullPath = prefix ? `${prefix}.${key}` : key;
 
-            Object.keys(color)
-              .sort()
-              .forEach((shade) => {
-                if (color[shade].$type === 'color' && color[shade].$value) {
-                  groups[paletteName].push({
-                    name: `${key}-${shade}`,
-                    hex: color[shade].$value.hex,
-                    components: color[shade].$value.components,
-                  });
-                }
+            if (value.$type === 'color' && value.$value) {
+              // Found a color value
+              const colorValue = value.$value;
+
+              // Determine group name based on prefix
+              let groupName;
+              if (!prefix) {
+                // Top-level colors (like "black", "white", "background", etc.)
+                groupName = 'Single Colors';
+              } else {
+                // Group by the first part of the path (e.g., "text", "card", "badge")
+                const firstPart = prefix.split('.')[0];
+                groupName = firstPart.charAt(0).toUpperCase() + firstPart.slice(1);
+              }
+
+              if (!groups[groupName]) {
+                groups[groupName] = [];
+              }
+
+              groups[groupName].push({
+                name: fullPath,
+                hex: colorValue.hex || '',
+                components: colorValue.components,
+                colorSpace: colorValue.colorSpace,
               });
-          }
-        });
+            } else if (typeof value === 'object' && value !== null && !value.$type) {
+              // Check if this is a color palette (has numeric keys like 100, 200, etc.)
+              const keys = Object.keys(value);
+              const isPalette = keys.every((k) => {
+                const numKey = parseInt(k, 10);
+                return !isNaN(numKey) && value[k].$type === 'color';
+              });
+
+              if (isPalette) {
+                // Color palette (like "fuschia", "lilac", etc.)
+                const paletteName = key.charAt(0).toUpperCase() + key.slice(1);
+                if (!groups[paletteName]) {
+                  groups[paletteName] = [];
+                }
+
+                keys
+                  .sort((a, b) => parseInt(a, 10) - parseInt(b, 10))
+                  .forEach((shade) => {
+                    const shadeValue = value[shade];
+                    if (shadeValue.$type === 'color' && shadeValue.$value) {
+                      groups[paletteName].push({
+                        name: `${key}-${shade}`,
+                        hex: shadeValue.$value.hex || '',
+                        components: shadeValue.$value.components,
+                        colorSpace: shadeValue.$value.colorSpace,
+                      });
+                    }
+                  });
+              } else {
+                // Nested object, recurse
+                processColorObject(value, fullPath);
+              }
+            }
+          });
+        }
+
+        processColorObject(colorObj);
 
         return groups;
       }
