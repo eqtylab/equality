@@ -62,7 +62,7 @@
 }
 
 .indicator-inner--not-selected {
-  @apply border-muted-foreground bg-muted/30;
+  @apply border-border bg-greyscale-300;
 }
 
 .check-icon {

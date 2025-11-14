@@ -19,7 +19,7 @@
 }
 
 .table-footer {
-  @apply bg-muted/50 border-t last:[&>tr]:border-b-0;
+  @apply bg-greyscale-800/50 border-t last:[&>tr]:border-b-0;
   @apply font-medium;
 }
 

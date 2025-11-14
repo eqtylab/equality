@@ -72,6 +72,6 @@
 }
 
 .select-separator {
-  @apply bg-muted;
+  @apply bg-greyscale-800;
   @apply -mx-1 my-1 h-px;
 }

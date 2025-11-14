@@ -9,13 +9,13 @@
 }
 
 .alert--default {
-  @apply bg-background;
+  @apply bg-card-background;
   @apply text-text-primary;
 }
 
 .alert--destructive {
-  @apply text-destructive [&>svg]:text-destructive;
-  @apply border-destructive/50 dark:border-destructive;
+  @apply text-button-danger-text [&>svg]:text-button-danger-text;
+  @apply bg-button-danger-fill border-button-danger-border;
 }
 
 .alert-title {

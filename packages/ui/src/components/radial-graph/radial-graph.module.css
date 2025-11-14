@@ -16,7 +16,7 @@
 }
 
 .bar-inner {
-  @apply absolute top-0 right-0 left-0;
+  @apply absolute left-0 right-0 top-0;
   @apply h-3/4 overflow-hidden rounded-full;
   @apply transition-transform;
 }
@@ -32,7 +32,7 @@
 
 .bar-background {
   @apply absolute inset-0;
-  @apply from-muted-foreground/50 bg-linear-to-b to-50%;
+  @apply from-greyscale-500 bg-linear-to-b to-50%;
 }
 
 .bar-gradient {

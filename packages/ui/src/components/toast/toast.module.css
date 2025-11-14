@@ -49,7 +49,7 @@
 }
 
 .toast--destructive .toast-action {
-  @apply border-muted/40;
+  @apply border-greyscale-800/40;
 }
 
 .toast--destructive:hover .toast-action {
