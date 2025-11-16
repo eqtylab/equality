@@ -6,15 +6,27 @@ description: "Background Gradient with theme variants"
 
 import { BgGradientDemo } from "@/components/demo/bg-gradient";
 
+## Overview
+
+The component supports all brand colors (primary, secondary, tertiary, red, gold) and will automatically pick up new colors added to the `equality-tokens.json` file. The hex values are read directly from the JSON, keeping the component in sync with design tokens.
+
 ## Variants
 
-### Theme Lilac
+### Theme Primary
 
 <BgGradientDemo client:load />
 
-### Theme Blue
+### Theme Secondary
 
-<BgGradientDemo client:load variant="blue" />
+<BgGradientDemo client:load variant="secondary" />
+
+### Theme Tertiary
+
+<BgGradientDemo client:load variant="secondary" />
+
+### Theme Red
+
+<BgGradientDemo client:load variant="red" />
 
 ### Theme Gold
 

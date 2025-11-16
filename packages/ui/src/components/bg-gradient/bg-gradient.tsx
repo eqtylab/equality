@@ -1,26 +1,42 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useMemo, useRef } from 'react';
 
 import styles from '@/components/bg-gradient/bg-gradient.module.css';
 
-const getThemeColour = (theme: 'gold' | 'blue' | 'lilac') => {
-  switch (theme) {
-    case 'gold':
-      return '#FFE4B8';
-    case 'blue':
-      return '#6697E4';
-    case 'lilac':
-      return '#e2ccff';
-  }
+import tokens from '../../../../tokens/equality-tokens.json';
+
+// Extract brand colors from tokens
+const getBrandColors = () => {
+  const brandColors = tokens.Light.color.brand;
+  const colors: Record<string, string> = {};
+
+  Object.entries(brandColors).forEach(([key, value]) => {
+    if (value.$value) {
+      const hex = value.$value.hex;
+      colors[key] =
+        // Remove alpha channel on hex string (last 2 chars)
+        hex.slice(0, 7) || '#000000';
+    }
+  });
+
+  return colors;
+};
+
+// Type-safe Theme type based on available brand colors
+export type Theme = keyof typeof tokens.Light.color.brand;
+
+const getThemeColour = (theme: Theme, brandColors: Record<string, string>) => {
+  return brandColors[theme] || '#000000';
 };
 
 const BgGradient = ({
   theme,
   placement = 'full',
 }: {
-  theme: 'gold' | 'blue' | 'lilac';
+  theme: Theme;
   placement?: 'full' | 'top';
 }) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const brandColors = useMemo(() => getBrandColors(), []);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -81,7 +97,7 @@ const BgGradient = ({
             },
           ];
 
-    const themeColourBlobs = getThemeColour(theme);
+    const themeColourBlobs = getThemeColour(theme, brandColors);
 
     let animationFrame: number;
     const animate = () => {
@@ -122,7 +138,7 @@ const BgGradient = ({
       window.removeEventListener('resize', updateSize);
       cancelAnimationFrame(animationFrame);
     };
-  }, [theme, placement]);
+  }, [theme, placement, brandColors]);
 
   return <canvas ref={canvasRef} className={styles['bg-gradient']} />;
 };

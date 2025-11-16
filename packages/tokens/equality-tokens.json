@@ -1081,7 +1081,7 @@
           "$value": {
             "colorSpace": "display-p3",
             "components": [0.6266, 0.4562, 0.8302],
-            "hex": ""
+            "hex": "#A872DAFF"
           }
         },
         "secondary": {
@@ -1089,7 +1089,7 @@
           "$value": {
             "colorSpace": "display-p3",
             "components": [0.3895, 0.4853, 0.8187],
-            "hex": ""
+            "hex": "#6697E4FF"
           }
         },
         "tertiary": {
@@ -1097,7 +1097,7 @@
           "$value": {
             "colorSpace": "display-p3",
             "components": [0.4374, 0.6383, 0.4134],
-            "hex": ""
+            "hex": "#5FA463FF"
           }
         },
         "red": {

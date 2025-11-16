@@ -1,9 +1,11 @@
 import { BgGradient } from "@eqtylab/equality";
 
+import tokens from "../../../../tokens/equality-tokens.json";
+
 export const BgGradientDemo = ({
-  variant = "lilac",
+  variant = "primary",
 }: {
-  variant?: "gold" | "blue" | "lilac";
+  variant?: keyof typeof tokens.Light.color.brand;
 }) => {
   return (
     <div className="relative h-150 w-full *:size-full">
