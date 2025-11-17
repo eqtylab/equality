@@ -2,47 +2,49 @@
 
 .button {
   @apply ring-offset-background rounded-md;
-  @apply whitespace-nowrap text-sm font-medium;
+  @apply text-sm font-medium whitespace-nowrap;
   @apply transition-all duration-300;
   @apply inline-flex items-center justify-center gap-1;
-  @apply focus-visible:ring-ring focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-offset-2;
+  @apply focus-visible:ring-focus-ring focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-hidden;
   @apply disabled:cursor-not-allowed disabled:opacity-50;
   @apply [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0;
 }
 
 .button--primary {
-  @apply border-button-primary-border bg-button-primary-fill border;
+  --mix-color: var(--color-button-primary-fill);
+  @apply bg-(--mix-color);
+  @apply border-button-primary-border border;
   @apply text-text-primary;
-  @apply hover:not-disabled:border-highlight hover:not-disabled:bg-highlight/60;
+  @apply hover:not-disabled:bg-mixed-dark;
 }
 
 .button--destructive {
-  @apply border-button-danger-border bg-button-danger-fill border;
+  --mix-color: var(--color-button-danger-fill);
+  @apply bg-(--mix-color);
+  @apply border-button-danger-border border;
   @apply text-button-danger-text;
-  @apply hover:not-disabled:border-red hover:not-disabled:bg-red/60 border;
+  @apply hover:not-disabled:bg-mixed-dark;
 }
 
 .button--secondary {
-  @apply border-foreground bg-foreground border;
-  @apply text-background;
-  @apply hover:not-disabled:border-primary hover:not-disabled:bg-primary/80;
+  --mix-color: var(--color-button-secondary-fill);
+  @apply bg-(--mix-color);
+  @apply border-button-secondary-border border;
+  @apply text-button-secondary-text;
+  @apply hover:not-disabled:bg-mixed-dark;
 }
 
 .button--tertiary {
-  @apply border-border border bg-black/60;
-  @apply text-text-primary;
-  @apply hover:not-disabled:text-accent-foreground hover:not-disabled:bg-white/10;
-}
-
-.button--outline {
-  @apply border-border bg-black/60;
-  @apply text-text-primary;
-  @apply hover:text-accent-foreground hover:border hover:bg-white/10;
+  --mix-color: var(--color-button-tertiary-fill);
+  @apply bg-(--mix-color);
+  @apply border-button-tertiary-border border;
+  @apply text-button-tertiary-text;
+  @apply hover:not-disabled:bg-mixed-light;
 }
 
 .button--link {
   @apply text-brand-primary;
-  @apply hover:not-disabled:underline underline-offset-4;
+  @apply underline-offset-4 hover:not-disabled:underline;
 }
 
 .size--sm {

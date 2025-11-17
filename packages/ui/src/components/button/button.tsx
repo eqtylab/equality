@@ -12,7 +12,6 @@ const buttonVariants = cva(styles['button'], {
       destructive: styles['button--destructive'],
       secondary: styles['button--secondary'],
       tertiary: styles['button--tertiary'],
-      outline: styles['button--outline'],
       link: styles['button--link'],
     },
     size: {
