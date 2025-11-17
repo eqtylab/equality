@@ -161,6 +161,16 @@
             }
           }
         }
+      },
+      "popover": {
+        "background": {
+          "$type": "color",
+          "$value": {
+            "colorSpace": "display-p3",
+            "components": [0, 0, 0],
+            "hex": "#000000FF"
+          }
+        }
       }
     }
   },
@@ -1733,6 +1743,16 @@
             "colorSpace": "display-p3",
             "components": [0.8698, 0.8698, 0.8698],
             "hex": ""
+          }
+        }
+      },
+      "popover": {
+        "background": {
+          "$type": "color",
+          "$value": {
+            "colorSpace": "display-p3",
+            "components": [1, 1, 1],
+            "hex": "#FFFFFFFF"
           }
         }
       }
