@@ -11,7 +11,8 @@
   @apply fixed left-[50%] top-[50%] z-50 translate-x-[-50%] translate-y-[-50%];
   @apply w-full max-w-lg;
   @apply grid gap-4 p-6;
-  @apply bg-popover-background border shadow-lg duration-200 sm:rounded-lg;
+  @apply bg-popover-background shadow-lg duration-200 sm:rounded-lg;
+  @apply border-border border;
 }
 
 .alert-dialog-header {

@@ -5,6 +5,7 @@
   @apply whitespace-nowrap text-sm font-medium;
   @apply transition-all duration-300;
   @apply inline-flex items-center justify-center gap-1;
+  @apply cursor-pointer;
   @apply disabled:cursor-not-allowed disabled:opacity-50;
   @apply [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0;
   @apply focus-ring;

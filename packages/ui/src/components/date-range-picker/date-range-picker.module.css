@@ -28,11 +28,7 @@
 }
 
 .popover-content {
-  @apply w-auto p-0;
-}
-
-.popover-content-inner {
-  @apply space-y-4 p-4;
+  @apply w-max min-w-max space-y-4;
 }
 
 .month-navigation {
@@ -73,23 +69,19 @@
 
 .calendar-day-btn {
   @apply text-sm font-normal transition-colors;
-  @apply size-9 rounded-md p-0;
+  @apply block size-9 rounded-md p-0;
 }
 
 .calendar-day-btn--selected {
-  @apply bg-lilac hover:bg-lilac/90;
-  @apply text-background;
-}
-
-.calendar-day-btn--not-selected {
-  @apply hover:bg-lilac/20;
+  @apply bg-brand-primary;
+  @apply text-text-primary;
 }
 
 .calendar-day-btn--today {
-  @apply text-lilac font-semibold;
-  @apply border-lilac/30 border;
+  @apply font-semibold;
+  @apply border-brand-primary border;
 }
 
 .calendar-day-btn--in-range {
-  @apply bg-lilac/10 text-lilac;
+  @apply bg-brand-primary/30;
 }

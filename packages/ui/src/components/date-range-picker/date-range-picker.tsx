@@ -191,76 +191,73 @@ const DateRangePicker = ({ dateRange, onSelect, className }: DateRangePickerProp
         )}
       </div>
       <PopoverContent className={styles['popover-content']} align="end">
-        <div className={styles['popover-content-inner']}>
-          {/* Header with month navigation */}
-          <div className={styles['month-navigation']}>
-            <Button
-              variant="tertiary"
-              size="sm"
-              className={styles['month-navigation-btn']}
-              onClick={goToPreviousMonth}
-            >
-              <ChevronLeftIcon />
-            </Button>
+        {/* Header with month navigation */}
+        <div className={styles['month-navigation']}>
+          <Button
+            variant="tertiary"
+            size="sm"
+            className={styles['month-navigation-btn']}
+            onClick={goToPreviousMonth}
+          >
+            <ChevronLeftIcon />
+          </Button>
 
-            <div className={styles['month-date-display']}>
-              <div className={styles['month-date-display-title']}>
-                {`${MONTHS[displayedMonth]} ${displayedYear}`}
-              </div>
-              {selecting && (
-                <div className={styles['month-date-display-subtitle']}>
-                  {selecting === 'from' ? 'Select start date' : 'Select end date'}
-                </div>
-              )}
+          <div className={styles['month-date-display']}>
+            <div className={styles['month-date-display-title']}>
+              {`${MONTHS[displayedMonth]} ${displayedYear}`}
             </div>
-
-            <Button
-              variant="tertiary"
-              size="sm"
-              className={styles['month-navigation-btn']}
-              onClick={goToNextMonth}
-            >
-              <ChevronRightIcon />
-            </Button>
-          </div>
-
-          {/* Day headers */}
-          <div className={styles['day-headers']}>
-            {DAY_HEADERS.map((day) => (
-              <div key={day} className={styles['day-headers-inner']}>
-                {day}
+            {selecting && (
+              <div className={styles['month-date-display-subtitle']}>
+                {selecting === 'from' ? 'Select start date' : 'Select end date'}
               </div>
-            ))}
+            )}
           </div>
 
-          {/* Calendar grid */}
-          <div className={styles['calendar-grid']}>
-            {paddingDays.map((_, index) => (
-              <div key={`padding-${index}`} />
-            ))}
-            {days.map((day, index) => {
-              const isSelected = isDateSelected(day, dateRange);
-              const isToday = checkIsToday(day);
-              const inRange = isInRange(day);
+          <Button
+            variant="tertiary"
+            size="sm"
+            className={styles['month-navigation-btn']}
+            onClick={goToNextMonth}
+          >
+            <ChevronRightIcon />
+          </Button>
+        </div>
 
-              return (
-                <Button
-                  key={index}
-                  variant="tertiary"
-                  className={cn(
-                    styles['calendar-day-btn'],
-                    isSelected && styles['calendar-day-btn--selected'],
-                    !isSelected && styles['calendar-day-btn--not-selected'],
-                    isToday && !isSelected && styles['calendar-day-btn--today'],
-                    inRange && !isSelected && styles['calendar-day-btn--in-range']
-                  )}
-                  onClick={() => handleDateSelect(day)}
-                >
-                  {day.getDate()}
-                </Button>
-              );
-            })}
-          </div>
+        {/* Day headers */}
+        <div className={styles['day-headers']}>
+          {DAY_HEADERS.map((day) => (
+            <div key={day} className={styles['day-headers-inner']}>
+              {day}
+            </div>
+          ))}
+        </div>
+
+        {/* Calendar grid */}
+        <div className={styles['calendar-grid']}>
+          {paddingDays.map((_, index) => (
+            <div key={`padding-${index}`} />
+          ))}
+          {days.map((day, index) => {
+            const isSelected = isDateSelected(day, dateRange);
+            const isToday = checkIsToday(day);
+            const inRange = isInRange(day);
+
+            return (
+              <Button
+                key={index}
+                variant="tertiary"
+                className={cn(
+                  styles['calendar-day-btn'],
+                  isSelected && styles['calendar-day-btn--selected'],
+                  isToday && !isSelected && styles['calendar-day-btn--today'],
+                  inRange && !isSelected && styles['calendar-day-btn--in-range']
+                )}
+                onClick={() => handleDateSelect(day)}
+              >
+                {day.getDate()}
+              </Button>
+            );
+          })}
         </div>
       </PopoverContent>
     </Popover>

@@ -1,7 +1,8 @@
 @reference '../../theme/theme.module.css';
 
 .popover-content {
-  @apply bg-black-5 text-popover-foreground border shadow-md outline-hidden;
+  @apply bg-popover-background text-text-primary outline-hidden shadow-md;
+  @apply border-border border;
   @apply z-50 w-72 rounded-md p-4;
   @apply origin-(--radix-popover-content-transform-origin);
   @apply data-[state=open]:animate-in data-[state=open]:fade-in-0 data-[state=open]:zoom-in-95;
@@ -11,5 +12,5 @@
 
 .popover-arrow {
   @apply h-2 w-4;
-  @apply fill-white/20;
+  @apply fill-text-secondary;
 }
