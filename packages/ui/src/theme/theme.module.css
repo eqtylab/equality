@@ -438,3 +438,11 @@
     }
   }
 }
+
+@utility focus-ring {
+  @apply ring-offset-background;
+  @apply focus-visible:ring-focus-ring;
+  @apply focus-visible:ring-2;
+  @apply focus-visible:ring-offset-2;
+  @apply focus-visible:outline-none;
+}
