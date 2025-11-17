@@ -20,12 +20,24 @@
   @apply font-mono text-xs;
 }
 
-.border-mint {
-  @apply border-mint;
+.primary {
+  @apply border-brand-primary;
 }
 
-.border-lilac {
-  @apply border-lilac;
+.secondary {
+  @apply border-brand-secondary;
+}
+
+.green {
+  @apply border-brand-green;
+}
+
+.red {
+  @apply border-brand-red;
+}
+
+.gold {
+  @apply border-brand-gold;
 }
 
 .scroll-container {
@@ -37,5 +49,5 @@
 }
 
 .code {
-  @apply whitespace-pre-wrap break-all;
+  @apply break-all whitespace-pre-wrap;
 }

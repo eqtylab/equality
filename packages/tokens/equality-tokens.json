@@ -1185,7 +1185,7 @@
             "hex": "#6697E4FF"
           }
         },
-        "tertiary": {
+        "green": {
           "$type": "color",
           "$value": {
             "colorSpace": "display-p3",

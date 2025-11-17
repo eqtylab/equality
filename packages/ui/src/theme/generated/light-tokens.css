@@ -56,10 +56,10 @@
   --color-blue-900: color(display-p3 0.06177 0.08243 0.1475);
   --color-border: color(display-p3 0.8698 0.8698 0.8698);
   --color-brand-gold: color(display-p3 0.863 0.6958 0.4108);
+  --color-brand-green: color(display-p3 0.4374 0.6383 0.4134);
   --color-brand-primary: color(display-p3 0.6266 0.4562 0.8302);
   --color-brand-red: color(display-p3 0.8114 0.4167 0.3761);
   --color-brand-secondary: color(display-p3 0.3895 0.4853 0.8187);
-  --color-brand-tertiary: color(display-p3 0.4374 0.6383 0.4134);
   --color-button-danger-border: color(display-p3 0.8114 0.4167 0.3761);
   --color-button-danger-fill: color(display-p3 0.2625 0.1106 0.09605);
   --color-button-danger-text: color(display-p3 0.8114 0.4167 0.3761);

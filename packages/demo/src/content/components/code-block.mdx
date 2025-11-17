@@ -6,7 +6,11 @@ description: "Code Block with sizes and variants"
 
 import { CodeBlock } from "@eqtylab/equality";
 
-## Color variant: default
+## Color Variants
+
+Code blocks support several color variants that correspond with the brand colors. You can use these variants — such as `primary`, `secondary`, `green`, `red`, and `gold` — to visually distinguish different types of code or their context according to your design needs. Each color maps directly to a brand color in the Equality design system, allowing for consistent and meaningful styling in your application.
+
+### Primary (default)
 
 <CodeBlock
   title="JSX"
@@ -279,11 +283,38 @@ className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transit
 client:only="react"
 />
 
-## Color variant: mint
+### Secondary
 
 <CodeBlock
   title="JS"
   code="console.log('Hello, world!');"
-  color="mint"
+  color="secondary"
+  client:only="react"
+/>
+
+### Green
+
+<CodeBlock
+  title="JS"
+  code="console.log('Hello, world!');"
+  color="green"
+  client:only="react"
+/>
+
+### Red
+
+<CodeBlock
+  title="JS"
+  code="console.log('Hello, world!');"
+  color="red"
+  client:only="react"
+/>
+
+### Gold
+
+<CodeBlock
+  title="JS"
+  code="console.log('Hello, world!');"
+  color="gold"
   client:only="react"
 />

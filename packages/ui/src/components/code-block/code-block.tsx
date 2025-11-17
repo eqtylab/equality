@@ -6,7 +6,7 @@ interface CodeBlockProps {
   className?: string;
   title: string;
   code: string;
-  color?: 'lilac' | 'mint';
+  color?: 'primary' | 'secondary' | 'green' | 'red' | 'gold';
   codeLabel?: string;
   copy?: string;
 }
@@ -15,7 +15,7 @@ const CodeBlock = ({
   className,
   title,
   code,
-  color = 'lilac',
+  color = 'primary',
   codeLabel,
   copy,
 }: CodeBlockProps) => {
@@ -25,12 +25,7 @@ const CodeBlock = ({
         <span className={styles.title}>{title}</span>
         <CopyButton value={copy || code} size="sm" />
       </div>
-      <div
-        className={cn(
-          styles.content,
-          color === 'mint' ? styles['border-mint'] : styles['border-lilac']
-        )}
-      >
+      <div className={cn(styles.content, styles[color])}>
         <div className={cn(styles['scroll-container'], 'styled-vertical-scrollbar')}>
           {codeLabel && <div className={styles['code-label']}>{codeLabel}</div>}
           <pre className={styles.code}>{code}</pre>
