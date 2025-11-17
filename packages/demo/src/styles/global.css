@@ -126,7 +126,9 @@
     & > ul,
     & > ol,
     & > table,
-    & > hr {
+    & > hr,
+    & > div,
+    & > span {
       @apply mb-2;
     }
 
