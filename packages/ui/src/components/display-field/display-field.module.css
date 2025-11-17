@@ -1,30 +1,29 @@
 @reference '../../theme/theme.module.css';
 
 .display-field {
-  @apply border-border bg-black-5 rounded-md border;
-  @apply text-text-primary text-clip text-base md:text-sm;
-  @apply h-9.5 flex w-full overflow-clip;
-  @apply ring-offset-background ring-ring/70;
-  @apply focus-visible:ring-1 focus-visible:ring-offset-2;
+  @apply border-border bg-popover-background rounded-md border;
+  @apply text-text-primary text-base text-clip md:text-sm;
+  @apply flex h-9.5 w-full overflow-clip;
+  @apply focus-ring;
 }
 
 .display-field--neutral {
-  @apply bg-lilac;
+  @apply bg-brand-primary;
 }
 
 .display-field--success {
-  @apply bg-mint;
+  @apply bg-brand-green;
 }
 
 .display-field--failure {
-  @apply bg-red;
+  @apply bg-brand-red;
 }
 
 .prefix {
   @apply flex items-center gap-1;
   @apply px-2;
   @apply text-sm font-medium text-black transition-colors;
-  @apply rounded-br-md rounded-tr-md;
+  @apply rounded-tr-md rounded-br-md;
 }
 
 .content {

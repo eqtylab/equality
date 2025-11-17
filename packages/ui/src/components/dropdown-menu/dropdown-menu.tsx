@@ -93,7 +93,7 @@ const DropdownMenuCheckboxItem = React.forwardRef<
     checked={checked}
     {...props}
   >
-    <span className={styles['dropdown-menu-item-indicator']}>
+    <span className={styles['dropdown-menu-item-indicator-checkbox']}>
       <DropdownMenuPrimitive.ItemIndicator>
         <CheckIcon className={styles['icon-size']} />
       </DropdownMenuPrimitive.ItemIndicator>
@@ -112,7 +112,7 @@ const DropdownMenuRadioItem = React.forwardRef<
     className={cn(styles['dropdown-menu-radio-item'], className)}
     {...props}
   >
-    <span className={styles['dropdown-menu-item-indicator']}>
+    <span className={styles['dropdown-menu-item-indicator-radio']}>
       <DropdownMenuPrimitive.ItemIndicator>
         <CircleIcon className={styles['radio-icon']} />
       </DropdownMenuPrimitive.ItemIndicator>

@@ -5,14 +5,14 @@
 }
 
 .drawer-content {
-  @apply bg-background border;
+  @apply bg-popover-background border;
   @apply mt-24 rounded-t-[10px];
   @apply fixed inset-x-0 bottom-0 z-50 h-auto;
   @appy flex flex-col;
 }
 
 .drawer-content-divider {
-  @apply bg-greyscale-800;
+  @apply bg-border;
   @apply h-2 w-[100px] rounded-full;
   @apply mx-auto mt-4;
 }
@@ -29,7 +29,7 @@
 }
 
 .drawer-title {
-  @apply text-lg font-semibold leading-none tracking-tight;
+  @apply text-lg leading-none font-semibold tracking-tight;
 }
 
 .drawer-description {

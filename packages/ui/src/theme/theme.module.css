@@ -37,22 +37,13 @@
   --color-non-compliant-secondary: hsl(var(--non-compliant-secondary));
 
   /* Primary colors */
-  --color-highlight: hsl(var(--highlight));
   --color-mint: hsl(var(--mint));
   --color-red: hsl(var(--red));
   --color-yellow: hsl(var(--yellow));
-  --color-purple: #a88bfa;
   --color-lilac: #e2ccff;
-  --color-lilac-dark: #887a99;
   --color-medium-lilac: #b5a3cc;
   --color-dark-lilac: #9153c9;
   --color-lilac-button: #4d4656;
-  --color-sky-blue: #6697e4;
-  --color-gold: #ffe4b8;
-  --color-black: #0d0d0d;
-  --color-black-5: #191919;
-  --color-black-10: #3e3e3e;
-  --color-grey: #454545;
 
   /* FONT FAMILY */
   --font-sans: 'TWK Lausanne', 'Inter', sans-serif;
@@ -117,7 +108,6 @@
   --non-compliant-secondary: 340, 94%, 65%, 0.2;
 
   /* Primary */
-  --highlight: 266 100% 90%;
   --mint: 142 69% 58%;
   --red: 342 96% 65%;
   --yellow: 51 100% 73%;
