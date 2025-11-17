@@ -1,4 +1,7 @@
 .root {
+  --hover-lighten: 20%;
+  --hover-darken: 20%;
+
   --color-amber-100: color(display-p3 0.9767 0.9238 0.8764);
   --color-amber-200: color(display-p3 0.9376 0.8222 0.7184);
   --color-amber-300: color(display-p3 0.896 0.7203 0.5608);
@@ -57,6 +60,12 @@
   --color-button-primary-border: color(display-p3 0.5243 0.2903 0.7705);
   --color-button-primary-fill: color(display-p3 0.5243 0.2903 0.7705);
   --color-button-primary-text: color(display-p3 1 1 1);
+  --color-button-secondary-border: color(display-p3 0 0 0);
+  --color-button-secondary-fill: color(display-p3 0 0 0);
+  --color-button-secondary-text: color(display-p3 1 1 1);
+  --color-button-tertiary-border: color(display-p3 0.8698 0.8698 0.8698);
+  --color-button-tertiary-fill: color(display-p3 1 1 1);
+  --color-button-tertiary-text: color(display-p3 0 0 0);
   --color-card-background: color(display-p3 1 1 1);
   --color-card-border: color(display-p3 0.8698 0.8698 0.8698);
   --color-cyan-100: color(display-p3 0.8736 0.9466 0.9942);

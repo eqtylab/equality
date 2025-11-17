@@ -68,6 +68,61 @@
             "hex": ""
           }
         }
+      },
+      "button": {
+        "Secondary": {
+          "fill": {
+            "$type": "color",
+            "$value": {
+              "colorSpace": "display-p3",
+              "components": [1, 1, 1],
+              "hex": "#FFFFFFFF"
+            }
+          },
+          "text": {
+            "$type": "color",
+            "$value": {
+              "colorSpace": "display-p3",
+              "components": [0, 0, 0],
+              "hex": "#000000FF"
+            }
+          },
+          "border": {
+            "$type": "color",
+            "$value": {
+              "colorSpace": "display-p3",
+              "components": [1, 1, 1],
+              "hex": "#FFFFFFFF"
+            }
+          }
+        },
+        "Tertiary": {
+          "fill": {
+            "$type": "color",
+            "$value": {
+              "colorSpace": "display-p3",
+              "components": [0, 0, 0],
+              "hex": "#000000FF"
+            }
+          },
+          "text": {
+            "$type": "color",
+            "$value": {
+              "colorSpace": "display-p3",
+
+              "components": [1, 1, 1],
+              "hex": "#FFFFFFFF"
+            }
+          },
+          "border": {
+            "$type": "color",
+            "$value": {
+              "colorSpace": "display-p3",
+              "components": [0.1792, 0.1792, 0.1792],
+              "hex": "#2E2E2EFF"
+            }
+          }
+        }
       }
     }
   },
@@ -1495,6 +1550,58 @@
               "colorSpace": "display-p3",
               "components": [0.8114, 0.4167, 0.3761],
               "hex": ""
+            }
+          }
+        },
+        "Secondary": {
+          "fill": {
+            "$type": "color",
+            "$value": {
+              "colorSpace": "display-p3",
+              "components": [0, 0, 0],
+              "hex": "#000000FF"
+            }
+          },
+          "text": {
+            "$type": "color",
+            "$value": {
+              "colorSpace": "display-p3",
+              "components": [1, 1, 1],
+              "hex": "#FFFFFFFF"
+            }
+          },
+          "border": {
+            "$type": "color",
+            "$value": {
+              "colorSpace": "display-p3",
+              "components": [0, 0, 0],
+              "hex": "#000000FF"
+            }
+          }
+        },
+        "Tertiary": {
+          "fill": {
+            "$type": "color",
+            "$value": {
+              "colorSpace": "display-p3",
+              "components": [1, 1, 1],
+              "hex": "#FFFFFFFF"
+            }
+          },
+          "text": {
+            "$type": "color",
+            "$value": {
+              "colorSpace": "display-p3",
+              "components": [0, 0, 0],
+              "hex": "#000000FF"
+            }
+          },
+          "border": {
+            "$type": "color",
+            "$value": {
+              "colorSpace": "display-p3",
+              "components": [0.8698, 0.8698, 0.8698],
+              "hex": "#DEDEDEFF"
             }
           }
         }

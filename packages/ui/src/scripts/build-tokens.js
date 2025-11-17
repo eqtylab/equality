@@ -83,6 +83,10 @@ sd.registerFormat({
 
     return await prettier.format(
       `.root {
+    
+      --hover-lighten: 20%;
+      --hover-darken: 20%;
+
       ${tokens}
     }`,
       { parser: 'css' }
@@ -97,6 +101,10 @@ sd.registerFormat({
 
     return await prettier.format(
       `@theme inline {
+
+      --color-mixed-light: color-mix(in oklch, var(--mix-color), white var(--hover-lighten, 20%));
+      --color-mixed-dark: color-mix(in oklch, var(--mix-color), black var(--hover-darken, 20%));
+
       ${tokens}
     }`,
       { parser: 'css' }
