@@ -166,7 +166,7 @@ const DateRangePicker = ({ dateRange, onSelect, className }: DateRangePickerProp
       <div className={styles['popover-header']}>
         <PopoverTrigger asChild>
           <Button
-            variant="outline"
+            variant="tertiary"
             className={cn(
               styles['popover-trigger'],
               dateRange.from && dateRange.to && styles['popover-trigger--active'],
@@ -180,7 +180,7 @@ const DateRangePicker = ({ dateRange, onSelect, className }: DateRangePickerProp
 
         {hasSelection && (
           <Button
-            variant="outline"
+            variant="tertiary"
             size="sm"
             onClick={handleClearClick}
             className={styles['clear-btn']}
@@ -195,7 +195,7 @@ const DateRangePicker = ({ dateRange, onSelect, className }: DateRangePickerProp
           {/* Header with month navigation */}
           <div className={styles['month-navigation']}>
             <Button
-              variant="outline"
+              variant="tertiary"
               size="sm"
               className={styles['month-navigation-btn']}
               onClick={goToPreviousMonth}
@@ -215,7 +215,7 @@ const DateRangePicker = ({ dateRange, onSelect, className }: DateRangePickerProp
             </div>
 
             <Button
-              variant="outline"
+              variant="tertiary"
               size="sm"
               className={styles['month-navigation-btn']}
               onClick={goToNextMonth}
@@ -246,7 +246,7 @@ const DateRangePicker = ({ dateRange, onSelect, className }: DateRangePickerProp
               return (
                 <Button
                   key={index}
-                  variant="outline"
+                  variant="tertiary"
                   className={cn(
                     styles['calendar-day-btn'],
                     isSelected && styles['calendar-day-btn--selected'],

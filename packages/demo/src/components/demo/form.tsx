@@ -46,7 +46,7 @@ export function DefaultForm() {
             </FormItem>
           )}
         />
-        <Button type="submit" size="sm" variant="outline">
+        <Button type="submit" size="sm" variant="tertiary">
           Submit
         </Button>
       </form>
@@ -89,7 +89,7 @@ export function FormWithErrors() {
             </FormItem>
           )}
         />
-        <Button type="submit" size="sm" variant="outline">
+        <Button type="submit" size="sm" variant="tertiary">
           Submit
         </Button>
       </form>
@@ -138,7 +138,7 @@ export function FormWithDescription() {
             </FormItem>
           )}
         />
-        <Button type="submit" size="sm" variant="outline">
+        <Button type="submit" size="sm" variant="tertiary">
           Submit
         </Button>
       </form>

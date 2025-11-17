@@ -19,7 +19,7 @@ export const DrawerDemo = () => {
 
   return (
     <div>
-      <Button size="sm" variant="outline" onClick={() => setOpen(true)}>
+      <Button size="sm" variant="tertiary" onClick={() => setOpen(true)}>
         Open Drawer
       </Button>
 
@@ -28,7 +28,7 @@ export const DrawerDemo = () => {
           <DrawerHeader>
             <DrawerTitle>Drawer Title</DrawerTitle>
             <DrawerDescription>Drawer Description</DrawerDescription>
-            <Button variant="outline" size="sm" onClick={onClose}>
+            <Button variant="tertiary" size="sm" onClick={onClose}>
               <X />
             </Button>
           </DrawerHeader>
@@ -36,7 +36,7 @@ export const DrawerDemo = () => {
           <div>Drawer Content</div>
 
           <DrawerFooter>
-            <Button size="sm" variant="outline" onClick={onClose}>
+            <Button size="sm" variant="tertiary" onClick={onClose}>
               Close
             </Button>
           </DrawerFooter>

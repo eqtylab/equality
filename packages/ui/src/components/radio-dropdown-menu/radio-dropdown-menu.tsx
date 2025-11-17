@@ -48,7 +48,7 @@ const RadioDropdown = ({
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="outline" className={cn(styles['selector-button'], className)}>
+        <Button variant="tertiary" className={cn(styles['selector-button'], className)}>
           <span className={styles['selector-button-inner']}>
             {selectedOption?.label || label}
             {hasSelectedCount && (

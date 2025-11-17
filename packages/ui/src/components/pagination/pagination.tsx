@@ -122,7 +122,7 @@ const Pagination = ({
       pageButtons.push(
         <Button
           key={i}
-          variant={currentPage === i ? 'primary' : 'outline'}
+          variant={currentPage === i ? 'primary' : 'tertiary'}
           size="sm"
           onClick={() => handlePageChange(i)}
         >
@@ -171,7 +171,7 @@ const Pagination = ({
       {/* Right side: Page navigation */}
       <div className={styles['page-navigation-container']}>
         <Button
-          variant="outline"
+          variant="tertiary"
           size="sm"
           onClick={handlePreviousPage}
           disabled={isFirstPage}
@@ -183,7 +183,7 @@ const Pagination = ({
         {getVisiblePages()}
 
         <Button
-          variant="outline"
+          variant="tertiary"
           size="sm"
           onClick={handleNextPage}
           disabled={isLastPage}

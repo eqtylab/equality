@@ -14,7 +14,7 @@ export const DialogDemo = () => {
 
   return (
     <div>
-      <Button size="sm" variant="outline" onClick={() => setIsModalOpen(true)}>
+      <Button size="sm" variant="tertiary" onClick={() => setIsModalOpen(true)}>
         Open Dialog
       </Button>
       <Dialog open={isModalOpen} onOpenChange={() => setIsModalOpen(false)}>
@@ -26,7 +26,7 @@ export const DialogDemo = () => {
           <DialogFooter>
             <Button
               size="sm"
-              variant="outline"
+              variant="tertiary"
               onClick={() => setIsModalOpen(false)}
             >
               Close

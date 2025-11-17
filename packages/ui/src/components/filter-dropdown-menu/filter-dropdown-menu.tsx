@@ -50,7 +50,7 @@ const FilterDropdown = ({
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Button
-          variant="outline"
+          variant="tertiary"
           className={cn(
             styles['selector-button'],
             hasSelectedFilters && styles['selector-button--selected'],

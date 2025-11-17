@@ -36,7 +36,7 @@ const EmptyTableState = ({
       {description && <span className={styles['description']}>{description}</span>}
 
       {showButton && (
-        <Button variant="outline" size="sm" onClick={onClear} className={styles['clear-button']}>
+        <Button variant="tertiary" size="sm" onClick={onClear} className={styles['clear-button']}>
           Clear Filters
         </Button>
       )}

@@ -72,7 +72,7 @@ function SortSelector({
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="outline" className={cn(styles['sort-selector-trigger'], className)}>
+        <Button variant="tertiary" className={cn(styles['sort-selector-trigger'], className)}>
           <span>{currentLabel}</span>
           <ChevronDownIcon className={styles['chevron-down-icon']} />
         </Button>

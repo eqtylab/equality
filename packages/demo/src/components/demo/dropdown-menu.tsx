@@ -39,7 +39,7 @@ export const DropdownMenuDemo = ({
     return (
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
-          <Button size="sm" variant="outline">
+          <Button size="sm" variant="tertiary">
             Open Menu
           </Button>
         </DropdownMenuTrigger>
@@ -56,7 +56,7 @@ export const DropdownMenuDemo = ({
     return (
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
-          <Button size="sm" variant="outline">
+          <Button size="sm" variant="tertiary">
             Account Menu
           </Button>
         </DropdownMenuTrigger>
@@ -85,7 +85,7 @@ export const DropdownMenuDemo = ({
     return (
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
-          <Button size="sm" variant="outline">
+          <Button size="sm" variant="tertiary">
             View Options
           </Button>
         </DropdownMenuTrigger>
@@ -119,7 +119,7 @@ export const DropdownMenuDemo = ({
     return (
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
-          <Button size="sm" variant="outline">
+          <Button size="sm" variant="tertiary">
             Position: {position}
           </Button>
         </DropdownMenuTrigger>
@@ -140,7 +140,7 @@ export const DropdownMenuDemo = ({
     return (
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
-          <Button size="sm" variant="outline">
+          <Button size="sm" variant="tertiary">
             Actions
           </Button>
         </DropdownMenuTrigger>
@@ -171,7 +171,7 @@ export const DropdownMenuDemo = ({
     return (
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
-          <Button size="sm" variant="outline">
+          <Button size="sm" variant="tertiary">
             More Options
           </Button>
         </DropdownMenuTrigger>
@@ -203,7 +203,7 @@ export const DropdownMenuDemo = ({
     return (
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
-          <Button size="sm" variant="outline">
+          <Button size="sm" variant="tertiary">
             File Menu
           </Button>
         </DropdownMenuTrigger>

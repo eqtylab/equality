@@ -26,7 +26,7 @@ export const SheetDemo = () => {
             </div>
             <SheetFooter>
               <Button
-                variant="outline"
+                variant="tertiary"
                 size="sm"
                 onClick={() => setIsOpen(false)}
               >
