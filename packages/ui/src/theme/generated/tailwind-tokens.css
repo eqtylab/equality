@@ -21,9 +21,12 @@
   --color-badge-background-non-compliant: var(--color-badge-background-non-compliant);
   --color-badge-background-not-applicable: var(--color-badge-background-not-applicable);
   --color-badge-background-not-started: var(--color-badge-background-not-started);
+  --color-badge-background-primary: var(--color-badge-background-primary);
   --color-badge-background-question: var(--color-badge-background-question);
   --color-badge-background-ready-for-review: var(--color-badge-background-ready-for-review);
+  --color-badge-background-secondary: var(--color-badge-background-secondary);
   --color-badge-background-success: var(--color-badge-background-success);
+  --color-badge-background-tertiary: var(--color-badge-background-tertiary);
   --color-badge-background-warn: var(--color-badge-background-warn);
   --color-badge-text-accepted: var(--color-badge-text-accepted);
   --color-badge-text-comment: var(--color-badge-text-comment);
@@ -34,9 +37,12 @@
   --color-badge-text-non-compliant: var(--color-badge-text-non-compliant);
   --color-badge-text-not-applicable: var(--color-badge-text-not-applicable);
   --color-badge-text-not-started: var(--color-badge-text-not-started);
+  --color-badge-text-primary: var(--color-badge-text-primary);
   --color-badge-text-question: var(--color-badge-text-question);
   --color-badge-text-ready-for-review: var(--color-badge-text-ready-for-review);
+  --color-badge-text-secondary: var(--color-badge-text-secondary);
   --color-badge-text-success: var(--color-badge-text-success);
+  --color-badge-text-tertiary: var(--color-badge-text-tertiary);
   --color-badge-text-warn: var(--color-badge-text-warn);
   --color-black: var(--color-black);
   --color-blue-100: var(--color-blue-100);

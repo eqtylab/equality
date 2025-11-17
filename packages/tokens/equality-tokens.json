@@ -123,6 +123,44 @@
             }
           }
         }
+      },
+      "badge": {
+        "text": {
+          "secondary": {
+            "$type": "color",
+            "$value": {
+              "colorSpace": "display-p3",
+              "components": [0, 0, 0],
+              "hex": "#000000FF"
+            }
+          },
+          "tertiary": {
+            "$type": "color",
+            "$value": {
+              "colorSpace": "display-p3",
+              "components": [1, 1, 1],
+              "hex": "#FFFFFFFF"
+            }
+          }
+        },
+        "background": {
+          "secondary": {
+            "$type": "color",
+            "$value": {
+              "colorSpace": "display-p3",
+              "components": [1, 1, 1],
+              "hex": "#FFFFFFFF"
+            }
+          },
+          "tertiary": {
+            "$type": "color",
+            "$value": {
+              "colorSpace": "display-p3",
+              "components": [0, 0, 0],
+              "hex": "#000000FF"
+            }
+          }
+        }
       }
     }
   },
@@ -1174,6 +1212,30 @@
       },
       "badge": {
         "text": {
+          "primary": {
+            "$type": "color",
+            "$value": {
+              "colorSpace": "display-p3",
+              "components": [0.8396, 0.7634, 0.9416],
+              "hex": "#D6C3F0FF"
+            }
+          },
+          "secondary": {
+            "$type": "color",
+            "$value": {
+              "colorSpace": "display-p3",
+              "components": [1, 1, 1],
+              "hex": "#FFFFFFFF"
+            }
+          },
+          "tertiary": {
+            "$type": "color",
+            "$value": {
+              "colorSpace": "display-p3",
+              "components": [0, 0, 0],
+              "hex": "#000000FF"
+            }
+          },
           "not-started": {
             "$type": "color",
             "$value": {
@@ -1280,6 +1342,30 @@
           }
         },
         "background": {
+          "primary": {
+            "$type": "color",
+            "$value": {
+              "colorSpace": "display-p3",
+              "components": [0.2927, 0.172, 0.4505],
+              "hex": "#4B2C73FF"
+            }
+          },
+          "secondary": {
+            "$type": "color",
+            "$value": {
+              "colorSpace": "display-p3",
+              "components": [0, 0, 0],
+              "hex": "#000000FF"
+            }
+          },
+          "tertiary": {
+            "$type": "color",
+            "$value": {
+              "colorSpace": "display-p3",
+              "components": [1, 1, 1],
+              "hex": "#FFFFFFFF"
+            }
+          },
           "not-started": {
             "$type": "color",
             "$value": {

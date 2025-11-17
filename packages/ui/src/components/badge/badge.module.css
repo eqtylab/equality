@@ -1,44 +1,40 @@
 @reference '../../theme/theme.module.css';
 
 .badge {
-  @apply focus:ring-ring focus:outline-hidden focus:ring-2 focus:ring-offset-2;
-  @apply inline-flex items-center;
   @apply px-2 py-0.5;
   @apply text-xs font-medium transition-colors;
-  @apply rounded-full border;
-}
-
-.badge--default {
-  @apply bg-primary border-transparent;
-  @apply text-primary-foreground;
+  @apply rounded-full;
+  @apply flex items-center gap-1;
+  @apply w-max;
 }
 
 .badge--primary {
-  @apply bg-lilac/20 border-transparent;
-  @apply text-lilac;
+  @apply bg-badge-background-primary;
+  @apply text-badge-text-primary;
 }
 
 .badge--secondary {
-  @apply bg-secondary border-transparent;
-  @apply text-secondary-foreground;
+  @apply bg-badge-background-secondary;
+  @apply text-badge-text-secondary;
+}
+
+.badge--tertiary {
+  @apply bg-badge-background-tertiary;
+  @apply text-badge-text-tertiary;
+  @apply border;
 }
 
 .badge--destructive {
-  @apply bg-destructive border-transparent;
-  @apply text-destructive-foreground;
-}
-
-.badge--outline {
-  @apply text-text-primary;
+  @apply bg-badge-background-danger;
+  @apply text-badge-text-danger;
 }
 
 .badge--neutral {
-  @apply bg-foreground/10 border-transparent;
-  @apply text-text-secondary font-medium;
-  @apply flex items-center gap-1;
+  @apply bg-badge-background-not-started;
+  @apply text-badge-text-not-started;
 }
 
 .badge--success {
-  @apply bg-compliant-secondary border-transparent;
-  @apply text-compliant;
+  @apply bg-badge-background-success;
+  @apply text-badge-text-success;
 }

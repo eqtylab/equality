@@ -21,9 +21,12 @@
   --color-badge-background-non-compliant: color(display-p3 0.4113 0.1505 0.1319);
   --color-badge-background-not-applicable: color(display-p3 0.2806 0.2806 0.2806);
   --color-badge-background-not-started: color(display-p3 0.2806 0.2806 0.2806);
+  --color-badge-background-primary: color(display-p3 0.2927 0.172 0.4505);
   --color-badge-background-question: color(display-p3 0.2473 0.1645 0.5241);
   --color-badge-background-ready-for-review: color(display-p3 0.1442 0.2013 0.4303);
+  --color-badge-background-secondary: color(display-p3 0 0 0);
   --color-badge-background-success: color(display-p3 0.1689 0.3045 0.136);
+  --color-badge-background-tertiary: color(display-p3 1 1 1);
   --color-badge-background-warn: color(display-p3 0.4487 0.322 0.1436);
   --color-badge-text-accepted: color(display-p3 0.6664 0.622 0.9719);
   --color-badge-text-comment: color(display-p3 0.6664 0.622 0.9719);
@@ -34,9 +37,12 @@
   --color-badge-text-non-compliant: color(display-p3 0.8779 0.5865 0.5474);
   --color-badge-text-not-applicable: color(display-p3 0.2806 0.2806 0.2806);
   --color-badge-text-not-started: color(display-p3 0.7432 0.7432 0.7432);
+  --color-badge-text-primary: color(display-p3 0.8396 0.7634 0.9416);
   --color-badge-text-question: color(display-p3 0.6664 0.622 0.9719);
   --color-badge-text-ready-for-review: color(display-p3 0.5545 0.6363 0.8816);
+  --color-badge-text-secondary: color(display-p3 1 1 1);
   --color-badge-text-success: color(display-p3 0.5855 0.7436 0.5779);
+  --color-badge-text-tertiary: color(display-p3 0 0 0);
   --color-badge-text-warn: color(display-p3 0.8984 0.7748 0.5691);
   --color-black: color(display-p3 0 0 0);
   --color-blue-100: color(display-p3 0.9115 0.9345 0.994);
