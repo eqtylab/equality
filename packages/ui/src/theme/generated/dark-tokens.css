@@ -1,4 +1,4 @@
-.root[data-eqty-theme='dark'] {
+:root[data-theme='dark'] {
   --color-background: color(display-p3 0.0355 0.0355 0.0427);
   --color-badge-background-secondary: color(display-p3 1 1 1);
   --color-badge-background-tertiary: color(display-p3 0 0 0);

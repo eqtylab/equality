@@ -28,7 +28,6 @@
   --color-accent-foreground: hsl(var(--accent-foreground));
   --color-destructive: hsl(var(--destructive));
   --color-destructive-foreground: hsl(var(--destructive-foreground));
-  --color-border: hsl(var(--border));
   --color-ring: hsl(var(--ring));
 
   /* Control Status Badges */
@@ -162,7 +161,7 @@
     margin: 0;
     padding: 0;
     border: 0 solid;
-    border-color: hsl(var(--border));
+    border-color: var(--color-border);
   }
 
   /* Cursor for buttons */
