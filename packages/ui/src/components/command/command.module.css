@@ -1,7 +1,8 @@
 @reference '../../theme/theme.module.css';
 
 .command {
-  @apply bg-popover text-popover-foreground;
+  @apply bg-popover-background text-text-primary;
+  @apply border-card-border border;
   @apply size-full overflow-hidden rounded-md;
   @apply flex flex-col;
 }
@@ -25,7 +26,8 @@
 }
 
 .command-input {
-  @apply h-9 border-b px-3;
+  @apply border-card-border border-b;
+  @apply h-9 px-3;
   @apply flex items-center gap-2;
 }
 
@@ -64,17 +66,18 @@
 }
 
 .command-item {
+  --mix-color: var(--color-popover-background);
   @apply outline-hidden rounded-sm;
   @apply text-sm;
   @apply flex items-center gap-2;
   @apply relative px-2 py-1.5;
-  @apply cursor-default select-none;
+  @apply cursor-pointer select-none;
   @apply [&_svg:not([class*='text-'])]:text-text-secondary [&_svg:not([class*='size-'])]:size-4 [&_svg]:pointer-events-none [&_svg]:shrink-0;
   @apply data-[disabled=true]:pointer-events-none data-[disabled=true]:opacity-50;
-  @apply data-[selected=true]:bg-accent data-[selected=true]:text-accent-foreground;
+  @apply data-[selected=true]:bg-mixed-light;
 }
 
 .command-shortcut {
-  @apply text-text-secondary text-xs tracking-widest;
+  @apply text-text-secondary text-xs;
   @apply ml-auto;
 }

@@ -2,10 +2,10 @@
 
 .checkbox {
   @apply size-4 shrink-0;
-  @apply border-text-primary ring-offset-background rounded-sm border;
+  @apply border-text-primary rounded-sm border;
   @apply data-[state=checked]:bg-text-primary data-[state=checked]:text-background;
-  @apply focus-visible:ring-focus-ring focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-offset-2;
   @apply disabled:cursor-not-allowed disabled:opacity-50;
+  @apply focus-ring;
 }
 
 .indicator {

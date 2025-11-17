@@ -1,13 +1,13 @@
 @reference '../../theme/theme.module.css';
 
 .button {
-  @apply ring-offset-background rounded-md;
-  @apply text-sm font-medium whitespace-nowrap;
+  @apply rounded-md;
+  @apply whitespace-nowrap text-sm font-medium;
   @apply transition-all duration-300;
   @apply inline-flex items-center justify-center gap-1;
-  @apply focus-visible:ring-focus-ring focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-hidden;
   @apply disabled:cursor-not-allowed disabled:opacity-50;
   @apply [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0;
+  @apply focus-ring;
 }
 
 .button--primary {
@@ -44,7 +44,7 @@
 
 .button--link {
   @apply text-brand-primary;
-  @apply underline-offset-4 hover:not-disabled:underline;
+  @apply hover:not-disabled:underline underline-offset-4;
 }
 
 .size--sm {

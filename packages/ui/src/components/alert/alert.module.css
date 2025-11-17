@@ -9,7 +9,7 @@
 }
 
 .alert--default {
-  @apply bg-card-background;
+  @apply bg-popover-background;
   @apply text-text-primary;
 }
 
