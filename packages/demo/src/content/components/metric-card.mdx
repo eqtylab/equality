@@ -7,11 +7,13 @@ description: "Metric Card with sizes and variants"
 import { MetricCard } from "@eqtylab/equality";
 import { Layers, CheckCircle2, Clock, AlertTriangle } from "lucide-react";
 
-## Default
+## Color Variants
+
+### Default
 
 <MetricCard label="Total" value={100} icon={Layers} />
 
-## Color variant: green
+### Green
 
 <MetricCard
   label="Success"
@@ -20,11 +22,11 @@ import { Layers, CheckCircle2, Clock, AlertTriangle } from "lucide-react";
   icon={CheckCircle2}
 />
 
-## Color variant: yellow
+### Yellow
 
 <MetricCard label="Pending" value={45} colorVariant="yellow" icon={Clock} />
 
-## Color variant: red
+### Red
 
 <MetricCard
   label="Failure"
@@ -32,3 +34,7 @@ import { Layers, CheckCircle2, Clock, AlertTriangle } from "lucide-react";
   colorVariant="red"
   icon={AlertTriangle}
 />
+
+### Lilac
+
+<MetricCard label="Total" value={80} colorVariant="lilac" icon={Layers} />

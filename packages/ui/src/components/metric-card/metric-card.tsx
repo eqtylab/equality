@@ -52,7 +52,7 @@ const MetricCard = ({
     <div className={cn(styles['metric-card'], className)}>
       <div className={styles['value-container']}>
         <p className={cn(styles.value, variant.text)}>{value}</p>
-        <IconCircle icon={IconComponent} className={cn(variant.iconBg, variant.text)} />
+        <IconCircle icon={IconComponent} size="md" className={cn(variant.iconBg, variant.text)} />
       </div>
       <p className={styles.label}>{label}</p>
     </div>
