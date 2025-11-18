@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Check, ChevronDown } from 'lucide-react';
+import { ChevronDown } from 'lucide-react';
 
 import { Button } from '@/components/button/button';
 import {
@@ -10,10 +10,9 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/dropdown-menu/dropdown-menu';
-import styles from '@/components/filter-dropdown-menu/filter-dropdown-menu.module.css';
+import styles from '@/components/filter-dropdown/filter-dropdown.module.css';
 import { cn } from '@/lib/utils';
 
-const CheckIcon = Check as React.ComponentType<{ className?: string }>;
 const ChevronDownIcon = ChevronDown as React.ComponentType<{ className?: string }>;
 
 interface FilterOption {
@@ -58,7 +57,7 @@ const FilterDropdown = ({
               <span className={styles['selected-filters-count']}>{selectedFilters.length}</span>
             )}
           </span>
-          <ChevronDownIcon className={styles['text-muted-foreground']} />
+          <ChevronDownIcon className={styles['chevron-icon']} />
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent

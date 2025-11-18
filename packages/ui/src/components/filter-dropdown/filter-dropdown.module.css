@@ -15,7 +15,7 @@
   @apply text-xs font-medium;
 }
 
-.text-text-secondary {
+.chevron-icon {
   @apply text-text-secondary;
 }
 
