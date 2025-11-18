@@ -7,17 +7,33 @@ export interface RadialGraphProps {
   percentage: number;
   displayLabel?: string;
   className?: string;
-  labelClassName?: string;
   subLabel?: string;
+  graphSize?: 'sm' | 'md' | 'lg';
+  color?: 'primary' | 'secondary' | 'green' | 'red' | 'gold';
 }
 
 const RadialGraph = forwardRef<HTMLDivElement, RadialGraphProps>(
-  ({ percentage, displayLabel, className, labelClassName, subLabel, ...props }, ref) => {
+  (
+    {
+      percentage,
+      displayLabel,
+      className,
+      subLabel,
+      graphSize = 'md',
+      color = 'primary',
+      ...props
+    },
+    ref
+  ) => {
     const bars = Array.from({ length: 100 });
     const label = displayLabel ?? `${Math.round(percentage)}%`;
 
     return (
-      <div ref={ref} className={cn(styles['radial-graph'], className)} {...props}>
+      <div
+        ref={ref}
+        className={cn(styles['radial-graph'], styles[graphSize], className)}
+        {...props}
+      >
         <div className={styles['bars-container']}>
           {bars.map((_, i) => {
             const isActive = i < percentage;
@@ -45,6 +61,7 @@ const RadialGraph = forwardRef<HTMLDivElement, RadialGraphProps>(
                   <div
                     className={cn(
                       styles['bar-gradient'],
+                      styles[`bar-gradient--${color}`],
                       isActive ? styles['bar-gradient--active'] : styles['bar-gradient--inactive']
                     )}
                     style={{
@@ -58,7 +75,7 @@ const RadialGraph = forwardRef<HTMLDivElement, RadialGraphProps>(
           })}
         </div>
         <div className={styles['label-container']}>
-          <p className={cn(styles['label'], labelClassName)}>{label}</p>
+          <p className={cn(styles['label'], styles[graphSize])}>{label}</p>
           {subLabel && <p className={styles['sub-label']}>{subLabel}</p>}
         </div>
       </div>

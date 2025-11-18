@@ -1,7 +1,7 @@
 @reference '../../theme/theme.module.css';
 
 .progress {
-  @apply bg-white/10;
+  @apply bg-greyscale-800;
   @apply relative overflow-hidden;
   @apply h-1.5 w-full rounded-full;
 }
@@ -11,6 +11,22 @@
   @apply transition-all;
 }
 
-.progress-indicator--color {
-  @apply bg-primary;
+.primary {
+  @apply bg-brand-primary;
+}
+
+.secondary {
+  @apply bg-brand-secondary;
+}
+
+.green {
+  @apply bg-brand-green;
+}
+
+.red {
+  @apply bg-brand-red;
+}
+
+.gold {
+  @apply bg-brand-gold;
 }
