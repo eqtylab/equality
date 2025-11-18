@@ -2,7 +2,7 @@
 
 .element-icon {
   @apply flex overflow-hidden transition-all;
-  @apply aspect-square w-10 min-w-10;
+  @apply aspect-square w-10 min-w-10 p-2;
   @apply border-border rounded-full border;
 }
 
