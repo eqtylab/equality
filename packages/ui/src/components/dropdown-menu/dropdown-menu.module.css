@@ -75,6 +75,7 @@
 }
 
 .dropdown-menu-label {
+  @apply flex items-center justify-between gap-2;
   @apply px-2 py-1.5 text-sm font-medium;
 }
 
