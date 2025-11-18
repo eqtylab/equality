@@ -13,7 +13,7 @@
 }
 
 .icon-container {
-  @apply text-red border-red bg-red/20 border shadow-lg;
+  @apply bg-red-800 text-red-400;
   @apply flex-center;
   @apply mx-auto size-20 rounded-full;
 }

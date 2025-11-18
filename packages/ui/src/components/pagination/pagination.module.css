@@ -6,29 +6,11 @@
 }
 
 .info-container {
-  @apply flex items-center gap-2;
-}
-
-.info-text {
   @apply text-text-secondary text-sm;
-  @apply flex items-center gap-1;
-}
-
-.select-trigger {
-  @apply border-border hover:text-accent-foreground border bg-black/60 hover:bg-white/10;
-  @apply text-sm;
-  @apply gap-0.5 px-2;
-  @apply h-7 w-auto rounded-md;
-}
-
-.select-item {
-  @apply cursor-pointer;
+  @apply flex items-center gap-2;
+  @apply whitespace-nowrap;
 }
 
 .page-navigation-container {
   @apply flex gap-1;
-}
-
-.icon {
-  @apply size-4;
 }

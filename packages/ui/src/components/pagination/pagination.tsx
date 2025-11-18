@@ -139,20 +139,16 @@ const Pagination = ({
       {/* Left side: Info text with inline dropdown */}
       <div className={styles['info-container']}>
         {showInfo && hasFilteredItems && (
-          <div className={styles['info-text']}>
+          <>
             <span>Showing {startItem} to</span>
             {onItemsPerPageChange ? (
               <Select value={itemsPerPage.toString()} onValueChange={handleItemsPerPageChange}>
-                <SelectTrigger className={styles['select-trigger']}>
+                <SelectTrigger>
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
                   {itemsPerPageOptions.map((option) => (
-                    <SelectItem
-                      key={option}
-                      value={option.toString()}
-                      className={styles['select-item']}
-                    >
+                    <SelectItem key={option} value={option.toString()}>
                       {option}
                     </SelectItem>
                   ))}
@@ -164,7 +160,7 @@ const Pagination = ({
             <span>
               of {filteredItems} {type}
             </span>
-          </div>
+          </>
         )}
       </div>
 
@@ -177,7 +173,7 @@ const Pagination = ({
           disabled={isFirstPage}
           aria-label="Previous page"
         >
-          <ChevronLeftIcon className={styles['icon']} />
+          <ChevronLeftIcon />
         </Button>
 
         {getVisiblePages()}
@@ -189,7 +185,7 @@ const Pagination = ({
           disabled={isLastPage}
           aria-label="Next page"
         >
-          <ChevronRightIcon className={styles['icon']} />
+          <ChevronRightIcon />
         </Button>
       </div>
     </div>
