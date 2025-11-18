@@ -4,25 +4,11 @@
   @apply pl-8;
 }
 
-.dropdown-menu-sub-content {
-  @apply z-50 rounded-md p-1;
-  @apply min-w-32 overflow-hidden;
-  @apply bg-popover text-popover-foreground border shadow-lg;
-  @apply origin-(--radix-dropdown-menu-content-transform-origin);
-  @apply data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2;
-  @apply data-[state=open]:animate-in data-[state=open]:fade-in-0 data-[state=open]:zoom-in-95;
-  @apply data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95;
-}
-
+.dropdown-menu-sub-content,
 .dropdown-menu-content {
-  @apply bg-background text-text-primary border border-white/20 shadow-md;
-  @apply z-50 rounded-md p-1;
-  @apply overflow-y-auto overflow-x-hidden;
-  @apply max-h-(--radix-dropdown-menu-content-available-height) min-w-32;
+  @apply dropdown-content;
   @apply origin-(--radix-dropdown-menu-content-transform-origin);
-  @apply data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2;
-  @apply data-[state=open]:animate-in data-[state=open]:fade-in-0 data-[state=open]:zoom-in-95;
-  @apply data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95;
+  @apply max-h-(--radix-dropdown-menu-content-available-height);
 }
 
 .dropdown-menu-trigger,
@@ -34,21 +20,14 @@
 
 .dropdown-menu-checkbox-item,
 .dropdown-menu-radio-item {
-  @apply py-1.5 pl-8 pr-2;
+  @apply py-1.5 pr-2 pl-8;
 }
 
 .dropdown-menu-trigger,
 .dropdown-menu-item,
 .dropdown-menu-checkbox-item,
 .dropdown-menu-radio-item {
-  --mix-color: var(--color-button-tertiary-fill);
-  @apply cursor-pointer;
-  @apply flex items-center;
-  @apply text-sm transition-colors;
-  @apply relative rounded-sm;
-  @apply outline-hidden select-none;
-  @apply hover:not-disabled:bg-mixed-light focus:bg-mixed-light;
-  @apply data-disabled:pointer-events-none data-disabled:opacity-50;
+  @apply dropdown-item;
 }
 
 .dropdown-menu-item-indicator-checkbox,

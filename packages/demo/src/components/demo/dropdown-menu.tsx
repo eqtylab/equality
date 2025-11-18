@@ -16,7 +16,7 @@ import {
   DropdownMenuSubContent,
   DropdownMenuSubTrigger,
 } from "@eqtylab/equality";
-import { Settings, User, LogOut, CreditCard } from "lucide-react";
+import { Settings, User, LogOut } from "lucide-react";
 
 export const DropdownMenuDemo = ({
   variant = "default",
@@ -64,16 +64,16 @@ export const DropdownMenuDemo = ({
           <DropdownMenuLabel>My Account</DropdownMenuLabel>
           <DropdownMenuSeparator />
           <DropdownMenuItem>
-            <User className="mr-2 h-4 w-4" />
+            <User />
             <span>Profile</span>
           </DropdownMenuItem>
           <DropdownMenuItem>
-            <Settings className="mr-2 h-4 w-4" />
+            <Settings />
             <span>Settings</span>
           </DropdownMenuItem>
           <DropdownMenuSeparator />
           <DropdownMenuItem>
-            <LogOut className="mr-2 h-4 w-4" />
+            <LogOut />
             <span>Logout</span>
           </DropdownMenuItem>
         </DropdownMenuContent>

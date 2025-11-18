@@ -437,7 +437,7 @@
 }
 
 @utility overlay-background {
-  @apply backdrop-blur-xs bg-black/80;
+  @apply bg-black/80 backdrop-blur-xs;
 }
 
 @utility overlay-content {
@@ -450,4 +450,25 @@
 
 @utility flex-center-between {
   @apply flex items-center justify-between;
+}
+
+@utility dropdown-content {
+  @apply bg-popover-background text-text-primary border-border border;
+  @apply z-50 rounded-md p-1;
+  @apply overflow-x-hidden overflow-y-auto;
+  @apply max-h-80 min-w-32;
+  @apply data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2;
+  @apply data-[state=open]:animate-in data-[state=open]:fade-in-0 data-[state=open]:zoom-in-95;
+  @apply data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95;
+}
+
+@utility dropdown-item {
+  --mix-color: var(--color-button-tertiary-fill);
+  @apply cursor-pointer;
+  @apply flex items-center;
+  @apply text-sm transition-colors;
+  @apply relative rounded-sm;
+  @apply outline-hidden select-none;
+  @apply hover:not-disabled:bg-mixed-light focus:bg-mixed-light;
+  @apply data-disabled:pointer-events-none data-disabled:opacity-50;
 }
