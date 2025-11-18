@@ -17,11 +17,11 @@ const XIcon = X as React.ComponentType<{ className?: string }>;
 interface FilterBadgeProps {
   label: string;
   handleRemove: () => void;
-  colors?: string;
-  btnColors?: string;
+  badgeClassName?: string;
+  btnClassName?: string;
 }
 
-const FilterBadge = ({ label, handleRemove, colors, btnColors }: FilterBadgeProps) => {
+const FilterBadge = ({ label, handleRemove, badgeClassName, btnClassName }: FilterBadgeProps) => {
   const isTruncated = label.length > 50;
   const displayLabel = isTruncated ? label.slice(0, 50) + '...' : label;
 
@@ -31,7 +31,7 @@ const FilterBadge = ({ label, handleRemove, colors, btnColors }: FilterBadgeProp
   };
 
   return (
-    <Badge className={cn(styles['filters-badge'], colors ?? styles['filters-badge--colors'])}>
+    <Badge className={cn(styles['filters-badge'], badgeClassName)}>
       {isTruncated ? (
         <TooltipProvider>
           <Tooltip>
@@ -47,7 +47,7 @@ const FilterBadge = ({ label, handleRemove, colors, btnColors }: FilterBadgeProp
         size="sm"
         onPointerDown={handlePointerDown}
         onClick={handleRemove}
-        className={cn(styles['remove-btn'], btnColors)}
+        className={cn(styles['remove-btn'], btnClassName)}
       >
         <XIcon />
       </Button>
