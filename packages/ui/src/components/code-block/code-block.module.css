@@ -7,7 +7,7 @@
 .header {
   @apply bg-background;
   @apply px-3 py-2;
-  @apply flex items-center justify-between;
+  @apply flex-center-between;
 }
 
 .title {
@@ -49,5 +49,5 @@
 }
 
 .code {
-  @apply break-all whitespace-pre-wrap;
+  @apply whitespace-pre-wrap break-all;
 }

@@ -3,7 +3,7 @@
 .selector-button {
   @apply min-w-auto rounded-md;
   @apply transition-all duration-200;
-  @apply flex items-center justify-between;
+  @apply flex-center-between;
   @apply hover:shadow-sm;
 }
 
@@ -29,7 +29,7 @@
 
 .dropdown-menu-content-header {
   @apply border-border border-b;
-  @apply flex items-center justify-between;
+  @apply flex-center-between;
   @apply px-3 pb-2 pt-2;
 }
 

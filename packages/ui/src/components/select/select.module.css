@@ -5,7 +5,7 @@
   @apply px-3 py-2;
   @apply h-10 w-full rounded-md;
   @apply border-border border bg-zinc-950;
-  @apply flex items-center justify-between;
+  @apply flex-center-between;
   @apply ring-offset-background;
   @apply focus:ring-ring/70 focus:outline-hidden focus:ring-1;
   @apply data-placeholder:text-text-secondary;

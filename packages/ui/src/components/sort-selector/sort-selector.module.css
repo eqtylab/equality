@@ -2,7 +2,7 @@
 
 .sort-selector-trigger {
   @apply min-w-32 rounded-md;
-  @apply flex items-center justify-between;
+  @apply flex-center-between;
   @apply transition-all duration-200;
   @apply hover:shadow-sm;
 }
@@ -18,7 +18,7 @@
 
 .dropdown-menu-content-header {
   @apply border-border border-b;
-  @apply flex items-center justify-between;
+  @apply flex-center-between;
   @apply px-3 pb-2 pt-2;
 }
 

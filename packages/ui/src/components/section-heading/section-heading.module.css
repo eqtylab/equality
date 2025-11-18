@@ -2,7 +2,7 @@
 
 .section-heading--right-content {
   @apply border-border border-b;
-  @apply flex items-center justify-between;
+  @apply flex-center-between;
   @apply pb-2;
 }
 

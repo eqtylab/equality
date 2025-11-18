@@ -32,7 +32,7 @@
 }
 
 .month-navigation {
-  @apply flex items-center justify-between;
+  @apply flex-center-between;
 }
 
 .month-navigation-btn {

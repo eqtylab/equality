@@ -9,7 +9,7 @@
 
 .toast {
   @apply pointer-events-auto relative transition-all;
-  @apply flex items-center justify-between;
+  @apply flex-center-between;
   @apply bg-background border shadow-lg backdrop-blur-sm;
   @apply w-full overflow-hidden;
   @apply space-x-4 rounded-md p-4 pr-8;

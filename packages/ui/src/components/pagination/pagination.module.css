@@ -2,7 +2,7 @@
 
 .pagination {
   @apply relative mt-4;
-  @apply flex items-center justify-between;
+  @apply flex-center-between;
 }
 
 .info-container {
