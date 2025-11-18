@@ -23,7 +23,7 @@
 
 .select-scroll-button {
   @apply cursor-default py-1;
-  @apply flex items-center justify-center;
+  @apply flex-center;
 }
 
 .select-content {
@@ -67,7 +67,7 @@
 
 .select-item-indicator {
   @aaply absolute left-2;
-  @apply flex items-center justify-center;
+  @apply flex-center;
   @apply size-3.5;
 }
 

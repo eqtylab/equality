@@ -1,8 +1,8 @@
 @reference '../../theme/theme.module.css';
 
 .alert-dialog-overlay {
-  @apply fixed inset-0 z-50;
-  @apply bg-black/80;
+  @apply overlay-content;
+  @apply overlay-background;
   @apply data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0;
 }
 

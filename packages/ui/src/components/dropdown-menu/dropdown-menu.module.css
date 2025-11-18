@@ -54,7 +54,7 @@
 .dropdown-menu-item-indicator-checkbox,
 .dropdown-menu-item-indicator-radio {
   @apply absolute left-2 size-3.5;
-  @apply flex items-center justify-center;
+  @apply flex-center;
   @apply border-text-secondary border;
 }
 

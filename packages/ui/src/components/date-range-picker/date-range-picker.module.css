@@ -60,7 +60,7 @@
 .day-headers-inner {
   @apply h-4;
   @apply text-text-secondary text-xs font-medium;
-  @apply flex items-center justify-center;
+  @apply flex-center;
 }
 
 .calendar-grid {

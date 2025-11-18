@@ -435,3 +435,15 @@
   @apply focus-visible:ring-offset-2;
   @apply focus-visible:outline-none;
 }
+
+@utility overlay-background {
+  @apply backdrop-blur-xs bg-black/80;
+}
+
+@utility overlay-content {
+  @apply fixed inset-0 z-50;
+}
+
+@utility flex-center {
+  @apply flex items-center justify-center;
+}

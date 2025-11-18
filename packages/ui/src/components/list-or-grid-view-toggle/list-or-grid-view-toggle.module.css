@@ -1,7 +1,7 @@
 @reference '../../theme/theme.module.css';
 
 .list-or-grid-view-toggle {
-  @apply border-lilac/10 border;
+  @apply border-border border;
   @apply flex rounded-md;
   @apply w-max overflow-hidden;
 }
@@ -11,9 +11,9 @@
 }
 
 .icon-button--active {
-  @apply bg-lilac/10 text-lilac;
+  @apply bg-brand-primary text-white;
 }
 
 .icon-button--inactive {
-  @apply bg-background/50 text-text-secondary hover:text-text-primary;
+  @apply bg-button-tertiary-fill text-text-secondary hover:text-text-primary;
 }

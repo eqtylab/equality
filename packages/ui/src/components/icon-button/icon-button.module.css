@@ -2,7 +2,7 @@
 
 .icon-btn {
   @apply rounded-md transition-colors;
-  @apply inline-flex items-center justify-center;
+  @apply flex-center;
   @apply disabled:cursor-not-allowed disabled:opacity-50;
   @apply focus-ring;
 }

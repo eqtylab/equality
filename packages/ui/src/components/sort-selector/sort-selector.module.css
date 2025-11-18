@@ -42,14 +42,14 @@
 
 .dropdown-menu-item-indicator {
   @apply size-4;
-  @apply flex items-center justify-center;
+  @apply flex-center;
   @apply absolute left-3 top-1/2 -translate-y-1/2;
 }
 
 .indicator-inner {
   @apply border-2 transition-colors;
   @apply size-4 rounded-full;
-  @apply flex items-center justify-center;
+  @apply flex-center;
 }
 
 .indicator-inner--selected {

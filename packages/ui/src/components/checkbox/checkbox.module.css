@@ -9,7 +9,7 @@
 }
 
 .indicator {
-  @apply flex items-center justify-center;
+  @apply flex-center;
   @apply text-current;
 }
 
