@@ -1,17 +1,18 @@
 import * as React from 'react';
-import { Check, ChevronDown } from 'lucide-react';
+import { ChevronDown } from 'lucide-react';
 
 import { Button } from '@/components/button/button';
 import {
   DropdownMenu,
   DropdownMenuCheckboxItem,
   DropdownMenuContent,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/dropdown-menu/dropdown-menu';
 import styles from '@/components/sort-selector/sort-selector.module.css';
 import { cn } from '@/lib/utils';
 
-const CheckIcon = Check as React.ComponentType<{ className?: string }>;
 const ChevronDownIcon = ChevronDown as React.ComponentType<{ className?: string }>;
 
 export type SortField = 'name' | 'type' | 'createdAt' | 'updatedAt' | 'controls';
@@ -77,15 +78,16 @@ function SortSelector({
           <ChevronDownIcon className={styles['chevron-down-icon']} />
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent align="end" className={styles['dropdown-menu-content']}>
-        <div className={styles['dropdown-menu-content-header']}>
-          <span className={styles['header-title']}>Sort By</span>
+      <DropdownMenuContent align="end">
+        <DropdownMenuLabel>
+          Sort By
           {!isDefaultSort && (
             <Button variant="link" size="sm" onClick={handleReset} className={styles['reset-btn']}>
               Reset
             </Button>
           )}
-        </div>
+        </DropdownMenuLabel>
+        <DropdownMenuSeparator />
         {filteredOptions.map((option) => {
           const isSelected = currentValue === option.value;
 
@@ -95,21 +97,8 @@ function SortSelector({
               checked={isSelected}
               onCheckedChange={() => handleChange(option.value)}
               onSelect={(e) => e.preventDefault()}
-              className={styles['dropdown-menu-item']}
             >
-              <span className={styles['dropdown-menu-item-indicator']}>
-                <div
-                  className={cn(
-                    styles['indicator-inner'],
-                    isSelected
-                      ? styles['indicator-inner--selected']
-                      : styles['indicator-inner--not-selected']
-                  )}
-                >
-                  {isSelected && <CheckIcon className={styles['check-icon']} />}
-                </div>
-              </span>
-              <span className={styles['dropdown-menu-item-label']}>{option.label}</span>
+              {option.label}
             </DropdownMenuCheckboxItem>
           );
         })}
