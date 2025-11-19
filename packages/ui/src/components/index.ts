@@ -46,7 +46,6 @@ export * from './section-heading/section-heading';
 export * from './select/select';
 export * from './separator/separator';
 export * from './sheet/sheet';
-export * from './shimmer-skeleton/shimmer-skeleton';
 export * from './skeleton/skeleton';
 export * from './sort-selector/sort-selector';
 export * from './spinner/spinner';
