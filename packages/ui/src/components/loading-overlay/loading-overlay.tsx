@@ -1,9 +1,5 @@
-import * as React from 'react';
-import { Loader2 } from 'lucide-react';
-
 import styles from '@/components/loading-overlay/loading-overlay.module.css';
-
-const Loader2Icon = Loader2 as React.ComponentType<{ className?: string }>;
+import { Spinner } from '@/components/spinner/spinner';
 
 interface LoadingOverlayProps {
   isVisible: boolean;
@@ -16,7 +12,7 @@ function LoadingOverlay({ isVisible, message = 'Loading...' }: LoadingOverlayPro
   return (
     <div className={styles['loading-overlay']}>
       <div className={styles['content']}>
-        <Loader2Icon className={styles['icon']} />
+        <Spinner color="primary" />
         <p className={styles['message']}>{message}</p>
       </div>
     </div>
