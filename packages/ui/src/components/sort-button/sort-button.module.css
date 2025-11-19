@@ -3,7 +3,7 @@
 .sort-button {
   @apply text-left font-medium transition-colors;
   @apply flex items-center gap-2;
-  @apply hover:text-lilac;
+  @apply hover:text-brand-primary;
   @apply [&>svg]:size-4;
 }
 
