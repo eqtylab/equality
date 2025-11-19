@@ -5,6 +5,54 @@ heading: "Spinner"
 
 import { Spinner } from "@eqtylab/equality";
 
-## Default
+## Size Variants
 
-<Spinner client:only="react" />
+### Extra Small (xs)
+
+<Spinner client:only="react" size="xs" />
+
+### Small (sm)
+
+<Spinner client:only="react" size="sm" />
+
+### Medium (md) - Default
+
+<Spinner client:only="react" size="md" />
+
+### Large (lg)
+
+<Spinner client:only="react" size="lg" />
+
+### Extra Large (xl)
+
+<Spinner client:only="react" size="xl" />
+
+## Color Variants
+
+This component supports several color variants that reflect the brand and UI context. You can use variants such as `primary`, `secondary`, `green`, `red`, and `gold` to visually distinguish loading spinners in line with your application's design language. Each color maps directly to a brand color defined in the Equality design system, ensuring visual consistency throughout your interface.
+
+The special `theme` variant adapts the spinner to use the primary text color, automatically switching between light and dark themes according to your app’s current appearance mode.
+
+### Theme
+
+<Spinner client:only="react" color="theme" />
+
+### Brand: Primary
+
+<Spinner client:only="react" color="primary" />
+
+### Brand: Secondary
+
+<Spinner client:only="react" color="secondary" />
+
+### Brand: Green
+
+<Spinner client:only="react" color="green" />
+
+### Brand: Red
+
+<Spinner client:only="react" color="red" />
+
+### Brand: Gold
+
+<Spinner client:only="react" color="gold" />
