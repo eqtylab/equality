@@ -9,16 +9,6 @@
   @apply disabled:cursor-not-allowed disabled:opacity-50;
 }
 
-.switch--default {
-  @apply h-6 w-11;
-  @apply data-[state=checked]:bg-lilac data-[state=unchecked]:bg-lilac-button;
-}
-
-.switch--small {
-  @apply h-5 w-9;
-  @apply data-[state=checked]:bg-lilac data-[state=unchecked]:bg-lilac-button;
-}
-
 .thumb {
   @apply bg-background shadow-lg ring-0;
   @apply transition-transform;
@@ -27,10 +17,54 @@
   @apply data-[state=unchecked]:translate-x-0;
 }
 
-.thumb--default {
+/* Size variants */
+
+.switch.sm {
+  @apply h-5 w-9;
+}
+
+.switch.md {
+  @apply h-6 w-11;
+}
+
+.switch.lg {
+  @apply h-7 w-13;
+}
+
+.thumb.sm {
+  @apply size-4 data-[state=checked]:translate-x-4;
+}
+
+.thumb.md {
   @apply size-5 data-[state=checked]:translate-x-5;
 }
 
-.thumb--small {
-  @apply size-4 data-[state=checked]:translate-x-4;
+.thumb.lg {
+  @apply size-6 data-[state=checked]:translate-x-6;
+}
+
+/* Color variants */
+
+.switch.default {
+  @apply data-[state=checked]:bg-text-primary data-[state=unchecked]:bg-greyscale-700;
+}
+
+.switch.red {
+  @apply data-[state=checked]:bg-red-400 data-[state=unchecked]:bg-red-700;
+}
+
+.switch.lilac {
+  @apply data-[state=checked]:bg-lilac-400 data-[state=unchecked]:bg-lilac-700;
+}
+
+.switch.blue {
+  @apply data-[state=checked]:bg-blue-400 data-[state=unchecked]:bg-blue-700;
+}
+
+.switch.green {
+  @apply data-[state=checked]:bg-green-400 data-[state=unchecked]:bg-green-700;
+}
+
+.switch.yellow {
+  @apply data-[state=checked]:bg-yellow-400 data-[state=unchecked]:bg-yellow-700;
 }
