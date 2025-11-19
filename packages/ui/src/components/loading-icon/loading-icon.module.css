@@ -1,5 +1,0 @@
-@reference '../../theme/theme.module.css';
-
-.path {
-  @apply stroke-white;
-}
