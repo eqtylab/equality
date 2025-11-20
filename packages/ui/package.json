@@ -1,6 +1,6 @@
 {
   "name": "@eqtylab/equality",
-  "version": "1.0.0",
+  "version": "0.2.3",
   "private": false,
   "type": "module",
   "main": "./dist/index.cjs",
