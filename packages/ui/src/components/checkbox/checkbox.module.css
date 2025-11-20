@@ -1,7 +1,7 @@
 @reference '../../theme/theme.module.css';
 
 .checkbox {
-  @apply size-4 shrink-0;
+  @apply shrink-0;
   @apply border-text-primary rounded-sm border;
   @apply data-[state=checked]:bg-text-primary data-[state=checked]:text-background;
   @apply disabled:cursor-not-allowed disabled:opacity-50;
@@ -13,6 +13,14 @@
   @apply text-current;
 }
 
-.check {
+.checkbox.sm {
+  @apply size-3.5;
+}
+
+.checkbox.md {
   @apply size-4;
+}
+
+.check {
+  @apply size-full;
 }

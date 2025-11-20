@@ -6,28 +6,30 @@ description: "Checkbox with sizes and variants"
 
 import { Checkbox } from "@eqtylab/equality";
 
-## Default Unchecked
+## States
 
-<Checkbox id="checkbox-default" checked={false} client:only="react" />
+### Default Unchecked
 
-## Checked
+<Checkbox checked={false} client:only="react" />
 
-<Checkbox id="checkbox-checked" checked={true} client:only="react" />
+### Checked
 
-## Disabled Unchecked
+<Checkbox checked={true} client:only="react" />
 
-<Checkbox
-  id="checkbox-disabled-unchecked"
-  checked={false}
-  disabled
-  client:only="react"
-/>
+### Disabled Unchecked
 
-## Disabled Checked
+<Checkbox checked={false} disabled client:only="react" />
 
-<Checkbox
-  id="checkbox-disabled-checked"
-  checked={true}
-  disabled
-  client:only="react"
-/>
+### Disabled Checked
+
+<Checkbox checked={true} disabled client:only="react" />
+
+## Size Variants
+
+### Medium (default)
+
+<Checkbox checked={true} client:only="react" />
+
+## Small
+
+<Checkbox checked={true} size="sm" client:only="react" />
