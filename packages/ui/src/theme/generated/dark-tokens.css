@@ -10,6 +10,7 @@
   --color-card-background: color(display-p3 0.0861 0.0861 0.0861);
   --color-card-border: color(display-p3 0.1792 0.1792 0.1792);
   --color-focus-ring: color(display-p3 0.7319 0.6108 0.8873);
+  --color-popover-background: color(display-p3 0.03547 0.03547 0.04268);
   --color-text-primary: color(display-p3 1 1 1);
   --color-text-secondary: color(display-p3 0.7432 0.7432 0.7432);
   --color-text-tertiary: color(display-p3 0.5021 0.5021 0.5021);

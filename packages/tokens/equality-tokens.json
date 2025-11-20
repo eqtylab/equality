@@ -97,6 +97,16 @@
           "hex": "#BB9CE2"
         }
       },
+      "popover": {
+        "background": {
+          "$type": "color",
+          "$value": {
+            "colorSpace": "display-p3",
+            "components": [0.03547, 0.03547, 0.04268],
+            "hex": "#09090B"
+          }
+        }
+      },
       "text": {
         "primary": {
           "$type": "color",
@@ -546,14 +556,6 @@
         }
       },
       "brand": {
-        "gold": {
-          "$type": "color",
-          "$value": {
-            "colorSpace": "display-p3",
-            "components": [0.863, 0.6958, 0.4108],
-            "hex": "#DCB169"
-          }
-        },
         "green": {
           "$type": "color",
           "$value": {
@@ -584,6 +586,14 @@
             "colorSpace": "display-p3",
             "components": [0.3895, 0.4853, 0.8187],
             "hex": "#637CD1"
+          }
+        },
+        "yellow": {
+          "$type": "color",
+          "$value": {
+            "colorSpace": "display-p3",
+            "components": [0.863, 0.6958, 0.4108],
+            "hex": "#DCB169"
           }
         }
       },
