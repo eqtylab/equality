@@ -60,9 +60,9 @@
   --color-brand-yellow: color(display-p3 0.863 0.6958 0.4108);
   --color-button-danger-border: color(display-p3 0.8114 0.4167 0.3761);
   --color-button-danger-fill: color(display-p3 0.2625 0.1106 0.09605);
-  --color-button-danger-text: color(display-p3 0.8114 0.4167 0.3761);
-  --color-button-primary-border: color(display-p3 0.5242 0.2903 0.7705);
-  --color-button-primary-fill: color(display-p3 0.5242 0.2903 0.7705);
+  --color-button-danger-text: color(display-p3 0.9358 0.751 0.7228);
+  --color-button-primary-border: color(display-p3 0.6266 0.4562 0.8302);
+  --color-button-primary-fill: color(display-p3 0.6266 0.4562 0.8302);
   --color-button-primary-text: color(display-p3 1 1 1);
   --color-button-secondary-border: color(display-p3 0.0861 0.0861 0.0861);
   --color-button-secondary-fill: color(display-p3 0.0861 0.0861 0.0861);
