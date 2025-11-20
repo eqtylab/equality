@@ -51,7 +51,7 @@
 
 /* Color Variants */
 
-.spinner.theme {
+.spinner.neutral {
   @apply border-x-text-primary border-b-text-primary;
 }
 
@@ -59,18 +59,14 @@
   @apply border-x-brand-primary border-b-brand-primary;
 }
 
-.spinner.secondary {
-  @apply border-x-brand-secondary border-b-brand-secondary;
-}
-
-.spinner.green {
+.spinner.success {
   @apply border-x-brand-green border-b-brand-green;
 }
 
-.spinner.red {
+.spinner.danger {
   @apply border-x-brand-red border-b-brand-red;
 }
 
-.spinner.gold {
-  @apply border-x-brand-gold border-b-brand-gold;
+.spinner.warning {
+  @apply border-x-brand-yellow border-b-brand-yellow;
 }

@@ -5,7 +5,7 @@ import styles from '@/components/progress/progress.module.css';
 import { cn } from '@/lib/utils';
 
 interface ProgressProps extends React.ComponentPropsWithoutRef<typeof ProgressPrimitive.Root> {
-  color?: 'primary' | 'secondary' | 'green' | 'red' | 'gold';
+  color?: 'primary' | 'secondary' | 'green' | 'red' | 'yellow';
 }
 
 const Progress = React.forwardRef<React.ElementRef<typeof ProgressPrimitive.Root>, ProgressProps>(

@@ -24,20 +24,16 @@
   @apply border-brand-primary;
 }
 
-.secondary {
-  @apply border-brand-secondary;
-}
-
-.green {
+.success {
   @apply border-brand-green;
 }
 
-.red {
+.danger {
   @apply border-brand-red;
 }
 
-.gold {
-  @apply border-brand-gold;
+.warning {
+  @apply border-brand-yellow;
 }
 
 .scroll-container {
@@ -49,5 +45,5 @@
 }
 
 .code {
-  @apply whitespace-pre-wrap break-all;
+  @apply break-all whitespace-pre-wrap;
 }

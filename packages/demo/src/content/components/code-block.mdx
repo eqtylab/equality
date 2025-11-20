@@ -8,7 +8,7 @@ import { CodeBlock } from "@eqtylab/equality";
 
 ## Color Variants
 
-Code blocks support several color variants that correspond with the brand colors. You can use these variants — such as `primary`, `secondary`, `green`, `red`, and `gold` — to visually distinguish different types of code or their context according to your design needs. Each color maps directly to a brand color in the Equality design system, allowing for consistent and meaningful styling in your application.
+Code blocks support color variants using either the brand primary color or status options. Available variants are `primary` (brand primary color), `success`, `danger`, and `warning`. Use these to visually distinguish different types of code or contexts according to your design needs.
 
 ### Primary (default)
 
@@ -283,38 +283,29 @@ className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transit
 client:only="react"
 />
 
-### Secondary
+### Success
 
 <CodeBlock
   title="JS"
   code="console.log('Hello, world!');"
-  color="secondary"
+  variant="success"
   client:only="react"
 />
 
-### Green
+### Danger
 
 <CodeBlock
   title="JS"
   code="console.log('Hello, world!');"
-  color="green"
+  variant="danger"
   client:only="react"
 />
 
-### Red
+### Warning
 
 <CodeBlock
   title="JS"
   code="console.log('Hello, world!');"
-  color="red"
-  client:only="react"
-/>
-
-### Gold
-
-<CodeBlock
-  title="JS"
-  code="console.log('Hello, world!');"
-  color="gold"
+  variant="warning"
   client:only="react"
 />

@@ -12,7 +12,7 @@ function LoadingOverlay({ isVisible, message = 'Loading...' }: LoadingOverlayPro
   return (
     <div className={styles['loading-overlay']}>
       <div className={styles['content']}>
-        <Spinner color="primary" />
+        <Spinner variant="primary" />
         <p className={styles['message']}>{message}</p>
       </div>
     </div>

@@ -9,7 +9,7 @@ export interface RadialGraphProps {
   className?: string;
   subLabel?: string;
   graphSize?: 'sm' | 'md' | 'lg';
-  color?: 'primary' | 'secondary' | 'green' | 'red' | 'gold';
+  variant?: 'primary' | 'success' | 'danger' | 'warning';
 }
 
 const RadialGraph = forwardRef<HTMLDivElement, RadialGraphProps>(
@@ -20,7 +20,7 @@ const RadialGraph = forwardRef<HTMLDivElement, RadialGraphProps>(
       className,
       subLabel,
       graphSize = 'md',
-      color = 'primary',
+      variant = 'primary',
       ...props
     },
     ref
@@ -61,7 +61,7 @@ const RadialGraph = forwardRef<HTMLDivElement, RadialGraphProps>(
                   <div
                     className={cn(
                       styles['bar-gradient'],
-                      styles[`bar-gradient--${color}`],
+                      styles[`bar-gradient--${variant}`],
                       isActive ? styles['bar-gradient--active'] : styles['bar-gradient--inactive']
                     )}
                     style={{

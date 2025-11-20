@@ -39,26 +39,22 @@ import { RadialGraph } from "@eqtylab/equality";
   graphSize="lg"
 />
 
-## Color Variants
+## Variants
 
-This component supports several color variants that correspond with the brand colors. You can use these variants — such as `primary`, `secondary`, `green`, `red`, and `gold` — to visually distinguish different types of radial graphs or their context according to your design needs. Each color maps directly to a brand color in the Equality design system, allowing for consistent and meaningful styling in your application.
+This component supports color variants using either the brand primary color or status options. Available variants are `primary` (brand primary color), `success`, `danger`, and `warning`. Use these to visually distinguish different types of radial graphs or their context according to your design needs.
 
 ### Primary (default)
 
 <RadialGraph percentage={60} />
 
-### Secondary
+### Success
 
-<RadialGraph percentage={40} color="secondary" />
+<RadialGraph percentage={95} variant="success" />
 
-### Green
+### Danger
 
-<RadialGraph percentage={95} color="green" />
+<RadialGraph percentage={10} variant="danger" />
 
-### Red
+### Warning
 
-<RadialGraph percentage={10} color="red" />
-
-### Gold
-
-<RadialGraph percentage={100} color="gold" />
+<RadialGraph percentage={50} variant="warning" />

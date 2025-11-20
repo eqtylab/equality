@@ -56,20 +56,16 @@
   @apply from-brand-primary;
 }
 
-.bar-gradient--secondary {
-  @apply from-brand-secondary;
-}
-
-.bar-gradient--green {
+.bar-gradient--success {
   @apply from-brand-green;
 }
 
-.bar-gradient--red {
+.bar-gradient--danger {
   @apply from-brand-red;
 }
 
-.bar-gradient--gold {
-  @apply from-brand-gold;
+.bar-gradient--warning {
+  @apply from-brand-yellow;
 }
 
 .bar-gradient--active {
