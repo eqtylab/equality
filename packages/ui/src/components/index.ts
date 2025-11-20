@@ -15,7 +15,6 @@ export * from './dialog/dialog';
 export * from './display-field/display-field';
 export * from './drawer/drawer';
 export * from './dropdown-menu/dropdown-menu';
-export * from './element-icon/element-icon';
 export * from './empty-table-state/empty-table-state';
 export * from './filled-tabs/filled-tabs';
 export * from './filter-badge/filter-badge';
