@@ -12,7 +12,7 @@
   @apply text-lg font-medium;
   @apply border-b-2 border-transparent;
   @apply flex-center;
-  @apply data-[state=active]:border-dark-lilac data-[state=active]:text-text-primary data-[state=active]:shadow-sm;
+  @apply data-[state=active]:border-brand-primary data-[state=active]:text-text-primary data-[state=active]:shadow-sm;
   @apply focus-ring;
   @apply disabled:pointer-events-none disabled:opacity-50;
 }

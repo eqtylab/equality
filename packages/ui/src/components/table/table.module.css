@@ -19,14 +19,15 @@
 }
 
 .table-footer {
-  @apply bg-greyscale-800/50 border-t last:[&>tr]:border-b-0;
+  @apply bg-greyscale-400 border-t last:[&>tr]:border-b-0;
   @apply font-medium;
 }
 
 .table-row {
+  --mix-color: var(--color-brand-primary);
   @apply border-b transition-colors;
-  @apply hover:bg-lilac-button;
-  @apply data-[state=selected]:bg-lilac-button;
+  @apply hover:bg-mixed-dark;
+  @apply data-[state=selected]:bg-mixed-dark;
 }
 
 .table-head {
