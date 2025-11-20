@@ -49,14 +49,17 @@
 }
 
 .size--sm {
-  @apply h-7 rounded-md px-2;
   @apply text-xs;
 }
 
-.size--md {
+.size--sm:not(.button--link) {
+  @apply h-7 rounded-md px-2;
+}
+
+.size--md:not(.button--link) {
   @apply h-10 rounded-md px-3 py-2;
 }
 
-.size--lg {
+.size--lg:not(.button--link) {
   @apply h-11 rounded-md px-8;
 }

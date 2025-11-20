@@ -22,7 +22,3 @@
 .dropdown-menu-content {
   @apply max-h-80 w-56 overflow-auto;
 }
-
-.clear-btn {
-  @apply h-auto p-0;
-}

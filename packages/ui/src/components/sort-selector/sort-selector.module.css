@@ -7,8 +7,3 @@
 .chevron-down-icon {
   @apply text-text-secondary;
 }
-
-.reset-btn {
-  @apply h-auto;
-  @apply p-0;
-}

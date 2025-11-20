@@ -67,7 +67,7 @@ const FilterDropdown = ({
         <DropdownMenuLabel>
           Filters
           {hasSelectedFilters && (
-            <Button variant="link" size="sm" onClick={onClearAll} className={styles['clear-btn']}>
+            <Button variant="link" size="sm" onClick={onClearAll}>
               Clear all
             </Button>
           )}

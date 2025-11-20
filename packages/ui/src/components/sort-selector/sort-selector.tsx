@@ -82,7 +82,7 @@ function SortSelector({
         <DropdownMenuLabel>
           Sort By
           {!isDefaultSort && (
-            <Button variant="link" size="sm" onClick={handleReset} className={styles['reset-btn']}>
+            <Button variant="link" size="sm" onClick={handleReset}>
               Reset
             </Button>
           )}
