@@ -1,4 +1,4 @@
-:root[data-theme='dark'] {
+.root[data-equality-theme='dark'] {
   --color-background: color(display-p3 0.03547 0.03547 0.04268);
   --color-border: color(display-p3 0.1792 0.1792 0.1792);
   --color-button-secondary-border: color(display-p3 1 1 1);

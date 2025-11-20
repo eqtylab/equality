@@ -4,7 +4,7 @@ import { cva, type VariantProps } from 'class-variance-authority';
 import { X } from 'lucide-react';
 
 import styles from '@/components/sheet/sheet.module.css';
-import { cn } from '@/lib/utils';
+import { cn, getThemeProviderRoot } from '@/lib/utils';
 
 const XIcon = X as React.ComponentType<{ className?: string }>;
 
@@ -14,7 +14,9 @@ const SheetTrigger = SheetPrimitive.Trigger;
 
 const SheetClose = SheetPrimitive.Close;
 
-const SheetPortal = SheetPrimitive.Portal;
+const SheetPortal = ({ children }: { children: React.ReactNode }) => (
+  <SheetPrimitive.Portal container={getThemeProviderRoot()}>{children}</SheetPrimitive.Portal>
+);
 
 const SheetOverlay = React.forwardRef<
   React.ElementRef<typeof SheetPrimitive.Overlay>,

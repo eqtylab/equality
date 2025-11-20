@@ -44,12 +44,12 @@
    ========================================================= */
 
   /* 1) Box model + resets + border-color */
-  :global([data-eqty-theme]),
-  :global([data-eqty-theme]) *,
-  :global([data-eqty-theme]) ::after,
-  :global([data-eqty-theme]) ::before,
-  :global([data-eqty-theme]) ::backdrop,
-  :global([data-eqty-theme]) ::file-selector-button {
+  :global([data-equality-theme]),
+  :global([data-equality-theme]) *,
+  :global([data-equality-theme]) ::after,
+  :global([data-equality-theme]) ::before,
+  :global([data-equality-theme]) ::backdrop,
+  :global([data-equality-theme]) ::file-selector-button {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
@@ -58,12 +58,12 @@
   }
 
   /* Cursor for buttons */
-  :global([data-eqty-theme]) button {
+  :global([data-equality-theme]) button {
     cursor: pointer;
   }
 
   /* Typography + platform defaults */
-  :global([data-eqty-theme]) {
+  :global([data-equality-theme]) {
     line-height: 1.5;
     -webkit-text-size-adjust: 100%;
     tab-size: 4;
@@ -76,47 +76,47 @@
   }
 
   /* Horizontal rule */
-  :global([data-eqty-theme]) hr {
+  :global([data-equality-theme]) hr {
     height: 0;
     color: inherit;
     border-top-width: 1px;
   }
 
   /* Abbr */
-  :global([data-eqty-theme]) abbr:where([title]) {
+  :global([data-equality-theme]) abbr:where([title]) {
     -webkit-text-decoration: underline dotted;
     text-decoration: underline dotted;
   }
 
   /* Headings reset */
-  :global([data-eqty-theme]) h1,
-  :global([data-eqty-theme]) h2,
-  :global([data-eqty-theme]) h3,
-  :global([data-eqty-theme]) h4,
-  :global([data-eqty-theme]) h5,
-  :global([data-eqty-theme]) h6 {
+  :global([data-equality-theme]) h1,
+  :global([data-equality-theme]) h2,
+  :global([data-equality-theme]) h3,
+  :global([data-equality-theme]) h4,
+  :global([data-equality-theme]) h5,
+  :global([data-equality-theme]) h6 {
     font-size: inherit;
     font-weight: inherit;
   }
 
   /* Links */
-  :global([data-eqty-theme]) a {
+  :global([data-equality-theme]) a {
     color: inherit;
     -webkit-text-decoration: inherit;
     text-decoration: inherit;
   }
 
   /* Strong */
-  :global([data-eqty-theme]) b,
-  :global([data-eqty-theme]) strong {
+  :global([data-equality-theme]) b,
+  :global([data-equality-theme]) strong {
     font-weight: bolder;
   }
 
   /* Code fonts */
-  :global([data-eqty-theme]) code,
-  :global([data-eqty-theme]) kbd,
-  :global([data-eqty-theme]) samp,
-  :global([data-eqty-theme]) pre {
+  :global([data-equality-theme]) code,
+  :global([data-equality-theme]) kbd,
+  :global([data-equality-theme]) samp,
+  :global([data-equality-theme]) pre {
     font-family:
       ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New',
       monospace;
@@ -124,81 +124,81 @@
   }
 
   /* Small */
-  :global([data-eqty-theme]) small {
+  :global([data-equality-theme]) small {
     font-size: 80%;
   }
 
   /* Sub/Sup */
-  :global([data-eqty-theme]) sub,
-  :global([data-eqty-theme]) sup {
+  :global([data-equality-theme]) sub,
+  :global([data-equality-theme]) sup {
     font-size: 75%;
     line-height: 0;
     position: relative;
     vertical-align: baseline;
   }
-  :global([data-eqty-theme]) sub {
+  :global([data-equality-theme]) sub {
     bottom: -0.25em;
   }
-  :global([data-eqty-theme]) sup {
+  :global([data-equality-theme]) sup {
     top: -0.5em;
   }
 
   /* Tables */
-  :global([data-eqty-theme]) table {
+  :global([data-equality-theme]) table {
     text-indent: 0;
     border-color: inherit;
     border-collapse: collapse;
   }
 
   /* Firefox focus */
-  :global([data-eqty-theme]) :-moz-focusring {
+  :global([data-equality-theme]) :-moz-focusring {
     outline: auto;
   }
 
   /* Progress baseline */
-  :global([data-eqty-theme]) progress {
+  :global([data-equality-theme]) progress {
     vertical-align: baseline;
   }
 
   /* Summary display */
-  :global([data-eqty-theme]) summary {
+  :global([data-equality-theme]) summary {
     display: list-item;
   }
 
   /* Lists unstyled */
-  :global([data-eqty-theme]) ol,
-  :global([data-eqty-theme]) ul,
-  :global([data-eqty-theme]) menu {
+  :global([data-equality-theme]) ol,
+  :global([data-equality-theme]) ul,
+  :global([data-equality-theme]) menu {
     list-style: none;
   }
 
   /* Replaced elements */
-  :global([data-eqty-theme]) img,
-  :global([data-eqty-theme]) svg,
-  :global([data-eqty-theme]) video,
-  :global([data-eqty-theme]) canvas,
-  :global([data-eqty-theme]) audio,
-  :global([data-eqty-theme]) iframe,
-  :global([data-eqty-theme]) embed,
-  :global([data-eqty-theme]) object {
+  :global([data-equality-theme]) img,
+  :global([data-equality-theme]) svg,
+  :global([data-equality-theme]) video,
+  :global([data-equality-theme]) canvas,
+  :global([data-equality-theme]) audio,
+  :global([data-equality-theme]) iframe,
+  :global([data-equality-theme]) embed,
+  :global([data-equality-theme]) object {
     display: block;
     vertical-align: middle;
   }
 
   /* Media constraints */
-  :global([data-eqty-theme]) img,
-  :global([data-eqty-theme]) video {
+  :global([data-equality-theme]) img,
+  :global([data-equality-theme]) video {
     max-width: 100%;
     height: auto;
   }
 
   /* Form element normalizations */
-  :global([data-eqty-theme]) button,
-  :global([data-eqty-theme]) input,
-  :global([data-eqty-theme]) select,
-  :global([data-eqty-theme]) optgroup,
-  :global([data-eqty-theme]) textarea,
-  :global([data-eqty-theme]) ::file-selector-button {
+  :global([data-equality-theme]) button,
+  :global([data-equality-theme]) input,
+  :global([data-equality-theme]) select,
+  :global([data-equality-theme]) optgroup,
+  :global([data-equality-theme]) textarea,
+  :global([data-equality-theme]) ::file-selector-button {
     font: inherit;
     font-feature-settings: inherit;
     font-variation-settings: inherit;
@@ -210,91 +210,91 @@
   }
 
   /* Select optgroup weight */
-  :global([data-eqty-theme]) :where(select:is([multiple], [size])) optgroup {
+  :global([data-equality-theme]) :where(select:is([multiple], [size])) optgroup {
     font-weight: bolder;
   }
 
   /* Select optgroup option indent */
-  :global([data-eqty-theme]) :where(select:is([multiple], [size])) optgroup option {
+  :global([data-equality-theme]) :where(select:is([multiple], [size])) optgroup option {
     padding-inline-start: 20px;
   }
 
   /* File button spacing */
-  :global([data-eqty-theme]) ::file-selector-button {
+  :global([data-equality-theme]) ::file-selector-button {
     margin-inline-end: 4px;
   }
 
   /* Placeholder */
-  :global([data-eqty-theme]) ::placeholder {
+  :global([data-equality-theme]) ::placeholder {
     opacity: 1;
   }
 
   @supports (not (-webkit-appearance: -apple-pay-button)) or (contain-intrinsic-size: 1px) {
-    :global([data-eqty-theme]) ::placeholder {
+    :global([data-equality-theme]) ::placeholder {
       color: color-mix(in oklab, currentcolor 50%, transparent);
     }
   }
 
   /* Textarea resize */
-  :global([data-eqty-theme]) textarea {
+  :global([data-equality-theme]) textarea {
     resize: vertical;
   }
 
   /* WebKit search decoration */
-  :global([data-eqty-theme]) ::-webkit-search-decoration {
+  :global([data-equality-theme]) ::-webkit-search-decoration {
     -webkit-appearance: none;
   }
 
   /* iOS date/time */
-  :global([data-eqty-theme]) ::-webkit-date-and-time-value {
+  :global([data-equality-theme]) ::-webkit-date-and-time-value {
     min-height: 1lh;
     text-align: inherit;
   }
 
-  :global([data-eqty-theme]) ::-webkit-datetime-edit {
+  :global([data-equality-theme]) ::-webkit-datetime-edit {
     display: inline-flex;
   }
 
-  :global([data-eqty-theme]) ::-webkit-datetime-edit-fields-wrapper {
+  :global([data-equality-theme]) ::-webkit-datetime-edit-fields-wrapper {
     padding: 0;
   }
 
-  :global([data-eqty-theme]) ::-webkit-datetime-edit,
-  :global([data-eqty-theme]) ::-webkit-datetime-edit-year-field,
-  :global([data-eqty-theme]) ::-webkit-datetime-edit-month-field,
-  :global([data-eqty-theme]) ::-webkit-datetime-edit-day-field,
-  :global([data-eqty-theme]) ::-webkit-datetime-edit-hour-field,
-  :global([data-eqty-theme]) ::-webkit-datetime-edit-minute-field,
-  :global([data-eqty-theme]) ::-webkit-datetime-edit-second-field,
-  :global([data-eqty-theme]) ::-webkit-datetime-edit-millisecond-field,
-  :global([data-eqty-theme]) ::-webkit-datetime-edit-meridiem-field {
+  :global([data-equality-theme]) ::-webkit-datetime-edit,
+  :global([data-equality-theme]) ::-webkit-datetime-edit-year-field,
+  :global([data-equality-theme]) ::-webkit-datetime-edit-month-field,
+  :global([data-equality-theme]) ::-webkit-datetime-edit-day-field,
+  :global([data-equality-theme]) ::-webkit-datetime-edit-hour-field,
+  :global([data-equality-theme]) ::-webkit-datetime-edit-minute-field,
+  :global([data-equality-theme]) ::-webkit-datetime-edit-second-field,
+  :global([data-equality-theme]) ::-webkit-datetime-edit-millisecond-field,
+  :global([data-equality-theme]) ::-webkit-datetime-edit-meridiem-field {
     padding-block: 0;
   }
 
-  :global([data-eqty-theme]) ::-webkit-calendar-picker-indicator {
+  :global([data-equality-theme]) ::-webkit-calendar-picker-indicator {
     line-height: 1;
   }
 
   /* Firefox invalid */
-  :global([data-eqty-theme]) :-moz-ui-invalid {
+  :global([data-equality-theme]) :-moz-ui-invalid {
     box-shadow: none;
   }
 
   /* Button appearances */
-  :global([data-eqty-theme]) button,
-  :global([data-eqty-theme]) input:where([type='button'], [type='reset'], [type='submit']),
-  :global([data-eqty-theme]) ::file-selector-button {
+  :global([data-equality-theme]) button,
+  :global([data-equality-theme]) input:where([type='button'], [type='reset'], [type='submit']),
+  :global([data-equality-theme]) ::file-selector-button {
     appearance: button;
   }
 
   /* Safari spin buttons */
-  :global([data-eqty-theme]) ::-webkit-inner-spin-button,
-  :global([data-eqty-theme]) ::-webkit-outer-spin-button {
+  :global([data-equality-theme]) ::-webkit-inner-spin-button,
+  :global([data-equality-theme]) ::-webkit-outer-spin-button {
     height: auto;
   }
 
   /* Hidden */
-  :global([data-eqty-theme]) [hidden]:where(:not([hidden='until-found'])) {
+  :global([data-equality-theme]) [hidden]:where(:not([hidden='until-found'])) {
     display: none !important;
   }
 
@@ -340,7 +340,7 @@
 }
 
 @utility overlay-background {
-  @apply backdrop-blur-xs bg-black/80;
+  @apply bg-black/80 backdrop-blur-xs;
 }
 
 @utility overlay-content {
@@ -358,7 +358,7 @@
 @utility dropdown-content {
   @apply bg-popover-background text-text-primary border-border border;
   @apply z-50 rounded-md p-1;
-  @apply overflow-y-auto overflow-x-hidden;
+  @apply overflow-x-hidden overflow-y-auto;
   @apply max-h-80 min-w-32;
   @apply data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2;
   @apply data-[state=open]:animate-in data-[state=open]:fade-in-0 data-[state=open]:zoom-in-95;

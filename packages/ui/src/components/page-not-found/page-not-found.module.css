@@ -13,14 +13,13 @@
 }
 
 .icon-container {
-  @apply bg-red-800 text-red-400;
+  @apply bg-yellow-800 text-yellow-400;
   @apply flex-center;
   @apply mx-auto size-20 rounded-full;
 }
 
 .alert-icon {
   @apply size-10;
-  @apply animate-pulse;
 }
 
 .title {
