@@ -13,17 +13,6 @@
   @apply text-badge-text-primary;
 }
 
-.badge--secondary {
-  @apply bg-badge-background-secondary;
-  @apply text-badge-text-secondary;
-}
-
-.badge--tertiary {
-  @apply bg-badge-background-tertiary;
-  @apply text-badge-text-tertiary;
-  @apply border;
-}
-
 .badge--destructive {
   @apply bg-badge-background-danger;
   @apply text-badge-text-danger;
