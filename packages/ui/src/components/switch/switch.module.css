@@ -47,24 +47,10 @@
 
 .switch.default {
   @apply data-[state=checked]:bg-text-primary data-[state=unchecked]:bg-greyscale-700;
+  @apply data-[state=checked]:hover:bg-greyscale-200 data-[state=unchecked]:hover:bg-greyscale-600;
 }
 
-.switch.red {
-  @apply data-[state=checked]:bg-red-400 data-[state=unchecked]:bg-red-700;
-}
-
-.switch.lilac {
-  @apply data-[state=checked]:bg-lilac-400 data-[state=unchecked]:bg-lilac-700;
-}
-
-.switch.blue {
-  @apply data-[state=checked]:bg-blue-400 data-[state=unchecked]:bg-blue-700;
-}
-
-.switch.green {
-  @apply data-[state=checked]:bg-green-400 data-[state=unchecked]:bg-green-700;
-}
-
-.switch.yellow {
-  @apply data-[state=checked]:bg-yellow-400 data-[state=unchecked]:bg-yellow-700;
+.switch.danger {
+  @apply data-[state=checked]:bg-red-500 data-[state=unchecked]:bg-red-700;
+  @apply data-[state=checked]:hover:bg-red-600 data-[state=unchecked]:hover:bg-red-600;
 }

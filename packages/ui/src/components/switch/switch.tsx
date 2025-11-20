@@ -6,13 +6,13 @@ import { cn } from '@/lib/utils';
 
 interface SwitchProps extends React.ComponentPropsWithoutRef<typeof SwitchPrimitives.Root> {
   size?: 'sm' | 'md' | 'lg';
-  color?: 'default' | 'red' | 'lilac' | 'blue' | 'green' | 'yellow';
+  variant?: 'default' | 'danger';
 }
 
 const Switch = React.forwardRef<React.ElementRef<typeof SwitchPrimitives.Root>, SwitchProps>(
-  ({ className, size = 'md', color = 'default', ...props }, ref) => (
+  ({ className, size = 'md', variant = 'default', ...props }, ref) => (
     <SwitchPrimitives.Root
-      className={cn(styles['switch'], styles[size], styles[color], className)}
+      className={cn(styles['switch'], styles[size], styles[variant], className)}
       {...props}
       ref={ref}
     >

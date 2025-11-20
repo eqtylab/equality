@@ -11,11 +11,7 @@ interface SwitchDemoProps {
     | "disabled-off"
     | "disabled-on"
     | "default"
-    | "red"
-    | "lilac"
-    | "blue"
-    | "green"
-    | "yellow";
+    | "danger";
 }
 
 export function SwitchDemo({ variant = "default-off" }: SwitchDemoProps) {
@@ -28,11 +24,7 @@ export function SwitchDemo({ variant = "default-off" }: SwitchDemoProps) {
     disabledUnchecked: false,
     disabledChecked: true,
     default: false,
-    red: false,
-    lilac: false,
-    blue: false,
-    green: false,
-    yellow: false,
+    danger: false,
   });
 
   if (variant === "default-off") {
@@ -98,61 +90,13 @@ export function SwitchDemo({ variant = "default-off" }: SwitchDemoProps) {
     );
   }
 
-  if (variant === "red") {
+  if (variant === "danger") {
     return (
       <Switch
-        color="red"
-        checked={switchStates.red}
+        variant="danger"
+        checked={switchStates.danger}
         onCheckedChange={(checked) =>
-          setSwitchStates((prev) => ({ ...prev, red: checked }))
-        }
-      />
-    );
-  }
-
-  if (variant === "lilac") {
-    return (
-      <Switch
-        color="lilac"
-        checked={switchStates.lilac}
-        onCheckedChange={(checked) =>
-          setSwitchStates((prev) => ({ ...prev, lilac: checked }))
-        }
-      />
-    );
-  }
-
-  if (variant === "blue") {
-    return (
-      <Switch
-        color="blue"
-        checked={switchStates.blue}
-        onCheckedChange={(checked) =>
-          setSwitchStates((prev) => ({ ...prev, blue: checked }))
-        }
-      />
-    );
-  }
-
-  if (variant === "green") {
-    return (
-      <Switch
-        color="green"
-        checked={switchStates.green}
-        onCheckedChange={(checked) =>
-          setSwitchStates((prev) => ({ ...prev, green: checked }))
-        }
-      />
-    );
-  }
-
-  if (variant === "yellow") {
-    return (
-      <Switch
-        color="yellow"
-        checked={switchStates.yellow}
-        onCheckedChange={(checked) =>
-          setSwitchStates((prev) => ({ ...prev, yellow: checked }))
+          setSwitchStates((prev) => ({ ...prev, danger: checked }))
         }
       />
     );
