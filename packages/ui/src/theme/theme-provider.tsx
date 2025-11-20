@@ -2,17 +2,15 @@ import styles from './theme.module.css';
 
 interface ThemeProviderProps {
   theme?: 'light' | 'dark';
-  customVars?: React.CSSProperties;
+  customVars?: React.CSSProperties & {
+    [key: `--${string}`]: string | number | undefined;
+  };
   children: React.ReactNode;
 }
 
 const ThemeProvider = ({ theme = 'dark', customVars, children }: ThemeProviderProps) => {
   return (
-    <div
-      data-equality-theme={theme}
-      className={styles.root}
-      style={customVars as React.CSSProperties}
-    >
+    <div data-equality-theme={theme} className={styles.root} style={customVars}>
       {children}
       <div id="equality-theme-provider-root-portal" />
     </div>
