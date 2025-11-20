@@ -6,17 +6,25 @@ import { cn } from '@/lib/utils';
 export interface IconCircleProps {
   className?: string;
   icon?: React.ElementType;
+  size?: 'sm' | 'md' | 'lg';
 }
 
-const IconCircle = forwardRef<HTMLDivElement, IconCircleProps>(
-  ({ className, icon, ...props }, ref) => {
-    if (!icon) return null;
+const iconSizeMap = {
+  sm: 16,
+  md: 20,
+  lg: 32,
+};
 
-    const IconElement = icon as React.ElementType;
+const IconCircle = forwardRef<HTMLDivElement, IconCircleProps>(
+  ({ className, icon: Icon, size = 'sm', ...props }, ref) => {
+    if (!Icon) return null;
+
+    const IconComponent = Icon as React.ComponentType<{ size?: number }>;
+    const iconSize = iconSizeMap[size];
 
     return (
       <div ref={ref} className={cn(styles['icon-circle'], className)} {...props}>
-        <IconElement className={styles.icon} />
+        <IconComponent size={iconSize} />
       </div>
     );
   }

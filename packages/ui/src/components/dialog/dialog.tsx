@@ -3,7 +3,7 @@ import * as DialogPrimitive from '@radix-ui/react-dialog';
 import { X } from 'lucide-react';
 
 import styles from '@/components/dialog/dialog.module.css';
-import { cn } from '@/lib/utils';
+import { cn, getThemeProviderRoot } from '@/lib/utils';
 
 const XIcon = X as React.ComponentType<{ className?: string }>;
 
@@ -11,7 +11,9 @@ const Dialog = DialogPrimitive.Root;
 
 const DialogTrigger = DialogPrimitive.Trigger;
 
-const DialogPortal = DialogPrimitive.Portal;
+const DialogPortal = ({ children }: { children: React.ReactNode }) => (
+  <DialogPrimitive.Portal container={getThemeProviderRoot()}>{children}</DialogPrimitive.Portal>
+);
 
 const DialogClose = DialogPrimitive.Close;
 

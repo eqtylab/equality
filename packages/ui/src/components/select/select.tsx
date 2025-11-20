@@ -3,7 +3,7 @@ import * as SelectPrimitive from '@radix-ui/react-select';
 import { Check, ChevronDown, ChevronUp } from 'lucide-react';
 
 import styles from '@/components/select/select.module.css';
-import { cn } from '@/lib/utils';
+import { cn, getThemeProviderRoot } from '@/lib/utils';
 
 const CheckIcon = Check as React.ComponentType<{ className?: string }>;
 const ChevronDownIcon = ChevronDown as React.ComponentType<{ className?: string }>;
@@ -56,11 +56,15 @@ const SelectScrollDownButton = React.forwardRef<
 ));
 SelectScrollDownButton.displayName = SelectPrimitive.ScrollDownButton.displayName;
 
+const SelectPortal = ({ children }: { children: React.ReactNode }) => (
+  <SelectPrimitive.Portal container={getThemeProviderRoot()}>{children}</SelectPrimitive.Portal>
+);
+
 const SelectContent = React.forwardRef<
   React.ElementRef<typeof SelectPrimitive.Content>,
   React.ComponentPropsWithoutRef<typeof SelectPrimitive.Content>
 >(({ className, children, position = 'popper', ...props }, ref) => (
-  <SelectPrimitive.Portal>
+  <SelectPortal>
     <SelectPrimitive.Content
       ref={ref}
       className={cn(
@@ -82,7 +86,7 @@ const SelectContent = React.forwardRef<
       </SelectPrimitive.Viewport>
       <SelectScrollDownButton />
     </SelectPrimitive.Content>
-  </SelectPrimitive.Portal>
+  </SelectPortal>
 ));
 SelectContent.displayName = SelectPrimitive.Content.displayName;
 

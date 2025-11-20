@@ -1,18 +1,26 @@
 @reference '../../theme/theme.module.css';
 
 .checkbox {
-  @apply size-4 shrink-0;
-  @apply border-primary ring-offset-background rounded-sm border;
-  @apply data-[state=checked]:bg-primary data-[state=checked]:text-primary-foreground;
-  @apply focus-visible:ring-ring focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-hidden;
+  @apply shrink-0;
+  @apply border-text-primary rounded-sm border;
+  @apply data-[state=checked]:bg-text-primary data-[state=checked]:text-background;
   @apply disabled:cursor-not-allowed disabled:opacity-50;
+  @apply focus-ring;
 }
 
 .indicator {
-  @apply flex items-center justify-center;
+  @apply flex-center;
   @apply text-current;
 }
 
-.check {
+.checkbox.sm {
+  @apply size-3.5;
+}
+
+.checkbox.md {
   @apply size-4;
+}
+
+.check {
+  @apply size-full;
 }

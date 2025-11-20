@@ -5,6 +5,50 @@ heading: "Spinner"
 
 import { Spinner } from "@eqtylab/equality";
 
-## Default
+## Size Variants
 
-<Spinner client:only="react" />
+### Extra Small (xs)
+
+<Spinner client:only="react" size="xs" />
+
+### Small (sm)
+
+<Spinner client:only="react" size="sm" />
+
+### Medium (md) - Default
+
+<Spinner client:only="react" size="md" />
+
+### Large (lg)
+
+<Spinner client:only="react" size="lg" />
+
+### Extra Large (xl)
+
+<Spinner client:only="react" size="xl" />
+
+## Color Variants
+
+This component supports color variants using either the brand primary color or status options. Available variants are `primary` (brand primary color), `success`, `danger`, and `warning`. Use these to visually distinguish loading spinners according to your design needs.
+
+The special `neutral` variant adapts the spinner to use the primary text color, automatically switching between light and dark themes according to your app's current appearance mode.
+
+### Neutral
+
+<Spinner client:only="react" variant="neutral" />
+
+### Primary
+
+<Spinner client:only="react" variant="primary" />
+
+### Success
+
+<Spinner client:only="react" variant="success" />
+
+### Danger
+
+<Spinner client:only="react" variant="danger" />
+
+### Warning
+
+<Spinner client:only="react" variant="warning" />

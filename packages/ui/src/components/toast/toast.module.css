@@ -3,14 +3,14 @@
 .toast-viewport {
   @apply flex flex-col-reverse sm:flex-col;
   @apply p-4;
-  @apply fixed top-0 z-100 sm:top-auto sm:right-0 sm:bottom-0;
-  @apply max-h-screen w-full md:max-w-[420px];
+  @apply z-100 fixed top-0 sm:bottom-0 sm:right-0 sm:top-auto;
+  @apply max-h-screen w-full md:max-w-md;
 }
 
 .toast {
   @apply pointer-events-auto relative transition-all;
-  @apply flex items-center justify-between;
-  @apply bg-background border shadow-lg backdrop-blur-sm;
+  @apply flex-center-between;
+  @apply border shadow-lg backdrop-blur-sm;
   @apply w-full overflow-hidden;
   @apply space-x-4 rounded-md p-4 pr-8;
   @apply data-[state=open]:animate-in data-[state=open]:slide-in-from-top-full sm:data-[state=open]:slide-in-from-bottom-full;
@@ -18,68 +18,63 @@
   @apply data-[swipe=end]:animate-out data-[swipe=end]:translate-x-(--radix-toast-swipe-end-x);
   @apply data-[swipe=move]:translate-x-(--radix-toast-swipe-move-x) data-[swipe=move]:transition-none;
   @apply data-[swipe=cancel]:translate-x-0;
-  @apply before:absolute before:inset-0 before:rounded-md;
 }
 
 .toast--default {
-  @apply border-lilac text-lilac before:bg-lilac/20;
+  --mix-color: var(--color-brand-primary);
+  --hover-darken: 50%;
+  @apply border-brand-primary text-brand-primary bg-mixed-dark;
 }
 
 .toast--destructive {
-  @apply border-red text-red before:bg-red/20;
+  @apply border-red-400 bg-red-800 text-red-400;
 }
 
 .toast--warning {
-  @apply border-yellow text-yellow before:bg-yellow/20;
+  @apply border-yellow-400 bg-yellow-800 text-yellow-400;
 }
 
 .toast--success {
-  @apply border-mint text-mint before:bg-mint/20;
+  @apply border-emerald-400 bg-emerald-800 text-emerald-400;
 }
 
 .toast-action {
-  @apply px-3;
-  @apply text-sm font-medium transition-colors;
-  @apply h-8 shrink-0 rounded-md;
-  @apply ring-offset-background border bg-transparent;
-  @apply inline-flex items-center justify-center;
-  @apply hover:bg-secondary;
-  @apply focus:ring-ring focus:ring-2 focus:ring-offset-2 focus:outline-hidden;
-  @apply disabled:pointer-events-none disabled:opacity-50;
+  --mix-color: var(--color-button-tertiary-fill);
+  @apply h-7 rounded-md px-2;
+  @apply text-xs;
+  @apply rounded-md;
+  @apply whitespace-nowrap text-sm font-medium;
+  @apply transition-all duration-300;
+  @apply flex-center gap-1;
+  @apply cursor-pointer;
+  @apply disabled:cursor-not-allowed disabled:opacity-50;
+  @apply [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0;
+  @apply focus-ring;
+  @apply bg-(--mix-color);
+  @apply border-button-tertiary-border border;
+  @apply text-button-tertiary-text;
+  @apply hover:not-disabled:bg-mixed-light;
 }
 
 .toast--destructive .toast-action {
-  @apply border-muted/40;
+  @apply border-greyscale-400;
 }
 
 .toast--destructive:hover .toast-action {
-  @apply border-destructive/30 bg-destructive text-destructive-foreground;
+  @apply border-red-400 bg-red-800 text-red-400;
 }
 
 .toast--destructive:focus .toast-action {
-  @apply ring-destructive;
+  @apply ring-red-400;
 }
 
 .toast-close {
-  @apply text-foreground/50;
+  @apply text-inherit transition-colors;
   @apply rounded-md;
   @apply p-1;
-  @apply opacity-0 transition-opacity;
-  @apply absolute top-2 right-2;
-  @apply hover:text-foreground;
-  @apply focus:opacity-100 focus:ring-2 focus:outline-hidden;
-}
-
-.toast:hover .toast-close {
-  @apply opacity-100;
-}
-
-.toast--destructive .toast-close {
-  @apply text-red;
-}
-
-.toast--destructive:focus .toast-close {
-  @apply ring-red ring-offset-red-600;
+  @apply absolute right-2 top-2;
+  @apply focus-ring;
+  @apply hover:text-text-primary;
 }
 
 .toast-close-icon {
@@ -91,5 +86,5 @@
 }
 
 .toast-description {
-  @apply text-muted-foreground text-sm;
+  @apply text-text-secondary text-sm;
 }

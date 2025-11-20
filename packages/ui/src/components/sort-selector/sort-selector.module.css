@@ -1,69 +1,9 @@
 @reference '../../theme/theme.module.css';
 
 .sort-selector-trigger {
-  @apply min-w-32 rounded-md;
-  @apply flex items-center justify-between;
-  @apply transition-all duration-200;
-  @apply hover:shadow-sm;
+  @apply min-w-32;
 }
 
 .chevron-down-icon {
-  @apply text-muted-foreground;
-}
-
-.dropdown-menu-content {
-  @apply border-border border shadow-lg;
-  @apply w-48;
-}
-
-.dropdown-menu-content-header {
-  @apply border-border border-b;
-  @apply flex items-center justify-between;
-  @apply px-3 pt-2 pb-2;
-}
-
-.header-title {
-  @apply text-foreground text-sm font-semibold;
-}
-
-.reset-btn {
-  @apply h-auto;
-  @apply p-0;
-}
-
-.dropdown-menu-item {
-  @apply relative cursor-pointer;
-  @apply px-3 py-1.5 pl-9;
-  @apply text-sm transition-colors;
-  @apply focus:bg-lilac-button;
-  @apply hover:bg-lilac-button;
-  @apply [&>span:first-child]:hidden;
-}
-
-.dropdown-menu-item-indicator {
-  @apply size-4;
-  @apply flex items-center justify-center;
-  @apply absolute top-1/2 left-3 -translate-y-1/2;
-}
-
-.indicator-inner {
-  @apply border-2 transition-colors;
-  @apply size-4 rounded-full;
-  @apply flex items-center justify-center;
-}
-
-.indicator-inner--selected {
-  @apply border-lilac bg-lilac;
-}
-
-.indicator-inner--not-selected {
-  @apply border-muted-foreground bg-muted/30;
-}
-
-.check-icon {
-  @apply text-background size-3;
-}
-
-.dropdown-menu-item-label {
-  @apply text-foreground;
+  @apply text-text-secondary;
 }

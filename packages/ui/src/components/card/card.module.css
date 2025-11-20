@@ -2,20 +2,20 @@
 
 .card {
   @apply @container/card relative;
-  @apply text-foreground;
-  @apply border-border border;
-  @apply bg-card/2 overflow-hidden rounded-lg shadow-sm;
+  @apply text-text-primary;
+  @apply border-card-border border;
+  @apply bg-card-background overflow-hidden rounded-lg shadow-sm;
 }
 
 .card--hover {
-  @apply hover:border-highlight active:border-highlight;
+  @apply hover:border-brand-primary active:border-brand-primary;
   @apply cursor-pointer transition-colors;
 }
 
 .card-hover-gradient {
   @apply pointer-events-none absolute inset-0 opacity-0;
   @apply transition-opacity duration-700;
-  @apply from-highlight/0 to-highlight/10 bg-linear-to-br;
+  @apply from-brand-primary/0 to-brand-primary/10 bg-linear-to-br;
 }
 
 .card:hover .card-hover-gradient,
@@ -32,7 +32,7 @@
 }
 
 .card-description {
-  @apply text-muted-foreground text-sm;
+  @apply text-text-secondary text-sm;
 }
 
 .card-content {

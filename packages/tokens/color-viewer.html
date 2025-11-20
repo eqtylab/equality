@@ -1,0 +1,359 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Equality Color Tokens Viewer</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family:
+          -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell,
+          sans-serif;
+        background: #f5f5f5;
+        padding: 2rem;
+        line-height: 1.6;
+      }
+
+      h1 {
+        margin-bottom: 2rem;
+        color: #333;
+      }
+
+      .theme-section {
+        margin-bottom: 3rem;
+      }
+
+      .theme-title {
+        font-size: 1.5rem;
+        font-weight: 600;
+        margin-bottom: 1.5rem;
+        color: #222;
+        padding-bottom: 0.5rem;
+        border-bottom: 2px solid #ddd;
+      }
+
+      .color-group {
+        margin-bottom: 2rem;
+      }
+
+      .group-title {
+        font-size: 1.1rem;
+        font-weight: 600;
+        margin-bottom: 1rem;
+        color: #444;
+        text-transform: capitalize;
+      }
+
+      .color-palette {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+        gap: 1rem;
+        margin-bottom: 1.5rem;
+      }
+
+      .color-swatch {
+        background: white;
+        border-radius: 8px;
+        overflow: hidden;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        transition:
+          transform 0.2s,
+          box-shadow 0.2s;
+      }
+
+      .color-swatch:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+      }
+
+      .color-box {
+        width: 100%;
+        height: 120px;
+        position: relative;
+      }
+
+      .color-info {
+        padding: 0.75rem;
+      }
+
+      .color-name {
+        font-weight: 600;
+        font-size: 0.9rem;
+        margin-bottom: 0.25rem;
+        color: #222;
+      }
+
+      .color-value {
+        font-size: 0.75rem;
+        color: #666;
+        font-family: 'Monaco', 'Menlo', 'Courier New', monospace;
+      }
+
+      .single-color {
+        display: inline-block;
+        margin-right: 1rem;
+        margin-bottom: 1rem;
+      }
+
+      .search-box {
+        width: 100%;
+        max-width: 500px;
+        padding: 0.75rem;
+        font-size: 1rem;
+        border: 2px solid #ddd;
+        border-radius: 8px;
+        margin-bottom: 2rem;
+      }
+
+      .search-box:focus {
+        outline: none;
+        border-color: #7043eb;
+      }
+
+      .empty-state {
+        text-align: center;
+        padding: 2rem;
+        color: #999;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Equality Color Tokens</h1>
+
+    <input type="text" class="search-box" placeholder="Search colors..." id="searchInput" />
+
+    <div id="colorContainer"></div>
+
+    <script>
+      // Load the JSON file
+      fetch('./equality-tokens.json')
+        .then((response) => response.json())
+        .then((data) => {
+          renderColors(data);
+          setupSearch(data);
+        })
+        .catch((error) => {
+          console.error('Error loading colors:', error);
+          document.getElementById('colorContainer').innerHTML =
+            '<div class="empty-state">Error loading color tokens. Make sure equality-tokens.json is in the same directory.</div>';
+        });
+
+      function renderColors(data) {
+        const container = document.getElementById('colorContainer');
+        container.innerHTML = '';
+
+        // Render each theme (Light, Dark)
+        Object.keys(data).forEach((theme) => {
+          const themeSection = document.createElement('div');
+          themeSection.className = 'theme-section';
+          themeSection.setAttribute('data-theme', theme.toLowerCase());
+
+          const themeTitle = document.createElement('h2');
+          themeTitle.className = 'theme-title';
+          themeTitle.textContent = `${theme} Theme`;
+          themeSection.appendChild(themeTitle);
+
+          const colors = data[theme];
+          const grouped = groupColors(colors);
+
+          // Render color groups
+          Object.keys(grouped)
+            .sort()
+            .forEach((groupName) => {
+              const groupDiv = document.createElement('div');
+              groupDiv.className = 'color-group';
+              groupDiv.setAttribute('data-group', groupName.toLowerCase());
+
+              const groupTitle = document.createElement('h3');
+              groupTitle.className = 'group-title';
+              groupTitle.textContent = groupName;
+              groupDiv.appendChild(groupTitle);
+
+              const palette = document.createElement('div');
+              palette.className = 'color-palette';
+
+              const groupColors = grouped[groupName];
+              groupColors.forEach((color) => {
+                const swatch = createColorSwatch(
+                  color.name,
+                  color.hex,
+                  color.components,
+                  color.colorSpace
+                );
+                palette.appendChild(swatch);
+              });
+
+              groupDiv.appendChild(palette);
+              themeSection.appendChild(groupDiv);
+            });
+
+          container.appendChild(themeSection);
+        });
+      }
+
+      function groupColors(colors) {
+        const groups = {};
+
+        // Access the color object within the theme
+        const colorObj = colors.color || colors;
+
+        function processColorObject(obj, prefix = '') {
+          Object.keys(obj).forEach((key) => {
+            const value = obj[key];
+            const fullPath = prefix ? `${prefix}.${key}` : key;
+
+            if (value.$type === 'color' && value.$value) {
+              // Found a color value
+              const colorValue = value.$value;
+
+              // Determine group name based on prefix
+              let groupName;
+              if (!prefix) {
+                // Top-level colors (like "black", "white", "background", etc.)
+                groupName = 'Single Colors';
+              } else {
+                // Group by the first part of the path (e.g., "text", "card", "badge")
+                const firstPart = prefix.split('.')[0];
+                groupName = firstPart.charAt(0).toUpperCase() + firstPart.slice(1);
+              }
+
+              if (!groups[groupName]) {
+                groups[groupName] = [];
+              }
+
+              groups[groupName].push({
+                name: fullPath,
+                hex: colorValue.hex || '',
+                components: colorValue.components,
+                colorSpace: colorValue.colorSpace,
+              });
+            } else if (typeof value === 'object' && value !== null && !value.$type) {
+              // Check if this is a color palette (has numeric keys like 100, 200, etc.)
+              const keys = Object.keys(value);
+              const isPalette = keys.every((k) => {
+                const numKey = parseInt(k, 10);
+                return !isNaN(numKey) && value[k].$type === 'color';
+              });
+
+              if (isPalette) {
+                // Color palette (like "fuschia", "lilac", etc.)
+                const paletteName = key.charAt(0).toUpperCase() + key.slice(1);
+                if (!groups[paletteName]) {
+                  groups[paletteName] = [];
+                }
+
+                keys
+                  .sort((a, b) => parseInt(a, 10) - parseInt(b, 10))
+                  .forEach((shade) => {
+                    const shadeValue = value[shade];
+                    if (shadeValue.$type === 'color' && shadeValue.$value) {
+                      groups[paletteName].push({
+                        name: `${key}-${shade}`,
+                        hex: shadeValue.$value.hex || '',
+                        components: shadeValue.$value.components,
+                        colorSpace: shadeValue.$value.colorSpace,
+                      });
+                    }
+                  });
+              } else {
+                // Nested object, recurse
+                processColorObject(value, fullPath);
+              }
+            }
+          });
+        }
+
+        processColorObject(colorObj);
+
+        return groups;
+      }
+
+      function createColorSwatch(name, hex, components, colorSpace) {
+        const swatch = document.createElement('div');
+        swatch.className = 'color-swatch';
+        swatch.setAttribute('data-name', name.toLowerCase());
+
+        const [r, g, b] = components;
+
+        const colorBox = document.createElement('div');
+        colorBox.className = 'color-box';
+
+        colorBox.style.backgroundColor =
+          colorSpace && components?.length > 0
+            ? `color(${colorSpace || 'display-p3'} ${r} ${g} ${b})`
+            : hex;
+
+        const info = document.createElement('div');
+        info.className = 'color-info';
+
+        const colorName = document.createElement('div');
+        colorName.className = 'color-name';
+        colorName.textContent = name;
+
+        const colorValue = document.createElement('div');
+        colorValue.className = 'color-value';
+        colorValue.textContent = hex;
+
+        info.appendChild(colorName);
+        info.appendChild(colorValue);
+        swatch.appendChild(colorBox);
+        swatch.appendChild(info);
+
+        return swatch;
+      }
+
+      function setupSearch(data) {
+        const searchInput = document.getElementById('searchInput');
+        searchInput.addEventListener('input', (e) => {
+          const searchTerm = e.target.value.toLowerCase();
+          const swatches = document.querySelectorAll('.color-swatch');
+          const groups = document.querySelectorAll('.color-group');
+          const themes = document.querySelectorAll('.theme-section');
+
+          let hasVisibleColors = false;
+
+          swatches.forEach((swatch) => {
+            const name = swatch.getAttribute('data-name');
+            if (name.includes(searchTerm)) {
+              swatch.style.display = '';
+              hasVisibleColors = true;
+            } else {
+              swatch.style.display = 'none';
+            }
+          });
+
+          // Hide empty groups
+          groups.forEach((group) => {
+            const visibleSwatches = group.querySelectorAll(
+              '.color-swatch:not([style*="display: none"])'
+            );
+            if (visibleSwatches.length === 0) {
+              group.style.display = 'none';
+            } else {
+              group.style.display = '';
+              hasVisibleColors = true;
+            }
+          });
+
+          // Hide empty themes
+          themes.forEach((theme) => {
+            const visibleGroups = theme.querySelectorAll(
+              '.color-group:not([style*="display: none"])'
+            );
+            if (visibleGroups.length === 0) {
+              theme.style.display = 'none';
+            } else {
+              theme.style.display = '';
+            }
+          });
+        });
+      }
+    </script>
+  </body>
+</html>

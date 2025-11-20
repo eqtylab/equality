@@ -122,7 +122,7 @@ const Pagination = ({
       pageButtons.push(
         <Button
           key={i}
-          variant={currentPage === i ? 'primary' : 'outline'}
+          variant={currentPage === i ? 'primary' : 'tertiary'}
           size="sm"
           onClick={() => handlePageChange(i)}
         >
@@ -139,20 +139,16 @@ const Pagination = ({
       {/* Left side: Info text with inline dropdown */}
       <div className={styles['info-container']}>
         {showInfo && hasFilteredItems && (
-          <div className={styles['info-text']}>
+          <>
             <span>Showing {startItem} to</span>
             {onItemsPerPageChange ? (
               <Select value={itemsPerPage.toString()} onValueChange={handleItemsPerPageChange}>
-                <SelectTrigger className={styles['select-trigger']}>
+                <SelectTrigger>
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
                   {itemsPerPageOptions.map((option) => (
-                    <SelectItem
-                      key={option}
-                      value={option.toString()}
-                      className={styles['select-item']}
-                    >
+                    <SelectItem key={option} value={option.toString()}>
                       {option}
                     </SelectItem>
                   ))}
@@ -164,32 +160,32 @@ const Pagination = ({
             <span>
               of {filteredItems} {type}
             </span>
-          </div>
+          </>
         )}
       </div>
 
       {/* Right side: Page navigation */}
       <div className={styles['page-navigation-container']}>
         <Button
-          variant="outline"
+          variant="tertiary"
           size="sm"
           onClick={handlePreviousPage}
           disabled={isFirstPage}
           aria-label="Previous page"
         >
-          <ChevronLeftIcon className={styles['icon']} />
+          <ChevronLeftIcon />
         </Button>
 
         {getVisiblePages()}
 
         <Button
-          variant="outline"
+          variant="tertiary"
           size="sm"
           onClick={handleNextPage}
           disabled={isLastPage}
           aria-label="Next page"
         >
-          <ChevronRightIcon className={styles['icon']} />
+          <ChevronRightIcon />
         </Button>
       </div>
     </div>

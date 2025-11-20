@@ -7,17 +7,14 @@ import { cn } from '@/lib/utils';
 const badgeVariants = cva(styles['badge'], {
   variants: {
     variant: {
-      default: styles['badge--default'],
       primary: styles['badge--primary'],
-      secondary: styles['badge--secondary'],
       destructive: styles['badge--destructive'],
-      outline: styles['badge--outline'],
       neutral: styles['badge--neutral'],
       success: styles['badge--success'],
     },
   },
   defaultVariants: {
-    variant: 'default',
+    variant: 'primary',
   },
 });
 

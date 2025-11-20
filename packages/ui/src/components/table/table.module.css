@@ -19,20 +19,21 @@
 }
 
 .table-footer {
-  @apply bg-muted/50 border-t last:[&>tr]:border-b-0;
+  @apply bg-greyscale-400 border-t last:[&>tr]:border-b-0;
   @apply font-medium;
 }
 
 .table-row {
+  --mix-color: var(--color-brand-primary);
   @apply border-b transition-colors;
-  @apply hover:bg-lilac-button;
-  @apply data-[state=selected]:bg-lilac-button;
+  @apply hover:bg-mixed-dark;
+  @apply data-[state=selected]:bg-mixed-dark;
 }
 
 .table-head {
   @apply h-12;
   @apply px-4 align-middle;
-  @apply text-muted-foreground text-left font-medium transition-colors;
+  @apply text-text-secondary text-left font-medium transition-colors;
   @apply [&:has([role=checkbox])]:pr-0;
 }
 
@@ -43,5 +44,5 @@
 }
 
 .table-caption {
-  @apply text-muted-foreground mt-4 text-sm;
+  @apply text-text-secondary mt-4 text-sm;
 }

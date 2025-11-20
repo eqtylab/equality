@@ -4,14 +4,18 @@
   @apply space-y-2;
 }
 
+.form-label {
+  @apply inline-block;
+}
+
 .form-label--failure {
-  @apply text-destructive;
+  @apply text-button-danger-text;
 }
 
 .form-description {
-  @apply text-muted-foreground text-sm;
+  @apply text-text-secondary text-sm;
 }
 
 .form-message {
-  @apply text-destructive text-sm font-medium;
+  @apply text-button-danger-text text-sm font-medium;
 }

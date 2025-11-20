@@ -6,22 +6,40 @@ description: "Progress with sizes and variants"
 
 import { Progress } from "@eqtylab/equality";
 
-## Percentage: 0%
+## Percentage Examples
+
+### Value: 0
 
 <Progress value={0} client:only="react" />
 
-## Percentage: 75%
+### Value: 75%
 
 <Progress value={75} client:only="react" />
 
-## Percentage: 100%
+### Value: 100%
 
 <Progress value={100} client:only="react" />
 
-## Color prop
+## Color Variants
 
-<Progress value={50} color="bg-lilac" client:only="react" />
+This component supports several color variants that correspond with the brand colors. You can use these variants — such as `primary`, `secondary`, `green`, `red`, and `gold` — to visually distinguish different types of progress bars or their context according to your design needs. Each color maps directly to a brand color in the Equality design system, allowing for consistent and meaningful styling in your application.
 
-## Color prop
+### Primary (default)
 
-<Progress value={50} color="bg-mint" client:only="react" />
+<Progress value={50} color="primary" client:only="react" />
+
+### Secondary
+
+<Progress value={50} color="secondary" client:only="react" />
+
+### Green
+
+<Progress value={50} color="green" client:only="react" />
+
+### Red
+
+<Progress value={50} color="red" client:only="react" />
+
+### Yellow
+
+<Progress value={50} color="yellow" client:only="react" />

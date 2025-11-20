@@ -9,9 +9,9 @@
 }
 
 .label {
-  @apply text-muted-foreground text-xs;
+  @apply text-text-secondary text-xs;
 }
 
 .description {
-  @apply text-foreground text-sm font-semibold;
+  @apply text-text-primary text-sm font-semibold;
 }

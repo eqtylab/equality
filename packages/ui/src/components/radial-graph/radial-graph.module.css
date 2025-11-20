@@ -5,6 +5,18 @@
   @apply aspect-square w-full;
 }
 
+.radial-graph.sm {
+  @apply h-36 w-max;
+}
+
+.radial-graph.md {
+  @apply h-40 w-max;
+}
+
+.radial-graph.lg {
+  @apply h-44 w-max;
+}
+
 .bars-container {
   @apply absolute inset-0 translate-x-1/2;
 }
@@ -32,12 +44,28 @@
 
 .bar-background {
   @apply absolute inset-0;
-  @apply from-muted-foreground/50 bg-linear-to-b to-50%;
+  @apply from-greyscale-800 bg-linear-to-b to-50%;
 }
 
 .bar-gradient {
   @apply absolute inset-0;
-  @apply from-highlight bg-linear-to-b to-50% transition-opacity;
+  @apply bg-linear-to-b to-50% transition-opacity;
+}
+
+.bar-gradient--primary {
+  @apply from-brand-primary;
+}
+
+.bar-gradient--success {
+  @apply from-brand-green;
+}
+
+.bar-gradient--danger {
+  @apply from-brand-red;
+}
+
+.bar-gradient--warning {
+  @apply from-brand-yellow;
 }
 
 .bar-gradient--active {
@@ -56,6 +84,18 @@
 
 .label {
   @apply text-5xl font-medium;
+}
+
+.label.sm {
+  @apply text-2xl;
+}
+
+.label.md {
+  @apply text-3xl;
+}
+
+.label.lg {
+  @apply text-4xl;
 }
 
 .sub-label {

@@ -1,17 +1,18 @@
 import * as React from 'react';
-import { Check, ChevronDown } from 'lucide-react';
+import { ChevronDown } from 'lucide-react';
 
 import { Button } from '@/components/button/button';
 import {
   DropdownMenu,
   DropdownMenuCheckboxItem,
   DropdownMenuContent,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/dropdown-menu/dropdown-menu';
-import styles from '@/components/filter-dropdown-menu/filter-dropdown-menu.module.css';
+import styles from '@/components/filter-dropdown/filter-dropdown.module.css';
 import { cn } from '@/lib/utils';
 
-const CheckIcon = Check as React.ComponentType<{ className?: string }>;
 const ChevronDownIcon = ChevronDown as React.ComponentType<{ className?: string }>;
 
 interface FilterOption {
@@ -25,8 +26,8 @@ interface FilterDropdownProps {
   selectedFilters: string[];
   onToggleFilter: (value: string) => void;
   onClearAll: () => void;
-  className?: string;
-  contentWidth?: string;
+  buttonClassName?: string;
+  contentClassName?: string;
 }
 
 const FilterDropdown = ({
@@ -35,8 +36,8 @@ const FilterDropdown = ({
   selectedFilters,
   onToggleFilter,
   onClearAll,
-  className,
-  contentWidth = 'w-56', // TODO: Sort out - should be a className
+  buttonClassName,
+  contentClassName,
 }: FilterDropdownProps) => {
   const hasSelectedFilters = selectedFilters.length > 0;
   const filteredOptions = options
@@ -49,35 +50,29 @@ const FilterDropdown = ({
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button
-          variant="outline"
-          className={cn(
-            styles['selector-button'],
-            hasSelectedFilters && styles['selector-button--selected'],
-            className
-          )}
-        >
+        <Button variant="tertiary" className={cn(styles['selector-button'], buttonClassName)}>
           <span className={styles['selector-button-inner']}>
             {label}
             {hasSelectedFilters && (
               <span className={styles['selected-filters-count']}>{selectedFilters.length}</span>
             )}
           </span>
-          <ChevronDownIcon className={styles['text-muted-foreground']} />
+          <ChevronDownIcon className={styles['chevron-icon']} />
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent
         align="end"
-        className={cn(styles['dropdown-menu-content'], contentWidth)}
+        className={cn(styles['dropdown-menu-content'], contentClassName)}
       >
-        <div className={styles['dropdown-menu-content-header']}>
-          <span className={styles['header-title']}>Filters</span>
+        <DropdownMenuLabel>
+          Filters
           {hasSelectedFilters && (
-            <Button variant="link" size="sm" onClick={onClearAll} className={styles['clear-btn']}>
+            <Button variant="link" size="sm" onClick={onClearAll}>
               Clear all
             </Button>
           )}
-        </div>
+        </DropdownMenuLabel>
+        <DropdownMenuSeparator />
         {filteredOptions.map((option) => {
           const isSelected = selectedFilters.includes(option.value);
 
@@ -87,22 +82,8 @@ const FilterDropdown = ({
               checked={isSelected}
               onCheckedChange={() => onToggleFilter(option.value)}
               onSelect={(e) => e.preventDefault()}
-              className={styles['dropdown-menu-item']}
             >
-              <span className={styles['dropdown-menu-item-indicator']}>
-                {/* TODO: Check if this extra wrapper is needed */}
-                <div
-                  className={cn(
-                    styles['indicator-inner'],
-                    isSelected
-                      ? styles['indicator-inner--selected']
-                      : styles['indicator-inner--not-selected']
-                  )}
-                >
-                  {isSelected && <CheckIcon className={styles['check-icon']} />}
-                </div>
-              </span>
-              <span className={styles['dropdown-menu-item-label']}>{option.label}</span>
+              {option.label}
             </DropdownMenuCheckboxItem>
           );
         })}

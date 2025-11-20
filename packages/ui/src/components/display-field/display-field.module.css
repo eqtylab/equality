@@ -1,23 +1,22 @@
 @reference '../../theme/theme.module.css';
 
 .display-field {
-  @apply border-border bg-black-5 rounded-md border;
-  @apply text-foreground text-base text-clip md:text-sm;
+  @apply border-border bg-popover-background rounded-md border;
+  @apply text-text-primary text-base text-clip md:text-sm;
   @apply flex h-9.5 w-full overflow-clip;
-  @apply ring-offset-background ring-ring/70;
-  @apply focus-visible:ring-1 focus-visible:ring-offset-2;
+  @apply focus-ring;
 }
 
 .display-field--neutral {
-  @apply bg-lilac;
+  @apply bg-brand-primary;
 }
 
 .display-field--success {
-  @apply bg-mint;
+  @apply bg-brand-green;
 }
 
 .display-field--failure {
-  @apply bg-red;
+  @apply bg-brand-red;
 }
 
 .prefix {

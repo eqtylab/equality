@@ -11,12 +11,12 @@
 }
 
 .popover-trigger--active {
-  @apply text-foreground;
+  @apply text-text-primary;
 }
 
 .calendar-icon {
-  @apply text-muted-foreground;
-  @apply absolute top-1/2 left-3 size-4 -translate-y-1/2;
+  @apply text-text-secondary;
+  @apply absolute left-3 top-1/2 size-4 -translate-y-1/2;
 }
 
 .date-range {
@@ -24,23 +24,19 @@
 }
 
 .clear-btn {
-  @apply absolute top-1/2 right-2 size-6 -translate-y-1/2;
+  @apply absolute right-2 top-1/2 size-6 -translate-y-1/2;
 }
 
 .popover-content {
-  @apply w-auto p-0;
-}
-
-.popover-content-inner {
-  @apply space-y-4 p-4;
+  @apply w-max min-w-max space-y-4;
 }
 
 .month-navigation {
-  @apply flex items-center justify-between;
+  @apply flex-center-between;
 }
 
 .month-navigation-btn {
-  @apply text-muted-foreground hover:text-foreground size-8 p-0;
+  @apply text-text-secondary hover:text-text-primary size-8 p-0;
 }
 
 .month-date-display {
@@ -48,11 +44,11 @@
 }
 
 .month-date-display-title {
-  @apply text-foreground text-sm font-semibold;
+  @apply text-text-primary text-sm font-semibold;
 }
 
 .month-date-display-subtitle {
-  @apply text-muted-foreground text-xs;
+  @apply text-text-secondary text-xs;
   @apply mt-1;
 }
 
@@ -63,8 +59,8 @@
 
 .day-headers-inner {
   @apply h-4;
-  @apply text-muted-foreground text-xs font-medium;
-  @apply flex items-center justify-center;
+  @apply text-text-secondary text-xs font-medium;
+  @apply flex-center;
 }
 
 .calendar-grid {
@@ -73,23 +69,19 @@
 
 .calendar-day-btn {
   @apply text-sm font-normal transition-colors;
-  @apply size-9 rounded-md p-0;
+  @apply block size-9 rounded-md p-0;
 }
 
 .calendar-day-btn--selected {
-  @apply bg-lilac hover:bg-lilac/90;
-  @apply text-background;
-}
-
-.calendar-day-btn--not-selected {
-  @apply hover:bg-lilac/20;
+  @apply bg-brand-primary;
+  @apply text-text-primary;
 }
 
 .calendar-day-btn--today {
-  @apply text-lilac font-semibold;
-  @apply border-lilac/30 border;
+  @apply font-semibold;
+  @apply border-brand-primary border;
 }
 
 .calendar-day-btn--in-range {
-  @apply bg-lilac/10 text-lilac;
+  @apply bg-brand-primary/30;
 }

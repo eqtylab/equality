@@ -34,7 +34,7 @@ const TruncatedDescription = ({
     <div className={cn(styles['truncated-description'], className)}>
       <div dangerouslySetInnerHTML={{ __html: displayDescription }} />
       {isLongDescription && (
-        <Button variant="link" size="sm" className={styles['show-btn']} onClick={handleToggle}>
+        <Button variant="link" size="sm" onClick={handleToggle}>
           {expanded ? 'Show less' : 'Show more'}
         </Button>
       )}

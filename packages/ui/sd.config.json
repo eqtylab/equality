@@ -1,0 +1,23 @@
+{
+  "source": ["../tokens/equality-tokens.json"],
+  "platforms": {
+    "css": {
+      "transforms": ["attribute/cti", "name/kebab", "color/css"],
+      "buildPath": "src/theme/generated/",
+      "files": [
+        {
+          "destination": "light-tokens.css",
+          "format": "css/light"
+        },
+        {
+          "destination": "dark-tokens.css",
+          "format": "css/dark"
+        },
+        {
+          "destination": "tailwind-tokens.css",
+          "format": "tailwind"
+        }
+      ]
+    }
+  }
+}

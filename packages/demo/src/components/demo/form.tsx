@@ -32,7 +32,7 @@ export function DefaultForm() {
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)}>
+      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
         <FormField
           control={form.control}
           name="username"
@@ -46,7 +46,7 @@ export function DefaultForm() {
             </FormItem>
           )}
         />
-        <Button type="submit" size="sm" variant="outline">
+        <Button type="submit" size="sm" variant="tertiary">
           Submit
         </Button>
       </form>
@@ -68,7 +68,11 @@ export function FormWithErrors() {
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} noValidate>
+      <form
+        onSubmit={form.handleSubmit(onSubmit)}
+        noValidate
+        className="space-y-4"
+      >
         <FormField
           control={form.control}
           name="email"
@@ -89,7 +93,7 @@ export function FormWithErrors() {
             </FormItem>
           )}
         />
-        <Button type="submit" size="sm" variant="outline">
+        <Button type="submit" size="sm" variant="tertiary">
           Submit
         </Button>
       </form>
@@ -110,7 +114,11 @@ export function FormWithDescription() {
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} noValidate>
+      <form
+        onSubmit={form.handleSubmit(onSubmit)}
+        noValidate
+        className="space-y-4"
+      >
         <FormField
           control={form.control}
           name="password"
@@ -138,7 +146,7 @@ export function FormWithDescription() {
             </FormItem>
           )}
         />
-        <Button type="submit" size="sm" variant="outline">
+        <Button type="submit" size="sm" variant="tertiary">
           Submit
         </Button>
       </form>

@@ -1,14 +1,14 @@
 @reference '../../theme/theme.module.css';
 
 .sheet-overlay {
-  @apply bg-black/80;
-  @apply fixed inset-0 z-50;
+  @apply overlay-background;
+  @apply overlay-content;
   @apply data-[state=open]:animate-in data-[state=open]:fade-in-0;
   @apply data-[state=closed]:animate-out data-[state=closed]:fade-out-0;
 }
 
 .sheet-content {
-  @apply bg-background shadow-lg;
+  @apply bg-popover-background;
   @apply fixed z-50 gap-4 p-6;
   @apply transition ease-in-out;
   @apply data-[state=open]:animate-in data-[state=open]:duration-500;
@@ -43,12 +43,8 @@
 
 .sheet-close {
   @apply rounded-sm;
-  @apply absolute top-4 right-4;
-  @apply opacity-70 transition-opacity;
-  @apply ring-offset-background;
-  @apply focus:ring-ring focus:ring-2 focus:ring-offset-2 focus:outline-hidden;
-  @apply hover:opacity-100;
-  @apply data-[state=open]:bg-secondary;
+  @apply absolute right-4 top-4;
+  @apply focus-ring;
   @apply disabled:pointer-events-none;
 }
 
@@ -72,9 +68,9 @@
 }
 
 .sheet-title {
-  @apply text-foreground text-lg font-medium;
+  @apply text-text-primary text-lg font-medium;
 }
 
 .sheet-description {
-  @apply text-muted-foreground text-sm;
+  @apply text-text-secondary text-sm;
 }

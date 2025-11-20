@@ -12,38 +12,22 @@ import React from "react";
 
 ### Default
 
-{(() => {
-const icon = React.createElement(SearchX);
-return (
-
 <EmptyTableState
-  icon={icon}
+  icon={SearchX}
   title="No Members Available"
   description="Members will appear here once they are available to be added."
 />
-)} )()}
 
 ### Without description
 
-{(() => {
-const icon = React.createElement(SearchX);
-return (
-
-<EmptyTableState icon={icon} title="No Members Available" />
-)} )()}
+<EmptyTableState icon={SearchX} title="No Members Available" />
 
 ### With Clear Button
 
-{(() => {
-const icon = React.createElement(SearchX);
-
-return (
-
 <EmptyTableState
-  icon={icon}
+  icon={SearchX}
   title="No External Users Found"
   description="Try refining your search terms or clearing filters."
   showClearButton
   onClear={() => {}}
 />
-)} )()}

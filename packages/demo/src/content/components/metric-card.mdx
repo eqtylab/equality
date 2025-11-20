@@ -7,28 +7,24 @@ description: "Metric Card with sizes and variants"
 import { MetricCard } from "@eqtylab/equality";
 import { Layers, CheckCircle2, Clock, AlertTriangle } from "lucide-react";
 
-## Default
+## Color Variants
+
+### Default
 
 <MetricCard label="Total" value={100} icon={Layers} />
 
-## Color variant: green
+### Primary
 
-<MetricCard
-  label="Success"
-  value={20}
-  colorVariant="green"
-  icon={CheckCircle2}
-/>
+<MetricCard label="Total" value={80} variant="primary" icon={Layers} />
 
-## Color variant: yellow
+### Success
 
-<MetricCard label="Pending" value={45} colorVariant="yellow" icon={Clock} />
+<MetricCard label="Success" value={20} variant="success" icon={CheckCircle2} />
 
-## Color variant: red
+### Warning
 
-<MetricCard
-  label="Failure"
-  value={80}
-  colorVariant="red"
-  icon={AlertTriangle}
-/>
+<MetricCard label="Pending" value={45} variant="warning" icon={Clock} />
+
+### Danger
+
+<MetricCard label="Failure" value={80} variant="danger" icon={AlertTriangle} />

@@ -6,10 +6,55 @@ description: "Radial Graph with sizes and variants"
 
 import { RadialGraph } from "@eqtylab/equality";
 
-## Default
+## Text variants
+
+### Default
 
 <RadialGraph percentage={100} />
 
-## Variant: with sub label
+### With sub label
 
-<RadialGraph percentage={75} displayLabel="75%" subLabel="Compliant" />
+<RadialGraph percentage={75} subLabel="Compliant" />
+
+## Graph Sizes
+
+### Small
+
+<RadialGraph percentage={60} graphSize="sm" />
+
+### Medium (default)
+
+<RadialGraph percentage={60} graphSize="md" />
+
+### Large
+
+<RadialGraph percentage={60} graphSize="lg" />
+
+## Custom display label
+
+<RadialGraph
+  percentage={50}
+  displayLabel="Halfway"
+  subLabel="There"
+  graphSize="lg"
+/>
+
+## Variants
+
+This component supports color variants using either the brand primary color or status options. Available variants are `primary` (brand primary color), `success`, `danger`, and `warning`. Use these to visually distinguish different types of radial graphs or their context according to your design needs.
+
+### Primary (default)
+
+<RadialGraph percentage={60} />
+
+### Success
+
+<RadialGraph percentage={95} variant="success" />
+
+### Danger
+
+<RadialGraph percentage={10} variant="danger" />
+
+### Warning
+
+<RadialGraph percentage={50} variant="warning" />

@@ -1,12 +1,12 @@
 @reference '../../theme/theme.module.css';
 
 .metric-card {
-  @apply bg-foreground/5 rounded-md p-3;
+  @apply bg-card-background rounded-md p-3;
   @apply flex flex-col justify-between;
 }
 
 .value-container {
-  @apply flex items-center justify-between gap-2;
+  @apply flex-center-between gap-2;
 }
 
 .value {
@@ -14,45 +14,45 @@
 }
 
 .label {
-  @apply text-foreground text-sm;
+  @apply text-text-primary text-sm;
 }
 
 .text-default {
-  @apply text-foreground;
+  @apply text-text-primary;
 }
 
-.text-red {
-  @apply text-red;
+.text-danger {
+  @apply text-red-400;
 }
 
-.text-lilac {
-  @apply text-lilac;
+.text-primary {
+  @apply text-lilac-400;
 }
 
-.text-green {
-  @apply text-mint;
+.text-success {
+  @apply text-emerald-400;
 }
 
-.text-yellow {
-  @apply text-yellow;
+.text-warning {
+  @apply text-yellow-400;
 }
 
 .bg-default {
-  @apply bg-foreground/20;
+  @apply bg-greyscale-800;
 }
 
-.bg-red {
-  @apply bg-non-compliant-secondary;
+.bg-danger {
+  @apply bg-red-800;
 }
 
-.bg-lilac {
-  @apply bg-lilac/20;
+.bg-primary {
+  @apply bg-lilac-800;
 }
 
-.bg-green {
-  @apply bg-compliant-secondary;
+.bg-success {
+  @apply bg-emerald-800;
 }
 
-.bg-yellow {
-  @apply bg-yellow/20;
+.bg-warning {
+  @apply bg-yellow-800;
 }

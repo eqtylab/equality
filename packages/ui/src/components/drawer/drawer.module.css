@@ -1,18 +1,19 @@
 @reference '../../theme/theme.module.css';
 
 .drawer-overlay {
-  @apply fixed inset-0 z-50 bg-black/80;
+  @apply overlay-content;
+  @apply overlay-background;
 }
 
 .drawer-content {
-  @apply bg-background border;
+  @apply bg-popover-background border;
   @apply mt-24 rounded-t-[10px];
   @apply fixed inset-x-0 bottom-0 z-50 h-auto;
   @appy flex flex-col;
 }
 
 .drawer-content-divider {
-  @apply bg-muted;
+  @apply bg-border;
   @apply h-2 w-[100px] rounded-full;
   @apply mx-auto mt-4;
 }
@@ -29,9 +30,9 @@
 }
 
 .drawer-title {
-  @apply text-lg leading-none font-semibold tracking-tight;
+  @apply text-lg font-semibold leading-none tracking-tight;
 }
 
 .drawer-description {
-  @apply text-muted-foreground text-sm;
+  @apply text-text-secondary text-sm;
 }

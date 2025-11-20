@@ -1,7 +1,72 @@
 @reference '../../theme/theme.module.css';
 
+.spinner-container {
+  @apply relative;
+}
+
 .spinner {
   @apply border-t-transparent;
   @apply rounded-full;
   @apply animate-spin;
+  @apply relative z-20;
+}
+
+.spinner-background {
+  @apply border-greyscale-800;
+  @apply rounded-full;
+  @apply absolute inset-0;
+}
+
+/* Size variants */
+
+.spinner-background.xs,
+.spinner.xs {
+  @apply size-4;
+  @apply border-2;
+}
+
+.spinner-background.sm,
+.spinner.sm {
+  @apply size-6;
+  @apply border-2;
+}
+
+.spinner-background.md,
+.spinner.md {
+  @apply size-8;
+  @apply border-3;
+}
+
+.spinner-background.lg,
+.spinner.lg {
+  @apply size-10;
+  @apply border-3;
+}
+
+.spinner-background.xl,
+.spinner.xl {
+  @apply size-12;
+  @apply border-4;
+}
+
+/* Color Variants */
+
+.spinner.neutral {
+  @apply border-x-text-primary border-b-text-primary;
+}
+
+.spinner.primary {
+  @apply border-x-brand-primary border-b-brand-primary;
+}
+
+.spinner.success {
+  @apply border-x-brand-green border-b-brand-green;
+}
+
+.spinner.danger {
+  @apply border-x-brand-red border-b-brand-red;
+}
+
+.spinner.warning {
+  @apply border-x-brand-yellow border-b-brand-yellow;
 }

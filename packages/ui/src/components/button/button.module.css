@@ -1,59 +1,65 @@
 @reference '../../theme/theme.module.css';
 
 .button {
-  @apply ring-offset-background rounded-md;
-  @apply text-sm font-medium whitespace-nowrap;
+  @apply rounded-md;
+  @apply whitespace-nowrap text-sm font-medium;
   @apply transition-all duration-300;
-  @apply inline-flex items-center justify-center gap-1;
-  @apply focus-visible:ring-ring focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-hidden;
+  @apply flex-center gap-1;
+  @apply cursor-pointer;
   @apply disabled:cursor-not-allowed disabled:opacity-50;
   @apply [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0;
+  @apply focus-ring;
 }
 
 .button--primary {
-  @apply border-highlight/0 bg-highlight/50 border;
-  @apply text-foreground;
-  @apply hover:not-disabled:border-highlight hover:not-disabled:bg-highlight/60;
+  --mix-color: var(--color-button-primary-fill);
+  @apply bg-(--mix-color);
+  @apply border-button-primary-border border;
+  @apply text-text-primary;
+  @apply hover:not-disabled:bg-mixed-dark;
 }
 
 .button--destructive {
-  @apply border-red/0 bg-red/50 border;
-  @apply text-foreground;
-  @apply hover:not-disabled:border-red hover:not-disabled:bg-red/60 border;
+  --mix-color: var(--color-button-danger-fill);
+  @apply bg-(--mix-color);
+  @apply border-button-danger-border border;
+  @apply text-button-danger-text;
+  @apply hover:not-disabled:bg-mixed-dark;
 }
 
 .button--secondary {
-  @apply border-foreground bg-foreground border;
-  @apply text-background;
-  @apply hover:not-disabled:border-primary hover:not-disabled:bg-primary/80;
+  --mix-color: var(--color-button-secondary-fill);
+  @apply bg-(--mix-color);
+  @apply border-button-secondary-border border;
+  @apply text-button-secondary-text;
+  @apply hover:not-disabled:bg-mixed-dark;
 }
 
 .button--tertiary {
-  @apply border-border border bg-black/60;
-  @apply text-foreground;
-  @apply hover:not-disabled:text-accent-foreground hover:not-disabled:bg-white/10;
-}
-
-.button--outline {
-  @apply border-border bg-black/60;
-  @apply text-foreground;
-  @apply hover:text-accent-foreground hover:border hover:bg-white/10;
+  --mix-color: var(--color-button-tertiary-fill);
+  @apply bg-(--mix-color);
+  @apply border-button-tertiary-border border;
+  @apply text-button-tertiary-text;
+  @apply hover:not-disabled:bg-mixed-light;
 }
 
 .button--link {
-  @apply text-lilac;
-  @apply underline-offset-4 hover:not-disabled:underline;
+  @apply text-brand-primary;
+  @apply hover:not-disabled:underline underline-offset-4;
 }
 
 .size--sm {
-  @apply h-7 rounded-md px-2;
   @apply text-xs;
 }
 
-.size--md {
+.size--sm:not(.button--link) {
+  @apply h-7 rounded-md px-2;
+}
+
+.size--md:not(.button--link) {
   @apply h-10 rounded-md px-3 py-2;
 }
 
-.size--lg {
+.size--lg:not(.button--link) {
   @apply h-11 rounded-md px-8;
 }

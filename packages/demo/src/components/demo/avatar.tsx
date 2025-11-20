@@ -2,11 +2,13 @@ import { Avatar, AvatarImage, AvatarFallback } from "@eqtylab/equality";
 
 export const AvatarDemo = ({
   variant = "default",
+  size,
 }: {
   variant?: "default" | "fallback";
+  size?: "sm" | "md" | "lg";
 }) => {
   return (
-    <Avatar>
+    <Avatar size={size}>
       <AvatarImage
         src={
           variant === "default"

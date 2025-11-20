@@ -1,7 +1,7 @@
 @reference '../../theme/theme.module.css';
 
 .card-content-header {
-  @apply flex items-center justify-between gap-2;
+  @apply flex-center-between gap-2;
 }
 
 .card-content-header--wrap {
@@ -13,9 +13,9 @@
 }
 
 .title {
-  @apply text-card-foreground grow text-lg;
+  @apply text-text-primary grow text-lg;
 }
 
 .title--button-click {
-  @apply w-full @sm/card:w-auto;
+  @apply @sm/card:w-auto w-full;
 }

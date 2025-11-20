@@ -1,9 +1,9 @@
 @reference '../../theme/theme.module.css';
 
 .page-not-found {
-  @apply flex items-center justify-center;
+  @apply flex-center;
   @apply px-8 py-16;
-  @apply text-foreground;
+  @apply text-text-primary;
 }
 
 .page-not-found-inner {
@@ -13,14 +13,13 @@
 }
 
 .icon-container {
-  @apply text-red border-red bg-red/20 border shadow-lg;
-  @apply flex items-center justify-center;
+  @apply bg-yellow-800 text-yellow-400;
+  @apply flex-center;
   @apply mx-auto size-20 rounded-full;
 }
 
 .alert-icon {
   @apply size-10;
-  @apply animate-pulse;
 }
 
 .title {
@@ -28,7 +27,7 @@
 }
 
 .description {
-  @apply text-muted-foreground;
+  @apply text-text-secondary;
 }
 
 .actions {

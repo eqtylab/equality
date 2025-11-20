@@ -33,7 +33,7 @@ const CardContentHeader = forwardRef<HTMLDivElement, CardContentHeaderProps>(
       >
         <IconCircle icon={icon} />
         {onButtonClick && (
-          <Button className={styles.button} variant="outline" size="sm" onClick={onButtonClick}>
+          <Button className={styles.button} variant="tertiary" size="sm" onClick={onButtonClick}>
             See All
           </Button>
         )}

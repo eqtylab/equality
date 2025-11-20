@@ -1,17 +1,18 @@
 @reference '../../theme/theme.module.css';
 
 .alert-dialog-overlay {
-  @apply fixed inset-0 z-50;
-  @apply bg-black/80;
+  @apply overlay-content;
+  @apply overlay-background;
   @apply data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0;
 }
 
 .alert-dialog-content {
   @apply data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[state=closed]:slide-out-to-left-1/2 data-[state=closed]:slide-out-to-top-[48%] data-[state=open]:slide-in-from-left-1/2 data-[state=open]:slide-in-from-top-[48%];
-  @apply fixed top-[50%] left-[50%] z-50 translate-x-[-50%] translate-y-[-50%];
+  @apply fixed left-[50%] top-[50%] z-50 translate-x-[-50%] translate-y-[-50%];
   @apply w-full max-w-lg;
   @apply grid gap-4 p-6;
-  @apply bg-black-5 border shadow-lg duration-200 sm:rounded-lg;
+  @apply bg-popover-background shadow-lg duration-200 sm:rounded-lg;
+  @apply border-border border;
 }
 
 .alert-dialog-header {
@@ -28,7 +29,7 @@
 }
 
 .alert-dialog-description {
-  @apply text-muted-foreground text-sm;
+  @apply text-text-secondary text-sm;
 }
 
 .alert-dialog-cancel {

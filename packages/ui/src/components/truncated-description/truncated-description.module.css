@@ -2,8 +2,5 @@
 
 .truncated-description {
   @apply text-sm;
-}
-
-.show-btn {
-  @apply h-max p-0 text-xs;
+  @apply space-y-1;
 }

@@ -1,17 +1,20 @@
 @reference '../../theme/theme.module.css';
 
 .loading-overlay {
-  @apply fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-xs;
+  @apply overlay-background;
+  @apply overlay-content;
+  @apply flex-center;
 }
 
 .content {
-  @apply flex flex-col items-center rounded-lg bg-zinc-950 p-6 shadow-xl;
+  @apply bg-background rounded-lg p-6 shadow-xl;
+  @apply flex-center flex-col;
 }
 
 .icon {
-  @apply text-purple h-10 w-10 animate-spin;
+  @apply text-brand-primary h-10 w-10 animate-spin;
 }
 
 .message {
-  @apply text-foreground mt-4 text-lg font-medium;
+  @apply text-text-primary mt-4 text-lg font-medium;
 }

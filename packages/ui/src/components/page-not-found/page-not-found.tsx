@@ -40,7 +40,7 @@ const NotFound = ({
         {/* Actions */}
         <div className={styles['actions']}>
           {showHomeButton && (
-            <Button onClick={onHomeClick} variant="primary">
+            <Button onClick={onHomeClick} variant="secondary">
               <HomeIcon className={styles['home-icon']} />
               Return Home
             </Button>

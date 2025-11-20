@@ -3,8 +3,8 @@
 .tooltip-content {
   @apply z-9999;
   @apply overflow-hidden rounded-md;
-  @apply border-border border bg-black shadow-md;
-  @apply text-foreground text-sm;
+  @apply border-border bg-popover-background border;
+  @apply text-text-primary text-sm;
   @apply px-3 py-1.5;
   @apply origin-(--radix-tooltip-content-transform-origin);
   @apply animate-in fade-in-0 zoom-in-95;

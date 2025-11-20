@@ -1,7 +1,7 @@
 @reference '../../theme/theme.module.css';
 
 .icon-square {
-  @apply bg-foreground/10;
+  @apply bg-greyscale-800;
   @apply w-max rounded-lg p-2;
 }
 
@@ -14,5 +14,5 @@
 }
 
 .icon {
-  @apply text-foreground;
+  @apply text-text-primary;
 }

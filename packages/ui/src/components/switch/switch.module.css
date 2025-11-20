@@ -5,18 +5,8 @@
   @apply transition-colors;
   @apply inline-flex shrink-0 items-center;
   @apply border-2 border-transparent;
-  @apply focus-visible:ring-ring focus-visible:ring-offset-background focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-hidden;
+  @apply focus-ring;
   @apply disabled:cursor-not-allowed disabled:opacity-50;
-}
-
-.switch--default {
-  @apply h-6 w-11;
-  @apply data-[state=checked]:bg-lilac data-[state=unchecked]:bg-lilac-button;
-}
-
-.switch--small {
-  @apply h-5 w-9;
-  @apply data-[state=checked]:bg-lilac data-[state=unchecked]:bg-lilac-button;
 }
 
 .thumb {
@@ -27,10 +17,40 @@
   @apply data-[state=unchecked]:translate-x-0;
 }
 
-.thumb--default {
+/* Size variants */
+
+.switch.sm {
+  @apply h-5 w-9;
+}
+
+.switch.md {
+  @apply h-6 w-11;
+}
+
+.switch.lg {
+  @apply h-7 w-13;
+}
+
+.thumb.sm {
+  @apply size-4 data-[state=checked]:translate-x-4;
+}
+
+.thumb.md {
   @apply size-5 data-[state=checked]:translate-x-5;
 }
 
-.thumb--small {
-  @apply size-4 data-[state=checked]:translate-x-4;
+.thumb.lg {
+  @apply size-6 data-[state=checked]:translate-x-6;
+}
+
+/* Color variants */
+
+.switch.default {
+  @apply data-[state=checked]:bg-text-primary data-[state=unchecked]:bg-greyscale-700;
+  @apply data-[state=checked]:hover:bg-greyscale-200 data-[state=unchecked]:hover:bg-greyscale-600;
+}
+
+.switch.danger {
+  @apply data-[state=checked]:bg-red-500 data-[state=unchecked]:bg-red-700;
+  @apply data-[state=checked]:hover:bg-red-600 data-[state=unchecked]:hover:bg-red-600;
 }

@@ -41,7 +41,7 @@ const SearchBar = ({
       />
       {searchQuery && (
         <Button
-          variant="outline"
+          variant="tertiary"
           size="sm"
           onClick={handleClear}
           className={styles['clear-button']}

@@ -3,13 +3,17 @@ import * as AlertDialogPrimitive from '@radix-ui/react-alert-dialog';
 
 import styles from '@/components/alert-dialog/alert-dialog.module.css';
 import { buttonVariants } from '@/components/button/button';
-import { cn } from '@/lib/utils';
+import { cn, getThemeProviderRoot } from '@/lib/utils';
 
 const AlertDialog = AlertDialogPrimitive.Root;
 
 const AlertDialogTrigger = AlertDialogPrimitive.Trigger;
 
-const AlertDialogPortal = AlertDialogPrimitive.Portal;
+const AlertDialogPortal = ({ children }: { children: React.ReactNode }) => (
+  <AlertDialogPrimitive.Portal container={getThemeProviderRoot()}>
+    {children}
+  </AlertDialogPrimitive.Portal>
+);
 
 const AlertDialogOverlay = React.forwardRef<
   React.ElementRef<typeof AlertDialogPrimitive.Overlay>,

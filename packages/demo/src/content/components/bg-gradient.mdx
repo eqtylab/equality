@@ -6,16 +6,40 @@ description: "Background Gradient with theme variants"
 
 import { BgGradientDemo } from "@/components/demo/bg-gradient";
 
-## Variants
+## Overview
 
-### Theme Lilac
+The component supports all brand colors (primary, secondary, tertiary, red, gold) and will automatically pick up new colors added to the `equality-tokens.json` file. The hex values are read directly from the JSON, keeping the component in sync with design tokens.
+
+## Theme Variants
+
+### Theme Primary
 
 <BgGradientDemo client:load />
 
-### Theme Blue
+### Theme Secondary
 
-<BgGradientDemo client:load variant="blue" />
+<BgGradientDemo client:load variant="secondary" />
+
+### Theme Tertiary
+
+<BgGradientDemo client:load variant="tertiary" />
+
+### Theme Red
+
+<BgGradientDemo client:load variant="red" />
 
 ### Theme Gold
 
 <BgGradientDemo client:load variant="gold" />
+
+## Placement Variants
+
+You can control where the background gradient appears by selecting its placement. Use the `placement` prop to choose between `"full"` (covering the entire container) or `"top"` (applying the gradient only to the top portion). This allows flexible use for backgrounds that need either total coverage or more subtle decoration across the top.
+
+### Placement Full
+
+<BgGradientDemo client:load placement="full" />
+
+### Placement Top
+
+<BgGradientDemo client:load placement="top" />

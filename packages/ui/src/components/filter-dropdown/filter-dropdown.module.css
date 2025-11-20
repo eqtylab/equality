@@ -1,0 +1,24 @@
+@reference '../../theme/theme.module.css';
+
+.selector-button {
+  @apply min-w-32;
+  @apply justify-between;
+}
+
+.selector-button-inner {
+  @apply flex items-center gap-1;
+}
+
+.selected-filters-count {
+  @apply bg-brand-primary text-text-primary;
+  @apply rounded-full px-2 py-0.5;
+  @apply text-xs font-medium;
+}
+
+.chevron-icon {
+  @apply text-text-secondary;
+}
+
+.dropdown-menu-content {
+  @apply max-h-80 w-56 overflow-auto;
+}
