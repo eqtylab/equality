@@ -21,19 +21,19 @@
   @apply text-text-primary;
 }
 
-.text-red {
+.text-danger {
   @apply text-red-400;
 }
 
-.text-lilac {
+.text-primary {
   @apply text-lilac-400;
 }
 
-.text-green {
-  @apply text-green-400;
+.text-success {
+  @apply text-emerald-400;
 }
 
-.text-yellow {
+.text-warning {
   @apply text-yellow-400;
 }
 
@@ -41,18 +41,18 @@
   @apply bg-greyscale-800;
 }
 
-.bg-red {
+.bg-danger {
   @apply bg-red-800;
 }
 
-.bg-lilac {
+.bg-primary {
   @apply bg-lilac-800;
 }
 
-.bg-green {
-  @apply bg-green-800;
+.bg-success {
+  @apply bg-emerald-800;
 }
 
-.bg-yellow {
+.bg-warning {
   @apply bg-yellow-800;
 }

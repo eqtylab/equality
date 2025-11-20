@@ -13,28 +13,18 @@ import { Layers, CheckCircle2, Clock, AlertTriangle } from "lucide-react";
 
 <MetricCard label="Total" value={100} icon={Layers} />
 
-### Green
+### Primary
 
-<MetricCard
-  label="Success"
-  value={20}
-  colorVariant="green"
-  icon={CheckCircle2}
-/>
+<MetricCard label="Total" value={80} variant="primary" icon={Layers} />
 
-### Yellow
+### Success
 
-<MetricCard label="Pending" value={45} colorVariant="yellow" icon={Clock} />
+<MetricCard label="Success" value={20} variant="success" icon={CheckCircle2} />
 
-### Red
+### Warning
 
-<MetricCard
-  label="Failure"
-  value={80}
-  colorVariant="red"
-  icon={AlertTriangle}
-/>
+<MetricCard label="Pending" value={45} variant="warning" icon={Clock} />
 
-### Lilac
+### Danger
 
-<MetricCard label="Total" value={80} colorVariant="lilac" icon={Layers} />
+<MetricCard label="Failure" value={80} variant="danger" icon={AlertTriangle} />

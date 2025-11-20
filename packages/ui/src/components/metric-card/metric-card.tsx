@@ -5,54 +5,52 @@ import { IconCircle } from '@/components/icon-circle/icon-circle';
 import styles from '@/components/metric-card/metric-card.module.css';
 import { cn } from '@/lib/utils';
 
-type ColorVariant = 'default' | 'red' | 'lilac' | 'green' | 'yellow';
+type Variant = 'default' | 'primary' | 'danger' | 'success' | 'warning';
 
 interface MetricCardProps {
   value: string | number;
   label: string;
   icon: LucideIcon;
-  colorVariant?: ColorVariant;
+  variant?: Variant;
   className?: string;
 }
 
-const COLOR_VARIANTS: Record<ColorVariant, { text: string; iconBg: string }> = {
+const VARIANTS: Record<Variant, { text: string; iconBg: string }> = {
   default: {
     text: styles['text-default'],
     iconBg: styles['bg-default'],
   },
-  red: {
-    text: styles['text-red'],
-    iconBg: styles['bg-red'],
+  primary: {
+    text: styles['text-primary'],
+    iconBg: styles['bg-primary'],
   },
-  lilac: {
-    text: styles['text-lilac'],
-    iconBg: styles['bg-lilac'],
+  danger: {
+    text: styles['text-danger'],
+    iconBg: styles['bg-danger'],
   },
-  green: {
-    text: styles['text-green'],
-    iconBg: styles['bg-green'],
+  success: {
+    text: styles['text-success'],
+    iconBg: styles['bg-success'],
   },
-  yellow: {
-    text: styles['text-yellow'],
-    iconBg: styles['bg-yellow'],
+  warning: {
+    text: styles['text-warning'],
+    iconBg: styles['bg-warning'],
   },
 };
 
-const MetricCard = ({
-  value,
-  label,
-  icon,
-  colorVariant = 'default',
-  className,
-}: MetricCardProps) => {
-  const variant = COLOR_VARIANTS[colorVariant];
+const MetricCard = ({ value, label, icon, variant = 'default', className }: MetricCardProps) => {
+  const variantStyles = VARIANTS[variant];
   const IconComponent = icon as React.ElementType;
 
   return (
     <div className={cn(styles['metric-card'], className)}>
       <div className={styles['value-container']}>
-        <p className={cn(styles.value, variant.text)}>{value}</p>
-        <IconCircle icon={IconComponent} size="md" className={cn(variant.iconBg, variant.text)} />
+        <p className={cn(styles.value, variantStyles.text)}>{value}</p>
+        <IconCircle
+          icon={IconComponent}
+          size="md"
+          className={cn(variantStyles.iconBg, variantStyles.text)}
+        />
       </div>
       <p className={styles.label}>{label}</p>
     </div>
