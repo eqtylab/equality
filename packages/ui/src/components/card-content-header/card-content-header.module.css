@@ -13,7 +13,7 @@
 }
 
 .title {
-  @apply text-card-foreground grow text-lg;
+  @apply text-text-primary grow text-lg;
 }
 
 .title--button-click {

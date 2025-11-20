@@ -9,42 +9,6 @@
 @import './tokens.css';
 
 @theme inline {
-  /* ===== Derived (Tailwind token names) =====
-     This enables @apply bg-primary, text-text-primary, etc. INSIDE CSS Modules. */
-  /* COLORS */
-  /* --color-background: hsl(var(--background)); */
-  --color-foreground: hsl(var(--foreground));
-  --color-card: hsl(var(--card));
-  --color-card-foreground: hsl(var(--card-foreground));
-  --color-popover: hsl(var(--popover));
-  --color-popover-foreground: hsl(var(--popover-foreground));
-  --color-primary: hsl(var(--primary));
-  --color-primary-foreground: hsl(var(--primary-foreground));
-  --color-secondary: hsl(var(--secondary));
-  --color-secondary-foreground: hsl(var(--secondary-foreground));
-  --color-muted: hsl(var(--muted));
-  --color-muted-foreground: hsl(var(--muted-foreground));
-  --color-accent: hsl(var(--accent));
-  --color-accent-foreground: hsl(var(--accent-foreground));
-  --color-destructive: hsl(var(--destructive));
-  --color-destructive-foreground: hsl(var(--destructive-foreground));
-  --color-ring: hsl(var(--ring));
-
-  /* Control Status Badges */
-  --color-compliant: hsl(var(--compliant));
-  --color-compliant-secondary: hsl(var(--compliant-secondary));
-  --color-non-compliant: hsl(var(--non-compliant));
-  --color-non-compliant-secondary: hsl(var(--non-compliant-secondary));
-
-  /* Primary colors */
-  --color-mint: hsl(var(--mint));
-  --color-red: hsl(var(--red));
-  --color-yellow: hsl(var(--yellow));
-  --color-lilac: #e2ccff;
-  --color-medium-lilac: #b5a3cc;
-  --color-dark-lilac: #9153c9;
-  --color-lilac-button: #4d4656;
-
   /* FONT FAMILY */
   --font-sans: 'TWK Lausanne', 'Inter', sans-serif;
 
@@ -72,67 +36,6 @@
       opacity: 1;
     }
   }
-}
-
-/* =========================================================
-   THEME PROVIDER (scoped via data-eqty-theme)
-   ========================================================= */
-
-/* Light theme */
-.root {
-  /* ===== Tokens (HSL tuples) ===== */
-  /* --background: 240, 10%, 4%; */
-  --foreground: 210 40% 98%;
-  --card: 0 0% 85%;
-  --card-foreground: 0 0% 98%;
-  --popover: 222.2 84% 4.9%;
-  --popover-foreground: 210 40% 98%;
-  --primary: 210 40% 98%;
-  --primary-foreground: 222.2 47.4% 11.2%;
-  --secondary: 217.2 32.6% 17.5%;
-  --secondary-foreground: 210 40% 98%;
-  --muted: 240 4% 16%;
-  --muted-foreground: 240 5% 65%;
-  --accent: 217.2 32.6% 17.5%;
-  --accent-foreground: 210 40% 98%;
-  --destructive: 0 62.8% 30.6%;
-  --destructive-foreground: 210 40% 98%;
-  --border: 240 4% 25%;
-  --ring: 212.7 26.8% 83.9%;
-
-  /* Control Status Badges */
-  --compliant: 142, 72%, 64%;
-  --compliant-secondary: 142, 72%, 64%, 0.2;
-
-  --non-compliant: 340, 94%, 65%;
-  --non-compliant-secondary: 340, 94%, 65%, 0.2;
-
-  /* Primary */
-  --mint: 142 69% 58%;
-  --red: 342 96% 65%;
-  --yellow: 51 100% 73%;
-}
-
-/* Dark theme */
-.root[data-eqty-theme='dark'] {
-  /* --background: 240, 10%, 4%; */
-  --foreground: 210 40% 98%;
-  --card: 0 0% 85%;
-  --card-foreground: 0 0% 98%;
-  --popover: 222.2 84% 4.9%;
-  --popover-foreground: 210 40% 98%;
-  --primary: 210 40% 98%;
-  --primary-foreground: 222.2 47.4% 11.2%;
-  --secondary: 217.2 32.6% 17.5%;
-  --secondary-foreground: 210 40% 98%;
-  --muted: 240 4% 16%;
-  --muted-foreground: 240 5% 65%;
-  --accent: 217.2 32.6% 17.5%;
-  --accent-foreground: 210 40% 98%;
-  --destructive: 0 62.8% 30.6%;
-  --destructive-foreground: 210 40% 98%;
-  --border: 240 4% 25%;
-  --ring: 212.7 26.8% 83.9%;
 }
 
 @layer base {
@@ -437,7 +340,7 @@
 }
 
 @utility overlay-background {
-  @apply bg-black/80 backdrop-blur-xs;
+  @apply backdrop-blur-xs bg-black/80;
 }
 
 @utility overlay-content {
@@ -455,7 +358,7 @@
 @utility dropdown-content {
   @apply bg-popover-background text-text-primary border-border border;
   @apply z-50 rounded-md p-1;
-  @apply overflow-x-hidden overflow-y-auto;
+  @apply overflow-y-auto overflow-x-hidden;
   @apply max-h-80 min-w-32;
   @apply data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2;
   @apply data-[state=open]:animate-in data-[state=open]:fade-in-0 data-[state=open]:zoom-in-95;

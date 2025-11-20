@@ -15,7 +15,7 @@
 }
 
 .content {
-  @apply bg-foreground/5 rounded-b-md border;
+  @apply bg-card-background rounded-b-md border;
   @apply p-3;
   @apply font-mono text-xs;
 }
