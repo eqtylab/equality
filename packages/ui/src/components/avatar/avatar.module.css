@@ -1,9 +1,20 @@
 @reference '../../theme/theme.module.css';
 
 .avatar {
-  @apply flex shrink-0;
-  @apply relative size-10;
+  @apply relative flex;
   @apply overflow-hidden rounded-full;
+}
+
+.avatar.sm {
+  @apply size-8;
+}
+
+.avatar.md {
+  @apply size-10;
+}
+
+.avatar.lg {
+  @apply size-12;
 }
 
 .avatar-image {
@@ -17,4 +28,12 @@
   @apply size-full rounded-full;
   @apply text-text-secondary font-semibold;
   @apply flex-center;
+}
+
+.avatar.sm .avatar-fallback {
+  @apply text-xs;
+}
+
+.avatar.lg .avatar-fallback {
+  @apply text-lg;
 }

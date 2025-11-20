@@ -4,12 +4,19 @@ import * as AvatarPrimitive from '@radix-ui/react-avatar';
 import styles from '@/components/avatar/avatar.module.css';
 import { cn } from '@/lib/utils';
 
-const Avatar = React.forwardRef<
-  React.ElementRef<typeof AvatarPrimitive.Root>,
-  React.ComponentPropsWithoutRef<typeof AvatarPrimitive.Root>
->(({ className, ...props }, ref) => (
-  <AvatarPrimitive.Root ref={ref} className={cn(styles.avatar, className)} {...props} />
-));
+interface AvatarProps extends React.ComponentPropsWithoutRef<typeof AvatarPrimitive.Root> {
+  size?: 'sm' | 'md' | 'lg';
+}
+
+const Avatar = React.forwardRef<React.ElementRef<typeof AvatarPrimitive.Root>, AvatarProps>(
+  ({ className, size = 'md', ...props }, ref) => (
+    <AvatarPrimitive.Root
+      ref={ref}
+      className={cn(styles.avatar, styles[size], className)}
+      {...props}
+    />
+  )
+);
 Avatar.displayName = AvatarPrimitive.Root.displayName;
 
 const AvatarImage = React.forwardRef<
