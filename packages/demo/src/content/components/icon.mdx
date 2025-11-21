@@ -1,0 +1,43 @@
+---
+layout: "@/layouts/mdx-layout.astro"
+heading: "Icon"
+description: "Icon with sizes and variants"
+---
+
+import React from "react";
+import { Icon } from "@eqtylab/equality";
+import { IconDemo } from "@/components/demo/icon";
+
+## Sizes
+
+### Small
+
+<Icon icon="Shield" size="sm" client:only="react" />
+
+## Medium (default)
+
+<Icon icon="Shield" client:only="react" />
+
+## Large
+
+<Icon icon="Shield" size="lg" client:only="react" />
+
+## Background
+
+### Square (default)
+
+<Icon icon="Shield" client:only="react" />
+
+### Circle
+
+<Icon icon="Shield" client:only="react" background="circle" />
+
+## Icons
+
+### Lucide React
+
+<Icon icon="BadgeInfo" client:only="react" background="circle" />
+
+### Custom Icons
+
+<IconDemo client:only="react" />

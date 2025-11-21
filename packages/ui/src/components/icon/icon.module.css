@@ -1,0 +1,31 @@
+@reference '../../theme/theme.module.css';
+
+.icon-container {
+  @apply bg-greyscale-800 text-text-primary;
+  @apply w-max shrink-0 p-2;
+  @apply flex items-center justify-center;
+}
+
+/* Size Variants */
+
+.size--sm .icon {
+  @apply size-4;
+}
+
+.size--md .icon {
+  @apply size-5;
+}
+
+.size--lg .icon {
+  @apply size-8;
+}
+
+/* Background Variants */
+
+.background--square {
+  @apply rounded-lg;
+}
+
+.background--circle {
+  @apply rounded-full;
+}
