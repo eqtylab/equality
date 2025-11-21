@@ -5,7 +5,7 @@ export const ToastDemo = ({
 }: {
   variant?:
     | "default"
-    | "destructive"
+    | "danger"
     | "warning"
     | "success"
     | "with-title"
@@ -28,18 +28,18 @@ export const ToastDemo = ({
     );
   }
 
-  if (variant === "destructive") {
+  if (variant === "danger") {
     return (
       <Button
         onClick={() => {
           toast({
-            variant: "destructive",
+            variant: "danger",
             title: "Error",
             description: "Something went wrong. Please try again.",
           });
         }}
       >
-        Show Destructive Toast
+        Show danger Toast
       </Button>
     );
   }

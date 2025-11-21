@@ -2,7 +2,7 @@
 
 .button {
   @apply rounded-md;
-  @apply whitespace-nowrap text-sm font-medium;
+  @apply text-sm font-medium whitespace-nowrap;
   @apply transition-all duration-300;
   @apply flex-center gap-1;
   @apply cursor-pointer;
@@ -19,7 +19,7 @@
   @apply hover:not-disabled:bg-mixed-dark;
 }
 
-.button--destructive {
+.button--danger {
   --mix-color: var(--color-button-danger-fill);
   @apply bg-(--mix-color);
   @apply border-button-danger-border border;
@@ -45,7 +45,7 @@
 
 .button--link {
   @apply text-brand-primary;
-  @apply hover:not-disabled:underline underline-offset-4;
+  @apply underline-offset-4 hover:not-disabled:underline;
 }
 
 .size--sm {

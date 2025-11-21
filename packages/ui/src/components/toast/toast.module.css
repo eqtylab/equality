@@ -3,7 +3,7 @@
 .toast-viewport {
   @apply flex flex-col-reverse sm:flex-col;
   @apply p-4;
-  @apply z-100 fixed top-0 sm:bottom-0 sm:right-0 sm:top-auto;
+  @apply fixed top-0 z-100 sm:top-auto sm:right-0 sm:bottom-0;
   @apply max-h-screen w-full md:max-w-md;
 }
 
@@ -26,7 +26,7 @@
   @apply border-brand-primary text-brand-primary bg-mixed-dark;
 }
 
-.toast--destructive {
+.toast--danger {
   @apply border-red-400 bg-red-800 text-red-400;
 }
 
@@ -43,7 +43,7 @@
   @apply h-7 rounded-md px-2;
   @apply text-xs;
   @apply rounded-md;
-  @apply whitespace-nowrap text-sm font-medium;
+  @apply text-sm font-medium whitespace-nowrap;
   @apply transition-all duration-300;
   @apply flex-center gap-1;
   @apply cursor-pointer;
@@ -56,15 +56,15 @@
   @apply hover:not-disabled:bg-mixed-light;
 }
 
-.toast--destructive .toast-action {
+.toast--danger .toast-action {
   @apply border-greyscale-400;
 }
 
-.toast--destructive:hover .toast-action {
+.toast--danger:hover .toast-action {
   @apply border-red-400 bg-red-800 text-red-400;
 }
 
-.toast--destructive:focus .toast-action {
+.toast--danger:focus .toast-action {
   @apply ring-red-400;
 }
 
@@ -72,7 +72,7 @@
   @apply text-inherit transition-colors;
   @apply rounded-md;
   @apply p-1;
-  @apply absolute right-2 top-2;
+  @apply absolute top-2 right-2;
   @apply focus-ring;
   @apply hover:text-text-primary;
 }

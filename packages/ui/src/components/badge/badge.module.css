@@ -13,7 +13,7 @@
   @apply text-badge-text-primary;
 }
 
-.badge--destructive {
+.badge--danger {
   @apply bg-badge-background-danger;
   @apply text-badge-text-danger;
 }

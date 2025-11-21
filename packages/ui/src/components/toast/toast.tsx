@@ -26,7 +26,7 @@ const toastVariants = cva(styles['toast'], {
   variants: {
     variant: {
       default: styles['toast--default'],
-      destructive: styles['toast--destructive'],
+      danger: styles['toast--danger'],
       warning: styles['toast--warning'],
       success: styles['toast--success'],
     },

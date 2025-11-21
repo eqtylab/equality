@@ -8,7 +8,7 @@ const badgeVariants = cva(styles['badge'], {
   variants: {
     variant: {
       primary: styles['badge--primary'],
-      destructive: styles['badge--destructive'],
+      danger: styles['badge--danger'],
       neutral: styles['badge--neutral'],
       success: styles['badge--success'],
     },

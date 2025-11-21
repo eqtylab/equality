@@ -8,7 +8,7 @@ const alertVariants = cva(styles['alert'], {
   variants: {
     variant: {
       default: styles['alert--default'],
-      destructive: styles['alert--destructive'],
+      danger: styles['alert--danger'],
     },
   },
   defaultVariants: {
