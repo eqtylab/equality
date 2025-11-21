@@ -16,6 +16,7 @@ const iconVariants = cva(styles['icon-container'], {
     background: {
       square: styles['background--square'],
       circle: styles['background--circle'],
+      transparent: styles['background--transparent'],
     },
   },
   defaultVariants: {
@@ -27,9 +28,9 @@ const iconVariants = cva(styles['icon-container'], {
 export interface IconProps
   extends React.HTMLAttributes<HTMLDivElement>,
     VariantProps<typeof iconVariants> {
-  icon: React.ReactElement | keyof typeof LucideIcons;
+  icon: React.ReactElement | string;
   size?: 'sm' | 'md' | 'lg';
-  background?: 'square' | 'circle';
+  background?: 'square' | 'circle' | 'transparent';
 }
 
 const Icon = forwardRef<HTMLDivElement, IconProps>(

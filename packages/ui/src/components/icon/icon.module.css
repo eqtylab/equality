@@ -1,9 +1,14 @@
 @reference '../../theme/theme.module.css';
 
 .icon-container {
-  @apply bg-greyscale-800 text-text-primary;
-  @apply w-max shrink-0 p-2;
+  @apply text-text-primary;
+  @apply w-max shrink-0;
   @apply flex items-center justify-center;
+}
+
+.icon-container:not(.background--transparent) {
+  @apply bg-greyscale-800;
+  @apply p-2;
 }
 
 /* Size Variants */
