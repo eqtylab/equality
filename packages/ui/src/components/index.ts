@@ -55,3 +55,4 @@ export * from './toast/toast';
 export * from './tooltip/tooltip';
 export * from './truncated-description/truncated-description';
 export * from './icon/icon';
+export * from './heading/heading';
