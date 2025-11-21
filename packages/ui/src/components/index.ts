@@ -21,8 +21,6 @@ export * from './filter-badge/filter-badge';
 export * from './filter-dropdown/filter-dropdown';
 export * from './form/form';
 export * from './icon-button/icon-button';
-export * from './icon-circle/icon-circle';
-export * from './icon-square/icon-square';
 export * from './info-card/info-card';
 export * from './input/input';
 export * from './label/label';
