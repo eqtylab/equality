@@ -1,6 +1,5 @@
 import React from "react";
 import { FilledTabs, Card, CardContent } from "@eqtylab/equality";
-import { Shield } from "lucide-react";
 
 export function FilledTabsDemo() {
   const [activeTab, setActiveTab] = React.useState("declarations");
@@ -11,7 +10,7 @@ export function FilledTabsDemo() {
         {
           label: "Declarations",
           value: "declarations",
-          icon: Shield,
+          icon: "Shield",
           content: (
             <Card>
               <CardContent>Declarations Content</CardContent>
@@ -21,7 +20,7 @@ export function FilledTabsDemo() {
         {
           label: "Reviews",
           value: "reviews",
-          icon: Shield,
+          icon: "Shield",
           content: (
             <Card>
               <CardContent>Reviews Content</CardContent>

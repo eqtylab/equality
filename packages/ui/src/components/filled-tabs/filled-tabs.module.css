@@ -13,22 +13,26 @@
 .tabs-trigger {
   @apply text-text-secondary text-sm font-medium;
   @apply relative z-10;
-  @apply border-border border-b-0 border-r last:border-r-0;
+  @apply border-border border-r border-b-0 last:border-r-0;
   @apply flex gap-2;
   @apply w-full;
   @apply px-3 py-1.5;
+}
+
+.tabs-trigger .tabs-icon {
+  @apply text-text-secondary;
+}
+
+.tabs-trigger[data-state='active'] .tabs-icon {
+  @apply text-black;
 }
 
 .tabs-list .tabs-trigger {
   @apply data-[state=active]:border-transparent data-[state=active]:text-black;
 }
 
-.icon {
-  @apply size-4;
-}
-
 .active-tab-indicator {
-  @apply bg-brand-primary -z-1 absolute inset-0 h-full w-full rounded-sm;
+  @apply bg-brand-primary absolute inset-0 -z-1 h-full w-full rounded-sm;
 }
 
 .content {

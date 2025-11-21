@@ -37,22 +37,22 @@
   @apply text-yellow-400;
 }
 
-.bg-default {
+.value-container .bg-default {
   @apply bg-greyscale-800;
 }
 
-.bg-danger {
+.value-container .bg-danger {
   @apply bg-red-800;
 }
 
-.bg-primary {
+.value-container .bg-primary {
   @apply bg-lilac-800;
 }
 
-.bg-success {
+.value-container .bg-success {
   @apply bg-emerald-800;
 }
 
-.bg-warning {
+.value-container .bg-warning {
   @apply bg-yellow-800;
 }

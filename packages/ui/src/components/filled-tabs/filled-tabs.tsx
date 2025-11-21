@@ -1,6 +1,7 @@
 import { motion } from 'motion/react';
 
 import styles from '@/components/filled-tabs/filled-tabs.module.css';
+import { Icon } from '@/components/icon/icon';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/tabs/tabs';
 import { cn } from '@/lib/utils';
 
@@ -10,7 +11,7 @@ interface FilledTabsProps {
   items: {
     label: string;
     value: string;
-    icon: React.ElementType;
+    icon: React.ReactElement | string;
     content: React.ReactNode;
   }[];
   className?: string;
@@ -28,7 +29,7 @@ const FilledTabs = ({ items, onValueChange, activeTab, className }: FilledTabsPr
       className={cn(styles['tabs'], className)}
     >
       <TabsList className={styles['tabs-list']}>
-        {items.map(({ label, value, icon: Icon }) => {
+        {items.map(({ label, value, icon }) => {
           const isActive = activeTab === value;
 
           return (
@@ -38,7 +39,12 @@ const FilledTabs = ({ items, onValueChange, activeTab, className }: FilledTabsPr
               className={styles['tabs-trigger']}
               data-tour={`${value}-tab-overview`}
             >
-              <Icon className={styles['icon']} />
+              <Icon
+                icon={icon}
+                background="transparent"
+                size="sm"
+                className={styles['tabs-icon']}
+              />
               {label}
               {isActive && (
                 <motion.span

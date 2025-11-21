@@ -2,12 +2,12 @@ import { forwardRef } from 'react';
 
 import { Button } from '@/components/button/button';
 import styles from '@/components/card-content-header/card-content-header.module.css';
-import { IconCircle } from '@/components/icon-circle/icon-circle';
+import { Icon } from '@/components/icon/icon';
 import { cn } from '@/lib/utils';
 
 export interface CardContentHeaderProps {
   className?: string;
-  icon?: React.ElementType;
+  icon: React.ReactElement | string;
   heading?: string;
   onButtonClick?: () => void;
 }
@@ -31,7 +31,7 @@ const CardContentHeader = forwardRef<HTMLDivElement, CardContentHeaderProps>(
         )}
         {...props}
       >
-        <IconCircle icon={icon} />
+        <Icon icon={icon} background="circle" />
         {onButtonClick && (
           <Button className={styles.button} variant="tertiary" size="sm" onClick={onButtonClick}>
             See All
