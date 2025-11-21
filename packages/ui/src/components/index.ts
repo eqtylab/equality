@@ -47,6 +47,7 @@ export * from './sort-selector/sort-selector';
 export * from './spinner/spinner';
 export * from './switch/switch';
 export * from './sort-button/sort-button';
+export * from './table/table-components';
 export * from './table/table';
 export * from './tabs/tabs';
 export * from './textarea/textarea';
