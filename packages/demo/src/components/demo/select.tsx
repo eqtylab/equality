@@ -5,8 +5,6 @@ import {
   Select,
   SelectTrigger,
   SelectItem,
-  SelectLabel,
-  SelectSeparator,
 } from "@eqtylab/equality";
 
 export function SelectDemo({
