@@ -6,13 +6,14 @@ import { cn } from '@/lib/utils';
 
 interface AvatarProps extends React.ComponentPropsWithoutRef<typeof AvatarPrimitive.Root> {
   size?: 'sm' | 'md' | 'lg';
+  shape?: 'circle' | 'square';
 }
 
 const Avatar = React.forwardRef<React.ElementRef<typeof AvatarPrimitive.Root>, AvatarProps>(
-  ({ className, size = 'md', ...props }, ref) => (
+  ({ className, size = 'md', shape = 'circle', ...props }, ref) => (
     <AvatarPrimitive.Root
       ref={ref}
-      className={cn(styles.avatar, styles[size], className)}
+      className={cn(styles.avatar, styles[size], styles[shape], className)}
       {...props}
     />
   )

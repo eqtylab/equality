@@ -2,8 +2,23 @@
 
 .avatar {
   @apply relative flex;
-  @apply overflow-hidden rounded-full;
+  @apply overflow-hidden;
 }
+
+.avatar-image {
+  @apply size-full;
+  @apply aspect-square;
+}
+
+.avatar-fallback {
+  @apply border-border border;
+  @apply from-greyscale-800 to-greyscale-900 bg-gradient-to-br;
+  @apply size-full;
+  @apply text-text-secondary font-semibold;
+  @apply flex-center;
+}
+
+/* Size Variants */
 
 .avatar.sm {
   @apply size-8;
@@ -17,23 +32,22 @@
   @apply size-12;
 }
 
-.avatar-image {
-  @apply size-full;
-  @apply aspect-square;
-}
-
-.avatar-fallback {
-  @apply border-border border;
-  @apply from-greyscale-800 to-greyscale-900 bg-gradient-to-br;
-  @apply size-full rounded-full;
-  @apply text-text-secondary font-semibold;
-  @apply flex-center;
-}
-
 .avatar.sm .avatar-fallback {
   @apply text-xs;
 }
 
 .avatar.lg .avatar-fallback {
   @apply text-lg;
+}
+
+/* Shape Variants */
+
+.avatar.circle,
+.avatar.circle .avatar-fallback {
+  @apply rounded-full;
+}
+
+.avatar.square,
+.avatar.square .avatar-fallback {
+  @apply rounded-lg;
 }
