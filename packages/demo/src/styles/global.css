@@ -123,10 +123,13 @@
     & > ul,
     & > ol,
     & > table,
-    & > hr,
     & > div,
     & > span {
       @apply mb-2;
+    }
+
+    & > hr {
+      @apply mb-4;
     }
 
     & > ul,
