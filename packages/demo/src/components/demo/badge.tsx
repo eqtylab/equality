@@ -10,7 +10,7 @@ const variantOrder: BadgeVariant[] = [
   "success",
 ];
 
-export function BadgeDemo() {
+export function BadgeClosableDemo() {
   const [badges, setBadges] = useState<number[]>([1, 2, 3, 4]);
 
   const addBadge = () => {
@@ -36,6 +36,22 @@ export function BadgeDemo() {
       <Button size="sm" variant="tertiary" onClick={addBadge}>
         Add Badge
       </Button>
+    </div>
+  );
+}
+
+export function BadgeTruncateDemo() {
+  return (
+    <div className="flex flex-wrap items-center gap-2">
+      <Badge truncate truncateLength={15}>
+        This is a badge that is longer than 15 characters
+      </Badge>
+      <Badge truncate>
+        This is a badge that is longer than 50 characters and will be truncated
+      </Badge>
+      <Badge truncate>
+        did:example:123456789abcdefghi123456789abcdefghi123456789abcdefghi
+      </Badge>
     </div>
   );
 }

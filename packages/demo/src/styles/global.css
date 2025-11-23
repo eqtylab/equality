@@ -135,6 +135,13 @@
       @apply space-y-1 pl-4;
     }
 
+    & > ul strong,
+    & > ol strong,
+    & > ul b,
+    & > ol b {
+      @apply text-foreground font-medium;
+    }
+
     & > ul {
       @apply list-disc;
     }

@@ -4,6 +4,12 @@ import { X } from 'lucide-react';
 
 import styles from '@/components/badge/badge.module.css';
 import { Button } from '@/components/button/button';
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from '@/components/tooltip/tooltip';
 import { cn } from '@/lib/utils';
 
 const XIcon = X as React.ComponentType<{ className?: string }>;
@@ -27,9 +33,19 @@ export interface BadgeProps
     VariantProps<typeof badgeVariants> {
   closeable?: boolean;
   handleClosable?: () => void;
+  truncate?: boolean;
+  truncateLength?: number;
 }
 
-function Badge({ className, variant, closeable, handleClosable, ...props }: BadgeProps) {
+function Badge({
+  className,
+  variant,
+  closeable,
+  handleClosable,
+  truncate = false,
+  truncateLength = 50,
+  ...props
+}: BadgeProps) {
   const renderClosable = () => {
     if (closeable && handleClosable)
       return (
@@ -45,9 +61,27 @@ function Badge({ className, variant, closeable, handleClosable, ...props }: Badg
     return null;
   };
 
+  const renderChildren = () => {
+    const children = props.children;
+
+    if (truncate && typeof children === 'string' && children.length > truncateLength) {
+      const displayLabel = children.slice(0, truncateLength) + '...';
+      return (
+        <TooltipProvider>
+          <Tooltip>
+            <TooltipTrigger>{displayLabel}</TooltipTrigger>
+            <TooltipContent className={styles['tooltip']}>{children}</TooltipContent>
+          </Tooltip>
+        </TooltipProvider>
+      );
+    }
+
+    return children;
+  };
+
   return (
     <div className={cn(badgeVariants({ variant }), className)} {...props}>
-      {props.children}
+      {renderChildren()}
       {renderClosable()}
     </div>
   );

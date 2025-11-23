@@ -5,9 +5,22 @@ description: "Badge with sizes and variants"
 ---
 
 import { Badge } from "@eqtylab/equality";
-import { BadgeDemo } from "@/components/demo/badge";
+import { BadgeClosableDemo, BadgeTruncateDemo } from "@/components/demo/badge";
 
 ## Color Variants
+
+The Badge component comes with four color variants to visually communicate different statuses or contexts:
+
+- **Primary:** The default style, suitable for general labeling.
+- **Neutral:** For non-critical, informational, or secondary status.
+- **Danger:** Indicates an error or warning state requiring attention.
+- **Success:** Represents positive outcomes or completed statuses.
+
+Select the appropriate variant by using the `variant` prop, for example:
+
+```tsx
+<Badge variant="danger">Danger Badge</Badge>
+```
 
 ### Primary (default)
 
@@ -29,4 +42,10 @@ import { BadgeDemo } from "@/components/demo/badge";
 
 The closable variant of the Badge is commonly used to represent active filters or selections, such as when content is filtered by a search bar. This allows users to easily remove specific filters by clicking the close button on the corresponding badge.
 
-<BadgeDemo client:only="react" />
+<BadgeClosableDemo client:only="react" />
+
+## Truncation
+
+The Badge component supports text truncation for long content. Use the `truncate` prop to enable truncation, and optionally set a custom `truncateLength` (defaults to 50 characters). When text exceeds the specified length, it will be truncated with an ellipsis ("..."), and the full text will be displayed in a tooltip on hover. This is particularly useful for maintaining consistent badge sizes when displaying variable-length content.
+
+<BadgeTruncateDemo client:only="react" />

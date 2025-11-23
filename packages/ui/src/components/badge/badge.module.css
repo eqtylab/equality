@@ -48,3 +48,7 @@
 .badge--success .closable-btn {
   @apply text-badge-background-success bg-badge-text-success;
 }
+
+.tooltip {
+  @apply max-w-xs break-words;
+}
