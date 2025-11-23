@@ -1,17 +1,34 @@
 import { Heading } from "@eqtylab/equality";
 
-const HeadingDemo = ({
-  as,
-  displayAs,
-}: {
-  as: "h1" | "h2" | "h3" | "h4" | "h5" | "h6";
-  displayAs?: "h1" | "h2" | "h3" | "h4" | "h5" | "h6";
-}) => {
-  const label = displayAs ? `${as} styled as ${displayAs}` : as;
+type HeadingTagType = "h1" | "h2" | "h3" | "h4" | "h5" | "h6";
+
+interface HeadingDemoProps {
+  as?: HeadingTagType;
+  displayAs?: HeadingTagType;
+}
+
+const HeadingDemo = ({ as, displayAs }: HeadingDemoProps = {}) => {
+  // If specific props are provided, render single variant
+  if (as) {
+    const label = displayAs ? `${as} styled as ${displayAs}` : `an ${as}`;
+
+    return (
+      <Heading as={as} displayAs={displayAs}>
+        This is {label} heading
+      </Heading>
+    );
+  }
+
+  // Otherwise, render all variants
+  const variants: HeadingTagType[] = ["h1", "h2", "h3", "h4", "h5", "h6"];
 
   return (
-    <div>
-      <Heading as={as}>This is an {label} heading</Heading>
+    <div className="space-y-4">
+      {variants.map((variant) => (
+        <Heading key={variant} as={variant}>
+          This is an {variant} heading
+        </Heading>
+      ))}
     </div>
   );
 };
