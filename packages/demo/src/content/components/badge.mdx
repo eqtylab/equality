@@ -5,8 +5,9 @@ description: "Badge with sizes and variants"
 ---
 
 import { Badge } from "@eqtylab/equality";
+import { BadgeDemo } from "@/components/demo/badge";
 
-## Variants
+## Color Variants
 
 ### Primary (default)
 
@@ -23,3 +24,9 @@ import { Badge } from "@eqtylab/equality";
 ### Success
 
 <Badge variant="success">This is a badge</Badge>
+
+## Closable Variant
+
+The closable variant of the Badge is commonly used to represent active filters or selections, such as when content is filtered by a search bar. This allows users to easily remove specific filters by clicking the close button on the corresponding badge.
+
+<BadgeDemo client:only="react" />
