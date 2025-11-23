@@ -13,6 +13,7 @@
   --color-gray-medium: #4b5563;
   --color-gray-light: #d1d5db;
   --color-gold: #ffe4b8;
+  --color-muted-white: #e1e4e8;
   --color-white: #ffffff;
   --color-muted-foreground: rgba(255, 255, 255, 0.6);
   --color-card: rgba(217, 217, 217, 0.05);
@@ -110,7 +111,7 @@
     & > h6 code,
     & > li code,
     & > p code {
-      @apply bg-card text-foreground rounded-sm p-1;
+      @apply bg-card text-muted-white rounded-sm p-1;
     }
 
     & > li code,
