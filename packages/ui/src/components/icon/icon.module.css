@@ -8,10 +8,21 @@
 
 .icon-container:not(.background--transparent) {
   @apply bg-greyscale-800;
+}
+
+.icon-container:not(.background--transparent):not(.size--xs) {
   @apply p-2;
 }
 
+.icon-container:not(.background--transparent).size--xs {
+  @apply p-1.5;
+}
+
 /* Size Variants */
+
+.size--xs .icon {
+  @apply size-3;
+}
 
 .size--sm .icon {
   @apply size-4;
@@ -27,7 +38,16 @@
 
 /* Background Variants */
 
-.background--square {
+.background--square.size--xs {
+  @apply rounded;
+}
+
+.background--square.size--sm {
+  @apply rounded-md;
+}
+
+.background--square.size--md,
+.background--square.size--lg {
   @apply rounded-lg;
 }
 

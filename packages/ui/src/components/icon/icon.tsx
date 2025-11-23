@@ -9,6 +9,7 @@ import { cn } from '@/lib/utils';
 const iconVariants = cva(styles['icon-container'], {
   variants: {
     size: {
+      xs: styles['size--xs'],
       sm: styles['size--sm'],
       md: styles['size--md'],
       lg: styles['size--lg'],
@@ -29,7 +30,7 @@ export interface IconProps
   extends React.HTMLAttributes<HTMLDivElement>,
     VariantProps<typeof iconVariants> {
   icon: React.ReactElement | string;
-  size?: 'sm' | 'md' | 'lg';
+  size?: 'xs' | 'sm' | 'md' | 'lg';
   background?: 'square' | 'circle' | 'transparent';
 }
 
