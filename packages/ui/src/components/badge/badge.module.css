@@ -8,6 +8,8 @@
   @apply w-max;
 }
 
+/* Color Variants */
+
 .badge--primary {
   @apply bg-badge-background-primary;
   @apply text-badge-text-primary;
@@ -27,6 +29,8 @@
   @apply bg-badge-background-success;
   @apply text-badge-text-success;
 }
+
+/* Closable Variant */
 
 .badge .closable-btn {
   @apply size-3.5 p-0 [&_svg]:size-3;
@@ -49,6 +53,26 @@
   @apply text-badge-background-success bg-badge-text-success;
 }
 
+/* Truncate Variant */
+
 .tooltip {
   @apply max-w-xs break-words;
+}
+
+/* Icon Variant */
+
+.badge--primary .icon {
+  @apply text-badge-text-primary;
+}
+
+.badge--danger .icon {
+  @apply text-badge-text-danger;
+}
+
+.badge--neutral .icon {
+  @apply text-badge-text-not-started;
+}
+
+.badge--success .icon {
+  @apply text-badge-text-success;
 }

@@ -55,3 +55,21 @@ The closable variant of the Badge is commonly used to represent active filters o
 The Badge component supports text truncation for long content. Use the `truncate` prop to enable truncation, and optionally set a custom `truncateLength` (defaults to 50 characters). When text exceeds the specified length, it will be truncated with an ellipsis ("..."), and the full text will be displayed in a tooltip on hover. This is particularly useful for maintaining consistent badge sizes when displaying variable-length content.
 
 <BadgeTruncateDemo client:only="react" />
+
+## Icon
+
+---
+
+You can enhance your badge by displaying an icon. The `icon` prop accepts either a string corresponding to any [Lucide React](https://lucide.dev/icons/) icon key (such as `"Layers"` or `"CheckCircle"`), or you can provide a custom icon component. For custom icons, pass a React component or element to the `icon` prop.
+
+<Badge icon="Layers">This is a badge</Badge>
+
+### Usage
+
+```tsx
+// Using a Lucide React icon by name
+<Badge icon="Layers">With Lucide Icon</Badge>
+
+// Using a custom icon component
+<Badge icon={<MyCustomIcon />}>With Custom Icon</Badge>
+```

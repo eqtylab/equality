@@ -4,6 +4,7 @@ import { X } from 'lucide-react';
 
 import styles from '@/components/badge/badge.module.css';
 import { Button } from '@/components/button/button';
+import { Icon } from '@/components/icon/icon';
 import {
   Tooltip,
   TooltipContent,
@@ -35,6 +36,7 @@ export interface BadgeProps
   handleClosable?: () => void;
   truncate?: boolean;
   truncateLength?: number;
+  icon?: React.ReactElement | string;
 }
 
 function Badge({
@@ -44,6 +46,7 @@ function Badge({
   handleClosable,
   truncate = false,
   truncateLength = 50,
+  icon,
   ...props
 }: BadgeProps) {
   const renderClosable = () => {
@@ -79,8 +82,16 @@ function Badge({
     return children;
   };
 
+  const renderIcon = () => {
+    if (icon) {
+      return <Icon icon={icon} background="transparent" size="xs" className={styles['icon']} />;
+    }
+    return null;
+  };
+
   return (
     <div className={cn(badgeVariants({ variant }), className)} {...props}>
+      {renderIcon()}
       {renderChildren()}
       {renderClosable()}
     </div>

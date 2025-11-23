@@ -153,6 +153,7 @@
       @apply list-decimal;
     }
 
+    & p > a,
     & > a {
       @apply text-foreground font-medium transition-all;
       @apply underline underline-offset-4;
