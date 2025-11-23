@@ -1,0 +1,53 @@
+@reference '../../theme/theme.module.css';
+
+.badge--no-label {
+  @apply p-1;
+}
+
+.badge--in-progress {
+  @apply bg-badge-background-in-progress text-badge-text-in-progress;
+}
+
+.badge--not-started {
+  @apply bg-badge-background-not-started text-badge-text-not-started;
+}
+
+.badge--ready-for-review {
+  @apply bg-badge-background-ready-for-review text-badge-text-ready-for-review;
+}
+
+.badge--in-review {
+  @apply bg-badge-background-in-review text-badge-text-in-review;
+}
+
+.badge--comment {
+  @apply bg-badge-background-comment text-badge-text-comment;
+}
+
+.badge--non-compliant {
+  @apply bg-badge-background-non-compliant text-badge-text-non-compliant;
+}
+
+.badge--not-applicable {
+  @apply bg-badge-background-not-applicable text-badge-text-not-applicable;
+}
+
+.badge--accepted {
+  @apply bg-badge-background-accepted text-badge-text-accepted;
+}
+
+.badge--question {
+  @apply bg-badge-background-question text-badge-text-question;
+}
+
+.badge--general {
+  @apply bg-badge-background-comment text-badge-text-comment;
+}
+
+.badge--compliant {
+  @apply bg-badge-background-compliant text-badge-text-compliant;
+}
+
+.badge--non-compliant {
+  @apply bg-badge-background-non-compliant text-badge-text-non-compliant;
+}

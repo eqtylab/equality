@@ -110,12 +110,16 @@
     & > h5 code,
     & > h6 code,
     & > li code,
-    & > p code {
+    & > li strong code,
+    & > p code,
+    & > table td code {
       @apply bg-card text-muted-white rounded-sm p-1;
     }
 
     & > li code,
-    & > p code {
+    & > li strong code,
+    & > p code,
+    & > table td code {
       @apply text-sm;
     }
 

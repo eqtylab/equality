@@ -61,18 +61,6 @@
 
 /* Icon Variant */
 
-.badge--primary .icon {
-  @apply text-badge-text-primary;
-}
-
-.badge--danger .icon {
-  @apply text-badge-text-danger;
-}
-
-.badge--neutral .icon {
-  @apply text-badge-text-not-started;
-}
-
-.badge--success .icon {
-  @apply text-badge-text-success;
+.badge .icon {
+  @apply text-inherit;
 }

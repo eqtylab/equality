@@ -55,3 +55,4 @@ export * from './tooltip/tooltip';
 export * from './truncated-description/truncated-description';
 export * from './icon/icon';
 export * from './heading/heading';
+export * from './control-status-badge/control-status-badge';
