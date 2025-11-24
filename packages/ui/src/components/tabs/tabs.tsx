@@ -41,7 +41,7 @@ const Tabs = ({ id, items, className, tabsListBackground = 'transparent' }: Tabs
     return null;
   };
 
-  const renderActiveFill = (isActive: boolean) => {
+  const renderActiveStyle = (isActive: boolean) => {
     if (isActive) {
       return (
         <motion.span
@@ -86,7 +86,7 @@ const Tabs = ({ id, items, className, tabsListBackground = 'transparent' }: Tabs
             >
               {renderIcon(icon)}
               {label}
-              {renderActiveFill(isActive)}
+              {renderActiveStyle(isActive)}
             </TabsTrigger>
           );
         })}
