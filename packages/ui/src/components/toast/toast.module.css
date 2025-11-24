@@ -1,90 +1,9 @@
 @reference '../../theme/theme.module.css';
 
-.toast-viewport {
-  @apply flex flex-col-reverse sm:flex-col;
-  @apply p-4;
-  @apply fixed top-0 z-100 sm:top-auto sm:right-0 sm:bottom-0;
-  @apply max-h-screen w-full md:max-w-md;
-}
-
-.toast {
-  @apply pointer-events-auto relative transition-all;
-  @apply flex-center-between;
-  @apply border shadow-lg backdrop-blur-sm;
-  @apply w-full overflow-hidden;
-  @apply space-x-4 rounded-md p-4 pr-8;
-  @apply data-[state=open]:animate-in data-[state=open]:slide-in-from-top-full sm:data-[state=open]:slide-in-from-bottom-full;
-  @apply data-[state=closed]:animate-out data-[state=closed]:fade-out-80 data-[state=closed]:slide-out-to-right-full;
-  @apply data-[swipe=end]:animate-out data-[swipe=end]:translate-x-(--radix-toast-swipe-end-x);
-  @apply data-[swipe=move]:translate-x-(--radix-toast-swipe-move-x) data-[swipe=move]:transition-none;
-  @apply data-[swipe=cancel]:translate-x-0;
-}
-
-.toast--default {
-  --mix-color: var(--color-brand-primary);
-  --hover-darken: 50%;
-  @apply border-brand-primary text-brand-primary bg-mixed-dark;
-}
-
-.toast--danger {
-  @apply border-red-400 bg-red-800 text-red-400;
-}
-
-.toast--warning {
-  @apply border-yellow-400 bg-yellow-800 text-yellow-400;
-}
-
-.toast--success {
-  @apply border-emerald-400 bg-emerald-800 text-emerald-400;
+.toast-copy {
+  @apply grid gap-1;
 }
 
 .toast-action {
-  --mix-color: var(--color-button-tertiary-fill);
-  @apply h-7 rounded-md px-2;
-  @apply text-xs;
-  @apply rounded-md;
-  @apply text-sm font-medium whitespace-nowrap;
-  @apply transition-all duration-300;
-  @apply flex-center gap-1;
-  @apply cursor-pointer;
-  @apply disabled:cursor-not-allowed disabled:opacity-50;
-  @apply [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0;
-  @apply focus-ring;
-  @apply bg-(--mix-color);
-  @apply border-button-tertiary-border border;
-  @apply text-button-tertiary-text;
-  @apply hover:not-disabled:bg-mixed-light;
-}
-
-.toast--danger .toast-action {
-  @apply border-greyscale-400;
-}
-
-.toast--danger:hover .toast-action {
-  @apply border-red-400 bg-red-800 text-red-400;
-}
-
-.toast--danger:focus .toast-action {
-  @apply ring-red-400;
-}
-
-.toast-close {
-  @apply text-inherit transition-colors;
-  @apply rounded-md;
-  @apply p-1;
-  @apply absolute top-2 right-2;
-  @apply focus-ring;
-  @apply hover:text-text-primary;
-}
-
-.toast-close-icon {
-  @apply size-4;
-}
-
-.toast-title {
-  @apply text-sm font-semibold;
-}
-
-.toast-description {
-  @apply text-text-secondary text-sm;
+  @apply mt-2 flex justify-end gap-1;
 }

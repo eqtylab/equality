@@ -16,6 +16,7 @@ export const ToastDemo = ({
   if (variant === "default") {
     return (
       <Button
+        size="sm"
         onClick={() => {
           toast({
             variant: "default",
@@ -31,6 +32,7 @@ export const ToastDemo = ({
   if (variant === "danger") {
     return (
       <Button
+        size="sm"
         onClick={() => {
           toast({
             variant: "danger",
@@ -47,6 +49,7 @@ export const ToastDemo = ({
   if (variant === "warning") {
     return (
       <Button
+        size="sm"
         onClick={() => {
           toast({
             variant: "warning",
@@ -63,6 +66,7 @@ export const ToastDemo = ({
   if (variant === "success") {
     return (
       <Button
+        size="sm"
         onClick={() => {
           toast({
             variant: "success",
@@ -79,6 +83,7 @@ export const ToastDemo = ({
   if (variant === "with-title") {
     return (
       <Button
+        size="sm"
         onClick={() => {
           toast({
             variant: "default",
@@ -95,6 +100,7 @@ export const ToastDemo = ({
   if (variant === "with-action") {
     return (
       <Button
+        size="sm"
         onClick={() => {
           toast({
             variant: "default",

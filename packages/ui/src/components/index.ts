@@ -50,6 +50,7 @@ export * from './table/table';
 export * from './tabs/tabs-components';
 export * from './tabs/tabs';
 export * from './textarea/textarea';
+export * from './toast/toast-components';
 export * from './toast/toast';
 export * from './tooltip/tooltip';
 export * from './truncated-description/truncated-description';
