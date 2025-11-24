@@ -13,9 +13,7 @@ export function PopoverDemo({
   return (
     <Popover>
       <PopoverTrigger asChild>
-        <Button variant="tertiary" size="sm">
-          Click me
-        </Button>
+        <Button size="sm">Click me</Button>
       </PopoverTrigger>
       <PopoverContent align={align}>
         <p>This is a popover</p>
