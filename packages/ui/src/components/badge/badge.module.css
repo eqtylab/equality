@@ -33,24 +33,28 @@
 /* Closable Variant */
 
 .badge .closable-btn {
-  @apply size-3.5 p-0 [&_svg]:size-3;
+  @apply -mr-1 size-3.5 rounded-full border-none p-0 [&_svg]:size-3;
   @apply hover:text-button-tertiary-text;
 }
 
 .badge--primary .closable-btn {
-  @apply text-badge-background-primary bg-badge-text-primary;
+  @apply text-badge-text-primary bg-badge-background-primary;
+  @apply hover:text-badge-background-primary hover:bg-badge-text-primary;
 }
 
 .badge--danger .closable-btn {
-  @apply text-badge-background-danger bg-badge-text-danger;
+  @apply text-badge-text-danger bg-badge-background-danger;
+  @apply hover:text-badge-background-danger hover:bg-badge-text-danger;
 }
 
 .badge--neutral .closable-btn {
-  @apply text-badge-background-not-started bg-badge-text-not-started;
+  @apply text-badge-text-not-started bg-badge-background-not-started;
+  @apply hover:text-badge-background-not-started hover:bg-badge-text-not-started;
 }
 
 .badge--success .closable-btn {
-  @apply text-badge-background-success bg-badge-text-success;
+  @apply text-badge-text-success bg-badge-background-success;
+  @apply hover:text-badge-background-success hover:bg-badge-text-success;
 }
 
 /* Truncate Variant */
