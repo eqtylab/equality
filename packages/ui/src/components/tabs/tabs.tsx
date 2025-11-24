@@ -34,9 +34,7 @@ const Tabs = ({ id, items, className, tabsListBackground = 'transparent' }: Tabs
 
   const renderIcon = (icon?: React.ReactElement | string) => {
     if (icon) {
-      return (
-        <Icon icon={icon} background="transparent" size="sm" className={styles['tabs-icon']} />
-      );
+      return <Icon icon={icon} size="sm" className={styles['tabs-icon']} />;
     }
     return null;
   };

@@ -22,7 +22,7 @@ const iconVariants = cva(styles['icon-container'], {
   },
   defaultVariants: {
     size: 'md',
-    background: 'square',
+    background: 'transparent',
   },
 });
 

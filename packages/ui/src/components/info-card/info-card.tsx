@@ -17,7 +17,7 @@ const InfoCard = ({ label, description, icon, className, onClick, ...props }: In
     <Card className={className} onClick={onClick} {...props}>
       <CardContent>
         <div className={styles['info-card-content']}>
-          <Icon icon={icon} size="sm" />
+          <Icon icon={icon} size="sm" background="square" />
           <div className={styles['copy-container']}>
             <p className={styles['label']}>{label}</p>
             <div className={styles['description']}>{description}</div>

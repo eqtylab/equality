@@ -84,7 +84,7 @@ function Badge({
 
   const renderIcon = () => {
     if (icon) {
-      return <Icon icon={icon} background="transparent" size="xs" className={styles['icon']} />;
+      return <Icon icon={icon} size="xs" className={styles['icon']} />;
     }
     return null;
   };
