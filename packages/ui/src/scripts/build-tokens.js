@@ -1,3 +1,4 @@
+import { createRequire } from 'module';
 import { dirname, resolve } from 'path';
 import { fileURLToPath } from 'url';
 import * as prettier from 'prettier';
@@ -5,10 +6,11 @@ import StyleDictionary from 'style-dictionary';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
-const rootDir = resolve(__dirname, '../../../..');
+const require = createRequire(import.meta.url);
 
-// Load prettier config
-const prettierConfig = (await prettier.resolveConfig(rootDir)) || {};
+// Load the workspace prettier config
+const prettierConfigPath = resolve(__dirname, '../../../../prettier.config.cjs');
+const prettierConfig = require(prettierConfigPath);
 
 const sd = new StyleDictionary('sd.config.json');
 
@@ -77,7 +79,7 @@ sd.registerFormat({
     const tokens = formatCssGroup(dictionary.tokens.Dark);
 
     return await prettier.format(
-      `.root[data-equality-theme="dark"] {
+      `.root[data-equality-theme='dark'] {
       ${tokens}
     }`,
       { ...prettierConfig, parser: 'css' }
