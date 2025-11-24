@@ -1,23 +1,55 @@
 @reference '../../theme/theme.module.css';
 
+.tabs {
+  @apply w-full;
+}
+
 .tabs-list {
-  @apply text-text-secondary;
-  @apply h-10;
-  @apply flex-center;
+  @apply relative w-full;
 }
 
-.tabs-trigger {
-  @apply whitespace-nowrap transition-all;
+.tabs-list--transparent {
+  @apply border-border border-b;
+}
+
+.tabs-list--filled {
+  @apply bg-greyscale-800;
+  @apply overflow-hidden rounded-md;
+  @apply p-1;
+}
+
+.tabs-trigger--filled {
+  @apply w-full;
   @apply px-3 py-1.5;
-  @apply text-lg font-medium;
-  @apply border-b-2 border-transparent;
-  @apply flex-center;
-  @apply data-[state=active]:border-brand-primary data-[state=active]:text-text-primary data-[state=active]:shadow-sm;
-  @apply focus-ring;
-  @apply disabled:pointer-events-none disabled:opacity-50;
+  @apply text-text-secondary;
 }
 
-.tabs-content {
-  @apply mt-2;
-  @apply focus-ring;
+.tabs-icon {
+  @apply text-inherit;
+}
+
+.tabs-list .tabs-trigger--filled {
+  @apply data-[state=active]:text-black;
+}
+
+.tabs-list .tabs-trigger--transparent {
+  @apply data-[state=active]:text-text-primary;
+}
+
+.active-tab-indicator {
+  @apply bg-brand-primary absolute -z-1 w-full;
+}
+
+.active-tab-indicator--filled {
+  @apply inset-0;
+  @apply h-full rounded-sm;
+}
+
+.active-tab-indicator--transparent {
+  @apply h-0.5;
+  @apply right-0 bottom-0 left-0;
+}
+
+.content {
+  @apply mt-5 space-y-6;
 }

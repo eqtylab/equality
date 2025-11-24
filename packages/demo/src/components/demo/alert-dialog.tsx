@@ -19,9 +19,7 @@ export const AlertDialogDemo = () => {
     <div>
       <AlertDialog open={open} onOpenChange={setOpen}>
         <AlertDialogTrigger asChild>
-          <Button variant="tertiary" size="sm">
-            This is the trigger
-          </Button>
+          <Button size="sm">This is the trigger</Button>
         </AlertDialogTrigger>
         <AlertDialogContent>
           <AlertDialogHeader>

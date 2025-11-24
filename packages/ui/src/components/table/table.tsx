@@ -1,68 +1,82 @@
 import * as React from 'react';
 
-import styles from '@/components/table/table.module.css';
+import {
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from '@/components/table/table-components';
 import { cn } from '@/lib/utils';
 
-const Table = React.forwardRef<HTMLTableElement, React.HTMLAttributes<HTMLTableElement>>(
-  ({ className, ...props }, ref) => (
-    <div className={styles['table']}>
-      <table ref={ref} className={styles['table-inner']} {...props} />
+import styles from './table.module.css';
+
+type TableColumn = {
+  key: string;
+  content: React.ReactNode;
+  className?: string;
+};
+
+type TableRowData = {
+  key: string;
+  cells: TableCellData[];
+  onClick?: () => void;
+  className?: string;
+};
+
+type TableCellData = {
+  key: string;
+  content: React.ReactNode;
+  className?: string;
+};
+
+interface TableProps {
+  columns: TableColumn[];
+  rows: TableRowData[];
+  className?: string;
+  border?: boolean;
+  background?: boolean;
+}
+
+const Table = ({ columns, rows, className, border = false, background = false }: TableProps) => {
+  return (
+    <div
+      className={cn(
+        styles['table'],
+        border && styles['table-border'],
+        background && styles['table-background'],
+        className
+      )}
+    >
+      <TableContainer>
+        <TableHeader>
+          <TableRow>
+            {columns.map((column) => (
+              <TableHead key={column.key} className={column.className}>
+                {column.content}
+              </TableHead>
+            ))}
+          </TableRow>
+        </TableHeader>
+        <TableBody>
+          {rows.map((row) => (
+            <TableRow
+              key={row.key}
+              className={cn(row.className, row.onClick && styles['table-row-clickable'])}
+              onClick={row.onClick}
+            >
+              {row.cells.map((cell) => (
+                <TableCell key={cell.key} className={cell.className}>
+                  {cell.content}
+                </TableCell>
+              ))}
+            </TableRow>
+          ))}
+        </TableBody>
+      </TableContainer>
     </div>
-  )
-);
-Table.displayName = 'Table';
+  );
+};
 
-const TableHeader = React.forwardRef<
-  HTMLTableSectionElement,
-  React.HTMLAttributes<HTMLTableSectionElement>
->(({ className, ...props }, ref) => (
-  <thead ref={ref} className={cn(styles['table-header'], className)} {...props} />
-));
-TableHeader.displayName = 'TableHeader';
-
-const TableBody = React.forwardRef<
-  HTMLTableSectionElement,
-  React.HTMLAttributes<HTMLTableSectionElement>
->(({ className, ...props }, ref) => (
-  <tbody ref={ref} className={cn(styles['table-body'], className)} {...props} />
-));
-TableBody.displayName = 'TableBody';
-
-const TableFooter = React.forwardRef<
-  HTMLTableSectionElement,
-  React.HTMLAttributes<HTMLTableSectionElement>
->(({ className, ...props }, ref) => (
-  <tfoot ref={ref} className={cn(styles['table-footer'], className)} {...props} />
-));
-TableFooter.displayName = 'TableFooter';
-
-const TableRow = React.forwardRef<HTMLTableRowElement, React.HTMLAttributes<HTMLTableRowElement>>(
-  ({ className, ...props }, ref) => (
-    <tr ref={ref} className={cn(styles['table-row'], className)} {...props} />
-  )
-);
-TableRow.displayName = 'TableRow';
-
-const TableHead = React.forwardRef<
-  HTMLTableCellElement,
-  React.ThHTMLAttributes<HTMLTableCellElement>
->(({ className, ...props }, ref) => (
-  <th ref={ref} className={cn(styles['table-head'], className)} {...props} />
-));
-TableHead.displayName = 'TableHead';
-
-const TableCell = React.forwardRef<
-  HTMLTableCellElement,
-  React.TdHTMLAttributes<HTMLTableCellElement>
->(({ className, ...props }, ref) => <td ref={ref} className={styles['table-cell']} {...props} />);
-TableCell.displayName = 'TableCell';
-
-const TableCaption = React.forwardRef<
-  HTMLTableCaptionElement,
-  React.HTMLAttributes<HTMLTableCaptionElement>
->(({ className, ...props }, ref) => (
-  <caption ref={ref} className={styles['table-caption']} {...props} />
-));
-TableCaption.displayName = 'TableCaption';
-
-export { Table, TableBody, TableCaption, TableCell, TableFooter, TableHead, TableHeader, TableRow };
+export { Table };

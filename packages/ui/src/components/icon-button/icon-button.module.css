@@ -18,3 +18,13 @@
 .size--lg {
   @apply size-12;
 }
+
+/* Background Variants */
+
+.background--square {
+  @apply rounded-lg;
+}
+
+.background--circle {
+  @apply rounded-full;
+}

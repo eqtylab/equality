@@ -1,0 +1,17 @@
+---
+layout: "@/layouts/mdx-layout.astro"
+heading: "Heading"
+description: "Heading with sizes and variants"
+---
+
+import { HeadingDemo } from "@/components/demo/heading";
+
+## HTML headings
+
+<HeadingDemo client:only="react" />
+
+## Display As
+
+Use `displayAs` to render a different semantic level while maintaining visual styling:
+
+<HeadingDemo as="h3" displayAs="h1" client:only="react" />

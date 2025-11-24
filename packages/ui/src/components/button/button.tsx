@@ -9,7 +9,7 @@ const buttonVariants = cva(styles['button'], {
   variants: {
     variant: {
       primary: styles['button--primary'],
-      destructive: styles['button--destructive'],
+      danger: styles['button--danger'],
       secondary: styles['button--secondary'],
       tertiary: styles['button--tertiary'],
       link: styles['button--link'],

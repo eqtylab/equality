@@ -1,33 +1,102 @@
-import * as React from 'react';
-import * as TabsPrimitive from '@radix-ui/react-tabs';
+import { useState } from 'react';
+import { motion } from 'motion/react';
 
+import { Icon } from '@/components/icon/icon';
+import {
+  TabsContainer,
+  TabsContent,
+  TabsList,
+  TabsTrigger,
+} from '@/components/tabs/tabs-components';
 import styles from '@/components/tabs/tabs.module.css';
 import { cn } from '@/lib/utils';
 
-const Tabs = TabsPrimitive.Root;
+interface TabsProps {
+  id: string;
+  items: {
+    label: string;
+    value: string;
+    icon?: React.ReactElement | string;
+    content: React.ReactNode;
+  }[];
+  className?: string;
+  tabsListBackground?: 'transparent' | 'filled';
+}
 
-const TabsList = React.forwardRef<
-  React.ElementRef<typeof TabsPrimitive.List>,
-  React.ComponentPropsWithoutRef<typeof TabsPrimitive.List>
->(({ className, ...props }, ref) => (
-  <TabsPrimitive.List ref={ref} className={cn(styles['tabs-list'], className)} {...props} />
-));
-TabsList.displayName = TabsPrimitive.List.displayName;
+const Tabs = ({ id, items, className, tabsListBackground = 'transparent' }: TabsProps) => {
+  const [activeTab, setActiveTab] = useState(items[0].value);
 
-const TabsTrigger = React.forwardRef<
-  React.ElementRef<typeof TabsPrimitive.Trigger>,
-  React.ComponentPropsWithoutRef<typeof TabsPrimitive.Trigger>
->(({ className, ...props }, ref) => (
-  <TabsPrimitive.Trigger ref={ref} className={cn(styles['tabs-trigger'], className)} {...props} />
-));
-TabsTrigger.displayName = TabsPrimitive.Trigger.displayName;
+  const isFilled = tabsListBackground === 'filled';
 
-const TabsContent = React.forwardRef<
-  React.ElementRef<typeof TabsPrimitive.Content>,
-  React.ComponentPropsWithoutRef<typeof TabsPrimitive.Content>
->(({ className, ...props }, ref) => (
-  <TabsPrimitive.Content ref={ref} className={cn(styles['tabs-content'], className)} {...props} />
-));
-TabsContent.displayName = TabsPrimitive.Content.displayName;
+  const handleValueChange = (newTab: string) => {
+    setActiveTab(newTab);
+  };
 
-export { Tabs, TabsContent, TabsList, TabsTrigger };
+  const renderIcon = (icon?: React.ReactElement | string) => {
+    if (icon) {
+      return <Icon icon={icon} size="sm" className={styles['tabs-icon']} />;
+    }
+    return null;
+  };
+
+  const renderActiveStyle = (isActive: boolean) => {
+    if (isActive) {
+      return (
+        <motion.span
+          className={cn(
+            styles['active-tab-indicator'],
+            isFilled
+              ? styles['active-tab-indicator--filled']
+              : styles['active-tab-indicator--transparent']
+          )}
+          initial={false}
+          layoutId={`${id}-active-tab-indicator`}
+        />
+      );
+    }
+    return null;
+  };
+
+  return (
+    <TabsContainer
+      value={activeTab}
+      onValueChange={handleValueChange}
+      className={cn(styles['tabs'], className)}
+    >
+      <TabsList
+        className={cn(
+          styles['tabs-list'],
+          isFilled ? styles['tabs-list--filled'] : styles['tabs-list--transparent']
+        )}
+      >
+        {items.map(({ label, value, icon }) => {
+          const isActive = activeTab === value;
+
+          return (
+            <TabsTrigger
+              key={value}
+              value={value}
+              className={cn(
+                styles['tabs-trigger'],
+                isFilled ? styles['tabs-trigger--filled'] : styles['tabs-trigger--transparent']
+              )}
+              data-tour={`${value}-tab-overview`}
+            >
+              {renderIcon(icon)}
+              {label}
+              {renderActiveStyle(isActive)}
+            </TabsTrigger>
+          );
+        })}
+      </TabsList>
+
+      {items.map(({ value, content }) => (
+        <TabsContent value={value} key={value} className={styles['content']}>
+          {content}
+        </TabsContent>
+      ))}
+    </TabsContainer>
+  );
+};
+
+export { Tabs };

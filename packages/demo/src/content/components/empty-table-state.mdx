@@ -5,7 +5,6 @@ description: "Empty Table State with sizes and variants"
 ---
 
 import { EmptyTableState } from "@eqtylab/equality";
-import { SearchX } from "lucide-react";
 import React from "react";
 
 ## Variants
@@ -13,19 +12,19 @@ import React from "react";
 ### Default
 
 <EmptyTableState
-  icon={SearchX}
+  icon="SearchX"
   title="No Members Available"
   description="Members will appear here once they are available to be added."
 />
 
 ### Without description
 
-<EmptyTableState icon={SearchX} title="No Members Available" />
+<EmptyTableState icon="SearchX" title="No Members Available" />
 
 ### With Clear Button
 
 <EmptyTableState
-  icon={SearchX}
+  icon="SearchX"
   title="No External Users Found"
   description="Try refining your search terms or clearing filters."
   showClearButton

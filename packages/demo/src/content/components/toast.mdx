@@ -1,13 +1,19 @@
 ---
 layout: "@/layouts/mdx-layout.astro"
 heading: "Toast"
-description: "Toast with sizes and variants"
+description: "Toast notifications with variants and actions"
 ---
 
 import { ToastDemo } from "@/components/demo/toast";
-import { ToastRootDemo } from "@/components/demo/toast-root";
+import { ToastRoot } from "@eqtylab/equality";
 
-<ToastRootDemo client:only="react" />
+<ToastRoot client:only="react" />
+
+## Overview
+
+---
+
+The Toast component provides a non-intrusive way to display notifications to users. Built on top of Radix UI primitives, it supports multiple variants (default, danger, warning, success), optional titles and descriptions, and action buttons. Toasts automatically dismiss after a delay and can be manually dismissed via a close button.
 
 ## Variants
 
@@ -15,9 +21,9 @@ import { ToastRootDemo } from "@/components/demo/toast-root";
 
 <ToastDemo client:only="react" />
 
-### Destructive
+### Danger
 
-<ToastDemo client:only="react" variant="destructive" />
+<ToastDemo client:only="react" variant="danger" />
 
 ### Warning
 
@@ -34,3 +40,137 @@ import { ToastRootDemo } from "@/components/demo/toast-root";
 ### With Action
 
 <ToastDemo client:only="react" variant="with-action" />
+
+## Usage
+
+---
+
+### Setup
+
+First, add the `ToastRoot` component to your application root. This component provides the toast context and viewport:
+
+```tsx
+import { ToastRoot } from "@eqtylab/equality";
+
+function App() {
+  return (
+    <>
+      {/* Your app content */}
+      <ToastRoot />
+    </>
+  );
+}
+```
+
+### Basic Usage
+
+Import the `useToast` hook in any component where you want to display toasts:
+
+```tsx
+import { useToast } from "@eqtylab/equality";
+
+function MyComponent() {
+  const { toast } = useToast();
+
+  const handleClick = () => {
+    toast({
+      description: "This is a toast notification.",
+    });
+  };
+
+  return <button onClick={handleClick}>Show Toast</button>;
+}
+```
+
+### Toast API
+
+The `toast` function accepts the following options:
+
+- `variant?: "default" | "danger" | "warning" | "success"` - Visual variant of the toast
+- `title?: React.ReactNode` - Optional title displayed at the top of the toast
+- `description?: React.ReactNode` - Main message content
+- `action?: ToastActionElement` - Optional action button element
+- `open?: boolean` - Control the open state (defaults to `true`)
+- `onOpenChange?: (open: boolean) => void` - Callback when open state changes
+
+The `toast` function returns an object with:
+
+- `id: string` - Unique identifier for the toast
+- `dismiss: () => void` - Function to manually dismiss the toast
+- `update: (props: ToasterToast) => void` - Function to update the toast properties
+
+### Examples
+
+#### Basic Toast
+
+```tsx
+import { useToast } from "@eqtylab/equality";
+
+const { toast } = useToast();
+
+toast({
+  description: "Your changes have been saved.",
+});
+```
+
+#### Toast with Title
+
+```tsx
+toast({
+  title: "Success",
+  description: "Your changes have been saved successfully.",
+});
+```
+
+#### Toast with Variant
+
+```tsx
+toast({
+  variant: "danger",
+  title: "Error",
+  description: "Something went wrong. Please try again.",
+});
+```
+
+#### Toast with Action
+
+```tsx
+import { useToast, ToastAction } from "@eqtylab/equality";
+
+const { toast } = useToast();
+
+toast({
+  title: "Action Required",
+  description: "This toast includes an action button.",
+  action: <ToastAction altText="Undo">Undo</ToastAction>,
+});
+```
+
+#### Updating a Toast
+
+```tsx
+const { toast } = useToast();
+
+const toastInstance = toast({
+  description: "Uploading...",
+});
+
+// Later, update the toast
+toastInstance.update({
+  variant: "success",
+  description: "Upload complete!",
+});
+```
+
+#### Dismissing a Toast
+
+```tsx
+const { toast } = useToast();
+
+const toastInstance = toast({
+  description: "Processing...",
+});
+
+// Dismiss programmatically
+toastInstance.dismiss();
+```

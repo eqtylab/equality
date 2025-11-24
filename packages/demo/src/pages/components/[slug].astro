@@ -1,7 +1,6 @@
 ---
 import { getEntry, render } from "astro:content";
 import type { APIContext } from "astro";
-import { ThemeProvider } from "@eqtylab/equality";
 
 export async function getStaticPaths() {
   // Pre-generate a page for every entry
@@ -21,9 +20,7 @@ if (!entry) throw new Error(`Component not found: ${slug}`);
 const { Content } = await render(entry); // MD/MDX → HTML + <Content/>
 ---
 
-<ThemeProvider>
-  <article>
-    <Content />
-    {/* renders your MDX, including React islands */}
-  </article>
-</ThemeProvider>
+<article>
+  <Content />
+  {/* renders your MDX, including React islands */}
+</article>

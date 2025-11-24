@@ -1,10 +1,10 @@
 import { Button } from '@/components/button/button';
 import styles from '@/components/empty-table-state/empty-table-state.module.css';
-import { IconCircle } from '@/components/icon-circle/icon-circle';
+import { Icon } from '@/components/icon/icon';
 import { cn } from '@/lib/utils';
 
 interface EmptyTableStateProps {
-  icon: React.ElementType;
+  icon: React.ReactElement | string;
   title: string;
   description?: string;
   showClearButton?: boolean;
@@ -25,7 +25,7 @@ const EmptyTableState = ({
   return (
     <div className={cn(styles['empty-table-state'], className)}>
       <div className={styles['icon-and-title-container']}>
-        <IconCircle icon={icon} size="md" />
+        <Icon icon={icon} size="md" background="circle" />
         <span className={styles['title']}>{title}</span>
       </div>
 

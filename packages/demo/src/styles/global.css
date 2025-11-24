@@ -13,6 +13,7 @@
   --color-gray-medium: #4b5563;
   --color-gray-light: #d1d5db;
   --color-gold: #ffe4b8;
+  --color-muted-white: #e1e4e8;
   --color-white: #ffffff;
   --color-muted-foreground: rgba(255, 255, 255, 0.6);
   --color-card: rgba(217, 217, 217, 0.05);
@@ -109,12 +110,16 @@
     & > h5 code,
     & > h6 code,
     & > li code,
-    & > p code {
-      @apply bg-card text-foreground rounded-sm p-1;
+    & > li strong code,
+    & > p code,
+    & > table td code {
+      @apply bg-card text-muted-white rounded-sm p-1;
     }
 
     & > li code,
-    & > p code {
+    & > li strong code,
+    & > p code,
+    & > table td code {
       @apply text-sm;
     }
 
@@ -123,16 +128,26 @@
     & > ul,
     & > ol,
     & > table,
-    & > hr,
     & > div,
     & > span {
       @apply mb-2;
+    }
+
+    & > hr {
+      @apply mb-4;
     }
 
     & > ul,
     & > ol {
       @apply text-muted-foreground;
       @apply space-y-1 pl-4;
+    }
+
+    & > ul strong,
+    & > ol strong,
+    & > ul b,
+    & > ol b {
+      @apply text-foreground font-medium;
     }
 
     & > ul {
@@ -143,6 +158,7 @@
       @apply list-decimal;
     }
 
+    & p > a,
     & > a {
       @apply text-foreground font-medium transition-all;
       @apply underline underline-offset-4;

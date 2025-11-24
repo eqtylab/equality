@@ -8,12 +8,14 @@
   @apply w-max;
 }
 
+/* Color Variants */
+
 .badge--primary {
   @apply bg-badge-background-primary;
   @apply text-badge-text-primary;
 }
 
-.badge--destructive {
+.badge--danger {
   @apply bg-badge-background-danger;
   @apply text-badge-text-danger;
 }
@@ -26,4 +28,39 @@
 .badge--success {
   @apply bg-badge-background-success;
   @apply text-badge-text-success;
+}
+
+/* Closable Variant */
+
+.badge .closable-btn {
+  @apply size-3.5 p-0 [&_svg]:size-3;
+  @apply hover:text-button-tertiary-text;
+}
+
+.badge--primary .closable-btn {
+  @apply text-badge-background-primary bg-badge-text-primary;
+}
+
+.badge--danger .closable-btn {
+  @apply text-badge-background-danger bg-badge-text-danger;
+}
+
+.badge--neutral .closable-btn {
+  @apply text-badge-background-not-started bg-badge-text-not-started;
+}
+
+.badge--success .closable-btn {
+  @apply text-badge-background-success bg-badge-text-success;
+}
+
+/* Truncate Variant */
+
+.tooltip {
+  @apply max-w-xs break-words;
+}
+
+/* Icon Variant */
+
+.badge .icon {
+  @apply text-inherit;
 }

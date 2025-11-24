@@ -1,17 +1,192 @@
 ---
 layout: "@/layouts/mdx-layout.astro"
 heading: "Tabs"
-description: "Tabs with sizes and variants"
+description: "A flexible, accessible component for organizing content into tabbed panels. Supports icons, customization, and multiple visual variants."
 ---
 
 import { TabsDemo } from "@/components/demo/tabs";
 
+## Overview
+
+---
+
+The `Tabs` component provides a clean and accessible way to organize content into multiple panels. Built on top of Radix UI primitives, it includes smooth animations for tab switching and supports icons, custom styling, and different background variants.
+
+The component automatically manages the active tab state and provides a smooth animated indicator that follows the active tab.
+
+## Usage
+
+---
+
+Import the component from the Equality UI library:
+
+```tsx
+import { Tabs } from "@eqtylab/equality";
+```
+
+Basic usage requires an `id` and an array of `items`:
+
+```tsx
+<Tabs
+  id="my-tabs"
+  items={[
+    {
+      label: "Tab 1",
+      value: "tab1",
+      content: <div>Content for Tab 1</div>,
+    },
+    {
+      label: "Tab 2",
+      value: "tab2",
+      content: <div>Content for Tab 2</div>,
+    },
+  ]}
+/>
+```
+
 ## Variants
+
+---
 
 ### Default
 
+The default variant uses a transparent background with an animated underline indicator:
+
 <TabsDemo client:only="react" />
 
-### With border
+#### Example
 
-<TabsDemo client:only="react" withBorder />
+```tsx
+<Tabs
+  id="default-tabs"
+  items={[
+    {
+      label: "Declarations",
+      value: "declarations",
+      content: <div>Declarations Content</div>,
+    },
+    {
+      label: "Reviews",
+      value: "reviews",
+      content: <div>Reviews Content</div>,
+    },
+  ]}
+/>
+```
+
+### With icons
+
+Add icons to tabs by including the `icon` property in each item. Icons can be provided as strings (icon name from Lucide React) or React elements:
+
+<TabsDemo client:only="react" variant="with-icons" />
+
+#### Example
+
+```tsx
+<Tabs
+  id="with-icons-tabs"
+  items={[
+    {
+      label: "Declarations",
+      value: "declarations",
+      icon: "Pen",
+      content: <div>Declarations Content</div>,
+    },
+    {
+      label: "Reviews",
+      value: "reviews",
+      icon: "Eye",
+      content: <div>Reviews Content</div>,
+    },
+  ]}
+/>
+```
+
+### With Fill
+
+Use `tabsListBackground="filled"` to apply a filled background style to the tabs list. The active tab will have a filled indicator:
+
+<TabsDemo client:only="react" variant="with-active-fill" />
+
+#### Example
+
+```tsx
+<Tabs
+  id="with-active-fill-tabs"
+  tabsListBackground="filled"
+  items={[
+    {
+      label: "Implementation",
+      value: "implementation",
+      content: <div>Implementation Content</div>,
+    },
+    {
+      label: "Monitoring",
+      value: "monitoring",
+      content: <div>Monitoring Content</div>,
+    },
+    {
+      label: "Report",
+      value: "report",
+      content: <div>Report Content</div>,
+    },
+  ]}
+/>
+```
+
+### With Fill and Icons
+
+Combine icons with the filled background variant for a more prominent tab design:
+
+<TabsDemo client:only="react" variant="with-icons-and-active-fill" />
+
+#### Example
+
+```tsx
+<Tabs
+  id="with-icons-and-active-fill-tabs"
+  tabsListBackground="filled"
+  items={[
+    {
+      label: "Implementation",
+      value: "implementation",
+      icon: "Shield",
+      content: <div>Implementation Content</div>,
+    },
+    {
+      label: "Monitoring",
+      value: "monitoring",
+      icon: "Activity",
+      content: <div>Monitoring Content</div>,
+    },
+    {
+      label: "Report",
+      value: "report",
+      icon: "FileChartLine",
+      content: <div>Report Content</div>,
+    },
+  ]}
+/>
+```
+
+## Props
+
+---
+
+| Prop                 | Type                        | Default         | Description                                                                                                                               |
+| -------------------- | --------------------------- | --------------- | ----------------------------------------------------------------------------------------------------------------------------------------- |
+| `id`                 | `string`                    | **Required**    | A unique identifier for the tabs instance. Used internally for the animated indicator's layoutId.                                         |
+| `items`              | `Array<TabItem>`            | **Required**    | An array of tab items. See TabItem structure below.                                                                                       |
+| `className`          | `string`                    | —               | Additional CSS classes to apply to the tabs container.                                                                                    |
+| `tabsListBackground` | `"transparent" \| "filled"` | `"transparent"` | The background style for the tabs list. `"transparent"` shows tabs with a transparent background, `"filled"` applies a filled background. |
+
+### TabItem Structure
+
+Each item in the `items` array should have the following structure:
+
+| Property  | Type                           | Required | Description                                                                                                     |
+| --------- | ------------------------------ | -------- | --------------------------------------------------------------------------------------------------------------- |
+| `label`   | `string`                       | Yes      | The text label displayed on the tab trigger.                                                                    |
+| `value`   | `string`                       | Yes      | A unique value that identifies this tab. Used for state management and content matching.                        |
+| `icon`    | `React.ReactElement \| string` | No       | Optional icon to display alongside the label. Can be a string (icon name from Lucide React) or a React element. |
+| `content` | `React.ReactNode`              | Yes      | The content to display when this tab is active. Can be any valid React node.                                    |
