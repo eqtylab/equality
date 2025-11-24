@@ -1,23 +1,4 @@
-import {
-  Card,
-  CardContent,
-  Tabs,
-  TabsContainer,
-  TabsList,
-  TabsTrigger,
-} from "@eqtylab/equality";
-import { cn } from "@/lib/utils";
-
-export function OldTabsDemo({ withBorder = false }: { withBorder?: boolean }) {
-  return (
-    <TabsContainer className={cn(withBorder && "border-border border-b")}>
-      <TabsList>
-        <TabsTrigger value="declarations">Declarations</TabsTrigger>
-        <TabsTrigger value="reviews">Reviews</TabsTrigger>
-      </TabsList>
-    </TabsContainer>
-  );
-}
+import { Card, CardContent, Tabs } from "@eqtylab/equality";
 
 export function TabsDemo({
   variant = "default",
