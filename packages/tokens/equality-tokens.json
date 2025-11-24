@@ -347,120 +347,120 @@
             "$type": "color",
             "$value": {
               "colorSpace": "display-p3",
-              "components": [0.6663, 0.622, 0.9719],
-              "hex": "#AA9FF8"
+              "components": [0.795, 0.7755, 0.9866],
+              "hex": "#CCC6FF"
             }
           },
           "comment": {
             "$type": "color",
             "$value": {
               "colorSpace": "display-p3",
-              "components": [0.6663, 0.622, 0.9719],
-              "hex": "#AA9FF8"
+              "components": [0.795, 0.7755, 0.9866],
+              "hex": "#CCC6FF"
             }
           },
           "compliant": {
             "$type": "color",
             "$value": {
               "colorSpace": "display-p3",
-              "components": [0.5855, 0.7436, 0.5779],
-              "hex": "#95BE93"
+              "components": [0.7403, 0.8486, 0.7417],
+              "hex": "#BDD8BD"
             }
           },
           "danger": {
             "$type": "color",
             "$value": {
               "colorSpace": "display-p3",
-              "components": [0.8779, 0.5865, 0.5474],
-              "hex": "#E0968C"
+              "components": [0.9358, 0.751, 0.7228],
+              "hex": "#EFC0B8"
             }
           },
           "in-progress": {
             "$type": "color",
             "$value": {
               "colorSpace": "display-p3",
-              "components": [0.8711, 0.6538, 0.5378],
-              "hex": "#DEA789"
+              "components": [0.9272, 0.788, 0.7058],
+              "hex": "#ECC9B4"
             }
           },
           "in-review": {
             "$type": "color",
             "$value": {
               "colorSpace": "display-p3",
-              "components": [0.6663, 0.622, 0.9719],
-              "hex": "#AA9FF8"
+              "components": [0.795, 0.7755, 0.9866],
+              "hex": "#CCC6FF"
             }
           },
           "neutral": {
             "$type": "color",
             "$value": {
               "colorSpace": "display-p3",
-              "components": [0.7432, 0.7432, 0.7432],
-              "hex": "#BEBEBE"
+              "components": [0.8698, 0.8698, 0.8698],
+              "hex": "#DEDEDE"
             }
           },
           "non-compliant": {
             "$type": "color",
             "$value": {
               "colorSpace": "display-p3",
-              "components": [0.8779, 0.5865, 0.5474],
-              "hex": "#E0968C"
+              "components": [0.9358, 0.751, 0.7228],
+              "hex": "#EFC0B8"
             }
           },
           "not-applicable": {
             "$type": "color",
             "$value": {
               "colorSpace": "display-p3",
-              "components": [0.7432, 0.7432, 0.7432],
-              "hex": "#BEBEBE"
+              "components": [0.8698, 0.8698, 0.8698],
+              "hex": "#DEDEDE"
             }
           },
           "not-started": {
             "$type": "color",
             "$value": {
               "colorSpace": "display-p3",
-              "components": [0.7432, 0.7432, 0.7432],
-              "hex": "#BEBEBE"
+              "components": [0.8698, 0.8698, 0.8698],
+              "hex": "#DEDEDE"
             }
           },
           "primary": {
             "$type": "color",
             "$value": {
               "colorSpace": "display-p3",
-              "components": [0.6663, 0.622, 0.9719],
-              "hex": "#AA9FF8"
+              "components": [0.795, 0.7755, 0.9866],
+              "hex": "#CCC6FF"
             }
           },
           "question": {
             "$type": "color",
             "$value": {
               "colorSpace": "display-p3",
-              "components": [0.6663, 0.622, 0.9719],
-              "hex": "#AA9FF8"
+              "components": [0.795, 0.7755, 0.9866],
+              "hex": "#CCC6FF"
             }
           },
           "ready-for-review": {
             "$type": "color",
             "$value": {
               "colorSpace": "display-p3",
-              "components": [0.5545, 0.6362, 0.8816],
-              "hex": "#8DA2E1"
+              "components": [0.7289, 0.7853, 0.9401],
+              "hex": "#BAC8F0"
             }
           },
           "success": {
             "$type": "color",
             "$value": {
               "colorSpace": "display-p3",
-              "components": [0.5855, 0.7436, 0.5779],
-              "hex": "#95BE93"
+              "components": [0.7403, 0.8486, 0.7417],
+              "hex": "#BDD8BD"
             }
           },
           "warn": {
             "$type": "color",
             "$value": {
               "colorSpace": "display-p3",
-              "components": [0.8984, 0.7748, 0.5691],
-              "hex": "#E5C691"
+              "components": [0.9327, 0.8528, 0.7204],
+              "hex": "#EED9B8"
             }
           }
         }
@@ -568,8 +568,8 @@
           "$type": "color",
           "$value": {
             "colorSpace": "display-p3",
-            "components": [0.6266, 0.4562, 0.8302],
-            "hex": "#A074D4"
+            "components": [0.7319, 0.6108, 0.8873],
+            "hex": "#BB9CE2"
           }
         },
         "red": {
