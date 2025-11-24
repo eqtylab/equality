@@ -1,5 +1,14 @@
+import { dirname, resolve } from 'path';
+import { fileURLToPath } from 'url';
 import * as prettier from 'prettier';
 import StyleDictionary from 'style-dictionary';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+const rootDir = resolve(__dirname, '../../../..');
+
+// Load prettier config
+const prettierConfig = (await prettier.resolveConfig(rootDir)) || {};
 
 const sd = new StyleDictionary('sd.config.json');
 
@@ -71,7 +80,7 @@ sd.registerFormat({
       `.root[data-equality-theme="dark"] {
       ${tokens}
     }`,
-      { parser: 'css' }
+      { ...prettierConfig, parser: 'css' }
     );
   },
 });
@@ -89,7 +98,7 @@ sd.registerFormat({
 
       ${tokens}
     }`,
-      { parser: 'css' }
+      { ...prettierConfig, parser: 'css' }
     );
   },
 });
@@ -107,7 +116,7 @@ sd.registerFormat({
 
       ${tokens}
     }`,
-      { parser: 'css' }
+      { ...prettierConfig, parser: 'css' }
     );
   },
 });

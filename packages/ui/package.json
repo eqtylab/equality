@@ -69,7 +69,7 @@
     "typescript": ">=5.4.x"
   },
   "scripts": {
-    "build": "pnpm run build:lib",
+    "build": "pnpm run build:tokens && pnpm run build:lib",
     "build:tokens": "node src/scripts/build-tokens.js",
     "build:lib": "tsup src/index.ts --dts --format esm,cjs --clean",
     "watch": "tsup src/index.ts --dts --format esm,cjs --watch",
