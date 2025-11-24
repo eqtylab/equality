@@ -48,6 +48,7 @@ export * from './switch/switch';
 export * from './sort-button/sort-button';
 export * from './table/table-components';
 export * from './table/table';
+export * from './tabs/tabs-components';
 export * from './tabs/tabs';
 export * from './textarea/textarea';
 export * from './toast/toast';

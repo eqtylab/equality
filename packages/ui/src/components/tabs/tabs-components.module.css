@@ -1,0 +1,23 @@
+@reference '../../theme/theme.module.css';
+
+.tabs-list {
+  @apply text-text-secondary;
+  @apply h-auto min-h-10;
+  @apply flex items-center;
+}
+
+.tabs-trigger {
+  @apply relative z-10;
+  @apply whitespace-nowrap transition-all;
+  @apply px-3 py-1.5;
+  @apply text-lg font-medium;
+  @apply flex gap-2;
+  @apply flex-center;
+  @apply focus-ring;
+  @apply disabled:pointer-events-none disabled:opacity-50;
+}
+
+.tabs-content {
+  @apply mt-2;
+  @apply focus-ring;
+}

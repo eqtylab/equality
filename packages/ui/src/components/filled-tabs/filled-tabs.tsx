@@ -2,7 +2,12 @@ import { motion } from 'motion/react';
 
 import styles from '@/components/filled-tabs/filled-tabs.module.css';
 import { Icon } from '@/components/icon/icon';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/tabs/tabs';
+import {
+  TabsContainer,
+  TabsContent,
+  TabsList,
+  TabsTrigger,
+} from '@/components/tabs/tabs-components';
 import { cn } from '@/lib/utils';
 
 interface FilledTabsProps {
@@ -23,7 +28,7 @@ const FilledTabs = ({ items, onValueChange, activeTab, className }: FilledTabsPr
   };
 
   return (
-    <Tabs
+    <TabsContainer
       value={activeTab}
       onValueChange={handleValueChange}
       className={cn(styles['tabs'], className)}
@@ -63,7 +68,7 @@ const FilledTabs = ({ items, onValueChange, activeTab, className }: FilledTabsPr
           {content}
         </TabsContent>
       ))}
-    </Tabs>
+    </TabsContainer>
   );
 };
 

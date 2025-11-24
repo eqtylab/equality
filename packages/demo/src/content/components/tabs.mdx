@@ -4,7 +4,7 @@ heading: "Tabs"
 description: "Tabs with sizes and variants"
 ---
 
-import { TabsDemo } from "@/components/demo/tabs";
+import { TabsDemo, OldTabsDemo } from "@/components/demo/tabs";
 
 ## Variants
 
@@ -12,6 +12,14 @@ import { TabsDemo } from "@/components/demo/tabs";
 
 <TabsDemo client:only="react" />
 
-### With border
+### With icons
 
-<TabsDemo client:only="react" withBorder />
+<TabsDemo client:only="react" variant="with-icons" />
+
+### With Fill
+
+<TabsDemo client:only="react" variant="with-active-fill" />
+
+### With Fill and Icons
+
+<TabsDemo client:only="react" variant="with-icons-and-active-fill" />
