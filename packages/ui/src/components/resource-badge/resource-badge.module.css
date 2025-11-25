@@ -1,9 +1,5 @@
 @reference '../../theme/theme.module.css';
 
-.badge--no-label {
-  @apply p-1;
-}
-
 .badge--agent {
   @apply bg-resource-background-agent;
   @apply text-resource-text-agent;

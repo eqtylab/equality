@@ -1,6 +1,5 @@
-import { Badge } from '@/components/badge/badge';
+import { Badge, type BadgeDisplayMode } from '@/components/badge/badge';
 import styles from '@/components/resource-badge/resource-badge.module.css';
-import { cn } from '@/lib/utils';
 
 export type ResourceType =
   | 'agent'
@@ -18,7 +17,7 @@ export type ResourceType =
   | 'tools'
   | 'unknown';
 
-export type ResourceDisplayMode = 'textonly' | 'icononly' | 'both';
+export type ResourceDisplayMode = BadgeDisplayMode;
 
 interface ResourceBadgeProps {
   type: ResourceType;
@@ -27,15 +26,10 @@ interface ResourceBadgeProps {
 
 const ResourceBadge = ({ type, display = 'both' }: ResourceBadgeProps) => {
   const config = getTypeConfig(type);
-  const hideIcon = display === 'textonly';
-  const hideLabel = display === 'icononly';
 
   return (
-    <Badge
-      icon={!hideIcon ? config.icon : undefined}
-      className={cn(config.className, hideLabel && styles['badge--no-label'])}
-    >
-      {!hideLabel ? config.label : ''}
+    <Badge icon={config.icon} display={display} className={config.className}>
+      {config.label}
     </Badge>
   );
 };

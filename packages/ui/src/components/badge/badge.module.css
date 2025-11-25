@@ -5,7 +5,7 @@
   @apply text-xs font-medium transition-colors;
   @apply rounded-full;
   @apply flex items-center gap-1;
-  @apply w-max;
+  @apply min-h-5 w-max min-w-5;
 }
 
 /* Color Variants */

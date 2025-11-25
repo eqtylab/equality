@@ -95,16 +95,10 @@ function Badge({
   };
 
   // Validate icon-only mode requires an icon
+  // If icononly is set without an icon, fallback to showing both
   const effectiveDisplay = display === 'icononly' && !icon ? 'both' : display;
   const shouldShowChildren = effectiveDisplay !== 'icononly';
   const isIconOnly = effectiveDisplay === 'icononly' && icon;
-
-  // Warn in development if icononly is used without an icon
-  if (process.env.NODE_ENV !== 'production' && display === 'icononly' && !icon) {
-    console.warn(
-      'Badge: display="icononly" requires an icon prop to be set. Falling back to default display mode.'
-    );
-  }
 
   return (
     <div
