@@ -103,7 +103,8 @@ function Badge({
   return (
     <div
       className={cn(
-        badgeVariants({ variant }),
+        variant !== null && badgeVariants({ variant }),
+        variant === null && styles['badge'],
         isIconOnly && styles['badge--icon-only'],
         className
       )}

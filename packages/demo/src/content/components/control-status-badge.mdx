@@ -4,8 +4,7 @@ heading: "Control Status Badge"
 description: "Displays a badge with consistent icons, colors, and labels for control status values."
 ---
 
-import { ControlStatusBadge } from "@eqtylab/equality";
-import { ControlStatusBadgeDemo } from "@/components/demo/control-status-badge";
+import { ControlStatusBadge, PanelLabel } from "@eqtylab/equality";
 
 ## Overview
 
@@ -33,42 +32,83 @@ Basic usage requires only a `status` prop:
 
 ---
 
-<ControlStatusBadgeDemo client:only="react" />
+<div className="grid grid-cols-[auto_auto_auto] gap-6">
+  <div className="flex flex-col items-start space-y-3">
+    <PanelLabel label="With Icons (default)" />
+    <ControlStatusBadge status="not-started" />
+    <ControlStatusBadge status="in-progress" />
+    <ControlStatusBadge status="ready-for-review" />
+    <ControlStatusBadge status="in-review" />
+    <ControlStatusBadge status="compliant" />
+    <ControlStatusBadge status="non-compliant" />
+    <ControlStatusBadge status="not-applicable" />
+    <ControlStatusBadge status="accepted" />
+    <ControlStatusBadge status="questioned" />
+    <ControlStatusBadge status="comment" />
+  </div>
+  <div className="flex flex-col items-start space-y-3">
+    <PanelLabel label="Label Only" />
+    <ControlStatusBadge status="not-started" display="textonly" />
+    <ControlStatusBadge status="in-progress" display="textonly" />
+    <ControlStatusBadge status="ready-for-review" display="textonly" />
+    <ControlStatusBadge status="in-review" display="textonly" />
+    <ControlStatusBadge status="compliant" display="textonly" />
+    <ControlStatusBadge status="non-compliant" display="textonly" />
+    <ControlStatusBadge status="not-applicable" display="textonly" />
+    <ControlStatusBadge status="accepted" display="textonly" />
+    <ControlStatusBadge status="questioned" display="textonly" />
+    <ControlStatusBadge status="comment" display="textonly" />
+  </div>
+  <div className="flex flex-col items-start space-y-3">
+    <PanelLabel label="Icon Only" />
+    <ControlStatusBadge status="not-started" display="icononly" />
+    <ControlStatusBadge status="in-progress" display="icononly" />
+    <ControlStatusBadge status="ready-for-review" display="icononly" />
+    <ControlStatusBadge status="in-review" display="icononly" />
+    <ControlStatusBadge status="compliant" display="icononly" />
+    <ControlStatusBadge status="non-compliant" display="icononly" />
+    <ControlStatusBadge status="not-applicable" display="icononly" />
+    <ControlStatusBadge status="accepted" display="icononly" />
+    <ControlStatusBadge status="questioned" display="icononly" />
+    <ControlStatusBadge status="comment" display="icononly" />
+  </div>
+</div>
 
 ## Display Options
 
 ---
+
+The component supports three display modes:
 
 ### With Icon and Label (Default)
 
 The default display shows both icon and label:
 
 ```tsx
-<ControlStatusBadge status="In Progress" />
+<ControlStatusBadge status="in-progress" />
 ```
 
 ### Icon Only
 
-Hide the label to show only the icon:
+Show only the icon by setting `display` to `"icononly"`:
 
 ```tsx
-<ControlStatusBadge status="Compliant" hideLabel />
+<ControlStatusBadge status="compliant" display="icononly" />
 ```
 
 ### Label Only
 
-Hide the icon to show only the text:
+Show only the text by setting `display` to `"textonly"`:
 
 ```tsx
-<ControlStatusBadge status="Non-Compliant" hideIcon />
+<ControlStatusBadge status="non-compliant" display="textonly" />
 ```
 
 ## Props
 
 ---
 
-| Prop        | Type      | Default      | Description                                                                                                               |
-| ----------- | --------- | ------------ | ------------------------------------------------------------------------------------------------------------------------- |
-| `status`    | `string`  | **Required** | The status value that determines the badge variant, icon, and label. See available statuses below.                        |
-| `hideIcon`  | `boolean` | `false`      | When `true`, hides the icon and displays only the label.                                                                  |
-| `hideLabel` | `boolean` | `false`      | When `true`, hides the label and displays only the icon. Automatically applies padding adjustments for icon-only display. |
+| Prop      | Type                                     | Default      | Description                                                                                                                     |
+| --------- | ---------------------------------------- | ------------ | ------------------------------------------------------------------------------------------------------------------------------- |
+| `status`  | `string`                                 | **Required** | The status value that determines the badge variant, icon, and label.                                                            |
+| `display` | `"both"` \| `"textonly"` \| `"icononly"` | `"both"`     | Controls what elements are displayed. `"both"` shows icon and text, `"textonly"` shows only text, `"icononly"` shows only icon. |
