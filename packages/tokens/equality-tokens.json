@@ -1414,6 +1414,120 @@
             "hex": "#43836D"
           }
         },
+        "background": {
+          "agent": {
+            "$type": "color",
+            "$value": {
+              "colorSpace": "display-p3",
+              "components": [0.1475, 0.2946, 0.2434],
+              "hex": "#264B3E"
+            }
+          },
+          "benchmark": {
+            "$type": "color",
+            "$value": {
+              "colorSpace": "display-p3",
+              "components": [0.2598, 0.1437, 0.07482],
+              "hex": "#422513"
+            }
+          },
+          "code": {
+            "$type": "color",
+            "$value": {
+              "colorSpace": "display-p3",
+              "components": [0.6137, 0.3942, 0.177],
+              "hex": "#9C652D"
+            }
+          },
+          "compute": {
+            "$type": "color",
+            "$value": {
+              "colorSpace": "display-p3",
+              "components": [0.4487, 0.322, 0.1436],
+              "hex": "#725225"
+            }
+          },
+          "database": {
+            "$type": "color",
+            "$value": {
+              "colorSpace": "display-p3",
+              "components": [0.2473, 0.1645, 0.5241],
+              "hex": "#3F2A86"
+            }
+          },
+          "dataset": {
+            "$type": "color",
+            "$value": {
+              "colorSpace": "display-p3",
+              "components": [0.2473, 0.1645, 0.5241],
+              "hex": "#3F2A86"
+            }
+          },
+          "document": {
+            "$type": "color",
+            "$value": {
+              "colorSpace": "display-p3",
+              "components": [0.5752, 0.2954, 0.1593],
+              "hex": "#934B29"
+            }
+          },
+          "guard": {
+            "$type": "color",
+            "$value": {
+              "colorSpace": "display-p3",
+              "components": [0.2598, 0.1437, 0.07482],
+              "hex": "#422513"
+            }
+          },
+          "inference": {
+            "$type": "color",
+            "$value": {
+              "colorSpace": "display-p3",
+              "components": [0.1689, 0.3045, 0.136],
+              "hex": "#2B4E23"
+            }
+          },
+          "model": {
+            "$type": "color",
+            "$value": {
+              "colorSpace": "display-p3",
+              "components": [0.1442, 0.2013, 0.4303],
+              "hex": "#25336E"
+            }
+          },
+          "prompt": {
+            "$type": "color",
+            "$value": {
+              "colorSpace": "display-p3",
+              "components": [0.1394, 0.2691, 0.3776],
+              "hex": "#244560"
+            }
+          },
+          "token": {
+            "$type": "color",
+            "$value": {
+              "colorSpace": "display-p3",
+              "components": [0.2534, 0.2782, 0.09737],
+              "hex": "#414719"
+            }
+          },
+          "tools": {
+            "$type": "color",
+            "$value": {
+              "colorSpace": "display-p3",
+              "components": [0.4113, 0.1505, 0.1319],
+              "hex": "#692622"
+            }
+          },
+          "unknown": {
+            "$type": "color",
+            "$value": {
+              "colorSpace": "display-p3",
+              "components": [0.2806, 0.2806, 0.2806],
+              "hex": "#484848"
+            }
+          }
+        },
         "benchmark": {
           "$type": "color",
           "$value": {
@@ -1492,6 +1606,120 @@
             "colorSpace": "display-p3",
             "components": [0.2084, 0.4784, 0.6451],
             "hex": "#357AA5"
+          }
+        },
+        "text": {
+          "agent": {
+            "$type": "color",
+            "$value": {
+              "colorSpace": "display-p3",
+              "components": [0.7135, 0.8482, 0.7942],
+              "hex": "#B6D8CB"
+            }
+          },
+          "benchmark": {
+            "$type": "color",
+            "$value": {
+              "colorSpace": "display-p3",
+              "components": [0.8711, 0.6538, 0.5378],
+              "hex": "#DEA789"
+            }
+          },
+          "code": {
+            "$type": "color",
+            "$value": {
+              "colorSpace": "display-p3",
+              "components": [0.9376, 0.8222, 0.7184],
+              "hex": "#EFD2B7"
+            }
+          },
+          "compute": {
+            "$type": "color",
+            "$value": {
+              "colorSpace": "display-p3",
+              "components": [0.9327, 0.8528, 0.7204],
+              "hex": "#EED9B8"
+            }
+          },
+          "database": {
+            "$type": "color",
+            "$value": {
+              "colorSpace": "display-p3",
+              "components": [0.795, 0.7755, 0.9866],
+              "hex": "#CCC6FF"
+            }
+          },
+          "dataset": {
+            "$type": "color",
+            "$value": {
+              "colorSpace": "display-p3",
+              "components": [0.795, 0.7755, 0.9866],
+              "hex": "#CCC6FF"
+            }
+          },
+          "document": {
+            "$type": "color",
+            "$value": {
+              "colorSpace": "display-p3",
+              "components": [0.9272, 0.788, 0.7058],
+              "hex": "#ECC9B4"
+            }
+          },
+          "guard": {
+            "$type": "color",
+            "$value": {
+              "colorSpace": "display-p3",
+              "components": [0.8711, 0.6538, 0.5378],
+              "hex": "#DEA789"
+            }
+          },
+          "inference": {
+            "$type": "color",
+            "$value": {
+              "colorSpace": "display-p3",
+              "components": [0.7403, 0.8486, 0.7417],
+              "hex": "#BDD8BD"
+            }
+          },
+          "model": {
+            "$type": "color",
+            "$value": {
+              "colorSpace": "display-p3",
+              "components": [0.7289, 0.7853, 0.9401],
+              "hex": "#BAC8F0"
+            }
+          },
+          "prompt": {
+            "$type": "color",
+            "$value": {
+              "colorSpace": "display-p3",
+              "components": [0.7072, 0.8271, 0.9059],
+              "hex": "#B4D3E7"
+            }
+          },
+          "token": {
+            "$type": "color",
+            "$value": {
+              "colorSpace": "display-p3",
+              "components": [0.8033, 0.8266, 0.7044],
+              "hex": "#CDD3B4"
+            }
+          },
+          "tools": {
+            "$type": "color",
+            "$value": {
+              "colorSpace": "display-p3",
+              "components": [0.9358, 0.751, 0.7228],
+              "hex": "#EFC0B8"
+            }
+          },
+          "unknown": {
+            "$type": "color",
+            "$value": {
+              "colorSpace": "display-p3",
+              "components": [0.8698, 0.8698, 0.8698],
+              "hex": "#DEDEDE"
+            }
           }
         },
         "token": {

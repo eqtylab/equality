@@ -4,6 +4,7 @@ export * from './avatar/avatar';
 export * from './badge/badge';
 export * from './bg-gradient/bg-gradient';
 export * from './button/button';
+export * from './resource-badge/resource-badge';
 export * from './card-content-header/card-content-header';
 export * from './card/card';
 export * from './checkbox/checkbox';
