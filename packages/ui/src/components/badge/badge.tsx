@@ -43,6 +43,13 @@ export interface BadgeProps
   display?: BadgeDisplayMode;
 }
 
+// Default icons for variants
+const defaultVariantIcons: Record<string, string> = {
+  success: 'Check',
+  warning: 'OctagonAlert',
+  danger: 'TriangleAlert',
+};
+
 function Badge({
   className,
   variant,
@@ -54,6 +61,9 @@ function Badge({
   display = 'both',
   ...props
 }: BadgeProps) {
+  // Use default icon for variant if no icon is provided
+  const effectiveIcon = icon ?? (variant ? defaultVariantIcons[variant] : undefined);
+
   const renderClosable = () => {
     if (closeable && handleClosable)
       return (
@@ -88,17 +98,17 @@ function Badge({
   };
 
   const renderIcon = () => {
-    if (icon && display !== 'textonly') {
-      return <Icon icon={icon} size="xs" className={styles['icon']} />;
+    if (effectiveIcon && display !== 'textonly') {
+      return <Icon icon={effectiveIcon} size="xs" className={styles['icon']} />;
     }
     return null;
   };
 
   // Validate icon-only mode requires an icon
   // If icononly is set without an icon, fallback to showing both
-  const effectiveDisplay = display === 'icononly' && !icon ? 'both' : display;
+  const effectiveDisplay = display === 'icononly' && !effectiveIcon ? 'both' : display;
   const shouldShowChildren = effectiveDisplay !== 'icononly';
-  const isIconOnly = effectiveDisplay === 'icononly' && icon;
+  const isIconOnly = effectiveDisplay === 'icononly' && effectiveIcon;
 
   return (
     <div
