@@ -21,6 +21,7 @@ const badgeVariants = cva(styles['badge'], {
       primary: styles['badge--primary'],
       danger: styles['badge--danger'],
       neutral: styles['badge--neutral'],
+      warning: styles['badge--warning'],
       success: styles['badge--success'],
     },
   },
@@ -28,6 +29,8 @@ const badgeVariants = cva(styles['badge'], {
     variant: 'primary',
   },
 });
+
+export type BadgeDisplayMode = 'both' | 'textonly' | 'icononly';
 
 export interface BadgeProps
   extends React.HTMLAttributes<HTMLDivElement>,
@@ -37,7 +40,15 @@ export interface BadgeProps
   truncate?: boolean;
   truncateLength?: number;
   icon?: React.ReactElement | string;
+  display?: BadgeDisplayMode;
 }
+
+// Default icons for variants
+const defaultVariantIcons: Record<string, string> = {
+  success: 'Check',
+  warning: 'OctagonAlert',
+  danger: 'TriangleAlert',
+};
 
 function Badge({
   className,
@@ -47,8 +58,12 @@ function Badge({
   truncate = false,
   truncateLength = 50,
   icon,
+  display = 'both',
   ...props
 }: BadgeProps) {
+  // Use default icon for variant if no icon is provided
+  const effectiveIcon = icon ?? (variant ? defaultVariantIcons[variant] : undefined);
+
   const renderClosable = () => {
     if (closeable && handleClosable)
       return (
@@ -83,16 +98,30 @@ function Badge({
   };
 
   const renderIcon = () => {
-    if (icon) {
-      return <Icon icon={icon} size="xs" className={styles['icon']} />;
+    if (effectiveIcon && display !== 'textonly') {
+      return <Icon icon={effectiveIcon} size="xs" className={styles['icon']} />;
     }
     return null;
   };
 
+  // Validate icon-only mode requires an icon
+  // If icononly is set without an icon, fallback to showing both
+  const effectiveDisplay = display === 'icononly' && !effectiveIcon ? 'both' : display;
+  const shouldShowChildren = effectiveDisplay !== 'icononly';
+  const isIconOnly = effectiveDisplay === 'icononly' && effectiveIcon;
+
   return (
-    <div className={cn(badgeVariants({ variant }), className)} {...props}>
+    <div
+      className={cn(
+        variant !== null && badgeVariants({ variant }),
+        variant === null && styles['badge'],
+        isIconOnly && styles['badge--icon-only'],
+        className
+      )}
+      {...props}
+    >
       {renderIcon()}
-      {renderChildren()}
+      {shouldShowChildren && renderChildren()}
       {renderClosable()}
     </div>
   );

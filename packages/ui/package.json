@@ -70,7 +70,7 @@
   },
   "scripts": {
     "build": "pnpm run build:tokens && pnpm run build:lib",
-    "build:tokens": "node src/scripts/build-tokens.js",
+    "build:tokens": "node src/scripts/build-tokens.js && prettier --write ../tokens/equality-tokens.json",
     "build:lib": "tsup src/index.ts --dts --format esm,cjs --clean",
     "watch": "tsup src/index.ts --dts --format esm,cjs --watch",
     "release": "pnpm run build && pnpm publish --access public"
