@@ -333,7 +333,7 @@
               "hex": "#2B4E23"
             }
           },
-          "warn": {
+          "warning": {
             "$type": "color",
             "$value": {
               "colorSpace": "display-p3",
@@ -455,7 +455,7 @@
               "hex": "#BDD8BD"
             }
           },
-          "warn": {
+          "warning": {
             "$type": "color",
             "$value": {
               "colorSpace": "display-p3",
