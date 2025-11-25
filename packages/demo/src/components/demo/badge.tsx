@@ -1,12 +1,13 @@
 import { useState } from "react";
 import { Badge, Button } from "@eqtylab/equality";
 
-type BadgeVariant = "primary" | "neutral" | "danger" | "success";
+type BadgeVariant = "primary" | "neutral" | "danger" | "warning" | "success";
 
 const variantOrder: BadgeVariant[] = [
   "primary",
   "neutral",
   "danger",
+  "warning",
   "success",
 ];
 
@@ -28,6 +29,7 @@ export function BadgeClosableDemo() {
           key={id}
           variant={variantOrder[index % variantOrder.length]}
           closeable
+          display="textonly"
           handleClosable={() => removeBadge(id)}
         >
           This is a badge

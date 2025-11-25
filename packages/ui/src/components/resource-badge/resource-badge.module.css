@@ -1,0 +1,71 @@
+@reference '../../theme/theme.module.css';
+
+.badge--agent {
+  @apply bg-resource-background-agent;
+  @apply text-resource-text-agent;
+}
+
+.badge--benchmark {
+  @apply bg-resource-background-benchmark;
+  @apply text-resource-text-benchmark;
+}
+
+.badge--code {
+  @apply bg-resource-background-code;
+  @apply text-resource-text-code;
+}
+
+.badge--compute {
+  @apply bg-resource-background-compute;
+  @apply text-resource-text-compute;
+}
+
+.badge--database {
+  @apply bg-resource-background-database;
+  @apply text-resource-text-database;
+}
+
+.badge--dataset {
+  @apply bg-resource-background-dataset;
+  @apply text-resource-text-dataset;
+}
+
+.badge--document {
+  @apply bg-resource-background-document;
+  @apply text-resource-text-document;
+}
+
+.badge--guard {
+  @apply bg-resource-background-guard;
+  @apply text-resource-text-guard;
+}
+
+.badge--inference {
+  @apply bg-resource-background-inference;
+  @apply text-resource-text-inference;
+}
+
+.badge--model {
+  @apply bg-resource-background-model;
+  @apply text-resource-text-model;
+}
+
+.badge--prompt {
+  @apply bg-resource-background-prompt;
+  @apply text-resource-text-prompt;
+}
+
+.badge--token {
+  @apply bg-resource-background-token;
+  @apply text-resource-text-token;
+}
+
+.badge--tools {
+  @apply bg-resource-background-tools;
+  @apply text-resource-text-tools;
+}
+
+.badge--unknown {
+  @apply bg-resource-background-unknown;
+  @apply text-resource-text-unknown;
+}
