@@ -1,9 +1,5 @@
 @reference '../../theme/theme.module.css';
 
-.badge--no-label {
-  @apply p-1;
-}
-
 .badge--in-progress {
   @apply bg-badge-background-in-progress text-badge-text-in-progress;
 }

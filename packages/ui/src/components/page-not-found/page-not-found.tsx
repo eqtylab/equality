@@ -1,11 +1,11 @@
 import * as React from 'react';
-import { AlertTriangle, Home } from 'lucide-react';
+import { AlertOctagon, Home } from 'lucide-react';
 
 import { Button } from '@/components/button/button';
 import styles from '@/components/page-not-found/page-not-found.module.css';
 import { cn } from '@/lib/utils';
 
-const AlertTriangleIcon = AlertTriangle as React.ComponentType<{ className?: string }>;
+const OctagonAlert = AlertOctagon as React.ComponentType<{ className?: string }>;
 const HomeIcon = Home as React.ComponentType<{ className?: string }>;
 
 interface NotFoundProps {
@@ -28,7 +28,7 @@ const NotFound = ({
       <div className={styles['page-not-found-inner']}>
         {/* Icon */}
         <div className={styles['icon-container']}>
-          <AlertTriangleIcon className={styles['alert-icon']} />
+          <OctagonAlert className={styles['alert-icon']} />
         </div>
 
         {/* Title */}
