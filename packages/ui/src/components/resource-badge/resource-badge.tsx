@@ -99,7 +99,7 @@ const getTypeConfig = (type: ResourceType) => {
       };
     case 'prompt':
       return {
-        icon: 'MessageSquare',
+        icon: 'MessageSquareText',
         className: styles['badge--prompt'],
         label: 'Prompt',
       };
