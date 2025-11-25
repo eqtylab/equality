@@ -7,6 +7,7 @@ const variantOrder: BadgeVariant[] = [
   "primary",
   "neutral",
   "danger",
+  "warning",
   "success",
 ];
 

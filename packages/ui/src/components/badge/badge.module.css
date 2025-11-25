@@ -25,6 +25,11 @@
   @apply text-badge-text-not-started;
 }
 
+.badge--warning {
+  @apply bg-badge-background-warning;
+  @apply text-badge-text-warning;
+}
+
 .badge--success {
   @apply bg-badge-background-success;
   @apply text-badge-text-success;
@@ -45,6 +50,11 @@
 .badge--danger .closable-btn {
   @apply text-badge-text-danger bg-badge-background-danger;
   @apply hover:text-badge-background-danger hover:bg-badge-text-danger;
+}
+
+.badge--warning .closable-btn {
+  @apply text-badge-text-warning bg-badge-background-warning;
+  @apply hover:text-badge-background-warning hover:bg-badge-text-warning;
 }
 
 .badge--neutral .closable-btn {

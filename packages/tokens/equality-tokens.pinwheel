@@ -1261,7 +1261,7 @@
               <buildGroupId>86B9D7D8-F74A-4CAE-B006-65451BBEDAB9</buildGroupId>
             </alias>
             <alias>
-              <name>Warn</name>
+              <name>Warning</name>
               <type>3</type>
               <referencedItemId>BB783E8C-1914-4094-BE1D-37E41EB42641</referencedItemId>
               <subIndex>1</subIndex>
@@ -1348,6 +1348,7 @@
           <group>
             <id>DA9E770F-29ED-4A78-9EDB-DD9F456BB566</id>
             <name>Background</name>
+            <expanded>1</expanded>
             <namespace>1</namespace>
             <alias>
               <name>Primary</name>
@@ -1371,7 +1372,7 @@
               <buildGroupId>86B9D7D8-F74A-4CAE-B006-65451BBEDAB9</buildGroupId>
             </alias>
             <alias>
-              <name>Warn</name>
+              <name>Warning</name>
               <type>3</type>
               <referencedItemId>BB783E8C-1914-4094-BE1D-37E41EB42641</referencedItemId>
               <subIndex>6</subIndex>
@@ -1459,7 +1460,6 @@
         <group>
           <id>F4FC786D-8F79-4199-A3D3-35667F6E2DCD</id>
           <name>Resource</name>
-          <expanded>1</expanded>
           <namespace>1</namespace>
           <alias>
             <name>Agent</name>

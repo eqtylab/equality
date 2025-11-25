@@ -26,7 +26,7 @@
   --color-badge-background-question: var(--color-badge-background-question);
   --color-badge-background-ready-for-review: var(--color-badge-background-ready-for-review);
   --color-badge-background-success: var(--color-badge-background-success);
-  --color-badge-background-warn: var(--color-badge-background-warn);
+  --color-badge-background-warning: var(--color-badge-background-warning);
   --color-badge-text-accepted: var(--color-badge-text-accepted);
   --color-badge-text-comment: var(--color-badge-text-comment);
   --color-badge-text-compliant: var(--color-badge-text-compliant);
@@ -41,7 +41,7 @@
   --color-badge-text-question: var(--color-badge-text-question);
   --color-badge-text-ready-for-review: var(--color-badge-text-ready-for-review);
   --color-badge-text-success: var(--color-badge-text-success);
-  --color-badge-text-warn: var(--color-badge-text-warn);
+  --color-badge-text-warning: var(--color-badge-text-warning);
   --color-black: var(--color-black);
   --color-blue-100: var(--color-blue-100);
   --color-blue-200: var(--color-blue-200);

@@ -21,6 +21,7 @@ const badgeVariants = cva(styles['badge'], {
       primary: styles['badge--primary'],
       danger: styles['badge--danger'],
       neutral: styles['badge--neutral'],
+      warning: styles['badge--warning'],
       success: styles['badge--success'],
     },
   },
