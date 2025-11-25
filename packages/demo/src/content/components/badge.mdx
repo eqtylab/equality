@@ -4,10 +4,10 @@ heading: "Badge"
 description: "Badge with sizes and variants"
 ---
 
-import { Badge } from "@eqtylab/equality";
+import { Badge, PanelLabel } from "@eqtylab/equality";
 import { BadgeClosableDemo, BadgeTruncateDemo } from "@/components/demo/badge";
 
-## Color Variants
+## Overview
 
 ---
 
@@ -18,31 +18,56 @@ The Badge component comes with four color variants to visually communicate diffe
 - **Danger:** Indicates an error or warning state requiring attention.
 - **Success:** Represents positive outcomes or completed statuses.
 
-Select the appropriate variant by using the `variant` prop, for example:
+For control compliance and resource types see [ControlStatusBadge](control-status-badge) and [ResourceBadge](resource-badge) respectively.
+
+## Usage
+
+---
+
+Import the component:
+
+```tsx
+import { Badge } from "@eqtylab/equality";
+```
+
+`primary` is the default variant. Select another by using the `variant` prop, for example:
 
 ```tsx
 <Badge variant="danger">Danger Badge</Badge>
 ```
 
-### Primary (default)
+## Basic Variants
 
-<Badge>This is a badge</Badge>
+---
 
-### Neutral
-
-<Badge variant="neutral">This is a badge</Badge>
-
-### Warning
-
-<Badge variant="warning">This is a badge</Badge>
-
-### Danger
-
-<Badge variant="danger">This is a badge</Badge>
-
-### Success
-
-<Badge variant="success">This is a badge</Badge>
+<div className="grid grid-cols-[auto_auto_auto] gap-6">
+  <div className="flex flex-col items-start space-y-3">
+    <PanelLabel label="Badge Variant" />
+    <Badge variant="neutral">Neutral</Badge>
+    <Badge variant="primary">Primary</Badge>
+    <Badge variant="warning">Warning</Badge>
+    <Badge variant="danger">Danger</Badge>
+    <Badge variant="success">Success</Badge>
+  </div>
+  <div className="flex flex-col items-start space-y-3">
+    <PanelLabel label="With Icons" />
+    <Badge variant="neutral" icon="Circle">
+      Neutral
+    </Badge>
+    <Badge variant="primary" icon="Shield">
+      Primary
+    </Badge>
+    <Badge variant="warning" icon="OctagonAlert">
+      Warning
+    </Badge>
+    <Badge variant="danger" icon="TriangleAlert">
+      Danger
+    </Badge>
+    <Badge variant="success" icon="Check">
+      Success
+    </Badge>
+  </div>
+</div>
 
 ## Closable Variant
 
