@@ -165,6 +165,9 @@ importers:
       react-hook-form:
         specifier: ^7.63.0
         version: 7.65.0(react@19.2.0)
+      react-truncate-inside:
+        specifier: ^1.0.3
+        version: 1.0.3(react@19.2.0)
       tailwind-merge:
         specifier: ^2.5.4
         version: 2.6.0
@@ -5031,6 +5034,14 @@ packages:
       '@types/react':
         optional: true
 
+  react-truncate-inside@1.0.3:
+    resolution:
+      {
+        integrity: sha512-XwQ+9ayvygHI4WjJwaTDYFiYLrLMbHiBc5VdhWuDrCAm8MWFT6YR/+BCgq5JUwyuISYleJyZ0yCAGbXMhGr9hw==,
+      }
+    peerDependencies:
+      react: '>= 16.x.x'
+
   react@19.2.0:
     resolution:
       {
@@ -9457,6 +9468,10 @@ snapshots:
       tslib: 2.8.1
     optionalDependencies:
       '@types/react': 19.2.2
+
+  react-truncate-inside@1.0.3(react@19.2.0):
+    dependencies:
+      react: 19.2.0
 
   react@19.2.0: {}
 
