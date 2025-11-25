@@ -68,7 +68,54 @@ import { Badge } from "@eqtylab/equality";
       Success
     </Badge>
   </div>
+  <div className="flex flex-col items-start space-y-3">
+    <PanelLabel label="Icon Only" />
+    <Badge variant="neutral" icon="Circle" display="icononly" />
+    <Badge variant="primary" icon="Shield" display="icononly" />
+    <Badge variant="warning" icon="OctagonAlert" display="icononly" />
+    <Badge variant="danger" icon="TriangleAlert" display="icononly" />
+    <Badge variant="success" icon="Check" display="icononly" />
+  </div>
 </div>
+
+## Display Modes
+
+---
+
+The Badge component supports three display modes to control what content is shown:
+
+<div className="flex items-center gap-3">
+  <Badge variant="primary" icon="Shield" display="both">
+    Both (Default)
+  </Badge>
+  <Badge variant="primary" icon="Shield" display="textonly">
+    Text Only
+  </Badge>
+  <Badge variant="primary" icon="Shield" display="icononly" />
+</div>
+
+### Usage
+
+```tsx
+{
+  /* Default - shows both icon and text */
+}
+<Badge variant="primary" icon="Shield">
+  Both Icon and Text
+</Badge>;
+
+{
+  /* Text only - hides the icon */
+}
+<Badge variant="primary" icon="Shield" display="textonly">
+  Text Only
+</Badge>;
+
+{
+  /* Icon only - hides the text */
+}
+<Badge variant="primary" icon="Shield" display="icononly" />;
+```
 
 ## Closable Variant
 
@@ -86,7 +133,7 @@ The Badge component supports text truncation for long content. Use the `truncate
 
 <BadgeTruncateDemo client:only="react" />
 
-## Icon
+## Icons
 
 ---
 
@@ -103,3 +150,18 @@ You can enhance your badge by displaying an icon. The `icon` prop accepts either
 // Using a custom icon component
 <Badge icon={<MyCustomIcon />}>With Custom Icon</Badge>
 ```
+
+## Props
+
+---
+
+| Prop             | Type                                                                   | Default     | Description                                                                                                                     |
+| ---------------- | ---------------------------------------------------------------------- | ----------- | ------------------------------------------------------------------------------------------------------------------------------- |
+| `variant`        | `"neutral"` \| `"primary"` \| `"warning"` \| `"danger"` \| `"success"` | `"primary"` | The visual style variant of the badge.                                                                                          |
+| `display`        | `"both"` \| `"textonly"` \| `"icononly"`                               | `"both"`    | Controls what elements are displayed. `"both"` shows icon and text, `"textonly"` shows only text, `"icononly"` shows only icon. |
+| `icon`           | `string` \| `ReactElement`                                             | -           | Icon to display. Can be a Lucide icon name or a custom React element.                                                           |
+| `closeable`      | `boolean`                                                              | `false`     | When true, displays a close button on the badge.                                                                                |
+| `handleClosable` | `() => void`                                                           | -           | Callback function called when the close button is clicked. Required when `closeable` is true.                                   |
+| `truncate`       | `boolean`                                                              | `false`     | When true, truncates long text with an ellipsis and shows full text on hover.                                                   |
+| `truncateLength` | `number`                                                               | `50`        | Maximum character length before truncation occurs.                                                                              |
+| `className`      | `string`                                                               | -           | Additional CSS classes to apply to the badge.                                                                                   |

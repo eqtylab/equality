@@ -30,6 +30,8 @@ const badgeVariants = cva(styles['badge'], {
   },
 });
 
+export type BadgeDisplayMode = 'both' | 'textonly' | 'icononly';
+
 export interface BadgeProps
   extends React.HTMLAttributes<HTMLDivElement>,
     VariantProps<typeof badgeVariants> {
@@ -38,6 +40,7 @@ export interface BadgeProps
   truncate?: boolean;
   truncateLength?: number;
   icon?: React.ReactElement | string;
+  display?: BadgeDisplayMode;
 }
 
 function Badge({
@@ -48,6 +51,7 @@ function Badge({
   truncate = false,
   truncateLength = 50,
   icon,
+  display = 'both',
   ...props
 }: BadgeProps) {
   const renderClosable = () => {
@@ -84,16 +88,35 @@ function Badge({
   };
 
   const renderIcon = () => {
-    if (icon) {
+    if (icon && display !== 'textonly') {
       return <Icon icon={icon} size="xs" className={styles['icon']} />;
     }
     return null;
   };
 
+  // Validate icon-only mode requires an icon
+  const effectiveDisplay = display === 'icononly' && !icon ? 'both' : display;
+  const shouldShowChildren = effectiveDisplay !== 'icononly';
+  const isIconOnly = effectiveDisplay === 'icononly' && icon;
+
+  // Warn in development if icononly is used without an icon
+  if (process.env.NODE_ENV !== 'production' && display === 'icononly' && !icon) {
+    console.warn(
+      'Badge: display="icononly" requires an icon prop to be set. Falling back to default display mode.'
+    );
+  }
+
   return (
-    <div className={cn(badgeVariants({ variant }), className)} {...props}>
+    <div
+      className={cn(
+        badgeVariants({ variant }),
+        isIconOnly && styles['badge--icon-only'],
+        className
+      )}
+      {...props}
+    >
       {renderIcon()}
-      {renderChildren()}
+      {shouldShowChildren && renderChildren()}
       {renderClosable()}
     </div>
   );

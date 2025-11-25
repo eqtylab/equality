@@ -1,6 +1,5 @@
-import { Badge } from '@/components/badge/badge';
+import { Badge, type BadgeDisplayMode } from '@/components/badge/badge';
 import styles from '@/components/control-status-badge/control-status-badge.module.css';
-import { cn } from '@/lib/utils';
 
 interface ControlStatusBadgeProps {
   status: string;
@@ -15,12 +14,17 @@ const ControlStatusBadge = ({
 }: ControlStatusBadgeProps) => {
   const config = getStatusConfig(status);
 
+  // Convert hideIcon/hideLabel to display mode
+  const getDisplayMode = (): BadgeDisplayMode => {
+    if (hideIcon && hideLabel) return 'both'; // fallback
+    if (hideIcon) return 'textonly';
+    if (hideLabel) return 'icononly';
+    return 'both';
+  };
+
   return (
-    <Badge
-      icon={!hideIcon ? config.icon : undefined}
-      className={cn(config.className, hideLabel && styles['badge--no-label'])}
-    >
-      {!hideLabel ? config.label : ''}
+    <Badge icon={config.icon} display={getDisplayMode()} className={config.className}>
+      {config.label}
     </Badge>
   );
 };

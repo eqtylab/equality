@@ -78,3 +78,7 @@
 .badge .icon {
   @apply text-inherit;
 }
+
+.badge--icon-only {
+  @apply p-1;
+}
