@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { MiddleTruncate } from '@re-dev/react-truncate';
+import Truncate from 'react-truncate-inside';
 import { cva, type VariantProps } from 'class-variance-authority';
 import { CircleCheck, CircleX } from 'lucide-react';
 
@@ -9,10 +9,6 @@ import { cn } from '@/lib/utils';
 
 const CircleCheckIcon = CircleCheck as React.ComponentType<{ className?: string }>;
 const CircleXIcon = CircleX as React.ComponentType<{ className?: string }>;
-const MiddleTruncateComponent = MiddleTruncate as React.ComponentType<{
-  end?: number;
-  children?: React.ReactNode;
-}>;
 
 const displayFieldVariants = cva('', {
   variants: {
@@ -60,13 +56,17 @@ function DisplayField({
 
   const renderContent = () => {
     if (truncate === 'middle' && typeof children === 'string') {
-      return <MiddleTruncateComponent end={8}>{children}</MiddleTruncateComponent>;
+      return (
+        <div>
+          <Truncate text={children} offset={8} ellipsis="…" />
+        </div>
+      );
     }
     return children;
   };
 
   const getTruncateClass = () => {
-    if (truncate === 'middle') return '';
+    if (truncate === 'middle') return 'overflow-hidden';
     if (truncate === true) return styles['truncate'];
     return styles['overflow-x-scroll'];
   };
