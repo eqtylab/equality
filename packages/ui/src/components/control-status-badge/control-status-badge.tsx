@@ -77,13 +77,13 @@ const getStatusConfig = (status: string) => {
       };
     case 'compliant':
       return {
-        icon: 'CheckCircle2',
+        icon: 'Check',
         className: styles['badge--compliant'],
         label: 'Compliant',
       };
     case 'non-compliant':
       return {
-        icon: 'XCircle',
+        icon: 'X',
         className: styles['badge--non-compliant'],
         label: 'Non-compliant',
       };
