@@ -11,9 +11,7 @@ import { ControlStatusBadgeDemo } from "@/components/demo/control-status-badge";
 
 ---
 
-The `ControlStatusBadge` component is a specialized badge wrapper that provides predefined status configurations for control management workflows. It automatically applies appropriate icons, colors, and labels based on the status value, making it easy to display consistent status indicators throughout your application.
-
-The component wraps the base `Badge` component and maps status strings to predefined configurations, handling icons, styling, and labels automatically.
+`ControlStatusBadge` is a specialized badge wrapper that provides predefined status configurations for controls. It automatically applies appropriate icons, colors, and labels based on the status value.
 
 ## Usage
 
@@ -64,47 +62,6 @@ Hide the icon to show only the text:
 ```tsx
 <ControlStatusBadge status="Non-Compliant" hideIcon />
 ```
-
-## Status Variants
-
----
-
-The component supports multiple status categories, each with its own visual styling and icon. Status matching is case-insensitive for some variants (noted below).
-
-### Workflow Statuses
-
-These statuses represent stages in a control workflow:
-
-- **`"Not Started"`** - Indicates a control that hasn't been initiated yet. Uses a circle icon.
-- **`"In Progress"`** - Shows a control currently being worked on. Uses a clock icon.
-- **`"Ready For Review"`** - Marks a control ready for review. Uses a clipboard check icon.
-- **`"In Review"`** - Indicates a control currently under review. Uses an eye icon.
-
-### Compliance Statuses
-
-These statuses represent compliance outcomes:
-
-- **`"Compliant"`** / **`"compliant"`** / **`"COMPLIANT"`** - Indicates successful compliance. Uses a check circle icon. Case-insensitive.
-- **`"Non-Compliant"`** / **`"non-compliant"`** / **`"NON_COMPLIANT"`** - Indicates compliance failure. Uses an X circle icon. Case-insensitive.
-- **`"Not Applicable"`** / **`"NOT_APPLICABLE"`** - Marks a control as not applicable. Uses a minus circle icon. Case-insensitive.
-
-### Comment and Review Statuses
-
-These statuses represent different types of comments and review actions:
-
-- **`"COMMENT"`** - General comment status. Uses a message circle icon.
-- **`"GENERAL"`** - General message type. Uses a message circle icon.
-- **`"ACCEPTED"`** - Indicates an accepted comment or review. Uses a custom message circle check icon.
-- **`"QUESTIONED"`** - Represents a question or inquiry. Uses a message circle question icon.
-- **`"FAILED"`** - Indicates a failed status. Uses an X circle icon.
-
-### Default Behavior
-
-If an unrecognized status is provided, the component defaults to:
-
-- Icon: Circle
-- Style: Not Started variant
-- Label: The provided status string (displayed as-is)
 
 ## Props
 
