@@ -7,7 +7,7 @@ import {
   SheetHeader,
   SheetTitle,
 } from "@eqtylab/equality";
-import { useState, type ReactNode } from "react";
+import { useEffect, useState, type ReactNode } from "react";
 
 interface MobileSidebarProps {
   children?: ReactNode;
@@ -15,6 +15,21 @@ interface MobileSidebarProps {
 
 export const MobileSidebar = ({ children }: MobileSidebarProps) => {
   const [isOpen, setIsOpen] = useState(false);
+
+  useEffect(() => {
+    const handleResize = () => {
+      // Close on resize, to avoid showing on desktop
+      setIsOpen(false);
+    };
+
+    handleResize();
+
+    window.addEventListener("resize", handleResize);
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
 
   return (
     <div>
