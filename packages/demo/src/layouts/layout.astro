@@ -19,8 +19,10 @@ import { ThemeProvider } from "@eqtylab/equality";
     <ThemeProvider>
       <Header />
 
-      <main class="bg-background grid grid-cols-[auto_1fr]">
-        <Sidebar />
+      <main class="bg-background grid grid-cols-[minmax(0,auto)_minmax(0,1fr)]">
+        <div class="hidden lg:block">
+          <Sidebar />
+        </div>
         <div class="px-8 pt-14 pb-14">
           <slot />
         </div>
