@@ -70,6 +70,7 @@
     "typescript": ">=5.4.x"
   },
   "scripts": {
+    "dev": "pnpm run watch:tokens",
     "build": "pnpm run build:tokens && pnpm run build:lib",
     "build:tokens": "node src/scripts/build-tokens.js && prettier --write ../tokens/equality-tokens.json",
     "build:lib": "tsup src/index.ts --dts --format esm,cjs --clean",
