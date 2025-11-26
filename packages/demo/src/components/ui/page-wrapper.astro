@@ -3,7 +3,9 @@ import Layout from "@demo/layouts/layout.astro";
 ---
 
 <Layout>
-  <div class="relative my-10 grid grid-cols-[1fr_auto] gap-20">
+  <div
+    class="relative my-10 xl:grid xl:grid-cols-[minmax(0,1fr)_minmax(0,auto)] xl:gap-20"
+  >
     <slot />
   </div>
 </Layout>
