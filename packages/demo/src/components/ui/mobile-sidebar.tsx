@@ -36,7 +36,7 @@ export const MobileSidebar = ({ children }: MobileSidebarProps) => {
       <IconButton
         name="Menu"
         label="Open menu"
-        size="lg"
+        size="md"
         onClick={() => setIsOpen(true)}
       />
       <Sheet open={isOpen} onOpenChange={setIsOpen}>
