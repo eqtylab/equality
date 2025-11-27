@@ -17,16 +17,20 @@ import { DemoThemeProvider } from "@/theme/demo-theme-provider";
   </head>
   <body>
     <DemoThemeProvider client:load>
-      <Header />
+      <div class="base-colors">
+        <Header />
 
-      <main class="bg-background grid grid-cols-[minmax(0,auto)_minmax(0,1fr)]">
-        <div class="hidden lg:block">
-          <Sidebar />
-        </div>
-        <div class="px-8 pt-14 pb-14">
-          <slot />
-        </div>
-      </main>
+        <main
+          class="bg-background grid grid-cols-[minmax(0,auto)_minmax(0,1fr)]"
+        >
+          <div class="hidden lg:block">
+            <Sidebar />
+          </div>
+          <div class="px-8 pt-14 pb-14">
+            <slot />
+          </div>
+        </main>
+      </div>
     </DemoThemeProvider>
   </body>
 </html>
