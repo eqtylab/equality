@@ -3,7 +3,7 @@ import "@/styles/global.css";
 
 import Header from "@/components/header.astro";
 import Sidebar from "@/components/sidebar.astro";
-import { ThemeProvider } from "@eqtylab/equality";
+import { DemoThemeProvider } from "@/theme/demo-theme-provider";
 ---
 
 <!doctype html>
@@ -16,7 +16,7 @@ import { ThemeProvider } from "@eqtylab/equality";
     <title>Equality</title>
   </head>
   <body>
-    <ThemeProvider>
+    <DemoThemeProvider client:load>
       <Header />
 
       <main class="bg-background grid grid-cols-[minmax(0,auto)_minmax(0,1fr)]">
@@ -26,7 +26,7 @@ import { ThemeProvider } from "@eqtylab/equality";
         <div class="px-8 pt-14 pb-14">
           <slot />
         </div>
-      </main></ThemeProvider
-    >
+      </main>
+    </DemoThemeProvider>
   </body>
 </html>

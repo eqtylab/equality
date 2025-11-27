@@ -1,6 +1,7 @@
 ---
 import Sidebar from "@/components/sidebar.astro";
 import { MobileSidebar } from "@/components/ui/mobile-sidebar";
+import { ThemeToggle } from "@/components/ui/theme-toggle";
 ---
 
 <header
@@ -34,5 +35,8 @@ import { MobileSidebar } from "@/components/ui/mobile-sidebar";
     </a>
     <div class="h-6 w-px bg-white/20"></div>
     <span class="text-lilac text-lg">Equality</span>
+  </div>
+  <div class="flex items-center gap-3">
+    <ThemeToggle client:load />
   </div>
 </header>
