@@ -4,7 +4,7 @@
   "packageManager": "pnpm@9.12.3",
   "scripts": {
     "build": "pnpm -r run build",
-    "dev": "pnpm --filter demo dev",
+    "dev": "pnpm -r --parallel run dev",
     "lint": "eslint src --ext .ts,.tsx --max-warnings=0",
     "release": "pnpm --filter @eqtylab/equality run release",
     "format": "prettier --write .",

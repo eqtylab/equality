@@ -1,5 +1,5 @@
 ---
-layout: "@/layouts/mdx-layout.astro"
+layout: "@demo/layouts/mdx-layout.astro"
 heading: "Component Architecture"
 description: "This section explains how the Equality UI library is structured under the hood — how components use Tailwind, CSS Modules, and the theme system to stay fully scoped, reusable, and conflict-free."
 ---
@@ -31,10 +31,10 @@ Every component imports its own `.module.css` file. Inside that file, Tailwind u
 
 .button {
   @apply ring-offset-background rounded-md;
-  @apply whitespace-nowrap text-sm font-medium;
+  @apply text-sm font-medium whitespace-nowrap;
   @apply transition-all duration-300;
   @apply inline-flex items-center justify-center gap-1;
-  @apply focus-visible:ring-ring focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-offset-2;
+  @apply focus-visible:ring-ring focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-hidden;
   @apply disabled:cursor-not-allowed disabled:opacity-50;
   @apply [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0;
 }

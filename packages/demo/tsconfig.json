@@ -5,14 +5,16 @@
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
-      "@/*": ["src/*"],
-      "@/components/*": ["src/components/*"],
-      "@/lib/*": ["src/lib/*"],
-      "@/layouts/*": ["src/layouts/*"],
-      "@/pages/*": ["src/pages/*"],
-      "@/styles/*": ["src/styles/*"],
+      "@demo/*": ["src/*"],
+      "@demo/components/*": ["src/components/*"],
+      "@demo/lib/*": ["src/lib/*"],
+      "@demo/layouts/*": ["src/layouts/*"],
+      "@demo/pages/*": ["src/pages/*"],
+      "@demo/styles/*": ["src/styles/*"],
       "@eqtylab/equality": ["../ui/src"],
-      "@eqtylab/equality/*": ["../ui/src/*"]
+      "@eqtylab/equality/*": ["../ui/src/*"],
+      "@/": ["../ui/src"],
+      "@/*": ["../ui/src/*"]
     },
     "jsx": "react-jsx",
     "jsxImportSource": "react",
