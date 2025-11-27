@@ -1,4 +1,4 @@
-import { theme } from "@/stores/themeStore";
+import { theme } from "@demo/stores/themeStore";
 import { Icon, Switch } from "@eqtylab/equality";
 import { useStore } from "@nanostores/react";
 import { Sun, Moon } from "lucide-react";
