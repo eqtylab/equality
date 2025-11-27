@@ -20,12 +20,14 @@ export default defineConfig({
     },
     resolve: {
       alias: {
-        "@": resolve(__dirname, "./src"),
-        "@/components": resolve(__dirname, "./src/components"),
-        "@/lib": resolve(__dirname, "./src/lib"),
-        "@/layouts": resolve(__dirname, "./src/layouts"),
-        "@/pages": resolve(__dirname, "./src/pages"),
-        "@/styles": resolve(__dirname, "./src/styles"),
+        "@demo": resolve(__dirname, "./src"),
+        "@demo/components": resolve(__dirname, "./src/components"),
+        "@demo/lib": resolve(__dirname, "./src/lib"),
+        "@demo/layouts": resolve(__dirname, "./src/layouts"),
+        "@demo/pages": resolve(__dirname, "./src/pages"),
+        "@demo/styles": resolve(__dirname, "./src/styles"),
+        // Resolve @eqty/equality to local ui package when viewing demo
+        "@eqtylab/equality": resolve(__dirname, "../ui/src"),
       },
     },
   },
