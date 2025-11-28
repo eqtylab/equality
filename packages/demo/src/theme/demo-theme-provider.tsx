@@ -20,6 +20,7 @@ export const DemoThemeProvider = ({
     );
     if (themeProviderRootElement) {
       themeProviderRootElement.setAttribute("data-equality-theme", theme);
+      document.documentElement.style.colorScheme = theme;
     }
   }, [theme]);
 

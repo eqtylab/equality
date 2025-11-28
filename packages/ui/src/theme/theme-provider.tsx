@@ -10,7 +10,7 @@ interface ThemeProviderProps {
 
 const ThemeProvider = ({ theme = 'dark', customVars, children }: ThemeProviderProps) => {
   return (
-    <div data-equality-theme={theme} className={styles.root} style={customVars}>
+    <div className={styles.root} style={customVars}>
       {children}
       <div id="equality-theme-provider-root-portal" />
     </div>
