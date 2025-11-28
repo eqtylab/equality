@@ -3,7 +3,7 @@ import "@demo/styles/global.css";
 
 import Header from "@demo/components/header.astro";
 import Sidebar from "@demo/components/sidebar.astro";
-import { ThemeProvider } from "@eqtylab/equality";
+import { DemoThemeProvider } from "@demo/theme/demo-theme-provider";
 ---
 
 <!doctype html>
@@ -13,20 +13,46 @@ import { ThemeProvider } from "@eqtylab/equality";
     <meta name="viewport" content="width=device-width" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="generator" content={Astro.generator} />
+    <meta name="theme" content="dark" />
     <title>Equality</title>
+    <script is:inline>
+      (() => {
+        const safeReadStorage = (key) => {
+          try {
+            return window.localStorage.getItem(key);
+          } catch {
+            return null;
+          }
+        };
+
+        const themeLocalStorageValue = safeReadStorage("theme");
+        const prefersDark = window.matchMedia(
+          "(prefers-color-scheme: dark)",
+        ).matches;
+        const theme =
+          themeLocalStorageValue ?? (prefersDark ? "dark" : "light");
+
+        window.__initialTheme = theme; // This sets the theme that is used to initialize the theme store
+        document.documentElement.setAttribute("data-equality-theme", theme); // This sets the theme that controls the styling color variables used
+      })();
+    </script>
   </head>
   <body>
-    <ThemeProvider>
-      <Header />
+    <DemoThemeProvider client:load>
+      <div class="base-colors">
+        <Header />
 
-      <main class="bg-background grid grid-cols-[minmax(0,auto)_minmax(0,1fr)]">
-        <div class="hidden lg:block">
-          <Sidebar />
-        </div>
-        <div class="px-8 pt-14 pb-14">
-          <slot />
-        </div>
-      </main></ThemeProvider
-    >
+        <main
+          class="bg-background grid grid-cols-[minmax(0,auto)_minmax(0,1fr)]"
+        >
+          <div class="hidden lg:block">
+            <Sidebar />
+          </div>
+          <div class="px-8 pt-14 pb-14">
+            <slot />
+          </div>
+        </main>
+      </div>
+    </DemoThemeProvider>
   </body>
 </html>

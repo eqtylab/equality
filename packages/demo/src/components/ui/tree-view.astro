@@ -102,11 +102,11 @@
 
             // Update active state
             treeItems.forEach((i) => {
-              i.classList.remove("text-foreground", "border-foreground");
-              i.classList.add("text-muted-foreground");
+              i.classList.remove("text-text-primary", "border-text-primary");
+              i.classList.add("text-text-secondary");
             });
-            target.classList.remove("text-muted-foreground");
-            target.classList.add("text-foreground", "border-foreground");
+            target.classList.remove("text-text-secondary");
+            target.classList.add("text-text-primary", "border-text-primary");
           }
         }
       });
@@ -128,11 +128,14 @@
               const itemId = item.getAttribute("data-id");
               if (itemId === id) {
                 treeItems.forEach((i) => {
-                  i.classList.remove("text-foreground", "border-foreground");
-                  i.classList.add("text-muted-foreground");
+                  i.classList.remove(
+                    "text-text-primary",
+                    "border-text-primary",
+                  );
+                  i.classList.add("text-text-secondary");
                 });
-                item.classList.remove("text-muted-foreground");
-                item.classList.add("text-foreground", "border-foreground");
+                item.classList.remove("text-text-secondary");
+                item.classList.add("text-text-primary", "border-text-primary");
               }
             });
           }

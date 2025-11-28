@@ -1,10 +1,11 @@
 ---
 import Sidebar from "@demo/components/sidebar.astro";
 import { MobileSidebar } from "@demo/components/ui/mobile-sidebar";
+import { ThemeToggle } from "@demo/components/ui/theme-toggle";
 ---
 
 <header
-  class="fixed top-0 left-0 z-50 flex w-full items-center justify-between border-b border-white/10 bg-black px-4 py-3.5"
+  class="border-text-primary/10 bg-background fixed top-0 left-0 z-50 flex w-full items-center justify-between border-b px-4 py-3.5"
 >
   <div class="flex items-center gap-3">
     <div class="lg:hidden">
@@ -12,12 +13,8 @@ import { MobileSidebar } from "@demo/components/ui/mobile-sidebar";
         <Sidebar />
       </MobileSidebar>
     </div>
-    <a class="[&>svg]:fill-foreground [&>svg]:h-auto [&>svg]:w-28" href="/">
-      <svg
-        viewBox="0 0 100 20"
-        fill="#0D0D0D"
-        xmlns="http://www.w3.org/2000/svg"
-      >
+    <a class="[&>svg]:fill-text-primary [&>svg]:h-auto [&>svg]:w-28" href="/">
+      <svg viewBox="0 0 100 20" xmlns="http://www.w3.org/2000/svg">
         <path
           d="M4.1556 11.8551H12.479V7.86308H4.1556V4.40998H13.0578V0.417969H0.00390625V19.9988H13.3572V15.9868H4.1556V11.8551Z"
         ></path>
@@ -32,7 +29,10 @@ import { MobileSidebar } from "@demo/components/ui/mobile-sidebar";
         ></path>
       </svg>
     </a>
-    <div class="h-6 w-px bg-white/20"></div>
-    <span class="text-lilac text-lg">Equality</span>
+    <div class="bg-text-primary/20 h-6 w-px"></div>
+    <span class="text-lilac-400 text-lg">Equality</span>
+  </div>
+  <div class="flex items-center gap-3">
+    <ThemeToggle client:load />
   </div>
 </header>
