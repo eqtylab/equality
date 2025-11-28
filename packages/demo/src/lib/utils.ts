@@ -4,3 +4,10 @@ import { twMerge } from "tailwind-merge";
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
+
+export function getInitialTheme() {
+  if (typeof window === "undefined") {
+    return undefined;
+  }
+  return window.__initialTheme;
+}

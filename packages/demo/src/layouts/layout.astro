@@ -13,7 +13,29 @@ import { DemoThemeProvider } from "@demo/theme/demo-theme-provider";
     <meta name="viewport" content="width=device-width" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="generator" content={Astro.generator} />
+    <meta name="theme" content="dark" />
     <title>Equality</title>
+    <script is:inline>
+      (() => {
+        const safeReadStorage = (key) => {
+          try {
+            return window.localStorage.getItem(key);
+          } catch {
+            return null;
+          }
+        };
+
+        const themeLocalStorageValue = safeReadStorage("theme");
+        const prefersDark = window.matchMedia(
+          "(prefers-color-scheme: dark)",
+        ).matches;
+        const theme =
+          themeLocalStorageValue ?? (prefersDark ? "dark" : "light");
+
+        window.__initialTheme = theme; // This sets the theme that is used to initialize the theme store
+        document.documentElement.setAttribute("data-equality-theme", theme); // This sets the theme that controls the styling color variables used
+      })();
+    </script>
   </head>
   <body>
     <DemoThemeProvider client:load>

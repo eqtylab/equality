@@ -1,13 +1,27 @@
-import { theme } from "@demo/stores/themeStore";
+import { usePersistentStore } from "@demo/hooks/use-persistent-store";
+import { getInitialTheme } from "@demo/lib/utils";
+import { $theme } from "@demo/stores/theme-store";
 import { ThemeProvider } from "@eqtylab/equality";
-import { useStore } from "@nanostores/react";
+import { useEffect } from "react";
 
 export const DemoThemeProvider = ({
   children,
 }: {
   children: React.ReactNode;
 }) => {
-  const $theme = useStore(theme);
+  const initialTheme = getInitialTheme();
+  const theme = usePersistentStore($theme, initialTheme);
 
-  return <ThemeProvider theme={$theme}>{children}</ThemeProvider>;
+  // TODO - @kate-gladeye - Figure out a better way to do this
+
+  useEffect(() => {
+    const themeProviderRootElement = document.querySelector(
+      "[data-equality-theme]",
+    );
+    if (themeProviderRootElement) {
+      themeProviderRootElement.setAttribute("data-equality-theme", theme);
+    }
+  }, [theme]);
+
+  return <ThemeProvider theme={theme}>{children}</ThemeProvider>;
 };
