@@ -1,4 +1,4 @@
-@reference '../../theme/theme.module.css';
+@reference '../../theme/theme.css';
 
 .tooltip-content {
   @apply z-9999;

@@ -1,4 +1,4 @@
-@reference '../../theme/theme.module.css';
+@reference '../../theme/theme.css';
 
 .popover-header {
   @apply relative w-auto;

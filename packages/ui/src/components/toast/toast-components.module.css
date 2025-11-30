@@ -1,9 +1,9 @@
-@reference '../../theme/theme.module.css';
+@reference '../../theme/theme.css';
 
 .toast-viewport {
   @apply flex flex-col-reverse sm:flex-col;
   @apply p-4;
-  @apply fixed top-0 z-100 sm:top-auto sm:right-0 sm:bottom-0;
+  @apply z-100 fixed top-0 sm:bottom-0 sm:right-0 sm:top-auto;
   @apply max-h-screen w-full md:max-w-md;
 }
 
@@ -43,7 +43,7 @@
   @apply h-7 rounded-md px-2;
   @apply text-xs;
   @apply rounded-md;
-  @apply text-sm font-medium whitespace-nowrap;
+  @apply whitespace-nowrap text-sm font-medium;
   @apply transition-all duration-300;
   @apply flex-center gap-1;
   @apply cursor-pointer;
@@ -72,7 +72,7 @@
   @apply text-inherit transition-colors;
   @apply rounded-md;
   @apply p-1;
-  @apply absolute top-2 right-2;
+  @apply absolute right-2 top-2;
   @apply focus-ring;
   @apply hover:text-text-primary;
 }

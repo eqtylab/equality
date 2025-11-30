@@ -1,4 +1,4 @@
-@reference '../../theme/theme.module.css';
+@reference '../../theme/theme.css';
 
 .separator {
   @apply bg-border shrink-0;

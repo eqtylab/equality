@@ -1,4 +1,4 @@
-@reference '../../theme/theme.module.css';
+@reference '../../theme/theme.css';
 
 .code-block {
   @apply border-border overflow-hidden rounded-md border;
@@ -45,5 +45,5 @@
 }
 
 .code {
-  @apply break-all whitespace-pre-wrap;
+  @apply whitespace-pre-wrap break-all;
 }

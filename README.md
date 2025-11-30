@@ -111,7 +111,7 @@ Notes:
 ## Developing the UI library
 
 - Source: `packages/ui/src` (components under `src/components`, exports in `src/index.ts`)
-- Styles/Tokens: `packages/ui/src/theme/theme.module.css`
+- Styles/Tokens: `packages/ui/src/theme/theme.css`
 
 Build the library locally:
 

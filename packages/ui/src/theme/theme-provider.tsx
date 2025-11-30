@@ -1,4 +1,4 @@
-import styles from './theme.module.css';
+import './theme.css';
 
 interface ThemeProviderProps {
   theme?: 'light' | 'dark';
@@ -10,7 +10,7 @@ interface ThemeProviderProps {
 
 const ThemeProvider = ({ theme = 'dark', customVars, children }: ThemeProviderProps) => {
   return (
-    <div className={styles.root} style={customVars}>
+    <div data-equality-theme={theme} style={customVars}>
       {children}
       <div id="equality-theme-provider-root-portal" />
     </div>

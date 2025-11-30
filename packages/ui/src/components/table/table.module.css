@@ -1,4 +1,4 @@
-@reference '../../theme/theme.module.css';
+@reference '../../theme/theme.css';
 
 .table-row-clickable {
   --mix-color: var(--color-brand-primary);

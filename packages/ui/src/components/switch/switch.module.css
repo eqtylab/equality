@@ -1,4 +1,4 @@
-@reference '../../theme/theme.module.css';
+@reference '../../theme/theme.css';
 
 .switch {
   @apply cursor-pointer rounded-full;
@@ -28,7 +28,7 @@
 }
 
 .switch.lg {
-  @apply h-7 w-13;
+  @apply w-13 h-7;
 }
 
 .thumb.sm {

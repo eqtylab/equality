@@ -1,4 +1,4 @@
-@reference '../../theme/theme.module.css';
+@reference '../../theme/theme.css';
 
 .list-or-grid-view-toggle {
   @apply border-border border;

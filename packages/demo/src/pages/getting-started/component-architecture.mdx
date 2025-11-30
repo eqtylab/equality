@@ -27,14 +27,14 @@ src/
 Every component imports its own `.module.css` file. Inside that file, Tailwind utilities are applied using the `@apply` directive.
 
 ```css
-@reference '../../theme/theme.module.css';
+@reference '../../theme/theme.css';
 
 .button {
   @apply ring-offset-background rounded-md;
-  @apply text-sm font-medium whitespace-nowrap;
+  @apply whitespace-nowrap text-sm font-medium;
   @apply transition-all duration-300;
   @apply inline-flex items-center justify-center gap-1;
-  @apply focus-visible:ring-ring focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-hidden;
+  @apply focus-visible:ring-ring focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-offset-2;
   @apply disabled:cursor-not-allowed disabled:opacity-50;
   @apply [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0;
 }

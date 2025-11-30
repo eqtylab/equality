@@ -1,4 +1,4 @@
-:global([data-equality-theme]) {
+[data-equality-theme] {
   --hover-lighten: 20%;
   --hover-darken: 20%;
 

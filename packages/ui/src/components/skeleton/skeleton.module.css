@@ -1,4 +1,4 @@
-@reference '../../theme/theme.module.css';
+@reference '../../theme/theme.css';
 
 .skeleton {
   @apply bg-greyscale-800 rounded-md;

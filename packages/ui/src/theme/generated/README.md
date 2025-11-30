@@ -10,7 +10,7 @@ This directory contains auto-generated CSS variables from `packages/tokens/equal
 
 ## Usage
 
-These variables are imported in `theme/tokens.css`. You can import this file into your theme file. For example, in `theme.module.css`:
+These variables are imported in `theme/tokens.css`. You can import this file into your theme file. For example, in `theme.css`:
 
 ```css
 @import './tokens.css';
