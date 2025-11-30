@@ -1,7 +1,6 @@
 import { usePersistentStore } from "@demo/hooks/use-persistent-store";
 import { getInitialTheme } from "@demo/lib/utils";
 import { $theme } from "@demo/stores/theme-store";
-import { ThemeProvider } from "@eqtylab/equality";
 import { useEffect } from "react";
 
 export const DemoThemeProvider = ({
@@ -24,5 +23,5 @@ export const DemoThemeProvider = ({
     }
   }, [theme]);
 
-  return <ThemeProvider theme={theme}>{children}</ThemeProvider>;
+  return children;
 };

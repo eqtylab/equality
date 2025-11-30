@@ -1,4 +1,4 @@
-import './theme.css';
+import { Portal } from './portal';
 
 interface ThemeProviderProps {
   theme?: 'light' | 'dark';
@@ -12,7 +12,7 @@ const ThemeProvider = ({ theme = 'dark', customVars, children }: ThemeProviderPr
   return (
     <div data-equality-theme={theme} style={customVars}>
       {children}
-      <div id="equality-theme-provider-root-portal" />
+      <Portal />
     </div>
   );
 };
