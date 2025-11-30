@@ -10,6 +10,8 @@ Equality ships with two built-in themes:
 - `light`
 - `dark`
 
+### Option 1: Use the `ThemeProvider` component
+
 You can set them through the `theme` prop on the `ThemeProvider`:
 
 ```tsx
@@ -19,6 +21,16 @@ You can set them through the `theme` prop on the `ThemeProvider`:
 ```
 
 Switching themes automatically updates all Tailwind semantic tokens (`bg-primary`, `text-muted`, etc.) at runtime — no reloads or extra configuration.
+
+### Option 2: Manual setup
+
+You can switch the theme applied by switching the theme set in the `data-equality-theme` attribute on the root element or wherever Equality components are used:
+
+```tsx
+<html data-equality-theme="dark">
+  <App />
+</html>
+```
 
 ## Default variables
 

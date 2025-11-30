@@ -5,6 +5,10 @@ heading: "Customizing"
 
 ## Custom variables
 
+Perfect for brand-specific adjustments or white-label versions.
+
+### Option 1: Use the `ThemeProvider` component
+
 You can override specific tokens using the `customVars` prop on `ThemeProvider`:
 
 ```tsx
@@ -19,7 +23,21 @@ You can override specific tokens using the `customVars` prop on `ThemeProvider`:
 </ThemeProvider>
 ```
 
-Perfect for brand-specific adjustments or white-label versions.
+### Option 2: Manual setup
+
+You can override specific tokens by applying CSS var overrides where the theme is set:
+
+```tsx
+<html
+  data-equality-theme="light"
+  style={{
+    "--color-brand-primary": "hsl(280 75% 60%)",
+    "--color-button-primary-fill": "hsl(50 100% 70%)",
+  }}
+>
+  <App />
+</html>
+```
 
 ## Extending Tailwind
 

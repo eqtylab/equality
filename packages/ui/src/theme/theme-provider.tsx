@@ -1,5 +1,7 @@
 import { Portal } from './portal';
 
+import './theme.css';
+
 interface ThemeProviderProps {
   theme?: 'light' | 'dark';
   customVars?: React.CSSProperties & {
