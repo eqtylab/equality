@@ -1,5 +1,7 @@
 @import "tailwindcss";
 
+@import "@eqtylab/equality/theme.css";
+
 @layer base {
   *,
   ::after,

@@ -25,10 +25,10 @@ This sets up all required CSS variables and makes sure the components render cor
 
 ### Option 2: Manual setup
 
-Add the Equality stylesheet to the app:
+Import the Equality stylesheet. In order to use the theme colors within your project code, the import must be added to the stylesheet rather than within the App code:
 
 ```tsx
-import "@eqtylab/equality/theme.css";
+@import "@eqtylab/equality/theme.css";
 ```
 
 Add the theme data attribute to the root element or wherever Equality components are used:
