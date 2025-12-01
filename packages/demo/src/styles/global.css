@@ -1,7 +1,5 @@
 @import "tailwindcss";
 
-@import "@eqtylab/equality/theme/tokens.css";
-
 @layer base {
   *,
   ::after,
