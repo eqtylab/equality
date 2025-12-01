@@ -27,6 +27,10 @@ export default defineConfig({
         "@demo/pages": resolve(__dirname, "./src/pages"),
         "@demo/styles": resolve(__dirname, "./src/styles"),
         // Resolve @eqty/equality to local ui package when viewing demo
+        "@eqtylab/equality/theme.css": resolve(
+          __dirname,
+          "../ui/src/theme/theme.css",
+        ),
         "@eqtylab/equality": resolve(__dirname, "../ui/src"),
       },
     },

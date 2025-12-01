@@ -12,6 +12,7 @@
       "@demo/pages/*": ["src/pages/*"],
       "@demo/styles/*": ["src/styles/*"],
       "@eqtylab/equality": ["../ui/src"],
+      "@eqtylab/equality/theme.css": ["../ui/src/theme/theme.css"],
       "@eqtylab/equality/*": ["../ui/src/*"],
       "@/": ["../ui/src"],
       "@/*": ["../ui/src/*"]
