@@ -1,7 +1,7 @@
 const STORAGE_KEY = 'equality-theme';
 const UPDATE_EVENT = 'equality-theme-change';
 const FALLBACK_THEME = 'light';
-export type Theme = 'light' | 'dark';
+type Theme = 'light' | 'dark';
 
 const getFallbackTheme = (): Theme => {
   if (typeof window === 'undefined') {
@@ -14,10 +14,8 @@ const getDefaultTheme = (): Theme | undefined => {
   // TODO - @kate-gladeye - get default theme from data-equality-theme attribute if available
   const themeProviderElement = document.querySelector('[data-equality-theme]');
   if (themeProviderElement) {
-    console.log('data-equality-theme] found');
     return themeProviderElement.getAttribute('data-equality-theme') as Theme;
   } else {
-    console.log('data-equality-theme] not found');
     return undefined;
   }
 };
@@ -77,17 +75,18 @@ const getCurrentThemeState = () => {
   // Then, use fallback theme from browser settings if available
 
   const isUsingLocalStorage = window.__equalityIsUsingLocalStorage;
-  if (isUsingLocalStorage) {
-    return getThemeFromLocalStorage() || getDefaultTheme() || getFallbackTheme();
-  } else {
-    return getThemeFromWindow() || getDefaultTheme() || getFallbackTheme();
+  const storedTheme = isUsingLocalStorage ? getThemeFromLocalStorage() : getThemeFromWindow();
+  const theme = storedTheme || getDefaultTheme() || getFallbackTheme();
+  if (!storedTheme) {
+    setTheme(theme);
   }
+  return theme;
 };
 
-const initializeTheme = () => {
-  // This is only used if local storage is used
+const initializeTheme = (useLocalStorage = false) => {
+  // This is only needed if the initial state needs to be dynamic
 
-  window.__equalityIsUsingLocalStorage = true;
+  window.__equalityIsUsingLocalStorage = useLocalStorage;
   const theme = getCurrentThemeState();
   applyThemeToDom(theme);
 };
@@ -110,7 +109,6 @@ const subscribeToThemeChange = (listener: () => void) => {
   } else {
     // use window object
     const windowListener = () => {
-      console.log('listnening to window event');
       listener();
     };
     window.addEventListener(UPDATE_EVENT, windowListener);
@@ -120,4 +118,20 @@ const subscribeToThemeChange = (listener: () => void) => {
   }
 };
 
-export { getCurrentThemeState, applyThemeToDom, initializeTheme, setTheme, subscribeToThemeChange };
+export {
+  Theme,
+  STORAGE_KEY,
+  UPDATE_EVENT,
+  FALLBACK_THEME,
+  getCurrentThemeState,
+  applyThemeToDom,
+  initializeTheme,
+  setTheme,
+  subscribeToThemeChange,
+  getFallbackTheme,
+  getDefaultTheme,
+  getThemeFromLocalStorage,
+  getThemeFromWindow,
+  setThemeInLocalStorage,
+  setThemeOnWindow,
+};

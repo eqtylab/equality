@@ -11,18 +11,22 @@ Import the Equality stylesheet. In order to use the theme colors within your pro
 @import "@eqtylab/equality/theme.css";
 ```
 
-Optional: Add the theme data attribute to the root element. This sets the default theme. If no data attribute is found, the default from the user's browser settings will be used:
+Add the theme data attribute to the root element. This sets the default theme. If no value is given, the default from the user's browser settings will be used:
 
 ```tsx
-<html data-equality-theme="light">
+<html data-equality-theme>
   <YourApp />
 </html>
 ```
 
-Optional: Initialize with the user's stored theme preference. This is not needed if you are not needing to store the user's theme preference:
+Optional: A lightweight script to initialize the theme with a dynamic value - either with the user's stored theme preferences (`{store: true}`) or their browser settings (default: `{store: false}`). This needs to be imported inline in the `<head>` in order for it to be picked up before rendering. This is not needed if you are not wanting the theme to be dynamic:
 
 ```tsx
-TODO;
+import { initializeTheme } from "@eqtylab/equality";
+
+<head>
+  <script>{initializeTheme({ store: true })}</script>
+</head>;
 ```
 
 ## Use components

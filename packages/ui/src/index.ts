@@ -7,7 +7,7 @@ export * from './theme/portal';
 export * from './theme/tokens.css';
 export * from './theme/theme.css';
 export * from './theme/hooks/use-theme';
-export { initializeTheme } from './theme/lib/utils';
+export { initializeTheme } from './theme/lib/inline-initialize-script';
 
 /* HOOKS */
 export * from './hooks';
