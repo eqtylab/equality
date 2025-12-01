@@ -5,14 +5,16 @@ export const ThemeToggle = () => {
   const [theme, setTheme] = useTheme();
   const displayToggle = !!theme; // Only display the toggle once the theme has initialised, to avoid rendering incorrect state initially
 
-  return displayToggle ? (
+  return true ? (
     <div className="flex items-center gap-2">
-      <Switch
-        checked={theme === "dark"}
-        size="sm"
-        onCheckedChange={(checked) => setTheme(checked ? "dark" : "light")}
-        thumbIcon={theme === "dark" ? <Moon /> : <Sun />}
-      />
+      {displayToggle && (
+        <Switch
+          checked={theme === "dark"}
+          size="sm"
+          onCheckedChange={(checked) => setTheme(checked ? "dark" : "light")}
+          thumbIcon={theme === "dark" ? <Moon /> : <Sun />}
+        />
+      )}
     </div>
   ) : null;
 };

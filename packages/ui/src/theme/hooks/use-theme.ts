@@ -17,7 +17,7 @@ const getSnapshot = () => {
 
 const getServerSnapshot = () => {
   // Default SSR value before hydration
-  return FALLBACK_THEME; // use undefined to indicate no server snapshot available if not using SSR
+  return undefined; // use undefined to indicate no server snapshot available if not using SSR
 };
 
 const useTheme = () => {
