@@ -87,6 +87,22 @@ createRoot(document.getElementById('root')!).render(
 );
 ```
 
+Or if you need to manually set up the theming:
+
+Add stylesheet:
+
+```tsx
+import '@eqtylab/equality/theme.css';
+```
+
+Add theme provider:
+
+```ts
+<html data-equality-theme="light">
+  <YourApp />
+</html>
+```
+
 3. Import and use components:
 
 ```ts
