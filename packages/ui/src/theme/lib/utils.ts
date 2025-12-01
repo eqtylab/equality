@@ -78,6 +78,10 @@ const getCurrentThemeState = () => {
   // Then, use default theme set on data-equality-theme attribute if available
   // Then, use fallback theme from browser settings if available
 
+  if (typeof window === 'undefined') {
+    return undefined;
+  }
+
   const isUsingLocalStorage = window.__equalityIsUsingLocalStorage;
   const storedTheme = isUsingLocalStorage ? getThemeFromLocalStorage() : getThemeFromWindow();
   const theme = storedTheme || getDefaultTheme() || getFallbackTheme();
@@ -93,10 +97,14 @@ const initializeTheme = (options: InitializeThemeOptions = {}) => {
 
   window.__equalityIsUsingLocalStorage = shouldStoreTheme;
   const theme = getCurrentThemeState();
-  applyThemeToDom(theme);
+  if (theme) applyThemeToDom(theme);
 };
 
 const subscribeToThemeChange = (listener: () => void) => {
+  if (typeof window === 'undefined') {
+    return () => {};
+  }
+
   const isUsingLocalStorage = window.__equalityIsUsingLocalStorage;
   if (isUsingLocalStorage) {
     // use localStorage
