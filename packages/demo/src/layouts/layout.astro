@@ -15,7 +15,7 @@ import Sidebar from "@demo/components/sidebar.astro";
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="generator" content={Astro.generator} />
     <meta name="theme" content="dark" />
-    <script is:inline set:html={initializeTheme({ store: false })} />
+    <script is:inline set:html={initializeTheme({ shouldStoreTheme: false })} />
     <title>Equality</title>
   </head>
   <body>
