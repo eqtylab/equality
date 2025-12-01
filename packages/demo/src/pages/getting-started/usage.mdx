@@ -19,13 +19,13 @@ Add the theme data attribute to the root element. This sets the default theme. I
 </html>
 ```
 
-Optional: A lightweight script to initialize the theme with a dynamic value - either with the user's stored theme preferences (`{store: true}`) or their browser settings (default: `{store: false}`). This needs to be imported inline in the `<head>` in order for it to be picked up before rendering. This is not needed if you are not wanting the theme to be dynamic:
+Optional: A lightweight script to initialize the theme with a dynamic value - either with the user's stored theme preferences (`{shouldStoreTheme: true}`) or their browser settings (default: `{shouldStoreTheme: false}`). This needs to be imported inline in the `<head>` in order for it to be picked up before rendering. This is not needed if you are not wanting the theme to be dynamic:
 
 ```tsx
 import { initializeTheme } from "@eqtylab/equality";
 
 <head>
-  <script>{initializeTheme({ store: true })}</script>
+  <script>{initializeTheme({ shouldStoreTheme: true })}</script>
 </head>;
 ```
 
