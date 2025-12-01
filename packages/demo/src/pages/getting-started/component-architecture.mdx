@@ -8,7 +8,7 @@ description: "This section explains how the Equality UI library is structured un
 
 Each UI component in the library is built to be:
 
-- **Self-contained** – no global CSS imports or leaks
+- **Self-contained** – scoped styles via CSS modules
 - **Themed** – all tokens resolve via the active `ThemeProvider` or theming data attribute
 - **Composable** – extendable through the `className` prop
 
@@ -31,10 +31,10 @@ Every component imports its own `.module.css` file. Inside that file, Tailwind u
 
 .button {
   @apply ring-offset-background rounded-md;
-  @apply whitespace-nowrap text-sm font-medium;
+  @apply text-sm font-medium whitespace-nowrap;
   @apply transition-all duration-300;
   @apply inline-flex items-center justify-center gap-1;
-  @apply focus-visible:ring-ring focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-offset-2;
+  @apply focus-visible:ring-ring focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-hidden;
   @apply disabled:cursor-not-allowed disabled:opacity-50;
   @apply [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0;
 }
@@ -56,7 +56,7 @@ Because Tailwind runs at build time, there's no runtime overhead — just static
 
 ## Theme system
 
-At the root level, the `<ThemeProvider>` injects all design tokens as CSS custom properties:
+The theme stylsheet injects all design tokens as CSS custom properties:
 
 ```css
 --color-primary: hsl(210 40% 98%);
@@ -72,7 +72,13 @@ When you change the theme via:
 <ThemeProvider theme="dark">
 ```
 
-…the provider updates those variables, and every component automatically restyles itself — no rebuilds, no extra logic.
+or
+
+```tsx
+<html data-equality-theme="dark">
+```
+
+…those variables are updated, and every component automatically restyles itself — no rebuilds, no extra logic.
 
 ## Build process
 
