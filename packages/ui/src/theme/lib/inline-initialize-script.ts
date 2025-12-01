@@ -6,6 +6,7 @@ import {
   getThemeFromLocalStorage,
   getThemeFromWindow,
   initializeTheme,
+  InitializeThemeOptions,
   setTheme,
   setThemeInLocalStorage,
   setThemeOnWindow,
@@ -33,20 +34,20 @@ const serializeHelpers = () =>
     })
     .join('\n');
 
-const buildInlineThemeInitializer = (options = {}) => {
-  const { store = false } = options;
+const buildInlineThemeInitializer = (options: InitializeThemeOptions = {}) => {
+  const { shouldStoreTheme = false } = options;
 
   return `
     (() => {
       const STORAGE_KEY = ${JSON.stringify(STORAGE_KEY)};
       const UPDATE_EVENT = ${JSON.stringify(UPDATE_EVENT)};
       ${serializeHelpers()}
-      initializeTheme(${JSON.stringify(store)});
+      initializeTheme({ shouldStoreTheme: ${JSON.stringify(shouldStoreTheme)} });
     })();
   `;
 };
 
-const inlineInitializeTheme = (options = {}) => {
+const inlineInitializeTheme = (options: InitializeThemeOptions = {}) => {
   return buildInlineThemeInitializer(options);
 };
 

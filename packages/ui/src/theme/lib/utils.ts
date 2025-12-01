@@ -3,6 +3,10 @@ const UPDATE_EVENT = 'equality-theme-change';
 const FALLBACK_THEME = 'light';
 type Theme = 'light' | 'dark';
 
+interface InitializeThemeOptions {
+  shouldStoreTheme?: boolean;
+}
+
 const getFallbackTheme = (): Theme => {
   if (typeof window === 'undefined') {
     return FALLBACK_THEME;
@@ -83,10 +87,11 @@ const getCurrentThemeState = () => {
   return theme;
 };
 
-const initializeTheme = (useLocalStorage = false) => {
+const initializeTheme = (options: InitializeThemeOptions = {}) => {
   // This is only needed if the initial state needs to be dynamic
+  const { shouldStoreTheme = false } = options;
 
-  window.__equalityIsUsingLocalStorage = useLocalStorage;
+  window.__equalityIsUsingLocalStorage = shouldStoreTheme;
   const theme = getCurrentThemeState();
   applyThemeToDom(theme);
 };
@@ -120,6 +125,7 @@ const subscribeToThemeChange = (listener: () => void) => {
 
 export {
   Theme,
+  InitializeThemeOptions,
   STORAGE_KEY,
   UPDATE_EVENT,
   FALLBACK_THEME,
