@@ -12,9 +12,13 @@
 .thumb {
   @apply bg-background shadow-lg ring-0;
   @apply transition-transform;
-  @apply block rounded-full;
+  @apply flex items-center justify-center rounded-full;
   @apply pointer-events-none;
   @apply data-[state=unchecked]:translate-x-0;
+}
+
+.thumb-icon {
+  @apply text-text-primary;
 }
 
 /* Size variants */
@@ -28,7 +32,7 @@
 }
 
 .switch.lg {
-  @apply w-13 h-7;
+  @apply h-7 w-13;
 }
 
 .thumb.sm {
