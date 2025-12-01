@@ -1,4 +1,4 @@
-[data-equality-theme] {
+:root[data-equality-theme] {
   --hover-lighten: 20%;
   --hover-darken: 20%;
 
