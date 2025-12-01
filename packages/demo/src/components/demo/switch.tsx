@@ -12,9 +12,15 @@ interface SwitchDemoProps {
     | "disabled-on"
     | "default"
     | "danger";
+  thumbIcon?: React.ReactElement | string;
+  thumbIconChecked?: React.ReactElement | string;
 }
 
-export function SwitchDemo({ variant = "default-off" }: SwitchDemoProps) {
+export function SwitchDemo({
+  variant = "default-off",
+  thumbIcon,
+  thumbIconChecked,
+}: SwitchDemoProps) {
   const [switchStates, setSwitchStates] = useState({
     defaultUnchecked: false,
     defaultChecked: true,
@@ -28,17 +34,34 @@ export function SwitchDemo({ variant = "default-off" }: SwitchDemoProps) {
   });
 
   if (variant === "default-off") {
-    return <Switch checked={switchStates.defaultUnchecked} />;
+    return (
+      <Switch
+        thumbIcon={
+          switchStates.default ? thumbIconChecked || thumbIcon : thumbIcon
+        }
+        checked={switchStates.defaultUnchecked}
+      />
+    );
   }
 
   if (variant === "default-on") {
-    return <Switch checked={switchStates.defaultChecked} />;
+    return (
+      <Switch
+        thumbIcon={
+          switchStates.default ? thumbIconChecked || thumbIcon : thumbIcon
+        }
+        checked={switchStates.defaultChecked}
+      />
+    );
   }
 
   if (variant === "small") {
     return (
       <Switch
         size="sm"
+        thumbIcon={
+          switchStates.default ? thumbIconChecked || thumbIcon : thumbIcon
+        }
         checked={switchStates.small}
         onCheckedChange={(checked) =>
           setSwitchStates((prev) => ({ ...prev, small: checked }))
@@ -51,6 +74,9 @@ export function SwitchDemo({ variant = "default-off" }: SwitchDemoProps) {
     return (
       <Switch
         size="md"
+        thumbIcon={
+          switchStates.default ? thumbIconChecked || thumbIcon : thumbIcon
+        }
         checked={switchStates.medium}
         onCheckedChange={(checked) =>
           setSwitchStates((prev) => ({ ...prev, medium: checked }))
@@ -63,6 +89,9 @@ export function SwitchDemo({ variant = "default-off" }: SwitchDemoProps) {
     return (
       <Switch
         size="lg"
+        thumbIcon={
+          switchStates.default ? thumbIconChecked || thumbIcon : thumbIcon
+        }
         checked={switchStates.large}
         onCheckedChange={(checked) =>
           setSwitchStates((prev) => ({ ...prev, large: checked }))
@@ -72,16 +101,35 @@ export function SwitchDemo({ variant = "default-off" }: SwitchDemoProps) {
   }
 
   if (variant === "disabled-off") {
-    return <Switch checked={switchStates.disabledUnchecked} disabled />;
+    return (
+      <Switch
+        thumbIcon={
+          switchStates.default ? thumbIconChecked || thumbIcon : thumbIcon
+        }
+        checked={switchStates.disabledUnchecked}
+        disabled
+      />
+    );
   }
 
   if (variant === "disabled-on") {
-    return <Switch checked={switchStates.disabledChecked} disabled />;
+    return (
+      <Switch
+        thumbIcon={
+          switchStates.default ? thumbIconChecked || thumbIcon : thumbIcon
+        }
+        checked={switchStates.disabledChecked}
+        disabled
+      />
+    );
   }
 
   if (variant === "default") {
     return (
       <Switch
+        thumbIcon={
+          switchStates.default ? thumbIconChecked || thumbIcon : thumbIcon
+        }
         checked={switchStates.default}
         onCheckedChange={(checked) =>
           setSwitchStates((prev) => ({ ...prev, default: checked }))
@@ -94,6 +142,9 @@ export function SwitchDemo({ variant = "default-off" }: SwitchDemoProps) {
     return (
       <Switch
         variant="danger"
+        thumbIcon={
+          switchStates.default ? thumbIconChecked || thumbIcon : thumbIcon
+        }
         checked={switchStates.danger}
         onCheckedChange={(checked) =>
           setSwitchStates((prev) => ({ ...prev, danger: checked }))
