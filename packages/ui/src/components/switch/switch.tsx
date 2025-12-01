@@ -13,7 +13,7 @@ interface SwitchProps extends React.ComponentPropsWithoutRef<typeof SwitchPrimit
 
 const Switch = React.forwardRef<React.ElementRef<typeof SwitchPrimitives.Root>, SwitchProps>(
   ({ className, size = 'md', variant = 'default', thumbIcon, ...props }, ref) => {
-    console.log(thumbIcon);
+    const iconSize = size === 'sm' ? 'xs' : size === 'md' ? 'sm' : 'md';
     return (
       <SwitchPrimitives.Root
         className={cn(styles['switch'], styles[size], styles[variant], className)}
@@ -21,7 +21,7 @@ const Switch = React.forwardRef<React.ElementRef<typeof SwitchPrimitives.Root>, 
         ref={ref}
       >
         <SwitchPrimitives.Thumb className={cn(styles['thumb'], styles[size])}>
-          {thumbIcon && <Icon icon={thumbIcon} className={styles['thumb-icon']} size="xs" />}
+          {thumbIcon && <Icon icon={thumbIcon} className={styles['thumb-icon']} size={iconSize} />}
         </SwitchPrimitives.Thumb>
       </SwitchPrimitives.Root>
     );
