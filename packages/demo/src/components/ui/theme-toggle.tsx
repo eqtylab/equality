@@ -5,7 +5,7 @@ export const ThemeToggle = () => {
   const [theme, setTheme] = useTheme();
   const displayToggle = !!theme; // Only display the toggle once the theme has initialised, to avoid rendering incorrect state initially
 
-  return true ? (
+  return (
     <div className="flex items-center gap-2">
       {displayToggle && (
         <Switch
@@ -16,5 +16,5 @@ export const ThemeToggle = () => {
         />
       )}
     </div>
-  ) : null;
+  );
 };
