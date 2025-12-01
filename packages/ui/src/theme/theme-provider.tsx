@@ -1,3 +1,5 @@
+// DEPRECATED
+
 import { Portal } from './portal';
 
 import './theme.css';

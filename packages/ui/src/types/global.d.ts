@@ -12,3 +12,12 @@ declare module '*.json' {
   const value: any;
   export default value;
 }
+
+declare global {
+  interface Window {
+    __equalityIsUsingLocalStorage: boolean;
+    __equalityTheme: string;
+  }
+}
+
+export {};

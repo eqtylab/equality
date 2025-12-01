@@ -24,14 +24,15 @@ import Sidebar from "@demo/components/sidebar.astro";
           }
         };
 
-        const themeLocalStorageValue = safeReadStorage("theme");
+        const themeLocalStorageValue = safeReadStorage("equality-theme");
         const prefersDark = window.matchMedia(
           "(prefers-color-scheme: dark)",
         ).matches;
         const theme =
           themeLocalStorageValue ?? (prefersDark ? "dark" : "light");
 
-        window.__initialTheme = theme; // This sets the theme that is used to initialize the theme store
+        window.__equalityIsUsingLocalStorage = false;
+
         document.documentElement.setAttribute("data-equality-theme", theme); // This sets the theme that controls the styling color variables used
       })();
     </script>

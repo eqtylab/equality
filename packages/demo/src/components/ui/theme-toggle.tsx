@@ -1,10 +1,8 @@
-import { usePersistentStore } from "@demo/hooks/use-persistent-store";
-import { $theme } from "@demo/stores/theme-store";
-import { Switch } from "@eqtylab/equality";
+import { Switch, useTheme } from "@eqtylab/equality";
 import { Sun, Moon } from "lucide-react";
 
 export const ThemeToggle = () => {
-  const theme = usePersistentStore($theme);
+  const [theme, setTheme] = useTheme();
   const displayToggle = !!theme; // Only display the toggle once the theme has initialised, to avoid rendering incorrect state initially
 
   return displayToggle ? (
@@ -12,7 +10,7 @@ export const ThemeToggle = () => {
       <Switch
         checked={theme === "dark"}
         size="sm"
-        onCheckedChange={(checked) => $theme.set(checked ? "dark" : "light")}
+        onCheckedChange={(checked) => setTheme(checked ? "dark" : "light")}
         thumbIcon={theme === "dark" ? <Moon /> : <Sun />}
       />
     </div>
