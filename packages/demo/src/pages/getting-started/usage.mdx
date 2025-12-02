@@ -10,15 +10,9 @@ By default, only the components wrapped in `<ThemeProvider />` will use the them
 Wrap components that use the Equality theme colors in `<ThemeProvider />`. You will probably want to add this near the root of your project:
 
 ```tsx
-<ThemeProvider>...</ThemeProvider>
-```
-
-Optional: Add the theme data attribute `data-equality-theme` to the root `<html>` element. This sets the default theme. If no value is given and the initializer script (below) is not used, `light` is the fallback:
-
-```tsx
-<html data-equality-theme="dark">
+<ThemeProvider>
   <YourApp />
-</html>
+</ThemeProvider>
 ```
 
 Optional: Import the Equality Tailwind v4 color configuration. If you are using Tailwind v4 and want to use the theme colors at the top level of your project code (like in your global stylesheet), the import must be added to your global stylesheet:
