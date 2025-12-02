@@ -1,3 +1,4 @@
+import { Portal } from './portal';
 import styles from './theme.module.css';
 
 interface ThemeProviderProps {
@@ -11,7 +12,7 @@ const ThemeProvider = ({ customVars, children }: ThemeProviderProps) => {
   return (
     <div className={styles.root} style={customVars}>
       {children}
-      <div id="equality-theme-provider-root-portal" />
+      <Portal />
     </div>
   );
 };
