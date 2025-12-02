@@ -7,17 +7,30 @@ interface InitializeThemeOptions {
   shouldStoreTheme?: boolean;
 }
 
-const getFallbackTheme = (): Theme => {
-  if (typeof window === 'undefined') {
+interface GetCurrentThemeStateOptions {
+  canFallbackToBrowserSettings?: boolean;
+}
+
+interface GetFallbackThemeOptions {
+  canFallbackToBrowserSettings?: boolean;
+}
+
+const getFallbackTheme = (options: GetFallbackThemeOptions = {}): Theme => {
+  const { canFallbackToBrowserSettings = false } = options;
+
+  if (typeof window === 'undefined' || !canFallbackToBrowserSettings) {
     return FALLBACK_THEME;
   }
   return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
 };
 
 const getDefaultTheme = (): Theme | undefined => {
-  const themeProviderElement = document.querySelector('[data-equality-theme]');
-  if (themeProviderElement) {
-    return themeProviderElement.getAttribute('data-equality-theme') as Theme;
+  const themeProviderRootElement =
+    document.querySelector('[data-equality-theme]') || document.documentElement;
+  if (themeProviderRootElement) {
+    return (themeProviderRootElement.getAttribute('data-equality-theme') || undefined) as
+      | Theme
+      | undefined;
   } else {
     return undefined;
   }
@@ -72,7 +85,9 @@ const setTheme = (theme: Theme) => {
   applyThemeToDom(theme);
 };
 
-const getCurrentThemeState = () => {
+const getCurrentThemeState = (options: GetCurrentThemeStateOptions = {}) => {
+  const { canFallbackToBrowserSettings = false } = options;
+
   // First, use stored theme if available
   // Then, use default theme set on data-equality-theme attribute if available
   // Then, use fallback theme from browser settings if available
@@ -83,7 +98,8 @@ const getCurrentThemeState = () => {
 
   const isUsingLocalStorage = window.__equalityIsUsingLocalStorage;
   const storedTheme = isUsingLocalStorage ? getThemeFromLocalStorage() : getThemeFromWindow();
-  const theme = storedTheme || getDefaultTheme() || getFallbackTheme();
+  const theme =
+    storedTheme || getDefaultTheme() || getFallbackTheme({ canFallbackToBrowserSettings });
   if (!storedTheme) {
     setTheme(theme);
   }
@@ -95,7 +111,7 @@ const initializeTheme = (options: InitializeThemeOptions = {}) => {
   const { shouldStoreTheme = false } = options;
 
   window.__equalityIsUsingLocalStorage = shouldStoreTheme;
-  const theme = getCurrentThemeState();
+  const theme = getCurrentThemeState({ canFallbackToBrowserSettings: true });
   if (theme) applyThemeToDom(theme);
 };
 

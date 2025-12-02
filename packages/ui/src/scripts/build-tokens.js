@@ -94,7 +94,7 @@ sd.registerFormat({
     const tokens = formatCssGroup(dictionary.tokens.Light);
 
     return await prettier.format(
-      `[data-equality-theme] .equality-theme-provider {
+      `.equality-theme-provider {
     
       --hover-lighten: 20%;
       --hover-darken: 20%;
