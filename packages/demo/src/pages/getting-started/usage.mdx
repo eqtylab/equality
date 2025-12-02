@@ -22,11 +22,37 @@ Add the theme data attribute `data-equality-theme` to the root `<html>` element.
 Optional: A lightweight script to initialize the theme with a dynamic value. Use the option `shouldStoreTheme: true` to initialize with `localStorage` to store the user's theme preference, or `shouldStoreTheme: false` (default) to initialize with the browser's theme settings. This needs to be imported inline in the `<head>` in order for it to be picked up before rendering. This is not needed if you are not wanting the theme to be initialized with a dynamic value:
 
 ```tsx
-import { initializeTheme } from "@eqtylab/equality";
+import { initializeTheme } from "@eqtylab/equality/scripts";
 
 <head>
   <script>{initializeTheme({ shouldStoreTheme: true })}</script>
 </head>;
+```
+
+Tip: For Vite, you can inject the initializer script into the head by adding the following to `vite.app.config.ts`:
+
+```tsx
+import { defineConfig } from "vite";
+import { initializeTheme } from "@eqtylab/equality/scripts";
+
+export default defineConfig({
+  plugins: [
+    {
+      name: "inject-equality-theme-initializer",
+      transformIndexHtml() {
+        const inlineThemeScript = initializeTheme({ shouldStoreTheme: true });
+        return [
+          {
+            tag: "script",
+            attrs: { id: "equality-theme-init" },
+            children: inlineThemeScript,
+            injectTo: "head-prepend",
+          },
+        ];
+      },
+    },
+  ],
+});
 ```
 
 ## Use components
