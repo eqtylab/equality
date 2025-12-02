@@ -69,7 +69,16 @@ Tailwind utilities in the components reference these tokens, so `bg-primary` map
 When you change the theme via:
 
 ```tsx
-<ThemeProvider theme="dark">
+<html data-equality-theme="dark">
+```
+
+or
+
+```tsx
+import { useTheme } from "@eqtylab/equality";
+
+const [theme, setTheme] = useTheme();
+setTheme("dark");
 ```
 
 …the provider updates those variables, and every component automatically restyles itself — no rebuilds, no extra logic.
