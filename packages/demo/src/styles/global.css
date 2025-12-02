@@ -1,6 +1,6 @@
 @import "tailwindcss";
 
-@import "@eqtylab/equality/theme.css";
+@import "@eqtylab/equality/theme-colors.css";
 
 @layer base {
   *,

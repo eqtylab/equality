@@ -17,7 +17,7 @@
       "import": "./dist/scripts.js",
       "require": "./dist/scripts.cjs"
     },
-    "./theme.css": "./dist/theme.css"
+    "./theme-colors.css": "./dist/generated/tailwind-tokens.css"
   },
   "files": [
     "dist",

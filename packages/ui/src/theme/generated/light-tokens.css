@@ -1,4 +1,4 @@
-[data-equality-theme] body {
+[data-equality-theme] .equality-theme-provider {
   --hover-lighten: 20%;
   --hover-darken: 20%;
 

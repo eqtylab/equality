@@ -80,7 +80,7 @@ sd.registerFormat({
 
     return await prettier.format(
       // Must have a higher specificity than the standard theme CSS
-      `html[data-equality-theme='dark'] body {
+      `html[data-equality-theme='dark'] .equality-theme-provider {
       ${tokens}
     }`,
       { ...prettierConfig, parser: 'css' }
@@ -94,7 +94,7 @@ sd.registerFormat({
     const tokens = formatCssGroup(dictionary.tokens.Light);
 
     return await prettier.format(
-      `[data-equality-theme] body {
+      `[data-equality-theme] .equality-theme-provider {
     
       --hover-lighten: 20%;
       --hover-darken: 20%;

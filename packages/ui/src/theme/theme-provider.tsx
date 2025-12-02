@@ -1,20 +1,17 @@
-// DEPRECATED
-
 import { Portal } from './portal';
 
 import './theme.css';
 
 interface ThemeProviderProps {
-  theme?: 'light' | 'dark';
   customVars?: React.CSSProperties & {
     [key: `--${string}`]: string | number | undefined;
   };
   children: React.ReactNode;
 }
 
-const ThemeProvider = ({ theme = 'dark', customVars, children }: ThemeProviderProps) => {
+const ThemeProvider = ({ customVars, children }: ThemeProviderProps) => {
   return (
-    <div data-equality-theme={theme} style={customVars}>
+    <div className="equality-theme-provider" style={customVars}>
       {children}
       <Portal />
     </div>

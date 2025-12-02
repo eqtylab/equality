@@ -15,7 +15,6 @@ const getFallbackTheme = (): Theme => {
 };
 
 const getDefaultTheme = (): Theme | undefined => {
-  // TODO - @kate-gladeye - get default theme from data-equality-theme attribute if available
   const themeProviderElement = document.querySelector('[data-equality-theme]');
   if (themeProviderElement) {
     return themeProviderElement.getAttribute('data-equality-theme') as Theme;

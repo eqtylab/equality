@@ -1,5 +1,3 @@
-// DEPRECATED
-
 const Portal = () => {
   return <div id="equality-theme-provider-root-portal" />;
 };
