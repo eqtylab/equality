@@ -16,6 +16,10 @@
         {
           "destination": "tailwind-tokens.css",
           "format": "tailwind"
+        },
+        {
+          "destination": "color-vars.css",
+          "format": "css/color-vars"
         }
       ]
     }

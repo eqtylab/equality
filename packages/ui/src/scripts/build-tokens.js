@@ -14,7 +14,7 @@ const prettierConfig = require(prettierConfigPath);
 
 const sd = new StyleDictionary('sd.config.json');
 
-function formatCssGroup(obj) {
+function formatCssGroup(obj, prefix = '') {
   const tokens = [];
 
   function traverse(obj, path) {
@@ -26,7 +26,7 @@ function formatCssGroup(obj) {
       if (token && typeof token === 'object') {
         const colorValue = token.$value;
         if (colorValue) {
-          const name = currentPath.join('-').toLowerCase();
+          const name = `${prefix}${currentPath.join('-').toLowerCase()}`;
           const colorSpace = colorValue.colorSpace || 'display-p3';
           const [r, g, b] = colorValue.components;
           const hex = colorValue.hex;
@@ -117,6 +117,26 @@ sd.registerFormat({
       --color-mixed-dark: color-mix(in oklch, var(--mix-color), black var(--hover-darken, 20%));
 
       ${tokens}
+    }`,
+      { ...prettierConfig, parser: 'css' }
+    );
+  },
+});
+
+// Color vars used in other frameworks
+sd.registerFormat({
+  name: 'css/color-vars',
+  format: async ({ dictionary }) => {
+    const tokensLight = formatCssGroup(dictionary.tokens.Light);
+    const tokensDark = formatCssGroup(dictionary.tokens.Dark, 'dark-');
+
+    return await prettier.format(
+      `:root {
+      /* Light theme */
+      ${tokensLight}
+
+      /* Dark theme */
+      ${tokensDark}
     }`,
       { ...prettierConfig, parser: 'css' }
     );
