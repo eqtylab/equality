@@ -77,7 +77,7 @@
     "dev": "pnpm run watch:tokens",
     "build": "pnpm run build:tokens && pnpm run build:lib",
     "build:tokens": "node src/scripts/build-tokens.js && prettier --write ../tokens/equality-tokens.json",
-    "build:lib": "tsup src/index.ts --dts --format esm,cjs --clean && cp src/theme/*.css dist/ && mkdir -p dist/generated && cp src/theme/generated/*.css dist/generated/",
+    "build:lib": "tsup src/index.ts --dts --format esm,cjs --clean && cp src/theme/*.css dist/ && cp src/theme/tailwind.config.js dist/ && mkdir -p dist/generated && cp src/theme/generated/*.css dist/generated/",
     "watch": "tsup src/index.ts --dts --format esm,cjs --watch",
     "watch:tokens": "chokidar '../tokens/**/*' -c 'pnpm run build:tokens'",
     "release": "pnpm run build && pnpm publish --access public"
