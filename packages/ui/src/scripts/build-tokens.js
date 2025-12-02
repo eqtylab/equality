@@ -79,7 +79,7 @@ sd.registerFormat({
     const tokens = formatCssGroup(dictionary.tokens.Dark);
 
     return await prettier.format(
-      `.root[data-equality-theme='dark'] {
+      `[data-equality-theme='dark'] .root {
       ${tokens}
     }`,
       { ...prettierConfig, parser: 'css' }
