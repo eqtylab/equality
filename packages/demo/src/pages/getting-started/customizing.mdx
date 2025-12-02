@@ -5,18 +5,17 @@ heading: "Customizing"
 
 ## Custom variables
 
-You can override specific tokens by applying CSS var overrides where the theme is set:
+You can override specific tokens by applying CSS var overrides to the `ThemeProvider`:
 
 ```tsx
-<html
-  data-equality-theme="light"
+<ThemeProvider
   style={{
     "--color-brand-primary": "hsl(280 75% 60%)",
     "--color-button-primary-fill": "hsl(50 100% 70%)",
   }}
 >
   <App />
-</html>
+</ThemeProvider>
 ```
 
 Perfect for brand-specific adjustments or white-label versions.
