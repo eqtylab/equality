@@ -1,25 +1,6 @@
 @import "tailwindcss";
 
-@theme {
-  --color-lilac: #e2ccff;
-  --color-mint: #4ade80;
-  --color-red: hsl(342 96% 65%);
-  --color-blue: #1069ff;
-  --color-yellow: #ffea75;
-  --color-border: rgba(255, 255, 255, 0.1);
-  --color-background: #141415;
-  --color-foreground: #ffffff;
-  --color-gray: hsl(220, 13%, 75%);
-  --color-gray-medium: #4b5563;
-  --color-gray-light: #d1d5db;
-  --color-gold: #ffe4b8;
-  --color-muted-white: #e1e4e8;
-  --color-white: #ffffff;
-  --color-muted-foreground: rgba(255, 255, 255, 0.6);
-  --color-card: rgba(217, 217, 217, 0.05);
-  --color-input: #09090b;
-  --color-lilac-gradient: rgba(179, 136, 236, 1);
-}
+@import "@eqtylab/equality/theme-colors.css";
 
 @layer base {
   *,
@@ -36,13 +17,17 @@
   }
 
   body {
-    @apply bg-background text-foreground font-sans transition-colors;
+    @apply font-sans;
   }
 }
 
 @layer components {
+  .base-colors {
+    @apply bg-background text-text-primary;
+  }
+
   .list {
-    @apply text-muted-foreground space-y-1 pl-4 [&>li]:text-base/7 [&>li>p]:align-top;
+    @apply text-text-secondary space-y-1 pl-4 [&>li]:text-base/7 [&>li>p]:align-top;
   }
 
   .label {
@@ -51,7 +36,7 @@
 
   .tree-view-item {
     @apply w-full cursor-pointer border-l py-1.5 text-left transition-all duration-300;
-    @apply text-muted-foreground hover:border-foreground hover:text-foreground;
+    @apply text-text-secondary hover:border-text-primary hover:text-text-primary;
   }
 
   #markdown-content {
@@ -95,12 +80,12 @@
     }
 
     & > p {
-      @apply text-muted-foreground text-base/7 font-normal;
+      @apply text-text-secondary text-base/7 font-normal;
     }
 
     & > p b,
     & > p strong {
-      @apply text-foreground font-medium;
+      @apply text-text-primary font-medium;
     }
 
     & > h1 code,
@@ -113,7 +98,7 @@
     & > li strong code,
     & > p code,
     & > table td code {
-      @apply bg-card text-muted-white rounded-sm p-1;
+      @apply bg-card-background text-text-secondary rounded-sm p-1;
     }
 
     & > li code,
@@ -139,7 +124,7 @@
 
     & > ul,
     & > ol {
-      @apply text-muted-foreground;
+      @apply text-text-secondary;
       @apply space-y-1 pl-4;
     }
 
@@ -147,7 +132,7 @@
     & > ol strong,
     & > ul b,
     & > ol b {
-      @apply text-foreground font-medium;
+      @apply text-text-primary font-medium;
     }
 
     & > ul {
@@ -160,9 +145,9 @@
 
     & p > a,
     & > a {
-      @apply text-foreground font-medium transition-all;
+      @apply text-text-primary font-medium transition-all;
       @apply underline underline-offset-4;
-      @apply hover:text-lilac;
+      @apply hover:text-lilac-400;
     }
 
     & > table {
@@ -182,7 +167,7 @@
     }
 
     & > pre {
-      @apply bg-card! text-foreground! overflow-x-auto rounded-sm p-3 text-sm;
+      @apply bg-card-background! text-text-primary! overflow-x-auto rounded-sm p-3 text-sm;
     }
 
     & > pre code {

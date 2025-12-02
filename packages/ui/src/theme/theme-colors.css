@@ -1,0 +1,5 @@
+@layer theme;
+
+@import 'tailwindcss/theme.css' layer(theme) theme(inline);
+
+@import './tokens.css';
