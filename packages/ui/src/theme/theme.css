@@ -4,7 +4,7 @@
 @import 'tailwindcss/utilities.css' layer(utilities);
 @import 'tw-animate-css';
 
-@config './tailwind.config.js';
+/* @config './tailwind.config.js'; - This seems to be breaking styles sometimes */
 
 @import './tokens.css';
 
