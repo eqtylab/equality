@@ -1,4 +1,4 @@
-@reference '../../theme/theme.css';
+@reference '../../theme/theme.module.css';
 
 .metric-card {
   @apply bg-card-background rounded-md p-3;

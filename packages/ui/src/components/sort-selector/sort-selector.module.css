@@ -1,4 +1,4 @@
-@reference '../../theme/theme.css';
+@reference '../../theme/theme.module.css';
 
 .sort-selector-trigger {
   @apply min-w-32;

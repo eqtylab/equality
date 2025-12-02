@@ -1,4 +1,4 @@
-@reference '../../theme/theme.css';
+@reference '../../theme/theme.module.css';
 
 .select-trigger {
   @apply text-sm;
@@ -36,7 +36,7 @@
 }
 
 .select-viewport--popper {
-  @apply h-(--radix-select-trigger-height) min-w-(--radix-select-trigger-width) w-full;
+  @apply h-(--radix-select-trigger-height) w-full min-w-(--radix-select-trigger-width);
 }
 
 .select-label {
@@ -46,7 +46,7 @@
 
 .select-item {
   @apply dropdown-item;
-  @apply py-1.5 pl-2 pr-2;
+  @apply py-1.5 pr-2 pl-2;
   @apply relative gap-2;
 }
 

@@ -1,4 +1,4 @@
-@reference '../../theme/theme.css';
+@reference '../../theme/theme.module.css';
 
 .card {
   @apply @container/card relative;

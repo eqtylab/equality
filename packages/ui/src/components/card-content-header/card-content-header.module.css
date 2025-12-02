@@ -1,4 +1,4 @@
-@reference '../../theme/theme.css';
+@reference '../../theme/theme.module.css';
 
 .card-content-header {
   @apply flex-center-between gap-2;
@@ -17,5 +17,5 @@
 }
 
 .title--button-click {
-  @apply @sm/card:w-auto w-full;
+  @apply w-full @sm/card:w-auto;
 }

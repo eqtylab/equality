@@ -1,4 +1,4 @@
-@reference '../../theme/theme.css';
+@reference '../../theme/theme.module.css';
 
 .badge--in-progress {
   @apply bg-badge-background-in-progress text-badge-text-in-progress;

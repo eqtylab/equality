@@ -1,8 +1,8 @@
-@reference '../../theme/theme.css';
+@reference '../../theme/theme.module.css';
 
 .button {
   @apply rounded-md;
-  @apply whitespace-nowrap text-sm font-medium;
+  @apply text-sm font-medium whitespace-nowrap;
   @apply transition-all duration-300;
   @apply flex-center gap-1;
   @apply cursor-pointer;
@@ -45,7 +45,7 @@
 
 .button--link {
   @apply text-brand-primary;
-  @apply hover:not-disabled:underline underline-offset-4;
+  @apply underline-offset-4 hover:not-disabled:underline;
 }
 
 .size--sm {

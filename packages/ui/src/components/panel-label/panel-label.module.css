@@ -1,5 +1,5 @@
-@reference '../../theme/theme.css';
+@reference '../../theme/theme.module.css';
 
 .panel-label {
-  @apply text-xxs font-semibold uppercase tracking-[0.5px];
+  @apply text-xxs font-semibold tracking-[0.5px] uppercase;
 }

@@ -8,10 +8,4 @@ export default defineConfig({
   clean: true,
   treeshake: true,
   external: ['react', 'react-dom', 'motion/react', '@radix-ui/react-slot'],
-  loader: {
-    '.css': 'copy', // Include CSS files in the bundle
-  },
-  esbuildOptions(options) {
-    options.assetNames = '[name]'; // Do not hash/version asset filenames
-  },
 });

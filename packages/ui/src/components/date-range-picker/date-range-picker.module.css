@@ -1,4 +1,4 @@
-@reference '../../theme/theme.css';
+@reference '../../theme/theme.module.css';
 
 .popover-header {
   @apply relative w-auto;
@@ -16,7 +16,7 @@
 
 .calendar-icon {
   @apply text-text-secondary;
-  @apply absolute left-3 top-1/2 size-4 -translate-y-1/2;
+  @apply absolute top-1/2 left-3 size-4 -translate-y-1/2;
 }
 
 .date-range {
@@ -24,7 +24,7 @@
 }
 
 .clear-btn {
-  @apply absolute right-2 top-1/2 size-6 -translate-y-1/2;
+  @apply absolute top-1/2 right-2 size-6 -translate-y-1/2;
 }
 
 .popover-content {

@@ -1,9 +1,9 @@
-@reference '../../theme/theme.css';
+@reference '../../theme/theme.module.css';
 
 .display-field {
   @apply border-border bg-popover-background rounded-md border;
-  @apply text-text-primary text-clip text-base text-sm;
-  @apply h-9.5 flex w-full overflow-clip;
+  @apply text-text-primary text-base text-sm text-clip;
+  @apply flex h-9.5 w-full overflow-clip;
   @apply focus-ring;
 }
 
@@ -23,7 +23,7 @@
   @apply flex items-center gap-1;
   @apply px-2;
   @apply text-sm font-medium text-black transition-colors;
-  @apply rounded-br-md rounded-tr-md;
+  @apply rounded-tr-md rounded-br-md;
 }
 
 .content {

@@ -17,7 +17,7 @@
       "import": "./dist/scripts.js",
       "require": "./dist/scripts.cjs"
     },
-    "./theme-colors.css": "./dist/generated/tailwind-tokens.css"
+    "./theme-colors.css": "./dist/theme-colors.css"
   },
   "files": [
     "dist",
@@ -79,7 +79,7 @@
     "dev": "pnpm run watch:tokens",
     "build": "pnpm run build:tokens && pnpm run build:lib",
     "build:tokens": "node src/scripts/build-tokens.js && prettier --write ../tokens/equality-tokens.json",
-    "build:lib": "tsup --config tsup.config.ts && mkdir -p dist/generated && cp src/theme/generated/tailwind-tokens.css dist/generated/",
+    "build:lib": "tsup --config tsup.config.ts && cp src/theme/*.css dist/ && mkdir -p dist/generated && cp src/theme/generated/*.css dist/generated/",
     "watch": "tsup --config tsup.config.ts --watch",
     "watch:tokens": "chokidar '../tokens/**/*' -c 'pnpm run build:tokens'",
     "release": "pnpm run build && pnpm publish --access public"

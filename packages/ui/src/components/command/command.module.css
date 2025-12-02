@@ -1,4 +1,4 @@
-@reference '../../theme/theme.css';
+@reference '../../theme/theme.module.css';
 
 .command {
   @apply bg-popover-background text-text-primary;
@@ -21,7 +21,7 @@
   @apply [&_[cmdk-item]]:px-2 [&_[cmdk-item]]:py-3 [&_[cmdk-item]_svg]:size-5;
   @apply [&_[cmdk-group-heading]]:text-text-secondary;
   @apply [&_[cmdk-group-heading]]:px-2 [&_[cmdk-group-heading]]:font-medium;
-  @apply [&_[cmdk-group]:not([hidden])_~[cmdk-group]]:pt-0 [&_[cmdk-group]]:px-2;
+  @apply [&_[cmdk-group]]:px-2 [&_[cmdk-group]:not([hidden])_~[cmdk-group]]:pt-0;
   @apply [&_[cmdk-input-wrapper]_svg]:size-5;
 }
 
@@ -38,7 +38,7 @@
 
 .command-input-input {
   @apply placeholder:text-text-secondary text-sm;
-  @apply outline-hidden rounded-md bg-transparent;
+  @apply rounded-md bg-transparent outline-hidden;
   @apply flex h-10 w-full py-3;
   @apply disabled:cursor-not-allowed disabled:opacity-50;
 }
@@ -67,12 +67,12 @@
 
 .command-item {
   --mix-color: var(--color-popover-background);
-  @apply outline-hidden rounded-sm;
+  @apply rounded-sm outline-hidden;
   @apply text-sm;
   @apply flex items-center gap-2;
   @apply relative px-2 py-1.5;
   @apply cursor-pointer select-none;
-  @apply [&_svg:not([class*='text-'])]:text-text-secondary [&_svg:not([class*='size-'])]:size-4 [&_svg]:pointer-events-none [&_svg]:shrink-0;
+  @apply [&_svg:not([class*='text-'])]:text-text-secondary [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4;
   @apply data-[disabled=true]:pointer-events-none data-[disabled=true]:opacity-50;
   @apply data-[selected=true]:bg-mixed-light;
 }

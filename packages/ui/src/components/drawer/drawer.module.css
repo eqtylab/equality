@@ -1,4 +1,4 @@
-@reference '../../theme/theme.css';
+@reference '../../theme/theme.module.css';
 
 .drawer-overlay {
   @apply overlay-content;
@@ -30,7 +30,7 @@
 }
 
 .drawer-title {
-  @apply text-lg font-semibold leading-none tracking-tight;
+  @apply text-lg leading-none font-semibold tracking-tight;
 }
 
 .drawer-description {

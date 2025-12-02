@@ -4,7 +4,7 @@
 @import 'tailwindcss/utilities.css' layer(utilities);
 @import 'tw-animate-css';
 
-/* @config './tailwind.config.js'; - This seems to be breaking styles sometimes */
+@config '../../tailwind.config.js';
 
 @import './tokens.css';
 
@@ -44,12 +44,12 @@
    ========================================================= */
 
   /* 1) Box model + resets + border-color */
-  [data-equality-theme],
-  [data-equality-theme] *,
-  [data-equality-theme] ::after,
-  [data-equality-theme] ::before,
-  [data-equality-theme] ::backdrop,
-  [data-equality-theme] ::file-selector-button {
+  :global([data-equality-theme]),
+  :global([data-equality-theme]) *,
+  :global([data-equality-theme]) ::after,
+  :global([data-equality-theme]) ::before,
+  :global([data-equality-theme]) ::backdrop,
+  :global([data-equality-theme]) ::file-selector-button {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
@@ -58,12 +58,12 @@
   }
 
   /* Cursor for buttons */
-  [data-equality-theme] button {
+  :global([data-equality-theme]) button {
     cursor: pointer;
   }
 
   /* Typography + platform defaults */
-  [data-equality-theme] {
+  :global([data-equality-theme]) {
     line-height: 1.5;
     -webkit-text-size-adjust: 100%;
     tab-size: 4;
@@ -76,47 +76,47 @@
   }
 
   /* Horizontal rule */
-  [data-equality-theme] hr {
+  :global([data-equality-theme]) hr {
     height: 0;
     color: inherit;
     border-top-width: 1px;
   }
 
   /* Abbr */
-  [data-equality-theme] abbr:where([title]) {
+  :global([data-equality-theme]) abbr:where([title]) {
     -webkit-text-decoration: underline dotted;
     text-decoration: underline dotted;
   }
 
   /* Headings reset */
-  [data-equality-theme] h1,
-  [data-equality-theme] h2,
-  [data-equality-theme] h3,
-  [data-equality-theme] h4,
-  [data-equality-theme] h5,
-  [data-equality-theme] h6 {
+  :global([data-equality-theme]) h1,
+  :global([data-equality-theme]) h2,
+  :global([data-equality-theme]) h3,
+  :global([data-equality-theme]) h4,
+  :global([data-equality-theme]) h5,
+  :global([data-equality-theme]) h6 {
     font-size: inherit;
     font-weight: inherit;
   }
 
   /* Links */
-  [data-equality-theme] a {
+  :global([data-equality-theme]) a {
     color: inherit;
     -webkit-text-decoration: inherit;
     text-decoration: inherit;
   }
 
   /* Strong */
-  [data-equality-theme] b,
-  [data-equality-theme] strong {
+  :global([data-equality-theme]) b,
+  :global([data-equality-theme]) strong {
     font-weight: bolder;
   }
 
   /* Code fonts */
-  [data-equality-theme] code,
-  [data-equality-theme] kbd,
-  [data-equality-theme] samp,
-  [data-equality-theme] pre {
+  :global([data-equality-theme]) code,
+  :global([data-equality-theme]) kbd,
+  :global([data-equality-theme]) samp,
+  :global([data-equality-theme]) pre {
     font-family:
       ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New',
       monospace;
@@ -124,81 +124,81 @@
   }
 
   /* Small */
-  [data-equality-theme] small {
+  :global([data-equality-theme]) small {
     font-size: 80%;
   }
 
   /* Sub/Sup */
-  [data-equality-theme] sub,
-  [data-equality-theme] sup {
+  :global([data-equality-theme]) sub,
+  :global([data-equality-theme]) sup {
     font-size: 75%;
     line-height: 0;
     position: relative;
     vertical-align: baseline;
   }
-  [data-equality-theme] sub {
+  :global([data-equality-theme]) sub {
     bottom: -0.25em;
   }
-  [data-equality-theme] sup {
+  :global([data-equality-theme]) sup {
     top: -0.5em;
   }
 
   /* Tables */
-  [data-equality-theme] table {
+  :global([data-equality-theme]) table {
     text-indent: 0;
     border-color: inherit;
     border-collapse: collapse;
   }
 
   /* Firefox focus */
-  [data-equality-theme] :-moz-focusring {
+  :global([data-equality-theme]) :-moz-focusring {
     outline: auto;
   }
 
   /* Progress baseline */
-  [data-equality-theme] progress {
+  :global([data-equality-theme]) progress {
     vertical-align: baseline;
   }
 
   /* Summary display */
-  [data-equality-theme] summary {
+  :global([data-equality-theme]) summary {
     display: list-item;
   }
 
   /* Lists unstyled */
-  [data-equality-theme] ol,
-  [data-equality-theme] ul,
-  [data-equality-theme] menu {
+  :global([data-equality-theme]) ol,
+  :global([data-equality-theme]) ul,
+  :global([data-equality-theme]) menu {
     list-style: none;
   }
 
   /* Replaced elements */
-  [data-equality-theme] img,
-  [data-equality-theme] svg,
-  [data-equality-theme] video,
-  [data-equality-theme] canvas,
-  [data-equality-theme] audio,
-  [data-equality-theme] iframe,
-  [data-equality-theme] embed,
-  [data-equality-theme] object {
+  :global([data-equality-theme]) img,
+  :global([data-equality-theme]) svg,
+  :global([data-equality-theme]) video,
+  :global([data-equality-theme]) canvas,
+  :global([data-equality-theme]) audio,
+  :global([data-equality-theme]) iframe,
+  :global([data-equality-theme]) embed,
+  :global([data-equality-theme]) object {
     display: block;
     vertical-align: middle;
   }
 
   /* Media constraints */
-  [data-equality-theme] img,
-  [data-equality-theme] video {
+  :global([data-equality-theme]) img,
+  :global([data-equality-theme]) video {
     max-width: 100%;
     height: auto;
   }
 
   /* Form element normalizations */
-  [data-equality-theme] button,
-  [data-equality-theme] input,
-  [data-equality-theme] select,
-  [data-equality-theme] optgroup,
-  [data-equality-theme] textarea,
-  [data-equality-theme] ::file-selector-button {
+  :global([data-equality-theme]) button,
+  :global([data-equality-theme]) input,
+  :global([data-equality-theme]) select,
+  :global([data-equality-theme]) optgroup,
+  :global([data-equality-theme]) textarea,
+  :global([data-equality-theme]) ::file-selector-button {
     font: inherit;
     font-feature-settings: inherit;
     font-variation-settings: inherit;
@@ -210,91 +210,91 @@
   }
 
   /* Select optgroup weight */
-  [data-equality-theme] :where(select:is([multiple], [size])) optgroup {
+  :global([data-equality-theme]) :where(select:is([multiple], [size])) optgroup {
     font-weight: bolder;
   }
 
   /* Select optgroup option indent */
-  [data-equality-theme] :where(select:is([multiple], [size])) optgroup option {
+  :global([data-equality-theme]) :where(select:is([multiple], [size])) optgroup option {
     padding-inline-start: 20px;
   }
 
   /* File button spacing */
-  [data-equality-theme] ::file-selector-button {
+  :global([data-equality-theme]) ::file-selector-button {
     margin-inline-end: 4px;
   }
 
   /* Placeholder */
-  [data-equality-theme] ::placeholder {
+  :global([data-equality-theme]) ::placeholder {
     opacity: 1;
   }
 
   @supports (not (-webkit-appearance: -apple-pay-button)) or (contain-intrinsic-size: 1px) {
-    [data-equality-theme] ::placeholder {
+    :global([data-equality-theme]) ::placeholder {
       color: color-mix(in oklab, currentcolor 50%, transparent);
     }
   }
 
   /* Textarea resize */
-  [data-equality-theme] textarea {
+  :global([data-equality-theme]) textarea {
     resize: vertical;
   }
 
   /* WebKit search decoration */
-  [data-equality-theme] ::-webkit-search-decoration {
+  :global([data-equality-theme]) ::-webkit-search-decoration {
     -webkit-appearance: none;
   }
 
   /* iOS date/time */
-  [data-equality-theme] ::-webkit-date-and-time-value {
+  :global([data-equality-theme]) ::-webkit-date-and-time-value {
     min-height: 1lh;
     text-align: inherit;
   }
 
-  [data-equality-theme] ::-webkit-datetime-edit {
+  :global([data-equality-theme]) ::-webkit-datetime-edit {
     display: inline-flex;
   }
 
-  [data-equality-theme] ::-webkit-datetime-edit-fields-wrapper {
+  :global([data-equality-theme]) ::-webkit-datetime-edit-fields-wrapper {
     padding: 0;
   }
 
-  [data-equality-theme] ::-webkit-datetime-edit,
-  [data-equality-theme] ::-webkit-datetime-edit-year-field,
-  [data-equality-theme] ::-webkit-datetime-edit-month-field,
-  [data-equality-theme] ::-webkit-datetime-edit-day-field,
-  [data-equality-theme] ::-webkit-datetime-edit-hour-field,
-  [data-equality-theme] ::-webkit-datetime-edit-minute-field,
-  [data-equality-theme] ::-webkit-datetime-edit-second-field,
-  [data-equality-theme] ::-webkit-datetime-edit-millisecond-field,
-  [data-equality-theme] ::-webkit-datetime-edit-meridiem-field {
+  :global([data-equality-theme]) ::-webkit-datetime-edit,
+  :global([data-equality-theme]) ::-webkit-datetime-edit-year-field,
+  :global([data-equality-theme]) ::-webkit-datetime-edit-month-field,
+  :global([data-equality-theme]) ::-webkit-datetime-edit-day-field,
+  :global([data-equality-theme]) ::-webkit-datetime-edit-hour-field,
+  :global([data-equality-theme]) ::-webkit-datetime-edit-minute-field,
+  :global([data-equality-theme]) ::-webkit-datetime-edit-second-field,
+  :global([data-equality-theme]) ::-webkit-datetime-edit-millisecond-field,
+  :global([data-equality-theme]) ::-webkit-datetime-edit-meridiem-field {
     padding-block: 0;
   }
 
-  [data-equality-theme] ::-webkit-calendar-picker-indicator {
+  :global([data-equality-theme]) ::-webkit-calendar-picker-indicator {
     line-height: 1;
   }
 
   /* Firefox invalid */
-  [data-equality-theme] :-moz-ui-invalid {
+  :global([data-equality-theme]) :-moz-ui-invalid {
     box-shadow: none;
   }
 
   /* Button appearances */
-  [data-equality-theme] button,
-  [data-equality-theme] input:where([type='button'], [type='reset'], [type='submit']),
-  [data-equality-theme] ::file-selector-button {
+  :global([data-equality-theme]) button,
+  :global([data-equality-theme]) input:where([type='button'], [type='reset'], [type='submit']),
+  :global([data-equality-theme]) ::file-selector-button {
     appearance: button;
   }
 
   /* Safari spin buttons */
-  [data-equality-theme] ::-webkit-inner-spin-button,
-  [data-equality-theme] ::-webkit-outer-spin-button {
+  :global([data-equality-theme]) ::-webkit-inner-spin-button,
+  :global([data-equality-theme]) ::-webkit-outer-spin-button {
     height: auto;
   }
 
   /* Hidden */
-  [data-equality-theme] [hidden]:where(:not([hidden='until-found'])) {
+  :global([data-equality-theme]) [hidden]:where(:not([hidden='until-found'])) {
     display: none !important;
   }
 
@@ -304,7 +304,7 @@
 }
 
 @layer components {
-  [data-equality-theme] .styled-horizontal-scrollbar {
+  .styled-horizontal-scrollbar {
     &::-webkit-scrollbar {
       width: 100%;
       height: 0.375rem;
@@ -317,7 +317,7 @@
     }
   }
 
-  [data-equality-theme] .styled-vertical-scrollbar {
+  .styled-vertical-scrollbar {
     &::-webkit-scrollbar {
       height: 100%;
       width: 0.375rem;
@@ -340,7 +340,7 @@
 }
 
 @utility overlay-background {
-  @apply backdrop-blur-xs bg-black/80;
+  @apply bg-black/80 backdrop-blur-xs;
 }
 
 @utility overlay-content {
@@ -358,7 +358,7 @@
 @utility dropdown-content {
   @apply bg-popover-background text-text-primary border-border border;
   @apply z-50 rounded-md p-1;
-  @apply overflow-y-auto overflow-x-hidden;
+  @apply overflow-x-hidden overflow-y-auto;
   @apply max-h-80 min-w-32;
   @apply data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2;
   @apply data-[state=open]:animate-in data-[state=open]:fade-in-0 data-[state=open]:zoom-in-95;

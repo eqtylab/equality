@@ -1,4 +1,4 @@
-@reference '../../theme/theme.css';
+@reference '../../theme/theme.module.css';
 
 .popover-content {
   @apply bg-popover-background text-text-primary outline-hidden;

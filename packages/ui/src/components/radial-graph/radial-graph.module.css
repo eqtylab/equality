@@ -1,4 +1,4 @@
-@reference '../../theme/theme.css';
+@reference '../../theme/theme.module.css';
 
 .radial-graph {
   @apply relative;
@@ -28,7 +28,7 @@
 }
 
 .bar-inner {
-  @apply absolute left-0 right-0 top-0;
+  @apply absolute top-0 right-0 left-0;
   @apply h-3/4 overflow-hidden rounded-full;
   @apply transition-transform;
 }

@@ -1,4 +1,4 @@
-@reference '../../theme/theme.css';
+@reference '../../theme/theme.module.css';
 
 .tabs {
   @apply w-full;
@@ -37,7 +37,7 @@
 }
 
 .active-tab-indicator {
-  @apply bg-brand-primary -z-1 absolute w-full;
+  @apply bg-brand-primary absolute -z-1 w-full;
 }
 
 .active-tab-indicator--filled {
@@ -47,7 +47,7 @@
 
 .active-tab-indicator--transparent {
   @apply h-0.5;
-  @apply bottom-0 left-0 right-0;
+  @apply right-0 bottom-0 left-0;
 }
 
 .content {

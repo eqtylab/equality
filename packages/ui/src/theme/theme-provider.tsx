@@ -1,6 +1,7 @@
 import { Portal } from './portal';
+import styles from './theme.module.css';
 
-import './theme.css';
+console.log('styles', styles);
 
 interface ThemeProviderProps {
   customVars?: React.CSSProperties & {
@@ -11,7 +12,7 @@ interface ThemeProviderProps {
 
 const ThemeProvider = ({ customVars, children }: ThemeProviderProps) => {
   return (
-    <div className="equality-theme-provider" style={customVars}>
+    <div className={styles.root} style={customVars}>
       {children}
       <Portal />
     </div>

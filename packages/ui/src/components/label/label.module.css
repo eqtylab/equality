@@ -1,6 +1,6 @@
-@reference '../../theme/theme.css';
+@reference '../../theme/theme.module.css';
 
 .label {
-  @apply text-sm font-medium leading-none;
+  @apply text-sm leading-none font-medium;
   @apply peer-disabled:cursor-not-allowed peer-disabled:opacity-70;
 }
