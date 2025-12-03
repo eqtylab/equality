@@ -1,0 +1,260 @@
+@layer base {
+  /* =========================================================
+     SCOPED PREFLIGHT (kept intact; selectors retargeted)
+     ========================================================= */
+
+  /* 1) Box model + resets + border-color */
+  html,
+  html *,
+  html ::after,
+  html ::before,
+  html ::backdrop,
+  html ::file-selector-button {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    border: 0 solid;
+    border-color: var(--color-border);
+  }
+
+  /* Cursor for buttons */
+  html button {
+    cursor: pointer;
+  }
+
+  /* Typography + platform defaults */
+  html {
+    line-height: 1.5;
+    -webkit-text-size-adjust: 100%;
+    tab-size: 4;
+    font-family: var(--font-sans);
+    -webkit-tap-highlight-color: transparent;
+    font-synthesis: none;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* Horizontal rule */
+  html hr {
+    height: 0;
+    color: inherit;
+    border-top-width: 1px;
+  }
+
+  /* Abbr */
+  html abbr:where([title]) {
+    -webkit-text-decoration: underline dotted;
+    text-decoration: underline dotted;
+  }
+
+  /* Headings reset */
+  html h1,
+  html h2,
+  html h3,
+  html h4,
+  html h5,
+  html h6 {
+    font-size: inherit;
+    font-weight: inherit;
+  }
+
+  /* Links */
+  html a {
+    color: inherit;
+    -webkit-text-decoration: inherit;
+    text-decoration: inherit;
+  }
+
+  /* Strong */
+  html b,
+  html strong {
+    font-weight: bolder;
+  }
+
+  /* Code fonts */
+  html code,
+  html kbd,
+  html samp,
+  html pre {
+    font-family:
+      ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New',
+      monospace;
+    font-size: 1em;
+  }
+
+  /* Small */
+  html small {
+    font-size: 80%;
+  }
+
+  /* Sub/Sup */
+  html sub,
+  html sup {
+    font-size: 75%;
+    line-height: 0;
+    position: relative;
+    vertical-align: baseline;
+  }
+  html sub {
+    bottom: -0.25em;
+  }
+  html sup {
+    top: -0.5em;
+  }
+
+  /* Tables */
+  html table {
+    text-indent: 0;
+    border-color: inherit;
+    border-collapse: collapse;
+  }
+
+  /* Firefox focus */
+  html :-moz-focusring {
+    outline: auto;
+  }
+
+  /* Progress baseline */
+  html progress {
+    vertical-align: baseline;
+  }
+
+  /* Summary display */
+  html summary {
+    display: list-item;
+  }
+
+  /* Lists unstyled */
+  html ol,
+  html ul,
+  html menu {
+    list-style: none;
+  }
+
+  /* Replaced elements */
+  html img,
+  html svg,
+  html video,
+  html canvas,
+  html audio,
+  html iframe,
+  html embed,
+  html object {
+    display: block;
+    vertical-align: middle;
+  }
+
+  /* Media constraints */
+  html img,
+  html video {
+    max-width: 100%;
+    height: auto;
+  }
+
+  /* Form element normalizations */
+  html button,
+  html input,
+  html select,
+  html optgroup,
+  html textarea,
+  html ::file-selector-button {
+    font: inherit;
+    font-feature-settings: inherit;
+    font-variation-settings: inherit;
+    letter-spacing: inherit;
+    color: inherit;
+    border-radius: 0;
+    background-color: transparent;
+    opacity: 1;
+  }
+
+  /* Select optgroup weight */
+  html :where(select:is([multiple], [size])) optgroup {
+    font-weight: bolder;
+  }
+
+  /* Select optgroup option indent */
+  html :where(select:is([multiple], [size])) optgroup option {
+    padding-inline-start: 20px;
+  }
+
+  /* File button spacing */
+  html ::file-selector-button {
+    margin-inline-end: 4px;
+  }
+
+  /* Placeholder */
+  html ::placeholder {
+    opacity: 1;
+  }
+
+  @supports (not (-webkit-appearance: -apple-pay-button)) or (contain-intrinsic-size: 1px) {
+    html ::placeholder {
+      color: color-mix(in oklab, currentcolor 50%, transparent);
+    }
+  }
+
+  /* Textarea resize */
+  html textarea {
+    resize: vertical;
+  }
+
+  /* WebKit search decoration */
+  html ::-webkit-search-decoration {
+    -webkit-appearance: none;
+  }
+
+  /* iOS date/time */
+  html ::-webkit-date-and-time-value {
+    min-height: 1lh;
+    text-align: inherit;
+  }
+
+  html ::-webkit-datetime-edit {
+    display: inline-flex;
+  }
+
+  html ::-webkit-datetime-edit-fields-wrapper {
+    padding: 0;
+  }
+
+  html ::-webkit-datetime-edit,
+  html ::-webkit-datetime-edit-year-field,
+  html ::-webkit-datetime-edit-month-field,
+  html ::-webkit-datetime-edit-day-field,
+  html ::-webkit-datetime-edit-hour-field,
+  html ::-webkit-datetime-edit-minute-field,
+  html ::-webkit-datetime-edit-second-field,
+  html ::-webkit-datetime-edit-millisecond-field,
+  html ::-webkit-datetime-edit-meridiem-field {
+    padding-block: 0;
+  }
+
+  html ::-webkit-calendar-picker-indicator {
+    line-height: 1;
+  }
+
+  /* Firefox invalid */
+  html :-moz-ui-invalid {
+    box-shadow: none;
+  }
+
+  /* Button appearances */
+  html button,
+  html input:where([type='button'], [type='reset'], [type='submit']),
+  html ::file-selector-button {
+    appearance: button;
+  }
+
+  /* Safari spin buttons */
+  html ::-webkit-inner-spin-button,
+  html ::-webkit-outer-spin-button {
+    height: auto;
+  }
+
+  /* Hidden */
+  html [hidden]:where(:not([hidden='until-found'])) {
+    display: none !important;
+  }
+}

@@ -17,7 +17,7 @@
       "import": "./dist/scripts.js",
       "require": "./dist/scripts.cjs"
     },
-    "./theme-colors.css": "./dist/theme-colors.css"
+    "./theme-config.css": "./dist/global-theme-config.css"
   },
   "files": [
     "dist",

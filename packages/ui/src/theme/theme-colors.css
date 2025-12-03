@@ -1,7 +1,0 @@
-@layer theme;
-
-@import 'tailwindcss/theme.css' layer(theme) theme(inline);
-
-@import './generated/global-light-tokens.css';
-@import './generated/global-dark-tokens.css';
-@import './generated/tailwind-tokens.css';

@@ -1,25 +1,6 @@
 @import "tailwindcss";
 
-@import "@eqtylab/equality/theme-colors.css";
-
-@layer base {
-  *,
-  ::after,
-  ::before,
-  ::backdrop,
-  ::file-selector-button {
-    border-color: var(--border, currentcolor);
-  }
-
-  * {
-    @apply border-border;
-    @apply antialiased;
-  }
-
-  body {
-    @apply font-sans;
-  }
-}
+@import "@eqtylab/equality/theme-config.css";
 
 @layer components {
   body {
