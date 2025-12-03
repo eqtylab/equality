@@ -22,7 +22,7 @@
 }
 
 @layer components {
-  .base-colors {
+  body {
     @apply bg-background text-text-primary;
   }
 

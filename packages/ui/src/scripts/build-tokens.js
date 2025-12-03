@@ -106,6 +106,38 @@ sd.registerFormat({
 });
 
 sd.registerFormat({
+  name: 'css/global/dark',
+  format: async ({ dictionary }) => {
+    const tokens = formatCssGroup(dictionary.tokens.Dark);
+
+    return await prettier.format(
+      `html[data-equality-theme='dark'] {
+      ${tokens}
+    }`,
+      { ...prettierConfig, parser: 'css' }
+    );
+  },
+});
+
+sd.registerFormat({
+  name: 'css/global/light',
+  format: async ({ dictionary }) => {
+    const tokens = formatCssGroup(dictionary.tokens.Light);
+
+    return await prettier.format(
+      `html {
+    
+      --hover-lighten: 20%;
+      --hover-darken: 20%;
+
+      ${tokens}
+    }`,
+      { ...prettierConfig, parser: 'css' }
+    );
+  },
+});
+
+sd.registerFormat({
   name: 'tailwind',
   format: async ({ dictionary }) => {
     const tokens = formatTailwindGroup(dictionary.tokens.Light);
