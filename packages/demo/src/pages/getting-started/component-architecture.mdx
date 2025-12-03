@@ -94,7 +94,7 @@ This setup means host apps can import components without any Tailwind setup of t
 | Layer                | Responsibility                                               |
 | -------------------- | ------------------------------------------------------------ |
 | Tailwind Config File | Allows colors and config to be imported if using Tailwind v4 |
-| ThemeProvider        | Injects design tokens & controls light/dark modes            |
+| ThemeProvider        | Injects and scopes design tokens if not using Tailwind v4    |
 | Component CSS Module | Handles structure & layout with Tailwind utilities           |
 | className Prop       | Allows host-level overrides per instance                     |
 | Build Pipeline       | Compiles, scopes, and tree-shakes for minimal bundle size    |

@@ -5,6 +5,10 @@ heading: "Usage"
 
 ## Setting up the theme
 
+The set up for theming depends on whether your project uses Tailwind v4 or another CSS framework. The recommended approach is to use Tailwind v4 if your project supports it, so that your project has access to all the same theme variables and colors for consistency.
+
+Please follow either of the setup configurations below depending on your project setup.
+
 ### Tailwind v4
 
 Import the Equality Tailwind v4 configuration into your global stylesheet (this includes preflight (base styles), theme colors, variables, utilities and components):
@@ -18,9 +22,11 @@ Import the Equality Tailwind v4 configuration into your global stylesheet (this 
 Add the `<ThemeProvider />` at the root of your app or wherever Equality components are used:
 
 ```tsx
+import { ThemeProvider } from "@eqtylab/equality";
+
 <ThemeProvider>
   <YourApp />
-</ThemeProvider>
+</ThemeProvider>;
 ```
 
 ## Use components
