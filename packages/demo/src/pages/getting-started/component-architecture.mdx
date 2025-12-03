@@ -66,13 +66,7 @@ At the root level, the theme color tokens are imported via the `@eqtylab/equalit
 
 Tailwind utilities in the components reference these tokens, so `bg-primary` maps directly to `--color-primary`.
 
-When you change the theme via:
-
-```tsx
-<html data-equality-theme="dark">
-```
-
-or
+When you change the theme via
 
 ```tsx
 import { useTheme } from "@eqtylab/equality";
@@ -93,7 +87,7 @@ The library uses Vite in library mode (or `tsup` if preferred) to compile everyt
 4. **Theme tokens** are exported as a Tailwind configuration file and also embedded and exposed through a `<ThemeProvider />` to allow for integration in various frameworks.
 5. Output goes into `/dist` as both ESM and CJS modules.
 
-This setup means host apps can import components without any Tailwind setup of their own if they like.
+This setup means host apps can import components without any Tailwind setup of their own if they require.
 
 ## Layered isolation
 

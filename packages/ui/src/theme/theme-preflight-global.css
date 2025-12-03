@@ -1,6 +1,6 @@
 @layer base {
   /* =========================================================
-     SCOPED PREFLIGHT (kept intact; selectors retargeted)
+     GLOBAL PREFLIGHT (kept intact)
      ========================================================= */
 
   /* 1) Box model + resets + border-color */
