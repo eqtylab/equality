@@ -1,6 +1,8 @@
 ---
 import "@demo/styles/global.css";
 
+import { initializeTheme } from "@eqtylab/equality/scripts";
+
 import Header from "@demo/components/header.astro";
 import Sidebar from "@demo/components/sidebar.astro";
 ---
@@ -12,6 +14,7 @@ import Sidebar from "@demo/components/sidebar.astro";
     <meta name="viewport" content="width=device-width" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="generator" content={Astro.generator} />
+    <script is:inline set:html={initializeTheme({ shouldStoreTheme: true })} />
     <title>Equality</title>
   </head>
   <body>
