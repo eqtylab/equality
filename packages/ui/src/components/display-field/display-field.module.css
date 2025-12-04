@@ -1,12 +1,12 @@
 @reference '../../theme/theme.module.css';
 
 .display-field {
-  @apply text-text-primary text-base text-clip md:text-sm;
+  @apply text-text-primary text-clip text-base md:text-sm;
 }
 
 .display-field-inner {
   @apply border-border bg-popover-background rounded-md border;
-  @apply flex h-9.5 w-full overflow-clip;
+  @apply h-9.5 flex w-full overflow-clip;
   @apply focus-ring;
   @apply relative z-10;
 }
@@ -27,7 +27,7 @@
   @apply flex items-center gap-1;
   @apply px-2;
   @apply text-sm font-medium text-black transition-colors;
-  @apply rounded-tr-md rounded-br-md;
+  @apply rounded-br-md rounded-tr-md;
 }
 
 .content {
@@ -53,7 +53,7 @@
 }
 
 .slot {
-  @apply relative -mt-[var(--radius-md)] pt-[var(--radius-md)];
+  @apply pt-(--radius-md) -mt-(--radius-md) relative;
   @apply bg-card-background rounded-b-md;
 }
 
