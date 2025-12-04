@@ -75,7 +75,7 @@
     "build:tokens": "node src/scripts/build-tokens.js && prettier --write ../tokens/equality-tokens.json",
     "build:lib": "tsup src/index.ts --dts --format esm,cjs --clean",
     "watch": "tsup src/index.ts --dts --format esm,cjs --watch",
-    "watch:tokens": "chokidar '../tokens/**/*' -c 'pnpm run build:tokens'",
+    "watch:tokens": "chokidar '../tokens/equality-tokens.json' --debounce 300 --initial=false -c 'pnpm run build:tokens'",
     "release": "pnpm run build && pnpm publish --access public"
   }
 }
