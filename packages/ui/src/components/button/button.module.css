@@ -40,12 +40,14 @@
   @apply bg-(--mix-color);
   @apply border-button-tertiary-border border;
   @apply text-button-tertiary-text;
-  @apply hover:not-disabled:bg-mixed-light;
+  @apply hover:dark:not-disabled:bg-mixed-light hover:not-disabled:bg-mixed-dark;
 }
 
 .button--link {
-  @apply text-brand-primary;
-  @apply hover:not-disabled:underline underline-offset-4;
+  --mix-color: var(--color-text-link);
+  @apply text-(--mix-color);
+  @apply underline hover:underline-offset-4;
+  @apply hover:not-disabled:text-mixed-light;
 }
 
 .size--sm {

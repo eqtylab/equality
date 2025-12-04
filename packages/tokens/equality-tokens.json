@@ -620,6 +620,14 @@
         }
       },
       "text": {
+        "link": {
+          "$type": "color",
+          "$value": {
+            "colorSpace": "display-p3",
+            "components": [0.7319, 0.6108, 0.8873],
+            "hex": "#BB9CE2"
+          }
+        },
         "primary": {
           "$type": "color",
           "$value": {
@@ -2334,6 +2342,14 @@
         }
       },
       "text": {
+        "link": {
+          "$type": "color",
+          "$value": {
+            "colorSpace": "display-p3",
+            "components": [0.4045, 0.2306, 0.6077],
+            "hex": "#673B9B"
+          }
+        },
         "primary": {
           "$type": "color",
           "$value": {

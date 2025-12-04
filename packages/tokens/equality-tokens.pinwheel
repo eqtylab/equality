@@ -2151,6 +2151,7 @@
         <group>
           <id>4EC67953-4547-4883-B947-D73CF2D3DF18</id>
           <name>Text</name>
+          <expanded>1</expanded>
           <namespace>1</namespace>
           <alias>
             <name>Primary</name>
@@ -2181,6 +2182,17 @@
             <subIndex>4</subIndex>
             <referencedItemIdDark>24FB2A07-ED91-45F9-B8E8-356DACAC4731</referencedItemIdDark>
             <subIndexDark>4</subIndexDark>
+            <buildGroupId>86B9D7D8-F74A-4CAE-B006-65451BBEDAB9</buildGroupId>
+          </alias>
+          <alias>
+            <name>Link</name>
+            <type>3</type>
+            <typeDark>3</typeDark>
+            <appearance>lightanddark</appearance>
+            <referencedItemId>68A1562E-D9B7-40A5-BFB2-31353FD45D3D</referencedItemId>
+            <subIndex>5</subIndex>
+            <referencedItemIdDark>68A1562E-D9B7-40A5-BFB2-31353FD45D3D</referencedItemIdDark>
+            <subIndexDark>2</subIndexDark>
             <buildGroupId>86B9D7D8-F74A-4CAE-B006-65451BBEDAB9</buildGroupId>
           </alias>
         </group>
