@@ -25,13 +25,14 @@ const displayFieldVariants = cva('', {
 });
 
 export interface DisplayFieldProps
-  extends React.HTMLAttributes<HTMLDivElement>,
+  extends Omit<React.HTMLAttributes<HTMLDivElement>, 'slot'>,
     VariantProps<typeof displayFieldVariants> {
   variant?: 'neutral' | 'success' | 'neutralCheck' | 'failure';
   prefix?: string;
   truncate?: true | false | 'middle';
   copy?: boolean;
   actions?: React.ReactNode;
+  slot?: React.ReactNode;
 }
 
 function DisplayField({
@@ -42,6 +43,7 @@ function DisplayField({
   truncate = false,
   copy = true,
   actions,
+  slot,
   ...props
 }: DisplayFieldProps) {
   const getIcon = () => {
@@ -82,22 +84,29 @@ function DisplayField({
 
   return (
     <div className={cn(styles['display-field'], className)} {...props}>
-      {prefix && (
-        <div className={cn(styles['prefix'], displayFieldVariants({ variant: variant }))}>
-          {getIcon()}
-          {prefix}
-        </div>
-      )}
-      <span
-        className={cn(styles['content'], getTruncateClass())}
-        style={{ scrollbarWidth: 'thin' }}
-      >
-        {renderContent()}
-      </span>
-      {showActions && (
-        <div className={styles['actions']}>
-          {actions}
-          {copy && <CopyButton value={getValueForCopy()} size="sm" />}
+      <div className={styles['display-field-inner']}>
+        {prefix && (
+          <div className={cn(styles['prefix'], displayFieldVariants({ variant: variant }))}>
+            {getIcon()}
+            {prefix}
+          </div>
+        )}
+        <span
+          className={cn(styles['content'], getTruncateClass())}
+          style={{ scrollbarWidth: 'thin' }}
+        >
+          {renderContent()}
+        </span>
+        {showActions && (
+          <div className={styles['actions']}>
+            {actions}
+            {copy && <CopyButton value={getValueForCopy()} size="sm" />}
+          </div>
+        )}
+      </div>
+      {slot && (
+        <div className={styles['slot']}>
+          <div className={styles['slot-inner']}>{slot}</div>
         </div>
       )}
     </div>
