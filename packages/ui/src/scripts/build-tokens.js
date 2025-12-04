@@ -14,6 +14,15 @@ const prettierConfig = require(prettierConfigPath);
 
 const sd = new StyleDictionary('sd.config.json');
 
+const THEME_MAPPING = {
+  light: {
+    colorScheme: 'light',
+  },
+  dark: {
+    colorScheme: 'dark',
+  },
+};
+
 function formatCssGroup(obj, prefix = '') {
   const tokens = [];
 
@@ -78,9 +87,11 @@ sd.registerFormat({
   name: 'css/dark',
   format: async ({ dictionary }) => {
     const tokens = formatCssGroup(dictionary.tokens.Dark);
+    const colorScheme = THEME_MAPPING.dark.colorScheme;
 
     return await prettier.format(
       `[data-equality-theme='dark'] .root {
+      color-scheme: ${colorScheme};
       ${tokens}
     }`,
       { ...prettierConfig, parser: 'css' }
@@ -92,9 +103,11 @@ sd.registerFormat({
   name: 'css/light',
   format: async ({ dictionary }) => {
     const tokens = formatCssGroup(dictionary.tokens.Light);
+    const colorScheme = THEME_MAPPING.light.colorScheme;
 
     return await prettier.format(
       `.root {
+      color-scheme: ${colorScheme};
     
       --hover-lighten: 20%;
       --hover-darken: 20%;
@@ -111,9 +124,11 @@ sd.registerFormat({
   name: 'css/global/dark',
   format: async ({ dictionary }) => {
     const tokens = formatCssGroup(dictionary.tokens.Dark);
+    const colorScheme = THEME_MAPPING.dark.colorScheme;
 
     return await prettier.format(
       `html[data-equality-theme='dark'] {
+      color-scheme: ${colorScheme};
       ${tokens}
     }`,
       { ...prettierConfig, parser: 'css' }
@@ -125,9 +140,11 @@ sd.registerFormat({
   name: 'css/global/light',
   format: async ({ dictionary }) => {
     const tokens = formatCssGroup(dictionary.tokens.Light);
+    const colorScheme = THEME_MAPPING.light.colorScheme;
 
     return await prettier.format(
       `html {
+      color-scheme: ${colorScheme};
     
       --hover-lighten: 20%;
       --hover-darken: 20%;

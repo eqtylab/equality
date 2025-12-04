@@ -1,4 +1,6 @@
 html {
+  color-scheme: light;
+
   --hover-lighten: 20%;
   --hover-darken: 20%;
 
