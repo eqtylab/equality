@@ -1,0 +1,29 @@
+@theme inline {
+  /* FONT FAMILY */
+  --font-sans: 'TWK Lausanne', 'Inter', sans-serif;
+
+  /* FONT SIZE */
+  --text-xxs: 0.625rem;
+
+  /* Animation */
+  --animate-grow-in: grow-in 800ms ease-in-out backwards;
+  --animate-fade-in: fade-in 800ms ease-in-out backwards;
+
+  @keyframes grow-in {
+    from {
+      transform: scaleY(0.75);
+    }
+    to {
+      transform: scaleY(1);
+    }
+  }
+
+  @keyframes fade-in {
+    0% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
+}

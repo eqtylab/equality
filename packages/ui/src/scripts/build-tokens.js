@@ -14,7 +14,16 @@ const prettierConfig = require(prettierConfigPath);
 
 const sd = new StyleDictionary('sd.config.json');
 
-function formatCssGroup(obj) {
+const THEME_MAPPING = {
+  light: {
+    colorScheme: 'light',
+  },
+  dark: {
+    colorScheme: 'dark',
+  },
+};
+
+function formatCssGroup(obj, prefix = '') {
   const tokens = [];
 
   function traverse(obj, path) {
@@ -26,7 +35,7 @@ function formatCssGroup(obj) {
       if (token && typeof token === 'object') {
         const colorValue = token.$value;
         if (colorValue) {
-          const name = currentPath.join('-').toLowerCase();
+          const name = `${prefix}${currentPath.join('-').toLowerCase()}`;
           const colorSpace = colorValue.colorSpace || 'display-p3';
           const [r, g, b] = colorValue.components;
           const hex = colorValue.hex;
@@ -73,13 +82,16 @@ function formatTailwindGroup(obj) {
   return tokens.sort().join('\n') + '\n';
 }
 
+/* SCOPED */
 sd.registerFormat({
   name: 'css/dark',
   format: async ({ dictionary }) => {
     const tokens = formatCssGroup(dictionary.tokens.Dark);
+    const colorScheme = THEME_MAPPING.dark.colorScheme;
 
     return await prettier.format(
-      `.root[data-equality-theme='dark'] {
+      `[data-equality-theme='dark'] .root {
+      color-scheme: ${colorScheme};
       ${tokens}
     }`,
       { ...prettierConfig, parser: 'css' }
@@ -91,9 +103,11 @@ sd.registerFormat({
   name: 'css/light',
   format: async ({ dictionary }) => {
     const tokens = formatCssGroup(dictionary.tokens.Light);
+    const colorScheme = THEME_MAPPING.light.colorScheme;
 
     return await prettier.format(
       `.root {
+      color-scheme: ${colorScheme};
     
       --hover-lighten: 20%;
       --hover-darken: 20%;
@@ -105,6 +119,44 @@ sd.registerFormat({
   },
 });
 
+/* GLOBAL */
+sd.registerFormat({
+  name: 'css/global/dark',
+  format: async ({ dictionary }) => {
+    const tokens = formatCssGroup(dictionary.tokens.Dark);
+    const colorScheme = THEME_MAPPING.dark.colorScheme;
+
+    return await prettier.format(
+      `html[data-equality-theme='dark'] {
+      color-scheme: ${colorScheme};
+      ${tokens}
+    }`,
+      { ...prettierConfig, parser: 'css' }
+    );
+  },
+});
+
+sd.registerFormat({
+  name: 'css/global/light',
+  format: async ({ dictionary }) => {
+    const tokens = formatCssGroup(dictionary.tokens.Light);
+    const colorScheme = THEME_MAPPING.light.colorScheme;
+
+    return await prettier.format(
+      `html {
+      color-scheme: ${colorScheme};
+    
+      --hover-lighten: 20%;
+      --hover-darken: 20%;
+
+      ${tokens}
+    }`,
+      { ...prettierConfig, parser: 'css' }
+    );
+  },
+});
+
+/* TAILWIND CONFIG */
 sd.registerFormat({
   name: 'tailwind',
   format: async ({ dictionary }) => {
@@ -117,6 +169,26 @@ sd.registerFormat({
       --color-mixed-dark: color-mix(in oklch, var(--mix-color), black var(--hover-darken, 20%));
 
       ${tokens}
+    }`,
+      { ...prettierConfig, parser: 'css' }
+    );
+  },
+});
+
+/* COLOR VARS USED IN OTHER FRAMEWORKS */
+sd.registerFormat({
+  name: 'css/color-vars',
+  format: async ({ dictionary }) => {
+    const tokensLight = formatCssGroup(dictionary.tokens.Light);
+    const tokensDark = formatCssGroup(dictionary.tokens.Dark, 'dark-');
+
+    return await prettier.format(
+      `:root {
+      /* Light theme */
+      ${tokensLight}
+
+      /* Dark theme */
+      ${tokensDark}
     }`,
       { ...prettierConfig, parser: 'css' }
     );

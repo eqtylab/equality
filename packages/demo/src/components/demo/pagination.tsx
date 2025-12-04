@@ -41,7 +41,7 @@ export const PaginationDemo = () => {
             className="border-border bg-muted/50 rounded-md border p-3"
           >
             <div className="font-medium">{item.name}</div>
-            <div className="text-muted-foreground text-sm">
+            <div className="text-text-secondary text-sm">
               {item.description}
             </div>
           </div>
