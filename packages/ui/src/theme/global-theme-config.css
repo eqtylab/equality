@@ -4,12 +4,12 @@
 @import 'tailwindcss/utilities.css' layer(utilities);
 @import 'tw-animate-css';
 
-@config '../../tailwind.config.js';
-
-/* COLORS SCOPED TO THEME PROVIDER */
-@import './tokens.css';
+/* COLORS SCOPED GLOBALLY */
+@import './generated/global-light-tokens.css';
+@import './generated/global-dark-tokens.css';
+@import './generated/tailwind-tokens.css';
 
 @import './theme-base.css';
-@import './theme-preflight-scoped.css';
+@import './theme-preflight-global.css';
 @import './theme-components.css';
 @import './theme-utilities.css';

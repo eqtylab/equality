@@ -14,8 +14,20 @@
           "format": "css/dark"
         },
         {
+          "destination": "global-light-tokens.css",
+          "format": "css/global/light"
+        },
+        {
+          "destination": "global-dark-tokens.css",
+          "format": "css/global/dark"
+        },
+        {
           "destination": "tailwind-tokens.css",
           "format": "tailwind"
+        },
+        {
+          "destination": "color-vars.css",
+          "format": "css/color-vars"
         }
       ]
     }

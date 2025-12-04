@@ -10,17 +10,100 @@ Equality ships with two built-in themes:
 - `light`
 - `dark`
 
-You can set them through the `theme` prop on the `ThemeProvider`:
+You can set the default theme in the `data-equality-theme` attribute on the root element:
 
 ```tsx
-<ThemeProvider theme="dark">
+<html data-equality-theme="dark">
   <App />
-</ThemeProvider>
+</html>
 ```
 
-Switching themes automatically updates all Tailwind semantic tokens (`bg-primary`, `text-muted`, etc.) at runtime — no reloads or extra configuration.
+## Initializating the theme with a dynamic value
+
+**Optional**
+
+A lightweight script (exported as a `string`) to initialize the theme with a dynamic value (user theme preferences). This needs to be imported inline in the `<head>` in order for to avoid FOUC. This is not needed if you are not wanting the theme to be initialized with a dynamic value:
+
+```tsx
+import { initializeTheme } from "@eqtylab/equality/scripts";
+
+<head>
+  <script>{initializeTheme()}</script>
+</head>;
+```
+
+### Parameters
+
+| Name               | Type      | Default | Description                                                                                                                                              |
+| ------------------ | --------- | ------- | -------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `shouldStoreTheme` | `boolean` | `false` | Set to `true` to initialize with `localStorage` for storing the user's theme preference. Set to `false` to initialize with the browser's theme settings. |
+
+### Examples
+
+#### Astro
+
+You can import the script string into an inline script tag in your Astro layout:
+
+```tsx
+import { initializeTheme } from "@eqtylab/equality/scripts";
+---
+<head>
+  <script is:inline set:html={initializeTheme({ shouldStoreTheme: true })} />
+</head>
+```
+
+#### Vite
+
+You can inject the initializer script into the head by adding the following to `vite.app.config.ts`:
+
+```tsx
+import { defineConfig } from "vite";
+import { initializeTheme } from "@eqtylab/equality/scripts";
+
+export default defineConfig({
+  plugins: [
+    {
+      name: "inject-equality-theme-initializer",
+      transformIndexHtml() {
+        const inlineThemeScript = initializeTheme({ shouldStoreTheme: true });
+        return [
+          {
+            tag: "script",
+            attrs: { id: "equality-theme-init" },
+            children: inlineThemeScript,
+            injectTo: "head-prepend",
+          },
+        ];
+      },
+    },
+  ],
+});
+```
+
+## Getting and settings the theme
+
+You can use the `useTheme()` hook:
+
+```tsx
+import { useTheme } from "@eqtylab/equality";
+
+const [theme, setTheme] = useTheme();
+```
 
 ## Default variables
+
+### Tailwind v4
+
+The theme color palettes are added to your Tailwind config when you import the `@eqtylab/equality/theme-config.css` file.
+
+```css
+--color-primary: hsl(210 40% 98%);
+--color-muted: hsl(240 4% 16%);
+```
+
+You can inspect the applied tokens directly in DevTools by selecting the `html` element.
+
+### Other CSS frameworks
 
 Each theme includes its own palette of colors. You don't need to import or configure these — they're injected automatically by the provider.
 
