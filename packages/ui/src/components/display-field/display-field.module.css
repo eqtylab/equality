@@ -1,10 +1,14 @@
 @reference '../../theme/theme.module.css';
 
 .display-field {
+  @apply text-text-primary text-clip text-base md:text-sm;
+}
+
+.display-field-inner {
   @apply border-border bg-popover-background rounded-md border;
-  @apply text-text-primary text-clip text-base text-sm;
   @apply h-9.5 flex w-full overflow-clip;
   @apply focus-ring;
+  @apply relative z-10;
 }
 
 .display-field--neutral {
@@ -46,4 +50,13 @@
 
 .overflow-x-scroll {
   @apply overflow-x-auto;
+}
+
+.slot {
+  @apply pt-(--radius-md) -mt-(--radius-md) relative;
+  @apply bg-card-background rounded-b-md;
+}
+
+.slot-inner {
+  @apply p-2;
 }

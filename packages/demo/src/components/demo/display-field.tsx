@@ -52,3 +52,32 @@ export function DisplayFieldWithActionsDemo({
     </DisplayField>
   );
 }
+
+export const DisplayFieldWithSlotDemo = ({
+  truncate = false,
+  copy = true,
+  prefix = "",
+  variant = "neutral",
+}: {
+  truncate?: true | false | "middle";
+  copy?: boolean;
+  prefix?: string;
+  variant?: "neutral" | "success" | "neutralCheck" | "failure";
+}) => {
+  return (
+    <DisplayField
+      truncate={truncate}
+      copy={copy}
+      prefix={prefix}
+      variant={variant}
+      slot={
+        <div className="flex flex-col gap-2">
+          <div>No additional data available</div>
+          <div>VComp Container</div>
+        </div>
+      }
+    >
+      zQ3shrGxRrYyWixJGrr45jJ1MEY76YQZ4KVbt9CYRsTWZ5MWV
+    </DisplayField>
+  );
+};
