@@ -96,8 +96,8 @@ function DisplayField({
       </span>
       {showActions && (
         <div className={styles['actions']}>
-          {copy && <CopyButton value={getValueForCopy()} size="sm" />}
           {actions}
+          {copy && <CopyButton value={getValueForCopy()} size="sm" />}
         </div>
       )}
     </div>
