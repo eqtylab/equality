@@ -73,6 +73,7 @@ function formatTailwindGroup(obj) {
   return tokens.sort().join('\n') + '\n';
 }
 
+/* SCOPED */
 sd.registerFormat({
   name: 'css/dark',
   format: async ({ dictionary }) => {
@@ -105,6 +106,7 @@ sd.registerFormat({
   },
 });
 
+/* GLOBAL */
 sd.registerFormat({
   name: 'css/global/dark',
   format: async ({ dictionary }) => {
@@ -137,6 +139,7 @@ sd.registerFormat({
   },
 });
 
+/* TAILWIND CONFIG */
 sd.registerFormat({
   name: 'tailwind',
   format: async ({ dictionary }) => {
@@ -155,7 +158,7 @@ sd.registerFormat({
   },
 });
 
-// Color vars used in other frameworks
+/* COLOR VARS USED IN OTHER FRAMEWORKS */
 sd.registerFormat({
   name: 'css/color-vars',
   format: async ({ dictionary }) => {
