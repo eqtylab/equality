@@ -2016,15 +2016,23 @@
             <alias>
               <name>Fill</name>
               <type>3</type>
+              <typeDark>3</typeDark>
+              <appearance>lightanddark</appearance>
               <referencedItemId>68A1562E-D9B7-40A5-BFB2-31353FD45D3D</referencedItemId>
-              <subIndex>3</subIndex>
+              <subIndex>4</subIndex>
+              <referencedItemIdDark>68A1562E-D9B7-40A5-BFB2-31353FD45D3D</referencedItemIdDark>
+              <subIndexDark>3</subIndexDark>
               <buildGroupId>86B9D7D8-F74A-4CAE-B006-65451BBEDAB9</buildGroupId>
             </alias>
             <alias>
               <name>Border</name>
               <type>3</type>
+              <typeDark>3</typeDark>
+              <appearance>lightanddark</appearance>
               <referencedItemId>68A1562E-D9B7-40A5-BFB2-31353FD45D3D</referencedItemId>
-              <subIndex>3</subIndex>
+              <subIndex>4</subIndex>
+              <referencedItemIdDark>68A1562E-D9B7-40A5-BFB2-31353FD45D3D</referencedItemIdDark>
+              <subIndexDark>3</subIndexDark>
               <buildGroupId>86B9D7D8-F74A-4CAE-B006-65451BBEDAB9</buildGroupId>
             </alias>
             <alias>
@@ -2080,7 +2088,7 @@
               <typeDark>1</typeDark>
               <appearance>lightanddark</appearance>
               <referencedItemId>24FB2A07-ED91-45F9-B8E8-356DACAC4731</referencedItemId>
-              <subIndex>1</subIndex>
+              <subIndex>0</subIndex>
               <referencedItemIdDark>68E685CF-C64F-4A8C-8DE3-886255A54EC0</referencedItemIdDark>
               <buildGroupId>86B9D7D8-F74A-4CAE-B006-65451BBEDAB9</buildGroupId>
             </alias>
@@ -2092,7 +2100,7 @@
               <referencedItemId>24FB2A07-ED91-45F9-B8E8-356DACAC4731</referencedItemId>
               <subIndex>2</subIndex>
               <referencedItemIdDark>24FB2A07-ED91-45F9-B8E8-356DACAC4731</referencedItemIdDark>
-              <subIndexDark>7</subIndexDark>
+              <subIndexDark>6</subIndexDark>
               <buildGroupId>86B9D7D8-F74A-4CAE-B006-65451BBEDAB9</buildGroupId>
             </alias>
             <alias>
@@ -2113,22 +2121,29 @@
             <alias>
               <name>Fill</name>
               <type>3</type>
+              <typeDark>3</typeDark>
+              <appearance>lightanddark</appearance>
               <referencedItemId>CCD80E1D-24ED-4193-A845-891C968555AF</referencedItemId>
-              <subIndex>7</subIndex>
+              <subIndex>4</subIndex>
+              <referencedItemIdDark>CCD80E1D-24ED-4193-A845-891C968555AF</referencedItemIdDark>
+              <subIndexDark>3</subIndexDark>
               <buildGroupId>86B9D7D8-F74A-4CAE-B006-65451BBEDAB9</buildGroupId>
             </alias>
             <alias>
               <name>Border</name>
               <type>3</type>
+              <typeDark>3</typeDark>
+              <appearance>lightanddark</appearance>
               <referencedItemId>CCD80E1D-24ED-4193-A845-891C968555AF</referencedItemId>
-              <subIndex>3</subIndex>
+              <subIndex>5</subIndex>
+              <referencedItemIdDark>CCD80E1D-24ED-4193-A845-891C968555AF</referencedItemIdDark>
+              <subIndexDark>4</subIndexDark>
               <buildGroupId>86B9D7D8-F74A-4CAE-B006-65451BBEDAB9</buildGroupId>
             </alias>
             <alias>
               <name>Text</name>
-              <type>3</type>
-              <referencedItemId>CCD80E1D-24ED-4193-A845-891C968555AF</referencedItemId>
-              <subIndex>1</subIndex>
+              <type>1</type>
+              <referencedItemId>9FC81FBB-965B-40C5-A7D2-A5F365863FE4</referencedItemId>
               <buildGroupId>86B9D7D8-F74A-4CAE-B006-65451BBEDAB9</buildGroupId>
             </alias>
           </group>
@@ -2136,6 +2151,7 @@
         <group>
           <id>4EC67953-4547-4883-B947-D73CF2D3DF18</id>
           <name>Text</name>
+          <expanded>1</expanded>
           <namespace>1</namespace>
           <alias>
             <name>Primary</name>
@@ -2166,6 +2182,17 @@
             <subIndex>4</subIndex>
             <referencedItemIdDark>24FB2A07-ED91-45F9-B8E8-356DACAC4731</referencedItemIdDark>
             <subIndexDark>4</subIndexDark>
+            <buildGroupId>86B9D7D8-F74A-4CAE-B006-65451BBEDAB9</buildGroupId>
+          </alias>
+          <alias>
+            <name>Link</name>
+            <type>3</type>
+            <typeDark>3</typeDark>
+            <appearance>lightanddark</appearance>
+            <referencedItemId>68A1562E-D9B7-40A5-BFB2-31353FD45D3D</referencedItemId>
+            <subIndex>5</subIndex>
+            <referencedItemIdDark>68A1562E-D9B7-40A5-BFB2-31353FD45D3D</referencedItemIdDark>
+            <subIndexDark>2</subIndexDark>
             <buildGroupId>86B9D7D8-F74A-4CAE-B006-65451BBEDAB9</buildGroupId>
           </alias>
         </group>

@@ -32,7 +32,7 @@
 }
 
 .switch.lg {
-  @apply w-13 h-7;
+  @apply h-7 w-13;
 }
 
 .thumb.sm {
