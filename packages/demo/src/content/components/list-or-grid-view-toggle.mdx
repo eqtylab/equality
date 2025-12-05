@@ -13,3 +13,12 @@ import { ListOrGridViewToggle } from "@eqtylab/equality";
   onViewModeChange={(mode) => console.log(mode)}
   client:only="react"
 />
+
+## Reordered
+
+<ListOrGridViewToggle
+  viewMode="list"
+  onViewModeChange={(mode) => console.log(mode)}
+  order={["list", "grid"]}
+  client:only="react"
+/>
