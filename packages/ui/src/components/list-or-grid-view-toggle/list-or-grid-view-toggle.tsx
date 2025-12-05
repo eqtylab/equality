@@ -7,7 +7,7 @@ export type ViewMode = 'grid' | 'list';
 interface ListOrGridViewToggleProps {
   viewMode: ViewMode;
   onViewModeChange: (mode: ViewMode) => void;
-  order: ['grid', 'list'] | ['list', 'grid'];
+  order?: ['grid', 'list'] | ['list', 'grid'];
   className?: string;
 }
 
