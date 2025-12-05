@@ -11,7 +11,7 @@
 }
 
 .icon-button--active {
-  @apply bg-brand-primary text-white;
+  @apply bg-button-primary-fill text-white;
 }
 
 .icon-button--inactive {
