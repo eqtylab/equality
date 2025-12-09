@@ -1,14 +1,11 @@
 import * as React from 'react';
 import Truncate from 'react-truncate-inside';
 import { cva, type VariantProps } from 'class-variance-authority';
-import { CircleCheck, CircleX } from 'lucide-react';
+import { Check, TriangleAlert } from 'lucide-react';
 
 import { CopyButton } from '@/components/copy-button/copy-button';
 import styles from '@/components/display-field/display-field.module.css';
 import { cn } from '@/lib/utils';
-
-const CircleCheckIcon = CircleCheck as React.ComponentType<{ className?: string }>;
-const CircleXIcon = CircleX as React.ComponentType<{ className?: string }>;
 
 const displayFieldVariants = cva('', {
   variants: {
@@ -48,10 +45,10 @@ function DisplayField({
 }: DisplayFieldProps) {
   const getIcon = () => {
     if (variant === 'success' || variant === 'neutralCheck') {
-      return <CircleCheckIcon className={styles['icon-width']} />;
+      return <Check className={styles['icon-width']} />;
     }
     if (variant === 'failure') {
-      return <CircleXIcon className={styles['icon-width']} />;
+      return <TriangleAlert className={styles['icon-width']} />;
     }
     return null;
   };
