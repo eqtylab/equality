@@ -1,7 +1,7 @@
 @reference '../../theme/theme.module.css';
 
 .alert {
-  @apply [&>svg]:text-text-primary [&>svg]:absolute [&>svg]:top-4 [&>svg]:left-4 [&>svg+div]:translate-y-[-3px] [&>svg~*]:pl-7;
+  @apply [&>svg]:text-text-primary [&>svg+div]:translate-y-[-3px] [&>svg]:absolute [&>svg]:left-4 [&>svg]:top-4 [&>svg~*]:pl-7;
   @apply relative w-full;
   @apply rounded-lg border;
   @apply px-4 py-3;
@@ -13,13 +13,23 @@
   @apply text-text-primary;
 }
 
+.alert--success {
+  @apply text-badge-text-danger [&>svg]:text-badge-text-danger;
+  @apply bg-badge-background-danger border-badge-text-success;
+}
+
+.alert--warning {
+  @apply text-badge-text-danger [&>svg]:text-badge-text-danger;
+  @apply bg-badge-background-danger border-badge-text-warning;
+}
+
 .alert--danger {
-  @apply text-button-danger-text [&>svg]:text-button-danger-text;
-  @apply bg-button-danger-fill border-button-danger-border;
+  @apply text-badge-text-danger [&>svg]:text-badge-text-danger;
+  @apply bg-badge-background-danger border-badge-text-danger;
 }
 
 .alert-title {
-  @apply leading-none font-medium tracking-tight;
+  @apply font-medium leading-none tracking-tight;
   @apply mb-1;
 }
 

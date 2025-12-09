@@ -8,6 +8,8 @@ const alertVariants = cva(styles['alert'], {
   variants: {
     variant: {
       default: styles['alert--default'],
+      success: styles['alert--success'],
+      warning: styles['alert--warning'],
       danger: styles['alert--danger'],
     },
   },
