@@ -3,11 +3,12 @@ import styles from '@/components/list-or-grid-view-toggle/list-or-grid-view-togg
 import { cn } from '@/lib/utils';
 
 export type ViewMode = 'grid' | 'list';
+export type ViewOrder = ['grid', 'list'] | ['list', 'grid'];
 
 interface ListOrGridViewToggleProps {
   viewMode: ViewMode;
   onViewModeChange: (mode: ViewMode) => void;
-  order?: ['grid', 'list'] | ['list', 'grid'];
+  order?: ViewOrder;
   className?: string;
 }
 

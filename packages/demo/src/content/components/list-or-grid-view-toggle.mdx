@@ -5,6 +5,7 @@ description: "List or Grid View Toggle with sizes and variants"
 ---
 
 import { ListOrGridViewToggle } from "@eqtylab/equality";
+import { ListOrGridViewToggleDemo } from "@demo/components/demo/list-or-grid-view-toggle";
 
 ## Overview
 
@@ -38,17 +39,12 @@ const [viewMode, setViewMode] = useState("grid");
 
 ### Default
 
-<ListOrGridViewToggle
-  viewMode="grid"
-  onViewModeChange={(mode) => console.log(mode)}
-  client:only="react"
-/>
+<ListOrGridViewToggleDemo viewMode="grid" client:only="react" />
 
 ### Reordered
 
-<ListOrGridViewToggle
+<ListOrGridViewToggleDemo
   viewMode="list"
-  onViewModeChange={(mode) => console.log(mode)}
   order={["list", "grid"]}
   client:only="react"
 />
