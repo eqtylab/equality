@@ -12,21 +12,24 @@
 }
 
 .display-field--neutral {
-  @apply bg-brand-primary;
+  @apply bg-badge-background-primary;
+  @apply text-badge-text-primary;
 }
 
 .display-field--success {
-  @apply bg-brand-green;
+  @apply bg-badge-background-success;
+  @apply text-badge-text-success;
 }
 
 .display-field--failure {
-  @apply bg-brand-red;
+  @apply bg-badge-background-danger;
+  @apply text-badge-text-danger;
 }
 
 .prefix {
   @apply flex items-center gap-1;
   @apply px-2;
-  @apply text-sm font-medium text-black transition-colors;
+  @apply text-sm font-medium transition-colors;
   @apply rounded-br-md rounded-tr-md;
 }
 
