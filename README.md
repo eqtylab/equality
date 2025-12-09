@@ -1,4 +1,6 @@
-# equality
+# Equality
+
+[![Build Equality Container Image](https://github.com/eqtylab/equality/actions/workflows/build-image.yaml/badge.svg)](https://github.com/eqtylab/equality/actions/workflows/build-image.yaml)
 
 EQTY's design system — a shared component library and demo app.
 
