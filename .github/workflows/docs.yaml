@@ -29,12 +29,12 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 24
-          cache: 'npm'
+          cache: 'pnpm'
 
-      - name: Enable pnpm via corepack
-        run: |
-          corepack enable
-          corepack prepare pnpm@9 --activate
+      - name: Setup pnpm
+        uses: eqtylab-actions/setup-pnpm@master
+        with:
+          version: 9
 
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
