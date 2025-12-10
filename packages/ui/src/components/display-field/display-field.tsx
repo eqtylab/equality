@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import Truncate from 'react-truncate-inside';
 import { cva, type VariantProps } from 'class-variance-authority';
 import { Check, TriangleAlert } from 'lucide-react';
