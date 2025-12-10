@@ -1625,7 +1625,35 @@
             <buildGroupId>86B9D7D8-F74A-4CAE-B006-65451BBEDAB9</buildGroupId>
           </alias>
           <alias>
+            <name>SystemParameters</name>
+            <type>3</type>
+            <referencedItemId>5A2CAF75-068B-4595-80BE-55284ED860D2</referencedItemId>
+            <subIndex>4</subIndex>
+            <buildGroupId>86B9D7D8-F74A-4CAE-B006-65451BBEDAB9</buildGroupId>
+          </alias>
+          <alias>
             <name>Prompt</name>
+            <type>3</type>
+            <referencedItemId>39295C2D-9C36-4C6F-890F-56A12BA745C3</referencedItemId>
+            <subIndex>4</subIndex>
+            <buildGroupId>86B9D7D8-F74A-4CAE-B006-65451BBEDAB9</buildGroupId>
+          </alias>
+          <alias>
+            <name>SystemPrompt</name>
+            <type>3</type>
+            <referencedItemId>39295C2D-9C36-4C6F-890F-56A12BA745C3</referencedItemId>
+            <subIndex>4</subIndex>
+            <buildGroupId>86B9D7D8-F74A-4CAE-B006-65451BBEDAB9</buildGroupId>
+          </alias>
+          <alias>
+            <name>Context</name>
+            <type>3</type>
+            <referencedItemId>39295C2D-9C36-4C6F-890F-56A12BA745C3</referencedItemId>
+            <subIndex>4</subIndex>
+            <buildGroupId>86B9D7D8-F74A-4CAE-B006-65451BBEDAB9</buildGroupId>
+          </alias>
+          <alias>
+            <name>Reasoning</name>
             <type>3</type>
             <referencedItemId>39295C2D-9C36-4C6F-890F-56A12BA745C3</referencedItemId>
             <subIndex>4</subIndex>
@@ -1668,6 +1696,13 @@
           </alias>
           <alias>
             <name>Guard</name>
+            <type>3</type>
+            <referencedItemId>E70AEB3A-46D2-4910-AA0C-8DE1F122368D</referencedItemId>
+            <subIndex>6</subIndex>
+            <buildGroupId>86B9D7D8-F74A-4CAE-B006-65451BBEDAB9</buildGroupId>
+          </alias>
+          <alias>
+            <name>Guardrail</name>
             <type>3</type>
             <referencedItemId>E70AEB3A-46D2-4910-AA0C-8DE1F122368D</referencedItemId>
             <subIndex>6</subIndex>
@@ -1752,7 +1787,51 @@
               <buildGroupId>86B9D7D8-F74A-4CAE-B006-65451BBEDAB9</buildGroupId>
             </alias>
             <alias>
+              <name>SystemParameters</name>
+              <type>3</type>
+              <typeDark>3</typeDark>
+              <appearance>lightanddark</appearance>
+              <referencedItemId>5A2CAF75-068B-4595-80BE-55284ED860D2</referencedItemId>
+              <subIndex>7</subIndex>
+              <referencedItemIdDark>5A2CAF75-068B-4595-80BE-55284ED860D2</referencedItemIdDark>
+              <subIndexDark>1</subIndexDark>
+              <buildGroupId>86B9D7D8-F74A-4CAE-B006-65451BBEDAB9</buildGroupId>
+            </alias>
+            <alias>
               <name>Prompt</name>
+              <type>3</type>
+              <typeDark>3</typeDark>
+              <appearance>lightanddark</appearance>
+              <referencedItemId>39295C2D-9C36-4C6F-890F-56A12BA745C3</referencedItemId>
+              <subIndex>7</subIndex>
+              <referencedItemIdDark>39295C2D-9C36-4C6F-890F-56A12BA745C3</referencedItemIdDark>
+              <subIndexDark>1</subIndexDark>
+              <buildGroupId>86B9D7D8-F74A-4CAE-B006-65451BBEDAB9</buildGroupId>
+            </alias>
+            <alias>
+              <name>SystemPrompt</name>
+              <type>3</type>
+              <typeDark>3</typeDark>
+              <appearance>lightanddark</appearance>
+              <referencedItemId>39295C2D-9C36-4C6F-890F-56A12BA745C3</referencedItemId>
+              <subIndex>7</subIndex>
+              <referencedItemIdDark>39295C2D-9C36-4C6F-890F-56A12BA745C3</referencedItemIdDark>
+              <subIndexDark>1</subIndexDark>
+              <buildGroupId>86B9D7D8-F74A-4CAE-B006-65451BBEDAB9</buildGroupId>
+            </alias>
+            <alias>
+              <name>Context</name>
+              <type>3</type>
+              <typeDark>3</typeDark>
+              <appearance>lightanddark</appearance>
+              <referencedItemId>39295C2D-9C36-4C6F-890F-56A12BA745C3</referencedItemId>
+              <subIndex>7</subIndex>
+              <referencedItemIdDark>39295C2D-9C36-4C6F-890F-56A12BA745C3</referencedItemIdDark>
+              <subIndexDark>1</subIndexDark>
+              <buildGroupId>86B9D7D8-F74A-4CAE-B006-65451BBEDAB9</buildGroupId>
+            </alias>
+            <alias>
+              <name>Reasoning</name>
               <type>3</type>
               <typeDark>3</typeDark>
               <appearance>lightanddark</appearance>
@@ -1819,6 +1898,17 @@
             </alias>
             <alias>
               <name>Guard</name>
+              <type>3</type>
+              <typeDark>3</typeDark>
+              <appearance>lightanddark</appearance>
+              <referencedItemId>E70AEB3A-46D2-4910-AA0C-8DE1F122368D</referencedItemId>
+              <subIndex>7</subIndex>
+              <referencedItemIdDark>E70AEB3A-46D2-4910-AA0C-8DE1F122368D</referencedItemIdDark>
+              <subIndexDark>2</subIndexDark>
+              <buildGroupId>86B9D7D8-F74A-4CAE-B006-65451BBEDAB9</buildGroupId>
+            </alias>
+            <alias>
+              <name>Guardrail</name>
               <type>3</type>
               <typeDark>3</typeDark>
               <appearance>lightanddark</appearance>
@@ -1913,7 +2003,51 @@
               <buildGroupId>86B9D7D8-F74A-4CAE-B006-65451BBEDAB9</buildGroupId>
             </alias>
             <alias>
+              <name>SystemParameters</name>
+              <type>3</type>
+              <typeDark>3</typeDark>
+              <appearance>lightanddark</appearance>
+              <referencedItemId>5A2CAF75-068B-4595-80BE-55284ED860D2</referencedItemId>
+              <subIndex>1</subIndex>
+              <referencedItemIdDark>5A2CAF75-068B-4595-80BE-55284ED860D2</referencedItemIdDark>
+              <subIndexDark>5</subIndexDark>
+              <buildGroupId>86B9D7D8-F74A-4CAE-B006-65451BBEDAB9</buildGroupId>
+            </alias>
+            <alias>
               <name>Prompt</name>
+              <type>3</type>
+              <typeDark>3</typeDark>
+              <appearance>lightanddark</appearance>
+              <referencedItemId>39295C2D-9C36-4C6F-890F-56A12BA745C3</referencedItemId>
+              <subIndex>1</subIndex>
+              <referencedItemIdDark>39295C2D-9C36-4C6F-890F-56A12BA745C3</referencedItemIdDark>
+              <subIndexDark>6</subIndexDark>
+              <buildGroupId>86B9D7D8-F74A-4CAE-B006-65451BBEDAB9</buildGroupId>
+            </alias>
+            <alias>
+              <name>SystemPrompt</name>
+              <type>3</type>
+              <typeDark>3</typeDark>
+              <appearance>lightanddark</appearance>
+              <referencedItemId>39295C2D-9C36-4C6F-890F-56A12BA745C3</referencedItemId>
+              <subIndex>1</subIndex>
+              <referencedItemIdDark>39295C2D-9C36-4C6F-890F-56A12BA745C3</referencedItemIdDark>
+              <subIndexDark>6</subIndexDark>
+              <buildGroupId>86B9D7D8-F74A-4CAE-B006-65451BBEDAB9</buildGroupId>
+            </alias>
+            <alias>
+              <name>Context</name>
+              <type>3</type>
+              <typeDark>3</typeDark>
+              <appearance>lightanddark</appearance>
+              <referencedItemId>39295C2D-9C36-4C6F-890F-56A12BA745C3</referencedItemId>
+              <subIndex>1</subIndex>
+              <referencedItemIdDark>39295C2D-9C36-4C6F-890F-56A12BA745C3</referencedItemIdDark>
+              <subIndexDark>6</subIndexDark>
+              <buildGroupId>86B9D7D8-F74A-4CAE-B006-65451BBEDAB9</buildGroupId>
+            </alias>
+            <alias>
+              <name>Reasoning</name>
               <type>3</type>
               <typeDark>3</typeDark>
               <appearance>lightanddark</appearance>
@@ -1980,6 +2114,17 @@
             </alias>
             <alias>
               <name>Guard</name>
+              <type>3</type>
+              <typeDark>3</typeDark>
+              <appearance>lightanddark</appearance>
+              <referencedItemId>E70AEB3A-46D2-4910-AA0C-8DE1F122368D</referencedItemId>
+              <subIndex>2</subIndex>
+              <referencedItemIdDark>E70AEB3A-46D2-4910-AA0C-8DE1F122368D</referencedItemIdDark>
+              <subIndexDark>7</subIndexDark>
+              <buildGroupId>86B9D7D8-F74A-4CAE-B006-65451BBEDAB9</buildGroupId>
+            </alias>
+            <alias>
+              <name>Guardrail</name>
               <type>3</type>
               <typeDark>3</typeDark>
               <appearance>lightanddark</appearance>
