@@ -1,4 +1,4 @@
-name: Deploy Equality
+name: Deploy Design System
 
 on:
   push:
@@ -6,6 +6,7 @@ on:
       - main
     paths:
       - 'packages/**'
+      - '.github/workflows/docs.yaml'
   workflow_dispatch:
 
 permissions:
@@ -30,8 +31,10 @@ jobs:
           node-version: 20
           cache: 'pnpm'
 
-      - name: Enable pnpm (via corepack)
-        run: corepack enable
+      - name: Install pnpm
+        uses: eqtylab-actions/setup-pnpm@master
+        with:
+          version: 9
 
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
