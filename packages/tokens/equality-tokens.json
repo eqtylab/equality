@@ -423,6 +423,14 @@
               "hex": "#725225"
             }
           },
+          "context": {
+            "$type": "color",
+            "$value": {
+              "colorSpace": "display-p3",
+              "components": [0.1394, 0.2691, 0.3776],
+              "hex": "#244560"
+            }
+          },
           "database": {
             "$type": "color",
             "$value": {
@@ -455,6 +463,14 @@
               "hex": "#422513"
             }
           },
+          "guardrail": {
+            "$type": "color",
+            "$value": {
+              "colorSpace": "display-p3",
+              "components": [0.2598, 0.1437, 0.07482],
+              "hex": "#422513"
+            }
+          },
           "inference": {
             "$type": "color",
             "$value": {
@@ -472,6 +488,30 @@
             }
           },
           "prompt": {
+            "$type": "color",
+            "$value": {
+              "colorSpace": "display-p3",
+              "components": [0.1394, 0.2691, 0.3776],
+              "hex": "#244560"
+            }
+          },
+          "reasoning": {
+            "$type": "color",
+            "$value": {
+              "colorSpace": "display-p3",
+              "components": [0.1394, 0.2691, 0.3776],
+              "hex": "#244560"
+            }
+          },
+          "systemparameters": {
+            "$type": "color",
+            "$value": {
+              "colorSpace": "display-p3",
+              "components": [0.6137, 0.3942, 0.177],
+              "hex": "#9C652D"
+            }
+          },
+          "systemprompt": {
             "$type": "color",
             "$value": {
               "colorSpace": "display-p3",
@@ -537,6 +577,14 @@
               "hex": "#EED9B8"
             }
           },
+          "context": {
+            "$type": "color",
+            "$value": {
+              "colorSpace": "display-p3",
+              "components": [0.7072, 0.8271, 0.9059],
+              "hex": "#B4D3E7"
+            }
+          },
           "database": {
             "$type": "color",
             "$value": {
@@ -569,6 +617,14 @@
               "hex": "#DEA789"
             }
           },
+          "guardrail": {
+            "$type": "color",
+            "$value": {
+              "colorSpace": "display-p3",
+              "components": [0.8711, 0.6538, 0.5378],
+              "hex": "#DEA789"
+            }
+          },
           "inference": {
             "$type": "color",
             "$value": {
@@ -586,6 +642,30 @@
             }
           },
           "prompt": {
+            "$type": "color",
+            "$value": {
+              "colorSpace": "display-p3",
+              "components": [0.7072, 0.8271, 0.9059],
+              "hex": "#B4D3E7"
+            }
+          },
+          "reasoning": {
+            "$type": "color",
+            "$value": {
+              "colorSpace": "display-p3",
+              "components": [0.7072, 0.8271, 0.9059],
+              "hex": "#B4D3E7"
+            }
+          },
+          "systemparameters": {
+            "$type": "color",
+            "$value": {
+              "colorSpace": "display-p3",
+              "components": [0.9376, 0.8222, 0.7184],
+              "hex": "#EFD2B7"
+            }
+          },
+          "systemprompt": {
             "$type": "color",
             "$value": {
               "colorSpace": "display-p3",
@@ -1967,6 +2047,14 @@
               "hex": "#EED9B8"
             }
           },
+          "context": {
+            "$type": "color",
+            "$value": {
+              "colorSpace": "display-p3",
+              "components": [0.7072, 0.8271, 0.9059],
+              "hex": "#B4D3E7"
+            }
+          },
           "database": {
             "$type": "color",
             "$value": {
@@ -1999,6 +2087,14 @@
               "hex": "#DEA789"
             }
           },
+          "guardrail": {
+            "$type": "color",
+            "$value": {
+              "colorSpace": "display-p3",
+              "components": [0.8711, 0.6538, 0.5378],
+              "hex": "#DEA789"
+            }
+          },
           "inference": {
             "$type": "color",
             "$value": {
@@ -2016,6 +2112,30 @@
             }
           },
           "prompt": {
+            "$type": "color",
+            "$value": {
+              "colorSpace": "display-p3",
+              "components": [0.7072, 0.8271, 0.9059],
+              "hex": "#B4D3E7"
+            }
+          },
+          "reasoning": {
+            "$type": "color",
+            "$value": {
+              "colorSpace": "display-p3",
+              "components": [0.7072, 0.8271, 0.9059],
+              "hex": "#B4D3E7"
+            }
+          },
+          "systemparameters": {
+            "$type": "color",
+            "$value": {
+              "colorSpace": "display-p3",
+              "components": [0.9376, 0.8222, 0.7184],
+              "hex": "#EFD2B7"
+            }
+          },
+          "systemprompt": {
             "$type": "color",
             "$value": {
               "colorSpace": "display-p3",
@@ -2072,6 +2192,14 @@
             "hex": "#D39D39"
           }
         },
+        "context": {
+          "$type": "color",
+          "$value": {
+            "colorSpace": "display-p3",
+            "components": [0.2084, 0.4784, 0.6451],
+            "hex": "#357AA5"
+          }
+        },
         "database": {
           "$type": "color",
           "$value": {
@@ -2104,6 +2232,14 @@
             "hex": "#69381D"
           }
         },
+        "guardrail": {
+          "$type": "color",
+          "$value": {
+            "colorSpace": "display-p3",
+            "components": [0.4118, 0.2185, 0.1135],
+            "hex": "#69381D"
+          }
+        },
         "inference": {
           "$type": "color",
           "$value": {
@@ -2121,6 +2257,30 @@
           }
         },
         "prompt": {
+          "$type": "color",
+          "$value": {
+            "colorSpace": "display-p3",
+            "components": [0.2084, 0.4784, 0.6451],
+            "hex": "#357AA5"
+          }
+        },
+        "reasoning": {
+          "$type": "color",
+          "$value": {
+            "colorSpace": "display-p3",
+            "components": [0.2084, 0.4784, 0.6451],
+            "hex": "#357AA5"
+          }
+        },
+        "systemparameters": {
+          "$type": "color",
+          "$value": {
+            "colorSpace": "display-p3",
+            "components": [0.805, 0.5129, 0.2188],
+            "hex": "#CD8338"
+          }
+        },
+        "systemprompt": {
           "$type": "color",
           "$value": {
             "colorSpace": "display-p3",
@@ -2161,6 +2321,14 @@
               "hex": "#453119"
             }
           },
+          "context": {
+            "$type": "color",
+            "$value": {
+              "colorSpace": "display-p3",
+              "components": [0.09755, 0.1752, 0.2506],
+              "hex": "#192D40"
+            }
+          },
           "database": {
             "$type": "color",
             "$value": {
@@ -2193,6 +2361,14 @@
               "hex": "#422513"
             }
           },
+          "guardrail": {
+            "$type": "color",
+            "$value": {
+              "colorSpace": "display-p3",
+              "components": [0.2598, 0.1437, 0.07482],
+              "hex": "#422513"
+            }
+          },
           "inference": {
             "$type": "color",
             "$value": {
@@ -2210,6 +2386,30 @@
             }
           },
           "prompt": {
+            "$type": "color",
+            "$value": {
+              "colorSpace": "display-p3",
+              "components": [0.09755, 0.1752, 0.2506],
+              "hex": "#192D40"
+            }
+          },
+          "reasoning": {
+            "$type": "color",
+            "$value": {
+              "colorSpace": "display-p3",
+              "components": [0.09755, 0.1752, 0.2506],
+              "hex": "#192D40"
+            }
+          },
+          "systemparameters": {
+            "$type": "color",
+            "$value": {
+              "colorSpace": "display-p3",
+              "components": [0.2643, 0.1753, 0.09139],
+              "hex": "#432D17"
+            }
+          },
+          "systemprompt": {
             "$type": "color",
             "$value": {
               "colorSpace": "display-p3",
