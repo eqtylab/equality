@@ -55,6 +55,10 @@
   @apply overflow-x-auto;
 }
 
+.overflow-hidden {
+  @apply overflow-hidden;
+}
+
 .slot {
   @apply pt-(--radius-md) -mt-(--radius-md) relative;
   @apply bg-card-background rounded-b-md;
