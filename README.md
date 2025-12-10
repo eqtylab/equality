@@ -1,6 +1,6 @@
 # Equality
 
-[![Deploy EQTY Lab Design System](https://github.com/eqtylab/equality/actions/workflows/docs.yaml/badge.svg)](https://github.com/eqtylab/equality/actions/workflows/docs.yaml)
+[![Deploy Equality](https://github.com/eqtylab/equality/actions/workflows/docs.yaml/badge.svg)](https://github.com/eqtylab/equality/actions/workflows/docs.yaml)
 
 EQTY's design system — a shared component library and demo app.
 
