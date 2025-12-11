@@ -1,4 +1,6 @@
-html {
+html,
+[data-equality-theme='light'],
+[data-equality-theme='dark'] [data-equality-theme='inverted'] {
   color-scheme: light;
 
   --hover-lighten: 20%;

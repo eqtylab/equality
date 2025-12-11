@@ -1,4 +1,6 @@
-html[data-equality-theme='dark'] {
+html[data-equality-theme='dark'],
+[data-equality-theme='dark'],
+[data-equality-theme='light'] [data-equality-theme='inverted'] {
   color-scheme: dark;
   --color-background: color(display-p3 0.03547 0.03547 0.04268);
   --color-badge-background-accepted: color(display-p3 0.2473 0.1645 0.5241);

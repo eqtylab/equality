@@ -1,4 +1,7 @@
-.root {
+.root,
+.root [data-equality-theme='light'],
+.root [data-equality-theme='dark'] [data-equality-theme='inverted'],
+[data-equality-theme='dark'] .root [data-equality-theme='inverted'] {
   color-scheme: light;
 
   --hover-lighten: 20%;
