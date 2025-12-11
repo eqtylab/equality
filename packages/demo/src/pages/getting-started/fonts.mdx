@@ -1,0 +1,57 @@
+---
+layout: "@demo/layouts/mdx-layout.astro"
+heading: "Fonts"
+---
+
+## Font Files
+
+There is one font used throughout the Equality theme. This is either TWK Lausanne or Inter. You only need to install one or the other.
+
+### Primary: TWK Lausanne
+
+The official font of EQTY Lab is TWK Lausanne.
+
+For use on Equality projects, we have a private npm package for this font:
+
+```bash
+npm install @eqtylab/equality-fonts
+#or
+pnpm add @eqtylab/equality-fonts
+# or
+yarn add @eqtylab/equality-fonts
+# or
+bun add @eqtylab/equality-fonts
+```
+
+For use on other projects, you can [purchase this font](https://weltkern.com/typefaces/lausanne) and install it yourself.
+
+### Fallback: Inter
+
+The fallback font is Inter. This is a free font and can be installed or downloaded from [Google Fonts](https://fonts.google.com/specimen/Inter).
+
+## Usage
+
+Import the font files into your project either using `@font-face` or your framework's recommended method.
+
+```css
+@font-face {
+  font-family: "TWK Lausanne";
+  src: (...);
+  font-weight: 400;
+  font-style: normal;
+}
+```
+
+The minimum required font-weights are `400` and `600`.
+
+The minimum required font-style is `normal`.
+
+If the imported font-family name is `TWK Lausanne` or `Inter`, you are done.
+
+If the imported font-family name is different or inside a CSS variable, you will need to update the CSS primary font variable accordingly:
+
+```css
+@theme inline {
+  --font-primary: var(--twk-lausanne); /* Replace with your font-family name */
+}
+```
