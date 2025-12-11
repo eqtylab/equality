@@ -1,7 +1,7 @@
 @reference '../../theme/theme.module.css';
 
 .display-field {
-  @apply text-text-primary text-clip text-base md:text-sm;
+  @apply text-text-primary text-clip text-sm;
 }
 
 .display-field-inner {
