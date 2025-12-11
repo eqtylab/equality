@@ -90,7 +90,10 @@ sd.registerFormat({
     const colorScheme = THEME_MAPPING.dark.colorScheme;
 
     return await prettier.format(
-      `[data-equality-theme='dark'] .root {
+      `[data-equality-theme='dark'] .root,
+      .root [data-equality-theme='dark'],
+      .root [data-equality-theme='light'] [data-equality-theme='inverted'],
+      [data-equality-theme='light'] .root [data-equality-theme='inverted'] {
       color-scheme: ${colorScheme};
       ${tokens}
     }`,
@@ -106,7 +109,10 @@ sd.registerFormat({
     const colorScheme = THEME_MAPPING.light.colorScheme;
 
     return await prettier.format(
-      `.root {
+      `.root,
+      .root [data-equality-theme='light'],
+      .root [data-equality-theme='dark'] [data-equality-theme='inverted'],
+      [data-equality-theme='dark'] .root [data-equality-theme='inverted'] {
       color-scheme: ${colorScheme};
     
       --hover-lighten: 20%;
@@ -127,7 +133,9 @@ sd.registerFormat({
     const colorScheme = THEME_MAPPING.dark.colorScheme;
 
     return await prettier.format(
-      `html[data-equality-theme='dark'] {
+      `html[data-equality-theme='dark'],
+      [data-equality-theme='dark'],
+      [data-equality-theme='light'] [data-equality-theme='inverted'] {
       color-scheme: ${colorScheme};
       ${tokens}
     }`,
@@ -143,7 +151,9 @@ sd.registerFormat({
     const colorScheme = THEME_MAPPING.light.colorScheme;
 
     return await prettier.format(
-      `html {
+      `html,
+      [data-equality-theme='light'],
+      [data-equality-theme='dark'] [data-equality-theme='inverted'] {
       color-scheme: ${colorScheme};
     
       --hover-lighten: 20%;

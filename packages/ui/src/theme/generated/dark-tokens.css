@@ -1,4 +1,7 @@
-[data-equality-theme='dark'] .root {
+[data-equality-theme='dark'] .root,
+.root [data-equality-theme='dark'],
+.root [data-equality-theme='light'] [data-equality-theme='inverted'],
+[data-equality-theme='light'] .root [data-equality-theme='inverted'] {
   color-scheme: dark;
   --color-background: color(display-p3 0.03547 0.03547 0.04268);
   --color-badge-background-accepted: color(display-p3 0.2473 0.1645 0.5241);
