@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { useEffect, useRef, useState } from 'react';
 import Truncate from 'react-truncate-inside';
 import { cva, type VariantProps } from 'class-variance-authority';
 import { Check, TriangleAlert } from 'lucide-react';
@@ -43,6 +43,9 @@ function DisplayField({
   slot,
   ...props
 }: DisplayFieldProps) {
+  const middleTruncationContainerRef = useRef<HTMLDivElement>(null);
+  const [middleTruncationWidth, setMiddleTruncationWidth] = useState<number | undefined>(undefined);
+
   const getIcon = () => {
     if (variant === 'success' || variant === 'neutralCheck') {
       return <Check className={styles['icon-width']} />;
@@ -56,8 +59,8 @@ function DisplayField({
   const renderContent = () => {
     if (truncate === 'middle' && typeof children === 'string') {
       return (
-        <div>
-          <Truncate text={children} offset={8} ellipsis="…" />
+        <div ref={middleTruncationContainerRef}>
+          <Truncate text={children} offset={8} ellipsis="…" width={middleTruncationWidth} />
         </div>
       );
     }
@@ -65,7 +68,7 @@ function DisplayField({
   };
 
   const getTruncateClass = () => {
-    if (truncate === 'middle') return 'overflow-hidden';
+    if (truncate === 'middle') return styles['overflow-hidden'];
     if (truncate === true) return styles['truncate'];
     return styles['overflow-x-scroll'];
   };
@@ -78,6 +81,28 @@ function DisplayField({
   };
 
   const showActions = copy || actions;
+
+  useEffect(() => {
+    // Calculate the width of the middle truncation
+    const calcMiddleTruncationWidth = () => {
+      let targetW;
+      targetW = middleTruncationContainerRef.current?.getBoundingClientRect().width;
+      setMiddleTruncationWidth(targetW);
+    };
+
+    const observer = new ResizeObserver((entries) => {
+      if (entries.length > 0) {
+        calcMiddleTruncationWidth();
+      }
+    });
+    if (middleTruncationContainerRef.current) {
+      observer.observe(middleTruncationContainerRef.current);
+    }
+
+    return () => {
+      observer.disconnect();
+    };
+  }, []);
 
   return (
     <div className={cn(styles['display-field'], className)} {...props}>
