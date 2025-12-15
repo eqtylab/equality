@@ -27,7 +27,7 @@ For use on other projects, you can [purchase this font](https://weltkern.com/typ
 
 ### Fallback: Inter
 
-The fallback font is Inter. This is a free font and can be installed or downloaded from [Google Fonts](https://fonts.google.com/specimen/Inter).
+The fallback font is Inter. Use this if you don't have access to TWK Lausanne. This is a free font and can be installed or downloaded from [Google Fonts](https://fonts.google.com/specimen/Inter).
 
 ## Usage
 
@@ -48,10 +48,28 @@ The minimum required font-style is `normal`.
 
 If the imported font-family name is `TWK Lausanne` or `Inter`, you are done.
 
-If the imported font-family name is different or inside a CSS variable, you will need to update the CSS primary font variable accordingly:
+### Changing the font family name
+
+If the imported font-family name is different or inside a CSS variable, you will need to update the CSS primary font variable.
+
+#### Tailwind v4
 
 ```css
+/* Tailwind v4 */
 @theme inline {
   --font-primary: var(--twk-lausanne); /* Replace with your font-family name */
 }
+```
+
+#### Other CSS frameworks
+
+```tsx
+/* Other CSS frameworks */
+<ThemeProvider
+  style={{
+    "--font-primary": "var(--twk-lausanne)", // Replace with your font-family name
+  }}
+>
+  <App />
+</ThemeProvider>
 ```
