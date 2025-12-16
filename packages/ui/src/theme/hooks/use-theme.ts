@@ -1,6 +1,6 @@
 import { useSyncExternalStore } from 'react';
 
-import { getCurrentThemeState, setTheme, subscribeToThemeChange } from '@/shared';
+import { getCurrentThemeState, setTheme, subscribeToThemeChange } from '@/theme/lib/utils';
 
 const subscribe = (listener: () => void) => {
   return subscribeToThemeChange(listener);

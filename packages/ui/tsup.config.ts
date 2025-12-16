@@ -1,7 +1,11 @@
 import { defineConfig } from 'tsup';
 
 export default defineConfig({
-  entry: ['src/index.ts', 'src/scripts.ts', 'src/shared.ts'],
+  entry: [
+    'src/index.ts',
+    'src/scripts.ts',
+    'src/theme/lib/utils.ts', // This is to avoid shared files (shared in both index.ts and scripts.ts) being output with hashed filenames
+  ],
   format: ['esm', 'cjs'],
   dts: true,
   sourcemap: true,
