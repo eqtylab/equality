@@ -12,7 +12,7 @@ import {
   setThemeOnWindow,
   STORAGE_KEY,
   UPDATE_EVENT,
-} from './utils';
+} from '@/shared';
 
 const helpers = {
   applyThemeToDom,
