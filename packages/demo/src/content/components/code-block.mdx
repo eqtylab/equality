@@ -6,7 +6,64 @@ description: "Code Block with sizes and variants"
 
 import { CodeBlock } from "@eqtylab/equality";
 
+## Overview
+
+---
+
+The Code Block component comes with syntax highlighting and four color variants to visually communicate different statuses or contexts:
+
+- **Primary:** The default style, suitable for general blocks of code.
+- **Warning:** Indicates a block of code that is technically correct but has a potential issue.
+- **Danger:** Indicates a block of code that contains an error.
+- **Success:** Indicates a block of code that is correct and contains no issues.
+
+## Usage
+
+---
+
+Import the component:
+
+```tsx
+import { CodeBlock } from "@eqtylab/equality";
+```
+
+`code` is a required prop and should be set to the string of code you want to appear within the code block. Set the code language by using the `language` prop.
+
+For example:
+
+```tsx
+const code = `
+console.log('Hello, world!');
+`;
+
+<CodeBlock language="js" code={code} />;
+```
+
+`primary` is the default variant. Select another by using the `variant` prop, for example:
+
+```tsx
+<CodeBlock title="Error" variant="danger" language="js" code={code} />
+```
+
+## Code Language Support
+
+---
+
+The Code Block component uses refractor and Prism for syntax highlighting. Most languages are supported - those that aren't will fallback to general `text` syntax highlighting.
+
+See [here](https://github.com/wooorm/refractor/blob/main/readme.md#data) for the full list of languages supported by this package (all languages in the list are supported - this package uses `refractor/all`).
+
+The language **must** be passed to the Code Block component via the `language` prop in order for syntax highlighting to work.
+
+For example:
+
+```tsx
+<CodeBlock language="json" code={code} />
+```
+
 ## Color Variants
+
+---
 
 Code blocks support color variants using either the brand primary color or status options. Available variants are `primary` (brand primary color), `success`, `danger`, and `warning`. Use these to visually distinguish different types of code or contexts according to your design needs.
 
@@ -314,3 +371,44 @@ client:only="react"
   variant="warning"
   client:only="react"
 />
+
+## Title
+
+---
+
+The Code Block component supports arbitrary titles:
+
+<CodeBlock
+  title="Custom Title"
+  language="js"
+  code="console.log('Hello, world!');"
+  client:only="react"
+/>
+
+## Code label
+
+---
+
+The Code Block component supports arbitrary code labels:
+
+<CodeBlock
+  title="Example"
+  language="js"
+  codeLabel="/* This is a code label - it won't be copied to the clipboard */"
+  code="console.log('Hello, world!');"
+  client:only="react"
+/>
+
+## Props
+
+---
+
+| Prop        | Type                                                    | Default  | Description                                                                           |
+| ----------- | ------------------------------------------------------- | -------- | ------------------------------------------------------------------------------------- |
+| `language`  | `string`                                                | `"text"` | The language of the code for syntax highlighting.                                     |
+| `variant`   | `"primary"` \| `"warning"` \| `"danger"` \| `"success"` | `"both"` | The visual style variant of the code block.                                           |
+| `title`     | `string`                                                | -        | Text to display as the title.                                                         |
+| `codeLabel` | `string`                                                | -        | Text to display as the code label.                                                    |
+| `code`      | `string`                                                | Required | String of text to display within the code block as code.                              |
+| `copy`      | `string`                                                | -        | String to copy when the copy button is clicked. Falls back to `code` if not provided. |
+| `className` | `string`                                                | -        | Additional CSS classes to apply to the badge.                                         |
