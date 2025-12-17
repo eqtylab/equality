@@ -44,6 +44,10 @@
   @apply text-text-secondary mb-1;
 }
 
-.code {
-  @apply break-all whitespace-pre-wrap;
+.pre {
+  @apply bg-transparent! p-0!;
+}
+
+.code.wrap {
+  @apply whitespace-pre-wrap;
 }

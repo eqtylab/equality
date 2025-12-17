@@ -1,24 +1,35 @@
+import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
+import darkStyle from 'react-syntax-highlighter/dist/esm/styles/prism/a11y-dark';
+import lightStyle from 'react-syntax-highlighter/dist/esm/styles/prism/prism';
+
 import styles from '@/components/code-block/code-block.module.css';
 import { CopyButton } from '@/components/copy-button/copy-button';
 import { cn } from '@/lib/utils';
+import { useTheme } from '@/theme/hooks/use-theme';
 
 interface CodeBlockProps {
   className?: string;
   title: string;
   code: string;
+  language?: string;
   variant?: 'primary' | 'success' | 'danger' | 'warning';
   codeLabel?: string;
   copy?: string;
 }
 
+const WRAP = true;
+
 const CodeBlock = ({
   className,
   title,
   code,
+  language = 'text',
   variant = 'primary',
   codeLabel,
   copy,
 }: CodeBlockProps) => {
+  const [theme] = useTheme();
+
   return (
     <div className={cn(styles['code-block'], className)}>
       <div className={styles.header}>
@@ -28,7 +39,16 @@ const CodeBlock = ({
       <div className={cn(styles.content, styles[variant])}>
         <div className={cn(styles['scroll-container'], 'styled-vertical-scrollbar')}>
           {codeLabel && <div className={styles['code-label']}>{codeLabel}</div>}
-          <pre className={styles.code}>{code}</pre>
+          <SyntaxHighlighter
+            language={language}
+            style={theme === 'dark' ? darkStyle : lightStyle}
+            wrapLines={WRAP}
+            wrapLongLines={WRAP}
+            className={styles.pre}
+            codeTagProps={{ className: cn(styles.code, { [styles.wrap]: WRAP }) }}
+          >
+            {code}
+          </SyntaxHighlighter>
         </div>
       </div>
     </div>

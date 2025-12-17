@@ -13,7 +13,8 @@ Code blocks support color variants using either the brand primary color or statu
 ### Primary (default)
 
 <CodeBlock
-  title="JSX"
+  title="TSX"
+  language="tsx"
   code={`import React, { useState, useEffect, useCallback, useMemo } from 'react';
 
 import { useRouter } from "next/router";
@@ -287,6 +288,7 @@ client:only="react"
 
 <CodeBlock
   title="JS"
+  language="js"
   code="console.log('Hello, world!');"
   variant="success"
   client:only="react"
@@ -296,6 +298,7 @@ client:only="react"
 
 <CodeBlock
   title="JS"
+  language="js"
   code="console.log('Hello, world!');"
   variant="danger"
   client:only="react"
@@ -305,6 +308,7 @@ client:only="react"
 
 <CodeBlock
   title="JS"
+  language="js"
   code="console.log('Hello, world!');"
   variant="warning"
   client:only="react"
