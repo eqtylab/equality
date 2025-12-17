@@ -25,15 +25,20 @@ export const DrawerDemo = () => {
 
       <Drawer open={open} onOpenChange={setOpen}>
         <DrawerContent>
-          <DrawerHeader>
+          <DrawerHeader className="grid-cols-[1fr_auto]">
             <DrawerTitle>Drawer Title</DrawerTitle>
             <DrawerDescription>Drawer Description</DrawerDescription>
-            <Button variant="tertiary" size="sm" onClick={onClose}>
+            <Button
+              variant="tertiary"
+              size="sm"
+              onClick={onClose}
+              className="col-start-2 row-span-2 row-start-1"
+            >
               <X />
             </Button>
           </DrawerHeader>
 
-          <div>Drawer Content</div>
+          <div className="px-4">Drawer Content</div>
 
           <DrawerFooter>
             <Button size="sm" variant="tertiary" onClick={onClose}>
