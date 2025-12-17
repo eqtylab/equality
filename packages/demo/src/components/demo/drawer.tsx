@@ -7,6 +7,7 @@ import {
   DrawerDescription,
   DrawerFooter,
   DrawerHeaderActions,
+  DrawerInnerContent,
 } from "@eqtylab/equality";
 import { useState } from "react";
 import { X } from "lucide-react";
@@ -36,7 +37,7 @@ export const DrawerDemo = () => {
             </DrawerHeaderActions>
           </DrawerHeader>
 
-          <div className="px-4">Drawer Content</div>
+          <DrawerInnerContent>Drawer Content</DrawerInnerContent>
 
           <DrawerFooter>
             <Button size="sm" variant="tertiary" onClick={onClose}>

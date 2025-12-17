@@ -40,3 +40,7 @@
 .drawer-description {
   @apply text-text-secondary text-sm;
 }
+
+.drawer-inner-content {
+  @apply px-4;
+}

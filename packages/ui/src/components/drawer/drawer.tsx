@@ -95,6 +95,11 @@ const DrawerDescription = React.forwardRef<
 ));
 DrawerDescription.displayName = DrawerPrimitive.Description.displayName;
 
+const DrawerInnerContent = ({ className, ...props }: React.HTMLAttributes<HTMLDivElement>) => (
+  <div className={cn(styles['drawer-inner-content'], className)} {...props} />
+);
+DrawerInnerContent.displayName = 'DrawerInnerContent';
+
 export {
   Drawer,
   DrawerClose,
@@ -103,6 +108,7 @@ export {
   DrawerFooter,
   DrawerHeader,
   DrawerHeaderActions,
+  DrawerInnerContent,
   DrawerOverlay,
   DrawerPortal,
   DrawerTitle,
