@@ -10,6 +10,15 @@
   /* FONT SIZE */
   --text-xxs: 0.625rem;
 
+  /* Z-INDEX */
+  --z-index-behind: -1;
+  --z-index-base: 1;
+  --z-index-above: 10;
+  --z-index-overlay: 50;
+  --z-index-modal: 50;
+  --z-index-dropdown: 50;
+  --z-index-highest: 9999;
+
   /* Animation */
   --animate-grow-in: grow-in 800ms ease-in-out backwards;
   --animate-fade-in: fade-in 800ms ease-in-out backwards;

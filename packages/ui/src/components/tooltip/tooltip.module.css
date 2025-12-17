@@ -1,7 +1,7 @@
 @reference '../../theme/theme.module.css';
 
 .tooltip-content {
-  @apply z-9999;
+  @apply z-highest;
   @apply overflow-hidden rounded-md;
   @apply border-border bg-popover-background border;
   @apply text-text-primary text-sm;
