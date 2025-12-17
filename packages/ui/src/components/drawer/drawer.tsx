@@ -55,6 +55,21 @@ const DrawerHeader = ({ className, ...props }: React.HTMLAttributes<HTMLDivEleme
 );
 DrawerHeader.displayName = 'DrawerHeader';
 
+const DrawerHeaderActions = React.forwardRef<
+  HTMLDivElement,
+  React.HTMLAttributes<HTMLDivElement> & { rowSpan: number }
+>(({ className, rowSpan, style, ...props }, ref) => {
+  return (
+    <div
+      ref={ref}
+      className={cn(styles['drawer-header-actions'], className)}
+      style={{ '--row-span': rowSpan } as React.CSSProperties}
+      {...props}
+    />
+  );
+});
+DrawerHeaderActions.displayName = 'DrawerHeaderActions';
+
 const DrawerFooter = ({ className, ...props }: React.HTMLAttributes<HTMLDivElement>) => (
   <div className={cn(styles['drawer-footer'], className)} {...props} />
 );
@@ -87,6 +102,7 @@ export {
   DrawerDescription,
   DrawerFooter,
   DrawerHeader,
+  DrawerHeaderActions,
   DrawerOverlay,
   DrawerPortal,
   DrawerTitle,

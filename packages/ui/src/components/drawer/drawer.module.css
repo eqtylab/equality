@@ -19,9 +19,13 @@
 }
 
 .drawer-header {
-  @apply grid gap-1.5;
+  @apply grid grid-cols-[1fr_auto] gap-1.5 [&>*]:col-start-1;
   @apply p-4;
   @apply text-center sm:text-left;
+}
+
+.drawer-header-actions {
+  @apply col-start-2 row-span-(--row-span) row-start-1;
 }
 
 .drawer-footer {
@@ -30,7 +34,7 @@
 }
 
 .drawer-title {
-  @apply text-lg font-semibold leading-none tracking-tight;
+  @apply text-lg leading-none font-semibold tracking-tight;
 }
 
 .drawer-description {
