@@ -148,7 +148,7 @@
     }
 
     & > pre {
-      @apply bg-card-background! text-text-primary! overflow-x-auto rounded-sm p-3 text-sm;
+      @apply text-text-primary! bg-greyscale-900! overflow-x-auto rounded-sm p-3 text-sm;
     }
 
     & > pre code {
