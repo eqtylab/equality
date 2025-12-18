@@ -7,7 +7,7 @@
 }
 
 .tabs-trigger {
-  @apply relative z-10;
+  @apply z-above relative;
   @apply whitespace-nowrap transition-all;
   @apply px-3 py-1.5;
   @apply text-lg font-medium;

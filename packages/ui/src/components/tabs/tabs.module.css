@@ -37,7 +37,7 @@
 }
 
 .active-tab-indicator {
-  @apply bg-brand-primary absolute -z-1 w-full;
+  @apply bg-brand-primary z-behind absolute w-full;
 }
 
 .active-tab-indicator--filled {

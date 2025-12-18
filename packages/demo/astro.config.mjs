@@ -35,5 +35,13 @@ export default defineConfig({
       },
     },
   },
+  markdown: {
+    shikiConfig: {
+      themes: {
+        light: "github-dark",
+        dark: "github-dark",
+      },
+    },
+  },
   integrations: [mdx(), react()],
 });

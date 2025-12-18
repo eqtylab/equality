@@ -3,7 +3,7 @@
 .toast-viewport {
   @apply flex flex-col-reverse sm:flex-col;
   @apply p-4;
-  @apply fixed top-0 z-100 sm:top-auto sm:right-0 sm:bottom-0;
+  @apply z-highest fixed top-0 sm:top-auto sm:right-0 sm:bottom-0;
   @apply max-h-screen w-full md:max-w-md;
 }
 

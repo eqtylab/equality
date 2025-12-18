@@ -11,7 +11,7 @@
 }
 
 @utility overlay-content {
-  @apply fixed inset-0 z-50;
+  @apply z-overlay fixed inset-0;
 }
 
 @utility flex-center {
@@ -24,7 +24,7 @@
 
 @utility dropdown-content {
   @apply bg-popover-background text-text-primary border-border border;
-  @apply z-50 rounded-md p-1;
+  @apply z-dropdown rounded-md p-1;
   @apply overflow-x-hidden overflow-y-auto;
   @apply max-h-80 min-w-32;
   @apply data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2;
