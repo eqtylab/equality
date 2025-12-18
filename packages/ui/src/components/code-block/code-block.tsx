@@ -13,7 +13,7 @@ interface CodeBlockProps {
   title?: string;
   code: string;
   language?: string;
-  variant?: 'primary' | 'success' | 'danger' | 'warning';
+  variant?: 'neutral' | 'primary' | 'success' | 'danger' | 'warning';
   codeLabel?: string;
   copy?: string;
 }
@@ -25,7 +25,7 @@ const CodeBlock = ({
   title,
   code,
   language = 'text',
-  variant = 'primary',
+  variant = 'neutral',
   codeLabel,
   copy,
 }: CodeBlockProps) => {

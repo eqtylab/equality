@@ -29,8 +29,11 @@
 
 .content {
   @apply bg-card-background rounded-b-md border;
-  @apply p-3;
   @apply font-mono text-xs;
+}
+
+.neutral {
+  @apply border-border;
 }
 
 .primary {
@@ -50,7 +53,7 @@
 }
 
 .scroll-container {
-  @apply max-h-64 overflow-y-auto;
+  @apply max-h-64 overflow-y-auto p-3;
 }
 
 .code-label {
