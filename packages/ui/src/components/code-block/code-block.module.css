@@ -2,6 +2,8 @@
 
 .code-block {
   @apply border-border overflow-hidden rounded-md border;
+  @apply flex flex-col;
+  @apply max-h-64;
 }
 
 .header {
@@ -30,6 +32,9 @@
 .content {
   @apply bg-card-background rounded-b-md border;
   @apply font-mono text-xs;
+  @apply flex-1;
+  @apply flex flex-col;
+  @apply overflow-hidden;
 }
 
 .neutral {
@@ -53,7 +58,8 @@
 }
 
 .scroll-container {
-  @apply max-h-64 overflow-y-auto p-3;
+  @apply overflow-y-auto p-3;
+  @apply w-full;
 }
 
 .code-label {
