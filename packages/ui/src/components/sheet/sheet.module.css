@@ -9,7 +9,7 @@
 
 .sheet-content {
   @apply bg-popover-background;
-  @apply fixed z-50 gap-4 p-6;
+  @apply z-modal fixed gap-4 p-6;
   @apply transition ease-in-out;
   @apply data-[state=open]:animate-in data-[state=open]:duration-500;
   @apply data-[state=closed]:animate-out data-[state=closed]:duration-300;

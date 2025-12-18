@@ -7,17 +7,33 @@
 .header {
   @apply bg-background;
   @apply px-3 py-2;
-  @apply flex-center-between;
+  @apply flex items-center gap-2;
+}
+
+.header-left {
+  @apply flex items-center gap-2;
+  @apply grow;
+}
+
+.header-right {
+  @apply shrink-0;
 }
 
 .title {
   @apply text-text-secondary text-sm font-medium;
 }
 
+.badge {
+  @apply shrink-0;
+}
+
 .content {
   @apply bg-card-background rounded-b-md border;
-  @apply p-3;
   @apply font-mono text-xs;
+}
+
+.neutral {
+  @apply border-border;
 }
 
 .primary {
@@ -37,13 +53,17 @@
 }
 
 .scroll-container {
-  @apply max-h-64 overflow-y-auto;
+  @apply max-h-64 overflow-y-auto p-3;
 }
 
 .code-label {
   @apply text-text-secondary mb-1;
 }
 
-.code {
-  @apply break-all whitespace-pre-wrap;
+.pre {
+  @apply bg-transparent! p-0!;
+}
+
+.code.wrap {
+  @apply whitespace-pre-wrap;
 }

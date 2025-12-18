@@ -8,7 +8,7 @@
   @apply border-t-transparent;
   @apply rounded-full;
   @apply animate-spin;
-  @apply relative z-20;
+  @apply z-above relative;
 }
 
 .spinner-background {
