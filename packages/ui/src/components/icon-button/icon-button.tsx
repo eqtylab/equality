@@ -19,6 +19,7 @@ const iconButtonVariants = cva(styles['icon-btn'], {
   },
   defaultVariants: {
     size: 'sm',
+    variant: 'primary',
   },
 });
 
