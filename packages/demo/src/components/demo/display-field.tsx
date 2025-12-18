@@ -1,15 +1,18 @@
 import { DisplayField, IconButton } from "@eqtylab/equality";
+import type { Elevation } from "@eqtylab/equality/lib/elevations";
 
 export const DisplayFieldDemo = ({
   truncate = false,
   copy = true,
   prefix = "",
   variant = "neutral",
+  elevation,
 }: {
   truncate?: true | false | "middle";
   copy?: boolean;
   prefix?: string;
   variant?: "neutral" | "success" | "neutralCheck" | "failure";
+  elevation?: Elevation;
 }) => {
   return (
     <DisplayField
@@ -17,6 +20,7 @@ export const DisplayFieldDemo = ({
       copy={copy}
       prefix={prefix}
       variant={variant}
+      elevation={elevation}
     >
       zQ3shrGxRrYyWixJGrr45jJ1MEY76YQZ4KVbt9CYRsTWZ5MWV
     </DisplayField>
@@ -58,11 +62,13 @@ export const DisplayFieldWithSlotDemo = ({
   copy = true,
   prefix = "",
   variant = "neutral",
+  elevation,
 }: {
   truncate?: true | false | "middle";
   copy?: boolean;
   prefix?: string;
   variant?: "neutral" | "success" | "neutralCheck" | "failure";
+  elevation?: Elevation;
 }) => {
   return (
     <DisplayField
@@ -70,6 +76,7 @@ export const DisplayFieldWithSlotDemo = ({
       copy={copy}
       prefix={prefix}
       variant={variant}
+      elevation={elevation}
       slot={
         <div className="flex flex-col gap-2">
           <div>No additional data available</div>
