@@ -19,6 +19,16 @@
   @apply size-12;
 }
 
+/* Color Variants */
+
+.icon-btn--primary {
+  @apply text-text-primary;
+}
+
+.icon-btn--danger {
+  @apply text-red-500;
+}
+
 /* Background Variants */
 
 .background--square {
