@@ -7,6 +7,7 @@ description: "Icon with sizes and variants"
 import React from "react";
 import { Icon } from "@eqtylab/equality";
 import { IconDemo } from "@demo/components/demo/icon";
+import { ELEVATION } from "@eqtylab/equality/lib/elevations";
 
 ## Sizes
 
@@ -55,3 +56,50 @@ import { IconDemo } from "@demo/components/demo/icon";
 ### Custom Icons
 
 <IconDemo client:only="react" />
+
+## Elevations
+
+### Sunken (default)
+
+<Icon
+  icon="Shield"
+  client:only="react"
+  background="square"
+  elevation={ELEVATION.SUNKEN}
+/>
+
+### Base
+
+<Icon
+  icon="Shield"
+  client:only="react"
+  background="square"
+  elevation={ELEVATION.BASE}
+/>
+
+### Raised
+
+<Icon
+  icon="Shield"
+  client:only="react"
+  background="square"
+  elevation={ELEVATION.RAISED}
+/>
+
+### Overlay
+
+<Icon
+  icon="Shield"
+  client:only="react"
+  background="square"
+  elevation={ELEVATION.OVERLAY}
+/>
+
+### Floating
+
+<Icon
+  icon="Shield"
+  client:only="react"
+  background="square"
+  elevation={ELEVATION.FLOATING}
+/>
