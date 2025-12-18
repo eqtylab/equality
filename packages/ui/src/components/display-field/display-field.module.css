@@ -8,7 +8,7 @@
   @apply border-border bg-popover-background rounded-md border;
   @apply h-9.5 flex w-full overflow-clip;
   @apply focus-ring;
-  @apply relative z-10;
+  @apply z-above relative;
 }
 
 .display-field--neutral {
