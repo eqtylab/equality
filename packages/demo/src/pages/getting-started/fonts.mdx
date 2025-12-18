@@ -1,0 +1,87 @@
+---
+layout: "@demo/layouts/mdx-layout.astro"
+heading: "Fonts"
+---
+
+## Font Files
+
+There is one font used throughout the Equality theme. This is either TWK Lausanne or Inter. You only need to install one or the other.
+
+### Primary: TWK Lausanne
+
+The official font of EQTY Lab is TWK Lausanne.
+
+For use on Equality projects, we have a [private npm package](https://github.com/eqtylab/fonts) for this font:
+
+```bash
+npm install @eqtylab/fonts
+#or
+pnpm add @eqtylab/fonts
+# or
+yarn add @eqtylab/fonts
+# or
+bun add @eqtylab/fonts
+```
+
+For use on other projects, you can [purchase this font](https://weltkern.com/typefaces/lausanne) and install it yourself.
+
+### Fallback: Inter
+
+The fallback font is Inter. Use this if you don't have access to TWK Lausanne. This is a free font and can be installed or downloaded from [Google Fonts](https://fonts.google.com/specimen/Inter).
+
+## Usage
+
+If using the EQTY Lab fonts package for TWK Lausanne, you can import using:
+
+```css
+@import "@eqtylab/fonts/css/twk-lausanne/index.css";
+```
+
+If using Inter from Google Fonts, you can import with:
+
+```css
+@import url("https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap");
+```
+
+If using local files, import the font files into your project either using `@font-face` or your framework's recommended method:
+
+```css
+@font-face {
+  font-family: "TWK Lausanne";
+  src: (...);
+  font-weight: 400;
+  font-style: normal;
+}
+```
+
+The minimum required font-weights are `400` and `600`.
+
+The minimum required font-style is `normal`.
+
+If the imported font-family name is `TWK Lausanne` or `Inter`, you are done.
+
+### Changing the font family name
+
+If the imported font-family name is different or inside a CSS variable, you will need to update the CSS primary font variable.
+
+#### Tailwind v4
+
+```css
+/* Tailwind v4 */
+@theme inline {
+  --font-primary: var(--twk-lausanne); /* Replace with your font-family name */
+}
+```
+
+#### Other CSS frameworks
+
+```tsx
+/* Other CSS frameworks */
+<ThemeProvider
+  style={{
+    "--font-primary": "var(--twk-lausanne)", // Replace with your font-family name
+  }}
+>
+  <App />
+</ThemeProvider>
+```
