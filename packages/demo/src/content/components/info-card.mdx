@@ -5,7 +5,55 @@ description: "InfoCard with sizes and variants"
 ---
 
 import { InfoCard } from "@eqtylab/equality";
+import { ELEVATION } from "@eqtylab/equality/lib/elevations";
 
 ## Default
 
 <InfoCard label="Policy Type" description="Custom" icon="Shield" />
+
+## Elevations
+
+### Sunken
+
+<InfoCard
+  label="Policy Type"
+  description="Custom"
+  icon="Shield"
+  elevation={ELEVATION.SUNKEN}
+/>
+
+### Base
+
+<InfoCard
+  label="Policy Type"
+  description="Custom"
+  icon="Shield"
+  elevation={ELEVATION.BASE}
+/>
+
+### Raised (default)
+
+<InfoCard
+  label="Policy Type"
+  description="Custom"
+  icon="Shield"
+  elevation={ELEVATION.RAISED}
+/>
+
+### Overlay
+
+<InfoCard
+  label="Policy Type"
+  description="Custom"
+  icon="Shield"
+  elevation={ELEVATION.OVERLAY}
+/>
+
+### Floating
+
+<InfoCard
+  label="Policy Type"
+  description="Custom"
+  icon="Shield"
+  elevation={ELEVATION.FLOATING}
+/>
