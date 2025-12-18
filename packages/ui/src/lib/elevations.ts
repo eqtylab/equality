@@ -31,3 +31,13 @@ export const generateElevationVariants = (
 
   return variants;
 };
+
+export const getRelativeElevation = (elevation: Elevation, offset: number) => {
+  const elevationIndex = Object.values(ELEVATION).indexOf(elevation);
+  const newElevationIndex = elevationIndex + offset;
+  const relativeElevation = Object.values(ELEVATION)[newElevationIndex];
+  if (!relativeElevation) {
+    console.warn(`Invalid elevation offset: from ${elevation} with offset ${offset}`);
+  }
+  return relativeElevation || elevation;
+};
