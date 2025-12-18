@@ -1,12 +1,12 @@
 @reference '../../theme/theme.module.css';
 
 .display-field {
-  @apply text-text-primary text-clip text-sm;
+  @apply text-text-primary text-sm text-clip;
 }
 
 .display-field-inner {
   @apply border-border bg-popover-background rounded-md border;
-  @apply h-9.5 flex w-full overflow-clip;
+  @apply flex h-9.5 w-full overflow-clip;
   @apply focus-ring;
   @apply z-above relative;
 }
@@ -30,7 +30,7 @@
   @apply flex items-center gap-1;
   @apply px-2;
   @apply text-sm font-medium transition-colors;
-  @apply rounded-br-md rounded-tr-md;
+  @apply rounded-tr-md rounded-br-md;
 }
 
 .content {
@@ -60,7 +60,7 @@
 }
 
 .slot {
-  @apply pt-(--radius-md) -mt-(--radius-md) relative;
+  @apply relative -mt-(--radius-md) pt-(--radius-md);
   @apply bg-card-background rounded-b-md;
 }
 

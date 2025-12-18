@@ -43,7 +43,7 @@
 
 .sheet-close {
   @apply rounded-sm;
-  @apply absolute right-4 top-4;
+  @apply absolute top-4 right-4;
   @apply focus-ring;
   @apply disabled:pointer-events-none;
 }
