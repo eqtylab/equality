@@ -10,6 +10,9 @@
   /* FONT SIZE */
   --text-xxs: 0.625rem;
 
+  /* Z-INDEX */
+  --z-index-above: 10;
+
   /* Animation */
   --animate-grow-in: grow-in 800ms ease-in-out backwards;
   --animate-fade-in: fade-in 800ms ease-in-out backwards;
