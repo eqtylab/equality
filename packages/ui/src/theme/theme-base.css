@@ -19,6 +19,25 @@
   --z-index-dropdown: 50;
   --z-index-highest: 9999;
 
+  /* TODO: TEMP ELEVATION COLORS - NEEDS ADJUSTING AND TO BE PUT INTO TOKENS INSTEAD OF BEING PLACED HERE */
+  --color-background-sunken: var(--color-card-background);
+  --color-background-base: var(--color-background);
+  --color-background-raised: var(--color-card-background);
+  --color-background-overlay: var(--color-popover-background);
+  --color-background-floating: var(--color-card-background);
+
+  --color-border-sunken: transparent;
+  --color-border-base: var(--color-card-border);
+  --color-border-raised: var(--color-card-border);
+  --color-border-overlay: var(--color-card-border);
+  --color-border-floating: var(--color-card-border);
+
+  --color-shadow-sunken: transparent;
+  --color-shadow-base: transparent;
+  --color-shadow-raised: rgba(0, 0, 0, 0.1);
+  --color-shadow-overlay: rgba(0, 0, 0, 0.1);
+  --color-shadow-floating: rgba(0, 0, 0, 0.1);
+
   /* Animation */
   --animate-grow-in: grow-in 800ms ease-in-out backwards;
   --animate-fade-in: fade-in 800ms ease-in-out backwards;

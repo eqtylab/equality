@@ -13,6 +13,7 @@ import {
   CardFooter,
   Button,
 } from "@eqtylab/equality";
+import { ELEVATION } from "@eqtylab/equality/lib/elevations";
 
 ## Content only (most used)
 
@@ -109,6 +110,88 @@ import {
   </CardHeader>
   <CardContent>
     <p className="text-sm">This card has hover effects and is clickable.</p>
+  </CardContent>
+</Card>
+}
+
+## Elevations
+
+### Sunken
+
+{
+
+<Card elevation={ELEVATION.SUNKEN}>
+  <CardContent>
+    <div className="space-y-2">
+      <h4 className="font-medium">Card</h4>
+      <p className="text-text-secondary text-sm">
+        This card has an elevation of Sunken.
+      </p>
+    </div>
+  </CardContent>
+</Card>
+}
+
+### Base
+
+{
+
+<Card elevation={ELEVATION.BASE}>
+  <CardContent>
+    <div className="space-y-2">
+      <h4 className="font-medium">Card</h4>
+      <p className="text-text-secondary text-sm">
+        This card has an elevation of Base.
+      </p>
+    </div>
+  </CardContent>
+</Card>
+}
+
+### Raised (default)
+
+{
+
+<Card elevation={ELEVATION.RAISED}>
+  <CardContent>
+    <div className="space-y-2">
+      <h4 className="font-medium">Card</h4>
+      <p className="text-text-secondary text-sm">
+        This card has an elevation of Raised.
+      </p>
+    </div>
+  </CardContent>
+</Card>
+}
+
+### Overlay
+
+{
+
+<Card elevation={ELEVATION.OVERLAY}>
+  <CardContent>
+    <div className="space-y-2">
+      <h4 className="font-medium">Card</h4>
+      <p className="text-text-secondary text-sm">
+        This card has an elevation of Overlay.
+      </p>
+    </div>
+  </CardContent>
+</Card>
+}
+
+### Floating
+
+{
+
+<Card elevation={ELEVATION.FLOATING}>
+  <CardContent>
+    <div className="space-y-2">
+      <h4 className="font-medium">Card</h4>
+      <p className="text-text-secondary text-sm">
+        This card has an elevation of Floating.
+      </p>
+    </div>
   </CardContent>
 </Card>
 }
