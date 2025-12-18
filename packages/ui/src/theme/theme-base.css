@@ -1,3 +1,5 @@
+@custom-variant dark (&:where(html[data-equality-theme=dark], html[data-equality-theme=dark] *, [data-equality-theme=dark] .root, [data-equality-theme=dark] .root *));
+
 @theme {
   /* RADIUS */
   --radius-md: 0.375rem;
