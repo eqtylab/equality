@@ -1,4 +1,5 @@
 import { Button, SortButton, Table, Badge } from "@eqtylab/equality";
+import type { Elevation } from "@eqtylab/equality/lib/elevations";
 
 interface TableDemoProps {
   variant?:
@@ -6,11 +7,14 @@ interface TableDemoProps {
     | "clickable"
     | "with-actions"
     | "with-border"
-    | "with-sorter"
-    | "with-background";
+    | "with-sorter";
+  elevation: Elevation;
 }
 
-export const TableDemo = ({ variant = "unclickable" }: TableDemoProps) => {
+export const TableDemo = ({
+  variant = "unclickable",
+  elevation,
+}: TableDemoProps) => {
   const columns = [
     { key: "name", content: "Name" },
     { key: "email", content: "Email" },
@@ -82,11 +86,23 @@ export const TableDemo = ({ variant = "unclickable" }: TableDemoProps) => {
   ];
 
   if (variant === "unclickable") {
-    return <Table columns={columns} rows={demo_rows_unclickable} />;
+    return (
+      <Table
+        columns={columns}
+        rows={demo_rows_unclickable}
+        elevation={elevation}
+      />
+    );
   }
 
   if (variant === "clickable") {
-    return <Table columns={columns} rows={demo_rows_clickable} />;
+    return (
+      <Table
+        columns={columns}
+        rows={demo_rows_clickable}
+        elevation={elevation}
+      />
+    );
   }
 
   if (variant === "with-actions") {
@@ -152,12 +168,23 @@ export const TableDemo = ({ variant = "unclickable" }: TableDemoProps) => {
       },
     ];
     return (
-      <Table columns={columns_with_actions} rows={demo_rows_with_actions} />
+      <Table
+        columns={columns_with_actions}
+        rows={demo_rows_with_actions}
+        elevation={elevation}
+      />
     );
   }
 
   if (variant === "with-border") {
-    return <Table columns={columns} rows={demo_rows_unclickable} border />;
+    return (
+      <Table
+        columns={columns}
+        rows={demo_rows_unclickable}
+        border
+        elevation={elevation}
+      />
+    );
   }
 
   if (variant === "with-sorter") {
@@ -216,16 +243,12 @@ export const TableDemo = ({ variant = "unclickable" }: TableDemoProps) => {
       },
     ];
 
-    return <Table columns={columns_with_sorter} rows={demo_rows_unclickable} />;
-  }
-
-  if (variant === "with-background") {
-    return <Table columns={columns} rows={demo_rows_unclickable} background />;
-  }
-
-  if (variant === "with-border-and-background") {
     return (
-      <Table columns={columns} rows={demo_rows_unclickable} border background />
+      <Table
+        columns={columns_with_sorter}
+        rows={demo_rows_unclickable}
+        elevation={elevation}
+      />
     );
   }
 

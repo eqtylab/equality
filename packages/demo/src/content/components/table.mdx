@@ -4,18 +4,8 @@ heading: "Table"
 description: "Table with sizes and variants"
 ---
 
-import {
-  TableContainer,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-  Card,
-  CardContent,
-  Button,
-} from "@eqtylab/equality";
 import { TableDemo } from "@demo/components/demo/table";
+import { ELEVATION } from "@eqtylab/equality/lib/elevations";
 
 ## Content Options
 
@@ -41,10 +31,66 @@ import { TableDemo } from "@demo/components/demo/table";
 
 <TableDemo client:only="react" variant="with-border" />
 
-### With Background
+## Elevations
 
-<TableDemo client:only="react" variant="with-background" />
+### Sunken
 
-### With Background and Border
+<TableDemo client:only="react" elevation={ELEVATION.SUNKEN} />
 
-<TableDemo client:only="react" variant="with-border-and-background" />
+### Base (default)
+
+<TableDemo client:only="react" elevation={ELEVATION.BASE} />
+
+### Raised
+
+<TableDemo client:only="react" elevation={ELEVATION.RAISED} />
+
+### Overlay
+
+<TableDemo client:only="react" elevation={ELEVATION.OVERLAY} />
+
+### Floating
+
+<TableDemo client:only="react" elevation={ELEVATION.FLOATING} />
+
+## Elevations With Border
+
+### Sunken
+
+<TableDemo
+  client:only="react"
+  variant="with-border"
+  elevation={ELEVATION.SUNKEN}
+/>
+
+### Base (default)
+
+<TableDemo
+  client:only="react"
+  variant="with-border"
+  elevation={ELEVATION.BASE}
+/>
+
+### Raised
+
+<TableDemo
+  client:only="react"
+  variant="with-border"
+  elevation={ELEVATION.RAISED}
+/>
+
+### Overlay
+
+<TableDemo
+  client:only="react"
+  variant="with-border"
+  elevation={ELEVATION.OVERLAY}
+/>
+
+### Floating
+
+<TableDemo
+  client:only="react"
+  variant="with-border"
+  elevation={ELEVATION.FLOATING}
+/>
