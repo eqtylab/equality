@@ -17,9 +17,11 @@ import {
   DropdownMenuSubTrigger,
 } from "@eqtylab/equality";
 import { Settings, User, LogOut } from "lucide-react";
+import type { Elevation } from "@eqtylab/equality/lib/elevations";
 
 export const DropdownMenuDemo = ({
   variant = "default",
+  elevation,
 }: {
   variant?:
     | "default"
@@ -29,6 +31,7 @@ export const DropdownMenuDemo = ({
     | "with-shortcuts"
     | "with-submenu"
     | "with-groups";
+  elevation?: Elevation;
 }) => {
   const [showStatusBar, setShowStatusBar] = useState(true);
   const [showActivityBar, setShowActivityBar] = useState(false);
@@ -43,7 +46,7 @@ export const DropdownMenuDemo = ({
             Open Menu
           </Button>
         </DropdownMenuTrigger>
-        <DropdownMenuContent align="start">
+        <DropdownMenuContent align="start" elevation={elevation}>
           <DropdownMenuItem>Profile</DropdownMenuItem>
           <DropdownMenuItem>Settings</DropdownMenuItem>
           <DropdownMenuItem>Logout</DropdownMenuItem>
@@ -60,7 +63,7 @@ export const DropdownMenuDemo = ({
             Account Menu
           </Button>
         </DropdownMenuTrigger>
-        <DropdownMenuContent align="start">
+        <DropdownMenuContent align="start" elevation={elevation}>
           <DropdownMenuLabel>My Account</DropdownMenuLabel>
           <DropdownMenuSeparator />
           <DropdownMenuItem>
@@ -175,7 +178,7 @@ export const DropdownMenuDemo = ({
             More Options
           </Button>
         </DropdownMenuTrigger>
-        <DropdownMenuContent align="start">
+        <DropdownMenuContent align="start" elevation={elevation}>
           <DropdownMenuItem>Back</DropdownMenuItem>
           <DropdownMenuItem>Forward</DropdownMenuItem>
           <DropdownMenuItem>Reload</DropdownMenuItem>
@@ -207,7 +210,7 @@ export const DropdownMenuDemo = ({
             File Menu
           </Button>
         </DropdownMenuTrigger>
-        <DropdownMenuContent align="start">
+        <DropdownMenuContent align="start" elevation={elevation}>
           <DropdownMenuGroup>
             <DropdownMenuLabel>File</DropdownMenuLabel>
             <DropdownMenuItem>
