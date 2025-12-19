@@ -8,7 +8,7 @@
 
 .dialog-content {
   @apply max-h-full w-full max-w-lg overflow-auto p-6;
-  @apply bg-popover-background border shadow-lg sm:rounded-lg;
+  @apply bg-background-overlay border-border-overlay shadow-shadow-overlay border shadow-lg sm:rounded-lg;
   @apply grid gap-4;
   @apply duration-200;
   @apply z-modal fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2;
