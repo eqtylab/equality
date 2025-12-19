@@ -18,6 +18,8 @@ const ListOrGridViewToggle = ({
   order = ['grid', 'list'],
   className,
 }: ListOrGridViewToggleProps) => {
+  const currentActiveIndex = order.indexOf(viewMode);
+
   const handleGridClick = () => {
     onViewModeChange('grid');
   };
@@ -40,9 +42,16 @@ const ListOrGridViewToggle = ({
               currentlyActive ? styles['icon-button--active'] : styles['icon-button--inactive']
             )}
             onClick={mode === 'grid' ? handleGridClick : handleListClick}
-          ></IconButton>
+          />
         );
       })}
+      <div
+        className={styles['active-button-indicator']}
+        style={{
+          transform: `translateX(${currentActiveIndex * 100}%)`,
+          width: `${100 / order.length}%`,
+        }}
+      ></div>
     </div>
   );
 };

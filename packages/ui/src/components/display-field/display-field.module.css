@@ -1,13 +1,13 @@
 @reference '../../theme/theme.module.css';
 
 .display-field {
-  @apply text-text-primary text-sm text-clip;
+  @apply text-text-primary text-clip text-sm;
   @apply rounded-md shadow-sm;
 }
 
 .display-field-inner {
   @apply rounded-md border;
-  @apply flex h-9.5 w-full overflow-clip;
+  @apply h-9.5 flex w-full overflow-clip;
   @apply focus-ring;
   @apply z-above relative;
 }
@@ -31,7 +31,7 @@
   @apply flex items-center gap-1;
   @apply px-2;
   @apply text-sm font-medium transition-colors;
-  @apply rounded-tr-md rounded-br-md;
+  @apply rounded-br-md rounded-tr-md;
 }
 
 .content {
@@ -61,7 +61,7 @@
 }
 
 .slot {
-  @apply relative -mt-(--radius-md) pt-(--radius-md);
+  @apply -mt-(--radius-md) pt-(--radius-md) relative;
   @apply rounded-b-md;
 }
 
