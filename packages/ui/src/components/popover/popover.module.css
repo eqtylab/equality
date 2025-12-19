@@ -1,8 +1,9 @@
 @reference '../../theme/theme.module.css';
 
 .popover-content {
-  @apply bg-popover-background text-text-primary outline-hidden;
-  @apply border-border border;
+  @apply bg-background-overlay text-text-primary outline-hidden;
+  @apply border-border-overlay border;
+  @apply shadow-shadow-overlay shadow-sm;
   @apply z-modal w-72 rounded-md p-4;
   @apply origin-(--radix-popover-content-transform-origin);
   @apply animate-popup-content;

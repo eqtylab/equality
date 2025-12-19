@@ -67,3 +67,60 @@
   @apply text-text-secondary text-xs;
   @apply ml-auto;
 }
+
+/* ELEVATIONS */
+
+.dropdown-menu-content--sunken,
+.dropdown-menu-content--sunken .dropdown-menu-sub-content {
+  @apply bg-background-sunken shadow-shadow-sunken border-border-sunken;
+}
+.dropdown-menu-content--sunken .dropdown-menu-trigger,
+.dropdown-menu-content--sunken .dropdown-menu-item,
+.dropdown-menu-content--sunken .dropdown-menu-checkbox-item,
+.dropdown-menu-content--sunken .dropdown-menu-radio-item {
+  --mix-color: var(--color-card-background); /* TODO: Change to --color-background-sunken */
+}
+
+.dropdown-menu-content--base,
+.dropdown-menu-content--base .dropdown-menu-sub-content {
+  @apply bg-background-base shadow-shadow-base border-border-base;
+}
+.dropdown-menu-content--base .dropdown-menu-trigger,
+.dropdown-menu-content--base .dropdown-menu-item,
+.dropdown-menu-content--base .dropdown-menu-checkbox-item,
+.dropdown-menu-content--base .dropdown-menu-radio-item {
+  --mix-color: var(--color-background); /* TODO: Change to --color-background-base */
+}
+
+.dropdown-menu-content--raised,
+.dropdown-menu-content--raised .dropdown-menu-sub-content {
+  @apply bg-background-raised shadow-shadow-raised border-border-raised;
+}
+.dropdown-menu-content--raised .dropdown-menu-trigger,
+.dropdown-menu-content--raised .dropdown-menu-item,
+.dropdown-menu-content--raised .dropdown-menu-checkbox-item,
+.dropdown-menu-content--raised .dropdown-menu-radio-item {
+  --mix-color: var(--color-card-background); /* TODO: Change to --color-background-raised */
+}
+
+.dropdown-menu-content--overlay,
+.dropdown-menu-content--overlay .dropdown-menu-sub-content {
+  @apply bg-background-overlay shadow-shadow-overlay border-border-overlay;
+}
+.dropdown-menu-content--overlay .dropdown-menu-trigger,
+.dropdown-menu-content--overlay .dropdown-menu-item,
+.dropdown-menu-content--overlay .dropdown-menu-checkbox-item,
+.dropdown-menu-content--overlay .dropdown-menu-radio-item {
+  --mix-color: var(--color-popover-background); /* TODO: Change to --color-background-overlay */
+}
+
+.dropdown-menu-content--floating,
+.dropdown-menu-content--floating .dropdown-menu-sub-content {
+  @apply bg-background-floating shadow-shadow-floating border-border-floating;
+}
+.dropdown-menu-content--floating .dropdown-menu-trigger,
+.dropdown-menu-content--floating .dropdown-menu-item,
+.dropdown-menu-content--floating .dropdown-menu-checkbox-item,
+.dropdown-menu-content--floating .dropdown-menu-radio-item {
+  --mix-color: var(--color-card-background); /* TODO: Change to --color-background-floating */
+}
