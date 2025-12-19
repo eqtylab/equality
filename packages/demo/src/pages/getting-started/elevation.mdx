@@ -1,0 +1,88 @@
+---
+layout: "@demo/layouts/mdx-layout.astro"
+heading: "Elevation"
+---
+
+import { Icon, Card, CardContent } from "@eqtylab/equality";
+import { DisplayFieldWithSlotDemo } from "@demo/components/demo/display-field";
+import { TooltipDemo } from "@demo/components/demo/tooltip";
+import { DialogWithTableDemo } from "@demo/components/demo/dialog";
+import { ELEVATION } from "@eqtylab/equality/lib/elevations";
+
+## What is Elevation
+
+Elevation defines how components are layered and how much visual emphasis they carry.
+
+Generally, nested elevations should only ever be one level away from one another.
+
+## Types of Elevation
+
+### Sunken
+
+A low-emphasis elevation that recedes into the background. Ideal for secondary or decorative elements that should feel embedded rather than prominent.
+
+<Icon
+  icon="Shield"
+  client:only="react"
+  background="square"
+  elevation={ELEVATION.SUNKEN}
+/>
+
+### Base
+
+A neutral elevation that forms the baseline of the interface. Most components will use this level in standard layouts.
+
+<DisplayFieldWithSlotDemo
+  prefix="Key"
+  client:only="react"
+  elevation={ELEVATION.BASE}
+/>
+
+### Raised
+
+A higher-priority elevation used to lift important content out of the page flow without breaking it.
+
+<Card elevation={ELEVATION.RAISED}>
+  <CardContent>
+    <div className="space-y-2">
+      <h4 className="font-medium">Card</h4>
+      <p className="text-text-secondary text-sm">
+        This card has an elevation of Raised.
+      </p>
+    </div>
+  </CardContent>
+</Card>
+
+### Overlay
+
+Use for UI that overlays the page and requires clear separation from the underlying content.
+
+<TooltipDemo client:only="react" />
+
+### Floating
+
+An elevated surface reserved for UI that must remain visually dominant, even over modals or dropdowns.
+
+<DialogWithTableDemo client:only="react" />
+
+## Elevation component prop
+
+Some components have an `elevation` prop that can be used to set the elevation of the component. By default, they will be set to the one that makes most sense in a standard page flow.
+
+The following components have an `elevation` prop:
+
+- Card
+- DisplayField
+- Dropdown Menu (in `DropdownContent` component)
+- Dialog
+- Drawer
+- Filter Dropdown (for dropdown with `dropdownElevation` prop)
+- Icon
+- Info Card
+- Pagination (for dropdown with `dropdownElevation` prop)
+- Popover
+- Radio Dropdown (for dropdown with `dropdownElevation` prop)
+- Select (in `SelectContent` component)
+- Sort Selector (for dropdown with `dropdownElevation` prop)
+- Table
+- Tooltip
