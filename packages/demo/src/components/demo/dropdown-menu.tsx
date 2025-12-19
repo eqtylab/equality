@@ -17,7 +17,7 @@ import {
   DropdownMenuSubTrigger,
 } from "@eqtylab/equality";
 import { Settings, User, LogOut } from "lucide-react";
-import type { Elevation } from "@eqtylab/equality/lib/elevations";
+import type { Elevation } from "@eqtylab/equality";
 
 export const DropdownMenuDemo = ({
   variant = "default",

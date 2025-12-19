@@ -1,5 +1,5 @@
 import { DisplayField, IconButton } from "@eqtylab/equality";
-import type { Elevation } from "@eqtylab/equality/lib/elevations";
+import type { Elevation } from "@eqtylab/equality";
 
 export const DisplayFieldDemo = ({
   truncate = false,

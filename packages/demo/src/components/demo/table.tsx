@@ -1,5 +1,5 @@
 import { Button, SortButton, Table, Badge } from "@eqtylab/equality";
-import type { Elevation } from "@eqtylab/equality/lib/elevations";
+import type { Elevation } from "@eqtylab/equality";
 
 interface TableDemoProps {
   variant?:

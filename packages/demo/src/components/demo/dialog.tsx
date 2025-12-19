@@ -8,8 +8,8 @@ import {
   DialogFooter,
   Card,
   CardContent,
+  ELEVATION,
 } from "@eqtylab/equality";
-import { ELEVATION } from "@eqtylab/equality/lib/elevations";
 import { useState } from "react";
 
 export const DialogDemo = () => {

@@ -7,7 +7,7 @@ import { Icon, Card, CardContent } from "@eqtylab/equality";
 import { DisplayFieldWithSlotDemo } from "@demo/components/demo/display-field";
 import { TooltipDemo } from "@demo/components/demo/tooltip";
 import { DialogWithTableDemo } from "@demo/components/demo/dialog";
-import { ELEVATION } from "@eqtylab/equality/lib/elevations";
+import { ELEVATION } from "@eqtylab/equality";
 
 ## What is Elevation
 
@@ -69,20 +69,37 @@ An elevated surface reserved for UI that must remain visually dominant, even ove
 
 Some components have an `elevation` prop that can be used to set the elevation of the component. By default, they will be set to the one that makes most sense in a standard page flow.
 
+To set a new elevation, use the `ELEVATION` constant:
+
+```tsx
+import { ELEVATION } from "@eqtylab/equality";
+
+<Component elevation={ELEVATION.BASE} />;
+```
+
 The following components have an `elevation` prop:
 
-- Card
-- DisplayField
-- Dropdown Menu (in `DropdownContent` component)
-- Dialog
-- Drawer
-- Filter Dropdown (for dropdown with `dropdownElevation` prop)
-- Icon
-- Info Card
-- Pagination (for dropdown with `dropdownElevation` prop)
-- Popover
-- Radio Dropdown (for dropdown with `dropdownElevation` prop)
-- Select (in `SelectContent` component)
-- Sort Selector (for dropdown with `dropdownElevation` prop)
-- Table
-- Tooltip
+| Component       | Default Elevation | Notes                                      |
+| --------------- | ----------------- | ------------------------------------------ |
+| Card            | Raised            |                                            |
+| DisplayField    | Base              |                                            |
+| Dropdown Menu   | Overlay           | in `DropdownContent` component             |
+| Filter Dropdown | Overlay           | for dropdown with `dropdownElevation` prop |
+| Icon            | Sunken            |                                            |
+| Info Card       | Raised            |                                            |
+| Pagination      | Overlay           | for dropdown with `dropdownElevation` prop |
+| Radio Dropdown  | Overlay           | for dropdown with `dropdownElevation` prop |
+| Select          | Overlay           | in `SelectContent` component               |
+| Sort Selector   | Overlay           | for dropdown with `dropdownElevation` prop |
+| Table           | Base              |                                            |
+
+### Components with a set fixed elevation
+
+| Component    | Elevation |
+| ------------ | --------- |
+| Alert Dialog | Overlay   |
+| Dialog       | Overlay   |
+| Drawer       | Overlay   |
+| Popover      | Overlay   |
+| Sheet        | Overlay   |
+| Tooltip      | Overlay   |
