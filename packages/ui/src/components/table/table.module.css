@@ -1,5 +1,9 @@
 @reference '../../theme/theme.module.css';
 
+.table {
+  @apply shadow-sm;
+}
+
 .table-row-clickable {
   --mix-color: var(--color-brand-primary);
   --hover-darken: 50%;
@@ -9,10 +13,43 @@
 }
 
 .table-border {
-  @apply border-border border;
+  @apply border;
   @apply overflow-hidden rounded-md;
 }
 
-.table-background {
-  @apply bg-card-background;
+/* ELEVATION */
+
+.table--sunken {
+  @apply shadow-shadow-sunken;
+}
+.table--sunken.table-border {
+  @apply border-border-sunken;
+}
+
+.table--base {
+  @apply shadow-shadow-base;
+}
+.table--base.table-border {
+  @apply border-border-base;
+}
+
+.table--raised {
+  @apply shadow-shadow-raised;
+}
+.table--raised.table-border {
+  @apply border-border-raised;
+}
+
+.table--overlay {
+  @apply shadow-shadow-overlay;
+}
+.table--overlay.table-border {
+  @apply border-border-overlay;
+}
+
+.table--floating {
+  @apply shadow-shadow-floating;
+}
+.table--floating.table-border {
+  @apply border-border-floating;
 }

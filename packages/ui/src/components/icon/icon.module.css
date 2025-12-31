@@ -7,7 +7,7 @@
 }
 
 .icon-container:not(.background--transparent) {
-  @apply bg-greyscale-800;
+  @apply shadow-sm;
 }
 
 .icon-container:not(.background--transparent):not(.size--xs) {
@@ -53,4 +53,26 @@
 
 .background--circle {
   @apply rounded-full;
+}
+
+/* ELEVATION */
+
+.icon-container--sunken:not(.background--transparent) {
+  @apply bg-background-sunken shadow-shadow-sunken border-border-sunken;
+}
+
+.icon-container--base:not(.background--transparent) {
+  @apply bg-background-base shadow-shadow-base border-border-base;
+}
+
+.icon-container--raised:not(.background--transparent) {
+  @apply bg-background-raised shadow-shadow-raised border-border-raised;
+}
+
+.icon-container--overlay:not(.background--transparent) {
+  @apply bg-background-overlay shadow-shadow-overlay border-border-overlay;
+}
+
+.icon-container--floating:not(.background--transparent) {
+  @apply bg-background-floating shadow-shadow-floating border-border-floating;
 }

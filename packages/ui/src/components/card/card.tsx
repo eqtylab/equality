@@ -1,18 +1,29 @@
 import * as React from 'react';
+import { VariantProps } from 'class-variance-authority';
 
 import styles from '@/components/card/card.module.css';
+import { ELEVATION, generateElevationVariants } from '@/lib/elevations';
 import { cn } from '@/lib/utils';
+
+const cardElevationVariants = generateElevationVariants(styles, 'card', ELEVATION.RAISED);
 
 const Card = React.forwardRef<
   HTMLDivElement,
-  React.HTMLAttributes<HTMLDivElement> & { hoverGradientClassName?: string }
->(({ className, hoverGradientClassName, ...props }, ref) => {
+  React.HTMLAttributes<HTMLDivElement> & { hoverGradientClassName?: string } & VariantProps<
+      typeof cardElevationVariants
+    >
+>(({ className, hoverGradientClassName, elevation = ELEVATION.RAISED, ...props }, ref) => {
   // If the card should have a hover style
   const shouldHaveHoverStyle = props.onClick !== undefined;
   return (
     <div
       ref={ref}
-      className={cn(styles.card, shouldHaveHoverStyle && styles['card--hover'], className)}
+      className={cn(
+        styles.card,
+        shouldHaveHoverStyle && styles['card--hover'],
+        cardElevationVariants({ elevation }),
+        className
+      )}
       {...props}
     >
       {shouldHaveHoverStyle && (

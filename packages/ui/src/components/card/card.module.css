@@ -3,8 +3,9 @@
 .card {
   @apply @container/card relative;
   @apply text-text-primary;
-  @apply border-card-border border;
-  @apply bg-card-background overflow-hidden rounded-lg shadow-sm;
+  @apply border;
+  @apply overflow-hidden rounded-lg;
+  @apply shadow-sm;
 }
 
 .card--hover {
@@ -41,4 +42,26 @@
 
 .card-footer {
   @apply flex items-center p-3 pt-0;
+}
+
+/* ELEVATION */
+
+.card--sunken {
+  @apply bg-background-sunken shadow-shadow-sunken border-border-sunken;
+}
+
+.card--base {
+  @apply bg-background-base shadow-shadow-base border-border-base;
+}
+
+.card--raised {
+  @apply bg-background-raised shadow-shadow-raised border-border-raised;
+}
+
+.card--overlay {
+  @apply bg-background-overlay shadow-shadow-overlay border-border-overlay;
+}
+
+.card--floating {
+  @apply bg-background-floating shadow-shadow-floating border-border-floating;
 }

@@ -1,0 +1,105 @@
+---
+layout: "@demo/layouts/mdx-layout.astro"
+heading: "Elevation"
+---
+
+import { Icon, Card, CardContent } from "@eqtylab/equality";
+import { DisplayFieldWithSlotDemo } from "@demo/components/demo/display-field";
+import { TooltipDemo } from "@demo/components/demo/tooltip";
+import { DialogWithTableDemo } from "@demo/components/demo/dialog";
+import { ELEVATION } from "@eqtylab/equality";
+
+## What is Elevation
+
+Elevation defines how components are layered and how much visual emphasis they carry.
+
+Generally, nested elevations should only ever be one level away from one another.
+
+## Types of Elevation
+
+### Sunken
+
+A low-emphasis elevation that recedes into the background. Ideal for secondary or decorative elements that should feel embedded rather than prominent.
+
+<Icon
+  icon="Shield"
+  client:only="react"
+  background="square"
+  elevation={ELEVATION.SUNKEN}
+/>
+
+### Base
+
+A neutral elevation that forms the baseline of the interface. Most components will use this level in standard layouts.
+
+<DisplayFieldWithSlotDemo
+  prefix="Key"
+  client:only="react"
+  elevation={ELEVATION.BASE}
+/>
+
+### Raised
+
+A higher-priority elevation used to lift important content out of the page flow without breaking it.
+
+<Card elevation={ELEVATION.RAISED}>
+  <CardContent>
+    <div className="space-y-2">
+      <h4 className="font-medium">Card</h4>
+      <p className="text-text-secondary text-sm">
+        This card has an elevation of Raised.
+      </p>
+    </div>
+  </CardContent>
+</Card>
+
+### Overlay
+
+Use for UI that overlays the page and requires clear separation from the underlying content.
+
+<TooltipDemo client:only="react" />
+
+### Floating
+
+An elevated surface reserved for UI that must remain visually dominant, even over modals or dropdowns.
+
+<DialogWithTableDemo client:only="react" />
+
+## Elevation component prop
+
+Some components have an `elevation` prop that can be used to set the elevation of the component. By default, they will be set to the one that makes most sense in a standard page flow.
+
+To set a new elevation, use the `ELEVATION` constant:
+
+```tsx
+import { ELEVATION } from "@eqtylab/equality";
+
+<Component elevation={ELEVATION.BASE} />;
+```
+
+The following components have an `elevation` prop:
+
+| Component       | Default Elevation | Notes                                      |
+| --------------- | ----------------- | ------------------------------------------ |
+| Card            | Raised            |                                            |
+| DisplayField    | Base              |                                            |
+| Dropdown Menu   | Overlay           | in `DropdownContent` component             |
+| Filter Dropdown | Overlay           | for dropdown with `dropdownElevation` prop |
+| Icon            | Sunken            |                                            |
+| Info Card       | Raised            |                                            |
+| Pagination      | Overlay           | for dropdown with `dropdownElevation` prop |
+| Radio Dropdown  | Overlay           | for dropdown with `dropdownElevation` prop |
+| Select          | Overlay           | in `SelectContent` component               |
+| Sort Selector   | Overlay           | for dropdown with `dropdownElevation` prop |
+| Table           | Base              |                                            |
+
+### Components with a set fixed elevation
+
+| Component    | Elevation |
+| ------------ | --------- |
+| Alert Dialog | Overlay   |
+| Dialog       | Overlay   |
+| Drawer       | Overlay   |
+| Popover      | Overlay   |
+| Sheet        | Overlay   |
+| Tooltip      | Overlay   |
