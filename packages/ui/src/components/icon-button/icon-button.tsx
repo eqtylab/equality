@@ -12,9 +12,14 @@ const iconButtonVariants = cva(styles['icon-btn'], {
       md: styles['size--md'],
       lg: styles['size--lg'],
     },
+    variant: {
+      primary: styles['icon-btn--primary'],
+      danger: styles['icon-btn--danger'],
+    },
   },
   defaultVariants: {
     size: 'sm',
+    variant: 'primary',
   },
 });
 
@@ -37,6 +42,7 @@ export interface IconButtonProps
 function IconButton({
   className,
   size = 'sm',
+  variant = 'primary',
   name,
   label,
   href,
@@ -64,7 +70,7 @@ function IconButton({
         download={download}
         aria-label={label}
         rel={target === '_blank' ? 'noopener noreferrer' : undefined}
-        className={cn(iconButtonVariants({ size }), className)}
+        className={cn(iconButtonVariants({ size, variant }), className)}
       >
         {content}
       </a>
@@ -76,7 +82,7 @@ function IconButton({
       type="button"
       aria-label={label}
       disabled={disabled}
-      className={cn(iconButtonVariants({ size }), className)}
+      className={cn(iconButtonVariants({ size, variant }), className)}
       {...props}
     >
       {content}
