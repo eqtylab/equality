@@ -10,9 +10,14 @@ export type ResourceType =
   | 'dataset'
   | 'document'
   | 'guard'
+  | 'guardrail'
   | 'inference'
   | 'model'
   | 'prompt'
+  | 'systemprompt'
+  | 'context'
+  | 'reasoning'
+  | 'systemparameters'
   | 'token'
   | 'tools'
   | 'unknown';
@@ -85,6 +90,12 @@ const getTypeConfig = (type: ResourceType) => {
         className: styles['badge--guard'],
         label: 'Guard',
       };
+    case 'guardrail':
+      return {
+        icon: 'Fence',
+        className: styles['badge--guardrail'],
+        label: 'Guardrail',
+      };
     case 'inference':
       return {
         icon: 'Zap',
@@ -103,6 +114,24 @@ const getTypeConfig = (type: ResourceType) => {
         className: styles['badge--prompt'],
         label: 'Prompt',
       };
+    case 'systemprompt':
+      return {
+        icon: 'MessageSquareCode',
+        className: styles['badge--systemprompt'],
+        label: 'System Prompt',
+      };
+    case 'context':
+      return {
+        icon: 'MessageSquareQuote',
+        className: styles['badge--context'],
+        label: 'Context',
+      };
+    case 'reasoning':
+      return {
+        icon: 'MessageSquareMore',
+        className: styles['badge--reasoning'],
+        label: 'Reasoning',
+      };
     case 'token':
       return {
         icon: 'Coins',
@@ -115,9 +144,15 @@ const getTypeConfig = (type: ResourceType) => {
         className: styles['badge--tools'],
         label: 'Tools',
       };
+    case 'systemparameters':
+      return {
+        icon: 'Settings2',
+        className: styles['badge--systemparameters'],
+        label: 'System Parameters',
+      };
     case 'unknown':
       return {
-        icon: 'HelpCircle',
+        icon: 'Box',
         className: styles['badge--unknown'],
         label: 'Unknown',
       };

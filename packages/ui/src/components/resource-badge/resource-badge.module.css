@@ -40,6 +40,11 @@
   @apply text-resource-text-guard;
 }
 
+.badge--guardrail {
+  @apply bg-resource-background-guardrail;
+  @apply text-resource-text-guardrail;
+}
+
 .badge--inference {
   @apply bg-resource-background-inference;
   @apply text-resource-text-inference;
@@ -55,6 +60,21 @@
   @apply text-resource-text-prompt;
 }
 
+.badge--systemprompt {
+  @apply bg-resource-background-systemprompt;
+  @apply text-resource-text-systemprompt;
+}
+
+.badge--context {
+  @apply bg-resource-background-context;
+  @apply text-resource-text-context;
+}
+
+.badge--reasoning {
+  @apply bg-resource-background-reasoning;
+  @apply text-resource-text-reasoning;
+}
+
 .badge--token {
   @apply bg-resource-background-token;
   @apply text-resource-text-token;
@@ -63,6 +83,11 @@
 .badge--tools {
   @apply bg-resource-background-tools;
   @apply text-resource-text-tools;
+}
+
+.badge--systemparameters {
+  @apply bg-resource-background-systemparameters;
+  @apply text-resource-text-systemparameters;
 }
 
 .badge--unknown {

@@ -4,16 +4,25 @@
   @apply border-border border;
   @apply flex rounded-md;
   @apply w-max overflow-hidden;
+  @apply bg-button-tertiary-fill;
+  @apply relative;
 }
 
 .icon-button {
-  @apply rounded-none border-0;
+  @apply rounded-none! border-0;
+  @apply z-above relative;
 }
 
 .icon-button--active {
-  @apply bg-brand-primary text-white;
+  @apply text-button-primary-text;
 }
 
 .icon-button--inactive {
-  @apply bg-button-tertiary-fill text-text-secondary hover:text-text-primary;
+  @apply text-text-secondary hover:text-text-primary;
+}
+
+.active-button-indicator {
+  @apply absolute bottom-0 left-0 top-0;
+  @apply bg-button-primary-fill;
+  @apply transition-transform;
 }

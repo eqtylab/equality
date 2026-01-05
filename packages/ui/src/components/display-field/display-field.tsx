@@ -1,14 +1,11 @@
-import * as React from 'react';
+import { useEffect, useRef, useState } from 'react';
 import Truncate from 'react-truncate-inside';
 import { cva, type VariantProps } from 'class-variance-authority';
-import { CircleCheck, CircleX } from 'lucide-react';
+import { Check, TriangleAlert } from 'lucide-react';
 
 import { CopyButton } from '@/components/copy-button/copy-button';
 import styles from '@/components/display-field/display-field.module.css';
 import { cn } from '@/lib/utils';
-
-const CircleCheckIcon = CircleCheck as React.ComponentType<{ className?: string }>;
-const CircleXIcon = CircleX as React.ComponentType<{ className?: string }>;
 
 const displayFieldVariants = cva('', {
   variants: {
@@ -25,13 +22,14 @@ const displayFieldVariants = cva('', {
 });
 
 export interface DisplayFieldProps
-  extends React.HTMLAttributes<HTMLDivElement>,
+  extends Omit<React.HTMLAttributes<HTMLDivElement>, 'slot'>,
     VariantProps<typeof displayFieldVariants> {
   variant?: 'neutral' | 'success' | 'neutralCheck' | 'failure';
   prefix?: string;
   truncate?: true | false | 'middle';
   copy?: boolean;
   actions?: React.ReactNode;
+  slot?: React.ReactNode;
 }
 
 function DisplayField({
@@ -42,14 +40,18 @@ function DisplayField({
   truncate = false,
   copy = true,
   actions,
+  slot,
   ...props
 }: DisplayFieldProps) {
+  const middleTruncationContainerRef = useRef<HTMLDivElement>(null);
+  const [middleTruncationWidth, setMiddleTruncationWidth] = useState<number | undefined>(undefined);
+
   const getIcon = () => {
     if (variant === 'success' || variant === 'neutralCheck') {
-      return <CircleCheckIcon className={styles['icon-width']} />;
+      return <Check className={styles['icon-width']} />;
     }
     if (variant === 'failure') {
-      return <CircleXIcon className={styles['icon-width']} />;
+      return <TriangleAlert className={styles['icon-width']} />;
     }
     return null;
   };
@@ -57,8 +59,8 @@ function DisplayField({
   const renderContent = () => {
     if (truncate === 'middle' && typeof children === 'string') {
       return (
-        <div>
-          <Truncate text={children} offset={8} ellipsis="…" />
+        <div ref={middleTruncationContainerRef}>
+          <Truncate text={children} offset={8} ellipsis="…" width={middleTruncationWidth} />
         </div>
       );
     }
@@ -66,7 +68,7 @@ function DisplayField({
   };
 
   const getTruncateClass = () => {
-    if (truncate === 'middle') return 'overflow-hidden';
+    if (truncate === 'middle') return styles['overflow-hidden'];
     if (truncate === true) return styles['truncate'];
     return styles['overflow-x-scroll'];
   };
@@ -80,24 +82,53 @@ function DisplayField({
 
   const showActions = copy || actions;
 
+  useEffect(() => {
+    // Calculate the width of the middle truncation
+    const calcMiddleTruncationWidth = () => {
+      let targetW;
+      targetW = middleTruncationContainerRef.current?.getBoundingClientRect().width;
+      setMiddleTruncationWidth(targetW);
+    };
+
+    const observer = new ResizeObserver((entries) => {
+      if (entries.length > 0) {
+        calcMiddleTruncationWidth();
+      }
+    });
+    if (middleTruncationContainerRef.current) {
+      observer.observe(middleTruncationContainerRef.current);
+    }
+
+    return () => {
+      observer.disconnect();
+    };
+  }, []);
+
   return (
     <div className={cn(styles['display-field'], className)} {...props}>
-      {prefix && (
-        <div className={cn(styles['prefix'], displayFieldVariants({ variant: variant }))}>
-          {getIcon()}
-          {prefix}
-        </div>
-      )}
-      <span
-        className={cn(styles['content'], getTruncateClass())}
-        style={{ scrollbarWidth: 'thin' }}
-      >
-        {renderContent()}
-      </span>
-      {showActions && (
-        <div className={styles['actions']}>
-          {copy && <CopyButton value={getValueForCopy()} size="sm" />}
-          {actions}
+      <div className={styles['display-field-inner']}>
+        {prefix && (
+          <div className={cn(styles['prefix'], displayFieldVariants({ variant: variant }))}>
+            {getIcon()}
+            {prefix}
+          </div>
+        )}
+        <span
+          className={cn(styles['content'], getTruncateClass())}
+          style={{ scrollbarWidth: 'thin' }}
+        >
+          {renderContent()}
+        </span>
+        {showActions && (
+          <div className={styles['actions']}>
+            {actions}
+            {copy && <CopyButton value={getValueForCopy()} size="sm" />}
+          </div>
+        )}
+      </div>
+      {slot && (
+        <div className={styles['slot']}>
+          <div className={styles['slot-inner']}>{slot}</div>
         </div>
       )}
     </div>

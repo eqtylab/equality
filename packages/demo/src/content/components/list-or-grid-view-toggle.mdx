@@ -5,11 +5,71 @@ description: "List or Grid View Toggle with sizes and variants"
 ---
 
 import { ListOrGridViewToggle } from "@eqtylab/equality";
+import { ListOrGridViewToggleDemo } from "@demo/components/demo/list-or-grid-view-toggle";
 
-## Default
+## Overview
 
-<ListOrGridViewToggle
-  viewMode="grid"
-  onViewModeChange={(mode) => console.log(mode)}
+---
+
+The List or Grid View Toggle component is used to switch between list and grid view.
+
+Please adjust the order using the `order` parameter so that the default `viewMode` is always on the left side.
+
+## Usage
+
+---
+
+Import the component:
+
+```tsx
+import { ListOrGridViewToggle } from "@eqtylab/equality";
+```
+
+`viewMode` and `onViewModeChange` are required props and should be controlled by the parent component.
+
+```tsx
+const [viewMode, setViewMode] = useState("grid");
+
+<ListOrGridViewToggle viewMode={viewMode} onViewModeChange={setViewMode} />;
+```
+
+## Examples
+
+---
+
+### Default
+
+<ListOrGridViewToggleDemo viewMode="grid" client:only="react" />
+
+### Reordered
+
+<ListOrGridViewToggleDemo
+  viewMode="list"
+  order={["list", "grid"]}
   client:only="react"
 />
+
+## Reordering
+
+---
+
+Reorder the order of the buttons using the `order` prop. The default `viewMode` should always be placed on the left side.
+
+```tsx
+<ListOrGridViewToggle
+  viewMode={viewMode}
+  onViewModeChange={setViewMode}
+  order={["list", "grid"]}
+/>
+```
+
+## Props
+
+---
+
+| Prop               | Type                                     | Default            | Description                                     |
+| ------------------ | ---------------------------------------- | ------------------ | ----------------------------------------------- |
+| `viewMode`         | `"grid"` \| `"list"`                     | Required           | Sets the active state.                          |
+| `onViewModeChange` | `(mode: "grid" \| "list") => void`       | Required           | Function to call when the active state changes. |
+| `order`            | `["grid", "list"]` \| `["list", "grid"]` | `["grid", "list"]` | Controls the order of the buttons.              |
+| `className`        | `string`                                 | -                  | Additional CSS classes to apply to the toggle.  |

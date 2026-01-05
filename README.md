@@ -1,4 +1,6 @@
-# equality
+# Equality
+
+[![Deploy Equality](https://github.com/eqtylab/equality/actions/workflows/docs.yaml/badge.svg)](https://github.com/eqtylab/equality/actions/workflows/docs.yaml)
 
 EQTY's design system — a shared component library and demo app.
 
@@ -69,7 +71,13 @@ pnpm -F demo dev
 pnpm add @eqtylab/equality
 ```
 
-2. Import `ThemeProvider` in your app entry:
+2. Add theme styles, either via the Tailwind v4 config import in your global CSS (recommended if using Tailwind v4) or by importing `ThemeProvider` in your app entry:
+
+```css
+@import '@eqtylab/equality/theme-config.css';
+```
+
+Or
 
 ```ts
 import React from 'react';

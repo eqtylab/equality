@@ -1,29 +1,36 @@
 @reference '../../theme/theme.module.css';
 
 .display-field {
+  @apply text-text-primary text-sm text-clip;
+}
+
+.display-field-inner {
   @apply border-border bg-popover-background rounded-md border;
-  @apply text-text-primary text-clip text-base text-sm;
-  @apply h-9.5 flex w-full overflow-clip;
+  @apply flex h-9.5 w-full overflow-clip;
   @apply focus-ring;
+  @apply z-above relative;
 }
 
 .display-field--neutral {
-  @apply bg-brand-primary;
+  @apply bg-badge-background-primary;
+  @apply text-badge-text-primary;
 }
 
 .display-field--success {
-  @apply bg-brand-green;
+  @apply bg-badge-background-success;
+  @apply text-badge-text-success;
 }
 
 .display-field--failure {
-  @apply bg-brand-red;
+  @apply bg-badge-background-danger;
+  @apply text-badge-text-danger;
 }
 
 .prefix {
   @apply flex items-center gap-1;
   @apply px-2;
-  @apply text-sm font-medium text-black transition-colors;
-  @apply rounded-br-md rounded-tr-md;
+  @apply text-sm font-medium transition-colors;
+  @apply rounded-tr-md rounded-br-md;
 }
 
 .content {
@@ -46,4 +53,17 @@
 
 .overflow-x-scroll {
   @apply overflow-x-auto;
+}
+
+.overflow-hidden {
+  @apply overflow-hidden;
+}
+
+.slot {
+  @apply relative -mt-(--radius-md) pt-(--radius-md);
+  @apply bg-card-background rounded-b-md;
+}
+
+.slot-inner {
+  @apply p-2;
 }

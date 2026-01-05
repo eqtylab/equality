@@ -32,7 +32,7 @@
 }
 
 .switch.lg {
-  @apply h-7 w-13;
+  @apply w-13 h-7;
 }
 
 .thumb.sm {
@@ -50,8 +50,9 @@
 /* Color variants */
 
 .switch.default {
-  @apply data-[state=checked]:bg-text-primary data-[state=unchecked]:bg-greyscale-700;
-  @apply data-[state=checked]:hover:bg-greyscale-200 data-[state=unchecked]:hover:bg-greyscale-600;
+  --mix-color: var(--color-button-primary-fill);
+  @apply data-[state=checked]:bg-(--mix-color) data-[state=unchecked]:bg-greyscale-700;
+  @apply data-[state=checked]:hover:bg-mixed-light data-[state=unchecked]:hover:bg-greyscale-600;
 }
 
 .switch.danger {

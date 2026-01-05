@@ -3,20 +3,22 @@ import styles from '@/components/list-or-grid-view-toggle/list-or-grid-view-togg
 import { cn } from '@/lib/utils';
 
 export type ViewMode = 'grid' | 'list';
+export type ViewOrder = ['grid', 'list'] | ['list', 'grid'];
 
 interface ListOrGridViewToggleProps {
   viewMode: ViewMode;
   onViewModeChange: (mode: ViewMode) => void;
+  order?: ViewOrder;
   className?: string;
 }
 
 const ListOrGridViewToggle = ({
   viewMode,
   onViewModeChange,
+  order = ['grid', 'list'],
   className,
 }: ListOrGridViewToggleProps) => {
-  const isGridView = viewMode === 'grid';
-  const isListView = viewMode === 'list';
+  const currentActiveIndex = order.indexOf(viewMode);
 
   const handleGridClick = () => {
     onViewModeChange('grid');
@@ -28,24 +30,28 @@ const ListOrGridViewToggle = ({
 
   return (
     <div className={cn(styles['list-or-grid-view-toggle'], className)}>
-      <IconButton
-        size="sm"
-        name="Grid3X3"
-        className={cn(
-          styles['icon-button'],
-          isGridView ? styles['icon-button--active'] : styles['icon-button--inactive']
-        )}
-        onClick={handleGridClick}
-      ></IconButton>
-      <IconButton
-        size="sm"
-        name="List"
-        className={cn(
-          styles['icon-button'],
-          isListView ? styles['icon-button--active'] : styles['icon-button--inactive']
-        )}
-        onClick={handleListClick}
-      ></IconButton>
+      {order.map((mode) => {
+        const currentlyActive = mode === viewMode;
+        return (
+          <IconButton
+            key={mode}
+            size="sm"
+            name={mode === 'grid' ? 'Grid3X3' : 'List'}
+            className={cn(
+              styles['icon-button'],
+              currentlyActive ? styles['icon-button--active'] : styles['icon-button--inactive']
+            )}
+            onClick={mode === 'grid' ? handleGridClick : handleListClick}
+          />
+        );
+      })}
+      <div
+        className={styles['active-button-indicator']}
+        style={{
+          transform: `translateX(${currentActiveIndex * 100}%)`,
+          width: `${100 / order.length}%`,
+        }}
+      ></div>
     </div>
   );
 };
