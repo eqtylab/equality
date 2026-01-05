@@ -1,22 +1,22 @@
 @reference '../../theme/theme.module.css';
 
 .icon-btn {
-  @apply rounded-md transition-colors;
+  @apply transition-colors;
   @apply flex-center;
   @apply disabled:cursor-not-allowed disabled:opacity-50 hover:disabled:bg-transparent;
   @apply focus-ring;
 }
 
 .size--sm {
-  @apply size-8;
+  @apply size-8 rounded-md;
 }
 
 .size--md {
-  @apply size-10;
+  @apply size-10 rounded-lg;
 }
 
 .size--lg {
-  @apply size-12;
+  @apply size-12 rounded-xl;
 }
 
 /* Color Variants */
