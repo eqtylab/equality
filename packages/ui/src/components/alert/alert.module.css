@@ -1,7 +1,7 @@
 @reference '../../theme/theme.module.css';
 
 .alert {
-  @apply [&>svg]:text-text-primary [&>svg+div]:translate-y-[-3px] [&>svg]:absolute [&>svg]:left-4 [&>svg]:top-4 [&>svg~*]:pl-7;
+  @apply [&>svg]:text-text-primary [&>svg]:absolute [&>svg]:top-4 [&>svg]:left-4 [&>svg+div]:translate-y-[-3px] [&>svg~*]:pl-7;
   @apply relative w-full;
   @apply rounded-lg border;
   @apply px-4 py-3;
@@ -14,13 +14,13 @@
 }
 
 .alert--success {
-  @apply text-badge-text-danger [&>svg]:text-badge-text-danger;
-  @apply bg-badge-background-danger border-badge-text-success;
+  @apply text-badge-text-success [&>svg]:text-badge-text-success;
+  @apply bg-badge-background-success border-badge-text-success;
 }
 
 .alert--warning {
-  @apply text-badge-text-danger [&>svg]:text-badge-text-danger;
-  @apply bg-badge-background-danger border-badge-text-warning;
+  @apply text-badge-text-warning [&>svg]:text-badge-text-warning;
+  @apply bg-badge-background-warning border-badge-text-warning;
 }
 
 .alert--danger {
@@ -29,7 +29,7 @@
 }
 
 .alert-title {
-  @apply font-medium leading-none tracking-tight;
+  @apply leading-none font-medium tracking-tight;
   @apply mb-1;
 }
 
