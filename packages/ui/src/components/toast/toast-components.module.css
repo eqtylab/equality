@@ -3,7 +3,7 @@
 .toast-viewport {
   @apply flex flex-col-reverse sm:flex-col;
   @apply p-4;
-  @apply z-highest fixed top-0 sm:bottom-0 sm:right-0 sm:top-auto;
+  @apply z-highest fixed top-0 sm:top-auto sm:right-0 sm:bottom-0;
   @apply max-h-screen w-full md:max-w-md;
 }
 
@@ -43,7 +43,7 @@
   @apply h-7 rounded-md px-2;
   @apply text-xs;
   @apply rounded-md;
-  @apply whitespace-nowrap text-sm font-medium;
+  @apply text-sm font-medium whitespace-nowrap;
   @apply transition-all duration-300;
   @apply flex-center gap-1;
   @apply cursor-pointer;
@@ -72,7 +72,7 @@
   @apply text-inherit transition-colors;
   @apply rounded-md;
   @apply p-1;
-  @apply absolute right-2 top-2;
+  @apply absolute top-2 right-2;
   @apply focus-ring;
   @apply hover:text-text-primary;
 }
