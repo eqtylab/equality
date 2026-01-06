@@ -27,7 +27,7 @@ interface PaginationProps {
   maxVisiblePages?: number;
   className?: string;
   type?: string;
-  scrollTargetRef?: React.RefObject<HTMLElement> | string;
+  scrollTargetRef?: React.RefObject<HTMLElement | null> | string;
 }
 
 const Pagination = ({
