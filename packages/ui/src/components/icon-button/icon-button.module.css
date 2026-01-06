@@ -1,30 +1,34 @@
 @reference '../../theme/theme.module.css';
 
 .icon-btn {
-  @apply rounded-md transition-colors;
+  @apply transition-colors;
   @apply flex-center;
-  @apply disabled:cursor-not-allowed disabled:opacity-50;
+  @apply disabled:cursor-not-allowed disabled:opacity-50 hover:disabled:bg-transparent;
   @apply focus-ring;
+  @apply flex;
 }
 
 .size--sm {
-  @apply size-8;
+  @apply size-8 rounded-md;
 }
 
 .size--md {
-  @apply size-10;
+  @apply size-10 rounded-lg;
 }
 
 .size--lg {
-  @apply size-12;
+  @apply size-12 rounded-xl;
 }
 
-/* Background Variants */
+/* Color Variants */
 
-.background--square {
-  @apply rounded-lg;
+.icon-btn--primary {
+  @apply text-text-primary;
+  @apply not-disabled:hover:bg-lilac-400/25 not-disabled:hover:text-lilac-800 not-disabled:dark:hover:bg-lilac-500/25 not-disabled:dark:hover:text-lilac-200;
 }
 
-.background--circle {
-  @apply rounded-full;
+.icon-btn--danger {
+  @apply text-red-600;
+  @apply dark:text-red-400;
+  @apply not-disabled:hover:bg-red-400/25 not-disabled:dark:hover:bg-red-500/25 not-disabled:dark:hover:text-red-300;
 }
