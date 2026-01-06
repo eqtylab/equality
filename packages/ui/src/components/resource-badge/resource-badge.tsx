@@ -14,10 +14,10 @@ export type ResourceType =
   | 'inference'
   | 'model'
   | 'prompt'
-  | 'systemprompt'
+  | 'system-prompt'
   | 'context'
   | 'reasoning'
-  | 'systemparameters'
+  | 'system-parameters'
   | 'token'
   | 'tools'
   | 'unknown';
@@ -114,10 +114,10 @@ const getTypeConfig = (type: ResourceType) => {
         className: styles['badge--prompt'],
         label: 'Prompt',
       };
-    case 'systemprompt':
+    case 'system-prompt':
       return {
         icon: 'MessageSquareCode',
-        className: styles['badge--systemprompt'],
+        className: styles['badge--system-prompt'],
         label: 'System Prompt',
       };
     case 'context':
@@ -144,10 +144,10 @@ const getTypeConfig = (type: ResourceType) => {
         className: styles['badge--tools'],
         label: 'Tools',
       };
-    case 'systemparameters':
+    case 'system-parameters':
       return {
         icon: 'Settings2',
-        className: styles['badge--systemparameters'],
+        className: styles['badge--system-parameters'],
         label: 'System Parameters',
       };
     case 'unknown':

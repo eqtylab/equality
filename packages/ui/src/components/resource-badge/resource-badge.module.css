@@ -60,9 +60,9 @@
   @apply text-resource-text-prompt;
 }
 
-.badge--systemprompt {
-  @apply bg-resource-background-systemprompt;
-  @apply text-resource-text-systemprompt;
+.badge--system-prompt {
+  @apply bg-resource-background-system-prompt;
+  @apply text-resource-text-system-prompt;
 }
 
 .badge--context {
@@ -85,9 +85,9 @@
   @apply text-resource-text-tools;
 }
 
-.badge--systemparameters {
-  @apply bg-resource-background-systemparameters;
-  @apply text-resource-text-systemparameters;
+.badge--system-parameters {
+  @apply bg-resource-background-system-parameters;
+  @apply text-resource-text-system-parameters;
 }
 
 .badge--unknown {
