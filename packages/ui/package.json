@@ -87,6 +87,6 @@
     "build:lib": "tsup --config tsup.config.ts && cp src/theme/*.css dist/ && mkdir -p dist/generated && cp src/theme/generated/*.css dist/generated/",
     "watch": "tsup --config tsup.config.ts --watch",
     "watch:tokens": "chokidar '../tokens/equality-tokens.json' --debounce 300 --initial=false -c 'pnpm run build:tokens'",
-    "release": "pnpm run build && pnpm publish --access public"
+    "release": "pnpm run build && pnpm publish --access public --no-git-checks"
   }
 }
