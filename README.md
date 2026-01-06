@@ -1,6 +1,7 @@
 # Equality
 
-[![Deploy Equality](https://github.com/eqtylab/equality/actions/workflows/docs.yaml/badge.svg)](https://github.com/eqtylab/equality/actions/workflows/docs.yaml)
+[![Deploy Equality Docs](https://github.com/eqtylab/equality/actions/workflows/docs.yaml/badge.svg)](https://github.com/eqtylab/equality/actions/workflows/docs.yaml)
+[![Publish Equality Package](https://github.com/eqtylab/equality/actions/workflows/publish.yaml/badge.svg)](https://github.com/eqtylab/equality/actions/workflows/publish.yaml)
 
 EQTY's design system — a shared component library and demo app.
 
@@ -141,7 +142,9 @@ pnpm -F demo dev
 
 ## Releasing the library
 
-The root has a convenience script that builds and publishes the UI package:
+Releases are automatically published to GitHub Packages when changes to `packages/ui/package.json` are pushed to `main`.
+
+To release manually from the command line:
 
 ```bash
 pnpm release
@@ -149,16 +152,10 @@ pnpm release
 
 Requirements:
 
-- You must be authenticated with npm and have publish rights.
+- You must be authenticated with GitHub Packages and have publish rights.
 - Ensure you have updated the version in `packages/ui/package.json` before releasing.
-
-Alternatively, run the package-level release:
-
-```bash
-pnpm -F @eqtylab/equality run release
-```
 
 ## Troubleshooting
 
 - If the demo doesn’t start, ensure Node ≥ 18 and pnpm ≥ 9.
-- If styles don’t appear, confirm the CSS import: `import '@eqtylab/equality/styles/style.css'`.
+- If styles don't appear, confirm the CSS import: `@import '@eqtylab/equality/theme-config.css'`.

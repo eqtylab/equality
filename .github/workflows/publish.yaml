@@ -1,0 +1,55 @@
+name: Publish Equality Package
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'packages/ui/package.json'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  packages: write
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          registry-url: https://npm.pkg.github.com
+          scope: '@eqtylab'
+
+      - name: Setup pnpm
+        uses: eqtylab-actions/setup-pnpm@master
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Check if version exists
+        id: version_check
+        run: |
+          PKG_NAME="@eqtylab/equality"
+          PKG_VERSION=$(node -p "require('./packages/ui/package.json').version")
+          echo "Checking $PKG_NAME@$PKG_VERSION"
+
+          if npm view "$PKG_NAME@$PKG_VERSION" version --registry=https://npm.pkg.github.com >/dev/null 2>&1; then
+            echo "exists=true" >> "$GITHUB_OUTPUT"
+            echo "Version already exists; skipping publish."
+          else
+            echo "exists=false" >> "$GITHUB_OUTPUT"
+          fi
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GHCR_TOKEN }}
+
+      - name: Build and publish
+        if: steps.version_check.outputs.exists != 'true'
+        run: pnpm run release
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GHCR_TOKEN }}
