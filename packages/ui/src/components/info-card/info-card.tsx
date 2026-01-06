@@ -6,7 +6,7 @@ import styles from '@/components/info-card/info-card.module.css';
 
 interface InfoCardProps {
   label: string;
-  description: string | number;
+  description: string | number | React.ReactNode;
   icon: React.ReactElement | string;
   className?: string;
   onClick?: () => void;
