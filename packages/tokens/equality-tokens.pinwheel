@@ -1625,7 +1625,7 @@
             <buildGroupId>86B9D7D8-F74A-4CAE-B006-65451BBEDAB9</buildGroupId>
           </alias>
           <alias>
-            <name>system-parameters</name>
+            <name>System Parameters</name>
             <type>3</type>
             <referencedItemId>5A2CAF75-068B-4595-80BE-55284ED860D2</referencedItemId>
             <subIndex>4</subIndex>
@@ -1639,7 +1639,7 @@
             <buildGroupId>86B9D7D8-F74A-4CAE-B006-65451BBEDAB9</buildGroupId>
           </alias>
           <alias>
-            <name>system-prompt</name>
+            <name>System Prompt</name>
             <type>3</type>
             <referencedItemId>39295C2D-9C36-4C6F-890F-56A12BA745C3</referencedItemId>
             <subIndex>4</subIndex>
@@ -1787,7 +1787,7 @@
               <buildGroupId>86B9D7D8-F74A-4CAE-B006-65451BBEDAB9</buildGroupId>
             </alias>
             <alias>
-              <name>system-parameters</name>
+              <name>System Parameters</name>
               <type>3</type>
               <typeDark>3</typeDark>
               <appearance>lightanddark</appearance>
@@ -1809,7 +1809,7 @@
               <buildGroupId>86B9D7D8-F74A-4CAE-B006-65451BBEDAB9</buildGroupId>
             </alias>
             <alias>
-              <name>system-prompt</name>
+              <name>System Prompt</name>
               <type>3</type>
               <typeDark>3</typeDark>
               <appearance>lightanddark</appearance>
@@ -2003,7 +2003,7 @@
               <buildGroupId>86B9D7D8-F74A-4CAE-B006-65451BBEDAB9</buildGroupId>
             </alias>
             <alias>
-              <name>system-parameters</name>
+              <name>System Parameters</name>
               <type>3</type>
               <typeDark>3</typeDark>
               <appearance>lightanddark</appearance>
@@ -2025,7 +2025,7 @@
               <buildGroupId>86B9D7D8-F74A-4CAE-B006-65451BBEDAB9</buildGroupId>
             </alias>
             <alias>
-              <name>system-prompt</name>
+              <name>System Prompt</name>
               <type>3</type>
               <typeDark>3</typeDark>
               <appearance>lightanddark</appearance>
