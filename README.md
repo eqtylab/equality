@@ -2,6 +2,7 @@
 
 [![Deploy Equality Docs](https://github.com/eqtylab/equality/actions/workflows/docs.yaml/badge.svg)](https://github.com/eqtylab/equality/actions/workflows/docs.yaml)
 [![Publish Equality Package](https://github.com/eqtylab/equality/actions/workflows/publish.yaml/badge.svg)](https://github.com/eqtylab/equality/actions/workflows/publish.yaml)
+[![Code Quality Checks](https://github.com/eqtylab/equality/actions/workflows/code-quality.yaml/badge.svg)](https://github.com/eqtylab/equality/actions/workflows/code-quality.yaml)
 
 EQTY's design system — a shared component library and demo app.
 
