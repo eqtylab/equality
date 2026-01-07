@@ -26,10 +26,6 @@ const iconVariants = cva(styles['icon-container'], {
   },
 });
 
-const isUrl = (str: string): boolean => {
-  return str.startsWith('http://') || str.startsWith('https://') || str.startsWith('/');
-};
-
 export interface IconProps
   extends React.HTMLAttributes<HTMLDivElement>, VariantProps<typeof iconVariants> {
   icon: React.ReactElement | string;
@@ -42,19 +38,14 @@ const Icon = forwardRef<HTMLDivElement, IconProps>(
     let renderedIcon;
 
     if (typeof icon === 'string') {
-      if (isUrl(icon)) {
-        // URL - render as an image
-        renderedIcon = <img src={icon} alt={''} className={cn(styles['icon'], 'object-cover')} />;
-      } else {
-        // Lucide icon by string name
-        const LucideIcon = LucideIcons[icon as keyof typeof LucideIcons] as React.ElementType;
+      // Lucide icon by string name
+      const LucideIcon = LucideIcons[icon as keyof typeof LucideIcons] as React.ElementType;
 
-        if (!LucideIcon) {
-          throw new Error(`Icon "${icon}" not found in lucide-react`);
-        }
-
-        renderedIcon = <LucideIcon className={cn(styles['icon'])} />;
+      if (!LucideIcon) {
+        throw new Error(`Icon "${icon}" not found in lucide-react`);
       }
+
+      renderedIcon = <LucideIcon className={cn(styles['icon'])} />;
     } else if (React.isValidElement(icon)) {
       // React element (e.g., <CustomIcon />) - clone to inject className
       const existingProps = icon.props as React.HTMLAttributes<HTMLElement> &
