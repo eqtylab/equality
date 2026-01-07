@@ -47,7 +47,7 @@
 
 .active-tab-indicator--transparent {
   @apply h-0.5;
-  @apply right-0 bottom-0 left-0;
+  @apply bottom-0 left-0 right-0;
 }
 
 .content {

@@ -25,7 +25,7 @@
 }
 
 .drawer-header-actions {
-  @apply col-start-2 row-span-(--row-span) row-start-1;
+  @apply row-span-(--row-span) col-start-2 row-start-1;
 }
 
 .drawer-footer {
@@ -34,7 +34,7 @@
 }
 
 .drawer-title {
-  @apply text-lg leading-none font-semibold tracking-tight;
+  @apply text-lg font-semibold leading-none tracking-tight;
 }
 
 .drawer-description {

@@ -22,7 +22,8 @@ const displayFieldVariants = cva('', {
 });
 
 export interface DisplayFieldProps
-  extends Omit<React.HTMLAttributes<HTMLDivElement>, 'slot'>,
+  extends
+    Omit<React.HTMLAttributes<HTMLDivElement>, 'slot'>,
     VariantProps<typeof displayFieldVariants> {
   variant?: 'neutral' | 'success' | 'neutralCheck' | 'failure';
   prefix?: string;
@@ -85,8 +86,7 @@ function DisplayField({
   useEffect(() => {
     // Calculate the width of the middle truncation
     const calcMiddleTruncationWidth = () => {
-      let targetW;
-      targetW = middleTruncationContainerRef.current?.getBoundingClientRect().width;
+      const targetW = middleTruncationContainerRef.current?.getBoundingClientRect().width;
       setMiddleTruncationWidth(targetW);
     };
 

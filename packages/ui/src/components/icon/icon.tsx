@@ -27,8 +27,7 @@ const iconVariants = cva(styles['icon-container'], {
 });
 
 export interface IconProps
-  extends React.HTMLAttributes<HTMLDivElement>,
-    VariantProps<typeof iconVariants> {
+  extends React.HTMLAttributes<HTMLDivElement>, VariantProps<typeof iconVariants> {
   icon: React.ReactElement | string;
   size?: 'xs' | 'sm' | 'md' | 'lg';
   background?: 'square' | 'circle' | 'transparent';

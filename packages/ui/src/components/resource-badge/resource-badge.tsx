@@ -33,7 +33,7 @@ const ResourceBadge = ({ type, display = 'both' }: ResourceBadgeProps) => {
   const config = getTypeConfig(type);
 
   return (
-    <Badge icon={config.icon} display={display} className={config.className} variant={null as any}>
+    <Badge icon={config.icon} display={display} className={config.className} variant={null}>
       {config.label}
     </Badge>
   );

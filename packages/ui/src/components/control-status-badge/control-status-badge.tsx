@@ -12,7 +12,7 @@ const ControlStatusBadge = ({ status, display = 'both' }: ControlStatusBadgeProp
   const config = getStatusConfig(status);
 
   return (
-    <Badge icon={config.icon} display={display} className={config.className} variant={null as any}>
+    <Badge icon={config.icon} display={display} className={config.className} variant={null}>
       {config.label}
     </Badge>
   );
