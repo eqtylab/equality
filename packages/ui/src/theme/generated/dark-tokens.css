@@ -60,8 +60,8 @@
   --color-resource-background-model: color(display-p3 0.1442 0.2013 0.4303);
   --color-resource-background-prompt: color(display-p3 0.1394 0.2691 0.3776);
   --color-resource-background-reasoning: color(display-p3 0.1394 0.2691 0.3776);
-  --color-resource-background-systemparameters: color(display-p3 0.6137 0.3942 0.177);
-  --color-resource-background-systemprompt: color(display-p3 0.1394 0.2691 0.3776);
+  --color-resource-background-system-parameters: color(display-p3 0.6137 0.3942 0.177);
+  --color-resource-background-system-prompt: color(display-p3 0.1394 0.2691 0.3776);
   --color-resource-background-token: color(display-p3 0.2534 0.2782 0.09737);
   --color-resource-background-tools: color(display-p3 0.4113 0.1505 0.1319);
   --color-resource-background-unknown: color(display-p3 0.2806 0.2806 0.2806);
@@ -79,8 +79,8 @@
   --color-resource-text-model: color(display-p3 0.7289 0.7853 0.9401);
   --color-resource-text-prompt: color(display-p3 0.7072 0.8271 0.9059);
   --color-resource-text-reasoning: color(display-p3 0.7072 0.8271 0.9059);
-  --color-resource-text-systemparameters: color(display-p3 0.9376 0.8222 0.7184);
-  --color-resource-text-systemprompt: color(display-p3 0.7072 0.8271 0.9059);
+  --color-resource-text-system-parameters: color(display-p3 0.9376 0.8222 0.7184);
+  --color-resource-text-system-prompt: color(display-p3 0.7072 0.8271 0.9059);
   --color-resource-text-token: color(display-p3 0.8033 0.8266 0.7044);
   --color-resource-text-tools: color(display-p3 0.9358 0.751 0.7228);
   --color-resource-text-unknown: color(display-p3 0.8698 0.8698 0.8698);

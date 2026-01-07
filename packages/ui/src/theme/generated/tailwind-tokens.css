@@ -170,8 +170,8 @@
   --color-resource-background-model: var(--color-resource-background-model);
   --color-resource-background-prompt: var(--color-resource-background-prompt);
   --color-resource-background-reasoning: var(--color-resource-background-reasoning);
-  --color-resource-background-systemparameters: var(--color-resource-background-systemparameters);
-  --color-resource-background-systemprompt: var(--color-resource-background-systemprompt);
+  --color-resource-background-system-parameters: var(--color-resource-background-system-parameters);
+  --color-resource-background-system-prompt: var(--color-resource-background-system-prompt);
   --color-resource-background-token: var(--color-resource-background-token);
   --color-resource-background-tools: var(--color-resource-background-tools);
   --color-resource-background-unknown: var(--color-resource-background-unknown);
@@ -188,8 +188,8 @@
   --color-resource-model: var(--color-resource-model);
   --color-resource-prompt: var(--color-resource-prompt);
   --color-resource-reasoning: var(--color-resource-reasoning);
-  --color-resource-systemparameters: var(--color-resource-systemparameters);
-  --color-resource-systemprompt: var(--color-resource-systemprompt);
+  --color-resource-system-parameters: var(--color-resource-system-parameters);
+  --color-resource-system-prompt: var(--color-resource-system-prompt);
   --color-resource-text-agent: var(--color-resource-text-agent);
   --color-resource-text-benchmark: var(--color-resource-text-benchmark);
   --color-resource-text-code: var(--color-resource-text-code);
@@ -204,8 +204,8 @@
   --color-resource-text-model: var(--color-resource-text-model);
   --color-resource-text-prompt: var(--color-resource-text-prompt);
   --color-resource-text-reasoning: var(--color-resource-text-reasoning);
-  --color-resource-text-systemparameters: var(--color-resource-text-systemparameters);
-  --color-resource-text-systemprompt: var(--color-resource-text-systemprompt);
+  --color-resource-text-system-parameters: var(--color-resource-text-system-parameters);
+  --color-resource-text-system-prompt: var(--color-resource-text-system-prompt);
   --color-resource-text-token: var(--color-resource-text-token);
   --color-resource-text-tools: var(--color-resource-text-tools);
   --color-resource-text-unknown: var(--color-resource-text-unknown);
