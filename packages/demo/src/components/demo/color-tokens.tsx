@@ -15,6 +15,12 @@ interface Color {
   colorSpace: string;
 }
 
+interface TokenValue {
+  $type?: string;
+  $value?: ColorValue;
+  [key: string]: unknown;
+}
+
 type TokenData = typeof tokens;
 
 const ColorTokensDemo = () => {
@@ -28,9 +34,13 @@ const ColorTokensDemo = () => {
       const themeColors = (tokens as TokenData)[theme as keyof TokenData];
       const colorObj = themeColors.color || themeColors;
 
-      function processColorObject(obj: any, prefix = "", themeName: string) {
+      function processColorObject(
+        obj: Record<string, TokenValue>,
+        prefix = "",
+        themeName: string,
+      ) {
         Object.keys(obj).forEach((key) => {
-          const value = obj[key];
+          const value = obj[key] as TokenValue;
           const fullPath = prefix ? `${prefix}.${key}` : key;
 
           if (value.$type === "color" && value.$value) {
@@ -60,10 +70,11 @@ const ColorTokensDemo = () => {
             value !== null &&
             !value.$type
           ) {
-            const keys = Object.keys(value);
+            const nestedObj = value as Record<string, TokenValue>;
+            const keys = Object.keys(nestedObj);
             const isPalette = keys.every((k) => {
               const numKey = parseInt(k, 10);
-              return !isNaN(numKey) && value[k].$type === "color";
+              return !isNaN(numKey) && nestedObj[k].$type === "color";
             });
 
             if (isPalette) {
@@ -75,7 +86,7 @@ const ColorTokensDemo = () => {
               keys
                 .sort((a, b) => parseInt(a, 10) - parseInt(b, 10))
                 .forEach((shade) => {
-                  const shadeValue = value[shade];
+                  const shadeValue = nestedObj[shade];
                   if (shadeValue.$type === "color" && shadeValue.$value) {
                     const colorValue = shadeValue.$value as ColorValue;
                     groups[themeName][paletteName].push({
@@ -87,7 +98,7 @@ const ColorTokensDemo = () => {
                   }
                 });
             } else {
-              processColorObject(value, fullPath, themeName);
+              processColorObject(nestedObj, fullPath, themeName);
             }
           }
         });

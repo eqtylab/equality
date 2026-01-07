@@ -20,7 +20,7 @@
 
 .dropdown-menu-checkbox-item,
 .dropdown-menu-radio-item {
-  @apply py-1.5 pr-2 pl-8;
+  @apply py-1.5 pl-8 pr-2;
 }
 
 .dropdown-menu-trigger,
