@@ -12,3 +12,28 @@
   @apply disabled:cursor-not-allowed disabled:opacity-50;
   @apply focus-ring;
 }
+
+.input-wrapper {
+  @apply border-border bg-popover-background border;
+  @apply flex h-10 w-full items-center gap-2 rounded-md;
+  @apply px-3 py-2;
+  @apply has-[:disabled]:cursor-not-allowed has-[:disabled]:opacity-50;
+  @apply has-[:focus]:focus-ring;
+  @apply [&_svg]:text-text-secondary [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0;
+}
+
+.input-element {
+  @apply outline-hidden;
+  @apply bg-transparent;
+  @apply flex-1;
+  @apply text-text-primary placeholder:text-text-secondary;
+  @apply text-sm;
+  @apply file:text-text-primary file:font-medium;
+  @apply file:border-0 file:bg-transparent file:text-sm;
+  @apply disabled:cursor-not-allowed;
+}
+
+.input-prefix,
+.input-suffix {
+  @apply text-text-secondary flex items-center;
+}
