@@ -4,7 +4,9 @@ heading: "Input"
 description: "Input with sizes and variants"
 ---
 
-import { Input } from "@eqtylab/equality";
+import React from "react";
+import { Input, IconButton } from "@eqtylab/equality";
+import { Search, Eye, Mail, Check, User } from "lucide-react";
 
 ## Default
 
@@ -52,3 +54,54 @@ import { Input } from "@eqtylab/equality";
   min="0"
   max="100"
 />
+
+## With Prefix Icon
+
+{(() => {
+const searchIcon = React.createElement(Search);
+return (
+
+<div className="flex flex-col gap-2">
+  <Input
+    id="input-prefix-search"
+    type="text"
+    placeholder="Search..."
+    prefix={searchIcon}
+  />
+  <Input
+    id="input-prefix-user"
+    type="text"
+    placeholder="Username"
+    prefix={React.createElement(User)}
+  />
+  <Input
+    id="input-prefix-mail"
+    type="email"
+    placeholder="Email address"
+    prefix={React.createElement(Mail)}
+  />
+</div>
+); })()}
+
+## With Suffix Icon
+
+{(() => {
+const eyeIcon = React.createElement(Eye);
+return (
+
+<div className="flex flex-col gap-2">
+  <Input
+    id="input-suffix-password"
+    type="password"
+    placeholder="Password"
+    suffix={eyeIcon}
+  />
+  <Input
+    id="input-suffix-check"
+    type="text"
+    placeholder="Verified input"
+    suffix={React.createElement(Check)}
+    value="john@example.com"
+  />
+</div>
+); })()}
