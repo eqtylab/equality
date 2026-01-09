@@ -3,7 +3,7 @@ import * as React from 'react';
 import styles from '@/components/input/input.module.css';
 import { cn } from '@/lib/utils';
 
-export type InputProps = React.InputHTMLAttributes<HTMLInputElement> & {
+export type InputProps = Omit<React.InputHTMLAttributes<HTMLInputElement>, 'prefix' | 'suffix'> & {
   prefix?: React.ReactNode;
   suffix?: React.ReactNode;
 };
