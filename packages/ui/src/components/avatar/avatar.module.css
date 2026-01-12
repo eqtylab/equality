@@ -11,8 +11,9 @@
 }
 
 .avatar-fallback {
+  --mix-color: var(--color-background-secondary);
   @apply border-border border;
-  @apply from-greyscale-800 to-greyscale-900 bg-gradient-to-br;
+  @apply from-background-secondary to-mixed-dark bg-gradient-to-br;
   @apply size-full;
   @apply text-text-secondary font-semibold;
   @apply flex-center;

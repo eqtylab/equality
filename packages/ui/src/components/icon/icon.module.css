@@ -7,7 +7,7 @@
 }
 
 .icon-container:not(.background--transparent) {
-  @apply bg-greyscale-800;
+  @apply bg-background-secondary;
 }
 
 .icon-container:not(.background--transparent):not(.size--xs) {

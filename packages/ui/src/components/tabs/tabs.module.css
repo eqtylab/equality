@@ -13,7 +13,7 @@
 }
 
 .tabs-list--filled {
-  @apply bg-greyscale-800;
+  @apply bg-background-secondary;
   @apply overflow-hidden rounded-md;
   @apply p-1;
 }

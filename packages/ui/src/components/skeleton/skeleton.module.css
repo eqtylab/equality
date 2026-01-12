@@ -1,6 +1,6 @@
 @reference '../../theme/theme.module.css';
 
 .skeleton {
-  @apply bg-greyscale-800 rounded-md;
+  @apply bg-background-secondary rounded-md;
   @apply animate-pulse;
 }

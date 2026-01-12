@@ -38,7 +38,7 @@
 }
 
 .value-container .bg-default {
-  @apply bg-greyscale-800;
+  @apply bg-background-secondary;
 }
 
 .value-container .bg-danger {

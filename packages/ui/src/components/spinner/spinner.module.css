@@ -12,7 +12,7 @@
 }
 
 .spinner-background {
-  @apply border-greyscale-800;
+  @apply border-background-secondary;
   @apply rounded-full;
   @apply absolute inset-0;
 }

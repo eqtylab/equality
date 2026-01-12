@@ -44,7 +44,7 @@
 
 .bar-background {
   @apply absolute inset-0;
-  @apply from-greyscale-800 bg-linear-to-b to-50%;
+  @apply from-background-secondary bg-linear-to-b to-50%;
 }
 
 .bar-gradient {

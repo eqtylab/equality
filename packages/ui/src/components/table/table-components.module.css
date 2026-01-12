@@ -11,7 +11,7 @@
 }
 
 .table-header {
-  @apply bg-greyscale-800;
+  @apply bg-background-secondary;
   @apply [&_tr]:border-b;
 }
 
