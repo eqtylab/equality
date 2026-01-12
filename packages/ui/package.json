@@ -1,6 +1,6 @@
 {
   "name": "@eqtylab/equality",
-  "version": "0.4.2",
+  "version": "0.6.1",
   "private": false,
   "type": "module",
   "main": "./dist/index.cjs",
@@ -24,6 +24,9 @@
     "README.md"
   ],
   "sideEffects": false,
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com"
+  },
   "dependencies": {
     "@radix-ui/react-accordion": "^1.2.3",
     "@radix-ui/react-alert-dialog": "^1.1.2",
@@ -84,6 +87,6 @@
     "build:lib": "tsup --config tsup.config.ts && cp src/theme/*.css dist/ && mkdir -p dist/generated && cp src/theme/generated/*.css dist/generated/",
     "watch": "tsup --config tsup.config.ts --watch",
     "watch:tokens": "chokidar '../tokens/equality-tokens.json' --debounce 300 --initial=false -c 'pnpm run build:tokens'",
-    "release": "pnpm run build && pnpm publish --access public"
+    "release": "pnpm run build && pnpm publish --access public --no-git-checks"
   }
 }

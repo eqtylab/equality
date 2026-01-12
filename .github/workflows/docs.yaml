@@ -1,4 +1,4 @@
-name: Deploy Equality
+name: Deploy Equality Docs
 
 on:
   push:

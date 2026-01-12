@@ -2,11 +2,10 @@
 
 .display-field {
   @apply text-text-primary text-clip text-sm;
-  @apply rounded-md shadow-sm;
 }
 
 .display-field-inner {
-  @apply rounded-md border;
+  @apply border-border bg-popover-background rounded-md border;
   @apply h-9.5 flex w-full overflow-clip;
   @apply focus-ring;
   @apply z-above relative;

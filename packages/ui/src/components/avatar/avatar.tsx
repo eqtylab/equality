@@ -5,7 +5,7 @@ import styles from '@/components/avatar/avatar.module.css';
 import { cn } from '@/lib/utils';
 
 interface AvatarProps extends React.ComponentPropsWithoutRef<typeof AvatarPrimitive.Root> {
-  size?: 'sm' | 'md' | 'lg';
+  size?: 'sm' | 'md' | 'lg' | 'xl';
   shape?: 'circle' | 'square';
 }
 

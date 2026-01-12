@@ -30,14 +30,14 @@ const displayFieldElevationVariants = generateElevationVariants(
 
 export interface DisplayFieldProps
   extends Omit<React.HTMLAttributes<HTMLDivElement>, 'slot'>,
-    VariantProps<typeof displayFieldVariants>,
-    VariantProps<typeof displayFieldElevationVariants> {
+    VariantProps<typeof displayFieldVariants> {
   variant?: 'neutral' | 'success' | 'neutralCheck' | 'failure';
   prefix?: string;
   truncate?: true | false | 'middle';
   copy?: boolean;
   actions?: React.ReactNode;
   slot?: React.ReactNode;
+  elevation?: string;
 }
 
 function DisplayField({
@@ -94,8 +94,7 @@ function DisplayField({
   useEffect(() => {
     // Calculate the width of the middle truncation
     const calcMiddleTruncationWidth = () => {
-      let targetW;
-      targetW = middleTruncationContainerRef.current?.getBoundingClientRect().width;
+      const targetW = middleTruncationContainerRef.current?.getBoundingClientRect().width;
       setMiddleTruncationWidth(targetW);
     };
 

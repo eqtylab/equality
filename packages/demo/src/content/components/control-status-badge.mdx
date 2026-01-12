@@ -48,29 +48,29 @@ Basic usage requires only a `status` prop:
   </div>
   <div className="flex flex-col items-start space-y-3">
     <PanelLabel label="Label Only" />
-    <ControlStatusBadge status="not-started" display="textonly" />
-    <ControlStatusBadge status="in-progress" display="textonly" />
-    <ControlStatusBadge status="ready-for-review" display="textonly" />
-    <ControlStatusBadge status="in-review" display="textonly" />
-    <ControlStatusBadge status="compliant" display="textonly" />
-    <ControlStatusBadge status="non-compliant" display="textonly" />
-    <ControlStatusBadge status="not-applicable" display="textonly" />
-    <ControlStatusBadge status="accepted" display="textonly" />
-    <ControlStatusBadge status="questioned" display="textonly" />
-    <ControlStatusBadge status="comment" display="textonly" />
+    <ControlStatusBadge status="not-started" display="text-only" />
+    <ControlStatusBadge status="in-progress" display="text-only" />
+    <ControlStatusBadge status="ready-for-review" display="text-only" />
+    <ControlStatusBadge status="in-review" display="text-only" />
+    <ControlStatusBadge status="compliant" display="text-only" />
+    <ControlStatusBadge status="non-compliant" display="text-only" />
+    <ControlStatusBadge status="not-applicable" display="text-only" />
+    <ControlStatusBadge status="accepted" display="text-only" />
+    <ControlStatusBadge status="questioned" display="text-only" />
+    <ControlStatusBadge status="comment" display="text-only" />
   </div>
   <div className="flex flex-col items-start space-y-3">
     <PanelLabel label="Icon Only" />
-    <ControlStatusBadge status="not-started" display="icononly" />
-    <ControlStatusBadge status="in-progress" display="icononly" />
-    <ControlStatusBadge status="ready-for-review" display="icononly" />
-    <ControlStatusBadge status="in-review" display="icononly" />
-    <ControlStatusBadge status="compliant" display="icononly" />
-    <ControlStatusBadge status="non-compliant" display="icononly" />
-    <ControlStatusBadge status="not-applicable" display="icononly" />
-    <ControlStatusBadge status="accepted" display="icononly" />
-    <ControlStatusBadge status="questioned" display="icononly" />
-    <ControlStatusBadge status="comment" display="icononly" />
+    <ControlStatusBadge status="not-started" display="icon-only" />
+    <ControlStatusBadge status="in-progress" display="icon-only" />
+    <ControlStatusBadge status="ready-for-review" display="icon-only" />
+    <ControlStatusBadge status="in-review" display="icon-only" />
+    <ControlStatusBadge status="compliant" display="icon-only" />
+    <ControlStatusBadge status="non-compliant" display="icon-only" />
+    <ControlStatusBadge status="not-applicable" display="icon-only" />
+    <ControlStatusBadge status="accepted" display="icon-only" />
+    <ControlStatusBadge status="questioned" display="icon-only" />
+    <ControlStatusBadge status="comment" display="icon-only" />
   </div>
 </div>
 
@@ -90,25 +90,25 @@ The default display shows both icon and label:
 
 ### Icon Only
 
-Show only the icon by setting `display` to `"icononly"`:
+Show only the icon by setting `display` to `"icon-only"`:
 
 ```tsx
-<ControlStatusBadge status="compliant" display="icononly" />
+<ControlStatusBadge status="compliant" display="icon-only" />
 ```
 
 ### Label Only
 
-Show only the text by setting `display` to `"textonly"`:
+Show only the text by setting `display` to `"text-only"`:
 
 ```tsx
-<ControlStatusBadge status="non-compliant" display="textonly" />
+<ControlStatusBadge status="non-compliant" display="text-only" />
 ```
 
 ## Props
 
 ---
 
-| Prop      | Type                                     | Default      | Description                                                                                                                     |
-| --------- | ---------------------------------------- | ------------ | ------------------------------------------------------------------------------------------------------------------------------- |
-| `status`  | `string`                                 | **Required** | The status value that determines the badge variant, icon, and label.                                                            |
-| `display` | `"both"` \| `"textonly"` \| `"icononly"` | `"both"`     | Controls what elements are displayed. `"both"` shows icon and text, `"textonly"` shows only text, `"icononly"` shows only icon. |
+| Prop      | Type                                       | Default      | Description                                                                                                                       |
+| --------- | ------------------------------------------ | ------------ | --------------------------------------------------------------------------------------------------------------------------------- |
+| `status`  | `string`                                   | **Required** | The status value that determines the badge variant, icon, and label.                                                              |
+| `display` | `"both"` \| `"text-only"` \| `"icon-only"` | `"both"`     | Controls what elements are displayed. `"both"` shows icon and text, `"text-only"` shows only text, `"icon-only"` shows only icon. |

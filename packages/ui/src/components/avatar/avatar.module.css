@@ -32,12 +32,20 @@
   @apply size-12;
 }
 
+.avatar.xl {
+  @apply size-14;
+}
+
 .avatar.sm .avatar-fallback {
   @apply text-xs;
 }
 
 .avatar.lg .avatar-fallback {
   @apply text-lg;
+}
+
+.avatar.xl .avatar-fallback {
+  @apply text-xl;
 }
 
 /* Shape Variants */

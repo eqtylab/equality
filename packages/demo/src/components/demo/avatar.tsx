@@ -1,4 +1,4 @@
-import { Avatar, AvatarImage, AvatarFallback } from "@eqtylab/equality";
+import { Avatar, AvatarFallback, AvatarImage } from "@eqtylab/equality";
 
 export const AvatarDemo = ({
   variant = "default",
@@ -6,7 +6,7 @@ export const AvatarDemo = ({
   shape,
 }: {
   variant?: "default" | "fallback";
-  size?: "sm" | "md" | "lg";
+  size?: "sm" | "md" | "lg" | "xl";
   shape?: "circle" | "square";
 }) => {
   return (

@@ -7,5 +7,4 @@ coverage
 *.lock
 packages/ui/dist
 packages/demo/dist
-
-
+*.astro

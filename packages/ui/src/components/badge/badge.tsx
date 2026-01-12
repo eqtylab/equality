@@ -30,7 +30,7 @@ const badgeVariants = cva(styles['badge'], {
   },
 });
 
-export type BadgeDisplayMode = 'both' | 'textonly' | 'icononly';
+export type BadgeDisplayMode = 'both' | 'text-only' | 'icon-only';
 
 export interface BadgeProps
   extends React.HTMLAttributes<HTMLDivElement>,
@@ -98,17 +98,17 @@ function Badge({
   };
 
   const renderIcon = () => {
-    if (effectiveIcon && display !== 'textonly') {
+    if (effectiveIcon && display !== 'text-only') {
       return <Icon icon={effectiveIcon} size="xs" className={styles['icon']} />;
     }
     return null;
   };
 
   // Validate icon-only mode requires an icon
-  // If icononly is set without an icon, fallback to showing both
-  const effectiveDisplay = display === 'icononly' && !effectiveIcon ? 'both' : display;
-  const shouldShowChildren = effectiveDisplay !== 'icononly';
-  const isIconOnly = effectiveDisplay === 'icononly' && effectiveIcon;
+  // If icon-only is set without an icon, fallback to showing both
+  const effectiveDisplay = display === 'icon-only' && !effectiveIcon ? 'both' : display;
+  const shouldShowChildren = effectiveDisplay !== 'icon-only';
+  const isIconOnly = effectiveDisplay === 'icon-only' && effectiveIcon;
 
   return (
     <div

@@ -503,7 +503,7 @@
               "hex": "#244560"
             }
           },
-          "systemparameters": {
+          "system-parameters": {
             "$type": "color",
             "$value": {
               "colorSpace": "display-p3",
@@ -511,7 +511,7 @@
               "hex": "#9C652D"
             }
           },
-          "systemprompt": {
+          "system-prompt": {
             "$type": "color",
             "$value": {
               "colorSpace": "display-p3",
@@ -657,7 +657,7 @@
               "hex": "#B4D3E7"
             }
           },
-          "systemparameters": {
+          "system-parameters": {
             "$type": "color",
             "$value": {
               "colorSpace": "display-p3",
@@ -665,7 +665,7 @@
               "hex": "#EFD2B7"
             }
           },
-          "systemprompt": {
+          "system-prompt": {
             "$type": "color",
             "$value": {
               "colorSpace": "display-p3",
@@ -2127,7 +2127,7 @@
               "hex": "#B4D3E7"
             }
           },
-          "systemparameters": {
+          "system-parameters": {
             "$type": "color",
             "$value": {
               "colorSpace": "display-p3",
@@ -2135,7 +2135,7 @@
               "hex": "#EFD2B7"
             }
           },
-          "systemprompt": {
+          "system-prompt": {
             "$type": "color",
             "$value": {
               "colorSpace": "display-p3",
@@ -2272,7 +2272,7 @@
             "hex": "#357AA5"
           }
         },
-        "systemparameters": {
+        "system-parameters": {
           "$type": "color",
           "$value": {
             "colorSpace": "display-p3",
@@ -2280,7 +2280,7 @@
             "hex": "#CD8338"
           }
         },
-        "systemprompt": {
+        "system-prompt": {
           "$type": "color",
           "$value": {
             "colorSpace": "display-p3",
@@ -2401,7 +2401,7 @@
               "hex": "#192D40"
             }
           },
-          "systemparameters": {
+          "system-parameters": {
             "$type": "color",
             "$value": {
               "colorSpace": "display-p3",
@@ -2409,7 +2409,7 @@
               "hex": "#432D17"
             }
           },
-          "systemprompt": {
+          "system-prompt": {
             "$type": "color",
             "$value": {
               "colorSpace": "display-p3",

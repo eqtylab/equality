@@ -7,7 +7,7 @@ import { Elevation, ELEVATION, getRelativeElevation } from '@/lib/elevations';
 
 interface InfoCardProps {
   label: string;
-  description: string | number;
+  description: string | number | React.ReactNode;
   icon: React.ReactElement | string;
   className?: string;
   onClick?: () => void;
