@@ -9,6 +9,7 @@
   --color-amber-700: color(display-p3 0.4327 0.2812 0.1347);
   --color-amber-800: color(display-p3 0.2643 0.1753 0.09139);
   --color-amber-900: color(display-p3 0.1121 0.07777 0.04646);
+  --color-background-secondary: color(display-p3 0.8698 0.8698 0.8698);
   --color-background: color(display-p3 0.9738 0.9799 0.9872);
   --color-badge-background-accepted: color(display-p3 0.795 0.7755 0.9866);
   --color-badge-background-comment: color(display-p3 0.795 0.7755 0.9866);
@@ -235,6 +236,7 @@
   --color-yellow-900: color(display-p3 0.1107 0.07879 0.04484);
 
   /* Dark theme */
+  --dark-color-background-secondary: color(display-p3 0.1792 0.1792 0.1792);
   --dark-color-background: color(display-p3 0.03547 0.03547 0.04268);
   --dark-color-badge-background-accepted: color(display-p3 0.2473 0.1645 0.5241);
   --dark-color-badge-background-comment: color(display-p3 0.2473 0.1645 0.5241);

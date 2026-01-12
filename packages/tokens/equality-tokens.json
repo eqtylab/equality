@@ -9,6 +9,14 @@
           "hex": "#09090B"
         }
       },
+      "background-secondary": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "display-p3",
+          "components": [0.1792, 0.1792, 0.1792],
+          "hex": "#2E2E2E"
+        }
+      },
       "badge": {
         "background": {
           "accepted": {
@@ -817,6 +825,14 @@
           "colorSpace": "display-p3",
           "components": [0.9738, 0.9799, 0.9872],
           "hex": "#F8FAFC"
+        }
+      },
+      "background-secondary": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "display-p3",
+          "components": [0.8698, 0.8698, 0.8698],
+          "hex": "#DEDEDE"
         }
       },
       "badge": {
