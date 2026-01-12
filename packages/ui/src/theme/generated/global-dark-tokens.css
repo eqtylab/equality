@@ -1,5 +1,9 @@
 html[data-equality-theme='dark'] {
   color-scheme: dark;
+  --color-background-floating: color(display-p3 0.03547 0.03547 0.04268);
+  --color-background-overlay: color(display-p3 0.03547 0.03547 0.04268);
+  --color-background-raised: color(display-p3 0.03547 0.03547 0.04268);
+  --color-background-sunken: color(display-p3 0.03547 0.03547 0.04268);
   --color-background: color(display-p3 0.03547 0.03547 0.04268);
   --color-badge-background-accepted: color(display-p3 0.2473 0.1645 0.5241);
   --color-badge-background-comment: color(display-p3 0.2473 0.1645 0.5241);

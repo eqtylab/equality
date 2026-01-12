@@ -13,6 +13,10 @@
   --color-amber-700: color(display-p3 0.4327 0.2812 0.1347);
   --color-amber-800: color(display-p3 0.2643 0.1753 0.09139);
   --color-amber-900: color(display-p3 0.1121 0.07777 0.04646);
+  --color-background-floating: color(display-p3 0.9738 0.9799 0.9872);
+  --color-background-overlay: color(display-p3 0.9738 0.9799 0.9872);
+  --color-background-raised: color(display-p3 0.9738 0.9799 0.9872);
+  --color-background-sunken: color(display-p3 0.9738 0.9799 0.9872);
   --color-background: color(display-p3 0.9738 0.9799 0.9872);
   --color-badge-background-accepted: color(display-p3 0.795 0.7755 0.9866);
   --color-badge-background-comment: color(display-p3 0.795 0.7755 0.9866);

@@ -11,6 +11,10 @@
   --color-amber-700: var(--color-amber-700);
   --color-amber-800: var(--color-amber-800);
   --color-amber-900: var(--color-amber-900);
+  --color-background-floating: var(--color-background-floating);
+  --color-background-overlay: var(--color-background-overlay);
+  --color-background-raised: var(--color-background-raised);
+  --color-background-sunken: var(--color-background-sunken);
   --color-background: var(--color-background);
   --color-badge-background-accepted: var(--color-badge-background-accepted);
   --color-badge-background-comment: var(--color-badge-background-comment);

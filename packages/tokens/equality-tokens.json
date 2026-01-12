@@ -9,6 +9,38 @@
           "hex": "#09090B"
         }
       },
+      "background-floating": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "display-p3",
+          "components": [0.03547, 0.03547, 0.04268],
+          "hex": "#09090B"
+        }
+      },
+      "background-overlay": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "display-p3",
+          "components": [0.03547, 0.03547, 0.04268],
+          "hex": "#09090B"
+        }
+      },
+      "background-raised": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "display-p3",
+          "components": [0.03547, 0.03547, 0.04268],
+          "hex": "#09090B"
+        }
+      },
+      "background-sunken": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "display-p3",
+          "components": [0.03547, 0.03547, 0.04268],
+          "hex": "#09090B"
+        }
+      },
       "badge": {
         "background": {
           "accepted": {
@@ -812,6 +844,38 @@
         }
       },
       "background": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "display-p3",
+          "components": [0.9738, 0.9799, 0.9872],
+          "hex": "#F8FAFC"
+        }
+      },
+      "background-floating": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "display-p3",
+          "components": [0.9738, 0.9799, 0.9872],
+          "hex": "#F8FAFC"
+        }
+      },
+      "background-overlay": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "display-p3",
+          "components": [0.9738, 0.9799, 0.9872],
+          "hex": "#F8FAFC"
+        }
+      },
+      "background-raised": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "display-p3",
+          "components": [0.9738, 0.9799, 0.9872],
+          "hex": "#F8FAFC"
+        }
+      },
+      "background-sunken": {
         "$type": "color",
         "$value": {
           "colorSpace": "display-p3",
