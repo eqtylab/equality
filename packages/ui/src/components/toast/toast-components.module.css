@@ -22,20 +22,38 @@
 
 .toast--default {
   --mix-color: var(--color-brand-primary);
-  --hover-darken: 50%;
-  @apply border-brand-primary text-brand-primary bg-mixed-dark;
+  @apply border-brand-primary text-brand-primary;
 }
 
 .toast--danger {
-  @apply border-red-400 bg-red-800 text-red-400;
+  --mix-color: var(--color-brand-red);
+  @apply border-brand-red text-brand-red;
 }
 
 .toast--warning {
-  @apply border-yellow-400 bg-yellow-800 text-yellow-400;
+  --mix-color: var(--color-brand-yellow);
+  @apply border-brand-yellow text-brand-yellow;
 }
 
 .toast--success {
-  @apply border-emerald-400 bg-emerald-800 text-emerald-400;
+  --mix-color: var(--color-brand-green);
+  @apply border-brand-green text-brand-green;
+}
+
+[data-equality-theme='dark'] .toast--default,
+[data-equality-theme='dark'] .toast--danger,
+[data-equality-theme='dark'] .toast--warning,
+[data-equality-theme='dark'] .toast--success {
+  --hover-darken: 50%;
+  @apply bg-mixed-dark;
+}
+
+[data-equality-theme='light'] .toast--default,
+[data-equality-theme='light'] .toast--danger,
+[data-equality-theme='light'] .toast--warning,
+[data-equality-theme='light'] .toast--success {
+  --hover-lighten: 80%;
+  @apply bg-mixed-light;
 }
 
 .toast-action {
@@ -53,19 +71,16 @@
   @apply bg-(--mix-color);
   @apply border-button-secondary-border border;
   @apply text-button-secondary-text;
+}
+
+[data-equality-theme='dark'] .toast-action {
+  --hover-darken: var(--hover-darken);
+  @apply hover:not-disabled:bg-mixed-dark;
+}
+
+[data-equality-theme='light'] .toast-action {
+  --hover-lighten: var(--hover-lighten);
   @apply hover:not-disabled:bg-mixed-light;
-}
-
-.toast--danger .toast-action {
-  @apply border-greyscale-400;
-}
-
-.toast--danger:hover .toast-action {
-  @apply border-red-400 bg-red-800 text-red-400;
-}
-
-.toast--danger:focus .toast-action {
-  @apply ring-red-400;
 }
 
 .toast-close {
