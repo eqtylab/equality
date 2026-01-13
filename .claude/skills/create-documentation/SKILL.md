@@ -44,7 +44,7 @@ Basic usage with required properties:
 
 ## Props
 
-<!-- Display a table of component properties. Always use these headings in the following example. -->
+<!-- Display a single table of top level component properties. Always use these headings in the following example. Some elements have className properties that allow developers to override things. Don't bother listing these in the table.-->
 
 | Name          | Description                  | Type                                   | Default   | Required |
 | ------------- | ---------------------------- | -------------------------------------- | --------- | -------- |
