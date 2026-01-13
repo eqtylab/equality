@@ -29,7 +29,7 @@ Basic usage with required properties:
 
 ## Variants
 
-<!-- Display the component and its variants in the best possible way given its various properties. The goal is not always to display EVERY combination of properties, rather to give developers a good overview of what is available. -->
+<!-- Display the component and its variants in the best possible way given its various properties. The goal is not always to display EVERY combination of properties, rather to give developers a good overview of what is available. Display a code example either below each variant (if there are many) or as a single code block with the subheading "Usage". -->
 
 ### Variant Subheadings
 
