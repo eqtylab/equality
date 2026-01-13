@@ -13,11 +13,11 @@ html {
   --color-amber-700: color(display-p3 0.4327 0.2812 0.1347);
   --color-amber-800: color(display-p3 0.2643 0.1753 0.09139);
   --color-amber-900: color(display-p3 0.1121 0.07777 0.04646);
-  --color-background-floating: color(display-p3 0.9738 0.9799 0.9872);
-  --color-background-overlay: color(display-p3 0.9738 0.9799 0.9872);
-  --color-background-raised: color(display-p3 0.9738 0.9799 0.9872);
-  --color-background-sunken: color(display-p3 0.9738 0.9799 0.9872);
-  --color-background: color(display-p3 0.9738 0.9799 0.9872);
+  --color-background-floating: color(display-p3 0.8264 0.8324 0.8394);
+  --color-background-overlay: color(display-p3 0.8648 0.8708 0.8779);
+  --color-background-raised: color(display-p3 0.9034 0.9095 0.9166);
+  --color-background-sunken: color(display-p3 0.8137 0.8197 0.8267);
+  --color-background: color(display-p3 0.9424 0.9485 0.9557);
   --color-badge-background-accepted: color(display-p3 0.795 0.7755 0.9866);
   --color-badge-background-comment: color(display-p3 0.795 0.7755 0.9866);
   --color-badge-background-compliant: color(display-p3 0.7403 0.8486 0.7417);

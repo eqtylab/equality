@@ -1189,96 +1189,102 @@
           </color>
           <buildGroupId>86B9D7D8-F74A-4CAE-B006-65451BBEDAB9</buildGroupId>
         </colorItem>
-        <colorItem>
-          <id>8DD0C915-EC77-43DD-A7AC-CFE330D2284D</id>
+        <group>
+          <id>1B65AE24-4667-4FF5-A755-DEF6F77AB63E</id>
           <name>Background</name>
-          <profile>DisplayP3</profile>
-          <format>7</format>
-          <appearance>lightanddark</appearance>
-          <color>
-            <variants>
-              <variant>
-                <rgba>0.97377 0.97993 0.98718 1</rgba>
-              </variant>
-              <variant type="dark">
-                <rgba>0.035468 0.03547 0.042676 1</rgba>
-              </variant>
-            </variants>
-          </color>
+          <expanded>1</expanded>
+          <colorItem>
+            <id>C02F313B-235E-4484-AE31-E375D3A96229</id>
+            <name>Background Sunken</name>
+            <profile>DisplayP3</profile>
+            <format>7</format>
+            <appearance>lightanddark</appearance>
+            <color>
+              <variants>
+                <variant>
+                  <rgba>0.81373 0.81968 0.82669 1</rgba>
+                </variant>
+                <variant type="dark">
+                  <rgba>0.035468 0.03547 0.042676 1</rgba>
+                </variant>
+              </variants>
+            </color>
+            <buildGroupId>86B9D7D8-F74A-4CAE-B006-65451BBEDAB9</buildGroupId>
+          </colorItem>
+          <colorItem>
+            <id>8DD0C915-EC77-43DD-A7AC-CFE330D2284D</id>
+            <name>Background</name>
+            <profile>DisplayP3</profile>
+            <format>7</format>
+            <appearance>lightanddark</appearance>
+            <color>
+              <variants>
+                <variant>
+                  <rgba>0.94238 0.9485 0.9557 1</rgba>
+                </variant>
+                <variant type="dark">
+                  <rgba>0.060177 0.060194 0.067867 1</rgba>
+                </variant>
+              </variants>
+            </color>
+            <buildGroupId>86B9D7D8-F74A-4CAE-B006-65451BBEDAB9</buildGroupId>
+          </colorItem>
+          <colorItem>
+            <id>4CCB3E1D-AEA4-44AA-B82B-5C5A4BEF7D27</id>
+            <name>Background Raised</name>
+            <profile>DisplayP3</profile>
+            <format>7</format>
+            <appearance>lightanddark</appearance>
+            <color>
+              <variants>
+                <variant>
+                  <rgba>0.90341 0.90948 0.91663 1</rgba>
+                </variant>
+                <variant type="dark">
+                  <rgba>0.085234 0.085263 0.093244 1</rgba>
+                </variant>
+              </variants>
+            </color>
+            <buildGroupId>86B9D7D8-F74A-4CAE-B006-65451BBEDAB9</buildGroupId>
+          </colorItem>
+          <colorItem>
+            <id>11E9B8A6-2EE8-4732-A9B8-7FE42D1F0346</id>
+            <name>Background Overlay</name>
+            <profile>DisplayP3</profile>
+            <format>7</format>
+            <appearance>lightanddark</appearance>
+            <color>
+              <variants>
+                <variant>
+                  <rgba>0.86476 0.87078 0.87787 1</rgba>
+                </variant>
+                <variant type="dark">
+                  <rgba>0.11214 0.11218 0.12044 1</rgba>
+                </variant>
+              </variants>
+            </color>
+            <buildGroupId>86B9D7D8-F74A-4CAE-B006-65451BBEDAB9</buildGroupId>
+          </colorItem>
+          <colorItem>
+            <id>4E15FED3-BFA6-47D4-910B-D285FCDB57F1</id>
+            <name>Background Floating</name>
+            <profile>DisplayP3</profile>
+            <format>7</format>
+            <appearance>lightanddark</appearance>
+            <color>
+              <variants>
+                <variant>
+                  <rgba>0.82643 0.8324 0.83943 1</rgba>
+                </variant>
+                <variant type="dark">
+                  <rgba>0.13994 0.13998 0.14851 1</rgba>
+                </variant>
+              </variants>
+            </color>
+            <buildGroupId>86B9D7D8-F74A-4CAE-B006-65451BBEDAB9</buildGroupId>
+          </colorItem>
           <buildGroupId>86B9D7D8-F74A-4CAE-B006-65451BBEDAB9</buildGroupId>
-        </colorItem>
-        <colorItem>
-          <id>C02F313B-235E-4484-AE31-E375D3A96229</id>
-          <name>Background Sunken</name>
-          <profile>DisplayP3</profile>
-          <format>7</format>
-          <appearance>lightanddark</appearance>
-          <color>
-            <variants>
-              <variant>
-                <rgba>0.97377 0.97993 0.98718 1</rgba>
-              </variant>
-              <variant type="dark">
-                <rgba>0.035468 0.03547 0.042676 1</rgba>
-              </variant>
-            </variants>
-          </color>
-          <buildGroupId>86B9D7D8-F74A-4CAE-B006-65451BBEDAB9</buildGroupId>
-        </colorItem>
-        <colorItem>
-          <id>4CCB3E1D-AEA4-44AA-B82B-5C5A4BEF7D27</id>
-          <name>Background Raised</name>
-          <profile>DisplayP3</profile>
-          <format>7</format>
-          <appearance>lightanddark</appearance>
-          <color>
-            <variants>
-              <variant>
-                <rgba>0.97377 0.97993 0.98718 1</rgba>
-              </variant>
-              <variant type="dark">
-                <rgba>0.035468 0.03547 0.042676 1</rgba>
-              </variant>
-            </variants>
-          </color>
-          <buildGroupId>86B9D7D8-F74A-4CAE-B006-65451BBEDAB9</buildGroupId>
-        </colorItem>
-        <colorItem>
-          <id>11E9B8A6-2EE8-4732-A9B8-7FE42D1F0346</id>
-          <name>Background Overlay</name>
-          <profile>DisplayP3</profile>
-          <format>7</format>
-          <appearance>lightanddark</appearance>
-          <color>
-            <variants>
-              <variant>
-                <rgba>0.97377 0.97993 0.98718 1</rgba>
-              </variant>
-              <variant type="dark">
-                <rgba>0.035468 0.03547 0.042676 1</rgba>
-              </variant>
-            </variants>
-          </color>
-          <buildGroupId>86B9D7D8-F74A-4CAE-B006-65451BBEDAB9</buildGroupId>
-        </colorItem>
-        <colorItem>
-          <id>4E15FED3-BFA6-47D4-910B-D285FCDB57F1</id>
-          <name>Background Floating</name>
-          <profile>DisplayP3</profile>
-          <format>7</format>
-          <appearance>lightanddark</appearance>
-          <color>
-            <variants>
-              <variant>
-                <rgba>0.97377 0.97993 0.98718 1</rgba>
-              </variant>
-              <variant type="dark">
-                <rgba>0.035468 0.03547 0.042676 1</rgba>
-              </variant>
-            </variants>
-          </color>
-          <buildGroupId>86B9D7D8-F74A-4CAE-B006-65451BBEDAB9</buildGroupId>
-        </colorItem>
+        </group>
         <alias>
           <name>Focus Ring</name>
           <type>3</type>
