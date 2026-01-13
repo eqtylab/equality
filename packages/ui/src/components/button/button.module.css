@@ -32,7 +32,14 @@
   @apply bg-(--mix-color);
   @apply border-button-secondary-border border;
   @apply text-button-secondary-text;
+}
+
+[data-equality-theme='dark'] .button--secondary {
   @apply hover:not-disabled:bg-mixed-dark;
+}
+
+[data-equality-theme='light'] .button--secondary {
+  @apply hover:not-disabled:bg-mixed-light;
 }
 
 .button--tertiary {
