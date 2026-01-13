@@ -22,19 +22,19 @@
 }
 
 .text-danger {
-  @apply text-red-400;
+  @apply text-brand-red;
 }
 
 .text-primary {
-  @apply text-lilac-400;
+  @apply text-brand-primary;
 }
 
 .text-success {
-  @apply text-emerald-400;
+  @apply text-brand-green;
 }
 
 .text-warning {
-  @apply text-yellow-400;
+  @apply text-brand-yellow;
 }
 
 .value-container .bg-default {
@@ -42,17 +42,33 @@
 }
 
 .value-container .bg-danger {
-  @apply bg-red-800;
+  --mix-color: var(--color-brand-red);
 }
 
 .value-container .bg-primary {
-  @apply bg-lilac-800;
+  --mix-color: var(--color-brand-primary);
 }
 
 .value-container .bg-success {
-  @apply bg-emerald-800;
+  --mix-color: var(--color-brand-green);
 }
 
 .value-container .bg-warning {
-  @apply bg-yellow-800;
+  --mix-color: var(--color-brand-yellow);
+}
+
+[data-equality-theme='dark'] .value-container .bg-danger,
+[data-equality-theme='dark'] .value-container .bg-primary,
+[data-equality-theme='dark'] .value-container .bg-success,
+[data-equality-theme='dark'] .value-container .bg-warning {
+  --hover-darken: 50%;
+  @apply bg-mixed-dark;
+}
+
+[data-equality-theme='light'] .value-container .bg-danger,
+[data-equality-theme='light'] .value-container .bg-primary,
+[data-equality-theme='light'] .value-container .bg-success,
+[data-equality-theme='light'] .value-container .bg-warning {
+  --hover-lighten: 80%;
+  @apply bg-mixed-light;
 }
