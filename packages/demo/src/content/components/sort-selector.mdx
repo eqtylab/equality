@@ -7,4 +7,33 @@ import { SortSelectorDemo } from "@demo/components/demo/sort-selector";
 
 ## Default
 
+Shows the Sort Selector with default sorting (by Name, ascending):
+
 <SortSelectorDemo client:only="react" />
+
+## Props
+
+The Sort Selector component accepts several props to customize its behavior:
+
+- **`sortField`** (`"name"`, `"type"`, `"createdAt"`, `"updatedAt"`): The field by which to sort.
+- **`sortOrder`** (`"asc"` or `"desc"`): The sort direction (ascending/descending).
+- **`sortMode`** (`"created"` or `"updated"`, default: `"created"`): Determines which date-related sorting options are offered.
+- **`showDateOptions`** (`true` or `false`, default: `true`): Controls whether date sorting options (created/updated) are displayed.
+- **`setSortField`** and **`setSortOrder`**: Handler functions to update the current sort field and order.
+
+You can combine these props to control and respond to sorting preference changes in your UI.
+
+### Sort mode options
+
+The `sortMode` prop determines which set of date-related sorting options are shown in the Sort Selector. It accepts either `"created"` (default) or `"updated"`.
+
+- When `sortMode="created"`, you will see options to sort by "Recently Created" or "Oldest Created".
+- When `sortMode="updated"`, you will see options to sort by "Recently Updated" or "Oldest Updated".
+
+<SortSelectorDemo client:only="react" sortMode="updated" />
+
+### Hide date options
+
+Set `showDateOptions={false}` to hide sorting options for creation date:
+
+<SortSelectorDemo client:only="react" showDateOptions={false} />
