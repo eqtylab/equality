@@ -7,12 +7,25 @@
 }
 
 .dialog-content {
-  @apply max-h-full w-full max-w-lg overflow-auto p-6;
+  @apply max-h-[75vh] w-[90%] overflow-auto;
+  @apply p-6;
   @apply bg-popover-background border shadow-lg sm:rounded-lg;
   @apply grid gap-4;
   @apply duration-200;
   @apply z-modal fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2;
   @apply animate-popup-content;
+}
+
+.dialog-content--size-sm {
+  @apply max-w-lg;
+}
+
+.dialog-content--size-md {
+  @apply max-w-2xl;
+}
+
+.dialog-content--size-lg {
+  @apply max-w-4xl;
 }
 
 .dialog-close {

@@ -29,15 +29,24 @@ const DialogOverlay = React.forwardRef<
 ));
 DialogOverlay.displayName = DialogPrimitive.Overlay.displayName;
 
+type DialogContentProps = React.ComponentPropsWithoutRef<typeof DialogPrimitive.Content> & {
+  size?: 'sm' | 'md' | 'lg';
+};
+
 const DialogContent = React.forwardRef<
   React.ElementRef<typeof DialogPrimitive.Content>,
-  React.ComponentPropsWithoutRef<typeof DialogPrimitive.Content>
->(({ className, children, ...props }, ref) => (
+  DialogContentProps
+>(({ className, children, size = 'md', ...props }, ref) => (
   <DialogPortal>
     <DialogOverlay />
     <DialogPrimitive.Content
       ref={ref}
-      className={cn(styles['dialog-content'], className)}
+      className={cn(
+        styles['dialog-content'],
+        'styled-vertical-scrollbar',
+        styles[`dialog-content--size-${size}`],
+        className
+      )}
       onCloseAutoFocus={(event) => {
         event.preventDefault();
         document.body.style.pointerEvents = '';
