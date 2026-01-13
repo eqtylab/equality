@@ -10,9 +10,9 @@ import { Alert, AlertTitle, AlertDescription } from "@eqtylab/equality";
 
 ---
 
-The Alert component displays important messages to users. Use alerts to communicate status, warnings, errors, or success states. Each alert can include an optional title and description for clear, structured messaging.
+The Alert component displays important messages to users, usually as a result of an action they took. Use alerts to communicate status, warnings, errors, or success states.
 
-- **Default:** General informational messages.
+- **Default:** General information.
 - **Success:** Positive outcomes or confirmations.
 - **Warning:** Cautionary information that needs attention.
 - **Danger:** Critical errors or destructive actions.
@@ -62,7 +62,7 @@ Basic usage with title and description:
 
   <Alert variant="danger">
     <AlertTitle>Danger</AlertTitle>
-    <AlertDescription>This action cannot be undone.</AlertDescription>
+    <AlertDescription>A serious error occurred.</AlertDescription>
   </Alert>
 </div>
 
@@ -81,7 +81,7 @@ Basic usage with title and description:
 
 <Alert variant="danger">
   <AlertTitle>Danger</AlertTitle>
-  <AlertDescription>This action cannot be undone.</AlertDescription>
+  <AlertDescription>A serious error occurred.</AlertDescription>
 </Alert>
 ```
 
