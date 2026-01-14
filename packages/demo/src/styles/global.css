@@ -77,6 +77,10 @@
     & > h6 code,
     & > li code,
     & > li strong code,
+    & > ul li code,
+    & > ul li strong code,
+    & > ol li code,
+    & > ol li strong code,
     & > p code,
     & > table td code {
       @apply bg-card-background text-text-secondary rounded-sm p-1;
@@ -84,6 +88,10 @@
 
     & > li code,
     & > li strong code,
+    & > ul li code,
+    & > ul li strong code,
+    & > ol li code,
+    & > ol li strong code,
     & > p code,
     & > table td code {
       @apply text-sm;

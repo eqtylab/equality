@@ -5,15 +5,20 @@ description: "Copy Button with sizes and variants"
 ---
 
 import { CopyButton } from "@eqtylab/equality";
+import { CopyButtonDemo } from "@demo/components/demo/copy-button";
 
-## Small (default)
+## Size Variants
+
+The `CopyButton` component supports three size variants: small (`"sm"`), medium (`"md"`), and large (`"lg"`). By adjusting the `size` prop, you can easily change the button's dimensions to fit a variety of interfaces and design needs. The default size is `"sm"`, making it compact, while `"md"` and `"lg"` provide progressively larger clickable areas.
+
+### Small (default)
 
 <CopyButton
   value="zQ3shrGxRrYyWixJGrr45jJ1MEY76YQZ4KVbt9CYRsTWZ5MWV"
   client:only="react"
 />
 
-## Medium
+### Medium
 
 <CopyButton
   value="zQ3shrGxRrYyWixJGrr45jJ1MEY76YQZ4KVbt9CYRsTWZ5MWV"
@@ -21,10 +26,30 @@ import { CopyButton } from "@eqtylab/equality";
   client:only="react"
 />
 
-## Large
+### Large
 
 <CopyButton
   value="zQ3shrGxRrYyWixJGrr45jJ1MEY76YQZ4KVbt9CYRsTWZ5MWV"
   size="lg"
   client:only="react"
 />
+
+## Props
+
+### `onClick` handler
+
+The `CopyButton` component exposes an `onClick` prop, which allows you to provide a custom function that will be called whenever the button is clicked. This makes the component highly composable, enabling you to trigger additional logic—such as showing a toast notification, logging analytics, or updating application state—alongside the built-in copy-to-clipboard behavior.
+
+For example, you can use the `onClick` handler to display a custom message:
+
+```jsx
+<CopyButton
+  value="sample text"
+  onClick={() => alert("Button clicked! Text copied!")}
+  client:only="react"
+/>
+```
+
+The `onClick` function is called after text has been copied to the clipboard.
+
+<CopyButtonDemo client:only="react" size="md" />
