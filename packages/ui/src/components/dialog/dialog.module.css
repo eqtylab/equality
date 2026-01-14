@@ -7,12 +7,12 @@
 }
 
 .dialog-content {
-  @apply max-h-[75vh] w-[90%] overflow-auto;
+  @apply max-h-[85vh] w-[90%] overflow-auto;
   @apply p-6;
-  @apply bg-popover-background border shadow-lg sm:rounded-lg;
+  @apply bg-popover-background rounded-lg border shadow-lg;
   @apply grid gap-4;
   @apply duration-200;
-  @apply z-modal fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2;
+  @apply z-modal fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2;
   @apply animate-popup-content;
 }
 
@@ -30,7 +30,7 @@
 
 .dialog-close {
   @apply cursor-pointer rounded-sm transition-all;
-  @apply absolute right-4 top-4;
+  @apply absolute top-4 right-4;
   @apply text-text-primary hover:text-text-secondary;
   @apply focus-ring;
   @apply disabled:pointer-events-none;
@@ -46,7 +46,7 @@
 
 .dialog-header {
   @apply flex flex-col space-y-1.5;
-  @apply text-center sm:text-left;
+  @apply text-left;
 }
 
 .dialog-footer {
@@ -54,7 +54,7 @@
 }
 
 .dialog-title {
-  @apply text-lg font-medium leading-none tracking-tight;
+  @apply text-lg leading-none font-medium tracking-tight;
 }
 
 .dialog-description {
