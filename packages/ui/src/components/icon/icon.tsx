@@ -30,7 +30,8 @@ const iconVariants = cva(styles['icon-container'], {
 const iconElevationVariants = generateElevationVariants(styles, 'icon-container', ELEVATION.SUNKEN);
 
 export interface IconProps
-  extends React.HTMLAttributes<HTMLDivElement>,
+  extends
+    React.HTMLAttributes<HTMLDivElement>,
     VariantProps<typeof iconVariants>,
     VariantProps<typeof iconElevationVariants> {
   icon: React.ReactElement | string;

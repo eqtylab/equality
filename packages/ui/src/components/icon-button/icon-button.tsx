@@ -30,7 +30,8 @@ const iconSizeMap = {
 };
 
 export interface IconButtonProps
-  extends Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, 'name'>,
+  extends
+    Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, 'name'>,
     VariantProps<typeof iconButtonVariants> {
   name: keyof typeof LucideIcons;
   label?: string;

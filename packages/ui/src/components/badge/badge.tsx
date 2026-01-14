@@ -33,8 +33,7 @@ const badgeVariants = cva(styles['badge'], {
 export type BadgeDisplayMode = 'both' | 'text-only' | 'icon-only';
 
 export interface BadgeProps
-  extends React.HTMLAttributes<HTMLDivElement>,
-    VariantProps<typeof badgeVariants> {
+  extends React.HTMLAttributes<HTMLDivElement>, VariantProps<typeof badgeVariants> {
   closeable?: boolean;
   handleClosable?: () => void;
   truncate?: boolean;
