@@ -1,7 +1,7 @@
 @reference '../../theme/theme.module.css';
 
 .popover-header {
-  @apply min-w-3xs relative w-auto;
+  @apply relative w-auto;
 }
 
 .popover-trigger {
