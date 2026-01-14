@@ -7,12 +7,11 @@
 }
 
 .dialog-content {
-  @apply max-h-[85vh] w-[90%] overflow-auto;
-  @apply p-6;
+  @apply max-h-[85vh] w-[90%] overflow-hidden;
   @apply bg-popover-background rounded-lg border shadow-lg;
-  @apply grid gap-4;
+  @apply flex flex-col;
   @apply duration-200;
-  @apply z-modal fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2;
+  @apply z-modal fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2;
   @apply animate-popup-content;
 }
 
@@ -30,7 +29,7 @@
 
 .dialog-close {
   @apply cursor-pointer rounded-sm transition-all;
-  @apply absolute top-4 right-4;
+  @apply absolute right-4 top-4;
   @apply text-text-primary hover:text-text-secondary;
   @apply focus-ring;
   @apply disabled:pointer-events-none;
@@ -45,18 +44,24 @@
 }
 
 .dialog-header {
-  @apply flex flex-col space-y-1.5;
+  @apply flex shrink-0 flex-col space-y-1.5;
   @apply text-left;
+  @apply border-b-1 border-border;
 }
 
 .dialog-footer {
-  @apply flex flex-col-reverse sm:flex-row sm:justify-end sm:space-x-2;
+  @apply flex shrink-0 flex-col-reverse sm:flex-row sm:justify-end sm:space-x-2;
+  @apply border-t-1 border-border;
+  @apply p-3;
 }
 
 .dialog-title {
-  @apply text-lg leading-none font-medium tracking-tight;
+  @apply text-lg font-medium leading-none tracking-tight;
+  @apply p-6;
 }
 
 .dialog-description {
   @apply text-text-secondary text-sm;
+  @apply min-h-0 flex-1 overflow-auto;
+  @apply p-6;
 }

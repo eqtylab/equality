@@ -41,12 +41,7 @@ const DialogContent = React.forwardRef<
     <DialogOverlay />
     <DialogPrimitive.Content
       ref={ref}
-      className={cn(
-        styles['dialog-content'],
-        'styled-vertical-scrollbar',
-        styles[`dialog-content--size-${size}`],
-        className
-      )}
+      className={cn(styles['dialog-content'], styles[`dialog-content--size-${size}`], className)}
       onCloseAutoFocus={(event) => {
         event.preventDefault();
         document.body.style.pointerEvents = '';
@@ -87,7 +82,7 @@ const DialogDescription = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <DialogPrimitive.Description
     ref={ref}
-    className={cn(styles['dialog-description'], className)}
+    className={cn(styles['dialog-description'], 'styled-vertical-scrollbar', className)}
     {...props}
   />
 ));
