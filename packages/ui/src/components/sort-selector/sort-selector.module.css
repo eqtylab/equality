@@ -1,9 +1,13 @@
 @reference '../../theme/theme.module.css';
 
 .sort-selector-trigger {
-  @apply min-w-32;
+  @apply min-w-42 justify-between;
 }
 
 .chevron-down-icon {
   @apply text-text-secondary;
+}
+
+.dropdown-menu-content {
+  @apply min-w-42;
 }
