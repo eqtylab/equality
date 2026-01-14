@@ -1,0 +1,5 @@
+{
+  "permissions": {
+    "allow": ["Skill(create-documentation)", "Skill(create-component)"]
+  }
+}
