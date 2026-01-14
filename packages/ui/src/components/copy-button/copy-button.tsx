@@ -7,6 +7,7 @@ export interface CopyButtonProps {
   label?: string;
   size?: 'sm' | 'md' | 'lg';
   className?: string;
+  onClick?: () => void;
 }
 
 function CopyButton({
@@ -14,6 +15,7 @@ function CopyButton({
   label = 'Copy to clipboard',
   size = 'sm',
   className,
+  onClick,
 }: CopyButtonProps) {
   const [copied, setCopied] = React.useState(false);
 
@@ -51,12 +53,17 @@ function CopyButton({
     }
   };
 
+  const handleClick = () => {
+    handleCopy();
+    onClick?.();
+  };
+
   return (
     <IconButton
       name={copied ? 'Check' : 'Copy'}
       label={copied ? 'Copied!' : label}
       size={size}
-      onClick={handleCopy}
+      onClick={handleClick}
       className={className}
     />
   );

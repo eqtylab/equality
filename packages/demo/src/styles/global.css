@@ -8,11 +8,11 @@
   }
 
   .list {
-    @apply text-text-secondary space-y-1 pl-4 [&>li]:text-base/7 [&>li>p]:align-top;
+    @apply text-text-secondary space-y-1 pl-4 [&>li>p]:align-top [&>li]:text-base/7;
   }
 
   .label {
-    @apply text-xs tracking-wider uppercase;
+    @apply text-xs uppercase tracking-wider;
   }
 
   .tree-view-item {
@@ -23,32 +23,32 @@
   #markdown-content {
     & > h1 {
       @apply text-4xl font-bold [&>code]:text-3xl;
-      @apply mt-12 mb-4;
+      @apply mb-4 mt-12;
     }
 
     & > h2 {
       @apply text-2xl font-semibold [&>code]:text-xl;
-      @apply mt-12 mb-4;
+      @apply mb-4 mt-12;
     }
 
     & > h3 {
       @apply text-xl font-medium [&>code]:text-lg;
-      @apply mt-8 mb-4;
+      @apply mb-4 mt-8;
     }
 
     & > h4 {
       @apply text-lg font-medium [&>code]:text-base;
-      @apply mt-6 mb-4;
+      @apply mb-4 mt-6;
     }
 
     & > h5 {
       @apply text-base font-medium [&>code]:text-sm;
-      @apply mt-4 mb-4;
+      @apply mb-4 mt-4;
     }
 
     & > h6 {
       @apply text-sm font-medium [&>code]:text-xs;
-      @apply mt-4 mb-4;
+      @apply mb-4 mt-4;
     }
 
     & > h1,
@@ -79,6 +79,8 @@
     & > li strong code,
     & > ul li code,
     & > ul li strong code,
+    & > ol li code,
+    & > ol li strong code,
     & > p code,
     & > table td code {
       @apply bg-card-background text-text-secondary rounded-sm p-1;
@@ -88,6 +90,8 @@
     & > li strong code,
     & > ul li code,
     & > ul li strong code,
+    & > ol li code,
+    & > ol li strong code,
     & > p code,
     & > table td code {
       @apply text-sm;
@@ -156,7 +160,7 @@
     }
 
     & > pre code {
-      @apply break-all whitespace-pre-wrap;
+      @apply whitespace-pre-wrap break-all;
     }
 
     & > :first-child {
