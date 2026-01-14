@@ -1,17 +1,7 @@
 @reference '../../theme/theme.module.css';
 
 .popover-header {
-  @apply relative w-auto;
-}
-
-.popover-trigger {
-  @apply justify-start;
-  @apply w-full rounded-md px-10;
-  @apply text-base font-normal md:text-sm;
-}
-
-.popover-trigger--active {
-  @apply text-text-primary;
+  @apply relative w-auto min-w-fit;
 }
 
 .calendar-icon {
@@ -36,7 +26,7 @@
 }
 
 .month-navigation-btn {
-  @apply text-text-secondary hover:text-text-primary size-8 p-0;
+  @apply text-text-secondary size-8 p-0;
 }
 
 .month-date-display {

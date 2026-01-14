@@ -4,6 +4,7 @@ import { CalendarDays, ChevronLeft, ChevronRight, X } from 'lucide-react';
 
 import { Button } from '@/components/button/button';
 import styles from '@/components/date-range-picker/date-range-picker.module.css';
+import { IconButton } from '@/components/icon-button/icon-button';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/popover/popover';
 import { cn } from '@/lib/utils';
 
@@ -167,28 +168,22 @@ const DateRangePicker = ({ dateRange, onSelect, className }: DateRangePickerProp
         <PopoverTrigger asChild>
           <Button
             variant="tertiary"
-            className={cn(
-              styles['popover-trigger'],
-              dateRange.from && dateRange.to && styles['popover-trigger--active'],
-              className
-            )}
+            prefix={<CalendarDaysIcon />}
+            suffix={
+              hasSelection && (
+                <IconButton
+                  name="X"
+                  size="sm"
+                  onClick={handleClearClick}
+                  label="Clear dates"
+                ></IconButton>
+              )
+            }
+            className={cn(dateRange.from && dateRange.to && styles, className)}
           >
-            <CalendarDaysIcon className={styles['calendar-icon']} />
             <span className={styles['date-range']}>{formatRange(dateRange)}</span>
           </Button>
         </PopoverTrigger>
-
-        {hasSelection && (
-          <Button
-            variant="tertiary"
-            size="sm"
-            onClick={handleClearClick}
-            className={styles['clear-btn']}
-            aria-label="Clear search"
-          >
-            <XIcon />
-          </Button>
-        )}
       </div>
       <PopoverContent className={styles['popover-content']} align="end">
         {/* Header with month navigation */}
