@@ -1,11 +1,9 @@
 import * as React from 'react';
 import * as DialogPrimitive from '@radix-ui/react-dialog';
-import { X } from 'lucide-react';
 
 import styles from '@/components/dialog/dialog.module.css';
+import { IconButton } from '@/components/icon-button/icon-button';
 import { cn, getThemeProviderRoot } from '@/lib/utils';
-
-const XIcon = X as React.ComponentType<{ className?: string }>;
 
 const Dialog = DialogPrimitive.Root;
 
@@ -29,15 +27,19 @@ const DialogOverlay = React.forwardRef<
 ));
 DialogOverlay.displayName = DialogPrimitive.Overlay.displayName;
 
+type DialogContentProps = React.ComponentPropsWithoutRef<typeof DialogPrimitive.Content> & {
+  size?: 'sm' | 'md' | 'lg';
+};
+
 const DialogContent = React.forwardRef<
   React.ElementRef<typeof DialogPrimitive.Content>,
-  React.ComponentPropsWithoutRef<typeof DialogPrimitive.Content>
->(({ className, children, ...props }, ref) => (
+  DialogContentProps
+>(({ className, children, size = 'md', ...props }, ref) => (
   <DialogPortal>
     <DialogOverlay />
     <DialogPrimitive.Content
       ref={ref}
-      className={cn(styles['dialog-content'], className)}
+      className={cn(styles['dialog-content'], styles[`dialog-content--size-${size}`], className)}
       onCloseAutoFocus={(event) => {
         event.preventDefault();
         document.body.style.pointerEvents = '';
@@ -45,17 +47,18 @@ const DialogContent = React.forwardRef<
       {...props}
     >
       {children}
-      <DialogPrimitive.Close className={styles['dialog-close']}>
-        <XIcon className={styles['dialog-close-icon']} />
-        <span className={styles['dialog-close-text']}>Close</span>
-      </DialogPrimitive.Close>
     </DialogPrimitive.Content>
   </DialogPortal>
 ));
 DialogContent.displayName = DialogPrimitive.Content.displayName;
 
-const DialogHeader = ({ className, ...props }: React.HTMLAttributes<HTMLDivElement>) => (
-  <div className={cn(styles['dialog-header'], className)} {...props} />
+const DialogHeader = ({ className, children, ...props }: React.HTMLAttributes<HTMLDivElement>) => (
+  <div className={cn(styles['dialog-header'], className)} {...props}>
+    {children}
+    <DialogPrimitive.Close asChild>
+      <IconButton name="X" label="Close" size="sm" />
+    </DialogPrimitive.Close>
+  </div>
 );
 DialogHeader.displayName = 'DialogHeader';
 
@@ -78,7 +81,7 @@ const DialogDescription = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <DialogPrimitive.Description
     ref={ref}
-    className={cn(styles['dialog-description'], className)}
+    className={cn(styles['dialog-description'], 'styled-vertical-scrollbar', className)}
     {...props}
   />
 ));

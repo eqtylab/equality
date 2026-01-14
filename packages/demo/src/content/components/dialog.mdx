@@ -6,6 +6,50 @@ description: "Dialog with sizes and variants"
 
 import { DialogDemo } from "@demo/components/demo/dialog";
 
-## Default
+## Size Variants
 
-<DialogDemo client:only="react" />
+The dialog component supports three size variants for controlling its maximum width: **small**, **medium**, and **large**. You can set the desired variant using the `size` prop: `"sm"`, `"md"`, or `"lg"`. By default, the dialog uses the medium size.
+
+Below are examples of each size variant:
+
+### Small
+
+Recommended for compact dialogs (max width: 32rem / 512px).
+
+```jsx
+<Dialog open={isModalOpen} onOpenChange={() => setIsModalOpen(false)}>
+  <DialogContent size="sm">...</DialogContent>
+</Dialog>
+```
+
+<DialogDemo client:only="react" size="sm" />
+
+### Medium (default)
+
+Recommended for typical dialog uses (max width: 42rem / 672px).
+
+```jsx
+<Dialog open={isModalOpen} onOpenChange={() => setIsModalOpen(false)}>
+  <DialogContent size="md">...</DialogContent>
+</Dialog>
+```
+
+<DialogDemo client:only="react" size="md" />
+
+### Large
+
+Recommended for dialogs that need extra horizontal space (max width: 56rem / 896px).
+
+```jsx
+<Dialog open={isModalOpen} onOpenChange={() => setIsModalOpen(false)}>
+  <DialogContent size="lg">...</DialogContent>
+</Dialog>
+```
+
+<DialogDemo client:only="react" size="lg" />
+
+## Constraints
+
+The dialog component enforces a maximum height of 85% of the viewport (85vh). If the dialog content exceeds this height, a vertical scrollbar will appear inside the dialog, allowing users to scroll through the overflowing content without affecting the background page.
+
+<DialogDemo client:only="react" size="md" showMaxHeight />
