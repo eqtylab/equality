@@ -22,7 +22,8 @@ const displayFieldVariants = cva('', {
 });
 
 export interface DisplayFieldProps
-  extends Omit<React.HTMLAttributes<HTMLDivElement>, 'slot'>,
+  extends
+    Omit<React.HTMLAttributes<HTMLDivElement>, 'slot'>,
     VariantProps<typeof displayFieldVariants> {
   variant?: 'neutral' | 'success' | 'neutralCheck' | 'failure';
   prefix?: string;
