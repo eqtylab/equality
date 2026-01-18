@@ -62,7 +62,7 @@
 }
 
 .icon-container--base:not(.background--transparent) {
-  @apply bg-background-base shadow-shadow-base border-border-base;
+  @apply bg-background shadow-shadow-base border-border-base;
 }
 
 .icon-container--raised:not(.background--transparent) {

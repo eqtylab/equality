@@ -48,7 +48,7 @@
 
 .table--sunken .table-header,
 .table--sunken .table-footer {
-  @apply bg-background-base;
+  @apply bg-background;
 }
 .table--sunken .table-body {
   @apply bg-background-sunken;
@@ -59,7 +59,7 @@
   @apply bg-background-raised;
 }
 .table--base .table-body {
-  @apply bg-background-base;
+  @apply bg-background;
 }
 
 .table--raised .table-header,
