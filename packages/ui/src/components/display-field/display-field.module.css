@@ -111,7 +111,7 @@
 }
 
 .display-field--floating {
-  @apply bg-background-floating shadow-shadow-floating border-border-floating;
+  @apply shadow-shadow-floating border-border-floating;
 }
 .display-field--floating .display-field-inner {
   @apply bg-background-floating border-border-floating;
