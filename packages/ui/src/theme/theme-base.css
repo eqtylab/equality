@@ -22,15 +22,10 @@
   --z-index-highest: 9999;
 
   /* TODO: TEMP ELEVATION COLORS - NEEDS ADJUSTING AND TO BE PUT INTO TOKENS INSTEAD OF BEING PLACED HERE */
-  --color-background-bottom: var(
-    --color-card-background
-  ); /* Extra for further down subcomponents */
-  --color-background-sunken: var(--color-card-background);
-  --color-background-base: var(--color-background);
-  --color-background-raised: var(--color-card-background);
-  --color-background-overlay: var(--color-popover-background);
-  --color-background-floating: var(--color-card-background);
-  --color-background-top: var(--color-card-background); /* Extra for further up subcomponents */
+  --color-background-bottom: var(--color-card-background);
+  /* Extra for further down subcomponents */
+  --color-background-top: var(--color-card-background);
+  /* Extra for further up subcomponents */
 
   --color-border-bottom: transparent; /* Extra for further down subcomponents */
   --color-border-sunken: transparent;
