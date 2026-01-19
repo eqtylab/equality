@@ -6,7 +6,7 @@
 }
 
 .drawer-content {
-  @apply bg-popover-background border;
+  @apply bg-background-overlay border-border-overlay shadow-shadow-overlay border shadow-lg;
   @apply mt-24 rounded-t-[10px];
   @apply z-modal fixed inset-x-0 bottom-0 h-auto;
   @appy flex flex-col;

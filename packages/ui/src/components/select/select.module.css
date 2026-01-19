@@ -60,3 +60,40 @@
   @apply bg-border;
   @apply -mx-1 my-1 h-px;
 }
+
+/* ELEVATIONS */
+
+.select-content--sunken {
+  @apply bg-background-sunken shadow-shadow-sunken border-border-sunken;
+}
+.select-content--sunken .select-item {
+  --mix-color: var(--color-background-sunken);
+}
+
+.select-content--base {
+  @apply bg-background shadow-shadow-base border-border-base;
+}
+.select-content--base .select-item {
+  --mix-color: var(--color-background);
+}
+
+.select-content--raised {
+  @apply bg-background-raised shadow-shadow-raised border-border-raised;
+}
+.select-content--raised .select-item {
+  --mix-color: var(--color-background-raised);
+}
+
+.select-content--overlay {
+  @apply bg-background-overlay shadow-shadow-overlay border-border-overlay;
+}
+.select-content--overlay .select-item {
+  --mix-color: var(--color-background-overlay);
+}
+
+.select-content--floating {
+  @apply bg-background-floating shadow-shadow-floating border-border-floating;
+}
+.select-content--floating .select-item {
+  --mix-color: var(--color-background-floating);
+}

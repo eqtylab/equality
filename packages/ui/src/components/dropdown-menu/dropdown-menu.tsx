@@ -1,8 +1,10 @@
 import * as React from 'react';
 import * as DropdownMenuPrimitive from '@radix-ui/react-dropdown-menu';
+import { VariantProps } from 'class-variance-authority';
 import { Check, ChevronRight, Circle } from 'lucide-react';
 
 import styles from '@/components/dropdown-menu/dropdown-menu.module.css';
+import { ELEVATION, generateElevationVariants } from '@/lib/elevations';
 import { cn, getThemeProviderRoot } from '@/lib/utils';
 
 const CheckIcon = Check as React.ComponentType<{ className?: string }>;
@@ -58,15 +60,26 @@ const DropdownMenuSubContent = React.forwardRef<
 ));
 DropdownMenuSubContent.displayName = DropdownMenuPrimitive.SubContent.displayName;
 
+const dropdownMenuContentElevationVariants = generateElevationVariants(
+  styles,
+  'dropdown-menu-content',
+  ELEVATION.OVERLAY
+);
+
 const DropdownMenuContent = React.forwardRef<
   React.ElementRef<typeof DropdownMenuPrimitive.Content>,
-  React.ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.Content>
->(({ className, sideOffset = 4, ...props }, ref) => (
+  React.ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.Content> &
+    VariantProps<typeof dropdownMenuContentElevationVariants>
+>(({ className, sideOffset = 4, elevation = ELEVATION.OVERLAY, ...props }, ref) => (
   <DropdownMenuPortal>
     <DropdownMenuPrimitive.Content
       ref={ref}
       sideOffset={sideOffset}
-      className={cn(styles['dropdown-menu-content'], className)}
+      className={cn(
+        styles['dropdown-menu-content'],
+        dropdownMenuContentElevationVariants({ elevation }),
+        className
+      )}
       {...props}
     />
   </DropdownMenuPortal>
