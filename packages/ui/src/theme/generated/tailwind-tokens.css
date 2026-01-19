@@ -11,10 +11,12 @@
   --color-amber-700: var(--color-amber-700);
   --color-amber-800: var(--color-amber-800);
   --color-amber-900: var(--color-amber-900);
+  --color-background-base: var(--color-background-base);
   --color-background-floating: var(--color-background-floating);
   --color-background-overlay: var(--color-background-overlay);
   --color-background-raised: var(--color-background-raised);
   --color-background-sunken: var(--color-background-sunken);
+  --color-background-top: var(--color-background-top);
   --color-background: var(--color-background);
   --color-badge-background-accepted: var(--color-badge-background-accepted);
   --color-badge-background-comment: var(--color-badge-background-comment);
@@ -56,6 +58,12 @@
   --color-blue-700: var(--color-blue-700);
   --color-blue-800: var(--color-blue-800);
   --color-blue-900: var(--color-blue-900);
+  --color-border-base: var(--color-border-base);
+  --color-border-floating: var(--color-border-floating);
+  --color-border-overlay: var(--color-border-overlay);
+  --color-border-raised: var(--color-border-raised);
+  --color-border-sunken: var(--color-border-sunken);
+  --color-border-top: var(--color-border-top);
   --color-border: var(--color-border);
   --color-brand-green: var(--color-brand-green);
   --color-brand-primary: var(--color-brand-primary);

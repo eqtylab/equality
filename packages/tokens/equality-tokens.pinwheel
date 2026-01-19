@@ -1189,102 +1189,24 @@
           </color>
           <buildGroupId>86B9D7D8-F74A-4CAE-B006-65451BBEDAB9</buildGroupId>
         </colorItem>
-        <group>
-          <id>1B65AE24-4667-4FF5-A755-DEF6F77AB63E</id>
+        <colorItem>
+          <id>8DD0C915-EC77-43DD-A7AC-CFE330D2284D</id>
           <name>Background</name>
-          <expanded>1</expanded>
-          <colorItem>
-            <id>C02F313B-235E-4484-AE31-E375D3A96229</id>
-            <name>Background Sunken</name>
-            <profile>DisplayP3</profile>
-            <format>7</format>
-            <appearance>lightanddark</appearance>
-            <color>
-              <variants>
-                <variant>
-                  <rgba>0.81373 0.81968 0.82669 1</rgba>
-                </variant>
-                <variant type="dark">
-                  <rgba>0.035468 0.03547 0.042676 1</rgba>
-                </variant>
-              </variants>
-            </color>
-            <buildGroupId>86B9D7D8-F74A-4CAE-B006-65451BBEDAB9</buildGroupId>
-          </colorItem>
-          <colorItem>
-            <id>8DD0C915-EC77-43DD-A7AC-CFE330D2284D</id>
-            <name>Background</name>
-            <profile>DisplayP3</profile>
-            <format>7</format>
-            <appearance>lightanddark</appearance>
-            <color>
-              <variants>
-                <variant>
-                  <rgba>0.94238 0.9485 0.9557 1</rgba>
-                </variant>
-                <variant type="dark">
-                  <rgba>0.060177 0.060194 0.067867 1</rgba>
-                </variant>
-              </variants>
-            </color>
-            <buildGroupId>86B9D7D8-F74A-4CAE-B006-65451BBEDAB9</buildGroupId>
-          </colorItem>
-          <colorItem>
-            <id>4CCB3E1D-AEA4-44AA-B82B-5C5A4BEF7D27</id>
-            <name>Background Raised</name>
-            <profile>DisplayP3</profile>
-            <format>7</format>
-            <appearance>lightanddark</appearance>
-            <color>
-              <variants>
-                <variant>
-                  <rgba>0.90341 0.90948 0.91663 1</rgba>
-                </variant>
-                <variant type="dark">
-                  <rgba>0.085234 0.085263 0.093244 1</rgba>
-                </variant>
-              </variants>
-            </color>
-            <buildGroupId>86B9D7D8-F74A-4CAE-B006-65451BBEDAB9</buildGroupId>
-          </colorItem>
-          <colorItem>
-            <id>11E9B8A6-2EE8-4732-A9B8-7FE42D1F0346</id>
-            <name>Background Overlay</name>
-            <profile>DisplayP3</profile>
-            <format>7</format>
-            <appearance>lightanddark</appearance>
-            <color>
-              <variants>
-                <variant>
-                  <rgba>0.86476 0.87078 0.87787 1</rgba>
-                </variant>
-                <variant type="dark">
-                  <rgba>0.11214 0.11218 0.12044 1</rgba>
-                </variant>
-              </variants>
-            </color>
-            <buildGroupId>86B9D7D8-F74A-4CAE-B006-65451BBEDAB9</buildGroupId>
-          </colorItem>
-          <colorItem>
-            <id>4E15FED3-BFA6-47D4-910B-D285FCDB57F1</id>
-            <name>Background Floating</name>
-            <profile>DisplayP3</profile>
-            <format>7</format>
-            <appearance>lightanddark</appearance>
-            <color>
-              <variants>
-                <variant>
-                  <rgba>0.82643 0.8324 0.83943 1</rgba>
-                </variant>
-                <variant type="dark">
-                  <rgba>0.13994 0.13998 0.14851 1</rgba>
-                </variant>
-              </variants>
-            </color>
-            <buildGroupId>86B9D7D8-F74A-4CAE-B006-65451BBEDAB9</buildGroupId>
-          </colorItem>
+          <profile>DisplayP3</profile>
+          <format>7</format>
+          <appearance>lightanddark</appearance>
+          <color>
+            <variants>
+              <variant>
+                <rgba>0.82643 0.8324 0.83943 1</rgba>
+              </variant>
+              <variant type="dark">
+                <rgba>0.060177 0.060194 0.067867 1</rgba>
+              </variant>
+            </variants>
+          </color>
           <buildGroupId>86B9D7D8-F74A-4CAE-B006-65451BBEDAB9</buildGroupId>
-        </group>
+        </colorItem>
         <alias>
           <name>Focus Ring</name>
           <type>3</type>
@@ -1302,11 +1224,209 @@
           <typeDark>3</typeDark>
           <appearance>lightanddark</appearance>
           <referencedItemId>24FB2A07-ED91-45F9-B8E8-356DACAC4731</referencedItemId>
-          <subIndex>1</subIndex>
+          <subIndex>2</subIndex>
           <referencedItemIdDark>24FB2A07-ED91-45F9-B8E8-356DACAC4731</referencedItemIdDark>
           <subIndexDark>7</subIndexDark>
           <buildGroupId>86B9D7D8-F74A-4CAE-B006-65451BBEDAB9</buildGroupId>
         </alias>
+        <colorItem>
+          <id>C02F313B-235E-4484-AE31-E375D3A96229</id>
+          <name>Background Sunken</name>
+          <profile>DisplayP3</profile>
+          <format>7</format>
+          <appearance>lightanddark</appearance>
+          <color>
+            <variants>
+              <variant>
+                <rgba>0.77584 0.78174 0.78869 1</rgba>
+              </variant>
+              <variant type="dark">
+                <rgba>0.035468 0.03547 0.042676 1</rgba>
+              </variant>
+            </variants>
+          </color>
+          <buildGroupId>86B9D7D8-F74A-4CAE-B006-65451BBEDAB9</buildGroupId>
+        </colorItem>
+        <alias>
+          <name>Background Base</name>
+          <type>1</type>
+          <typeDark>1</typeDark>
+          <appearance>lightanddark</appearance>
+          <referencedItemId>8DD0C915-EC77-43DD-A7AC-CFE330D2284D</referencedItemId>
+          <referencedItemIdDark>8DD0C915-EC77-43DD-A7AC-CFE330D2284D</referencedItemIdDark>
+          <buildGroupId>86B9D7D8-F74A-4CAE-B006-65451BBEDAB9</buildGroupId>
+        </alias>
+        <colorItem>
+          <id>4CCB3E1D-AEA4-44AA-B82B-5C5A4BEF7D27</id>
+          <name>Background Raised</name>
+          <profile>DisplayP3</profile>
+          <format>7</format>
+          <appearance>lightanddark</appearance>
+          <color>
+            <variants>
+              <variant>
+                <rgba>0.86476 0.87078 0.87787 1</rgba>
+              </variant>
+              <variant type="dark">
+                <rgba>0.085234 0.085263 0.093244 1</rgba>
+              </variant>
+            </variants>
+          </color>
+          <buildGroupId>86B9D7D8-F74A-4CAE-B006-65451BBEDAB9</buildGroupId>
+        </colorItem>
+        <colorItem>
+          <id>11E9B8A6-2EE8-4732-A9B8-7FE42D1F0346</id>
+          <name>Background Overlay</name>
+          <profile>DisplayP3</profile>
+          <format>7</format>
+          <appearance>lightanddark</appearance>
+          <color>
+            <variants>
+              <variant>
+                <rgba>0.90341 0.90948 0.91663 1</rgba>
+              </variant>
+              <variant type="dark">
+                <rgba>0.11214 0.11218 0.12044 1</rgba>
+              </variant>
+            </variants>
+          </color>
+          <buildGroupId>86B9D7D8-F74A-4CAE-B006-65451BBEDAB9</buildGroupId>
+        </colorItem>
+        <colorItem>
+          <id>4E15FED3-BFA6-47D4-910B-D285FCDB57F1</id>
+          <name>Background Floating</name>
+          <profile>DisplayP3</profile>
+          <format>7</format>
+          <appearance>lightanddark</appearance>
+          <color>
+            <variants>
+              <variant>
+                <rgba>0.94238 0.9485 0.9557 1</rgba>
+              </variant>
+              <variant type="dark">
+                <rgba>0.13994 0.13998 0.14851 1</rgba>
+              </variant>
+            </variants>
+          </color>
+          <buildGroupId>86B9D7D8-F74A-4CAE-B006-65451BBEDAB9</buildGroupId>
+        </colorItem>
+        <colorItem>
+          <id>D2D914F9-2851-4DF5-B8E3-71FF9CF3EDA9</id>
+          <name>Background Top</name>
+          <profile>DisplayP3</profile>
+          <format>7</format>
+          <appearance>lightanddark</appearance>
+          <color>
+            <variants>
+              <variant>
+                <rgba>0.98165 0.98782 0.99508 1</rgba>
+              </variant>
+              <variant type="dark">
+                <rgba>0.13994 0.13998 0.14851 1</rgba>
+              </variant>
+            </variants>
+          </color>
+          <buildGroupId>86B9D7D8-F74A-4CAE-B006-65451BBEDAB9</buildGroupId>
+        </colorItem>
+        <colorItem>
+          <id>877D681D-6C70-40A8-B8C7-C3A5D5FE5307</id>
+          <name>Border Sunken</name>
+          <profile>DisplayP3</profile>
+          <format>7</format>
+          <appearance>lightanddark</appearance>
+          <color>
+            <variants>
+              <variant>
+                <rgba>0.81373 0.81968 0.82669 1</rgba>
+              </variant>
+              <variant type="dark">
+                <rgba>0.035468 0.03547 0.042676 1</rgba>
+              </variant>
+            </variants>
+          </color>
+          <buildGroupId>86B9D7D8-F74A-4CAE-B006-65451BBEDAB9</buildGroupId>
+        </colorItem>
+        <alias>
+          <name>Border Base</name>
+          <type>1</type>
+          <typeDark>1</typeDark>
+          <appearance>lightanddark</appearance>
+          <referencedItemId>8DD0C915-EC77-43DD-A7AC-CFE330D2284D</referencedItemId>
+          <referencedItemIdDark>8DD0C915-EC77-43DD-A7AC-CFE330D2284D</referencedItemIdDark>
+          <buildGroupId>86B9D7D8-F74A-4CAE-B006-65451BBEDAB9</buildGroupId>
+        </alias>
+        <colorItem>
+          <id>FCCC8194-9D90-40C3-9527-29073187A68D</id>
+          <name>Border Raised</name>
+          <profile>DisplayP3</profile>
+          <format>7</format>
+          <appearance>lightanddark</appearance>
+          <color>
+            <variants>
+              <variant>
+                <rgba>0.90341 0.90948 0.91663 1</rgba>
+              </variant>
+              <variant type="dark">
+                <rgba>0.085234 0.085263 0.093244 1</rgba>
+              </variant>
+            </variants>
+          </color>
+          <buildGroupId>86B9D7D8-F74A-4CAE-B006-65451BBEDAB9</buildGroupId>
+        </colorItem>
+        <colorItem>
+          <id>8013131C-EDCE-4EEB-B9CE-089BDB54D58A</id>
+          <name>Border Overlay</name>
+          <profile>DisplayP3</profile>
+          <format>7</format>
+          <appearance>lightanddark</appearance>
+          <color>
+            <variants>
+              <variant>
+                <rgba>0.86476 0.87078 0.87787 1</rgba>
+              </variant>
+              <variant type="dark">
+                <rgba>0.11214 0.11218 0.12044 1</rgba>
+              </variant>
+            </variants>
+          </color>
+          <buildGroupId>86B9D7D8-F74A-4CAE-B006-65451BBEDAB9</buildGroupId>
+        </colorItem>
+        <colorItem>
+          <id>55AD9E0C-C95D-4474-BF8F-8A5007570498</id>
+          <name>Border Floating</name>
+          <profile>DisplayP3</profile>
+          <format>7</format>
+          <appearance>lightanddark</appearance>
+          <color>
+            <variants>
+              <variant>
+                <rgba>0.82643 0.8324 0.83943 1</rgba>
+              </variant>
+              <variant type="dark">
+                <rgba>0.13994 0.13998 0.14851 1</rgba>
+              </variant>
+            </variants>
+          </color>
+          <buildGroupId>86B9D7D8-F74A-4CAE-B006-65451BBEDAB9</buildGroupId>
+        </colorItem>
+        <colorItem>
+          <id>C1513DB9-AC65-4188-A286-3678335AC5E6</id>
+          <name>Border Top</name>
+          <profile>DisplayP3</profile>
+          <format>7</format>
+          <appearance>lightanddark</appearance>
+          <color>
+            <variants>
+              <variant>
+                <rgba>0.82643 0.8324 0.83943 1</rgba>
+              </variant>
+              <variant type="dark">
+                <rgba>0.13994 0.13998 0.14851 1</rgba>
+              </variant>
+            </variants>
+          </color>
+          <buildGroupId>86B9D7D8-F74A-4CAE-B006-65451BBEDAB9</buildGroupId>
+        </colorItem>
         <group>
           <id>3AF4332D-089A-4B0F-B382-199809A5D0F8</id>
           <name>Badge</name>
