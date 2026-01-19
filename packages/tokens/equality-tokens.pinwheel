@@ -1231,6 +1231,24 @@
         </alias>
         <colorItem>
           <id>C02F313B-235E-4484-AE31-E375D3A96229</id>
+          <name>Background Bottom</name>
+          <profile>DisplayP3</profile>
+          <format>7</format>
+          <appearance>lightanddark</appearance>
+          <color>
+            <variants>
+              <variant>
+                <rgba>0.73829 0.74414 0.75102 1</rgba>
+              </variant>
+              <variant type="dark">
+                <rgba>1.094e-05 5.131e-06 6.4691e-05 1</rgba>
+              </variant>
+            </variants>
+          </color>
+          <buildGroupId>86B9D7D8-F74A-4CAE-B006-65451BBEDAB9</buildGroupId>
+        </colorItem>
+        <colorItem>
+          <id>E81B8262-88C5-4E78-88D4-5AAA2C106947</id>
           <name>Background Sunken</name>
           <profile>DisplayP3</profile>
           <format>7</format>
@@ -1328,6 +1346,24 @@
           </color>
           <buildGroupId>86B9D7D8-F74A-4CAE-B006-65451BBEDAB9</buildGroupId>
         </colorItem>
+        <colorItem>
+          <id>FCCC8194-9D90-40C3-9527-29073187A68D</id>
+          <name>Border Bottom</name>
+          <profile>DisplayP3</profile>
+          <format>7</format>
+          <appearance>lightanddark</appearance>
+          <color>
+            <variants>
+              <variant>
+                <rgba>0.67651 0.68226 0.68903 1</rgba>
+              </variant>
+              <variant type="dark">
+                <rgba>0.15893 0.15898 0.16767 1</rgba>
+              </variant>
+            </variants>
+          </color>
+          <buildGroupId>86B9D7D8-F74A-4CAE-B006-65451BBEDAB9</buildGroupId>
+        </colorItem>
         <alias>
           <name>Border Sunken</name>
           <type>3</type>
@@ -1351,7 +1387,7 @@
           <buildGroupId>86B9D7D8-F74A-4CAE-B006-65451BBEDAB9</buildGroupId>
         </alias>
         <colorItem>
-          <id>FCCC8194-9D90-40C3-9527-29073187A68D</id>
+          <id>AFE8A16E-7D82-46B7-994D-86E56F786FAA</id>
           <name>Border Raised</name>
           <profile>DisplayP3</profile>
           <format>7</format>

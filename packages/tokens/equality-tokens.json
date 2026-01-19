@@ -17,6 +17,14 @@
           "hex": "#0F0F11"
         }
       },
+      "background-bottom": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "display-p3",
+          "components": [1.094e-5, 5.131e-6, 6.469e-5],
+          "hex": "#000000"
+        }
+      },
       "background-floating": {
         "$type": "color",
         "$value": {
@@ -921,6 +929,14 @@
           "colorSpace": "display-p3",
           "components": [0.8264, 0.8324, 0.8394],
           "hex": "#D3D4D6"
+        }
+      },
+      "background-bottom": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "display-p3",
+          "components": [0.7383, 0.7441, 0.751],
+          "hex": "#BCBEC0"
         }
       },
       "background-floating": {

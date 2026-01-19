@@ -10,6 +10,7 @@
   --color-amber-800: color(display-p3 0.2643 0.1753 0.09139);
   --color-amber-900: color(display-p3 0.1121 0.07777 0.04646);
   --color-background-base: color(display-p3 0.8264 0.8324 0.8394);
+  --color-background-bottom: color(display-p3 0.7383 0.7441 0.751);
   --color-background-floating: color(display-p3 0.9424 0.9485 0.9557);
   --color-background-overlay: color(display-p3 0.9034 0.9095 0.9166);
   --color-background-raised: color(display-p3 0.8648 0.8708 0.8779);
@@ -248,6 +249,7 @@
 
   /* Dark theme */
   --dark-color-background-base: color(display-p3 0.06018 0.06019 0.06787);
+  --dark-color-background-bottom: color(display-p3 0.00001094 0.000005131 0.00006469);
   --dark-color-background-floating: color(display-p3 0.1399 0.14 0.1485);
   --dark-color-background-overlay: color(display-p3 0.1121 0.1122 0.1204);
   --dark-color-background-raised: color(display-p3 0.08523 0.08526 0.09324);
