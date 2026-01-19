@@ -63,6 +63,38 @@ export function DisplayFieldWithActionsDemo({
   );
 }
 
+const DisplayFieldWithSlotExample = ({
+  truncate = false,
+  copy = true,
+  prefix = "",
+  variant = "neutral",
+  elevation,
+}: {
+  truncate?: true | false | "middle";
+  copy?: boolean;
+  prefix?: string;
+  variant?: "neutral" | "success" | "neutralCheck" | "failure";
+  elevation?: Elevation;
+}) => {
+  return (
+    <DisplayField
+      truncate={truncate}
+      copy={copy}
+      prefix={prefix}
+      variant={variant}
+      elevation={elevation}
+      slot={
+        <div className="flex flex-col gap-2">
+          <div>No additional data available</div>
+          <div>VComp Container</div>
+        </div>
+      }
+    >
+      zQ3shrGxRrYyWixJGrr45jJ1MEY76YQZ4KVbt9CYRsTWZ5MWV
+    </DisplayField>
+  );
+};
+
 export const DisplayFieldWithSlotDemo = ({
   truncate = false,
   copy = true,
@@ -78,30 +110,16 @@ export const DisplayFieldWithSlotDemo = ({
   elevation?: Elevation;
   withinCard?: boolean;
 }) => {
-  const DisplayFieldExample = () => {
-    return (
-      <DisplayField
-        truncate={truncate}
-        copy={copy}
-        prefix={prefix}
-        variant={variant}
-        elevation={elevation}
-        slot={
-          <div className="flex flex-col gap-2">
-            <div>No additional data available</div>
-            <div>VComp Container</div>
-          </div>
-        }
-      >
-        zQ3shrGxRrYyWixJGrr45jJ1MEY76YQZ4KVbt9CYRsTWZ5MWV
-      </DisplayField>
-    );
-  };
-
   if (withinCard) {
     return (
       <div className="space-y-6">
-        <DisplayFieldExample />
+        <DisplayFieldWithSlotExample
+          truncate={truncate}
+          copy={copy}
+          prefix={prefix}
+          variant={variant}
+          elevation={elevation}
+        />
         <Card elevation={elevation}>
           <CardContent className="border-border border-b">
             <Heading as="h5">
@@ -109,12 +127,26 @@ export const DisplayFieldWithSlotDemo = ({
             </Heading>
           </CardContent>
           <CardContent>
-            <DisplayFieldExample />
+            <DisplayFieldWithSlotExample
+              truncate={truncate}
+              copy={copy}
+              prefix={prefix}
+              variant={variant}
+              elevation={elevation}
+            />
           </CardContent>
         </Card>
       </div>
     );
   }
 
-  return <DisplayFieldExample />;
+  return (
+    <DisplayFieldWithSlotExample
+      truncate={truncate}
+      copy={copy}
+      prefix={prefix}
+      variant={variant}
+      elevation={elevation}
+    />
+  );
 };
