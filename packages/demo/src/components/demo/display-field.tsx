@@ -1,4 +1,10 @@
-import { DisplayField, IconButton } from "@eqtylab/equality";
+import {
+  Card,
+  CardContent,
+  DisplayField,
+  Heading,
+  IconButton,
+} from "@eqtylab/equality";
 import type { Elevation } from "@eqtylab/equality";
 
 export const DisplayFieldDemo = ({
@@ -63,28 +69,52 @@ export const DisplayFieldWithSlotDemo = ({
   prefix = "",
   variant = "neutral",
   elevation,
+  withinCard = false,
 }: {
   truncate?: true | false | "middle";
   copy?: boolean;
   prefix?: string;
   variant?: "neutral" | "success" | "neutralCheck" | "failure";
   elevation?: Elevation;
+  withinCard?: boolean;
 }) => {
-  return (
-    <DisplayField
-      truncate={truncate}
-      copy={copy}
-      prefix={prefix}
-      variant={variant}
-      elevation={elevation}
-      slot={
-        <div className="flex flex-col gap-2">
-          <div>No additional data available</div>
-          <div>VComp Container</div>
-        </div>
-      }
-    >
-      zQ3shrGxRrYyWixJGrr45jJ1MEY76YQZ4KVbt9CYRsTWZ5MWV
-    </DisplayField>
-  );
+  const DisplayFieldExample = () => {
+    return (
+      <DisplayField
+        truncate={truncate}
+        copy={copy}
+        prefix={prefix}
+        variant={variant}
+        elevation={elevation}
+        slot={
+          <div className="flex flex-col gap-2">
+            <div>No additional data available</div>
+            <div>VComp Container</div>
+          </div>
+        }
+      >
+        zQ3shrGxRrYyWixJGrr45jJ1MEY76YQZ4KVbt9CYRsTWZ5MWV
+      </DisplayField>
+    );
+  };
+
+  if (withinCard) {
+    return (
+      <div className="space-y-6">
+        <DisplayFieldExample />
+        <Card elevation={elevation}>
+          <CardContent className="border-border border-b">
+            <Heading as="h5">
+              Wrapped in Card Component with {elevation} elevation
+            </Heading>
+          </CardContent>
+          <CardContent>
+            <DisplayFieldExample />
+          </CardContent>
+        </Card>
+      </div>
+    );
+  }
+
+  return <DisplayFieldExample />;
 };
