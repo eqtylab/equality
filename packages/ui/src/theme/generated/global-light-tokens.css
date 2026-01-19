@@ -60,12 +60,12 @@ html {
   --color-blue-700: color(display-p3 0.1442 0.2013 0.4303);
   --color-blue-800: color(display-p3 0.1017 0.1411 0.2832);
   --color-blue-900: color(display-p3 0.06177 0.08243 0.1475);
-  --color-border-base: color(display-p3 0.8264 0.8324 0.8394);
-  --color-border-floating: color(display-p3 0.8264 0.8324 0.8394);
-  --color-border-overlay: color(display-p3 0.8648 0.8708 0.8779);
-  --color-border-raised: color(display-p3 0.9034 0.9095 0.9166);
-  --color-border-sunken: color(display-p3 0.8137 0.8197 0.8267);
-  --color-border-top: color(display-p3 0.8264 0.8324 0.8394);
+  --color-border-base: color(display-p3 0.7432 0.7432 0.7432);
+  --color-border-floating: color(display-p3 0.8011 0.807 0.814);
+  --color-border-overlay: color(display-p3 0.8011 0.807 0.814);
+  --color-border-raised: color(display-p3 0.7383 0.7441 0.751);
+  --color-border-sunken: color(display-p3 0.7432 0.7432 0.7432);
+  --color-border-top: color(display-p3 0.8011 0.807 0.814);
   --color-border: color(display-p3 0.7432 0.7432 0.7432);
   --color-brand-green: color(display-p3 0.4374 0.6383 0.4134);
   --color-brand-primary: color(display-p3 0.7319 0.6108 0.8873);

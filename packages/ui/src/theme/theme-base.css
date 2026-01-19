@@ -28,11 +28,6 @@
   /* Extra for further up subcomponents */
 
   --color-border-bottom: transparent; /* Extra for further down subcomponents */
-  --color-border-sunken: transparent;
-  --color-border-base: var(--color-card-border);
-  --color-border-raised: var(--color-card-border);
-  --color-border-overlay: var(--color-card-border);
-  --color-border-floating: var(--color-card-border);
   --color-border-top: var(--color-card-border); /* Extra for further up subcomponents */
 
   --color-shadow-bottom: transparent; /* Extra for further down subcomponents */

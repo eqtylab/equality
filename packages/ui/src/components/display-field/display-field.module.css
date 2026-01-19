@@ -87,7 +87,7 @@
   @apply bg-background border-border-base;
 }
 .display-field--base .slot {
-  @apply bg-background-sunken border-border-sunken;
+  @apply bg-background-sunken border-border-base;
 }
 
 .display-field--raised {

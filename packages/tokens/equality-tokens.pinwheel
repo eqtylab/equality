@@ -1328,31 +1328,26 @@
           </color>
           <buildGroupId>86B9D7D8-F74A-4CAE-B006-65451BBEDAB9</buildGroupId>
         </colorItem>
-        <colorItem>
-          <id>877D681D-6C70-40A8-B8C7-C3A5D5FE5307</id>
+        <alias>
           <name>Border Sunken</name>
-          <profile>DisplayP3</profile>
-          <format>7</format>
+          <type>3</type>
+          <typeDark>3</typeDark>
           <appearance>lightanddark</appearance>
-          <color>
-            <variants>
-              <variant>
-                <rgba>0.81373 0.81968 0.82669 1</rgba>
-              </variant>
-              <variant type="dark">
-                <rgba>0.035468 0.03547 0.042676 1</rgba>
-              </variant>
-            </variants>
-          </color>
+          <referencedItemId>24FB2A07-ED91-45F9-B8E8-356DACAC4731</referencedItemId>
+          <subIndex>2</subIndex>
+          <referencedItemIdDark>24FB2A07-ED91-45F9-B8E8-356DACAC4731</referencedItemIdDark>
+          <subIndexDark>7</subIndexDark>
           <buildGroupId>86B9D7D8-F74A-4CAE-B006-65451BBEDAB9</buildGroupId>
-        </colorItem>
+        </alias>
         <alias>
           <name>Border Base</name>
-          <type>1</type>
-          <typeDark>1</typeDark>
+          <type>3</type>
+          <typeDark>3</typeDark>
           <appearance>lightanddark</appearance>
-          <referencedItemId>8DD0C915-EC77-43DD-A7AC-CFE330D2284D</referencedItemId>
-          <referencedItemIdDark>8DD0C915-EC77-43DD-A7AC-CFE330D2284D</referencedItemIdDark>
+          <referencedItemId>24FB2A07-ED91-45F9-B8E8-356DACAC4731</referencedItemId>
+          <subIndex>2</subIndex>
+          <referencedItemIdDark>24FB2A07-ED91-45F9-B8E8-356DACAC4731</referencedItemIdDark>
+          <subIndexDark>7</subIndexDark>
           <buildGroupId>86B9D7D8-F74A-4CAE-B006-65451BBEDAB9</buildGroupId>
         </alias>
         <colorItem>
@@ -1364,10 +1359,10 @@
           <color>
             <variants>
               <variant>
-                <rgba>0.90341 0.90948 0.91663 1</rgba>
+                <rgba>0.73829 0.74414 0.75102 1</rgba>
               </variant>
               <variant type="dark">
-                <rgba>0.085234 0.085263 0.093244 1</rgba>
+                <rgba>0.228 0.22807 0.23725 1</rgba>
               </variant>
             </variants>
           </color>
@@ -1382,10 +1377,10 @@
           <color>
             <variants>
               <variant>
-                <rgba>0.86476 0.87078 0.87787 1</rgba>
+                <rgba>0.80106 0.80699 0.81398 1</rgba>
               </variant>
               <variant type="dark">
-                <rgba>0.11214 0.11218 0.12044 1</rgba>
+                <rgba>0.27956 0.27963 0.28913 1</rgba>
               </variant>
             </variants>
           </color>
@@ -1400,10 +1395,10 @@
           <color>
             <variants>
               <variant>
-                <rgba>0.82643 0.8324 0.83943 1</rgba>
+                <rgba>0.80106 0.80699 0.81398 1</rgba>
               </variant>
               <variant type="dark">
-                <rgba>0.13994 0.13998 0.14851 1</rgba>
+                <rgba>0.33276 0.33284 0.34262 1</rgba>
               </variant>
             </variants>
           </color>
@@ -1418,10 +1413,10 @@
           <color>
             <variants>
               <variant>
-                <rgba>0.82643 0.8324 0.83943 1</rgba>
+                <rgba>0.80106 0.80699 0.81398 1</rgba>
               </variant>
               <variant type="dark">
-                <rgba>0.13994 0.13998 0.14851 1</rgba>
+                <rgba>0.33276 0.33284 0.34262 1</rgba>
               </variant>
             </variants>
           </color>
