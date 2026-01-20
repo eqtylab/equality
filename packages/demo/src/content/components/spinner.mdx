@@ -3,7 +3,7 @@ layout: "@demo/layouts/mdx-layout.astro"
 heading: "Spinner"
 ---
 
-import { Spinner } from "@eqtylab/equality";
+import { Spinner, ELEVATION } from "@eqtylab/equality";
 
 ## Size Variants
 
@@ -52,3 +52,25 @@ The special `neutral` variant adapts the spinner to use the primary text color, 
 ### Warning
 
 <Spinner client:only="react" variant="warning" />
+
+## Elevations
+
+### Sunken
+
+<Spinner client:only="react" variant="neutral" elevation={ELEVATION.SUNKEN} />
+
+### Base
+
+<Spinner client:only="react" variant="neutral" elevation={ELEVATION.BASE} />
+
+### Raised (default)
+
+<Spinner client:only="react" variant="neutral" elevation={ELEVATION.RAISED} />
+
+### Overlay
+
+<Spinner client:only="react" variant="neutral" elevation={ELEVATION.OVERLAY} />
+
+### Floating
+
+<Spinner client:only="react" variant="neutral" elevation={ELEVATION.FLOATING} />

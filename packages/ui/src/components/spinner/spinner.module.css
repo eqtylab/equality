@@ -12,7 +12,6 @@
 }
 
 .spinner-background {
-  @apply border-background-secondary;
   @apply rounded-full;
   @apply absolute inset-0;
 }
@@ -69,4 +68,26 @@
 
 .spinner.warning {
   @apply border-x-brand-yellow border-b-brand-yellow;
+}
+
+/* ELEVATION */
+
+.spinner-background--sunken {
+  @apply border-background-sunken;
+}
+
+.spinner-background--base {
+  @apply border-background-base;
+}
+
+.spinner-background--raised {
+  @apply border-background-raised;
+}
+
+.spinner-background--overlay {
+  @apply border-background-overlay;
+}
+
+.spinner-background--floating {
+  @apply border-background-floating;
 }
