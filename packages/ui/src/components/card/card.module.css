@@ -51,7 +51,7 @@
 }
 
 .card--base {
-  @apply bg-background shadow-shadow-base border-border-base;
+  @apply bg-background-base shadow-shadow-base border-border-base;
 }
 
 .card--raised {

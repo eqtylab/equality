@@ -84,7 +84,7 @@
   @apply shadow-shadow-base;
 }
 .display-field--base .display-field-inner {
-  @apply bg-background border-border-base;
+  @apply bg-background-base border-border-base;
 }
 .display-field--base .slot {
   @apply bg-background-sunken border-border-base;
@@ -97,7 +97,7 @@
   @apply bg-background-raised border-border-raised;
 }
 .display-field--raised .slot {
-  @apply bg-background border-border-base;
+  @apply bg-background-base border-border-base;
 }
 
 .display-field--overlay {
