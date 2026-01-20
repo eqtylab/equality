@@ -1,5 +1,6 @@
 import { Icon } from '@/components/icon/icon';
 import styles from '@/components/metric-card/metric-card.module.css';
+import { Elevation, ELEVATION, getRelativeElevation } from '@/lib/elevations';
 import { cn } from '@/lib/utils';
 
 type Variant = 'default' | 'primary' | 'danger' | 'success' | 'warning';
@@ -10,6 +11,7 @@ interface MetricCardProps {
   icon: React.ReactElement | string;
   variant?: Variant;
   className?: string;
+  elevation?: Elevation;
 }
 
 const VARIANTS: Record<Variant, { text: string; iconBg: string }> = {
@@ -35,7 +37,14 @@ const VARIANTS: Record<Variant, { text: string; iconBg: string }> = {
   },
 };
 
-const MetricCard = ({ value, label, icon, variant = 'default', className }: MetricCardProps) => {
+const MetricCard = ({
+  value,
+  label,
+  icon,
+  variant = 'default',
+  elevation = ELEVATION.RAISED,
+  className,
+}: MetricCardProps) => {
   const variantStyles = VARIANTS[variant];
 
   return (
@@ -47,6 +56,9 @@ const MetricCard = ({ value, label, icon, variant = 'default', className }: Metr
           size="md"
           background="circle"
           className={cn(variantStyles.iconBg, variantStyles.text)}
+          elevation={
+            elevation === ELEVATION.SUNKEN ? ELEVATION.BASE : getRelativeElevation(elevation, -1)
+          }
         />
       </div>
       <p className={styles.label}>{label}</p>

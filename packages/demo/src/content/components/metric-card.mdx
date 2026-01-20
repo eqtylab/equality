@@ -4,7 +4,7 @@ heading: "Metric Card"
 description: "Metric Card with sizes and variants"
 ---
 
-import { MetricCard } from "@eqtylab/equality";
+import { MetricCard, ELEVATION } from "@eqtylab/equality";
 
 ## Color Variants
 
@@ -27,3 +27,50 @@ import { MetricCard } from "@eqtylab/equality";
 ### Danger
 
 <MetricCard label="Failure" value={80} variant="danger" icon="AlertTriangle" />
+
+## Elevations
+
+### Sunken
+
+<MetricCard
+  label="Total"
+  value={100}
+  icon="Layers"
+  elevation={ELEVATION.SUNKEN}
+/>
+
+### Base
+
+<MetricCard
+  label="Total"
+  value={100}
+  icon="Layers"
+  elevation={ELEVATION.BASE}
+/>
+
+### Raised (default)
+
+<MetricCard
+  label="Total"
+  value={100}
+  icon="Layers"
+  elevation={ELEVATION.RAISED}
+/>
+
+### Overlay
+
+<MetricCard
+  label="Total"
+  value={100}
+  icon="Layers"
+  elevation={ELEVATION.OVERLAY}
+/>
+
+### Floating
+
+<MetricCard
+  label="Total"
+  value={100}
+  icon="Layers"
+  elevation={ELEVATION.FLOATING}
+/>

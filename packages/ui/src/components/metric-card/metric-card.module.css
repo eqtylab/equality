@@ -37,10 +37,6 @@
   @apply text-brand-yellow;
 }
 
-.value-container .bg-default {
-  @apply bg-background-secondary;
-}
-
 .value-container .bg-danger {
   --mix-color: var(--color-brand-red);
 }
