@@ -1,7 +1,14 @@
 import { forwardRef } from 'react';
 
 import styles from '@/components/radial-graph/radial-graph.module.css';
+import { Elevation, ELEVATION, generateElevationVariants } from '@/lib/elevations';
 import { cn } from '@/lib/utils';
+
+const radialGraphElevationVariants = generateElevationVariants(
+  styles,
+  'bar-background',
+  ELEVATION.RAISED
+);
 
 export interface RadialGraphProps {
   percentage: number;
@@ -10,6 +17,7 @@ export interface RadialGraphProps {
   subLabel?: string;
   graphSize?: 'sm' | 'md' | 'lg';
   variant?: 'primary' | 'success' | 'danger' | 'warning';
+  elevation?: Elevation;
 }
 
 const RadialGraph = forwardRef<HTMLDivElement, RadialGraphProps>(
@@ -21,6 +29,7 @@ const RadialGraph = forwardRef<HTMLDivElement, RadialGraphProps>(
       subLabel,
       graphSize = 'md',
       variant = 'primary',
+      elevation = ELEVATION.RAISED,
       ...props
     },
     ref
@@ -57,7 +66,12 @@ const RadialGraph = forwardRef<HTMLDivElement, RadialGraphProps>(
                     animationDelay: delay,
                   }}
                 >
-                  <div className={styles['bar-background']} />
+                  <div
+                    className={cn(
+                      styles['bar-background'],
+                      radialGraphElevationVariants({ elevation })
+                    )}
+                  />
                   <div
                     className={cn(
                       styles['bar-gradient'],

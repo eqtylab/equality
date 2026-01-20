@@ -44,7 +44,7 @@
 
 .bar-background {
   @apply absolute inset-0;
-  @apply from-background-secondary bg-linear-to-b to-50%;
+  @apply bg-linear-to-b to-50%;
 }
 
 .bar-gradient {
@@ -100,4 +100,26 @@
 
 .sub-label {
   @apply text-sm;
+}
+
+/* ELEVATION */
+
+.bar-background--sunken {
+  @apply from-background-sunken;
+}
+
+.bar-background--base {
+  @apply from-background-base;
+}
+
+.bar-background--raised {
+  @apply from-background-raised;
+}
+
+.bar-background--overlay {
+  @apply from-background-overlay;
+}
+
+.bar-background--floating {
+  @apply from-background-floating;
 }

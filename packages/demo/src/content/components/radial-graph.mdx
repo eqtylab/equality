@@ -4,7 +4,7 @@ heading: "Radial Graph"
 description: "Radial Graph with sizes and variants"
 ---
 
-import { RadialGraph } from "@eqtylab/equality";
+import { RadialGraph, ELEVATION } from "@eqtylab/equality";
 
 ## Text variants
 
@@ -58,3 +58,25 @@ This component supports color variants using either the brand primary color or s
 ### Warning
 
 <RadialGraph percentage={50} variant="warning" />
+
+## Elevations
+
+### Sunken
+
+<RadialGraph percentage={60} elevation={ELEVATION.SUNKEN} />
+
+### Base
+
+<RadialGraph percentage={60} elevation={ELEVATION.BASE} />
+
+### Raised (default)
+
+<RadialGraph percentage={60} elevation={ELEVATION.RAISED} />
+
+### Overlay
+
+<RadialGraph percentage={60} elevation={ELEVATION.OVERLAY} />
+
+### Floating
+
+<RadialGraph percentage={60} elevation={ELEVATION.FLOATING} />
