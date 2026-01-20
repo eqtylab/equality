@@ -1,6 +1,28 @@
 @reference '../../theme/theme.module.css';
 
 .skeleton {
-  @apply bg-background-secondary rounded-md;
+  @apply rounded-md;
   @apply animate-pulse;
+}
+
+/* ELEVATION */
+
+.skeleton--sunken {
+  @apply bg-background-sunken;
+}
+
+.skeleton--base {
+  @apply bg-background-base;
+}
+
+.skeleton--raised {
+  @apply bg-background-raised;
+}
+
+.skeleton--overlay {
+  @apply bg-background-overlay;
+}
+
+.skeleton--floating {
+  @apply bg-background-floating;
 }

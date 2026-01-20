@@ -4,8 +4,30 @@ heading: "Skeleton"
 description: "Skeleton components"
 ---
 
-import { Skeleton } from "@eqtylab/equality";
+import { Skeleton, ELEVATION } from "@eqtylab/equality";
 
 ## Skeleton
 
 <Skeleton className="h-12" />
+
+## Elevations
+
+### Sunken
+
+<Skeleton className="h-12" elevation={ELEVATION.SUNKEN} />
+
+### Base
+
+<Skeleton className="h-12" elevation={ELEVATION.BASE} />
+
+### Raised (default)
+
+<Skeleton className="h-12" elevation={ELEVATION.RAISED} />
+
+### Overlay
+
+<Skeleton className="h-12" elevation={ELEVATION.OVERLAY} />
+
+### Floating
+
+<Skeleton className="h-12" elevation={ELEVATION.FLOATING} />
