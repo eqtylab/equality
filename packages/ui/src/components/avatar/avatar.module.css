@@ -11,9 +11,8 @@
 }
 
 .avatar-fallback {
-  --mix-color: var(--color-background-secondary);
   @apply border-border border;
-  @apply from-background-secondary to-mixed-dark bg-gradient-to-br;
+  @apply to-mixed-dark bg-gradient-to-br;
   @apply size-full;
   @apply text-text-secondary font-semibold;
   @apply flex-center;
@@ -59,4 +58,31 @@
 .avatar.square,
 .avatar.square .avatar-fallback {
   @apply rounded-lg;
+}
+
+/* ELEVATION */
+
+.avatar-fallback--sunken {
+  --mix-color: var(--color-background-sunken);
+  @apply from-background-sunken;
+}
+
+.avatar-fallback--base {
+  --mix-color: var(--color-background-base);
+  @apply from-background-base;
+}
+
+.avatar-fallback--raised {
+  --mix-color: var(--color-background-raised);
+  @apply from-background-raised;
+}
+
+.avatar-fallback--overlay {
+  --mix-color: var(--color-background-overlay);
+  @apply from-background-overlay;
+}
+
+.avatar-fallback--floating {
+  --mix-color: var(--color-background-floating);
+  @apply from-background-floating;
 }

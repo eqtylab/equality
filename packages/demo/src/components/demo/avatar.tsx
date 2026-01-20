@@ -1,13 +1,21 @@
-import { Avatar, AvatarFallback, AvatarImage } from "@eqtylab/equality";
+import {
+  Avatar,
+  AvatarFallback,
+  AvatarImage,
+  ELEVATION,
+  type Elevation,
+} from "@eqtylab/equality";
 
 export const AvatarDemo = ({
   variant = "default",
   size,
   shape,
+  elevation = ELEVATION.RAISED,
 }: {
   variant?: "default" | "fallback";
   size?: "sm" | "md" | "lg" | "xl";
   shape?: "circle" | "square";
+  elevation?: Elevation;
 }) => {
   return (
     <Avatar size={size} shape={shape}>
@@ -18,7 +26,7 @@ export const AvatarDemo = ({
             : undefined
         }
       />
-      <AvatarFallback>RG</AvatarFallback>
+      <AvatarFallback elevation={elevation}>RG</AvatarFallback>
     </Avatar>
   );
 };

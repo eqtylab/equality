@@ -5,6 +5,7 @@ description: "Avatar with sizes and variants"
 ---
 
 import { AvatarDemo } from "@demo/components/demo/avatar";
+import { ELEVATION } from "@eqtylab/equality";
 
 ## Components
 
@@ -43,3 +44,41 @@ import { AvatarDemo } from "@demo/components/demo/avatar";
 ### Square
 
 <AvatarDemo client:only="react" variant="fallback" shape="square" />
+
+## Elevations
+
+### Sunken
+
+<AvatarDemo
+  client:only="react"
+  variant="fallback"
+  elevation={ELEVATION.SUNKEN}
+/>
+
+### Base
+
+<AvatarDemo client:only="react" variant="fallback" elevation={ELEVATION.BASE} />
+
+### Raised (default)
+
+<AvatarDemo
+  client:only="react"
+  variant="fallback"
+  elevation={ELEVATION.RAISED}
+/>
+
+### Overlay
+
+<AvatarDemo
+  client:only="react"
+  variant="fallback"
+  elevation={ELEVATION.OVERLAY}
+/>
+
+### Floating
+
+<AvatarDemo
+  client:only="react"
+  variant="fallback"
+  elevation={ELEVATION.FLOATING}
+/>

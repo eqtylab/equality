@@ -2,7 +2,14 @@ import * as React from 'react';
 import * as AvatarPrimitive from '@radix-ui/react-avatar';
 
 import styles from '@/components/avatar/avatar.module.css';
+import { Elevation, ELEVATION, generateElevationVariants } from '@/lib/elevations';
 import { cn } from '@/lib/utils';
+
+const avatarFallbackElevationVariants = generateElevationVariants(
+  styles,
+  'avatar-fallback',
+  ELEVATION.RAISED
+);
 
 interface AvatarProps extends React.ComponentPropsWithoutRef<typeof AvatarPrimitive.Root> {
   size?: 'sm' | 'md' | 'lg' | 'xl';
@@ -28,13 +35,22 @@ const AvatarImage = React.forwardRef<
 ));
 AvatarImage.displayName = AvatarPrimitive.Image.displayName;
 
+interface AvatarFallbackProps extends React.ComponentPropsWithoutRef<
+  typeof AvatarPrimitive.Fallback
+> {
+  elevation?: Elevation;
+}
 const AvatarFallback = React.forwardRef<
   React.ElementRef<typeof AvatarPrimitive.Fallback>,
-  React.ComponentPropsWithoutRef<typeof AvatarPrimitive.Fallback>
->(({ className, ...props }, ref) => (
+  AvatarFallbackProps
+>(({ className, elevation = ELEVATION.RAISED, ...props }, ref) => (
   <AvatarPrimitive.Fallback
     ref={ref}
-    className={cn(styles['avatar-fallback'], className)}
+    className={cn(
+      styles['avatar-fallback'],
+      avatarFallbackElevationVariants({ elevation }),
+      className
+    )}
     {...props}
   />
 ));
