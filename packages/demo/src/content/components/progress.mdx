@@ -5,6 +5,7 @@ description: "Progress with sizes and variants"
 ---
 
 import { Progress } from "@eqtylab/equality";
+import { ELEVATION } from "@eqtylab/equality";
 
 ## Percentage Examples
 
@@ -43,3 +44,50 @@ This component supports several color variants that correspond with the brand co
 ### Yellow
 
 <Progress value={50} color="yellow" client:only="react" />
+
+## Elevations
+
+### Sunken
+
+<Progress
+  value={50}
+  color="primary"
+  elevation={ELEVATION.SUNKEN}
+  client:only="react"
+/>
+
+### Base
+
+<Progress
+  value={50}
+  color="primary"
+  elevation={ELEVATION.BASE}
+  client:only="react"
+/>
+
+### Raised (default)
+
+<Progress
+  value={50}
+  color="primary"
+  elevation={ELEVATION.RAISED}
+  client:only="react"
+/>
+
+### Overlay
+
+<Progress
+  value={50}
+  color="primary"
+  elevation={ELEVATION.OVERLAY}
+  client:only="react"
+/>
+
+### Floating
+
+<Progress
+  value={50}
+  color="primary"
+  elevation={ELEVATION.FLOATING}
+  client:only="react"
+/>

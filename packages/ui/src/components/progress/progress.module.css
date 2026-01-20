@@ -1,7 +1,6 @@
 @reference '../../theme/theme.module.css';
 
 .progress {
-  @apply bg-background-secondary;
   @apply relative overflow-hidden;
   @apply h-1.5 w-full rounded-full;
 }
@@ -29,4 +28,26 @@
 
 .yellow {
   @apply bg-brand-yellow;
+}
+
+/* ELEVATION */
+
+.progress--sunken {
+  @apply bg-background-sunken;
+}
+
+.progress--base {
+  @apply bg-background-base;
+}
+
+.progress--raised {
+  @apply bg-background-raised;
+}
+
+.progress--overlay {
+  @apply bg-background-overlay;
+}
+
+.progress--floating {
+  @apply bg-background-floating;
 }

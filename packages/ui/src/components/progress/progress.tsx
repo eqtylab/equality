@@ -2,15 +2,23 @@ import * as React from 'react';
 import * as ProgressPrimitive from '@radix-ui/react-progress';
 
 import styles from '@/components/progress/progress.module.css';
+import { Elevation, ELEVATION, generateElevationVariants } from '@/lib/elevations';
 import { cn } from '@/lib/utils';
 
 interface ProgressProps extends React.ComponentPropsWithoutRef<typeof ProgressPrimitive.Root> {
   color?: 'primary' | 'secondary' | 'green' | 'red' | 'yellow';
+  elevation?: Elevation;
 }
 
+const progressElevationVariants = generateElevationVariants(styles, 'progress', ELEVATION.RAISED);
+
 const Progress = React.forwardRef<React.ElementRef<typeof ProgressPrimitive.Root>, ProgressProps>(
-  ({ className, value, color = 'primary', ...props }, ref) => (
-    <ProgressPrimitive.Root ref={ref} className={cn(styles['progress'], className)} {...props}>
+  ({ className, value, color = 'primary', elevation = ELEVATION.RAISED, ...props }, ref) => (
+    <ProgressPrimitive.Root
+      ref={ref}
+      className={cn(styles['progress'], progressElevationVariants({ elevation }), className)}
+      {...props}
+    >
       <ProgressPrimitive.Indicator
         className={cn(styles['progress-indicator'], styles[color])}
         style={{ transform: `translateX(-${100 - (value || 0)}%)` }}
