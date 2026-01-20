@@ -1,7 +1,13 @@
 html[data-equality-theme='dark'] {
   color-scheme: dark;
-  --color-background-secondary: color(display-p3 0.1792 0.1792 0.1792);
-  --color-background: color(display-p3 0.03547 0.03547 0.04268);
+  --color-background-base: color(display-p3 0.06018 0.06019 0.06787);
+  --color-background-bottom: color(display-p3 0.00001094 0.000005131 0.00006469);
+  --color-background-floating: color(display-p3 0.1399 0.14 0.1485);
+  --color-background-overlay: color(display-p3 0.1121 0.1122 0.1204);
+  --color-background-raised: color(display-p3 0.08523 0.08526 0.09324);
+  --color-background-sunken: color(display-p3 0.03547 0.03547 0.04268);
+  --color-background-top: color(display-p3 0.1399 0.14 0.1485);
+  --color-background: color(display-p3 0.06018 0.06019 0.06787);
   --color-badge-background-accepted: color(display-p3 0.2473 0.1645 0.5241);
   --color-badge-background-comment: color(display-p3 0.2473 0.1645 0.5241);
   --color-badge-background-compliant: color(display-p3 0.1689 0.3045 0.136);
@@ -32,6 +38,12 @@ html[data-equality-theme='dark'] {
   --color-badge-text-ready-for-review: color(display-p3 0.7289 0.7853 0.9401);
   --color-badge-text-success: color(display-p3 0.8698 0.8698 0.8698);
   --color-badge-text-warning: color(display-p3 0.9327 0.8528 0.7204);
+  --color-border-base: color(display-p3 0.1792 0.1792 0.1792);
+  --color-border-floating: color(display-p3 0.3328 0.3328 0.3426);
+  --color-border-overlay: color(display-p3 0.2796 0.2796 0.2891);
+  --color-border-raised: color(display-p3 0.228 0.2281 0.2372);
+  --color-border-sunken: color(display-p3 0.1792 0.1792 0.1792);
+  --color-border-top: color(display-p3 0.3328 0.3328 0.3426);
   --color-border: color(display-p3 0.1792 0.1792 0.1792);
   --color-button-danger-border: color(display-p3 0.7365 0.2216 0.2026);
   --color-button-danger-fill: color(display-p3 0.8114 0.4167 0.3761);

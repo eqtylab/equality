@@ -5,6 +5,7 @@ import { Check, TriangleAlert } from 'lucide-react';
 
 import { CopyButton } from '@/components/copy-button/copy-button';
 import styles from '@/components/display-field/display-field.module.css';
+import { ELEVATION, generateElevationVariants } from '@/lib/elevations';
 import { cn } from '@/lib/utils';
 
 const displayFieldVariants = cva('', {
@@ -21,6 +22,12 @@ const displayFieldVariants = cva('', {
   },
 });
 
+const displayFieldElevationVariants = generateElevationVariants(
+  styles,
+  'display-field',
+  ELEVATION.BASE
+);
+
 export interface DisplayFieldProps
   extends
     Omit<React.HTMLAttributes<HTMLDivElement>, 'slot'>,
@@ -31,11 +38,13 @@ export interface DisplayFieldProps
   copy?: boolean;
   actions?: React.ReactNode;
   slot?: React.ReactNode;
+  elevation?: string;
 }
 
 function DisplayField({
   className,
   variant,
+  elevation = ELEVATION.BASE,
   children,
   prefix,
   truncate = false,
@@ -105,7 +114,14 @@ function DisplayField({
   }, []);
 
   return (
-    <div className={cn(styles['display-field'], className)} {...props}>
+    <div
+      className={cn(
+        styles['display-field'],
+        displayFieldElevationVariants({ elevation }),
+        className
+      )}
+      {...props}
+    >
       <div className={styles['display-field-inner']}>
         {prefix && (
           <div className={cn(styles['prefix'], displayFieldVariants({ variant: variant }))}>

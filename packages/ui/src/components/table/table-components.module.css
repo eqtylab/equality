@@ -11,7 +11,6 @@
 }
 
 .table-header {
-  @apply bg-background-secondary;
   @apply [&_tr]:border-b;
 }
 
@@ -20,7 +19,7 @@
 }
 
 .table-footer {
-  @apply bg-greyscale-400 border-t last:[&>tr]:border-b-0;
+  @apply border-t last:[&>tr]:border-b-0;
   @apply font-medium;
 }
 
@@ -43,4 +42,46 @@
 
 .table-caption {
   @apply text-text-secondary mt-4 text-sm;
+}
+
+/* ELEVATION */
+
+.table--sunken .table-header,
+.table--sunken .table-footer {
+  @apply bg-background-base;
+}
+.table--sunken .table-body {
+  @apply bg-background-sunken;
+}
+
+.table--base .table-header,
+.table--base .table-footer {
+  @apply bg-background-raised;
+}
+.table--base .table-body {
+  @apply bg-background-base;
+}
+
+.table--raised .table-header,
+.table--raised .table-footer {
+  @apply bg-background-overlay;
+}
+.table--raised .table-body {
+  @apply bg-background-raised;
+}
+
+.table--overlay .table-header,
+.table--overlay .table-footer {
+  @apply bg-background-floating;
+}
+.table--overlay .table-body {
+  @apply bg-background-overlay;
+}
+
+.table--floating .table-header,
+.table--floating .table-footer {
+  @apply bg-background-top;
+}
+.table--floating .table-body {
+  @apply bg-background-floating;
 }

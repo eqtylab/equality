@@ -6,32 +6,108 @@ description: "Alert with sizes and variants"
 
 import { Alert, AlertTitle, AlertDescription } from "@eqtylab/equality";
 
+## Overview
+
+---
+
+The Alert component displays important messages to users, usually as a result of an action they took. Use alerts to communicate status, warnings, errors, or success states.
+
+- **Default:** General information.
+- **Success:** Positive outcomes or confirmations.
+- **Warning:** Cautionary information that needs attention.
+- **Danger:** Critical errors or destructive actions.
+
+## Usage
+
+---
+
+Import the component:
+
+```tsx
+import { Alert, AlertTitle, AlertDescription } from "@eqtylab/equality";
+```
+
+Basic usage with title and description:
+
+```tsx
+<Alert>
+  <AlertTitle>Heads up!</AlertTitle>
+  <AlertDescription>This is an important message.</AlertDescription>
+</Alert>
+```
+
 ## Variants
 
-### Default
+---
 
-<Alert>
-  <AlertTitle>Alert title</AlertTitle>
-  <AlertDescription>This is an alert description</AlertDescription>
-</Alert>
-
-### Success
+<div className="flex flex-col gap-4">
+  <Alert>
+    <AlertTitle>Default</AlertTitle>
+    <AlertDescription>This is a default alert for general information.</AlertDescription>
+  </Alert>
 
 <Alert variant="success">
-  <AlertTitle>Alert title</AlertTitle>
-  <AlertDescription>This is an alert description</AlertDescription>
+  <AlertTitle>Success</AlertTitle>
+  <AlertDescription>
+    Your changes have been saved successfully.
+  </AlertDescription>
 </Alert>
-
-### Warning
 
 <Alert variant="warning">
-  <AlertTitle>Alert title</AlertTitle>
-  <AlertDescription>This is an alert description</AlertDescription>
+  <AlertTitle>Warning</AlertTitle>
+  <AlertDescription>
+    Please review your input before continuing.
+  </AlertDescription>
 </Alert>
 
-### Danger
+  <Alert variant="danger">
+    <AlertTitle>Danger</AlertTitle>
+    <AlertDescription>A serious error occurred.</AlertDescription>
+  </Alert>
+</div>
+
+### Usage
+
+```tsx
+<Alert variant="success">
+  <AlertTitle>Success</AlertTitle>
+  <AlertDescription>Your changes have been saved successfully.</AlertDescription>
+</Alert>
+
+<Alert variant="warning">
+  <AlertTitle>Warning</AlertTitle>
+  <AlertDescription>Please review your input before continuing.</AlertDescription>
+</Alert>
 
 <Alert variant="danger">
-  <AlertTitle>Alert title</AlertTitle>
-  <AlertDescription>This is an alert description</AlertDescription>
+  <AlertTitle>Danger</AlertTitle>
+  <AlertDescription>A serious error occurred.</AlertDescription>
 </Alert>
+```
+
+## Slots
+
+---
+
+| Name               | Description                                          |
+| ------------------ | ---------------------------------------------------- |
+| `AlertTitle`       | Renders the alert heading as an `<h5>` element.      |
+| `AlertDescription` | Renders the alert body content as a `<div>` element. |
+
+## Props
+
+---
+
+### Alert
+
+| Name      | Description                   | Type                                      | Default   | Required |
+| --------- | ----------------------------- | ----------------------------------------- | --------- | -------- |
+| `variant` | The visual style of the alert | `default`, `success`, `warning`, `danger` | `default` | ❌       |
+
+### AlertTitle
+
+Accepts all standard HTML heading attributes.
+
+### AlertDescription
+
+Accepts all standard HTML paragraph attributes.

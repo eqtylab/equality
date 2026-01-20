@@ -6,11 +6,14 @@ import {
   SelectTrigger,
   SelectItem,
 } from "@eqtylab/equality";
+import type { Elevation } from "@eqtylab/equality";
 
 export function SelectDemo({
   variant = "default",
+  elevation,
 }: {
   variant?: "default" | "disabled" | "pre-selected";
+  elevation?: Elevation;
 }) {
   const [selectValue, setSelectValue] = useState<string>("");
 
@@ -20,7 +23,7 @@ export function SelectDemo({
         <SelectTrigger id="select-default">
           <SelectValue placeholder="Select an option" />
         </SelectTrigger>
-        <SelectContent>
+        <SelectContent elevation={elevation}>
           <SelectItem value="option1">Option 1</SelectItem>
           <SelectItem value="option2">Option 2</SelectItem>
           <SelectItem value="option3">Option 3</SelectItem>
@@ -35,7 +38,7 @@ export function SelectDemo({
         <SelectTrigger id="select-disabled">
           <SelectValue placeholder="Disabled select" />
         </SelectTrigger>
-        <SelectContent>
+        <SelectContent elevation={elevation}>
           <SelectItem value="option1">Option 1</SelectItem>
           <SelectItem value="option2">Option 2</SelectItem>
         </SelectContent>
@@ -49,7 +52,7 @@ export function SelectDemo({
         <SelectTrigger id="select-preselected">
           <SelectValue placeholder="Select an option" />
         </SelectTrigger>
-        <SelectContent>
+        <SelectContent elevation={elevation}>
           <SelectItem value="option1">Option 1</SelectItem>
           <SelectItem value="option2">Option 2</SelectItem>
           <SelectItem value="option3">Option 3</SelectItem>

@@ -4,6 +4,7 @@ import { cva, type VariantProps } from 'class-variance-authority';
 import * as LucideIcons from 'lucide-react';
 
 import styles from '@/components/icon/icon.module.css';
+import { ELEVATION, generateElevationVariants } from '@/lib/elevations';
 import { cn } from '@/lib/utils';
 
 const iconVariants = cva(styles['icon-container'], {
@@ -26,15 +27,20 @@ const iconVariants = cva(styles['icon-container'], {
   },
 });
 
+const iconElevationVariants = generateElevationVariants(styles, 'icon-container', ELEVATION.SUNKEN);
+
 export interface IconProps
-  extends React.HTMLAttributes<HTMLDivElement>, VariantProps<typeof iconVariants> {
+  extends
+    React.HTMLAttributes<HTMLDivElement>,
+    VariantProps<typeof iconVariants>,
+    VariantProps<typeof iconElevationVariants> {
   icon: React.ReactElement | string;
   size?: 'xs' | 'sm' | 'md' | 'lg';
   background?: 'square' | 'circle' | 'transparent';
 }
 
 const Icon = forwardRef<HTMLDivElement, IconProps>(
-  ({ className, size, background, icon, ...props }, ref) => {
+  ({ className, size, background, icon, elevation = ELEVATION.SUNKEN, ...props }, ref) => {
     let renderedIcon;
 
     if (typeof icon === 'string') {
@@ -63,7 +69,15 @@ const Icon = forwardRef<HTMLDivElement, IconProps>(
     }
 
     return (
-      <div ref={ref} className={cn(iconVariants({ size, background }), className)} {...props}>
+      <div
+        ref={ref}
+        className={cn(
+          iconVariants({ size, background }),
+          iconElevationVariants({ elevation }),
+          className
+        )}
+        {...props}
+      >
         {renderedIcon}
       </div>
     );

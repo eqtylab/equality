@@ -12,6 +12,7 @@ import {
   DropdownMenuTrigger,
 } from '@/components/dropdown-menu/dropdown-menu';
 import styles from '@/components/radio-dropdown/radio-dropdown.module.css';
+import { ELEVATION, Elevation } from '@/lib/elevations';
 
 const ChevronDownIcon = ChevronDown as React.ComponentType<{ className?: string }>;
 
@@ -25,6 +26,7 @@ interface RadioDropdownProps {
   label: string;
   options: FilterOption[];
   selectedValue: string;
+  dropdownElevation?: Elevation;
   onSelect: (value: string) => void;
   className?: string;
 }
@@ -33,6 +35,7 @@ const RadioDropdown = ({
   label,
   options,
   selectedValue,
+  dropdownElevation = ELEVATION.OVERLAY,
   onSelect,
   className,
 }: RadioDropdownProps) => {
@@ -57,7 +60,11 @@ const RadioDropdown = ({
           <ChevronDownIcon className={styles['chevron-icon']} />
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent align="end" className={styles['dropdown-menu-content']}>
+      <DropdownMenuContent
+        align="end"
+        className={styles['dropdown-menu-content']}
+        elevation={dropdownElevation}
+      >
         <DropdownMenuLabel>{label}</DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuRadioGroup value={selectedValue} onValueChange={onSelect}>

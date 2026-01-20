@@ -11,16 +11,22 @@ import {
   DropdownMenuTrigger,
 } from '@/components/dropdown-menu/dropdown-menu';
 import styles from '@/components/sort-selector/sort-selector.module.css';
+import { Elevation, ELEVATION } from '@/lib/elevations';
 import { cn } from '@/lib/utils';
 
 const ChevronDownIcon = ChevronDown as React.ComponentType<{ className?: string }>;
 
-export type SortField = 'name' | 'type' | 'createdAt' | 'updatedAt' | 'controls';
+export type SortField = 'name' | 'type' | 'createdAt' | 'updatedAt';
 export type SortOrder = 'asc' | 'desc';
+export type SortMode = 'created' | 'updated';
 
 interface SortSelectorProps {
   sortField: SortField;
+  defaultSortField?: SortField;
   sortOrder: SortOrder;
+  dropdownElevation?: Elevation;
+  defaultSortOrder?: SortOrder;
+  sortMode?: SortMode;
   setSortField: (field: SortField) => void;
   setSortOrder: (order: SortOrder) => void;
   setCurrentPage?: (page: number) => void;
@@ -30,7 +36,11 @@ interface SortSelectorProps {
 
 function SortSelector({
   sortField,
+  defaultSortField = 'name',
   sortOrder,
+  dropdownElevation = ELEVATION.OVERLAY,
+  defaultSortOrder = 'asc',
+  sortMode = 'created',
   setSortField,
   setSortOrder,
   setCurrentPage,
@@ -41,16 +51,21 @@ function SortSelector({
     { value: 'name-asc', label: 'Name (A-Z)' },
     { value: 'name-desc', label: 'Name (Z-A)' },
     ...(showDateOptions
-      ? [
-          { value: 'createdAt-desc', label: 'Recently Created' },
-          { value: 'createdAt-asc', label: 'Oldest Created' },
-        ]
+      ? sortMode === 'created'
+        ? [
+            { value: 'createdAt-desc', label: 'Recently Created' },
+            { value: 'createdAt-asc', label: 'Oldest Created' },
+          ]
+        : [
+            { value: 'updatedAt-desc', label: 'Recently Updated' },
+            { value: 'updatedAt-asc', label: 'Oldest Updated' },
+          ]
       : []),
   ] as const;
 
   const currentValue = `${sortField}-${sortOrder}`;
   const currentLabel = options.find((option) => option.value === currentValue)?.label || 'Sort';
-  const isDefaultSort = sortField === 'name' && sortOrder === 'asc';
+  const isDefaultSort = sortField === defaultSortField && sortOrder === defaultSortOrder;
 
   const filteredOptions = options.filter(
     (option) =>
@@ -65,8 +80,8 @@ function SortSelector({
   };
 
   const handleReset = () => {
-    setSortField('name');
-    setSortOrder('asc');
+    setSortField(defaultSortField);
+    setSortOrder(defaultSortOrder);
     setCurrentPage?.(1);
   };
 
@@ -78,9 +93,13 @@ function SortSelector({
           <ChevronDownIcon className={styles['chevron-down-icon']} />
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent align="end">
+      <DropdownMenuContent
+        align="end"
+        elevation={dropdownElevation}
+        className={styles['dropdown-menu-content']}
+      >
         <DropdownMenuLabel>
-          Sort By
+          Sort
           {!isDefaultSort && (
             <Button variant="link" size="sm" onClick={handleReset}>
               Reset
