@@ -1,13 +1,21 @@
-import { Card, CardContent, Tabs } from "@eqtylab/equality";
+import {
+  Card,
+  CardContent,
+  Tabs,
+  ELEVATION,
+  type Elevation,
+} from "@eqtylab/equality";
 
 export function TabsDemo({
   variant = "default",
+  elevation = ELEVATION.RAISED,
 }: {
   variant?:
     | "default"
     | "with-icons"
     | "with-active-fill"
     | "with-icons-and-active-fill";
+  elevation?: Elevation;
 }) {
   if (variant === "default") {
     return (
@@ -101,6 +109,7 @@ export function TabsDemo({
           },
         ]}
         tabsListBackground="filled"
+        elevation={elevation}
       />
     );
   }
@@ -142,6 +151,7 @@ export function TabsDemo({
           },
         ]}
         tabsListBackground="filled"
+        elevation={elevation}
       />
     );
   }

@@ -9,7 +9,14 @@ import {
   TabsTrigger,
 } from '@/components/tabs/tabs-components';
 import styles from '@/components/tabs/tabs.module.css';
+import { Elevation, ELEVATION, generateElevationVariants } from '@/lib/elevations';
 import { cn } from '@/lib/utils';
+
+const tabsElevationVariants = generateElevationVariants(
+  styles,
+  'tabs-list--filled',
+  ELEVATION.RAISED
+);
 
 interface TabsProps {
   id: string;
@@ -21,9 +28,16 @@ interface TabsProps {
   }[];
   className?: string;
   tabsListBackground?: 'transparent' | 'filled';
+  elevation?: Elevation;
 }
 
-const Tabs = ({ id, items, className, tabsListBackground = 'transparent' }: TabsProps) => {
+const Tabs = ({
+  id,
+  items,
+  className,
+  tabsListBackground = 'transparent',
+  elevation = ELEVATION.RAISED,
+}: TabsProps) => {
   const [activeTab, setActiveTab] = useState(items[0].value);
 
   const isFilled = tabsListBackground === 'filled';
@@ -66,7 +80,9 @@ const Tabs = ({ id, items, className, tabsListBackground = 'transparent' }: Tabs
       <TabsList
         className={cn(
           styles['tabs-list'],
-          isFilled ? styles['tabs-list--filled'] : styles['tabs-list--transparent']
+          isFilled
+            ? [styles['tabs-list--filled'], tabsElevationVariants({ elevation })]
+            : styles['tabs-list--transparent']
         )}
       >
         {items.map(({ label, value, icon }) => {

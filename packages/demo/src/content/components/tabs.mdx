@@ -5,6 +5,7 @@ description: "A flexible, accessible component for organizing content into tabbe
 ---
 
 import { TabsDemo } from "@demo/components/demo/tabs";
+import { ELEVATION } from "@eqtylab/equality";
 
 ## Overview
 
@@ -169,16 +170,59 @@ Combine icons with the filled background variant for a more prominent tab design
 />
 ```
 
+## Elevations
+
+### Sunken
+
+<TabsDemo
+  client:only="react"
+  variant="with-active-fill"
+  elevation={ELEVATION.SUNKEN}
+/>
+
+### Base
+
+<TabsDemo
+  client:only="react"
+  variant="with-active-fill"
+  elevation={ELEVATION.BASE}
+/>
+
+### Raised (default)
+
+<TabsDemo
+  client:only="react"
+  variant="with-active-fill"
+  elevation={ELEVATION.RAISED}
+/>
+
+### Overlay
+
+<TabsDemo
+  client:only="react"
+  variant="with-active-fill"
+  elevation={ELEVATION.OVERLAY}
+/>
+
+### Floating
+
+<TabsDemo
+  client:only="react"
+  variant="with-active-fill"
+  elevation={ELEVATION.FLOATING}
+/>
+
 ## Props
 
 ---
 
-| Prop                 | Type                        | Default         | Description                                                                                                                               |
-| -------------------- | --------------------------- | --------------- | ----------------------------------------------------------------------------------------------------------------------------------------- |
-| `id`                 | `string`                    | **Required**    | A unique identifier for the tabs instance. Used internally for the animated indicator's layoutId.                                         |
-| `items`              | `Array<TabItem>`            | **Required**    | An array of tab items. See TabItem structure below.                                                                                       |
-| `className`          | `string`                    | —               | Additional CSS classes to apply to the tabs container.                                                                                    |
-| `tabsListBackground` | `"transparent" \| "filled"` | `"transparent"` | The background style for the tabs list. `"transparent"` shows tabs with a transparent background, `"filled"` applies a filled background. |
+| Prop                 | Type                                                              | Default         | Description                                                                                                                               |
+| -------------------- | ----------------------------------------------------------------- | --------------- | ----------------------------------------------------------------------------------------------------------------------------------------- |
+| `id`                 | `string`                                                          | **Required**    | A unique identifier for the tabs instance. Used internally for the animated indicator's layoutId.                                         |
+| `items`              | `Array<TabItem>`                                                  | **Required**    | An array of tab items. See TabItem structure below.                                                                                       |
+| `className`          | `string`                                                          | —               | Additional CSS classes to apply to the tabs container.                                                                                    |
+| `tabsListBackground` | `"transparent" \| "filled"`                                       | `"transparent"` | The background style for the tabs list. `"transparent"` shows tabs with a transparent background, `"filled"` applies a filled background. |
+| `elevation`          | `"sunken" \| "base"` \| `"raised"` \| `"overlay"` \| `"floating"` | `"raised"`      | The background elevation style for the tabs list.                                                                                         |
 
 ### TabItem Structure
 

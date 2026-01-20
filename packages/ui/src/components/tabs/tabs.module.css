@@ -13,7 +13,6 @@
 }
 
 .tabs-list--filled {
-  @apply bg-background-secondary;
   @apply overflow-hidden rounded-md;
   @apply p-1;
 }
@@ -52,4 +51,26 @@
 
 .content {
   @apply mt-5 space-y-6;
+}
+
+/* ELEVATION */
+
+.tabs-list--filled--sunken {
+  @apply bg-background-sunken;
+}
+
+.tabs-list--filled--base {
+  @apply bg-background-base;
+}
+
+.tabs-list--filled--raised {
+  @apply bg-background-raised;
+}
+
+.tabs-list--filled--overlay {
+  @apply bg-background-overlay;
+}
+
+.tabs-list--filled--floating {
+  @apply bg-background-floating;
 }
