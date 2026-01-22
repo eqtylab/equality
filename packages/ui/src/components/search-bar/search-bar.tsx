@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Search, X } from 'lucide-react';
+import { Search } from 'lucide-react';
 
 import { IconButton } from '@/components/icon-button/icon-button';
 import { Input } from '@/components/input/input';
@@ -7,7 +7,6 @@ import styles from '@/components/search-bar/search-bar.module.css';
 import { cn } from '@/lib/utils';
 
 const SearchIcon = Search as React.ComponentType<{ className?: string }>;
-const XIcon = X as React.ComponentType<{ className?: string }>;
 
 interface SearchBarProps {
   className?: string;
