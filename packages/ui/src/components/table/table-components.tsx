@@ -1,15 +1,20 @@
 import * as React from 'react';
+import { VariantProps } from 'class-variance-authority';
 
 import styles from '@/components/table/table-components.module.css';
+import { ELEVATION, generateElevationVariants } from '@/lib/elevations';
 import { cn } from '@/lib/utils';
 
-const TableContainer = React.forwardRef<HTMLTableElement, React.HTMLAttributes<HTMLTableElement>>(
-  ({ className, ...props }, ref) => (
-    <div className={styles['table']}>
-      <table ref={ref} className={styles['table-inner']} {...props} />
-    </div>
-  )
-);
+const tableElevationVariants = generateElevationVariants(styles, 'table', ELEVATION.RAISED);
+
+const TableContainer = React.forwardRef<
+  HTMLTableElement,
+  React.HTMLAttributes<HTMLTableElement> & VariantProps<typeof tableElevationVariants>
+>(({ className, elevation = ELEVATION.RAISED, ...props }, ref) => (
+  <div className={(styles['table'], tableElevationVariants({ elevation }))}>
+    <table ref={ref} className={styles['table-inner']} {...props} />
+  </div>
+));
 TableContainer.displayName = 'Table';
 
 const TableHeader = React.forwardRef<

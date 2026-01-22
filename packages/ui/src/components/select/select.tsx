@@ -1,8 +1,10 @@
 import * as React from 'react';
 import * as SelectPrimitive from '@radix-ui/react-select';
+import { VariantProps } from 'class-variance-authority';
 import { Check, ChevronDown, ChevronUp } from 'lucide-react';
 
 import styles from '@/components/select/select.module.css';
+import { ELEVATION, generateElevationVariants } from '@/lib/elevations';
 import { cn, getThemeProviderRoot } from '@/lib/utils';
 
 const CheckIcon = Check as React.ComponentType<{ className?: string }>;
@@ -60,16 +62,24 @@ const SelectPortal = ({ children }: { children: React.ReactNode }) => (
   <SelectPrimitive.Portal container={getThemeProviderRoot()}>{children}</SelectPrimitive.Portal>
 );
 
+const selectContentElevationVariants = generateElevationVariants(
+  styles,
+  'select-content',
+  ELEVATION.OVERLAY
+);
+
 const SelectContent = React.forwardRef<
   React.ElementRef<typeof SelectPrimitive.Content>,
-  React.ComponentPropsWithoutRef<typeof SelectPrimitive.Content>
->(({ className, children, position = 'popper', ...props }, ref) => (
+  React.ComponentPropsWithoutRef<typeof SelectPrimitive.Content> &
+    VariantProps<typeof selectContentElevationVariants>
+>(({ className, children, position = 'popper', elevation = ELEVATION.OVERLAY, ...props }, ref) => (
   <SelectPortal>
     <SelectPrimitive.Content
       ref={ref}
       className={cn(
         styles['select-content'],
         position === 'popper' && styles['select-content--popper'],
+        selectContentElevationVariants({ elevation }),
         className
       )}
       position={position}

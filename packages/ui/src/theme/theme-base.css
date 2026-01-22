@@ -21,6 +21,12 @@
   --z-index-dropdown: 50;
   --z-index-highest: 9999;
 
+  --color-shadow-sunken: rgba(0, 0, 0, 0.05);
+  --color-shadow-base: transparent;
+  --color-shadow-raised: rgba(0, 0, 0, 0.05);
+  --color-shadow-overlay: rgba(0, 0, 0, 0.1);
+  --color-shadow-floating: rgba(0, 0, 0, 0.15);
+
   /* Animation */
   --animate-grow-in: grow-in 800ms ease-in-out backwards;
   --animate-fade-in: fade-in 800ms ease-in-out backwards;

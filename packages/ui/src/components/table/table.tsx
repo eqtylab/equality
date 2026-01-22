@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { VariantProps } from 'class-variance-authority';
 
 import {
   TableBody,
@@ -8,6 +9,7 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/table/table-components';
+import { ELEVATION, generateElevationVariants } from '@/lib/elevations';
 import { cn } from '@/lib/utils';
 
 import styles from './table.module.css';
@@ -31,25 +33,32 @@ type TableCellData = {
   className?: string;
 };
 
-interface TableProps {
+interface TableProps extends VariantProps<typeof tableElevationVariants> {
   columns: TableColumn[];
   rows: TableRowData[];
   className?: string;
   border?: boolean;
-  background?: boolean;
 }
 
-const Table = ({ columns, rows, className, border = false, background = false }: TableProps) => {
+const tableElevationVariants = generateElevationVariants(styles, 'table', ELEVATION.BASE);
+
+const Table = ({
+  columns,
+  rows,
+  className,
+  border = false,
+  elevation = ELEVATION.BASE,
+}: TableProps) => {
   return (
     <div
       className={cn(
         styles['table'],
         border && styles['table-border'],
-        background && styles['table-background'],
+        tableElevationVariants({ elevation }),
         className
       )}
     >
-      <TableContainer>
+      <TableContainer elevation={elevation}>
         <TableHeader>
           <TableRow>
             {columns.map((column) => (

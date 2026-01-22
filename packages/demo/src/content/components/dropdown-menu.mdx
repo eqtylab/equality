@@ -5,6 +5,7 @@ description: "Dropdown Menu with sizes and variants"
 ---
 
 import { DropdownMenuDemo } from "@demo/components/demo/dropdown-menu";
+import { ELEVATION } from "@eqtylab/equality";
 
 ## Variants
 
@@ -35,3 +36,45 @@ import { DropdownMenuDemo } from "@demo/components/demo/dropdown-menu";
 ### With Groups
 
 <DropdownMenuDemo client:only="react" variant="with-groups" />
+
+## Elevations
+
+### Sunken
+
+<DropdownMenuDemo
+  client:only="react"
+  variant="with-submenu"
+  elevation={ELEVATION.SUNKEN}
+/>
+
+### Base (default)
+
+<DropdownMenuDemo
+  client:only="react"
+  variant="with-submenu"
+  elevation={ELEVATION.BASE}
+/>
+
+### Raised
+
+<DropdownMenuDemo
+  client:only="react"
+  variant="with-submenu"
+  elevation={ELEVATION.RAISED}
+/>
+
+### Overlay
+
+<DropdownMenuDemo
+  client:only="react"
+  variant="with-submenu"
+  elevation={ELEVATION.OVERLAY}
+/>
+
+### Floating
+
+<DropdownMenuDemo
+  client:only="react"
+  variant="with-submenu"
+  elevation={ELEVATION.FLOATING}
+/>

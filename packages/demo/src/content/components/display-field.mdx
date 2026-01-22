@@ -9,6 +9,7 @@ import {
   DisplayFieldWithActionsDemo,
   DisplayFieldWithSlotDemo,
 } from "@demo/components/demo/display-field";
+import { ELEVATION } from "@eqtylab/equality";
 
 ## Neutral
 
@@ -49,3 +50,50 @@ import {
 ## With Slot Content
 
 <DisplayFieldWithSlotDemo prefix="Key" client:only="react" />
+
+## Elevations
+
+### Sunken
+
+<DisplayFieldWithSlotDemo
+  prefix="Key"
+  client:only="react"
+  elevation={ELEVATION.SUNKEN}
+  withinCard
+/>
+
+### Base (default)
+
+<DisplayFieldWithSlotDemo
+  prefix="Key"
+  client:only="react"
+  elevation={ELEVATION.BASE}
+  withinCard
+/>
+
+### Raised
+
+<DisplayFieldWithSlotDemo
+  prefix="Key"
+  client:only="react"
+  elevation={ELEVATION.RAISED}
+  withinCard
+/>
+
+### Overlay
+
+<DisplayFieldWithSlotDemo
+  prefix="Key"
+  client:only="react"
+  elevation={ELEVATION.OVERLAY}
+  withinCard
+/>
+
+### Floating
+
+<DisplayFieldWithSlotDemo
+  prefix="Key"
+  client:only="react"
+  elevation={ELEVATION.FLOATING}
+  withinCard
+/>

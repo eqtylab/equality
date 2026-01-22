@@ -5,7 +5,7 @@
 }
 
 .display-field-inner {
-  @apply border-border bg-popover-background rounded-md border;
+  @apply border-border bg-popover-background rounded-lg border;
   @apply h-9.5 flex w-full overflow-clip;
   @apply focus-ring;
   @apply z-above relative;
@@ -40,7 +40,7 @@
 }
 
 .actions {
-  @apply flex items-center;
+  @apply mr-0.5 flex items-center;
 }
 
 .icon-width {
@@ -61,9 +61,62 @@
 
 .slot {
   @apply -mt-(--radius-md) pt-(--radius-md) relative;
-  @apply bg-card-background rounded-b-md;
+  @apply rounded-b-md;
+  @apply inset-shadow-sm;
 }
 
 .slot-inner {
   @apply p-2;
+}
+
+/* ELEVATION */
+
+.display-field--sunken {
+  @apply shadow-shadow-sunken;
+}
+.display-field--sunken .display-field-inner {
+  @apply bg-background-sunken border-border-bottom;
+}
+.display-field--sunken .slot {
+  @apply bg-background-bottom border-border-bottom border;
+}
+
+.display-field--base {
+  @apply shadow-shadow-base;
+}
+.display-field--base .display-field-inner {
+  @apply bg-background-base border-border-base;
+}
+.display-field--base .slot {
+  @apply bg-background-sunken border-border-base;
+}
+
+.display-field--raised {
+  @apply shadow-shadow-raised;
+}
+.display-field--raised .display-field-inner {
+  @apply bg-background-raised border-border-raised;
+}
+.display-field--raised .slot {
+  @apply bg-background-base border-border-base;
+}
+
+.display-field--overlay {
+  @apply shadow-shadow-overlay;
+}
+.display-field--overlay .display-field-inner {
+  @apply bg-background-overlay border-border-overlay;
+}
+.display-field--overlay .slot {
+  @apply bg-background-raised border-border-raised;
+}
+
+.display-field--floating {
+  @apply shadow-shadow-floating border-border-floating;
+}
+.display-field--floating .display-field-inner {
+  @apply bg-background-floating border-border-floating;
+}
+.display-field--floating .slot {
+  @apply bg-background-overlay border-border-overlay;
 }

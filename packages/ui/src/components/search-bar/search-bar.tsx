@@ -1,13 +1,12 @@
 import * as React from 'react';
-import { Search, X } from 'lucide-react';
+import { Search } from 'lucide-react';
 
-import { Button } from '@/components/button/button';
+import { IconButton } from '@/components/icon-button/icon-button';
 import { Input } from '@/components/input/input';
 import styles from '@/components/search-bar/search-bar.module.css';
 import { cn } from '@/lib/utils';
 
 const SearchIcon = Search as React.ComponentType<{ className?: string }>;
-const XIcon = X as React.ComponentType<{ className?: string }>;
 
 interface SearchBarProps {
   className?: string;
@@ -32,24 +31,23 @@ const SearchBar = ({
 
   return (
     <div className={cn(styles['search-bar'], className)}>
-      <SearchIcon className={styles['search-icon']} />
       <Input
         placeholder={placeholder}
         value={searchQuery}
         onChange={handleChange}
         className={styles['input']}
+        prefix={<SearchIcon className={styles['search-icon']} />}
+        suffix={
+          searchQuery && (
+            <IconButton
+              name="XIcon"
+              onClick={handleClear}
+              className={styles['clear-button']}
+              label="Clear search"
+            ></IconButton>
+          )
+        }
       />
-      {searchQuery && (
-        <Button
-          variant="tertiary"
-          size="sm"
-          onClick={handleClear}
-          className={styles['clear-button']}
-          aria-label="Clear search"
-        >
-          <XIcon />
-        </Button>
-      )}
     </div>
   );
 };

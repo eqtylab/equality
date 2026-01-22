@@ -5,6 +5,7 @@ description: "Select with sizes and variants"
 ---
 
 import { SelectDemo } from "@demo/components/demo/select";
+import { ELEVATION } from "@eqtylab/equality";
 
 ## Variants
 
@@ -19,3 +20,25 @@ import { SelectDemo } from "@demo/components/demo/select";
 ### Pre-selected Select
 
 <SelectDemo client:only="react" variant="pre-selected" />
+
+## Elevations
+
+### Sunken
+
+<SelectDemo client:only="react" elevation={ELEVATION.SUNKEN} />
+
+### Base (default)
+
+<SelectDemo client:only="react" elevation={ELEVATION.BASE} />
+
+### Raised
+
+<SelectDemo client:only="react" elevation={ELEVATION.RAISED} />
+
+### Overlay
+
+<SelectDemo client:only="react" elevation={ELEVATION.OVERLAY} />
+
+### Floating
+
+<SelectDemo client:only="react" elevation={ELEVATION.FLOATING} />
