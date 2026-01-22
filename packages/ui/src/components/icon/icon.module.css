@@ -6,7 +6,7 @@
   @apply flex items-center justify-center;
 }
 
-.icon-container:not(.background--transparent) {
+.icon-container:not(.background--transparent):not(.icon-container--sunken) {
   @apply shadow-sm;
 }
 
@@ -58,7 +58,7 @@
 /* ELEVATION */
 
 .icon-container--sunken:not(.background--transparent) {
-  @apply bg-background-sunken shadow-shadow-sunken border-border-sunken;
+  @apply bg-background-sunken shadow-shadow-sunken border-border-sunken inset-shadow-xs;
 }
 
 .icon-container--base:not(.background--transparent) {
