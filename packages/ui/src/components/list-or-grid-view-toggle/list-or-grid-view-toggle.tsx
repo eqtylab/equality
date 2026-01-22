@@ -1,4 +1,5 @@
-import { IconButton } from '@/components/icon-button/icon-button';
+import { Grid3X3, List } from 'lucide-react';
+
 import styles from '@/components/list-or-grid-view-toggle/list-or-grid-view-toggle.module.css';
 import { cn } from '@/lib/utils';
 
@@ -32,17 +33,20 @@ const ListOrGridViewToggle = ({
     <div className={cn(styles['list-or-grid-view-toggle'], className)}>
       {order.map((mode) => {
         const currentlyActive = mode === viewMode;
+        const Icon = mode === 'grid' ? Grid3X3 : List;
         return (
-          <IconButton
+          <button
             key={mode}
-            size="sm"
-            name={mode === 'grid' ? 'Grid3X3' : 'List'}
+            type="button"
+            aria-label={mode === 'grid' ? 'Grid view' : 'List view'}
             className={cn(
               styles['icon-button'],
               currentlyActive ? styles['icon-button--active'] : styles['icon-button--inactive']
             )}
             onClick={mode === 'grid' ? handleGridClick : handleListClick}
-          />
+          >
+            <Icon size={16} />
+          </button>
         );
       })}
       <div
