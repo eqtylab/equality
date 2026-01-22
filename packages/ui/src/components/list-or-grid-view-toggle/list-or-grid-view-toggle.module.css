@@ -1,7 +1,7 @@
 @reference '../../theme/theme.module.css';
 
 .list-or-grid-view-toggle {
-  @apply border-border border;
+  @apply border-button-tertiary-border border;
   @apply flex rounded-md;
   @apply w-max overflow-hidden;
   @apply bg-button-tertiary-fill;
