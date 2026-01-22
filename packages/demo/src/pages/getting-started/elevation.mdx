@@ -3,49 +3,58 @@ layout: "@demo/layouts/mdx-layout.astro"
 heading: "Elevation"
 ---
 
-import { Icon, Card, CardContent } from "@eqtylab/equality";
-import { DisplayFieldWithSlotDemo } from "@demo/components/demo/display-field";
+import { Icon, Card, CardContent, DisplayField } from "@eqtylab/equality";
 import { TooltipDemo } from "@demo/components/demo/tooltip";
 import { DialogWithTableDemo } from "@demo/components/demo/dialog";
 import { ELEVATION } from "@eqtylab/equality";
 
-## What is Elevation
+## Overview
 
-Elevation defines how components are layered and how much visual emphasis they carry.
+Elevation properties and tokens define how components are layered ensuring that contrast remains consistent regardless of background color. Elevation is used both to differentiate backgrounds, and to differentiate components from the background they are currently on.
 
-Generally, nested elevations should only ever be one level away from one another.
+Generally, when applying elevation tokens or properties, values should only ever be one level away from the background a component is placed onto.
 
-## Types of Elevation
+## Elevation Values
 
 ### Sunken
 
-A low-emphasis elevation that recedes into the background. Ideal for secondary or decorative elements that should feel embedded rather than prominent.
+Use when a section should recede into the background, inset from the surface it is on. Good for highlighting areas that should provide additional contrast to content in a `base` or `raised` container.
 
-<Icon
-  icon="Shield"
-  client:only="react"
-  background="square"
-  elevation={ELEVATION.SUNKEN}
-/>
+<Card elevation={ELEVATION.SUNKEN}>
+  <CardContent>
+    <div className="space-y-2">
+      <h4 className="font-medium">Sunken Background</h4>
+      <p className="text-text-secondary text-sm">
+        This card has an elevation of Sunken.
+      </p>
+    </div>
+  </CardContent>
+</Card>
 
 ### Base
 
 A neutral elevation that forms the baseline of the interface. Most components will use this level in standard layouts.
 
-<DisplayFieldWithSlotDemo
-  prefix="Key"
-  client:only="react"
-  elevation={ELEVATION.BASE}
-/>
+<Card elevation={ELEVATION.BASE}>
+  <CardContent>
+    <div className="space-y-2">
+      <h4 className="font-medium">Base Background</h4>
+      <p className="text-text-secondary text-sm">
+        This card has an elevation of Base. In this case, it is equal with the
+        background colour, but generally cards should be set to raised.
+      </p>
+    </div>
+  </CardContent>
+</Card>
 
 ### Raised
 
-A higher-priority elevation used to lift important content out of the page flow without breaking it.
+Used to lift content or sections out of the background.
 
 <Card elevation={ELEVATION.RAISED}>
   <CardContent>
     <div className="space-y-2">
-      <h4 className="font-medium">Card</h4>
+      <h4 className="font-medium">Raised Background</h4>
       <p className="text-text-secondary text-sm">
         This card has an elevation of Raised.
       </p>
