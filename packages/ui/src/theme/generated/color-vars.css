@@ -10,7 +10,7 @@
   --color-amber-800: color(display-p3 0.2643 0.1753 0.09139);
   --color-amber-900: color(display-p3 0.1121 0.07777 0.04646);
   --color-background-base: color(display-p3 0.8264 0.8324 0.8394);
-  --color-background-bottom: color(display-p3 0.7383 0.7441 0.751);
+  --color-background-bottom: color(display-p3 0.6765 0.6823 0.689);
   --color-background-floating: color(display-p3 0.9424 0.9485 0.9557);
   --color-background-overlay: color(display-p3 0.9034 0.9095 0.9166);
   --color-background-raised: color(display-p3 0.8648 0.8708 0.8779);
@@ -58,6 +58,7 @@
   --color-blue-800: color(display-p3 0.1017 0.1411 0.2832);
   --color-blue-900: color(display-p3 0.06177 0.08243 0.1475);
   --color-border-base: color(display-p3 0.7432 0.7432 0.7432);
+  --color-border-bottom: color(display-p3 0.6158 0.6214 0.6281);
   --color-border-floating: color(display-p3 0.8011 0.807 0.814);
   --color-border-overlay: color(display-p3 0.8011 0.807 0.814);
   --color-border-raised: color(display-p3 0.7383 0.7441 0.751);
@@ -287,6 +288,7 @@
   --dark-color-badge-text-success: color(display-p3 0.8698 0.8698 0.8698);
   --dark-color-badge-text-warning: color(display-p3 0.9327 0.8528 0.7204);
   --dark-color-border-base: color(display-p3 0.1792 0.1792 0.1792);
+  --dark-color-border-bottom: color(display-p3 0.1589 0.159 0.1677);
   --dark-color-border-floating: color(display-p3 0.3328 0.3328 0.3426);
   --dark-color-border-overlay: color(display-p3 0.2796 0.2796 0.2891);
   --dark-color-border-raised: color(display-p3 0.228 0.2281 0.2372);

@@ -5,7 +5,7 @@
 }
 
 .display-field-inner {
-  @apply border-border bg-popover-background rounded-md border;
+  @apply border-border bg-popover-background rounded-lg border;
   @apply h-9.5 flex w-full overflow-clip;
   @apply focus-ring;
   @apply z-above relative;
@@ -40,7 +40,7 @@
 }
 
 .actions {
-  @apply flex items-center;
+  @apply mr-0.5 flex items-center;
 }
 
 .icon-width {
@@ -62,6 +62,7 @@
 .slot {
   @apply -mt-(--radius-md) pt-(--radius-md) relative;
   @apply rounded-b-md;
+  @apply inset-shadow-sm;
 }
 
 .slot-inner {
@@ -74,10 +75,10 @@
   @apply shadow-shadow-sunken;
 }
 .display-field--sunken .display-field-inner {
-  @apply bg-background-sunken border-border-sunken;
+  @apply bg-background-sunken border-border-bottom;
 }
 .display-field--sunken .slot {
-  @apply bg-background-bottom border-border-bottom;
+  @apply bg-background-bottom border-border-bottom border;
 }
 
 .display-field--base {

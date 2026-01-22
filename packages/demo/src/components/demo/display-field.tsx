@@ -113,13 +113,6 @@ export const DisplayFieldWithSlotDemo = ({
   if (withinCard) {
     return (
       <div className="space-y-6">
-        <DisplayFieldWithSlotExample
-          truncate={truncate}
-          copy={copy}
-          prefix={prefix}
-          variant={variant}
-          elevation={elevation}
-        />
         <Card elevation={elevation}>
           <CardContent className="border-border border-b">
             <Heading as="h5">

@@ -4,7 +4,7 @@
   @apply outline-hidden;
   @apply border-border bg-popover-background border;
   @apply px-3 py-2;
-  @apply flex h-10 w-full rounded-md;
+  @apply flex h-10 w-full rounded-lg;
   @apply text-text-primary placeholder:text-text-secondary;
   @apply text-sm;
   @apply file:text-text-primary file:font-medium;
@@ -15,7 +15,7 @@
 
 .input-wrapper {
   @apply border-border bg-popover-background border;
-  @apply flex h-10 w-full items-center gap-2 rounded-md;
+  @apply flex h-10 w-full items-center gap-2 rounded-lg;
   @apply px-3 py-2;
   @apply has-[:disabled]:cursor-not-allowed has-[:disabled]:opacity-50;
   @apply has-[:focus]:focus-ring;

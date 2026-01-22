@@ -1238,7 +1238,7 @@
           <color>
             <variants>
               <variant>
-                <rgba>0.73829 0.74414 0.75102 1</rgba>
+                <rgba>0.67651 0.68226 0.68903 1</rgba>
               </variant>
               <variant type="dark">
                 <rgba>1.094e-05 5.131e-06 6.4691e-05 1</rgba>
@@ -1355,7 +1355,7 @@
           <color>
             <variants>
               <variant>
-                <rgba>0.67651 0.68226 0.68903 1</rgba>
+                <rgba>0.61575 0.6214 0.62806 1</rgba>
               </variant>
               <variant type="dark">
                 <rgba>0.15893 0.15898 0.16767 1</rgba>

@@ -39,6 +39,7 @@
   --color-badge-text-success: color(display-p3 0.8698 0.8698 0.8698);
   --color-badge-text-warning: color(display-p3 0.9327 0.8528 0.7204);
   --color-border-base: color(display-p3 0.1792 0.1792 0.1792);
+  --color-border-bottom: color(display-p3 0.1589 0.159 0.1677);
   --color-border-floating: color(display-p3 0.3328 0.3328 0.3426);
   --color-border-overlay: color(display-p3 0.2796 0.2796 0.2891);
   --color-border-raised: color(display-p3 0.228 0.2281 0.2372);
