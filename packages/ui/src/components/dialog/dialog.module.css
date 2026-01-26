@@ -28,19 +28,26 @@
 }
 
 .dialog-header {
-  @apply flex shrink-0 items-baseline justify-between gap-4;
+  @apply flex shrink-0 items-start justify-between gap-4;
   @apply text-left;
   @apply border-b-1 border-border;
   @apply px-6 py-3;
 }
 
+.dialog-header-content {
+  @apply flex min-w-0 flex-1 flex-col;
+}
+
 .dialog-title {
   @apply text-lg font-medium leading-none tracking-tight;
-  @apply min-w-0 flex-1;
 }
 
 .dialog-description {
   @apply text-text-secondary text-sm;
+  @apply mt-1;
+}
+
+.dialog-body {
   @apply min-h-0 flex-1 overflow-auto;
   @apply p-6;
 }

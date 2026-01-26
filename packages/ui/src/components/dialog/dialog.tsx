@@ -27,13 +27,13 @@ const DialogOverlay = React.forwardRef<
 ));
 DialogOverlay.displayName = DialogPrimitive.Overlay.displayName;
 
-type DialogContentProps = React.ComponentPropsWithoutRef<typeof DialogPrimitive.Content> & {
+type DialogContainerProps = React.ComponentPropsWithoutRef<typeof DialogPrimitive.Content> & {
   size?: 'sm' | 'md' | 'lg';
 };
 
-const DialogContent = React.forwardRef<
+const DialogContainer = React.forwardRef<
   React.ElementRef<typeof DialogPrimitive.Content>,
-  DialogContentProps
+  DialogContainerProps
 >(({ className, children, size = 'md', ...props }, ref) => (
   <DialogPortal>
     <DialogOverlay />
@@ -50,11 +50,11 @@ const DialogContent = React.forwardRef<
     </DialogPrimitive.Content>
   </DialogPortal>
 ));
-DialogContent.displayName = DialogPrimitive.Content.displayName;
+DialogContainer.displayName = DialogPrimitive.Content.displayName;
 
 const DialogHeader = ({ className, children, ...props }: React.HTMLAttributes<HTMLDivElement>) => (
   <div className={cn(styles['dialog-header'], className)} {...props}>
-    {children}
+    <div className={styles['dialog-header-content']}>{children}</div>
     <DialogPrimitive.Close asChild>
       <IconButton name="X" label="Close" size="sm" />
     </DialogPrimitive.Close>
@@ -81,15 +81,21 @@ const DialogDescription = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <DialogPrimitive.Description
     ref={ref}
-    className={cn(styles['dialog-description'], 'styled-vertical-scrollbar', className)}
+    className={cn(styles['dialog-description'], className)}
     {...props}
   />
 ));
 DialogDescription.displayName = DialogPrimitive.Description.displayName;
 
+const DialogContent = ({ className, ...props }: React.HTMLAttributes<HTMLDivElement>) => (
+  <div className={cn(styles['dialog-body'], 'styled-vertical-scrollbar', className)} {...props} />
+);
+DialogContent.displayName = 'DialogContent';
+
 export {
   Dialog,
   DialogClose,
+  DialogContainer,
   DialogContent,
   DialogDescription,
   DialogFooter,

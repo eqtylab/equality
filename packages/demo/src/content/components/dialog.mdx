@@ -1,25 +1,62 @@
 ---
 layout: "@demo/layouts/mdx-layout.astro"
 heading: "Dialog"
-description: "Dialog with sizes and variants"
+description: "A modal dialog component with customizable sizes"
 ---
 
-import { DialogDemo } from "@demo/components/demo/dialog";
+import { DialogDemo, DialogWithTableDemo } from "@demo/components/demo/dialog";
+
+## Overview
+
+The Dialog component provides a modal overlay for displaying content that requires user interaction to proceed. It can be useful for guiding the user through a form, or focusing their attention away from the rest of the app.
+
+## Usage
+
+Import the dialog components:
+
+```ts
+import {
+  Dialog,
+  DialogContainer,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogFooter,
+} from "@eqtylab/equality";
+```
+
+Basic usage with required properties:
+
+```jsx
+import { useState } from "react";
+
+const [isOpen, setIsOpen] = useState(false);
+
+<Dialog open={isOpen} onOpenChange={setIsOpen}>
+  <DialogContainer>
+    <DialogHeader>
+      <DialogTitle>Dialog Title</DialogTitle>
+      <DialogDescription>Dialog description text</DialogDescription>
+    </DialogHeader>
+    <DialogContent>Your content here</DialogContent>
+    <DialogFooter>
+      <Button onClick={() => setIsOpen(false)}>Close</Button>
+    </DialogFooter>
+  </DialogContainer>
+</Dialog>;
+```
 
 ## Size Variants
 
-The dialog component supports three size variants for controlling its maximum width: **small**, **medium**, and **large**. You can set the desired variant using the `size` prop: `"sm"`, `"md"`, or `"lg"`. By default, the dialog uses the medium size.
-
-Below are examples of each size variant:
+The dialog component supports three size variants for controlling its maximum width: `small`, `medium`, and `large`. Set the size using the `size` prop on `DialogContainer`. By default, the dialog uses the `medium` size.
 
 ### Small
 
 Recommended for compact dialogs (max width: 32rem / 512px).
 
 ```jsx
-<Dialog open={isModalOpen} onOpenChange={() => setIsModalOpen(false)}>
-  <DialogContent size="sm">...</DialogContent>
-</Dialog>
+<DialogContainer size="sm">...</DialogContainer>
 ```
 
 <DialogDemo client:only="react" size="sm" />
@@ -29,9 +66,7 @@ Recommended for compact dialogs (max width: 32rem / 512px).
 Recommended for typical dialog uses (max width: 42rem / 672px).
 
 ```jsx
-<Dialog open={isModalOpen} onOpenChange={() => setIsModalOpen(false)}>
-  <DialogContent size="md">...</DialogContent>
-</Dialog>
+<DialogContainer size="md">...</DialogContainer>
 ```
 
 <DialogDemo client:only="react" size="md" />
@@ -41,15 +76,57 @@ Recommended for typical dialog uses (max width: 42rem / 672px).
 Recommended for dialogs that need extra horizontal space (max width: 56rem / 896px).
 
 ```jsx
-<Dialog open={isModalOpen} onOpenChange={() => setIsModalOpen(false)}>
-  <DialogContent size="lg">...</DialogContent>
-</Dialog>
+<DialogContainer size="lg">...</DialogContainer>
 ```
 
 <DialogDemo client:only="react" size="lg" />
 
-## Constraints
+## Scrolling Content
 
-The dialog component enforces a maximum height of 85% of the viewport (85vh). If the dialog content exceeds this height, a vertical scrollbar will appear inside the dialog, allowing users to scroll through the overflowing content without affecting the background page.
+The dialog component enforces a maximum height of 85% of the viewport (85vh). If the dialog content exceeds this height, a vertical scrollbar will appear inside the `DialogContent` area, allowing users to scroll through overflowing content without affecting the background page.
 
 <DialogDemo client:only="react" size="md" showMaxHeight />
+
+## Nested Content
+
+You can nest other components like cards within the dialog content area. The `DialogContent` component provides proper spacing and scrolling behavior.
+
+<DialogWithTableDemo client:only="react" />
+
+## Slots
+
+The Dialog component is composed of several sub-components:
+
+| Name                | Description                                                    |
+| ------------------- | -------------------------------------------------------------- |
+| `Dialog`            | Root component that manages the dialog state                   |
+| `DialogContainer`   | The dialog content wrapper with size variants                  |
+| `DialogHeader`      | Header section containing title, description, and close button |
+| `DialogTitle`       | The dialog's title (required for accessibility)                |
+| `DialogDescription` | Optional description text                                      |
+| `DialogContent`     | Scrollable content area for the dialog body                    |
+| `DialogFooter`      | Footer section typically containing action buttons             |
+| `DialogTrigger`     | Button or element that opens the dialog                        |
+| `DialogClose`       | Element that closes the dialog when clicked                    |
+
+## Props
+
+### DialogContainer
+
+| Name       | Description                                       | Type             | Default | Required |
+| ---------- | ------------------------------------------------- | ---------------- | ------- | -------- |
+| `size`     | Controls the maximum width of the dialog          | `sm`, `md`, `lg` | `md`    | ❌       |
+| `children` | Dialog content including header, body, and footer | `ReactNode`      | -       | ✅       |
+
+### Dialog
+
+| Name           | Description                                 | Type                      | Default | Required |
+| -------------- | ------------------------------------------- | ------------------------- | ------- | -------- |
+| `open`         | Controls whether the dialog is open         | `boolean`                 | -       | ✅       |
+| `onOpenChange` | Callback when the dialog open state changes | `(open: boolean) => void` | -       | ✅       |
+
+### DialogTitle
+
+| Name       | Description    | Type        | Default | Required |
+| ---------- | -------------- | ----------- | ------- | -------- |
+| `children` | The title text | `ReactNode` | -       | ✅       |

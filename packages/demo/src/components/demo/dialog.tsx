@@ -2,6 +2,7 @@ import {
   Button,
   DialogDescription,
   Dialog,
+  DialogContainer,
   DialogContent,
   DialogHeader,
   DialogTitle,
@@ -27,11 +28,12 @@ export const DialogDemo = ({
         Open Dialog
       </Button>
       <Dialog open={isModalOpen} onOpenChange={() => setIsModalOpen(false)}>
-        <DialogContent size={size}>
+        <DialogContainer size={size}>
           <DialogHeader>
             <DialogTitle>Dialog Title</DialogTitle>
+            <DialogDescription>Dialog Subtitle</DialogDescription>
           </DialogHeader>
-          <DialogDescription>
+          <DialogContent>
             {showMaxHeight ? (
               <>
                 This is example content to demonstrate the max height behavior
@@ -101,7 +103,7 @@ export const DialogDemo = ({
                 nisi ut aliquip ex ea commodo consequat.
               </>
             )}
-          </DialogDescription>
+          </DialogContent>
           <DialogFooter>
             <Button
               size="sm"
@@ -111,7 +113,7 @@ export const DialogDemo = ({
               Close
             </Button>
           </DialogFooter>
-        </DialogContent>
+        </DialogContainer>
       </Dialog>
     </div>
   );
@@ -126,21 +128,23 @@ export const DialogWithTableDemo = () => {
         Open Dialog
       </Button>
       <Dialog open={isModalOpen} onOpenChange={() => setIsModalOpen(false)}>
-        <DialogContent>
+        <DialogContainer>
           <DialogHeader>
             <DialogTitle>Dialog Title</DialogTitle>
+            <DialogDescription>Dialog Description</DialogDescription>
           </DialogHeader>
-          <DialogDescription>Dialog Description</DialogDescription>
-          <Card elevation={ELEVATION.FLOATING}>
-            <CardContent>
-              <div className="space-y-2">
-                <h4 className="font-medium">Card</h4>
-                <p className="text-text-secondary text-sm">
-                  This card has an elevation of Floating.
-                </p>
-              </div>
-            </CardContent>
-          </Card>
+          <DialogContent>
+            <Card elevation={ELEVATION.FLOATING}>
+              <CardContent>
+                <div className="space-y-2">
+                  <h4 className="font-medium">Card</h4>
+                  <p className="text-text-secondary text-sm">
+                    This card has an elevation of Floating.
+                  </p>
+                </div>
+              </CardContent>
+            </Card>
+          </DialogContent>
           <DialogFooter>
             <Button
               size="sm"
@@ -150,7 +154,7 @@ export const DialogWithTableDemo = () => {
               Close
             </Button>
           </DialogFooter>
-        </DialogContent>
+        </DialogContainer>
       </Dialog>
     </div>
   );
