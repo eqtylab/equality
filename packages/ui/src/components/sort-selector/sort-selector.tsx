@@ -11,7 +11,6 @@ import {
   DropdownMenuTrigger,
 } from '@/components/dropdown-menu/dropdown-menu';
 import styles from '@/components/sort-selector/sort-selector.module.css';
-import { Elevation, ELEVATION } from '@/lib/elevations';
 import { cn } from '@/lib/utils';
 
 const ChevronDownIcon = ChevronDown as React.ComponentType<{ className?: string }>;
@@ -24,7 +23,6 @@ interface SortSelectorProps {
   sortField: SortField;
   defaultSortField?: SortField;
   sortOrder: SortOrder;
-  dropdownElevation?: Elevation;
   defaultSortOrder?: SortOrder;
   sortMode?: SortMode;
   setSortField: (field: SortField) => void;
@@ -38,7 +36,6 @@ function SortSelector({
   sortField,
   defaultSortField = 'name',
   sortOrder,
-  dropdownElevation = ELEVATION.OVERLAY,
   defaultSortOrder = 'asc',
   sortMode = 'created',
   setSortField,
@@ -93,11 +90,7 @@ function SortSelector({
           <ChevronDownIcon className={styles['chevron-down-icon']} />
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent
-        align="end"
-        elevation={dropdownElevation}
-        className={styles['dropdown-menu-content']}
-      >
+      <DropdownMenuContent align="end" className={styles['dropdown-menu-content']}>
         <DropdownMenuLabel>
           Sort
           {!isDefaultSort && (

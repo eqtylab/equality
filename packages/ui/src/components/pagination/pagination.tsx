@@ -10,7 +10,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/select/select';
-import { ELEVATION, Elevation } from '@/lib/elevations';
 import { cn } from '@/lib/utils';
 
 const ChevronLeftIcon = ChevronLeft as React.ComponentType<{ className?: string }>;
@@ -26,7 +25,6 @@ interface PaginationProps {
   itemsPerPageOptions?: number[];
   showInfo?: boolean;
   maxVisiblePages?: number;
-  dropdownElevation?: Elevation;
   className?: string;
   type?: string;
   scrollTargetRef?: React.RefObject<HTMLElement | null> | string;
@@ -42,7 +40,6 @@ const Pagination = ({
   itemsPerPageOptions = [10, 25, 50, 100],
   showInfo = true,
   maxVisiblePages = 5,
-  dropdownElevation = ELEVATION.OVERLAY,
   className = '',
   type = '',
   scrollTargetRef,
@@ -149,7 +146,7 @@ const Pagination = ({
                 <SelectTrigger>
                   <SelectValue />
                 </SelectTrigger>
-                <SelectContent elevation={dropdownElevation}>
+                <SelectContent>
                   {itemsPerPageOptions.map((option) => (
                     <SelectItem key={option} value={option.toString()}>
                       {option}
