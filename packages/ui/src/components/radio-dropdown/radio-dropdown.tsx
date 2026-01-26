@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { ChevronDown } from 'lucide-react';
 
+import { Badge } from '@/components/badge/badge';
 import { Button } from '@/components/button/button';
 import {
   DropdownMenu,
@@ -12,7 +13,6 @@ import {
   DropdownMenuTrigger,
 } from '@/components/dropdown-menu/dropdown-menu';
 import styles from '@/components/radio-dropdown/radio-dropdown.module.css';
-import { ELEVATION, Elevation } from '@/lib/elevations';
 
 const ChevronDownIcon = ChevronDown as React.ComponentType<{ className?: string }>;
 
@@ -26,7 +26,6 @@ interface RadioDropdownProps {
   label: string;
   options: FilterOption[];
   selectedValue: string;
-  dropdownElevation?: Elevation;
   onSelect: (value: string) => void;
   className?: string;
 }
@@ -35,7 +34,6 @@ const RadioDropdown = ({
   label,
   options,
   selectedValue,
-  dropdownElevation = ELEVATION.OVERLAY,
   onSelect,
   className,
 }: RadioDropdownProps) => {
@@ -53,23 +51,16 @@ const RadioDropdown = ({
         <Button variant="tertiary" className={className}>
           <span className={styles['selector-button-inner']}>
             {selectedOption?.label || label}
-            {hasSelectedCount && (
-              <span className={styles['selected-count']}>{selectedOption.count}</span>
-            )}
+            {hasSelectedCount && <Badge variant="primary">{selectedOption.count}</Badge>}
           </span>
           <ChevronDownIcon className={styles['chevron-icon']} />
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent
-        align="end"
-        className={styles['dropdown-menu-content']}
-        elevation={dropdownElevation}
-      >
+      <DropdownMenuContent align="end" className={styles['dropdown-menu-content']}>
         <DropdownMenuLabel>{label}</DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuRadioGroup value={selectedValue} onValueChange={onSelect}>
           {filteredOptions.map((option) => {
-            const isSelected = selectedValue === option.value;
             const hasCount = option.count !== undefined;
 
             return (
