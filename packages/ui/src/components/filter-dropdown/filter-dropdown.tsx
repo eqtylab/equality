@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { ChevronDown } from 'lucide-react';
 
+import { Badge } from '@/components/badge/badge';
 import { Button } from '@/components/button/button';
 import {
   DropdownMenu,
@@ -53,9 +54,7 @@ const FilterDropdown = ({
         <Button variant="tertiary" className={cn(styles['selector-button'], buttonClassName)}>
           <span className={styles['selector-button-inner']}>
             {label}
-            {hasSelectedFilters && (
-              <span className={styles['selected-filters-count']}>{selectedFilters.length}</span>
-            )}
+            {hasSelectedFilters && <Badge variant="primary">{selectedFilters.length}</Badge>}
           </span>
           <ChevronDownIcon className={styles['chevron-icon']} />
         </Button>

@@ -9,12 +9,6 @@
   @apply flex items-center gap-1;
 }
 
-.selected-filters-count {
-  @apply bg-brand-primary text-text-primary;
-  @apply rounded-full px-2 py-0.5;
-  @apply text-xs font-medium;
-}
-
 .chevron-icon {
   @apply text-text-secondary;
 }
