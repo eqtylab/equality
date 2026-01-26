@@ -1,10 +1,19 @@
+import { VariantProps } from 'class-variance-authority';
+
 import { Icon } from '@/components/icon/icon';
 import styles from '@/components/metric-card/metric-card.module.css';
+import { ELEVATION, generateElevationVariants } from '@/lib/elevations';
 import { cn } from '@/lib/utils';
+
+const metricCardElevationVariants = generateElevationVariants(
+  styles,
+  'metric-card',
+  ELEVATION.RAISED
+);
 
 type Variant = 'default' | 'primary' | 'danger' | 'success' | 'warning';
 
-interface MetricCardProps {
+interface MetricCardProps extends VariantProps<typeof metricCardElevationVariants> {
   value: string | number;
   label: string;
   icon: React.ReactElement | string;
@@ -35,13 +44,21 @@ const VARIANTS: Record<Variant, { text: string; iconBg: string }> = {
   },
 };
 
-const MetricCard = ({ value, label, icon, variant = 'default', className }: MetricCardProps) => {
+const MetricCard = ({
+  value,
+  label,
+  icon,
+  variant = 'default',
+  elevation = ELEVATION.RAISED,
+  className,
+}: MetricCardProps) => {
   const variantStyles = VARIANTS[variant];
 
   return (
-    <div className={cn(styles['metric-card'], className)}>
+    <div className={cn(metricCardElevationVariants({ elevation }), className)}>
       <div className={styles['value-container']}>
-        <p className={cn(styles.value, variantStyles.text)}>{value}</p>
+        <p className={cn(styles.value)}>{value}</p>
+        {/* TODO: these status based icon styles are incompatible with the elevation system.  Refactor them into the icon component as variants and make icon a slot instead of a hardcoded element with a property in metric card (this component) */}
         <Icon
           icon={icon}
           size="md"
