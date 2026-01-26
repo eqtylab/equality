@@ -8,6 +8,7 @@
 .avatar-image {
   @apply size-full;
   @apply aspect-square;
+  @apply object-cover;
 }
 
 .avatar-fallback {
