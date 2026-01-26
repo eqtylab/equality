@@ -70,7 +70,7 @@ Use for UI that overlays the page and requires clear separation from the underly
 
 ### Floating
 
-An elevated surface reserved for UI that must remain visually dominant, even over modals or dropdowns.
+An elevated surface reserved for UI that _must_ remain visually dominant over all other elements.
 
 <DialogWithTableDemo client:only="react" />
 
@@ -92,7 +92,6 @@ The following components have an `elevation` prop:
 | --------------- | ----------------- | ------------------------------------------ |
 | Card            | Raised            |                                            |
 | DisplayField    | Base              |                                            |
-| Dropdown Menu   | Overlay           | in `DropdownContent` component             |
 | Filter Dropdown | Overlay           | for dropdown with `dropdownElevation` prop |
 | Icon            | Sunken            |                                            |
 | Info Card       | Raised            |                                            |
@@ -105,11 +104,12 @@ The following components have an `elevation` prop:
 
 ### Components with a set fixed elevation
 
-| Component    | Elevation |
-| ------------ | --------- |
-| Alert Dialog | Overlay   |
-| Dialog       | Overlay   |
-| Drawer       | Overlay   |
-| Popover      | Overlay   |
-| Sheet        | Overlay   |
-| Tooltip      | Overlay   |
+| Component     | Elevation |
+| ------------- | --------- |
+| Alert Dialog  | Overlay   |
+| Dialog        | Overlay   |
+| Drawer        | Overlay   |
+| Dropdown Menu | Floating  |
+| Popover       | Floating  |
+| Sheet         | Overlay   |
+| Tooltip       | Overlay   |
