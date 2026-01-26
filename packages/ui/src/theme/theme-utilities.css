@@ -23,7 +23,7 @@
 }
 
 @utility dropdown-content {
-  @apply bg-popover-background text-text-primary border-border border;
+  @apply bg-background-floating text-text-primary border-border border;
   @apply z-dropdown rounded-md p-1;
   @apply overflow-y-auto overflow-x-hidden;
   @apply max-h-80 min-w-32;
@@ -33,7 +33,7 @@
 }
 
 @utility dropdown-item {
-  --mix-color: var(--color-button-tertiary-fill);
+  --mix-color: var(--color-background);
   @apply cursor-pointer;
   @apply flex items-center;
   @apply text-sm transition-colors;

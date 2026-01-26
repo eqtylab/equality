@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { ChevronDown } from 'lucide-react';
 
+import { Badge } from '@/components/badge/badge';
 import { Button } from '@/components/button/button';
 import {
   DropdownMenu,
@@ -11,7 +12,6 @@ import {
   DropdownMenuTrigger,
 } from '@/components/dropdown-menu/dropdown-menu';
 import styles from '@/components/filter-dropdown/filter-dropdown.module.css';
-import { ELEVATION, Elevation } from '@/lib/elevations';
 import { cn } from '@/lib/utils';
 
 const ChevronDownIcon = ChevronDown as React.ComponentType<{ className?: string }>;
@@ -25,7 +25,6 @@ interface FilterDropdownProps {
   label: string;
   options: FilterOption[];
   selectedFilters: string[];
-  dropdownElevation?: Elevation;
   onToggleFilter: (value: string) => void;
   onClearAll: () => void;
   buttonClassName?: string;
@@ -36,7 +35,6 @@ const FilterDropdown = ({
   label,
   options,
   selectedFilters,
-  dropdownElevation = ELEVATION.OVERLAY,
   onToggleFilter,
   onClearAll,
   buttonClassName,
@@ -56,9 +54,7 @@ const FilterDropdown = ({
         <Button variant="tertiary" className={cn(styles['selector-button'], buttonClassName)}>
           <span className={styles['selector-button-inner']}>
             {label}
-            {hasSelectedFilters && (
-              <span className={styles['selected-filters-count']}>{selectedFilters.length}</span>
-            )}
+            {hasSelectedFilters && <Badge variant="primary">{selectedFilters.length}</Badge>}
           </span>
           <ChevronDownIcon className={styles['chevron-icon']} />
         </Button>
@@ -66,7 +62,6 @@ const FilterDropdown = ({
       <DropdownMenuContent
         align="end"
         className={cn(styles['dropdown-menu-content'], contentClassName)}
-        elevation={dropdownElevation}
       >
         <DropdownMenuLabel>
           Filters
