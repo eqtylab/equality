@@ -13,9 +13,8 @@
 }
 
 .tabs-list--filled {
-  @apply bg-greyscale-800;
+  @apply bg-background-sunken inset-shadow-xs;
   @apply overflow-hidden rounded-md;
-  @apply p-1;
 }
 
 .tabs-trigger--filled {
@@ -29,7 +28,7 @@
 }
 
 .tabs-list .tabs-trigger--filled {
-  @apply data-[state=active]:text-black;
+  @apply data-[state=active]:text-button-primary-text;
 }
 
 .tabs-list .tabs-trigger--transparent {
@@ -37,7 +36,7 @@
 }
 
 .active-tab-indicator {
-  @apply bg-brand-primary z-behind absolute w-full;
+  @apply bg-button-primary-fill z-behind absolute w-full;
 }
 
 .active-tab-indicator--filled {
