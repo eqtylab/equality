@@ -11,7 +11,6 @@ import {
   DropdownMenuTrigger,
 } from '@/components/dropdown-menu/dropdown-menu';
 import styles from '@/components/filter-dropdown/filter-dropdown.module.css';
-import { ELEVATION, Elevation } from '@/lib/elevations';
 import { cn } from '@/lib/utils';
 
 const ChevronDownIcon = ChevronDown as React.ComponentType<{ className?: string }>;
@@ -25,7 +24,6 @@ interface FilterDropdownProps {
   label: string;
   options: FilterOption[];
   selectedFilters: string[];
-  dropdownElevation?: Elevation;
   onToggleFilter: (value: string) => void;
   onClearAll: () => void;
   buttonClassName?: string;
@@ -36,7 +34,6 @@ const FilterDropdown = ({
   label,
   options,
   selectedFilters,
-  dropdownElevation = ELEVATION.OVERLAY,
   onToggleFilter,
   onClearAll,
   buttonClassName,
@@ -66,7 +63,6 @@ const FilterDropdown = ({
       <DropdownMenuContent
         align="end"
         className={cn(styles['dropdown-menu-content'], contentClassName)}
-        elevation={dropdownElevation}
       >
         <DropdownMenuLabel>
           Filters
