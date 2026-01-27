@@ -3,7 +3,7 @@
 .code-block {
   @apply border-border overflow-hidden rounded-md border;
   @apply flex flex-col;
-  @apply max-h-64;
+  @apply max-h-64 w-full;
 }
 
 .header {
@@ -35,6 +35,7 @@
   @apply flex-1;
   @apply flex flex-col;
   @apply overflow-scroll;
+  @apply min-w-0;
 }
 
 .neutral {
