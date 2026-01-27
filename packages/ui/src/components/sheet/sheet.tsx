@@ -1,12 +1,10 @@
 import * as React from 'react';
 import * as SheetPrimitive from '@radix-ui/react-dialog';
 import { cva, type VariantProps } from 'class-variance-authority';
-import { X } from 'lucide-react';
 
+import { IconButton } from '@/components/icon-button/icon-button';
 import styles from '@/components/sheet/sheet.module.css';
 import { cn, getThemeProviderRoot } from '@/lib/utils';
-
-const XIcon = X as React.ComponentType<{ className?: string }>;
 
 const Sheet = SheetPrimitive.Root;
 
@@ -53,17 +51,18 @@ const SheetContent = React.forwardRef<
     <SheetOverlay />
     <SheetPrimitive.Content ref={ref} className={cn(sheetVariants({ side }), className)} {...props}>
       {children}
-      <SheetPrimitive.Close className={styles['sheet-close']}>
-        <XIcon className={styles['sheet-close-icon']} />
-        <span className={styles['sheet-close-text']}>Close</span>
-      </SheetPrimitive.Close>
     </SheetPrimitive.Content>
   </SheetPortal>
 ));
 SheetContent.displayName = SheetPrimitive.Content.displayName;
 
 const SheetHeader = ({ className, ...props }: React.HTMLAttributes<HTMLDivElement>) => (
-  <div className={cn(styles['sheet-header'], className)} {...props} />
+  <div className={cn(styles['sheet-header'], className)} {...props}>
+    <div className={styles['sheet-header-content']}>{props.children}</div>
+    <SheetPrimitive.Close asChild>
+      <IconButton name="X" label="Close" className={styles['sheet-close']} />
+    </SheetPrimitive.Close>
+  </div>
 );
 SheetHeader.displayName = 'SheetHeader';
 

@@ -11,7 +11,7 @@
   @apply bg-background-overlay;
   @apply shadow-shadow-overlay shadow-lg;
   @apply border-border-overlay;
-  @apply z-modal fixed gap-4 p-6;
+  @apply z-modal fixed gap-4;
   @apply transition ease-in-out;
   @apply data-[state=open]:animate-in data-[state=open]:duration-500;
   @apply data-[state=closed]:animate-out data-[state=closed]:duration-300;
@@ -44,29 +44,26 @@
 }
 
 .sheet-close {
-  @apply rounded-sm;
-  @apply absolute right-4 top-4;
-  @apply focus-ring;
-  @apply disabled:pointer-events-none;
-}
-
-.sheet-close-icon {
-  @apply size-4;
-}
-
-.sheet-close-text {
-  @apply sr-only;
+  @apply shrink-0;
 }
 
 .sheet-header {
+  @apply flex flex-row items-start justify-between;
+  @apply gap-4 p-4;
+  @apply text-center sm:text-left;
+  @apply from-brand-primary/40 to-background border-b bg-gradient-to-r;
+}
+
+.sheet-header-content {
   @apply flex flex-col;
   @apply space-y-2;
-  @apply text-center sm:text-left;
+  @apply flex-1;
 }
 
 .sheet-footer {
   @apply flex flex-col-reverse sm:flex-row sm:justify-end;
   @apply sm:space-x-2;
+  @apply border-border border-t p-4;
 }
 
 .sheet-title {
