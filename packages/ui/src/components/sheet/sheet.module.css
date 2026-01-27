@@ -33,14 +33,14 @@
 .sheet-content--side-left {
   @apply border-r;
   @apply inset-y-0 left-0;
-  @apply h-full w-3/4 sm:max-w-sm;
+  @apply h-full w-3/4 sm:w-1/3;
   @apply data-[state=closed]:slide-out-to-left data-[state=open]:slide-in-from-left;
 }
 
 .sheet-content--side-right {
   @apply border-l;
   @apply inset-y-0 right-0;
-  @apply h-full w-3/4 sm:max-w-sm;
+  @apply h-full w-3/4 sm:w-1/3;
   @apply data-[state=closed]:slide-out-to-right data-[state=open]:slide-in-from-right;
 }
 
