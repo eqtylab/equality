@@ -1,6 +1,14 @@
 {
   "name": "@eqtylab/equality",
+  "description": "EQTYLab's component and token-based design system",
+  "homepage": "https://equality.eqtylab.io/",
   "version": "1.0.0",
+  "license": "Apache-2.0",
+  "keywords": [
+    "component library",
+    "react",
+    "components"
+  ],
   "private": false,
   "type": "module",
   "main": "./dist/index.cjs",
