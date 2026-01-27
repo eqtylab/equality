@@ -2,6 +2,7 @@ import {
   IconButton,
   ScrollArea,
   Sheet,
+  SheetContainer,
   SheetContent,
   SheetDescription,
   SheetHeader,
@@ -40,18 +41,16 @@ export const MobileSidebar = ({ children }: MobileSidebarProps) => {
         onClick={() => setIsOpen(true)}
       />
       <Sheet open={isOpen} onOpenChange={setIsOpen}>
-        <SheetContent className="py-0! pr-0!" side="left">
-          <div className="flex h-full w-full flex-col justify-between">
-            <div className="flex max-h-full flex-col space-y-4">
-              <SheetHeader className="sr-only">
-                <SheetTitle>Menu</SheetTitle>
-              </SheetHeader>
-              <ScrollArea className="h-full">
-                <SheetDescription>{children}</SheetDescription>
-              </ScrollArea>
-            </div>
-          </div>
-        </SheetContent>
+        <SheetContainer className="py-0! pr-0!" side="left">
+          <SheetHeader className="sr-only">
+            <SheetTitle>Menu</SheetTitle>
+          </SheetHeader>
+          <SheetContent className="p-0">
+            <ScrollArea className="h-full">
+              <SheetDescription>{children}</SheetDescription>
+            </ScrollArea>
+          </SheetContent>
+        </SheetContainer>
       </Sheet>
     </div>
   );
