@@ -10,7 +10,7 @@ on:
 
 permissions:
   contents: read
-  packages: write
+  id-token: write
 
 jobs:
   publish:
@@ -23,8 +23,7 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 22
-          registry-url: https://npm.pkg.github.com
-          scope: '@eqtylab'
+          registry-url: https://registry.npmjs.org
 
       - name: Setup pnpm
         uses: eqtylab-actions/setup-pnpm@master
@@ -39,17 +38,13 @@ jobs:
           PKG_VERSION=$(node -p "require('./packages/ui/package.json').version")
           echo "Checking $PKG_NAME@$PKG_VERSION"
 
-          if npm view "$PKG_NAME@$PKG_VERSION" version --registry=https://npm.pkg.github.com >/dev/null 2>&1; then
+          if npm view "$PKG_NAME@$PKG_VERSION" version --registry=https://registry.npmjs.org >/dev/null 2>&1; then
             echo "exists=true" >> "$GITHUB_OUTPUT"
             echo "Version already exists; skipping publish."
           else
             echo "exists=false" >> "$GITHUB_OUTPUT"
           fi
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.GHCR_TOKEN }}
 
       - name: Build and publish
         if: steps.version_check.outputs.exists != 'true'
         run: pnpm run release
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.GHCR_TOKEN }}

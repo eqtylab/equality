@@ -47,4 +47,4 @@ node_modules/.cache/
 
 # Misc
 *.local
-
+.direnv
