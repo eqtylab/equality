@@ -11,7 +11,8 @@
   @apply bg-background-overlay;
   @apply shadow-shadow-overlay shadow-lg;
   @apply border-border-overlay;
-  @apply z-modal fixed gap-4;
+  @apply z-modal fixed;
+  @apply flex flex-col;
   @apply transition ease-in-out;
   @apply data-[state=open]:animate-in data-[state=open]:duration-500;
   @apply data-[state=closed]:animate-out data-[state=closed]:duration-300;
@@ -48,20 +49,24 @@
 }
 
 .sheet-header {
-  @apply flex flex-row items-start justify-between;
+  @apply flex shrink-0 items-start justify-between;
   @apply gap-4 p-4;
-  @apply text-center sm:text-left;
+  @apply text-left;
   @apply from-brand-primary/40 to-background border-b bg-gradient-to-r;
 }
 
 .sheet-header-content {
-  @apply flex flex-col;
+  @apply flex min-w-0 flex-1 flex-col;
   @apply space-y-2;
-  @apply flex-1;
+}
+
+.sheet-body {
+  @apply min-h-0 flex-1 overflow-auto;
+  @apply p-4;
 }
 
 .sheet-footer {
-  @apply flex flex-col-reverse sm:flex-row sm:justify-end;
+  @apply flex shrink-0 flex-col-reverse sm:flex-row sm:justify-end;
   @apply sm:space-x-2;
   @apply border-border border-t p-4;
 }

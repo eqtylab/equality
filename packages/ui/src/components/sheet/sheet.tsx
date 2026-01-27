@@ -38,14 +38,14 @@ const sheetVariants = cva(styles['sheet-content'], {
   },
 });
 
-interface SheetContentProps
+interface SheetContainerProps
   extends
     React.ComponentPropsWithoutRef<typeof SheetPrimitive.Content>,
     VariantProps<typeof sheetVariants> {}
 
-const SheetContent = React.forwardRef<
+const SheetContainer = React.forwardRef<
   React.ElementRef<typeof SheetPrimitive.Content>,
-  SheetContentProps
+  SheetContainerProps
 >(({ side = 'right', className, children, ...props }, ref) => (
   <SheetPortal>
     <SheetOverlay />
@@ -54,7 +54,7 @@ const SheetContent = React.forwardRef<
     </SheetPrimitive.Content>
   </SheetPortal>
 ));
-SheetContent.displayName = SheetPrimitive.Content.displayName;
+SheetContainer.displayName = SheetPrimitive.Content.displayName;
 
 const SheetHeader = ({ className, ...props }: React.HTMLAttributes<HTMLDivElement>) => (
   <div className={cn(styles['sheet-header'], className)} {...props}>
@@ -91,9 +91,15 @@ const SheetDescription = React.forwardRef<
 ));
 SheetDescription.displayName = SheetPrimitive.Description.displayName;
 
+const SheetContent = ({ className, ...props }: React.HTMLAttributes<HTMLDivElement>) => (
+  <div className={cn(styles['sheet-body'], 'styled-vertical-scrollbar', className)} {...props} />
+);
+SheetContent.displayName = 'SheetContent';
+
 export {
   Sheet,
   SheetClose,
+  SheetContainer,
   SheetContent,
   SheetDescription,
   SheetFooter,
