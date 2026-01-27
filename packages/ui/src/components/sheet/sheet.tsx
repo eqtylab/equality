@@ -56,14 +56,30 @@ const SheetContainer = React.forwardRef<
 ));
 SheetContainer.displayName = SheetPrimitive.Content.displayName;
 
-const SheetHeader = ({ className, ...props }: React.HTMLAttributes<HTMLDivElement>) => (
-  <div className={cn(styles['sheet-header'], className)} {...props}>
-    <div className={styles['sheet-header-content']}>{props.children}</div>
-    <SheetPrimitive.Close asChild>
-      <IconButton name="X" label="Close" className={styles['sheet-close']} />
-    </SheetPrimitive.Close>
-  </div>
+const SheetHeaderIcon = ({ className, ...props }: React.HTMLAttributes<HTMLDivElement>) => (
+  <div className={cn(styles['sheet-header-icon'], className)} {...props} />
 );
+SheetHeaderIcon.displayName = 'SheetHeaderIcon';
+
+const SheetHeader = ({ className, children, ...props }: React.HTMLAttributes<HTMLDivElement>) => {
+  const childrenArray = React.Children.toArray(children);
+  const icon = childrenArray.find(
+    (child) => React.isValidElement(child) && child.type === SheetHeaderIcon
+  );
+  const otherChildren = childrenArray.filter(
+    (child) => !(React.isValidElement(child) && child.type === SheetHeaderIcon)
+  );
+
+  return (
+    <div className={cn(styles['sheet-header'], className)} {...props}>
+      {icon}
+      <div className={styles['sheet-header-text-content']}>{otherChildren}</div>
+      <SheetPrimitive.Close asChild>
+        <IconButton name="X" label="Close" className={styles['sheet-close']} />
+      </SheetPrimitive.Close>
+    </div>
+  );
+};
 SheetHeader.displayName = 'SheetHeader';
 
 const SheetFooter = ({ className, ...props }: React.HTMLAttributes<HTMLDivElement>) => (
@@ -104,6 +120,7 @@ export {
   SheetDescription,
   SheetFooter,
   SheetHeader,
+  SheetHeaderIcon,
   SheetOverlay,
   SheetPortal,
   SheetTitle,
