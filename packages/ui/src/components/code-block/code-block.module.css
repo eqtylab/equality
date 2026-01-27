@@ -30,11 +30,11 @@
 }
 
 .content {
-  @apply bg-card-background rounded-b-md border;
+  @apply bg-card-background border-t-border border-t;
   @apply font-mono text-xs;
   @apply flex-1;
   @apply flex flex-col;
-  @apply overflow-hidden;
+  @apply overflow-scroll;
 }
 
 .neutral {
@@ -57,17 +57,19 @@
   @apply border-brand-yellow;
 }
 
-.scroll-container {
-  @apply overflow-y-auto p-3;
-  @apply w-full;
+.code-label {
+  @apply p-3;
+  @apply border-t-border border-t;
 }
 
-.code-label {
-  @apply text-text-secondary mb-1;
+.code-label-text {
+  @apply text-text-secondary;
+  @apply font-mono text-xs;
 }
 
 .pre {
-  @apply bg-transparent! p-0!;
+  @apply bg-transparent! px-3! my-0!;
+  @apply py-3;
 }
 
 .code.wrap {

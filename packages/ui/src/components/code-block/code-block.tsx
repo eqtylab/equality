@@ -32,7 +32,7 @@ const CodeBlock = ({
   const [theme] = useTheme();
 
   return (
-    <div className={cn(styles['code-block'], className)}>
+    <div className={cn(styles['code-block'], styles[variant], className)}>
       <div className={styles.header}>
         <div className={styles['header-left']}>
           {title && <span className={styles.title}>{title}</span>}
@@ -44,21 +44,23 @@ const CodeBlock = ({
           <CopyButton value={copy || code} size="sm" />
         </div>
       </div>
-      <div className={cn(styles.content, styles[variant])}>
-        <div className={cn(styles['scroll-container'], 'styled-vertical-scrollbar')}>
-          {codeLabel && <div className={styles['code-label']}>{codeLabel}</div>}
-          <SyntaxHighlighter
-            language={language}
-            style={theme === 'dark' ? darkStyle : lightStyle}
-            wrapLines={WRAP}
-            wrapLongLines={WRAP}
-            className={styles.pre}
-            codeTagProps={{ className: cn(styles.code, { [styles.wrap]: WRAP }) }}
-          >
-            {code}
-          </SyntaxHighlighter>
-        </div>
+      <div className={cn(styles.content)}>
+        <SyntaxHighlighter
+          language={language}
+          style={theme === 'dark' ? darkStyle : lightStyle}
+          wrapLines={WRAP}
+          wrapLongLines={WRAP}
+          className={styles.pre}
+          codeTagProps={{ className: cn(styles.code, { [styles.wrap]: WRAP }) }}
+        >
+          {code}
+        </SyntaxHighlighter>
       </div>
+      {codeLabel && (
+        <div className={styles['code-label']}>
+          <p className={styles['code-label-text']}>{codeLabel}</p>
+        </div>
+      )}
     </div>
   );
 };
