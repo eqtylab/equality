@@ -1,5 +1,5 @@
 {
   "permissions": {
-    "allow": ["Skill(create-documentation)", "Skill(create-component)"]
+    "allow": ["Skill(create-documentation)", "Skill(create-component)", "Bash(pnpm build:*)"]
   }
 }

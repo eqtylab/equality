@@ -1,11 +1,112 @@
 ---
 layout: "@demo/layouts/mdx-layout.astro"
 heading: "Sheet"
-description: "Sheet with sizes and variants"
+description: "A slide-out panel that overlays content from the edge of the screen"
 ---
 
 import { SheetDemo } from "@demo/components/demo/sheet";
 
-## Default
+## Overview
+
+The Sheet component is a modal dialog that slides in from the edge of the screen. It's useful for displaying supplementary content, without navigating away from the current page.
+
+## Usage
+
+Import the component:
+
+```ts
+import {
+  Sheet,
+  SheetContainer,
+  SheetContent,
+  SheetDescription,
+  SheetFooter,
+  SheetHeader,
+  SheetHeaderIcon,
+  SheetTitle,
+  SheetTrigger,
+} from "@eqtylab/equality";
+```
+
+Basic usage with required properties:
+
+```tsx
+<Sheet>
+  <SheetTrigger asChild>
+    <Button>Open Sheet</Button>
+  </SheetTrigger>
+  <SheetContainer>
+    <SheetHeader>
+      <SheetTitle>Sheet Title</SheetTitle>
+      <SheetDescription>Sheet description goes here</SheetDescription>
+    </SheetHeader>
+    <SheetContent>Your content goes here</SheetContent>
+    <SheetFooter>
+      <Button>Action</Button>
+    </SheetFooter>
+  </SheetContainer>
+</Sheet>
+```
+
+With an optional header icon:
+
+```tsx
+<SheetHeader>
+  <SheetHeaderIcon>
+    <Avatar>
+      <AvatarFallback>JD</AvatarFallback>
+    </Avatar>
+  </SheetHeaderIcon>
+  <SheetTitle>Sheet Title</SheetTitle>
+  <SheetDescription>Sheet description goes here</SheetDescription>
+</SheetHeader>
+```
+
+## Variants
 
 <SheetDemo client:only="react" />
+
+### Side Position
+
+The Sheet can slide in from any side of the screen using the `side` prop on `SheetContainer`. Available values: `"top"`, `"bottom"`, `"left"`, `"right"` (default).
+
+```tsx
+<SheetContainer side="right">
+  <SheetHeader>
+    <SheetTitle>Sheet Title</SheetTitle>
+    <SheetDescription>Sheet description</SheetDescription>
+  </SheetHeader>
+  <SheetContent>Content goes here</SheetContent>
+</SheetContainer>
+```
+
+## Slots
+
+| Name               | Description                                                                     |
+| ------------------ | ------------------------------------------------------------------------------- |
+| `SheetTrigger`     | The button or element that triggers the sheet to open                           |
+| `SheetContainer`   | The main container that wraps all sheet content and controls the slide position |
+| `SheetHeader`      | A container for the title and description, positioned at the top of the sheet   |
+| `SheetHeaderIcon`  | Optional icon container positioned to the left of the title and description     |
+| `SheetTitle`       | The accessible title for the sheet (required for accessibility)                 |
+| `SheetDescription` | Optional description that provides additional context about the sheet's purpose |
+| `SheetContent`     | The scrollable body area for the main content of the sheet                      |
+| `SheetFooter`      | A container for actions or buttons, positioned at the bottom of the sheet       |
+| `SheetClose`       | A component that closes the sheet when clicked (automatically included)         |
+
+## Props
+
+### Sheet
+
+| Name           | Description                               | Type       | Default | Required |
+| -------------- | ----------------------------------------- | ---------- | ------- | -------- |
+| `open`         | Controlled open state of the sheet        | `boolean`  | -       | ❌       |
+| `onOpenChange` | Callback when the open state changes      | `function` | -       | ❌       |
+| `defaultOpen`  | Default open state for uncontrolled usage | `boolean`  | `false` | ❌       |
+| `modal`        | Whether the sheet should trap focus       | `boolean`  | `true`  | ❌       |
+
+### SheetContainer
+
+| Name   | Description                          | Type                             | Default | Required |
+| ------ | ------------------------------------ | -------------------------------- | ------- | -------- |
+| `side` | The side of the screen to slide from | `top`, `bottom`, `left`, `right` | `right` | ❌       |

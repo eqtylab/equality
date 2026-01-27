@@ -1,12 +1,10 @@
 import * as React from 'react';
 import * as SheetPrimitive from '@radix-ui/react-dialog';
 import { cva, type VariantProps } from 'class-variance-authority';
-import { X } from 'lucide-react';
 
+import { IconButton } from '@/components/icon-button/icon-button';
 import styles from '@/components/sheet/sheet.module.css';
 import { cn, getThemeProviderRoot } from '@/lib/utils';
-
-const XIcon = X as React.ComponentType<{ className?: string }>;
 
 const Sheet = SheetPrimitive.Root;
 
@@ -40,31 +38,48 @@ const sheetVariants = cva(styles['sheet-content'], {
   },
 });
 
-interface SheetContentProps
+interface SheetContainerProps
   extends
     React.ComponentPropsWithoutRef<typeof SheetPrimitive.Content>,
     VariantProps<typeof sheetVariants> {}
 
-const SheetContent = React.forwardRef<
+const SheetContainer = React.forwardRef<
   React.ElementRef<typeof SheetPrimitive.Content>,
-  SheetContentProps
+  SheetContainerProps
 >(({ side = 'right', className, children, ...props }, ref) => (
   <SheetPortal>
     <SheetOverlay />
     <SheetPrimitive.Content ref={ref} className={cn(sheetVariants({ side }), className)} {...props}>
       {children}
-      <SheetPrimitive.Close className={styles['sheet-close']}>
-        <XIcon className={styles['sheet-close-icon']} />
-        <span className={styles['sheet-close-text']}>Close</span>
-      </SheetPrimitive.Close>
     </SheetPrimitive.Content>
   </SheetPortal>
 ));
-SheetContent.displayName = SheetPrimitive.Content.displayName;
+SheetContainer.displayName = SheetPrimitive.Content.displayName;
 
-const SheetHeader = ({ className, ...props }: React.HTMLAttributes<HTMLDivElement>) => (
-  <div className={cn(styles['sheet-header'], className)} {...props} />
+const SheetHeaderIcon = ({ className, ...props }: React.HTMLAttributes<HTMLDivElement>) => (
+  <div className={cn(styles['sheet-header-icon'], className)} {...props} />
 );
+SheetHeaderIcon.displayName = 'SheetHeaderIcon';
+
+const SheetHeader = ({ className, children, ...props }: React.HTMLAttributes<HTMLDivElement>) => {
+  const childrenArray = React.Children.toArray(children);
+  const icon = childrenArray.find(
+    (child) => React.isValidElement(child) && child.type === SheetHeaderIcon
+  );
+  const otherChildren = childrenArray.filter(
+    (child) => !(React.isValidElement(child) && child.type === SheetHeaderIcon)
+  );
+
+  return (
+    <div className={cn(styles['sheet-header'], className)} {...props}>
+      {icon}
+      <div className={styles['sheet-header-text-content']}>{otherChildren}</div>
+      <SheetPrimitive.Close asChild>
+        <IconButton name="X" label="Close" className={styles['sheet-close']} />
+      </SheetPrimitive.Close>
+    </div>
+  );
+};
 SheetHeader.displayName = 'SheetHeader';
 
 const SheetFooter = ({ className, ...props }: React.HTMLAttributes<HTMLDivElement>) => (
@@ -92,13 +107,20 @@ const SheetDescription = React.forwardRef<
 ));
 SheetDescription.displayName = SheetPrimitive.Description.displayName;
 
+const SheetContent = ({ className, ...props }: React.HTMLAttributes<HTMLDivElement>) => (
+  <div className={cn(styles['sheet-body'], 'styled-vertical-scrollbar', className)} {...props} />
+);
+SheetContent.displayName = 'SheetContent';
+
 export {
   Sheet,
   SheetClose,
+  SheetContainer,
   SheetContent,
   SheetDescription,
   SheetFooter,
   SheetHeader,
+  SheetHeaderIcon,
   SheetOverlay,
   SheetPortal,
   SheetTitle,

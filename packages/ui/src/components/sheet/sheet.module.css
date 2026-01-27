@@ -11,7 +11,8 @@
   @apply bg-background-overlay;
   @apply shadow-shadow-overlay shadow-lg;
   @apply border-border-overlay;
-  @apply z-modal fixed gap-4 p-6;
+  @apply z-modal fixed;
+  @apply flex flex-col;
   @apply transition ease-in-out;
   @apply data-[state=open]:animate-in data-[state=open]:duration-500;
   @apply data-[state=closed]:animate-out data-[state=closed]:duration-300;
@@ -32,41 +33,47 @@
 .sheet-content--side-left {
   @apply border-r;
   @apply inset-y-0 left-0;
-  @apply h-full w-3/4 sm:max-w-sm;
+  @apply h-full w-3/4 sm:w-1/3;
   @apply data-[state=closed]:slide-out-to-left data-[state=open]:slide-in-from-left;
 }
 
 .sheet-content--side-right {
   @apply border-l;
   @apply inset-y-0 right-0;
-  @apply h-full w-3/4 sm:max-w-sm;
+  @apply h-full w-3/4 sm:w-1/3;
   @apply data-[state=closed]:slide-out-to-right data-[state=open]:slide-in-from-right;
 }
 
 .sheet-close {
-  @apply rounded-sm;
-  @apply absolute right-4 top-4;
-  @apply focus-ring;
-  @apply disabled:pointer-events-none;
-}
-
-.sheet-close-icon {
-  @apply size-4;
-}
-
-.sheet-close-text {
-  @apply sr-only;
+  @apply shrink-0;
 }
 
 .sheet-header {
-  @apply flex flex-col;
+  @apply flex shrink-0 items-center;
+  @apply gap-4 p-4;
+  @apply text-left;
+  @apply from-brand-primary/40 to-background border-b bg-gradient-to-r;
+}
+
+.sheet-header-icon {
+  @apply shrink-0;
+  @apply flex items-center justify-center;
+}
+
+.sheet-header-text-content {
+  @apply flex min-w-0 flex-1 flex-col;
   @apply space-y-2;
-  @apply text-center sm:text-left;
+}
+
+.sheet-body {
+  @apply min-h-0 flex-1 overflow-auto;
+  @apply p-4;
 }
 
 .sheet-footer {
-  @apply flex flex-col-reverse sm:flex-row sm:justify-end;
+  @apply flex shrink-0 flex-col-reverse sm:flex-row sm:justify-end;
   @apply sm:space-x-2;
+  @apply border-border border-t p-4;
 }
 
 .sheet-title {
