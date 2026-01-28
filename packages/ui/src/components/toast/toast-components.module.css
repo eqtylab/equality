@@ -23,19 +23,19 @@
 .toast--default {
   --mix-color: var(--color-brand-primary);
   --hover-darken: 50%;
-  @apply border-brand-primary text-brand-primary bg-mixed-dark;
+  @apply border-badge-text-primary bg-badge-background-primary text-badge-text-primary;
 }
 
 .toast--danger {
-  @apply border-red-400 bg-red-800 text-red-400;
+  @apply border-badge-text-danger bg-badge-background-danger text-badge-text-danger;
 }
 
 .toast--warning {
-  @apply border-yellow-400 bg-yellow-800 text-yellow-400;
+  @apply border-badge-text-warning bg-badge-background-warning text-badge-text-warning;
 }
 
 .toast--success {
-  @apply border-emerald-400 bg-emerald-800 text-emerald-400;
+  @apply border-badge-text-success bg-badge-background-success text-badge-text-success;
 }
 
 .toast-action {
@@ -86,5 +86,5 @@
 }
 
 .toast-description {
-  @apply text-text-secondary text-sm;
+  @apply text-sm;
 }

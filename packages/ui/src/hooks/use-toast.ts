@@ -10,6 +10,7 @@ export type ToasterToast = ToastProps & {
   title?: React.ReactNode;
   description?: React.ReactNode;
   action?: ToastActionElement;
+  icon?: string | React.ReactElement;
 };
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars

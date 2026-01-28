@@ -7,3 +7,7 @@
 .toast-action {
   @apply mt-2 flex justify-end gap-1;
 }
+
+.toast-title-container {
+  @apply flex gap-2;
+}
