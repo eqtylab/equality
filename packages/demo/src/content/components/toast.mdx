@@ -11,11 +11,13 @@ import { ToastRoot } from "@eqtylab/equality";
 
 ## Overview
 
----
+The Toast component provides a non-intrusive way to display notifications to users. It supports status-dependant variants, optional (though suggested) titles and descriptions, and action buttons. Toasts automatically dismiss after a delay and can be manually dismissed via a close button.
 
-The Toast component provides a non-intrusive way to display notifications to users. Built on top of Radix UI primitives, it supports multiple variants (default, danger, warning, success), optional titles and descriptions, and action buttons. Toasts automatically dismiss after a delay and can be manually dismissed via a close button.
+Because toasts disappear autoamtically after five seconds, it is not recommended to make any actions surfaced within them solely available in the toast. For example, this could be used to give users an opportunity to undo their previous action, but the undo action should also be made available outside of the toast component.
 
 ## Variants
+
+When `title` is present, toasts display variant-specific icons by default.
 
 ### Default
 
@@ -33,25 +35,21 @@ The Toast component provides a non-intrusive way to display notifications to use
 
 <ToastDemo client:only="react" variant="success" />
 
-### With Title
-
-<ToastDemo client:only="react" variant="with-title" />
-
 ### With Action
 
 <ToastDemo client:only="react" variant="with-action" />
 
 ## Usage
 
----
-
-### Setup
-
-First, add the `ToastRoot` component to your application root. This component provides the toast context and viewport:
+Import the components and hooks:
 
 ```tsx
-import { ToastRoot } from "@eqtylab/equality";
+import { ToastRoot, useToast } from "@eqtylab/equality";
+```
 
+First, add the `ToastRoot` component to your application root:
+
+```tsx
 function App() {
   return (
     <>
@@ -62,19 +60,17 @@ function App() {
 }
 ```
 
-### Basic Usage
-
-Import the `useToast` hook in any component where you want to display toasts:
+Basic usage with the `useToast` hook:
 
 ```tsx
-import { useToast } from "@eqtylab/equality";
-
 function MyComponent() {
   const { toast } = useToast();
 
   const handleClick = () => {
     toast({
-      description: "This is a toast notification.",
+      title: "Success",
+      description: "Your changes have been saved.",
+      variant: "success",
     });
   };
 
@@ -82,30 +78,33 @@ function MyComponent() {
 }
 ```
 
-### Toast API
+## Props
 
-The `toast` function accepts the following options:
+| Name           | Description                                                                 | Type                                      | Default               | Required |
+| -------------- | --------------------------------------------------------------------------- | ----------------------------------------- | --------------------- | -------- |
+| `variant`      | Visual style of the toast with default icon                                 | `default`, `danger`, `warning`, `success` | `default`             | ❌       |
+| `title`        | Title text displayed with an icon                                           | `React.ReactNode`                         | -                     | ❌       |
+| `description`  | Main message content                                                        | `React.ReactNode`                         | -                     | ❌       |
+| `icon`         | Custom icon (string for Lucide icon name or React element, null to disable) | `string \| React.ReactElement \| null`    | Variant-specific icon | ❌       |
+| `action`       | Action button element                                                       | `ToastActionElement`                      | -                     | ❌       |
+| `open`         | Control the open state                                                      | `boolean`                                 | `true`                | ❌       |
+| `onOpenChange` | Callback when open state changes                                            | `(open: boolean) => void`                 | -                     | ❌       |
 
-- `variant?: "default" | "danger" | "warning" | "success"` - Visual variant of the toast
-- `title?: React.ReactNode` - Optional title displayed at the top of the toast
-- `description?: React.ReactNode` - Main message content
-- `action?: ToastActionElement` - Optional action button element
-- `open?: boolean` - Control the open state (defaults to `true`)
-- `onOpenChange?: (open: boolean) => void` - Callback when open state changes
+### Toast Instance Methods
 
-The `toast` function returns an object with:
+The `toast` function returns an object with the following methods:
 
-- `id: string` - Unique identifier for the toast
-- `dismiss: () => void` - Function to manually dismiss the toast
-- `update: (props: ToasterToast) => void` - Function to update the toast properties
+| Method    | Description                             | Type                            |
+| --------- | --------------------------------------- | ------------------------------- |
+| `id`      | Unique identifier for the toast         | `string`                        |
+| `dismiss` | Function to manually dismiss the toast  | `() => void`                    |
+| `update`  | Function to update the toast properties | `(props: ToasterToast) => void` |
 
-### Examples
+## Examples
 
-#### Basic Toast
+### Basic Toast
 
 ```tsx
-import { useToast } from "@eqtylab/equality";
-
 const { toast } = useToast();
 
 toast({
@@ -113,16 +112,7 @@ toast({
 });
 ```
 
-#### Toast with Title
-
-```tsx
-toast({
-  title: "Success",
-  description: "Your changes have been saved successfully.",
-});
-```
-
-#### Toast with Variant
+### Toast with Title and Variant
 
 ```tsx
 toast({
@@ -132,12 +122,10 @@ toast({
 });
 ```
 
-#### Toast with Action
+### Toast with Action
 
 ```tsx
-import { useToast, ToastAction } from "@eqtylab/equality";
-
-const { toast } = useToast();
+import { ToastAction } from "@eqtylab/equality";
 
 toast({
   title: "Action Required",
@@ -146,11 +134,9 @@ toast({
 });
 ```
 
-#### Updating a Toast
+### Updating a Toast
 
 ```tsx
-const { toast } = useToast();
-
 const toastInstance = toast({
   description: "Uploading...",
 });
@@ -162,11 +148,9 @@ toastInstance.update({
 });
 ```
 
-#### Dismissing a Toast
+### Dismissing a Toast
 
 ```tsx
-const { toast } = useToast();
-
 const toastInstance = toast({
   description: "Processing...",
 });

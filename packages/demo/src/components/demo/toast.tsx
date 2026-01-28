@@ -3,13 +3,7 @@ import { Button, useToast, ToastAction } from "@eqtylab/equality";
 export const ToastDemo = ({
   variant = "default",
 }: {
-  variant?:
-    | "default"
-    | "danger"
-    | "warning"
-    | "success"
-    | "with-title"
-    | "with-action";
+  variant?: "default" | "danger" | "warning" | "success" | "with-action";
 }) => {
   const { toast } = useToast();
 
@@ -76,23 +70,6 @@ export const ToastDemo = ({
         }}
       >
         Show Success Toast
-      </Button>
-    );
-  }
-
-  if (variant === "with-title") {
-    return (
-      <Button
-        size="sm"
-        onClick={() => {
-          toast({
-            variant: "default",
-            title: "Notification",
-            description: "This toast includes both a title and description.",
-          });
-        }}
-      >
-        Show Toast with Title
       </Button>
     );
   }
