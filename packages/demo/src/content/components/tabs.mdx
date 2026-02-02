@@ -173,21 +173,21 @@ Combine icons with the filled background variant for a more prominent tab design
 
 ---
 
-| Prop                 | Type                        | Default         | Description                                                                                                                               |
-| -------------------- | --------------------------- | --------------- | ----------------------------------------------------------------------------------------------------------------------------------------- |
-| `id`                 | `string`                    | **Required**    | A unique identifier for the tabs instance. Used internally for the animated indicator's layoutId.                                         |
-| `items`              | `Array<TabItem>`            | **Required**    | An array of tab items. See TabItem structure below.                                                                                       |
-| `defaultValue`       | `string`                    | First item      | The value of the tab that should be active by default. Defaults to the first item's value if not specified.                               |
-| `tabsListBackground` | `"transparent" \| "filled"` | `"transparent"` | The background style for the tabs list. `"transparent"` shows tabs with a transparent background, `"filled"` applies a filled background. |
-| `onValueChange`      | `(value: string) => void`   | —               | Callback function called when the active tab changes. Receives the new tab's value as an argument.                                        |
+| Name                 | Description                                                              | Type                      | Default       | Required |
+| -------------------- | ------------------------------------------------------------------------ | ------------------------- | ------------- | -------- |
+| `id`                 | Unique identifier for the tabs instance, used for the animated indicator | `string`                  | -             | ✅       |
+| `items`              | Array of tab items (see TabItem structure below)                         | `Array<TabItem>`          | -             | ✅       |
+| `defaultValue`       | The value of the tab that should be active by default                    | `string`                  | First item    | ❌       |
+| `tabsListBackground` | Background style for the tabs list                                       | `transparent`, `filled`   | `transparent` | ❌       |
+| `onValueChange`      | Callback fired when the active tab changes                               | `(value: string) => void` | -             | ❌       |
 
 ### TabItem Structure
 
 Each item in the `items` array should have the following structure:
 
-| Property  | Type                           | Required | Description                                                                                                     |
-| --------- | ------------------------------ | -------- | --------------------------------------------------------------------------------------------------------------- |
-| `label`   | `string`                       | Yes      | The text label displayed on the tab trigger.                                                                    |
-| `value`   | `string`                       | Yes      | A unique value that identifies this tab. Used for state management and content matching.                        |
-| `icon`    | `React.ReactElement \| string` | No       | Optional icon to display alongside the label. Can be a string (icon name from Lucide React) or a React element. |
-| `content` | `React.ReactNode`              | Yes      | The content to display when this tab is active. Can be any valid React node.                                    |
+| Name      | Description                                                  | Type                           | Default | Required |
+| --------- | ------------------------------------------------------------ | ------------------------------ | ------- | -------- |
+| `label`   | Text label displayed on the tab trigger                      | `string`                       | -       | ✅       |
+| `value`   | Unique value that identifies this tab                        | `string`                       | -       | ✅       |
+| `icon`    | Icon to display alongside the label (Lucide name or element) | `React.ReactElement`, `string` | -       | ❌       |
+| `content` | Content to display when this tab is active                   | `React.ReactNode`              | -       | ✅       |
