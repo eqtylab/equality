@@ -177,8 +177,9 @@ Combine icons with the filled background variant for a more prominent tab design
 | -------------------- | --------------------------- | --------------- | ----------------------------------------------------------------------------------------------------------------------------------------- |
 | `id`                 | `string`                    | **Required**    | A unique identifier for the tabs instance. Used internally for the animated indicator's layoutId.                                         |
 | `items`              | `Array<TabItem>`            | **Required**    | An array of tab items. See TabItem structure below.                                                                                       |
-| `className`          | `string`                    | —               | Additional CSS classes to apply to the tabs container.                                                                                    |
+| `defaultValue`       | `string`                    | First item      | The value of the tab that should be active by default. Defaults to the first item's value if not specified.                               |
 | `tabsListBackground` | `"transparent" \| "filled"` | `"transparent"` | The background style for the tabs list. `"transparent"` shows tabs with a transparent background, `"filled"` applies a filled background. |
+| `onValueChange`      | `(value: string) => void`   | —               | Callback function called when the active tab changes. Receives the new tab's value as an argument.                                        |
 
 ### TabItem Structure
 
