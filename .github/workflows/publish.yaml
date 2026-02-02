@@ -6,6 +6,7 @@ on:
       - main
     paths:
       - 'packages/ui/package.json'
+      - '.github/workflows/publish.yaml'
   workflow_dispatch:
 
 permissions:
@@ -48,3 +49,5 @@ jobs:
       - name: Build and publish
         if: steps.version_check.outputs.exists != 'true'
         run: pnpm run release
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_EQTYLAB_TOKEN }}
