@@ -21,15 +21,25 @@ interface TabsProps {
   }[];
   className?: string;
   tabsListBackground?: 'transparent' | 'filled';
+  defaultValue?: string;
+  onValueChange?: (value: string) => void;
 }
 
-const Tabs = ({ id, items, className, tabsListBackground = 'transparent' }: TabsProps) => {
-  const [activeTab, setActiveTab] = useState(items[0].value);
+const Tabs = ({
+  id,
+  items,
+  className,
+  tabsListBackground = 'transparent',
+  defaultValue,
+  onValueChange,
+}: TabsProps) => {
+  const [activeTab, setActiveTab] = useState(defaultValue ?? items[0].value);
 
   const isFilled = tabsListBackground === 'filled';
 
   const handleValueChange = (newTab: string) => {
     setActiveTab(newTab);
+    onValueChange?.(newTab);
   };
 
   const renderIcon = (icon?: React.ReactElement | string) => {
