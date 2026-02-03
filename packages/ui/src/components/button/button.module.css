@@ -50,6 +50,11 @@
   @apply hover:not-disabled:text-mixed-light;
 }
 
+.button--navigation {
+  @apply text-text-link;
+  @apply not-disabled:hover:bg-lilac-400/25 not-disabled:hover:text-lilac-800 not-disabled:dark:hover:bg-lilac-500/25 not-disabled:dark:hover:text-lilac-200;
+}
+
 .size--sm {
   @apply text-xs;
 }

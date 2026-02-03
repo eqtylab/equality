@@ -6,7 +6,7 @@ description: "Button with sizes and variants"
 
 import React from "react";
 import { Button } from "@eqtylab/equality";
-import { ArrowUp, Grid3X3 } from "lucide-react";
+import { ArrowUp, Grid3X3, ArrowRight } from "lucide-react";
 
 ## Primary (default)
 
@@ -92,6 +92,27 @@ import { ArrowUp, Grid3X3 } from "lucide-react";
   </Button>
 </div>
 }
+
+## Navigation Button
+
+These should only be used for navigation elements that require buttons and never for actions. They should not be used for "next" or "previous" navigation in forms.
+
+{(() => {
+const arrowRight = React.createElement(ArrowRight);
+return (
+
+<div className="flex gap-2">
+  <Button variant="navigation" size="lg" suffix={arrowRight}>
+    Navigation LG
+  </Button>
+  <Button variant="navigation" size="md" suffix={arrowRight}>
+    Navigation MD
+  </Button>
+  <Button variant="navigation" size="sm" suffix={arrowRight}>
+    Navigation SM
+  </Button>
+</div>
+); })()}
 
 ## With Prefix Icon
 
