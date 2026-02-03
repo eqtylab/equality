@@ -30,7 +30,7 @@ const SearchBar = ({
   };
 
   return (
-    <div className={cn(styles['search-bar'], className)}>
+    <search className={cn(styles['search-bar'], className)}>
       <Input
         placeholder={placeholder}
         value={searchQuery}
@@ -48,7 +48,7 @@ const SearchBar = ({
           )
         }
       />
-    </div>
+    </search>
   );
 };
 
