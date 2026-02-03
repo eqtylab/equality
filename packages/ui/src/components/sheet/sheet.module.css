@@ -33,14 +33,14 @@
 .sheet-content--side-left {
   @apply border-r;
   @apply inset-y-0 left-0;
-  @apply h-full w-3/4 sm:w-1/3;
+  @apply max-w-3/4 min-w-1/3 h-full w-fit;
   @apply data-[state=closed]:slide-out-to-left data-[state=open]:slide-in-from-left;
 }
 
 .sheet-content--side-right {
   @apply border-l;
   @apply inset-y-0 right-0;
-  @apply h-full w-3/4 sm:w-1/3;
+  @apply max-w-3/4 min-w-7/8 md:min-w-1/4 md:max-w-screen h-full w-fit;
   @apply data-[state=closed]:slide-out-to-right data-[state=open]:slide-in-from-right;
 }
 
@@ -49,7 +49,7 @@
 }
 
 .sheet-header {
-  @apply flex shrink-0 items-center;
+  @apply flex w-fit w-full shrink-0 items-center;
   @apply gap-4 p-4;
   @apply text-left;
   @apply from-brand-primary/40 to-background border-b bg-gradient-to-r;
@@ -71,8 +71,7 @@
 }
 
 .sheet-footer {
-  @apply flex shrink-0 flex-col-reverse sm:flex-row sm:justify-end;
-  @apply sm:space-x-2;
+  @apply flex w-full min-w-fit shrink-0 flex-col-reverse gap-2 sm:flex-row sm:justify-end;
   @apply border-border border-t p-4;
 }
 
