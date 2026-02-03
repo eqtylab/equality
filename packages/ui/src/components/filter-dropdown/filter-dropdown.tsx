@@ -52,7 +52,7 @@ const FilterDropdown = ({
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Button variant="tertiary" className={cn(styles['selector-button'], buttonClassName)}>
-          <span className={styles['selector-button-inner']}>
+          <span className={styles['selector-button-content']}>
             {label}
             {hasSelectedFilters && <Badge variant="primary">{selectedFilters.length}</Badge>}
           </span>

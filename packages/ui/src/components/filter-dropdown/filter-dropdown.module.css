@@ -1,12 +1,12 @@
 @reference '../../theme/theme.module.css';
 
 .selector-button {
-  @apply min-w-32;
-  @apply justify-between;
+  @apply min-w-128;
+  @apply flex justify-between;
 }
 
-.selector-button-inner {
-  @apply flex items-center gap-1;
+.selector-button-content {
+  @apply flex w-full items-center gap-1 truncate;
 }
 
 .chevron-icon {
