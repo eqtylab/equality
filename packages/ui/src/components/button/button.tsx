@@ -13,6 +13,7 @@ const buttonVariants = cva(styles['button'], {
       secondary: styles['button--secondary'],
       tertiary: styles['button--tertiary'],
       link: styles['button--link'],
+      navigation: styles['button--navigation'],
     },
     size: {
       sm: styles['size--sm'],

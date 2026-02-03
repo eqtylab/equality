@@ -6,9 +6,33 @@ description: "Button with sizes and variants"
 
 import React from "react";
 import { Button } from "@eqtylab/equality";
-import { ArrowUp, Grid3X3 } from "lucide-react";
+import { ArrowUp, Grid3X3, ArrowRight } from "lucide-react";
 
-## Primary (default)
+## Overview
+
+Buttons are interactive elements that trigger actions when clicked. They are used for form submissions, dialogs, and other user interactions where the user performs an action.
+
+## Usage
+
+Import the component:
+
+```ts
+import { Button } from "@eqtylab/equality";
+```
+
+Basic usage with required properties:
+
+```tsx
+<Button>Click me</Button>
+```
+
+## Variants
+
+The Button component supports multiple visual variants to communicate different levels of emphasis and intent.
+
+### Primary
+
+As the default variant, the `primary` variant is used for main call-to-action buttons and intended next steps.
 
 {
 
@@ -25,7 +49,9 @@ import { ArrowUp, Grid3X3 } from "lucide-react";
 </div>
 }
 
-## Secondary
+### Secondary
+
+Use the `secondary` variant to call out actions that are of secondary importance in comparison to a primary action.
 
 {
 
@@ -42,7 +68,9 @@ import { ArrowUp, Grid3X3 } from "lucide-react";
 </div>
 }
 
-## Tertiary
+### Tertiary
+
+Use the `tertiary` variant for most other lower-emphasis actions.
 
 {
 
@@ -59,24 +87,28 @@ import { ArrowUp, Grid3X3 } from "lucide-react";
 </div>
 }
 
-## Danger
+### Danger
+
+Use the `danger` variant For destructive actions like delete or remove.
 
 {
 
 <div className="flex gap-2">
   <Button variant="danger" size="lg">
-    danger LG
+    Danger LG
   </Button>
   <Button variant="danger" size="md">
-    danger MD
+    Danger MD
   </Button>
   <Button variant="danger" size="sm">
-    danger SM
+    Danger SM
   </Button>
 </div>
 }
 
-## Link
+### Link
+
+Use the `link` variant for buttons that should be styled as a link but with button semantics.
 
 {
 
@@ -93,7 +125,32 @@ import { ArrowUp, Grid3X3 } from "lucide-react";
 </div>
 }
 
-## With Prefix Icon
+### Navigation
+
+Use the `navigation` variant for navigation elements that require button styling. These should only be used for navigation and never for form actions like "next" or "previous".
+
+{(() => {
+const arrowRight = React.createElement(ArrowRight);
+return (
+
+<div className="flex gap-2">
+  <Button variant="navigation" size="lg" suffix={arrowRight}>
+    Navigation LG
+  </Button>
+  <Button variant="navigation" size="md" suffix={arrowRight}>
+    Navigation MD
+  </Button>
+  <Button variant="navigation" size="sm" suffix={arrowRight}>
+    Navigation SM
+  </Button>
+</div>
+); })()}
+
+## Icons
+
+Buttons can display icons before or after the label using the `prefix` and `suffix` props.
+
+### With Prefix Icon
 
 {(() => {
 const prefixIcon = React.createElement(Grid3X3);
@@ -112,7 +169,7 @@ return (
 </div>
 ); })()}
 
-## With Suffix Icon
+### With Suffix Icon
 
 {(() => {
 const suffixIcon = React.createElement(ArrowUp);
@@ -131,61 +188,70 @@ return (
 </div>
 ); })()}
 
-## As Link
+### Usage
 
-{
+```tsx
+import { ArrowRight, Grid3X3 } from 'lucide-react';
 
-<div className="flex gap-2">
-  <Button variant="primary" size="lg" href="https://example.com">
-    Link LG
-  </Button>
-  <Button variant="primary" size="md" href="https://example.com">
-    Link MD
-  </Button>
-  <Button variant="primary" size="sm" href="https://example.com">
-    Link SM
-  </Button>
-</div>
-}
+<Button prefix={<Grid3X3 />}>With Prefix</Button>
+<Button suffix={<ArrowRight />}>With Suffix</Button>
+```
 
-## As Link with Target
+## As a Link
 
-{
+When an `href` prop is provided, buttons render as an anchor elements while maintaining their styling. This should be used in favor of `onClick` events when using buttons for navigation.
 
-<div className="flex gap-2">
-  <Button
-    variant="secondary"
-    size="md"
-    href="https://example.com"
-    target="_blank"
-    rel="noopener noreferrer"
-  >
-    Open in New Tab
-  </Button>
-  <Button
-    variant="tertiary"
-    size="md"
-    href="https://example.com/file.pdf"
-    download
-  >
-    Download File
-  </Button>
-</div>
-}
+Button also accepts common HTML link-related properties such as `target`, and `download`.
+
+```tsx
+<Button href="https://example.com" target="_blank">New Tab Link Button</Button>
+<Button href="https://example.com/file.pdf" download>Link Button</Button>
+```
 
 ## Disabled
 
+Buttons tagged with the `disabled` property are non-interactive and visually muted.
+
 {
 
 <div className="flex gap-2">
-  <Button variant="primary" size="lg" disabled>
-    Disabled LG
-  </Button>
-  <Button variant="primary" size="md" disabled>
-    Disabled MD
-  </Button>
   <Button variant="primary" size="sm" disabled>
-    Disabled SM
+    Disabled Primary
+  </Button>
+  <Button variant="secondary" size="sm" disabled>
+    Disabled Secondary
+  </Button>
+  <Button variant="tertiary" size="sm" disabled>
+    Disabled Tertiary
+  </Button>
+  <Button variant="danger" size="sm" disabled>
+    Disabled Danger
+  </Button>
+  <Button variant="navigation" size="sm" disabled>
+    Disabled Navigation
   </Button>
 </div>
 }
+
+## Slots
+
+| Name       | Description                                     |
+| ---------- | ----------------------------------------------- |
+| `children` | The button label content                        |
+| `prefix`   | Content displayed before the label (e.g., icon) |
+| `suffix`   | Content displayed after the label (e.g., icon)  |
+
+## Props
+
+| Name       | Description                                      | Type                                                               | Default   | Required |
+| ---------- | ------------------------------------------------ | ------------------------------------------------------------------ | --------- | -------- |
+| `variant`  | The visual style of the button                   | `primary`, `secondary`, `tertiary`, `danger`, `link`, `navigation` | `primary` | ❌       |
+| `size`     | The size of the button                           | `sm`, `md`, `lg`                                                   | `md`      | ❌       |
+| `prefix`   | Content to display before the button label       | `ReactNode`                                                        | -         | ❌       |
+| `suffix`   | Content to display after the button label        | `ReactNode`                                                        | -         | ❌       |
+| `href`     | URL for link buttons (renders as anchor element) | `string`                                                           | -         | ❌       |
+| `target`   | Link target (when href is provided)              | `string`                                                           | -         | ❌       |
+| `rel`      | Link rel attribute (when href is provided)       | `string`                                                           | -         | ❌       |
+| `download` | Makes link downloadable (when href is provided)  | `string`, `boolean`                                                | -         | ❌       |
+| `asChild`  | Merge props onto child element                   | `boolean`                                                          | `false`   | ❌       |
+| `disabled` | Disables the button                              | `boolean`                                                          | `false`   | ❌       |
