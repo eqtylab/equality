@@ -31,10 +31,19 @@ export const SheetDemo = () => {
             <SheetDescription>Sheet Description</SheetDescription>
           </SheetHeader>
           <SheetContent>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do
-            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
-            ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-            aliquip ex ea commodo consequat.
+            <div className="w-full max-w-200">
+              <p>
+                This container with max-w-200 and w-full applied sets the width
+                of the element up to a certain point!
+              </p>
+              <br />
+              <p>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do
+                eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
+                enim ad minim veniam, quis nostrud exercitation ullamco laboris
+                nisi ut aliquip ex ea commodo consequat.
+              </p>
+            </div>
           </SheetContent>
           <SheetFooter>
             <Button
