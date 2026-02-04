@@ -53,3 +53,11 @@
 .table--floating.table-border {
   @apply border-border-floating;
 }
+
+.table-row-expandable:hover {
+  @apply bg-transparent;
+}
+
+.table-cell-expandable {
+  @apply border-none !p-0;
+}

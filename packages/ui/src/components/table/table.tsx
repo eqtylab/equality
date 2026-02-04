@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { VariantProps } from 'class-variance-authority';
 
+import { MotionCollapsibleContent } from '@/components/motion-collapsible/motion-collapsible';
 import {
   TableBody,
   TableCell,
@@ -25,6 +26,10 @@ type TableRowData = {
   cells: TableCellData[];
   onClick?: () => void;
   className?: string;
+  expandable?: {
+    isOpen: boolean;
+    content: React.ReactNode;
+  };
 };
 
 type TableCellData = {
@@ -70,17 +75,27 @@ const Table = ({
         </TableHeader>
         <TableBody>
           {rows.map((row) => (
-            <TableRow
-              key={row.key}
-              className={cn(row.className, row.onClick && styles['table-row-clickable'])}
-              onClick={row.onClick}
-            >
-              {row.cells.map((cell) => (
-                <TableCell key={cell.key} className={cell.className}>
-                  {cell.content}
-                </TableCell>
-              ))}
-            </TableRow>
+            <React.Fragment key={row.key}>
+              <TableRow
+                className={cn(row.className, row.onClick && styles['table-row-clickable'])}
+                onClick={row.onClick}
+              >
+                {row.cells.map((cell) => (
+                  <TableCell key={cell.key} className={cell.className}>
+                    {cell.content}
+                  </TableCell>
+                ))}
+              </TableRow>
+              {row.expandable && (
+                <TableRow className={styles['table-row-expandable']}>
+                  <TableCell colSpan={columns.length} className={styles['table-cell-expandable']}>
+                    <MotionCollapsibleContent isOpen={row.expandable.isOpen}>
+                      {row.expandable.content}
+                    </MotionCollapsibleContent>
+                  </TableCell>
+                </TableRow>
+              )}
+            </React.Fragment>
           ))}
         </TableBody>
       </TableContainer>
