@@ -63,7 +63,7 @@ const DrawerHeaderActions = React.forwardRef<
     <div
       ref={ref}
       className={cn(styles['drawer-header-actions'], className)}
-      style={{ '--row-span': rowSpan } as React.CSSProperties}
+      style={{ ...style, '--row-span': rowSpan } as React.CSSProperties}
       {...props}
     />
   );

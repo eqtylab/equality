@@ -1,5 +1,6 @@
 import * as React from 'react';
 import * as AlertDialogPrimitive from '@radix-ui/react-alert-dialog';
+import { type VariantProps } from 'class-variance-authority';
 
 import styles from '@/components/alert-dialog/alert-dialog.module.css';
 import { buttonVariants } from '@/components/button/button';
@@ -78,11 +79,12 @@ AlertDialogDescription.displayName = AlertDialogPrimitive.Description.displayNam
 
 const AlertDialogAction = React.forwardRef<
   React.ElementRef<typeof AlertDialogPrimitive.Action>,
-  React.ComponentPropsWithoutRef<typeof AlertDialogPrimitive.Action>
->(({ className, ...props }, ref) => (
+  React.ComponentPropsWithoutRef<typeof AlertDialogPrimitive.Action> &
+    VariantProps<typeof buttonVariants>
+>(({ className, variant = 'primary', size = 'sm', ...props }, ref) => (
   <AlertDialogPrimitive.Action
     ref={ref}
-    className={cn(buttonVariants({ variant: 'primary', size: 'sm' }), className)}
+    className={cn(buttonVariants({ variant, size }), className)}
     {...props}
   />
 ));
@@ -90,15 +92,12 @@ AlertDialogAction.displayName = AlertDialogPrimitive.Action.displayName;
 
 const AlertDialogCancel = React.forwardRef<
   React.ElementRef<typeof AlertDialogPrimitive.Cancel>,
-  React.ComponentPropsWithoutRef<typeof AlertDialogPrimitive.Cancel>
->(({ className, ...props }, ref) => (
+  React.ComponentPropsWithoutRef<typeof AlertDialogPrimitive.Cancel> &
+    VariantProps<typeof buttonVariants>
+>(({ className, variant = 'tertiary', size = 'sm', ...props }, ref) => (
   <AlertDialogPrimitive.Cancel
     ref={ref}
-    className={cn(
-      buttonVariants({ variant: 'tertiary', size: 'sm' }),
-      styles['alert-dialog-cancel'],
-      className
-    )}
+    className={cn(buttonVariants({ variant, size }), styles['alert-dialog-cancel'], className)}
     {...props}
   />
 ));
