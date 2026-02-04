@@ -1,7 +1,7 @@
 @reference '../../theme/theme.module.css';
 
 .selector-button {
-  @apply min-w-128;
+  @apply min-w-32;
   @apply flex justify-between;
 }
 

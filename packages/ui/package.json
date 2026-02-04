@@ -2,7 +2,7 @@
   "name": "@eqtylab/equality",
   "description": "EQTYLab's component and token-based design system",
   "homepage": "https://equality.eqtylab.io/",
-  "version": "1.1.3",
+  "version": "1.1.4",
   "license": "Apache-2.0",
   "keywords": [
     "component library",
