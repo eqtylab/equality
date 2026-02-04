@@ -91,4 +91,4 @@ function IconButton({
   );
 }
 
-export { IconButton, iconButtonVariants };
+export { IconButton };

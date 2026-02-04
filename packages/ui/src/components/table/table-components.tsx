@@ -59,14 +59,16 @@ TableHead.displayName = 'TableHead';
 const TableCell = React.forwardRef<
   HTMLTableCellElement,
   React.TdHTMLAttributes<HTMLTableCellElement>
->(({ className, ...props }, ref) => <td ref={ref} className={styles['table-cell']} {...props} />);
+>(({ className, ...props }, ref) => (
+  <td ref={ref} className={cn(styles['table-cell'], className)} {...props} />
+));
 TableCell.displayName = 'TableCell';
 
 const TableCaption = React.forwardRef<
   HTMLTableCaptionElement,
   React.HTMLAttributes<HTMLTableCaptionElement>
 >(({ className, ...props }, ref) => (
-  <caption ref={ref} className={styles['table-caption']} {...props} />
+  <caption ref={ref} className={cn(styles['table-caption'], className)} {...props} />
 ));
 TableCaption.displayName = 'TableCaption';
 

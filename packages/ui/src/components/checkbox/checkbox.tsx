@@ -20,7 +20,7 @@ const Checkbox = React.forwardRef<React.ElementRef<typeof CheckboxPrimitive.Root
       {...props}
     >
       <CheckboxPrimitive.Indicator className={styles.indicator}>
-        <CheckIcon className={styles.check} />
+        {Icon ? <Icon className={styles.check} /> : <CheckIcon className={styles.check} />}
       </CheckboxPrimitive.Indicator>
     </CheckboxPrimitive.Root>
   )
