@@ -11,7 +11,7 @@ const TableContainer = React.forwardRef<
   HTMLTableElement,
   React.HTMLAttributes<HTMLTableElement> & VariantProps<typeof tableElevationVariants>
 >(({ className, elevation = ELEVATION.RAISED, ...props }, ref) => (
-  <div className={(styles['table'], tableElevationVariants({ elevation }))}>
+  <div className={cn(styles['table'], tableElevationVariants({ elevation }), className)}>
     <table ref={ref} className={styles['table-inner']} {...props} />
   </div>
 ));
@@ -59,22 +59,24 @@ TableHead.displayName = 'TableHead';
 const TableCell = React.forwardRef<
   HTMLTableCellElement,
   React.TdHTMLAttributes<HTMLTableCellElement>
->(({ className, ...props }, ref) => <td ref={ref} className={styles['table-cell']} {...props} />);
+>(({ className, ...props }, ref) => (
+  <td ref={ref} className={cn(styles['table-cell'], className)} {...props} />
+));
 TableCell.displayName = 'TableCell';
 
 const TableCaption = React.forwardRef<
   HTMLTableCaptionElement,
   React.HTMLAttributes<HTMLTableCaptionElement>
 >(({ className, ...props }, ref) => (
-  <caption ref={ref} className={styles['table-caption']} {...props} />
+  <caption ref={ref} className={cn(styles['table-caption'], className)} {...props} />
 ));
 TableCaption.displayName = 'TableCaption';
 
 export {
-  TableContainer,
   TableBody,
   TableCaption,
   TableCell,
+  TableContainer,
   TableFooter,
   TableHead,
   TableHeader,

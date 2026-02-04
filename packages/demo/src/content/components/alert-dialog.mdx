@@ -1,11 +1,118 @@
 ---
 layout: "@demo/layouts/mdx-layout.astro"
 heading: "Alert Dialog"
-description: "Alert Dialog with sizes and variants"
+description: "A modal dialog for confirmations and destructive actions"
 ---
 
 import { AlertDialogDemo } from "@demo/components/demo/alert-dialog";
 
-## Default
+## Overview
+
+A confirmation dialog that blocks interaction until the user acknowledges it. Unlike [Dialog](dialog), clicking the background overlay won't dismiss it — the user must choose an action.
+
+## Usage
+
+Import the components:
+
+```ts
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@eqtylab/equality";
+```
+
+```jsx
+<AlertDialog>
+  <AlertDialogTrigger asChild>
+    <Button>Delete Item</Button>
+  </AlertDialogTrigger>
+  <AlertDialogContent>
+    <AlertDialogHeader>
+      <AlertDialogTitle>Are you sure?</AlertDialogTitle>
+      <AlertDialogDescription>
+        This action cannot be undone. This will permanently delete the item.
+      </AlertDialogDescription>
+    </AlertDialogHeader>
+    <AlertDialogFooter>
+      <AlertDialogCancel>Cancel</AlertDialogCancel>
+      <AlertDialogAction>Delete</AlertDialogAction>
+    </AlertDialogFooter>
+  </AlertDialogContent>
+</AlertDialog>
+```
 
 <AlertDialogDemo client:only="react" />
+
+## Variants
+
+### Action Button Variants
+
+`AlertDialogAction` and `AlertDialogCancel` accept `variant` and `size` props from Button. Defaults are `primary` (action) and `tertiary` (cancel) at size `sm`.
+
+Use `danger` for destructive confirmations:
+
+```jsx
+<AlertDialogFooter>
+  <AlertDialogCancel>Cancel</AlertDialogCancel>
+  <AlertDialogAction variant="danger">Delete</AlertDialogAction>
+</AlertDialogFooter>
+```
+
+### Controlled State
+
+Control the open state with `open` and `onOpenChange`:
+
+```jsx
+const [open, setOpen] = useState(false);
+
+<AlertDialog open={open} onOpenChange={setOpen}>
+  <AlertDialogTrigger asChild>
+    <Button>Open</Button>
+  </AlertDialogTrigger>
+  <AlertDialogContent>...</AlertDialogContent>
+</AlertDialog>;
+```
+
+## Slots
+
+| Name                     | Description                                |
+| ------------------------ | ------------------------------------------ |
+| `AlertDialog`            | Root component, manages open state         |
+| `AlertDialogTrigger`     | Opens the dialog on click                  |
+| `AlertDialogContent`     | Dialog panel with header, body, and footer |
+| `AlertDialogHeader`      | Contains the title and description         |
+| `AlertDialogTitle`       | Title text (required for accessibility)    |
+| `AlertDialogDescription` | Describes the action being confirmed       |
+| `AlertDialogFooter`      | Contains action and cancel buttons         |
+| `AlertDialogAction`      | Confirms and closes the dialog             |
+| `AlertDialogCancel`      | Dismisses without acting                   |
+
+## Props
+
+### AlertDialog
+
+| Name           | Description                    | Type                      | Default | Required |
+| -------------- | ------------------------------ | ------------------------- | ------- | -------- |
+| `open`         | Whether the dialog is open     | `boolean`                 | -       | ❌       |
+| `onOpenChange` | Called when open state changes | `(open: boolean) => void` | -       | ❌       |
+
+### AlertDialogAction
+
+| Name      | Description          | Type                                                               | Default   | Required |
+| --------- | -------------------- | ------------------------------------------------------------------ | --------- | -------- |
+| `variant` | Button style variant | `primary`, `danger`, `secondary`, `tertiary`, `link`, `navigation` | `primary` | ❌       |
+| `size`    | Button size          | `sm`, `md`, `lg`                                                   | `sm`      | ❌       |
+
+### AlertDialogCancel
+
+| Name      | Description          | Type                                                               | Default    | Required |
+| --------- | -------------------- | ------------------------------------------------------------------ | ---------- | -------- |
+| `variant` | Button style variant | `primary`, `danger`, `secondary`, `tertiary`, `link`, `navigation` | `tertiary` | ❌       |
+| `size`    | Button size          | `sm`, `md`, `lg`                                                   | `sm`       | ❌       |

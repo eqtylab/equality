@@ -1,6 +1,6 @@
-import { useState } from 'react';
 import * as React from 'react';
-import { CalendarDays, ChevronLeft, ChevronRight, X } from 'lucide-react';
+import { useState } from 'react';
+import { CalendarDays, ChevronLeft, ChevronRight } from 'lucide-react';
 
 import { Button } from '@/components/button/button';
 import styles from '@/components/date-range-picker/date-range-picker.module.css';
@@ -9,7 +9,6 @@ import { Popover, PopoverContent, PopoverTrigger } from '@/components/popover/po
 import { cn } from '@/lib/utils';
 
 const CalendarDaysIcon = CalendarDays as React.ComponentType<{ className?: string }>;
-const XIcon = X as React.ComponentType<{ className?: string }>;
 const ChevronLeftIcon = ChevronLeft as React.ComponentType<{ className?: string }>;
 const ChevronRightIcon = ChevronRight as React.ComponentType<{ className?: string }>;
 

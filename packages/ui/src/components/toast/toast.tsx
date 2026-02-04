@@ -15,7 +15,7 @@ interface ToastProps {
 }
 
 const Toast = ({ toast }: ToastProps) => {
-  const { id, title, description, action, icon, variant, ...props } = toast;
+  const { title, description, action, icon, variant, ...props } = toast;
 
   // Default icons based on variant
   const getDefaultIcon = () => {

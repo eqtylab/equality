@@ -151,4 +151,4 @@ function DisplayField({
   );
 }
 
-export { DisplayField, displayFieldVariants };
+export { DisplayField };
