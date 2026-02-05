@@ -59,7 +59,7 @@
 
 .calendar-day-btn {
   @apply text-sm font-normal transition-colors;
-  @apply block size-9 rounded-md p-0;
+  @apply size-9 rounded-md p-0;
 }
 
 .calendar-day-btn--selected {
