@@ -83,7 +83,7 @@ const getStatusConfig = (status: string) => {
       };
     case 'non-compliant':
       return {
-        icon: 'X',
+        icon: 'TriangleAlert',
         className: styles['badge--non-compliant'],
         label: 'Non-compliant',
       };
