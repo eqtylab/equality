@@ -79,27 +79,41 @@ AlertDialogDescription.displayName = AlertDialogPrimitive.Description.displayNam
 
 const AlertDialogAction = React.forwardRef<
   React.ElementRef<typeof AlertDialogPrimitive.Action>,
-  React.ComponentPropsWithoutRef<typeof AlertDialogPrimitive.Action> &
-    VariantProps<typeof buttonVariants>
->(({ className, variant = 'primary', size = 'sm', ...props }, ref) => (
+  Omit<React.ComponentPropsWithoutRef<typeof AlertDialogPrimitive.Action>, 'prefix'> &
+    VariantProps<typeof buttonVariants> & {
+      prefix?: React.ReactNode;
+      suffix?: React.ReactNode;
+    }
+>(({ className, variant = 'primary', size = 'sm', prefix, suffix, children, ...props }, ref) => (
   <AlertDialogPrimitive.Action
     ref={ref}
     className={cn(buttonVariants({ variant, size }), className)}
     {...props}
-  />
+  >
+    {prefix}
+    {children}
+    {suffix}
+  </AlertDialogPrimitive.Action>
 ));
 AlertDialogAction.displayName = AlertDialogPrimitive.Action.displayName;
 
 const AlertDialogCancel = React.forwardRef<
   React.ElementRef<typeof AlertDialogPrimitive.Cancel>,
-  React.ComponentPropsWithoutRef<typeof AlertDialogPrimitive.Cancel> &
-    VariantProps<typeof buttonVariants>
->(({ className, variant = 'tertiary', size = 'sm', ...props }, ref) => (
+  Omit<React.ComponentPropsWithoutRef<typeof AlertDialogPrimitive.Cancel>, 'prefix'> &
+    VariantProps<typeof buttonVariants> & {
+      prefix?: React.ReactNode;
+      suffix?: React.ReactNode;
+    }
+>(({ className, variant = 'tertiary', size = 'sm', prefix, suffix, children, ...props }, ref) => (
   <AlertDialogPrimitive.Cancel
     ref={ref}
     className={cn(buttonVariants({ variant, size }), styles['alert-dialog-cancel'], className)}
     {...props}
-  />
+  >
+    {prefix}
+    {children}
+    {suffix}
+  </AlertDialogPrimitive.Cancel>
 ));
 AlertDialogCancel.displayName = AlertDialogPrimitive.Cancel.displayName;
 

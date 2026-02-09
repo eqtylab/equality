@@ -105,14 +105,18 @@ const [open, setOpen] = useState(false);
 
 ### AlertDialogAction
 
-| Name      | Description          | Type                                                               | Default   | Required |
-| --------- | -------------------- | ------------------------------------------------------------------ | --------- | -------- |
-| `variant` | Button style variant | `primary`, `danger`, `secondary`, `tertiary`, `link`, `navigation` | `primary` | ❌       |
-| `size`    | Button size          | `sm`, `md`, `lg`                                                   | `sm`      | ❌       |
+| Name      | Description                      | Type                                                               | Default   | Required |
+| --------- | -------------------------------- | ------------------------------------------------------------------ | --------- | -------- |
+| `variant` | Button style variant             | `primary`, `danger`, `secondary`, `tertiary`, `link`, `navigation` | `primary` | ❌       |
+| `size`    | Button size                      | `sm`, `md`, `lg`                                                   | `sm`      | ❌       |
+| `prefix`  | Content rendered before children | `ReactNode`                                                        | -         | ❌       |
+| `suffix`  | Content rendered after children  | `ReactNode`                                                        | -         | ❌       |
 
 ### AlertDialogCancel
 
-| Name      | Description          | Type                                                               | Default    | Required |
-| --------- | -------------------- | ------------------------------------------------------------------ | ---------- | -------- |
-| `variant` | Button style variant | `primary`, `danger`, `secondary`, `tertiary`, `link`, `navigation` | `tertiary` | ❌       |
-| `size`    | Button size          | `sm`, `md`, `lg`                                                   | `sm`       | ❌       |
+| Name      | Description                      | Type                                                               | Default    | Required |
+| --------- | -------------------------------- | ------------------------------------------------------------------ | ---------- | -------- |
+| `variant` | Button style variant             | `primary`, `danger`, `secondary`, `tertiary`, `link`, `navigation` | `tertiary` | ❌       |
+| `size`    | Button size                      | `sm`, `md`, `lg`                                                   | `sm`       | ❌       |
+| `prefix`  | Content rendered before children | `ReactNode`                                                        | -          | ❌       |
+| `suffix`  | Content rendered after children  | `ReactNode`                                                        | -          | ❌       |
