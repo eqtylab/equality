@@ -25,8 +25,8 @@ const iconButtonVariants = cva(styles['icon-btn'], {
 
 const iconSizeMap = {
   sm: 16,
-  md: 20,
-  lg: 32,
+  md: 22,
+  lg: 26,
 };
 
 export interface IconButtonProps
