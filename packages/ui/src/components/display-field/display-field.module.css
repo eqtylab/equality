@@ -40,7 +40,7 @@
 }
 
 .actions {
-  @apply mr-0.5 flex items-center;
+  @apply mr-1 flex items-center;
 }
 
 .icon-width {
