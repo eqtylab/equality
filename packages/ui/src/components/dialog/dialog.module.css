@@ -28,14 +28,20 @@
 }
 
 .dialog-header {
-  @apply flex shrink-0 items-start justify-between gap-4;
+  @apply flex shrink-0 items-center gap-4;
   @apply text-left;
   @apply border-b-1 border-border;
   @apply px-6 py-3;
 }
 
+.dialog-header-icon {
+  @apply shrink-0;
+  @apply flex items-center justify-center;
+}
+
 .dialog-header-content {
   @apply flex min-w-0 flex-1 flex-col;
+  @apply space-y-0.5;
 }
 
 .dialog-title {

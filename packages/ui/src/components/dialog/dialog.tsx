@@ -52,14 +52,30 @@ const DialogContainer = React.forwardRef<
 ));
 DialogContainer.displayName = DialogPrimitive.Content.displayName;
 
-const DialogHeader = ({ className, children, ...props }: React.HTMLAttributes<HTMLDivElement>) => (
-  <div className={cn(styles['dialog-header'], className)} {...props}>
-    <div className={styles['dialog-header-content']}>{children}</div>
-    <DialogPrimitive.Close asChild>
-      <IconButton name="X" label="Close" size="sm" />
-    </DialogPrimitive.Close>
-  </div>
+const DialogHeaderIcon = ({ className, ...props }: React.HTMLAttributes<HTMLDivElement>) => (
+  <div className={cn(styles['dialog-header-icon'], className)} {...props} />
 );
+DialogHeaderIcon.displayName = 'DialogHeaderIcon';
+
+const DialogHeader = ({ className, children, ...props }: React.HTMLAttributes<HTMLDivElement>) => {
+  const childrenArray = React.Children.toArray(children);
+  const icon = childrenArray.find(
+    (child) => React.isValidElement(child) && child.type === DialogHeaderIcon
+  );
+  const otherChildren = childrenArray.filter(
+    (child) => !(React.isValidElement(child) && child.type === DialogHeaderIcon)
+  );
+
+  return (
+    <div className={cn(styles['dialog-header'], className)} {...props}>
+      {icon}
+      <div className={styles['dialog-header-content']}>{otherChildren}</div>
+      <DialogPrimitive.Close asChild>
+        <IconButton name="X" label="Close" size="sm" />
+      </DialogPrimitive.Close>
+    </div>
+  );
+};
 DialogHeader.displayName = 'DialogHeader';
 
 const DialogFooter = ({ className, ...props }: React.HTMLAttributes<HTMLDivElement>) => (
@@ -100,6 +116,7 @@ export {
   DialogDescription,
   DialogFooter,
   DialogHeader,
+  DialogHeaderIcon,
   DialogOverlay,
   DialogPortal,
   DialogTitle,
