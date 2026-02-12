@@ -1,5 +1,11 @@
-import { Button, SortButton, Table, Badge } from "@eqtylab/equality";
 import type { Elevation } from "@eqtylab/equality";
+import {
+  Badge,
+  Button,
+  EmptyTableState,
+  SortButton,
+  Table,
+} from "@eqtylab/equality";
 
 interface TableDemoProps {
   variant?:
@@ -7,7 +13,9 @@ interface TableDemoProps {
     | "clickable"
     | "with-actions"
     | "with-border"
-    | "with-sorter";
+    | "with-sorter"
+    | "empty-state"
+    | "empty-state-custom";
   elevation: Elevation;
 }
 
@@ -183,6 +191,38 @@ export const TableDemo = ({
         rows={demo_rows_unclickable}
         border
         elevation={elevation}
+      />
+    );
+  }
+
+  if (variant === "empty-state") {
+    return (
+      <Table
+        columns={columns}
+        rows={[]}
+        border
+        elevation={elevation}
+        emptyState="No data available"
+      />
+    );
+  }
+
+  if (variant === "empty-state-custom") {
+    return (
+      <Table
+        columns={columns}
+        rows={[]}
+        border
+        elevation={elevation}
+        emptyState={
+          <EmptyTableState
+            icon="SearchX"
+            title="No Members Found"
+            description="Try refining your search terms or clearing filters."
+            showClearButton
+            onClear={() => {}}
+          />
+        }
       />
     );
   }

@@ -17,6 +17,10 @@
   @apply overflow-hidden rounded-md;
 }
 
+.table-empty-state {
+  @apply text-text-secondary py-8 text-center;
+}
+
 /* ELEVATION */
 
 .table--sunken {

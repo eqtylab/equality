@@ -38,6 +38,7 @@ interface TableProps extends VariantProps<typeof tableElevationVariants> {
   rows: TableRowData[];
   className?: string;
   border?: boolean;
+  emptyState?: React.ReactNode;
 }
 
 const tableElevationVariants = generateElevationVariants(styles, 'table', ELEVATION.BASE);
@@ -48,7 +49,10 @@ const Table = ({
   className,
   border = false,
   elevation = ELEVATION.BASE,
+  emptyState,
 }: TableProps) => {
+  const isEmpty = rows.length === 0;
+
   return (
     <div
       className={cn(
@@ -68,21 +72,31 @@ const Table = ({
             ))}
           </TableRow>
         </TableHeader>
-        <TableBody>
-          {rows.map((row) => (
-            <TableRow
-              key={row.key}
-              className={cn(row.className, row.onClick && styles['table-row-clickable'])}
-              onClick={row.onClick}
-            >
-              {row.cells.map((cell) => (
-                <TableCell key={cell.key} className={cell.className}>
-                  {cell.content}
-                </TableCell>
-              ))}
+        {isEmpty && emptyState ? (
+          <TableBody>
+            <TableRow>
+              <TableCell colSpan={columns.length} className={styles['table-empty-state']}>
+                {emptyState}
+              </TableCell>
             </TableRow>
-          ))}
-        </TableBody>
+          </TableBody>
+        ) : (
+          <TableBody>
+            {rows.map((row) => (
+              <TableRow
+                key={row.key}
+                className={cn(row.className, row.onClick && styles['table-row-clickable'])}
+                onClick={row.onClick}
+              >
+                {row.cells.map((cell) => (
+                  <TableCell key={cell.key} className={cell.className}>
+                    {cell.content}
+                  </TableCell>
+                ))}
+              </TableRow>
+            ))}
+          </TableBody>
+        )}
       </TableContainer>
     </div>
   );

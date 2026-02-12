@@ -25,6 +25,18 @@ import { ELEVATION } from "@eqtylab/equality";
 
 <TableDemo client:only="react" variant="with-sorter" />
 
+### Empty State
+
+When `rows` is empty and `emptyState` is provided, the table keeps column headers visible and renders the empty state content spanning all columns.
+
+<TableDemo client:only="react" variant="empty-state" />
+
+### Empty State with Custom Component
+
+The `emptyState` prop accepts any `ReactNode`, so you can pass a custom component like `EmptyTableState`.
+
+<TableDemo client:only="react" variant="empty-state-custom" />
+
 ## Style Options
 
 ### With Border
@@ -94,3 +106,13 @@ import { ELEVATION } from "@eqtylab/equality";
   variant="with-border"
   elevation={ELEVATION.FLOATING}
 />
+
+## Props
+
+| Name         | Description                                                  | Type                                              | Default | Required |
+| ------------ | ------------------------------------------------------------ | ------------------------------------------------- | ------- | -------- |
+| `columns`    | Column definitions with key, content, and optional className | `TableColumn[]`                                   |         | ✅       |
+| `rows`       | Row data with key, cells, and optional onClick/className     | `TableRowData[]`                                  |         | ✅       |
+| `border`     | Adds a border and rounded corners around the table           | `boolean`                                         | `false` | ❌       |
+| `elevation`  | Controls the shadow and border elevation level               | `sunken`, `base`, `raised`, `overlay`, `floating` | `base`  | ❌       |
+| `emptyState` | Content rendered when rows is empty, spanning all columns    | `ReactNode`                                       |         | ❌       |
