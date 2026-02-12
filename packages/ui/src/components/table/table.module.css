@@ -18,7 +18,7 @@
 }
 
 .table-empty-state {
-  @apply text-foreground-secondary py-8 text-center;
+  @apply text-text-secondary py-8 text-center;
 }
 
 /* ELEVATION */
