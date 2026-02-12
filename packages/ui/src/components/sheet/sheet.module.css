@@ -62,7 +62,6 @@
 
 .sheet-header-text-content {
   @apply flex min-w-0 flex-1 flex-col;
-  @apply space-y-0.5;
 }
 
 .sheet-body {
