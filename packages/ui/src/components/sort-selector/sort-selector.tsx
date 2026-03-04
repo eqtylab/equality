@@ -90,7 +90,10 @@ function SortSelector({
           <ChevronDownIcon className={styles['chevron-down-icon']} />
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent align="end" className={styles['dropdown-menu-content']}>
+      <DropdownMenuContent
+        align="end"
+        style={{ minWidth: 'var(--radix-dropdown-menu-trigger-width)' }}
+      >
         <DropdownMenuLabel>
           Sort
           {!isDefaultSort && (
