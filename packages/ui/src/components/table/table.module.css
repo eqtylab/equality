@@ -50,10 +50,3 @@
 .table--overlay.table-border {
   @apply border-border-overlay;
 }
-
-.table--floating {
-  @apply shadow-shadow-floating;
-}
-.table--floating.table-border {
-  @apply border-border-overlay;
-}

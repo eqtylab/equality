@@ -68,12 +68,6 @@ Use for UI that overlays the page and requires clear separation from the underly
 
 <TooltipDemo client:only="react" />
 
-### Floating
-
-An elevated surface reserved for UI that _must_ remain visually dominant over all other elements.
-
-<DialogWithTableDemo client:only="react" />
-
 ## Elevation component prop
 
 Some components have an `elevation` prop that can be used to set the elevation of the component. By default, they will be set to the one that makes most sense in a standard page flow.
@@ -105,7 +99,7 @@ The following components have an `elevation` prop:
 | Alert Dialog  | Overlay   |
 | Dialog        | Overlay   |
 | Drawer        | Overlay   |
-| Dropdown Menu | Floating  |
-| Popover       | Floating  |
+| Dropdown Menu | Overlay   |
+| Popover       | Overlay   |
 | Sheet         | Overlay   |
 | Tooltip       | Overlay   |

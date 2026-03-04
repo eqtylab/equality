@@ -77,11 +77,3 @@
 .table--overlay .table-body {
   @apply bg-background-overlay;
 }
-
-.table--floating .table-header,
-.table--floating .table-footer {
-  @apply bg-background-top;
-}
-.table--floating .table-body {
-  @apply bg-background-overlay;
-}

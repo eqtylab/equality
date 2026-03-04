@@ -74,7 +74,3 @@
 .metric-card--overlay {
   @apply bg-background-overlay shadow-shadow-overlay border-border-overlay;
 }
-
-.metric-card--floating {
-  @apply bg-background-overlay shadow-shadow-floating border-border-overlay;
-}

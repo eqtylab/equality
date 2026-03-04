@@ -134,12 +134,12 @@ export const DialogWithTableDemo = () => {
             <DialogDescription>Dialog Description</DialogDescription>
           </DialogHeader>
           <DialogContent>
-            <Card elevation={ELEVATION.FLOATING}>
+            <Card elevation={ELEVATION.OVERLAY}>
               <CardContent>
                 <div className="space-y-2">
                   <h4 className="font-medium">Card</h4>
                   <p className="text-text-secondary text-sm">
-                    This card has an elevation of Floating.
+                    This card has an elevation of Overlay.
                   </p>
                 </div>
               </CardContent>

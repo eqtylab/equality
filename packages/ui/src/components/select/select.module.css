@@ -90,10 +90,3 @@
 .select-content--overlay .select-item {
   --mix-color: var(--color-background-overlay);
 }
-
-.select-content--floating {
-  @apply bg-background-overlay shadow-shadow-floating border-border-overlay;
-}
-.select-content--floating .select-item {
-  --mix-color: var(--color-background-overlay);
-}

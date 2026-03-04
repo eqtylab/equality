@@ -110,13 +110,3 @@
 .display-field--overlay .slot {
   @apply bg-background-raised border-border-raised;
 }
-
-.display-field--floating {
-  @apply shadow-shadow-floating border-border-overlay;
-}
-.display-field--floating .display-field-inner {
-  @apply bg-background-overlay border-border-overlay;
-}
-.display-field--floating .slot {
-  @apply bg-background-overlay border-border-overlay;
-}

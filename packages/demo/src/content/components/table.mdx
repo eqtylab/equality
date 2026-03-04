@@ -61,10 +61,6 @@ The `emptyState` prop accepts any `ReactNode`, so you can pass a custom componen
 
 <TableDemo client:only="react" elevation={ELEVATION.OVERLAY} />
 
-### Floating
-
-<TableDemo client:only="react" elevation={ELEVATION.FLOATING} />
-
 ## Elevations With Border
 
 ### Sunken
@@ -99,20 +95,12 @@ The `emptyState` prop accepts any `ReactNode`, so you can pass a custom componen
   elevation={ELEVATION.OVERLAY}
 />
 
-### Floating
-
-<TableDemo
-  client:only="react"
-  variant="with-border"
-  elevation={ELEVATION.FLOATING}
-/>
-
 ## Props
 
-| Name         | Description                                                  | Type                                              | Default | Required |
-| ------------ | ------------------------------------------------------------ | ------------------------------------------------- | ------- | -------- |
-| `columns`    | Column definitions with key, content, and optional className | `TableColumn[]`                                   |         | ✅       |
-| `rows`       | Row data with key, cells, and optional onClick/className     | `TableRowData[]`                                  |         | ✅       |
-| `border`     | Adds a border and rounded corners around the table           | `boolean`                                         | `false` | ❌       |
-| `elevation`  | Controls the shadow and border elevation level               | `sunken`, `base`, `raised`, `overlay`, `floating` | `base`  | ❌       |
-| `emptyState` | Content rendered when rows is empty, spanning all columns    | `ReactNode`                                       |         | ❌       |
+| Name         | Description                                                  | Type                                   | Default | Required |
+| ------------ | ------------------------------------------------------------ | -------------------------------------- | ------- | -------- |
+| `columns`    | Column definitions with key, content, and optional className | `TableColumn[]`                        |         | ✅       |
+| `rows`       | Row data with key, cells, and optional onClick/className     | `TableRowData[]`                       |         | ✅       |
+| `border`     | Adds a border and rounded corners around the table           | `boolean`                              | `false` | ❌       |
+| `elevation`  | Controls the shadow and border elevation level               | `sunken`, `base`, `raised`, `overlay`, | `base`  | ❌       |
+| `emptyState` | Content rendered when rows is empty, spanning all columns    | `ReactNode`                            |         | ❌       |

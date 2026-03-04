@@ -61,7 +61,3 @@
 .card--overlay {
   @apply bg-background-overlay shadow-shadow-overlay border-border-overlay;
 }
-
-.card--floating {
-  @apply bg-background-overlay shadow-shadow-floating border-border-overlay;
-}
