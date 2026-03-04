@@ -9,5 +9,5 @@
 }
 
 .dropdown-menu-content {
-  @apply min-w-[var(--radix-dropdown-menu-trigger-width)];
+  min-width: var(--radix-dropdown-menu-trigger-width);
 }
