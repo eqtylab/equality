@@ -112,10 +112,10 @@
 }
 
 .display-field--floating {
-  @apply shadow-shadow-floating border-border-floating;
+  @apply shadow-shadow-floating border-border-overlay;
 }
 .display-field--floating .display-field-inner {
-  @apply bg-background-floating border-border-floating;
+  @apply bg-background-overlay border-border-overlay;
 }
 .display-field--floating .slot {
   @apply bg-background-overlay border-border-overlay;

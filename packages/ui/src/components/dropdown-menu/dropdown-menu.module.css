@@ -69,5 +69,5 @@
 }
 
 .dropdown-menu-content {
-  @apply bg-background-floating shadow-shadow-floating border-border-floating;
+  @apply bg-background-overlay shadow-shadow-floating border-border-overlay;
 }

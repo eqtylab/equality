@@ -55,5 +55,5 @@
   @apply shadow-shadow-floating;
 }
 .table--floating.table-border {
-  @apply border-border-floating;
+  @apply border-border-overlay;
 }

@@ -92,8 +92,8 @@
 }
 
 .select-content--floating {
-  @apply bg-background-floating shadow-shadow-floating border-border-floating;
+  @apply bg-background-overlay shadow-shadow-floating border-border-overlay;
 }
 .select-content--floating .select-item {
-  --mix-color: var(--color-background-floating);
+  --mix-color: var(--color-background-overlay);
 }
