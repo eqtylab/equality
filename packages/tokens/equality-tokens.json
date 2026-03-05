@@ -25,14 +25,6 @@
           "hex": "#000000"
         }
       },
-      "background-floating": {
-        "$type": "color",
-        "$value": {
-          "colorSpace": "display-p3",
-          "components": [0.1399, 0.14, 0.1485],
-          "hex": "#242426"
-        }
-      },
       "background-overlay": {
         "$type": "color",
         "$value": {
@@ -333,14 +325,6 @@
           "colorSpace": "display-p3",
           "components": [0.1589, 0.159, 0.1677],
           "hex": "#29292B"
-        }
-      },
-      "border-floating": {
-        "$type": "color",
-        "$value": {
-          "colorSpace": "display-p3",
-          "components": [0.3328, 0.3328, 0.3426],
-          "hex": "#555557"
         }
       },
       "border-overlay": {
@@ -927,51 +911,19 @@
         "$type": "color",
         "$value": {
           "colorSpace": "display-p3",
-          "components": [0.8264, 0.8324, 0.8394],
-          "hex": "#D3D4D6"
+          "components": [1, 1, 1],
+          "hex": "#FFFFFF"
         }
       },
       "background-base": {
         "$type": "color",
         "$value": {
           "colorSpace": "display-p3",
-          "components": [0.8264, 0.8324, 0.8394],
-          "hex": "#D3D4D6"
+          "components": [1, 1, 1],
+          "hex": "#FFFFFF"
         }
       },
       "background-bottom": {
-        "$type": "color",
-        "$value": {
-          "colorSpace": "display-p3",
-          "components": [0.6765, 0.6823, 0.689],
-          "hex": "#ADAEB0"
-        }
-      },
-      "background-floating": {
-        "$type": "color",
-        "$value": {
-          "colorSpace": "display-p3",
-          "components": [0.9424, 0.9485, 0.9557],
-          "hex": "#F0F2F4"
-        }
-      },
-      "background-overlay": {
-        "$type": "color",
-        "$value": {
-          "colorSpace": "display-p3",
-          "components": [0.9034, 0.9095, 0.9166],
-          "hex": "#E6E8EA"
-        }
-      },
-      "background-raised": {
-        "$type": "color",
-        "$value": {
-          "colorSpace": "display-p3",
-          "components": [0.8648, 0.8708, 0.8779],
-          "hex": "#DDDEE0"
-        }
-      },
-      "background-sunken": {
         "$type": "color",
         "$value": {
           "colorSpace": "display-p3",
@@ -979,12 +931,36 @@
           "hex": "#C6C7C9"
         }
       },
+      "background-overlay": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "display-p3",
+          "components": [0.9946, 0.9998, 0.9999],
+          "hex": "#FDFFFF"
+        }
+      },
+      "background-raised": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "display-p3",
+          "components": [0.9554, 0.9616, 0.9688],
+          "hex": "#F4F5F7"
+        }
+      },
+      "background-sunken": {
+        "$type": "color",
+        "$value": {
+          "colorSpace": "display-p3",
+          "components": [0.8648, 0.8708, 0.8779],
+          "hex": "#DDDEE0"
+        }
+      },
       "background-top": {
         "$type": "color",
         "$value": {
           "colorSpace": "display-p3",
-          "components": [0.9817, 0.9878, 0.9951],
-          "hex": "#FAFCFE"
+          "components": [0.9294, 0.9355, 0.9426],
+          "hex": "#EDEFF0"
         }
       },
       "badge": {
@@ -1337,14 +1313,6 @@
           "colorSpace": "display-p3",
           "components": [0.6158, 0.6214, 0.6281],
           "hex": "#9D9EA0"
-        }
-      },
-      "border-floating": {
-        "$type": "color",
-        "$value": {
-          "colorSpace": "display-p3",
-          "components": [0.8011, 0.807, 0.814],
-          "hex": "#CCCED0"
         }
       },
       "border-overlay": {

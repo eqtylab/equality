@@ -72,7 +72,3 @@
 .icon-container--overlay:not(.background--transparent) {
   @apply bg-background-overlay shadow-shadow-overlay border-border-overlay;
 }
-
-.icon-container--floating:not(.background--transparent) {
-  @apply bg-background-floating shadow-shadow-floating border-border-floating;
-}

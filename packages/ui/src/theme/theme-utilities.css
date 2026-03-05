@@ -23,7 +23,7 @@
 }
 
 @utility dropdown-content {
-  @apply bg-background-floating text-text-primary border-border border;
+  @apply bg-background-overlay text-text-primary border-border border;
   @apply z-dropdown rounded-md p-1;
   @apply overflow-y-auto overflow-x-hidden;
   @apply max-h-80 min-w-32;

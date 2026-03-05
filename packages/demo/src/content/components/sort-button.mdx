@@ -1,10 +1,67 @@
 ---
 layout: "@demo/layouts/mdx-layout.astro"
 heading: "Sort Button"
+description: "A button for toggling column sort direction in tables and lists."
 ---
 
 import { SortButtonDemo } from "@demo/components/demo/sort-button";
 
-## Default
+## Overview
+
+SortButton is a control for sorting data by a given field. It displays directional arrow icons to indicate the current sort state. It is primarily used inside [`<Table>`](/components/table) column headers but can work anywhere a sort toggle is needed.
+
+## Usage
+
+Import the component:
+
+```ts
+import { SortButton } from "@eqtylab/equality";
+```
+
+Basic usage with required properties:
+
+```tsx
+<SortButton
+  field="name"
+  sortField={currentSortField}
+  sortDirection={currentSortDirection}
+  onSort={(field) => handleSort(field)}
+>
+  Name
+</SortButton>
+```
+
+## Variants
+
+### Default
+
+Click each button to toggle sort direction. Clicking a different button changes the active sort field.
 
 <SortButtonDemo client:only="react" />
+
+### With Custom Icon
+
+The `icon` prop allows rendering a custom icon before the label.
+
+```tsx
+<SortButton
+  field="name"
+  sortField={sortField}
+  sortDirection={sortDirection}
+  onSort={handleSort}
+  icon={<UserIcon />}
+>
+  Name
+</SortButton>
+```
+
+## Props
+
+| Name            | Description                                              | Type                      | Default | Required |
+| --------------- | -------------------------------------------------------- | ------------------------- | ------- | -------- |
+| `field`         | The field identifier this button sorts by                | `string`                  |         | ✅       |
+| `children`      | Label content displayed inside the button                | `ReactNode`               |         | ✅       |
+| `sortField`     | The currently active sort field, or null if none         | `string \| null`          |         | ✅       |
+| `sortDirection` | The current sort direction                               | `asc`, `desc`             |         | ✅       |
+| `onSort`        | Callback fired with the field when the button is clicked | `(field: string) => void` |         | ✅       |
+| `icon`          | Custom icon rendered before the label                    | `ReactNode`               |         | ❌       |
