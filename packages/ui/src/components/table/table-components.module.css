@@ -1,7 +1,6 @@
 @reference '../../theme/theme.module.css';
 
 .table {
-  @apply relative;
   @apply w-full overflow-auto;
 }
 
@@ -23,19 +22,15 @@
   @apply font-medium;
 }
 
-.table-row {
-  @apply border-b transition-colors;
-}
-
 .table-head {
-  @apply h-12;
+  @apply h-10;
   @apply px-4 align-middle;
   @apply text-text-primary text-left font-medium transition-colors;
   @apply [&:has([role=checkbox])]:pr-0;
 }
 
 .table-cell {
-  @apply px-4 py-3;
+  @apply px-4 py-2;
   @apply align-middle;
   @apply [&:has([role=checkbox])]:pr-0;
 }
@@ -52,6 +47,10 @@
 }
 .table--sunken .table-body {
   @apply bg-background-sunken;
+  --table-stripe-bg: light-dark(
+    color-mix(in oklch, var(--color-background-sunken), black 2%),
+    color-mix(in oklch, var(--color-background-sunken), white 4%)
+  );
 }
 
 .table--base .table-header,
@@ -60,6 +59,10 @@
 }
 .table--base .table-body {
   @apply bg-background-base;
+  --table-stripe-bg: light-dark(
+    color-mix(in oklch, var(--color-background-base), black 2%),
+    color-mix(in oklch, var(--color-background-base), white 4%)
+  );
 }
 
 .table--raised .table-header,
@@ -68,6 +71,10 @@
 }
 .table--raised .table-body {
   @apply bg-background-raised;
+  --table-stripe-bg: light-dark(
+    color-mix(in oklch, var(--color-background-raised), black 2%),
+    color-mix(in oklch, var(--color-background-raised), white 4%)
+  );
 }
 
 .table--overlay .table-header,
@@ -76,4 +83,12 @@
 }
 .table--overlay .table-body {
   @apply bg-background-overlay;
+  --table-stripe-bg: light-dark(
+    color-mix(in oklch, var(--color-background-overlay), black 2%),
+    color-mix(in oklch, var(--color-background-overlay), white 4%)
+  );
+}
+
+.table-body .table-row:nth-child(even) {
+  background-color: var(--table-stripe-bg);
 }

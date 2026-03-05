@@ -53,7 +53,7 @@ Rows accept an `onClick` handler, which applies hover and cursor styles.
 
 ### Sortable Columns
 
-Column `content` accepts any `ReactNode`, so you can use components like [`<SortButton>`](/components/sort-button) in column headers to add interactive sort controls.
+Use [`<SortButton>`](/components/sort-button) in column headers to add interactive sort controls.
 
 <TableDemo client:only="react" variant="with-sorter" />
 
@@ -83,6 +83,8 @@ import { SortButton, Table } from "@eqtylab/equality";
 ```
 
 ### With Border
+
+Apply a border to tables with the `border` prop. This should be added most places `<Table>` is used, except for when it lives within a different container which already has a border applied.
 
 <TableDemo client:only="react" variant="with-border" />
 

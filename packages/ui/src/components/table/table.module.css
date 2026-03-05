@@ -9,7 +9,7 @@
   --hover-darken: 50%;
   --hover-lighten: 50%;
   @apply cursor-pointer;
-  @apply hover:bg-mixed-light dark:hover:bg-mixed-dark;
+  @apply hover:bg-mixed-light! dark:hover:bg-mixed-dark!;
   @apply data-[state=selected]:bg-mixed-light dark:data-[state=selected]:bg-mixed-dark;
 }
 
