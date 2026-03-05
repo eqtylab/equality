@@ -53,9 +53,34 @@ Rows accept an `onClick` handler, which applies hover and cursor styles.
 
 ### Sortable Columns
 
-Column `content` accepts any `ReactNode`, so you can use components like `SortButton` in column headers.
+Column `content` accepts any `ReactNode`, so you can use components like [`<SortButton>`](/components/sort-button) in column headers to add interactive sort controls.
 
 <TableDemo client:only="react" variant="with-sorter" />
+
+#### Usage
+
+```tsx
+import { SortButton, Table } from "@eqtylab/equality";
+
+<Table
+  columns={[
+    {
+      key: "name",
+      content: (
+        <SortButton
+          field="name"
+          sortField={sortField}
+          sortDirection={sortDirection}
+          onSort={handleSort}
+        >
+          Name
+        </SortButton>
+      ),
+    },
+  ]}
+  rows={rows}
+/>;
+```
 
 ### With Border
 
