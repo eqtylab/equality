@@ -16,6 +16,7 @@
     "@eqtylab/equality": "workspace:*",
     "@tailwindcss/vite": "^4.1.16",
     "astro": "^5.15.3",
+    "astro-markdown-export": "^0.2.0",
     "clsx": "^2.1.1",
     "lucide-react": "^0.545.0",
     "prettier-plugin-tailwindcss": "^0.6.14",

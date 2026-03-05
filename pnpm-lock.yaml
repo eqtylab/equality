@@ -65,6 +65,9 @@ importers:
       astro:
         specifier: ^5.15.3
         version: 5.15.3(@types/node@24.9.2)(jiti@2.6.1)(lightningcss@1.30.2)(rollup@4.52.4)(tsx@4.20.6)(typescript@5.9.3)(yaml@2.8.1)
+      astro-markdown-export:
+        specifier: ^0.2.0
+        version: 0.2.0(astro@5.15.3(@types/node@24.9.2)(jiti@2.6.1)(lightningcss@1.30.2)(rollup@4.52.4)(tsx@4.20.6)(typescript@5.9.3)(yaml@2.8.1))
       clsx:
         specifier: ^2.1.1
         version: 2.1.1
@@ -2955,6 +2958,15 @@ packages:
         integrity: sha512-LElXdjswlqjWrPpJFg1Fx4wpkOCxj1TDHlSV4PlaRxHGWko024xICaa97ZkMfs6DRKlCguiAI+rbXv5GWwXIkg==,
       }
     hasBin: true
+
+  astro-markdown-export@0.2.0:
+    resolution:
+      {
+        integrity: sha512-N/V07IfCN3fZHi8gKqhED4c6XU+Vg4yPwhShp80FENRPnaCnn3Xm7acNgO3oY1wC27+b3V/v5FMYtxdb0gG99g==,
+      }
+    engines: { node: '>=18.0.0' }
+    peerDependencies:
+      astro: ^5.14.1
 
   astro@5.15.3:
     resolution:
@@ -9057,6 +9069,10 @@ snapshots:
       util: 0.12.5
 
   astring@1.9.0: {}
+
+  astro-markdown-export@0.2.0(astro@5.15.3(@types/node@24.9.2)(jiti@2.6.1)(lightningcss@1.30.2)(rollup@4.52.4)(tsx@4.20.6)(typescript@5.9.3)(yaml@2.8.1)):
+    dependencies:
+      astro: 5.15.3(@types/node@24.9.2)(jiti@2.6.1)(lightningcss@1.30.2)(rollup@4.52.4)(tsx@4.20.6)(typescript@5.9.3)(yaml@2.8.1)
 
   astro@5.15.3(@types/node@24.9.2)(jiti@2.6.1)(lightningcss@1.30.2)(rollup@4.52.4)(tsx@4.20.6)(typescript@5.9.3)(yaml@2.8.1):
     dependencies:

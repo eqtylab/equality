@@ -2,6 +2,7 @@
 import { defineConfig } from "astro/config";
 import { fileURLToPath } from "url";
 import { resolve } from "path";
+import markdownExport from "astro-markdown-export";
 
 import tailwindcss from "@tailwindcss/vite";
 
@@ -43,5 +44,20 @@ export default defineConfig({
       },
     },
   },
-  integrations: [mdx(), react()],
+  integrations: [
+    mdx(),
+    react(),
+    markdownExport({
+      // options (all optional)
+      siteUrl: "https://equality.eqtylab.io",
+      contentDir: "src/content/components",
+      outputDir: "/components/",
+      includeSourceUrls: true,
+      normalizeExtension: true,
+      additionalFrontmatter: {
+        generator: "Astro Markdown Export",
+        version: "1.0.0",
+      },
+    }),
+  ],
 });
