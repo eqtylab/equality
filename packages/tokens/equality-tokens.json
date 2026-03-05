@@ -927,8 +927,8 @@
         "$type": "color",
         "$value": {
           "colorSpace": "display-p3",
-          "components": [0.6765, 0.6823, 0.689],
-          "hex": "#ADAEB0"
+          "components": [0.7758, 0.7817, 0.7887],
+          "hex": "#C6C7C9"
         }
       },
       "background-overlay": {
@@ -943,24 +943,24 @@
         "$type": "color",
         "$value": {
           "colorSpace": "display-p3",
-          "components": [0.9817, 0.9878, 0.9951],
-          "hex": "#FAFCFE"
+          "components": [0.9554, 0.9616, 0.9688],
+          "hex": "#F4F5F7"
         }
       },
       "background-sunken": {
         "$type": "color",
         "$value": {
           "colorSpace": "display-p3",
-          "components": [0.7758, 0.7817, 0.7887],
-          "hex": "#C6C7C9"
+          "components": [0.8648, 0.8708, 0.8779],
+          "hex": "#DDDEE0"
         }
       },
       "background-top": {
         "$type": "color",
         "$value": {
           "colorSpace": "display-p3",
-          "components": [0.8648, 0.8708, 0.8779],
-          "hex": "#DDDEE0"
+          "components": [0.9294, 0.9355, 0.9426],
+          "hex": "#EDEFF0"
         }
       },
       "badge": {

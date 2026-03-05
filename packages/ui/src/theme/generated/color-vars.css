@@ -10,11 +10,11 @@
   --color-amber-800: color(display-p3 0.2643 0.1753 0.09139);
   --color-amber-900: color(display-p3 0.1121 0.07777 0.04646);
   --color-background-base: color(display-p3 1 1 1);
-  --color-background-bottom: color(display-p3 0.6765 0.6823 0.689);
+  --color-background-bottom: color(display-p3 0.7758 0.7817 0.7887);
   --color-background-overlay: color(display-p3 0.9946 0.9998 0.9999);
-  --color-background-raised: color(display-p3 0.9817 0.9878 0.9951);
-  --color-background-sunken: color(display-p3 0.7758 0.7817 0.7887);
-  --color-background-top: color(display-p3 0.8648 0.8708 0.8779);
+  --color-background-raised: color(display-p3 0.9554 0.9616 0.9688);
+  --color-background-sunken: color(display-p3 0.8648 0.8708 0.8779);
+  --color-background-top: color(display-p3 0.9294 0.9355 0.9426);
   --color-background: color(display-p3 1 1 1);
   --color-badge-background-accepted: color(display-p3 0.795 0.7755 0.9866);
   --color-badge-background-comment: color(display-p3 0.795 0.7755 0.9866);

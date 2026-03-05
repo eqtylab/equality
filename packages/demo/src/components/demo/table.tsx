@@ -1,26 +1,25 @@
 import type { Elevation } from "@eqtylab/equality";
 import {
   Badge,
-  Button,
   EmptyTableState,
+  IconButton,
   SortButton,
   Table,
 } from "@eqtylab/equality";
 
 interface TableDemoProps {
   variant?:
-    | "unclickable"
+    | "default"
     | "clickable"
-    | "with-actions"
     | "with-border"
     | "with-sorter"
     | "empty-state"
     | "empty-state-custom";
-  elevation: Elevation;
+  elevation?: Elevation;
 }
 
 export const TableDemo = ({
-  variant = "unclickable",
+  variant = "default",
   elevation,
 }: TableDemoProps) => {
   const columns = [
@@ -28,9 +27,10 @@ export const TableDemo = ({
     { key: "email", content: "Email" },
     { key: "role", content: "Role" },
     { key: "status", content: "Status" },
+    { key: "actions", content: "" },
   ];
 
-  const demo_rows_unclickable = [
+  const rows = [
     {
       key: "1",
       cells: [
@@ -38,7 +38,14 @@ export const TableDemo = ({
         { key: "email", content: "alice@example.com" },
         { key: "role", content: "Admin" },
         { key: "status", content: <Badge variant="success">Active</Badge> },
+        {
+          key: "actions",
+          content: <IconButton name="EllipsisVertical" label="Row actions" />,
+        },
       ],
+      ...(variant === "clickable" && {
+        onClick: () => console.log("Clicked row 1"),
+      }),
     },
     {
       key: "2",
@@ -47,7 +54,14 @@ export const TableDemo = ({
         { key: "email", content: "bob@example.com" },
         { key: "role", content: "User" },
         { key: "status", content: <Badge variant="success">Active</Badge> },
+        {
+          key: "actions",
+          content: <IconButton name="EllipsisVertical" label="Row actions" />,
+        },
       ],
+      ...(variant === "clickable" && {
+        onClick: () => console.log("Clicked row 2"),
+      }),
     },
     {
       key: "3",
@@ -55,180 +69,23 @@ export const TableDemo = ({
         { key: "name", content: "Charlie Brown" },
         { key: "email", content: "charlie@example.com" },
         { key: "role", content: "Viewer" },
-        { key: "status", content: <Badge variant="neutral">Inactive</Badge> },
+        {
+          key: "status",
+          content: <Badge variant="neutral">Inactive</Badge>,
+        },
+        {
+          key: "actions",
+          content: <IconButton name="EllipsisVertical" label="Row actions" />,
+        },
       ],
+      ...(variant === "clickable" && {
+        onClick: () => console.log("Clicked row 3"),
+      }),
     },
   ];
-
-  const demo_rows_clickable = [
-    {
-      key: "1",
-      cells: [
-        { key: "name", content: "Alice Cooper" },
-        { key: "email", content: "alice@example.com" },
-        { key: "role", content: "Admin" },
-        { key: "status", content: "Active" },
-      ],
-      onClick: () => console.log("Clicked row 1"),
-    },
-    {
-      key: "2",
-      cells: [
-        { key: "name", content: "Bob Smith" },
-        { key: "email", content: "bob@example.com" },
-        { key: "role", content: "User" },
-        { key: "status", content: "Active" },
-      ],
-      onClick: () => console.log("Clicked row 2"),
-    },
-    {
-      key: "3",
-      cells: [
-        { key: "name", content: "Charlie Brown" },
-        { key: "email", content: "charlie@example.com" },
-        { key: "role", content: "Viewer" },
-        { key: "status", content: "Inactive" },
-      ],
-      onClick: () => console.log("Clicked row 3"),
-    },
-  ];
-
-  if (variant === "unclickable") {
-    return (
-      <Table
-        columns={columns}
-        rows={demo_rows_unclickable}
-        elevation={elevation}
-      />
-    );
-  }
-
-  if (variant === "clickable") {
-    return (
-      <Table
-        columns={columns}
-        rows={demo_rows_clickable}
-        elevation={elevation}
-      />
-    );
-  }
-
-  if (variant === "with-actions") {
-    const columns_with_actions = [
-      { key: "name", content: "Name" },
-      { key: "email", content: "Email" },
-      { key: "role", content: "Role" },
-      { key: "status", content: "Status" },
-      { key: "actions", content: "Actions" },
-    ];
-
-    const demo_rows_with_actions = [
-      {
-        key: "1",
-        cells: [
-          { key: "name", content: "Alice Cooper" },
-          { key: "email", content: "alice@example.com" },
-          { key: "role", content: "Admin" },
-          { key: "status", content: "Active" },
-          {
-            key: "actions",
-            content: (
-              <Button variant="tertiary" size="sm">
-                View
-              </Button>
-            ),
-          },
-        ],
-      },
-      {
-        key: "2",
-        cells: [
-          { key: "name", content: "Bob Smith" },
-          { key: "email", content: "bob@example.com" },
-          { key: "role", content: "User" },
-          { key: "status", content: "Active" },
-          {
-            key: "actions",
-            content: (
-              <Button variant="tertiary" size="sm">
-                View
-              </Button>
-            ),
-          },
-        ],
-      },
-      {
-        key: "3",
-        cells: [
-          { key: "name", content: "Charlie Brown" },
-          { key: "email", content: "charlie@example.com" },
-          { key: "role", content: "Viewer" },
-          { key: "status", content: "Inactive" },
-          {
-            key: "actions",
-            content: (
-              <Button variant="tertiary" size="sm">
-                View
-              </Button>
-            ),
-          },
-        ],
-      },
-    ];
-    return (
-      <Table
-        columns={columns_with_actions}
-        rows={demo_rows_with_actions}
-        elevation={elevation}
-      />
-    );
-  }
-
-  if (variant === "with-border") {
-    return (
-      <Table
-        columns={columns}
-        rows={demo_rows_unclickable}
-        border
-        elevation={elevation}
-      />
-    );
-  }
-
-  if (variant === "empty-state") {
-    return (
-      <Table
-        columns={columns}
-        rows={[]}
-        border
-        elevation={elevation}
-        emptyState="No data available"
-      />
-    );
-  }
-
-  if (variant === "empty-state-custom") {
-    return (
-      <Table
-        columns={columns}
-        rows={[]}
-        border
-        elevation={elevation}
-        emptyState={
-          <EmptyTableState
-            icon="SearchX"
-            title="No Members Found"
-            description="Try refining your search terms or clearing filters."
-            showClearButton
-            onClear={() => {}}
-          />
-        }
-      />
-    );
-  }
 
   if (variant === "with-sorter") {
-    const columns_with_sorter = [
+    const sortColumns = [
       {
         key: "name",
         content: (
@@ -281,16 +138,50 @@ export const TableDemo = ({
           </SortButton>
         ),
       },
+      { key: "actions", content: "" },
     ];
 
+    return <Table columns={sortColumns} rows={rows} elevation={elevation} />;
+  }
+
+  if (variant === "empty-state") {
     return (
       <Table
-        columns={columns_with_sorter}
-        rows={demo_rows_unclickable}
+        columns={columns}
+        rows={[]}
+        border
         elevation={elevation}
+        emptyState="No data available"
       />
     );
   }
 
-  return null;
+  if (variant === "empty-state-custom") {
+    return (
+      <Table
+        columns={columns}
+        rows={[]}
+        border
+        elevation={elevation}
+        emptyState={
+          <EmptyTableState
+            icon="SearchX"
+            title="No Members Found"
+            description="Try refining your search terms or clearing filters."
+            showClearButton
+            onClear={() => {}}
+          />
+        }
+      />
+    );
+  }
+
+  return (
+    <Table
+      columns={columns}
+      rows={rows}
+      border={variant === "with-border"}
+      elevation={elevation}
+    />
+  );
 };
