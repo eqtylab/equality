@@ -95,10 +95,10 @@
   @apply shadow-shadow-raised;
 }
 .display-field--raised .display-field-inner {
-  @apply bg-background-raised border-border-raised;
+  @apply bg-background-raised border-border-base;
 }
 .display-field--raised .slot {
-  @apply bg-background-base border-border-base;
+  @apply bg-background-sunken border-border-base;
 }
 
 .display-field--overlay {
@@ -108,15 +108,5 @@
   @apply bg-background-overlay border-border-overlay;
 }
 .display-field--overlay .slot {
-  @apply bg-background-raised border-border-raised;
-}
-
-.display-field--floating {
-  @apply shadow-shadow-floating border-border-floating;
-}
-.display-field--floating .display-field-inner {
-  @apply bg-background-floating border-border-floating;
-}
-.display-field--floating .slot {
-  @apply bg-background-overlay border-border-overlay;
+  @apply bg-background-sunken border-border-base;
 }

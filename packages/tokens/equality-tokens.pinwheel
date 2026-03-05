@@ -1198,7 +1198,7 @@
           <color>
             <variants>
               <variant>
-                <rgba>0.82643 0.8324 0.83943 1</rgba>
+                <rgba>1 1 1 1</rgba>
               </variant>
               <variant type="dark">
                 <rgba>0.060177 0.060194 0.067867 1</rgba>
@@ -1238,7 +1238,7 @@
           <color>
             <variants>
               <variant>
-                <rgba>0.67651 0.68226 0.68903 1</rgba>
+                <rgba>0.77584 0.78174 0.78869 1</rgba>
               </variant>
               <variant type="dark">
                 <rgba>1.094e-05 5.131e-06 6.4691e-05 1</rgba>
@@ -1256,7 +1256,7 @@
           <color>
             <variants>
               <variant>
-                <rgba>0.77584 0.78174 0.78869 1</rgba>
+                <rgba>0.86476 0.87078 0.87787 1</rgba>
               </variant>
               <variant type="dark">
                 <rgba>0.035468 0.03547 0.042676 1</rgba>
@@ -1283,7 +1283,7 @@
           <color>
             <variants>
               <variant>
-                <rgba>0.86476 0.87078 0.87787 1</rgba>
+                <rgba>0.95543 0.96157 0.96879 1</rgba>
               </variant>
               <variant type="dark">
                 <rgba>0.085234 0.085263 0.093244 1</rgba>
@@ -1301,28 +1301,10 @@
           <color>
             <variants>
               <variant>
-                <rgba>0.90341 0.90948 0.91663 1</rgba>
+                <rgba>0.99459 0.99978 0.99989 1</rgba>
               </variant>
               <variant type="dark">
                 <rgba>0.11214 0.11218 0.12044 1</rgba>
-              </variant>
-            </variants>
-          </color>
-          <buildGroupId>86B9D7D8-F74A-4CAE-B006-65451BBEDAB9</buildGroupId>
-        </colorItem>
-        <colorItem>
-          <id>4E15FED3-BFA6-47D4-910B-D285FCDB57F1</id>
-          <name>Background Floating</name>
-          <profile>DisplayP3</profile>
-          <format>7</format>
-          <appearance>lightanddark</appearance>
-          <color>
-            <variants>
-              <variant>
-                <rgba>0.94238 0.9485 0.9557 1</rgba>
-              </variant>
-              <variant type="dark">
-                <rgba>0.13994 0.13998 0.14851 1</rgba>
               </variant>
             </variants>
           </color>
@@ -1337,7 +1319,7 @@
           <color>
             <variants>
               <variant>
-                <rgba>0.98165 0.98782 0.99508 1</rgba>
+                <rgba>0.92935 0.93546 0.94264 1</rgba>
               </variant>
               <variant type="dark">
                 <rgba>0.13994 0.13998 0.14851 1</rgba>
@@ -1417,24 +1399,6 @@
               </variant>
               <variant type="dark">
                 <rgba>0.27956 0.27963 0.28913 1</rgba>
-              </variant>
-            </variants>
-          </color>
-          <buildGroupId>86B9D7D8-F74A-4CAE-B006-65451BBEDAB9</buildGroupId>
-        </colorItem>
-        <colorItem>
-          <id>55AD9E0C-C95D-4474-BF8F-8A5007570498</id>
-          <name>Border Floating</name>
-          <profile>DisplayP3</profile>
-          <format>7</format>
-          <appearance>lightanddark</appearance>
-          <color>
-            <variants>
-              <variant>
-                <rgba>0.80106 0.80699 0.81398 1</rgba>
-              </variant>
-              <variant type="dark">
-                <rgba>0.33276 0.33284 0.34262 1</rgba>
               </variant>
             </variants>
           </color>

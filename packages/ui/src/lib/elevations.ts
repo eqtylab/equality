@@ -5,7 +5,6 @@ export const ELEVATION = {
   BASE: 'base',
   RAISED: 'raised',
   OVERLAY: 'overlay',
-  FLOATING: 'floating',
 };
 
 export type Elevation = (typeof ELEVATION)[keyof typeof ELEVATION];
