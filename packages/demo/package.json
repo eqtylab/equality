@@ -10,12 +10,12 @@
     "astro": "astro"
   },
   "dependencies": {
-    "@astrojs/mdx": "^4.3.9",
-    "@astrojs/prism": "^3.3.0",
-    "@astrojs/react": "^4.4.1",
+    "@astrojs/mdx": "^5.0.0",
+    "@astrojs/prism": "^4.0.0",
+    "@astrojs/react": "^5.0.0",
     "@eqtylab/equality": "workspace:*",
     "@tailwindcss/vite": "^4.1.16",
-    "astro": "^5.15.3",
+    "astro": "^6.0.2",
     "astro-markdown-export": "^0.2.0",
     "clsx": "^2.1.1",
     "lucide-react": "^0.545.0",
