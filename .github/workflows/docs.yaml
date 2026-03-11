@@ -28,6 +28,11 @@ jobs:
       - name: Setup pnpm
         uses: eqtylab-actions/setup-pnpm@master
 
+      - name: Setup node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 25
+
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
