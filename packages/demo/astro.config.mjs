@@ -11,9 +11,11 @@ import mdx from "@astrojs/mdx";
 import react from "@astrojs/react";
 
 const __dirname = fileURLToPath(new URL(".", import.meta.url));
+const site = "https://equality.eqtylab.io";
 
 // https://astro.build/config
 export default defineConfig({
+  site,
   vite: {
     plugins: [tailwindcss()],
     ssr: {
@@ -48,7 +50,7 @@ export default defineConfig({
     mdx(),
     react(),
     markdownExport({
-      siteUrl: "https://equality.eqtylab.io",
+      siteUrl: site,
       contentDir: "src/content/components",
       outputDir: "/components/",
       includeSourceUrls: true,
