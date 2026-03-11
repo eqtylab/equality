@@ -1,17 +1,39 @@
 ---
 import Heading from "@demo/components/ui/heading.astro";
+import { Icon } from "@eqtylab/equality";
+import { getEntry } from "astro:content";
 
 const { heading, description } = Astro.props;
+
+const slug = Astro.url.pathname.replace(/\/$/, "").split("/").pop();
+const componentEntry = slug ? await getEntry("components", slug) : undefined;
+const markdownHref = componentEntry ? `/components/${slug}.md` : null;
 ---
 
 <section class="space-y-3 border-b pb-4">
-  <Heading as="h1">{heading}</Heading>
-  {
-    description && (
-      <p
-        class="text-text-secondary [&>b]:text-text-primary max-w-4xl text-lg [&>b]:font-medium"
-        set:html={description}
-      />
-    )
-  }
+  <div class="flex items-center gap-3">
+    <Heading as="h1">{heading}</Heading>
+  </div>
+  <div class="flex gap-2 justify-between items-center">
+    {
+      description && (
+        <p
+          class="text-text-secondary [&>b]:text-text-primary max-w-4xl text-lg [&>b]:font-medium"
+          set:html={description}
+        />
+      )
+    }
+    {
+      markdownHref && (
+        <a
+          href={markdownHref}
+          aria-label="View markdown"
+          class="text-text-link hover:text-text-primary mt-1 transition-colors inline-flex items-center gap-1"
+        >
+          <Icon icon="FileType" size="sm" />
+          View Markdown
+        </a>
+      )
+    }
+  </div>
 </section>
