@@ -48,7 +48,6 @@ export default defineConfig({
     mdx(),
     react(),
     markdownExport({
-      // options (all optional)
       siteUrl: "https://equality.eqtylab.io",
       contentDir: "src/content/components",
       outputDir: "/components/",
