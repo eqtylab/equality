@@ -1,13 +1,73 @@
 ---
 layout: "@demo/layouts/mdx-layout.astro"
 heading: "Tooltip"
-description: "Tooltip with sizes and variants"
+description: "A popup that displays contextual information when hovering or focusing an element"
 ---
 
 import { TooltipDemo } from "@demo/components/demo/tooltip";
+
+## Overview
+
+The Tooltip displays brief, contextual information when a user hovers over or focuses an element.
+
+## Usage
+
+Import the component parts:
+
+```tsx
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@eqtylab/equality";
+```
+
+Basic usage:
+
+```tsx
+<TooltipProvider>
+  <Tooltip>
+    <TooltipTrigger asChild>
+      <Button variant="tertiary" size="sm">
+        Hover me
+      </Button>
+    </TooltipTrigger>
+    <TooltipContent>
+      <p>This is a tooltip</p>
+    </TooltipContent>
+  </Tooltip>
+</TooltipProvider>
+```
 
 ## Variants
 
 ### Default
 
 <TooltipDemo client:only="react" />
+
+## Slots
+
+| Name             | Description                                             |
+| ---------------- | ------------------------------------------------------- |
+| `TooltipTrigger` | The element that triggers the tooltip on hover or focus |
+| `TooltipContent` | The popup content displayed when the tooltip is open    |
+
+## Props
+
+### TooltipProvider
+
+Wrap your app or a section of your app with `TooltipProvider` to share delay and skip settings across tooltips.
+
+| Name                | Description                                     | Type     | Default | Required |
+| ------------------- | ----------------------------------------------- | -------- | ------- | -------- |
+| `delayDuration`     | Duration in ms before the tooltip opens         | `number` | `700`   | ❌       |
+| `skipDelayDuration` | Duration in ms before skipping between tooltips | `number` | `300`   | ❌       |
+
+### TooltipContent
+
+| Name         | Description                                     | Type                             | Default  | Required |
+| ------------ | ----------------------------------------------- | -------------------------------- | -------- | -------- |
+| `sideOffset` | Distance in px between trigger and tooltip      | `number`                         | `4`      | ❌       |
+| `side`       | Preferred side of the trigger to render against | `top`, `right`, `bottom`, `left` | `top`    | ❌       |
+| `align`      | Preferred alignment against the trigger         | `start`, `center`, `end`         | `center` | ❌       |
