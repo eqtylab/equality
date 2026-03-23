@@ -1,0 +1,13 @@
+{
+  "permissions": {
+    "allow": [
+      "Skill(create-documentation)",
+      "Skill(create-component)",
+      "Bash(pnpm build:*)",
+      "Bash(pnpm dev:*)",
+      "WebFetch(domain:astro.build)",
+      "Bash(ls:*)",
+      "Bash(pnpm astro check:*)"
+    ]
+  }
+}
