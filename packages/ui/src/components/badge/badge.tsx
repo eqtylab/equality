@@ -24,9 +24,14 @@ const badgeVariants = cva(styles['badge'], {
       warning: styles['badge--warning'],
       success: styles['badge--success'],
     },
+    size: {
+      sm: styles['badge--sm'],
+      md: styles['badge--md'],
+    },
   },
   defaultVariants: {
     variant: 'primary',
+    size: 'md',
   },
 });
 
@@ -52,6 +57,7 @@ const defaultVariantIcons: Record<string, string> = {
 function Badge({
   className,
   variant,
+  size,
   closeable,
   handleClosable,
   truncate = false,
@@ -112,8 +118,9 @@ function Badge({
   return (
     <div
       className={cn(
-        variant !== null && badgeVariants({ variant }),
+        variant !== null && badgeVariants({ variant, size }),
         variant === null && styles['badge'],
+        variant === null && styles[`badge--${size ?? 'md'}`],
         isIconOnly && styles['badge--icon-only'],
         className
       )}
