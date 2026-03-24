@@ -1425,10 +1425,12 @@
         <group>
           <id>3AF4332D-089A-4B0F-B382-199809A5D0F8</id>
           <name>Badge</name>
+          <expanded>1</expanded>
           <namespace>1</namespace>
           <group>
             <id>1B345E6F-7BFA-4A29-A8DE-903B2EB193A0</id>
             <name>Text</name>
+            <expanded>1</expanded>
             <namespace>1</namespace>
             <alias>
               <name>Primary</name>
@@ -1438,6 +1440,17 @@
               <referencedItemId>1E1912EB-A51B-4A9A-8A06-7978755E4858</referencedItemId>
               <subIndex>7</subIndex>
               <referencedItemIdDark>1E1912EB-A51B-4A9A-8A06-7978755E4858</referencedItemIdDark>
+              <subIndexDark>1</subIndexDark>
+              <buildGroupId>86B9D7D8-F74A-4CAE-B006-65451BBEDAB9</buildGroupId>
+            </alias>
+            <alias>
+              <name>Secondary</name>
+              <type>3</type>
+              <typeDark>3</typeDark>
+              <appearance>lightanddark</appearance>
+              <referencedItemId>C0C0A4D2-2348-4A7F-A8D3-80FBA6568876</referencedItemId>
+              <subIndex>7</subIndex>
+              <referencedItemIdDark>C0C0A4D2-2348-4A7F-A8D3-80FBA6568876</referencedItemIdDark>
               <subIndexDark>1</subIndexDark>
               <buildGroupId>86B9D7D8-F74A-4CAE-B006-65451BBEDAB9</buildGroupId>
             </alias>
@@ -1599,6 +1612,7 @@
           <group>
             <id>DA9E770F-29ED-4A78-9EDB-DD9F456BB566</id>
             <name>Background</name>
+            <expanded>1</expanded>
             <namespace>1</namespace>
             <alias>
               <name>Primary</name>
@@ -1608,6 +1622,17 @@
               <referencedItemId>1E1912EB-A51B-4A9A-8A06-7978755E4858</referencedItemId>
               <subIndex>1</subIndex>
               <referencedItemIdDark>1E1912EB-A51B-4A9A-8A06-7978755E4858</referencedItemIdDark>
+              <subIndexDark>6</subIndexDark>
+              <buildGroupId>86B9D7D8-F74A-4CAE-B006-65451BBEDAB9</buildGroupId>
+            </alias>
+            <alias>
+              <name>Secondary</name>
+              <type>3</type>
+              <typeDark>3</typeDark>
+              <appearance>lightanddark</appearance>
+              <referencedItemId>C0C0A4D2-2348-4A7F-A8D3-80FBA6568876</referencedItemId>
+              <subIndex>1</subIndex>
+              <referencedItemIdDark>C0C0A4D2-2348-4A7F-A8D3-80FBA6568876</referencedItemIdDark>
               <subIndexDark>6</subIndexDark>
               <buildGroupId>86B9D7D8-F74A-4CAE-B006-65451BBEDAB9</buildGroupId>
             </alias>
@@ -2342,6 +2367,7 @@
           <group>
             <id>AB837834-B6A2-4B55-BB11-D3A5D13EEE41</id>
             <name>Primary</name>
+            <expanded>1</expanded>
             <namespace>1</namespace>
             <alias>
               <name>Fill</name>
@@ -2552,6 +2578,7 @@
         <group>
           <id>C2525A18-4A97-4EEC-BE78-A03DF3113E10</id>
           <name>Brand</name>
+          <expanded>1</expanded>
           <namespace>1</namespace>
           <alias>
             <name>Primary</name>

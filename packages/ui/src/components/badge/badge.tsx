@@ -19,14 +19,20 @@ const badgeVariants = cva(styles['badge'], {
   variants: {
     variant: {
       primary: styles['badge--primary'],
+      secondary: styles['badge--secondary'],
       danger: styles['badge--danger'],
       neutral: styles['badge--neutral'],
       warning: styles['badge--warning'],
       success: styles['badge--success'],
     },
+    size: {
+      sm: styles['badge--sm'],
+      md: styles['badge--md'],
+    },
   },
   defaultVariants: {
     variant: 'primary',
+    size: 'md',
   },
 });
 
@@ -40,6 +46,8 @@ export interface BadgeProps
   truncateLength?: number;
   icon?: React.ReactElement | string;
   display?: BadgeDisplayMode;
+  monospace?: boolean;
+  pill?: boolean;
 }
 
 // Default icons for variants
@@ -52,12 +60,15 @@ const defaultVariantIcons: Record<string, string> = {
 function Badge({
   className,
   variant,
+  size,
   closeable,
   handleClosable,
   truncate = false,
   truncateLength = 50,
   icon,
   display = 'both',
+  monospace = false,
+  pill = true,
   ...props
 }: BadgeProps) {
   // Use default icon for variant if no icon is provided
@@ -112,8 +123,11 @@ function Badge({
   return (
     <div
       className={cn(
-        variant !== null && badgeVariants({ variant }),
+        variant !== null && badgeVariants({ variant, size }),
         variant === null && styles['badge'],
+        variant === null && styles[`badge--${size ?? 'md'}`],
+        monospace && styles['badge--monospace'],
+        !pill && styles['badge--square'],
         isIconOnly && styles['badge--icon-only'],
         className
       )}

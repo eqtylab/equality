@@ -163,6 +163,14 @@
               "hex": "#25336E"
             }
           },
+          "secondary": {
+            "$type": "color",
+            "$value": {
+              "colorSpace": "display-p3",
+              "components": [0.1442, 0.2013, 0.4303],
+              "hex": "#25336E"
+            }
+          },
           "success": {
             "$type": "color",
             "$value": {
@@ -278,6 +286,14 @@
             }
           },
           "ready-for-review": {
+            "$type": "color",
+            "$value": {
+              "colorSpace": "display-p3",
+              "components": [0.7289, 0.7853, 0.9401],
+              "hex": "#BAC8F0"
+            }
+          },
+          "secondary": {
             "$type": "color",
             "$value": {
               "colorSpace": "display-p3",
@@ -1069,6 +1085,14 @@
               "hex": "#BAC8F0"
             }
           },
+          "secondary": {
+            "$type": "color",
+            "$value": {
+              "colorSpace": "display-p3",
+              "components": [0.7289, 0.7853, 0.9401],
+              "hex": "#BAC8F0"
+            }
+          },
           "success": {
             "$type": "color",
             "$value": {
@@ -1184,6 +1208,14 @@
             }
           },
           "ready-for-review": {
+            "$type": "color",
+            "$value": {
+              "colorSpace": "display-p3",
+              "components": [0.1017, 0.1411, 0.2832],
+              "hex": "#1A2448"
+            }
+          },
+          "secondary": {
             "$type": "color",
             "$value": {
               "colorSpace": "display-p3",

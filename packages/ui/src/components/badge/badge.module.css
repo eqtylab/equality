@@ -1,11 +1,22 @@
 @reference '../../theme/theme.module.css';
 
 .badge {
-  @apply px-2 py-0.5;
-  @apply text-xs font-medium transition-colors;
+  @apply font-medium transition-colors;
   @apply rounded-full;
-  @apply flex items-center gap-1;
-  @apply min-h-5 w-max min-w-5;
+  @apply flex items-center;
+  @apply w-max;
+}
+
+/* Size Variants */
+
+.badge--md {
+  @apply px-2 py-0.5 text-xs;
+  @apply min-h-5 min-w-5 gap-1;
+}
+
+.badge--sm {
+  @apply px-1 py-0 text-xs;
+  @apply min-h-4 min-w-4 gap-0.5;
 }
 
 /* Color Variants */
@@ -13,6 +24,11 @@
 .badge--primary {
   @apply bg-badge-background-primary;
   @apply text-badge-text-primary;
+}
+
+.badge--secondary {
+  @apply bg-badge-background-secondary;
+  @apply text-badge-text-secondary;
 }
 
 .badge--danger {
@@ -42,9 +58,18 @@
   @apply hover:text-button-tertiary-text;
 }
 
+.badge--sm .closable-btn {
+  @apply size-3 [&_svg]:size-2.5;
+}
+
 .badge--primary .closable-btn {
   @apply text-badge-text-primary bg-badge-background-primary;
   @apply hover:text-badge-background-primary hover:bg-badge-text-primary;
+}
+
+.badge--secondary .closable-btn {
+  @apply text-badge-text-secondary bg-badge-background-secondary;
+  @apply hover:text-badge-background-secondary hover:bg-badge-text-secondary;
 }
 
 .badge--danger .closable-btn {
@@ -79,6 +104,18 @@
   @apply text-inherit;
 }
 
+.badge--monospace {
+  @apply font-mono;
+}
+
+.badge--square {
+  @apply rounded-sm;
+}
+
 .badge--icon-only {
   @apply p-1;
+}
+
+.badge--sm.badge--icon-only {
+  @apply p-0.5;
 }

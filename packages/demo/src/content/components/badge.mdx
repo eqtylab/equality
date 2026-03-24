@@ -16,8 +16,9 @@ import {
 
 The Badge component comes with four color variants to visually communicate different statuses or contexts:
 
-- **Neutral:** For non-critical, informational, or secondary status.
 - **Primary:** The default style, suitable for general labeling.
+- **Secondary:** Use after primary but information is of secondary (or equal) importance
+- **Neutral:** For non-critical, informational, or secondary status.
 - **Warning:** Indicates something that is worthy of more attention.
 - **Danger:** Indicates an error or danger state that requires serious attention.
 - **Success:** Represents positive outcomes or completed statuses.
@@ -47,19 +48,23 @@ import { Badge } from "@eqtylab/equality";
 <div className="grid grid-cols-[auto_auto_auto] gap-6">
   <div className="flex flex-col items-start space-y-3">
     <PanelLabel label="Badge Variant" />
-    <Badge variant="neutral">Neutral</Badge>
     <Badge variant="primary">Primary</Badge>
+    <Badge variant="secondary">Secondary</Badge>
+    <Badge variant="neutral">Neutral</Badge>
     <Badge variant="warning">Warning</Badge>
     <Badge variant="danger">Danger</Badge>
     <Badge variant="success">Success</Badge>
   </div>
   <div className="flex flex-col items-start space-y-3">
     <PanelLabel label="With Icons" />
-    <Badge variant="neutral" icon="Circle">
-      Neutral
-    </Badge>
     <Badge variant="primary" icon="Shield">
       Primary
+    </Badge>
+    <Badge variant="secondary" icon="Circle">
+      Secondary
+    </Badge>
+    <Badge variant="neutral" icon="Circle">
+      Neutral
     </Badge>
     <Badge variant="warning">Warning</Badge>
     <Badge variant="danger">Danger</Badge>
@@ -67,13 +72,56 @@ import { Badge } from "@eqtylab/equality";
   </div>
   <div className="flex flex-col items-start space-y-3">
     <PanelLabel label="Icon Only" />
-    <Badge variant="neutral" icon="Circle" display="icon-only" />
     <Badge variant="primary" icon="Shield" display="icon-only" />
+    <Badge variant="secondary" icon="Circle" display="icon-only" />
+    <Badge variant="neutral" icon="Circle" display="icon-only" />
     <Badge variant="warning" display="icon-only" />
     <Badge variant="danger" display="icon-only" />
     <Badge variant="success" display="icon-only" />
   </div>
 </div>
+
+## Sizes
+
+---
+
+The Badge comes in two sizes. The default `md` size is 20px tall and should be used in most situations, while `sm` is 16px tall for use in tighter layouts where density is desired (such as log viewers). Small badges generally look better with `pill={false}` applied.
+
+<div className="flex items-center gap-3">
+  <Badge size="md">Medium (Default)</Badge>
+  <Badge size="sm" icon="Check">
+    Small
+  </Badge>
+  <Badge size="sm" pill={false} icon="Check">
+    Small square
+  </Badge>
+</div>
+
+### Usage
+
+```tsx
+<Badge size="md">Medium (Default)</Badge>
+<Badge size="sm">Small (Square)</Badge>
+<Badge size="sm" pill={false}>Small (Square)</Badge>
+```
+
+## Pill Shape
+
+---
+
+Badges are pill-shaped by default. Set `pill={false}` when using badges along with dense in-line text.
+
+<div className="flex items-center gap-3">
+  <Badge>Pill (Default)</Badge>
+  <Badge pill={false}>Square</Badge>
+</div>
+
+### Usage
+
+```tsx
+<Badge>Pill (Default)</Badge>
+<Badge pill={false}>Square</Badge>
+```
 
 ## Display Modes
 
@@ -130,6 +178,28 @@ The Badge component supports text truncation for long content. Use the `truncate
 
 <BadgeTruncateDemo client:only="react" />
 
+## Monospace
+
+---
+
+Use the `monospace` prop when badges will be rendered atop one another and their contents always or often share the same character count.
+
+<div className="flex items-center gap-3">
+  <Badge monospace>v1.3.0</Badge>
+  <Badge monospace variant="success">
+    0x1a2b
+  </Badge>
+  <Badge monospace size="sm">
+    build-482
+  </Badge>
+</div>
+
+### Usage
+
+```tsx
+<Badge monospace>v1.3.0</Badge>
+```
+
 ## Icons
 
 ---
@@ -152,13 +222,16 @@ You can enhance your badge by displaying an icon. The `icon` prop accepts either
 
 ---
 
-| Prop             | Type                                                                   | Default     | Description                                                                                                                       |
-| ---------------- | ---------------------------------------------------------------------- | ----------- | --------------------------------------------------------------------------------------------------------------------------------- |
-| `variant`        | `"neutral"` \| `"primary"` \| `"warning"` \| `"danger"` \| `"success"` | `"primary"` | The visual style variant of the badge.                                                                                            |
-| `display`        | `"both"` \| `"text-only"` \| `"icon-only"`                             | `"both"`    | Controls what elements are displayed. `"both"` shows icon and text, `"text-only"` shows only text, `"icon-only"` shows only icon. |
-| `icon`           | `string` \| `ReactElement`                                             | -           | Icon to display. Can be a Lucide icon name or a custom React element.                                                             |
-| `closeable`      | `boolean`                                                              | `false`     | When true, displays a close button on the badge.                                                                                  |
-| `handleClosable` | `() => void`                                                           | -           | Callback function called when the close button is clicked. Required when `closeable` is true.                                     |
-| `truncate`       | `boolean`                                                              | `false`     | When true, truncates long text with an ellipsis and shows full text on hover.                                                     |
-| `truncateLength` | `number`                                                               | `50`        | Maximum character length before truncation occurs.                                                                                |
-| `className`      | `string`                                                               | -           | Additional CSS classes to apply to the badge.                                                                                     |
+| Prop             | Type                                                                                    | Default     | Description                                                                                                                       |
+| ---------------- | --------------------------------------------------------------------------------------- | ----------- | --------------------------------------------------------------------------------------------------------------------------------- |
+| `variant`        | `"neutral"` \| `"primary"` \| `"secondary"` \| `"warning"` \| `"danger"` \| `"success"` | `"primary"` | The visual style variant of the badge.                                                                                            |
+| `size`           | `"sm"` \| `"md"`                                                                        | `"md"`      | The size of the badge. `"md"` renders at 20px tall, `"sm"` at 16px tall.                                                          |
+| `display`        | `"both"` \| `"text-only"` \| `"icon-only"`                                              | `"both"`    | Controls what elements are displayed. `"both"` shows icon and text, `"text-only"` shows only text, `"icon-only"` shows only icon. |
+| `icon`           | `string` \| `ReactElement`                                                              | -           | Icon to display. Can be a Lucide icon name or a custom React element.                                                             |
+| `pill`           | `boolean`                                                                               | `true`      | When true (default), badge is pill-shaped. Set to `false` for a square badge with subtle border radius.                           |
+| `monospace`      | `boolean`                                                                               | `false`     | When true, renders badge text in a monospace font.                                                                                |
+| `closeable`      | `boolean`                                                                               | `false`     | When true, displays a close button on the badge.                                                                                  |
+| `handleClosable` | `() => void`                                                                            | -           | Callback function called when the close button is clicked. Required when `closeable` is true.                                     |
+| `truncate`       | `boolean`                                                                               | `false`     | When true, truncates long text with an ellipsis and shows full text on hover.                                                     |
+| `truncateLength` | `number`                                                                                | `50`        | Maximum character length before truncation occurs.                                                                                |
+| `className`      | `string`                                                                                | -           | Additional CSS classes to apply to the badge.                                                                                     |
