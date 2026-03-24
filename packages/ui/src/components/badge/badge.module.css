@@ -26,6 +26,11 @@
   @apply text-badge-text-primary;
 }
 
+.badge--secondary {
+  @apply bg-badge-background-secondary;
+  @apply text-badge-text-secondary;
+}
+
 .badge--danger {
   @apply bg-badge-background-danger;
   @apply text-badge-text-danger;
@@ -60,6 +65,11 @@
 .badge--primary .closable-btn {
   @apply text-badge-text-primary bg-badge-background-primary;
   @apply hover:text-badge-background-primary hover:bg-badge-text-primary;
+}
+
+.badge--secondary .closable-btn {
+  @apply text-badge-text-secondary bg-badge-background-secondary;
+  @apply hover:text-badge-background-secondary hover:bg-badge-text-secondary;
 }
 
 .badge--danger .closable-btn {

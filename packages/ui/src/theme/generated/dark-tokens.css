@@ -20,6 +20,7 @@
   --color-badge-background-primary: color(display-p3 0.2473 0.1645 0.5241);
   --color-badge-background-question: color(display-p3 0.2473 0.1645 0.5241);
   --color-badge-background-ready-for-review: color(display-p3 0.1442 0.2013 0.4303);
+  --color-badge-background-secondary: color(display-p3 0.1442 0.2013 0.4303);
   --color-badge-background-success: color(display-p3 0.1689 0.3045 0.136);
   --color-badge-background-warning: color(display-p3 0.4487 0.322 0.1436);
   --color-badge-text-accepted: color(display-p3 0.795 0.7755 0.9866);
@@ -35,6 +36,7 @@
   --color-badge-text-primary: color(display-p3 0.795 0.7755 0.9866);
   --color-badge-text-question: color(display-p3 0.795 0.7755 0.9866);
   --color-badge-text-ready-for-review: color(display-p3 0.7289 0.7853 0.9401);
+  --color-badge-text-secondary: color(display-p3 0.7289 0.7853 0.9401);
   --color-badge-text-success: color(display-p3 0.8698 0.8698 0.8698);
   --color-badge-text-warning: color(display-p3 0.9327 0.8528 0.7204);
   --color-border-base: color(display-p3 0.1792 0.1792 0.1792);

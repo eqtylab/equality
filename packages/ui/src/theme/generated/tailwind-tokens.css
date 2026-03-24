@@ -31,6 +31,7 @@
   --color-badge-background-primary: var(--color-badge-background-primary);
   --color-badge-background-question: var(--color-badge-background-question);
   --color-badge-background-ready-for-review: var(--color-badge-background-ready-for-review);
+  --color-badge-background-secondary: var(--color-badge-background-secondary);
   --color-badge-background-success: var(--color-badge-background-success);
   --color-badge-background-warning: var(--color-badge-background-warning);
   --color-badge-text-accepted: var(--color-badge-text-accepted);
@@ -46,6 +47,7 @@
   --color-badge-text-primary: var(--color-badge-text-primary);
   --color-badge-text-question: var(--color-badge-text-question);
   --color-badge-text-ready-for-review: var(--color-badge-text-ready-for-review);
+  --color-badge-text-secondary: var(--color-badge-text-secondary);
   --color-badge-text-success: var(--color-badge-text-success);
   --color-badge-text-warning: var(--color-badge-text-warning);
   --color-black: var(--color-black);
