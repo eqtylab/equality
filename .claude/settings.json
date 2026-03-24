@@ -7,7 +7,7 @@
       "Bash(pnpm dev:*)",
       "WebFetch(domain:astro.build)",
       "Bash(ls:*)",
-      "Bash(pnpm astro check:*)"
+      "Bash(pnpm astro check:*)",
       "Bash(git stash:*)",
       "Bash(curl -s http://localhost:4321/:*)"
     ]
