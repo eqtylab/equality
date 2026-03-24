@@ -6,7 +6,7 @@ interface SpinnerProps {
   variant?: 'neutral' | 'primary' | 'success' | 'danger' | 'warning';
 }
 
-export const Spinner = ({ size = 'md', variant = 'neutral' }: SpinnerProps) => {
+export const Spinner = ({ size = 'md', variant = 'primary' }: SpinnerProps) => {
   return (
     <div className={styles['spinner-container']}>
       <div className={cn(styles['spinner'], styles[size], styles[variant])} />
