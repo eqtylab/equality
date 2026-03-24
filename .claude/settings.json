@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "Skill(create-documentation)",
+      "Skill(create-component)",
+      "Bash(pnpm build:*)",
+      "Bash(git stash:*)",
+      "Bash(curl -s http://localhost:4321/:*)"
+    ]
+  }
+}
