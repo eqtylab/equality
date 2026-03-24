@@ -5,50 +5,69 @@ heading: "Spinner"
 
 import { Spinner } from "@eqtylab/equality";
 
-## Size Variants
+## Overview
 
-### Extra Small (xs)
+The Spinner component provides a visual loading indicator to communicate that content or an action is in progress. Use it when fetching data, submitting forms, or during any asynchronous operation where the user should wait.
 
-<Spinner client:only="react" size="xs" />
+## Usage
 
-### Small (sm)
+Import the component:
 
-<Spinner client:only="react" size="sm" />
+```ts
+import { Spinner } from "@eqtylab/equality";
+```
 
-### Medium (md) - Default
+Basic usage with default properties:
 
-<Spinner client:only="react" size="md" />
+```tsx
+<Spinner />
+```
 
-### Large (lg)
+## Variants
 
-<Spinner client:only="react" size="lg" />
+### Size
 
-### Extra Large (xl)
+The Spinner supports five size variants to fit different contexts, from inline indicators to full-page loading states.
 
-<Spinner client:only="react" size="xl" />
+<div style={{ display: "flex", alignItems: "center", gap: "1rem" }}>
+  <Spinner client:only="react" size="xs" />
+  <Spinner client:only="react" size="sm" />
+  <Spinner client:only="react" size="md" />
+  <Spinner client:only="react" size="lg" />
+  <Spinner client:only="react" size="xl" />
+</div>
 
-## Color Variants
+```tsx
+<Spinner size="xs" />
+<Spinner size="sm" />
+<Spinner size="md" />
+<Spinner size="lg" />
+<Spinner size="xl" />
+```
 
-This component supports color variants using either the brand primary color or status options. Available variants are `primary` (brand primary color), `success`, `danger`, and `warning`. Use these to visually distinguish loading spinners according to your design needs.
+### Color
 
-The special `neutral` variant adapts the spinner to use the primary text color, automatically switching between light and dark themes according to your app's current appearance mode.
+The Spinner supports color variants using either the brand primary color or status options.
 
-### Neutral
+<div style={{ display: "flex", alignItems: "center", gap: "1rem" }}>
+  <Spinner client:only="react" variant="neutral" />
+  <Spinner client:only="react" variant="primary" />
+  <Spinner client:only="react" variant="success" />
+  <Spinner client:only="react" variant="danger" />
+  <Spinner client:only="react" variant="warning" />
+</div>
 
-<Spinner client:only="react" variant="neutral" />
+```tsx
+<Spinner variant="neutral" />
+<Spinner variant="primary" />
+<Spinner variant="success" />
+<Spinner variant="danger" />
+<Spinner variant="warning" />
+```
 
-### Primary
+## Props
 
-<Spinner client:only="react" variant="primary" />
-
-### Success
-
-<Spinner client:only="react" variant="success" />
-
-### Danger
-
-<Spinner client:only="react" variant="danger" />
-
-### Warning
-
-<Spinner client:only="react" variant="warning" />
+| Name      | Description                           | Type                                                 | Default   | Required |
+| --------- | ------------------------------------- | ---------------------------------------------------- | --------- | -------- |
+| `size`    | Controls the size of the spinner      | `xs`, `sm`, `md`, `lg`, `xl`                         | `md`      | ❌       |
+| `variant` | Sets the color variant of the spinner | `neutral`, `primary`, `success`, `danger`, `warning` | `primary` | ❌       |
