@@ -79,7 +79,7 @@ import { Badge } from "@eqtylab/equality";
 
 ---
 
-The Badge comes in two sizes. The default `md` size is 20px tall, while `sm` is 16px tall for use in tighter layouts where very density is desired such as log viewers.
+The Badge comes in two sizes. The default `md` size is 20px tall and should be used in most situations, while `sm` is 16px tall for use in tighter layouts where very density is desired (such as log viewers).
 
 <div className="flex items-center gap-3">
   <Badge size="md">Medium (Default)</Badge>
@@ -150,6 +150,28 @@ The Badge component supports text truncation for long content. Use the `truncate
 
 <BadgeTruncateDemo client:only="react" />
 
+## Monospace
+
+---
+
+Use the `monospace` prop when badges will be rendered atop one another and their contents always or often share the same character count.
+
+<div className="flex items-center gap-3">
+  <Badge monospace>v1.3.0</Badge>
+  <Badge monospace variant="success">
+    0x1a2b
+  </Badge>
+  <Badge monospace size="sm">
+    build-482
+  </Badge>
+</div>
+
+### Usage
+
+```tsx
+<Badge monospace>v1.3.0</Badge>
+```
+
 ## Icons
 
 ---
@@ -178,6 +200,7 @@ You can enhance your badge by displaying an icon. The `icon` prop accepts either
 | `size`           | `"sm"` \| `"md"`                                                       | `"md"`      | The size of the badge. `"md"` renders at 20px tall, `"sm"` at 16px tall.                                                          |
 | `display`        | `"both"` \| `"text-only"` \| `"icon-only"`                             | `"both"`    | Controls what elements are displayed. `"both"` shows icon and text, `"text-only"` shows only text, `"icon-only"` shows only icon. |
 | `icon`           | `string` \| `ReactElement`                                             | -           | Icon to display. Can be a Lucide icon name or a custom React element.                                                             |
+| `monospace`      | `boolean`                                                              | `false`     | When true, renders badge text in a monospace font.                                                                                |
 | `closeable`      | `boolean`                                                              | `false`     | When true, displays a close button on the badge.                                                                                  |
 | `handleClosable` | `() => void`                                                           | -           | Callback function called when the close button is clicked. Required when `closeable` is true.                                     |
 | `truncate`       | `boolean`                                                              | `false`     | When true, truncates long text with an ellipsis and shows full text on hover.                                                     |

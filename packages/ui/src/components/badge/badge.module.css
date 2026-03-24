@@ -94,6 +94,10 @@
   @apply text-inherit;
 }
 
+.badge--monospace {
+  @apply font-mono;
+}
+
 .badge--icon-only {
   @apply p-1;
 }
