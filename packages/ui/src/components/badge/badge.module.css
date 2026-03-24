@@ -2,7 +2,7 @@
 
 .badge {
   @apply font-medium transition-colors;
-  @apply rounded-sm;
+  @apply rounded-full;
   @apply flex items-center;
   @apply w-max;
 }
@@ -106,6 +106,10 @@
 
 .badge--monospace {
   @apply font-mono;
+}
+
+.badge--square {
+  @apply rounded-sm;
 }
 
 .badge--icon-only {

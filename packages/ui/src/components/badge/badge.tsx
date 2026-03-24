@@ -47,6 +47,7 @@ export interface BadgeProps
   icon?: React.ReactElement | string;
   display?: BadgeDisplayMode;
   monospace?: boolean;
+  pill?: boolean;
 }
 
 // Default icons for variants
@@ -67,6 +68,7 @@ function Badge({
   icon,
   display = 'both',
   monospace = false,
+  pill = true,
   ...props
 }: BadgeProps) {
   // Use default icon for variant if no icon is provided
@@ -125,6 +127,7 @@ function Badge({
         variant === null && styles['badge'],
         variant === null && styles[`badge--${size ?? 'md'}`],
         monospace && styles['badge--monospace'],
+        !pill && styles['badge--square'],
         isIconOnly && styles['badge--icon-only'],
         className
       )}

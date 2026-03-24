@@ -85,12 +85,15 @@ import { Badge } from "@eqtylab/equality";
 
 ---
 
-The Badge comes in two sizes. The default `md` size is 20px tall and should be used in most situations, while `sm` is 16px tall for use in tighter layouts where density is desired (such as log viewers).
+The Badge comes in two sizes. The default `md` size is 20px tall and should be used in most situations, while `sm` is 16px tall for use in tighter layouts where density is desired (such as log viewers). Small badges generally look better with `pill={false}` applied.
 
 <div className="flex items-center gap-3">
   <Badge size="md">Medium (Default)</Badge>
   <Badge size="sm" icon="Check">
     Small
+  </Badge>
+  <Badge size="sm" pill={false} icon="Check">
+    Small square
   </Badge>
 </div>
 
@@ -98,7 +101,26 @@ The Badge comes in two sizes. The default `md` size is 20px tall and should be u
 
 ```tsx
 <Badge size="md">Medium (Default)</Badge>
-<Badge size="sm">Small</Badge>
+<Badge size="sm">Small (Square)</Badge>
+<Badge size="sm" pill={false}>Small (Square)</Badge>
+```
+
+## Pill Shape
+
+---
+
+Badges are pill-shaped by default. Set `pill={false}` when using badges along with dense in-line text.
+
+<div className="flex items-center gap-3">
+  <Badge>Pill (Default)</Badge>
+  <Badge pill={false}>Square</Badge>
+</div>
+
+### Usage
+
+```tsx
+<Badge>Pill (Default)</Badge>
+<Badge pill={false}>Square</Badge>
 ```
 
 ## Display Modes
@@ -206,6 +228,7 @@ You can enhance your badge by displaying an icon. The `icon` prop accepts either
 | `size`           | `"sm"` \| `"md"`                                                                        | `"md"`      | The size of the badge. `"md"` renders at 20px tall, `"sm"` at 16px tall.                                                          |
 | `display`        | `"both"` \| `"text-only"` \| `"icon-only"`                                              | `"both"`    | Controls what elements are displayed. `"both"` shows icon and text, `"text-only"` shows only text, `"icon-only"` shows only icon. |
 | `icon`           | `string` \| `ReactElement`                                                              | -           | Icon to display. Can be a Lucide icon name or a custom React element.                                                             |
+| `pill`           | `boolean`                                                                               | `true`      | When true (default), badge is pill-shaped. Set to `false` for a square badge with subtle border radius.                           |
 | `monospace`      | `boolean`                                                                               | `false`     | When true, renders badge text in a monospace font.                                                                                |
 | `closeable`      | `boolean`                                                                               | `false`     | When true, displays a close button on the badge.                                                                                  |
 | `handleClosable` | `() => void`                                                                            | -           | Callback function called when the close button is clicked. Required when `closeable` is true.                                     |
