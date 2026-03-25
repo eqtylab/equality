@@ -242,7 +242,7 @@ export const TableDemo = ({
                 Status
               </SortButton>
             </TableHead>
-            <TableHead />
+            <TableHead style={{ width: "1%" }} />
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -296,7 +296,7 @@ export const TableDemo = ({
             <TableHead>Email</TableHead>
             <TableHead>Role</TableHead>
             <TableHead>Status</TableHead>
-            <TableHead />
+            <TableHead style={{ width: "1%" }} />
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -325,7 +325,7 @@ export const TableDemo = ({
             <TableHead>Email</TableHead>
             <TableHead>Role</TableHead>
             <TableHead>Status</TableHead>
-            <TableHead />
+            <TableHead style={{ width: "1%" }} />
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -360,7 +360,7 @@ export const TableDemo = ({
           <TableHead>Email</TableHead>
           <TableHead>Role</TableHead>
           <TableHead>Status</TableHead>
-          <TableHead />
+          <TableHead style={{ width: "1%" }} />
         </TableRow>
       </TableHeader>
       <TableBody>

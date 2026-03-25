@@ -170,7 +170,7 @@ Use `style={{ minWidth }}` or `style={{ maxWidth }}` on `<TableHead>` to constra
 
 ### Shrink to Content
 
-In the default `auto` layout, use `style={{ width: "1%" }}` to minimize a column to fit its content. This is useful for action columns or icon-only columns.
+In the default `auto` layout, use `style={{ width: "1%" }}` to minimize a column to fit its content. The browser's table algorithm ensures the column still renders at least as wide as its content, while giving all remaining space to other columns. This is useful for action columns or icon-only columns.
 
 ```tsx
 <TableHead style={{ width: "1%" }}>{/* Actions */}</TableHead>
