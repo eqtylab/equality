@@ -22,7 +22,8 @@ interface TableDemoProps {
     | "empty-state-custom"
     | "column-sizing"
     | "truncation"
-    | "responsive";
+    | "responsive"
+    | "sticky-header";
   elevation?: Elevation;
 }
 
@@ -194,6 +195,92 @@ export const TableDemo = ({
           </TableBody>
         </TableContainer>
       </div>
+    );
+  }
+
+  if (variant === "sticky-header") {
+    return (
+      <TableContainer
+        elevation={elevation}
+        style={{ maxHeight: "240px" }}
+        className="overflow-hidden rounded-md border"
+      >
+        <TableHeader sticky>
+          <TableRow>
+            <TableHead>Name</TableHead>
+            <TableHead>Email</TableHead>
+            <TableHead>Role</TableHead>
+            <TableHead>Status</TableHead>
+            <TableHead style={{ width: "1%" }} />
+          </TableRow>
+        </TableHeader>
+        <TableBody>
+          {[
+            {
+              name: "Alice Cooper",
+              email: "alice@example.com",
+              role: "Admin",
+              active: true,
+            },
+            {
+              name: "Bob Smith",
+              email: "bob@example.com",
+              role: "User",
+              active: true,
+            },
+            {
+              name: "Charlie Brown",
+              email: "charlie@example.com",
+              role: "Viewer",
+              active: false,
+            },
+            {
+              name: "Diana Prince",
+              email: "diana@example.com",
+              role: "Admin",
+              active: true,
+            },
+            {
+              name: "Eve Wilson",
+              email: "eve@example.com",
+              role: "User",
+              active: true,
+            },
+            {
+              name: "Frank Castle",
+              email: "frank@example.com",
+              role: "Viewer",
+              active: false,
+            },
+            {
+              name: "Grace Hopper",
+              email: "grace@example.com",
+              role: "Admin",
+              active: true,
+            },
+            {
+              name: "Hank Pym",
+              email: "hank@example.com",
+              role: "User",
+              active: true,
+            },
+          ].map((user) => (
+            <TableRow key={user.name}>
+              <TableCell>{user.name}</TableCell>
+              <TableCell>{user.email}</TableCell>
+              <TableCell>{user.role}</TableCell>
+              <TableCell>
+                <Badge variant={user.active ? "success" : "neutral"}>
+                  {user.active ? "Active" : "Inactive"}
+                </Badge>
+              </TableCell>
+              <TableCell>
+                <IconButton name="EllipsisVertical" label="Row actions" />
+              </TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      </TableContainer>
     );
   }
 

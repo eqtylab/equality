@@ -13,6 +13,10 @@
   @apply [&_tr]:border-b;
 }
 
+.table-header--sticky {
+  @apply sticky top-0 z-10;
+}
+
 .table-body {
   @apply [&_tr:last-child]:border-0;
 }

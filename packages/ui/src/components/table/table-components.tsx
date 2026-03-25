@@ -11,8 +11,11 @@ const TableContainer = React.forwardRef<
   HTMLTableElement,
   React.HTMLAttributes<HTMLTableElement> &
     VariantProps<typeof tableElevationVariants> & { tableLayout?: 'auto' | 'fixed' }
->(({ className, elevation = ELEVATION.RAISED, tableLayout, ...props }, ref) => (
-  <div className={cn(styles['table'], tableElevationVariants({ elevation }), className)}>
+>(({ className, style, elevation = ELEVATION.RAISED, tableLayout, ...props }, ref) => (
+  <div
+    className={cn(styles['table'], tableElevationVariants({ elevation }), className)}
+    style={style}
+  >
     <table
       ref={ref}
       className={styles['table-inner']}
@@ -25,9 +28,13 @@ TableContainer.displayName = 'Table';
 
 const TableHeader = React.forwardRef<
   HTMLTableSectionElement,
-  React.HTMLAttributes<HTMLTableSectionElement>
->(({ className, ...props }, ref) => (
-  <thead ref={ref} className={cn(styles['table-header'], className)} {...props} />
+  React.HTMLAttributes<HTMLTableSectionElement> & { sticky?: boolean }
+>(({ className, sticky, ...props }, ref) => (
+  <thead
+    ref={ref}
+    className={cn(styles['table-header'], sticky && styles['table-header--sticky'], className)}
+    {...props}
+  />
 ));
 TableHeader.displayName = 'TableHeader';
 

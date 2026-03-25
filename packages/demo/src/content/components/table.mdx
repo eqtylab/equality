@@ -122,6 +122,26 @@ The empty state cell accepts any `ReactNode`, so you can use a custom component 
 
 <TableDemo client:only="react" variant="empty-state-custom" />
 
+### Sticky Header
+
+Use the `sticky` prop on `<TableHeader>` to keep column headers visible while scrolling. The height of the `<TableContainer>` must be constrained for this to work as expected.
+
+<TableDemo client:only="react" variant="sticky-header" />
+
+#### Usage
+
+```tsx
+<TableContainer style={{ maxHeight: "400px" }}>
+  <TableHeader sticky>
+    <TableRow>
+      <TableHead>Name</TableHead>
+      <TableHead>Email</TableHead>
+    </TableRow>
+  </TableHeader>
+  <TableBody>{/* rows */}</TableBody>
+</TableContainer>
+```
+
 ## Column Sizing
 
 ---
@@ -272,6 +292,18 @@ Use [container queries](https://tailwindcss.com/docs/responsive-design#what-are-
 | ------------- | ------------------------------------------ | ------------------------------------- | ------- | -------- |
 | `elevation`   | Controls the shadow and background styling | `sunken`, `base`, `raised`, `overlay` | `base`  | ❌       |
 | `tableLayout` | Controls the CSS table-layout algorithm    | `auto`, `fixed`                       | `auto`  | ❌       |
+
+### TableHeader
+
+| Name     | Description                                      | Type      | Default | Required |
+| -------- | ------------------------------------------------ | --------- | ------- | -------- |
+| `sticky` | Keeps the header visible while the table scrolls | `boolean` | `false` | ❌       |
+
+### TableRow
+
+| Name        | Description                                 | Type      | Default | Required |
+| ----------- | ------------------------------------------- | --------- | ------- | -------- |
+| `clickable` | Applies hover and cursor interaction styles | `boolean` | `false` | ❌       |
 
 ### TableHead
 
