@@ -36,11 +36,11 @@ export const TableDemo = ({
       <TableContainer tableLayout="fixed" elevation={elevation}>
         <TableHeader>
           <TableRow>
-            <TableHead style={{ width: "30%" }}>Name</TableHead>
-            <TableHead style={{ width: "30%" }}>Email</TableHead>
-            <TableHead style={{ width: "100px" }}>Role</TableHead>
-            <TableHead style={{ width: "100px" }}>Status</TableHead>
-            <TableHead style={{ width: "60px" }} />
+            <TableHead className="w-[30%]">Name</TableHead>
+            <TableHead className="w-[30%]">Email</TableHead>
+            <TableHead className="w-[100px]">Role</TableHead>
+            <TableHead className="w-[100px]">Status</TableHead>
+            <TableHead className="w-[60px]" />
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -87,13 +87,13 @@ export const TableDemo = ({
       <TableContainer tableLayout="fixed" elevation={elevation}>
         <TableHeader>
           <TableRow>
-            <TableHead style={{ width: "25%" }}>Name</TableHead>
-            <TableHead style={{ width: "40%" }} truncate>
+            <TableHead className="w-[25%]">Name</TableHead>
+            <TableHead className="w-[40%]" truncate>
               Email
             </TableHead>
-            <TableHead style={{ width: "100px" }}>Role</TableHead>
-            <TableHead style={{ width: "100px" }}>Status</TableHead>
-            <TableHead style={{ width: "60px" }} />
+            <TableHead className="w-[100px]">Role</TableHead>
+            <TableHead className="w-[100px]">Status</TableHead>
+            <TableHead className="w-[60px]" />
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -149,7 +149,7 @@ export const TableDemo = ({
               <TableHead className="hidden @md:table-cell">Email</TableHead>
               <TableHead className="hidden @lg:table-cell">Role</TableHead>
               <TableHead>Status</TableHead>
-              <TableHead style={{ width: "1%" }} />
+              <TableHead className="w-[1%]" />
             </TableRow>
           </TableHeader>
           <TableBody>
@@ -202,8 +202,7 @@ export const TableDemo = ({
     return (
       <TableContainer
         elevation={elevation}
-        style={{ maxHeight: "240px" }}
-        className="overflow-hidden rounded-md border"
+        className="max-h-[240px] overflow-hidden rounded-md border"
       >
         <TableHeader sticky>
           <TableRow>
@@ -211,7 +210,7 @@ export const TableDemo = ({
             <TableHead>Email</TableHead>
             <TableHead>Role</TableHead>
             <TableHead>Status</TableHead>
-            <TableHead style={{ width: "1%" }} />
+            <TableHead className="w-[1%]" />
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -329,7 +328,7 @@ export const TableDemo = ({
                 Status
               </SortButton>
             </TableHead>
-            <TableHead style={{ width: "1%" }} />
+            <TableHead className="w-[1%]" />
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -383,7 +382,7 @@ export const TableDemo = ({
             <TableHead>Email</TableHead>
             <TableHead>Role</TableHead>
             <TableHead>Status</TableHead>
-            <TableHead style={{ width: "1%" }} />
+            <TableHead className="w-[1%]" />
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -412,7 +411,7 @@ export const TableDemo = ({
             <TableHead>Email</TableHead>
             <TableHead>Role</TableHead>
             <TableHead>Status</TableHead>
-            <TableHead style={{ width: "1%" }} />
+            <TableHead className="w-[1%]" />
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -447,7 +446,7 @@ export const TableDemo = ({
           <TableHead>Email</TableHead>
           <TableHead>Role</TableHead>
           <TableHead>Status</TableHead>
-          <TableHead style={{ width: "1%" }} />
+          <TableHead className="w-[1%]" />
         </TableRow>
       </TableHeader>
       <TableBody>

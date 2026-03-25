@@ -131,7 +131,7 @@ Use the `sticky` prop on `<TableHeader>` to keep column headers visible while sc
 #### Usage
 
 ```tsx
-<TableContainer style={{ maxHeight: "400px" }}>
+<TableContainer className="max-h-[400px]">
   <TableHeader sticky>
     <TableRow>
       <TableHead>Name</TableHead>
@@ -146,7 +146,7 @@ Use the `sticky` prop on `<TableHeader>` to keep column headers visible while sc
 
 ---
 
-Use the `tableLayout` prop on `TableContainer` to control how column widths are calculated. Set explicit widths on `<TableHead>` cells using the `style` prop.
+Use the `tableLayout` prop on `TableContainer` to control how column widths are calculated. Set explicit widths on `<TableHead>` cells using Tailwind classes.
 
 ### Fixed Layout
 
@@ -160,11 +160,11 @@ With `tableLayout="fixed"`, columns respect explicit widths exactly. This is the
 <TableContainer tableLayout="fixed">
   <TableHeader>
     <TableRow>
-      <TableHead style={{ width: "30%" }}>Name</TableHead>
-      <TableHead style={{ width: "30%" }}>Email</TableHead>
-      <TableHead style={{ width: "100px" }}>Role</TableHead>
-      <TableHead style={{ width: "100px" }}>Status</TableHead>
-      <TableHead style={{ width: "60px" }} />
+      <TableHead className="w-[30%]">Name</TableHead>
+      <TableHead className="w-[30%]">Email</TableHead>
+      <TableHead className="w-[100px]">Role</TableHead>
+      <TableHead className="w-[100px]">Status</TableHead>
+      <TableHead className="w-[60px]" />
     </TableRow>
   </TableHeader>
 </TableContainer>
@@ -172,28 +172,28 @@ With `tableLayout="fixed"`, columns respect explicit widths exactly. This is the
 
 ### Min and Max Width
 
-Use `style={{ minWidth }}` or `style={{ maxWidth }}` on `<TableHead>` to constrain column sizes. `minWidth` works in both `auto` and `fixed` layouts. `maxWidth` works best with the default `auto` layout.
+Use `min-w-` or `max-w-` Tailwind classes on `<TableHead>` to constrain column sizes. `min-w-` works in both `auto` and `fixed` layouts. `max-w-` works best with the default `auto` layout.
 
 ```tsx
 {
   /* Column won't shrink below 150px */
 }
-<TableHead style={{ minWidth: "150px" }}>Description</TableHead>;
+<TableHead className="min-w-[150px]">Description</TableHead>;
 
 {
   /* Column won't grow beyond 300px — pair with truncate */
 }
-<TableHead style={{ maxWidth: "300px" }} truncate>
+<TableHead className="max-w-[300px]" truncate>
   Email
 </TableHead>;
 ```
 
 ### Shrink to Content
 
-In the default `auto` layout, use `style={{ width: "1%" }}` to minimize a column to fit its content. The browser's table algorithm ensures the column still renders at least as wide as its content, while giving all remaining space to other columns. This is useful for action columns or icon-only columns.
+In the default `auto` layout, use `w-[1%]` to minimize a column to fit its content. The browser's table algorithm ensures the column still renders at least as wide as its content, while giving all remaining space to other columns. This is useful for action columns or icon-only columns.
 
 ```tsx
-<TableHead style={{ width: "1%" }}>{/* Actions */}</TableHead>
+<TableHead className="w-[1%]">{/* Actions */}</TableHead>
 ```
 
 ## Truncation
@@ -210,8 +210,8 @@ Use the `truncate` prop on `<TableHead>` and `<TableCell>` to clip overflowing t
 <TableContainer tableLayout="fixed">
   <TableHeader>
     <TableRow>
-      <TableHead style={{ width: "25%" }}>Name</TableHead>
-      <TableHead style={{ width: "40%" }} truncate>
+      <TableHead className="w-[25%]">Name</TableHead>
+      <TableHead className="w-[40%]" truncate>
         Email
       </TableHead>
     </TableRow>
