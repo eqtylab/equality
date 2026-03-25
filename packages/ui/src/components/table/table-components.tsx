@@ -9,19 +9,32 @@ const tableElevationVariants = generateElevationVariants(styles, 'table', ELEVAT
 
 const TableContainer = React.forwardRef<
   HTMLTableElement,
-  React.HTMLAttributes<HTMLTableElement> & VariantProps<typeof tableElevationVariants>
->(({ className, elevation = ELEVATION.RAISED, ...props }, ref) => (
-  <div className={cn(styles['table'], tableElevationVariants({ elevation }), className)}>
-    <table ref={ref} className={styles['table-inner']} {...props} />
+  React.HTMLAttributes<HTMLTableElement> &
+    VariantProps<typeof tableElevationVariants> & { tableLayout?: 'auto' | 'fixed' }
+>(({ className, style, elevation = ELEVATION.RAISED, tableLayout, ...props }, ref) => (
+  <div
+    className={cn(styles['table'], tableElevationVariants({ elevation }), className)}
+    style={style}
+  >
+    <table
+      ref={ref}
+      className={styles['table-inner']}
+      style={tableLayout ? { tableLayout } : undefined}
+      {...props}
+    />
   </div>
 ));
 TableContainer.displayName = 'Table';
 
 const TableHeader = React.forwardRef<
   HTMLTableSectionElement,
-  React.HTMLAttributes<HTMLTableSectionElement>
->(({ className, ...props }, ref) => (
-  <thead ref={ref} className={cn(styles['table-header'], className)} {...props} />
+  React.HTMLAttributes<HTMLTableSectionElement> & { sticky?: boolean }
+>(({ className, sticky, ...props }, ref) => (
+  <thead
+    ref={ref}
+    className={cn(styles['table-header'], sticky && styles['table-header--sticky'], className)}
+    {...props}
+  />
 ));
 TableHeader.displayName = 'TableHeader';
 
@@ -41,26 +54,39 @@ const TableFooter = React.forwardRef<
 ));
 TableFooter.displayName = 'TableFooter';
 
-const TableRow = React.forwardRef<HTMLTableRowElement, React.HTMLAttributes<HTMLTableRowElement>>(
-  ({ className, ...props }, ref) => (
-    <tr ref={ref} className={cn(styles['table-row'], className)} {...props} />
-  )
-);
+const TableRow = React.forwardRef<
+  HTMLTableRowElement,
+  React.HTMLAttributes<HTMLTableRowElement> & { clickable?: boolean }
+>(({ className, clickable, ...props }, ref) => (
+  <tr
+    ref={ref}
+    className={cn(styles['table-row'], clickable && styles['table-row--clickable'], className)}
+    {...props}
+  />
+));
 TableRow.displayName = 'TableRow';
 
 const TableHead = React.forwardRef<
   HTMLTableCellElement,
-  React.ThHTMLAttributes<HTMLTableCellElement>
->(({ className, ...props }, ref) => (
-  <th ref={ref} className={cn(styles['table-head'], className)} {...props} />
+  React.ThHTMLAttributes<HTMLTableCellElement> & { truncate?: boolean }
+>(({ className, truncate, ...props }, ref) => (
+  <th
+    ref={ref}
+    className={cn(styles['table-head'], truncate && styles['table-head--truncate'], className)}
+    {...props}
+  />
 ));
 TableHead.displayName = 'TableHead';
 
 const TableCell = React.forwardRef<
   HTMLTableCellElement,
-  React.TdHTMLAttributes<HTMLTableCellElement>
->(({ className, ...props }, ref) => (
-  <td ref={ref} className={cn(styles['table-cell'], className)} {...props} />
+  React.TdHTMLAttributes<HTMLTableCellElement> & { truncate?: boolean }
+>(({ className, truncate, ...props }, ref) => (
+  <td
+    ref={ref}
+    className={cn(styles['table-cell'], truncate && styles['table-cell--truncate'], className)}
+    {...props}
+  />
 ));
 TableCell.displayName = 'TableCell';
 

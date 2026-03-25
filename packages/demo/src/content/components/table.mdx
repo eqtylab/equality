@@ -9,37 +9,55 @@ import { ELEVATION } from "@eqtylab/equality";
 
 ## Overview
 
-The Table component displays structured data in rows and columns. It supports clickable rows, sortable column headers, bordered styling, elevation levels, and empty state messaging. Column and cell `content` accepts any `ReactNode`, allowing badges, buttons, and other components inline.
+---
+
+Tables are built from compositional primitives that map directly to [HTML table elements](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/table). Each primitive is a styled wrapper that accepts all native HTML attributes, giving you full control over layout, sizing, and responsiveness.
+
+- **TableContainer:** Wraps the `<table>` in a scrollable container with elevation styling.
+- **TableHeader / TableBody / TableFooter:** Semantic section wrappers (`<thead>`, `<tbody>`, `<tfoot>`).
+- **TableRow:** A table row (`<tr>`) that accepts `onClick` for clickable rows.
+- **TableHead:** A column header cell (`<th>`) with a `truncate` prop for overflow control.
+- **TableCell:** A data cell (`<td>`) with a `truncate` prop for overflow control.
 
 ## Usage
 
-Import the component:
+---
 
-```ts
-import { Table } from "@eqtylab/equality";
-```
-
-Basic usage with required properties:
+Import the components:
 
 ```tsx
-<Table
-  columns={[
-    { key: "name", content: "Name" },
-    { key: "email", content: "Email" },
-  ]}
-  rows={[
-    {
-      key: "1",
-      cells: [
-        { key: "name", content: "Alice Cooper" },
-        { key: "email", content: "alice@example.com" },
-      ],
-    },
-  ]}
-/>
+import {
+  TableContainer,
+  TableHeader,
+  TableBody,
+  TableRow,
+  TableHead,
+  TableCell,
+} from "@eqtylab/equality";
+```
+
+Basic usage:
+
+```tsx
+<TableContainer>
+  <TableHeader>
+    <TableRow>
+      <TableHead>Name</TableHead>
+      <TableHead>Email</TableHead>
+    </TableRow>
+  </TableHeader>
+  <TableBody>
+    <TableRow>
+      <TableCell>Alice Cooper</TableCell>
+      <TableCell>alice@example.com</TableCell>
+    </TableRow>
+  </TableBody>
+</TableContainer>
 ```
 
 ## Variants
+
+---
 
 ### Default
 
@@ -47,26 +65,31 @@ Basic usage with required properties:
 
 ### Clickable Rows
 
-Rows accept an `onClick` handler, which applies hover and cursor styles.
+Rows accept an `onClick` handler, which enables hover interactions.
 
 <TableDemo client:only="react" variant="clickable" />
 
 ### Sortable Columns
 
-Use [`<SortButton>`](/components/sort-button) in column headers to add interactive sort controls.
+Use [`<SortButton>`](/components/sort-button) inside `<TableHead>` cells to add interactive sort controls.
 
 <TableDemo client:only="react" variant="with-sorter" />
 
 #### Usage
 
 ```tsx
-import { SortButton, Table } from "@eqtylab/equality";
+import {
+  SortButton,
+  TableContainer,
+  TableHeader,
+  TableRow,
+  TableHead,
+} from "@eqtylab/equality";
 
-<Table
-  columns={[
-    {
-      key: "name",
-      content: (
+<TableContainer>
+  <TableHeader>
+    <TableRow>
+      <TableHead>
         <SortButton
           field="name"
           sortField={sortField}
@@ -75,32 +98,173 @@ import { SortButton, Table } from "@eqtylab/equality";
         >
           Name
         </SortButton>
-      ),
-    },
-  ]}
-  rows={rows}
-/>;
+      </TableHead>
+    </TableRow>
+  </TableHeader>
+</TableContainer>;
 ```
 
 ### With Border
 
-Apply a border to tables with the `border` prop. This should be added most places `<Table>` is used, except for when it lives within a different container which already has a border applied.
+Apply a border to tables by adding `overflow-hidden rounded-md border` to the `TableContainer` className. This should be added most places the table is used, except when it lives within a container that already has a border.
 
 <TableDemo client:only="react" variant="with-border" />
 
 ### Empty State
 
-When `rows` is empty and `emptyState` is provided, the table keeps column headers visible and renders the empty state content spanning all columns.
+When there are no rows, render empty state content in a `<TableCell>` that spans all columns with `colSpan`.
 
 <TableDemo client:only="react" variant="empty-state" />
 
 ### Empty State with Custom Component
 
-The `emptyState` prop accepts any `ReactNode`, so you can pass a custom component like `EmptyTableState`.
+The empty state cell accepts any `ReactNode`, so you can use a custom component like `EmptyTableState`.
 
 <TableDemo client:only="react" variant="empty-state-custom" />
 
+### Sticky Header
+
+Use the `sticky` prop on `<TableHeader>` to keep column headers visible while scrolling. The height of the `<TableContainer>` must be constrained for this to work as expected.
+
+<TableDemo client:only="react" variant="sticky-header" />
+
+#### Usage
+
+```tsx
+<TableContainer style={{ maxHeight: "400px" }}>
+  <TableHeader sticky>
+    <TableRow>
+      <TableHead>Name</TableHead>
+      <TableHead>Email</TableHead>
+    </TableRow>
+  </TableHeader>
+  <TableBody>{/* rows */}</TableBody>
+</TableContainer>
+```
+
+## Column Sizing
+
+---
+
+Use the `tableLayout` prop on `TableContainer` to control how column widths are calculated. Set explicit widths on `<TableHead>` cells using the `style` prop.
+
+### Fixed Layout
+
+With `tableLayout="fixed"`, columns respect explicit widths exactly. This is the recommended approach when you need predictable column sizing.
+
+<TableDemo client:only="react" variant="column-sizing" />
+
+#### Usage
+
+```tsx
+<TableContainer tableLayout="fixed">
+  <TableHeader>
+    <TableRow>
+      <TableHead style={{ width: "30%" }}>Name</TableHead>
+      <TableHead style={{ width: "30%" }}>Email</TableHead>
+      <TableHead style={{ width: "100px" }}>Role</TableHead>
+      <TableHead style={{ width: "100px" }}>Status</TableHead>
+      <TableHead style={{ width: "60px" }} />
+    </TableRow>
+  </TableHeader>
+</TableContainer>
+```
+
+### Min and Max Width
+
+Use `style={{ minWidth }}` or `style={{ maxWidth }}` on `<TableHead>` to constrain column sizes. `minWidth` works in both `auto` and `fixed` layouts. `maxWidth` works best with the default `auto` layout.
+
+```tsx
+{
+  /* Column won't shrink below 150px */
+}
+<TableHead style={{ minWidth: "150px" }}>Description</TableHead>;
+
+{
+  /* Column won't grow beyond 300px — pair with truncate */
+}
+<TableHead style={{ maxWidth: "300px" }} truncate>
+  Email
+</TableHead>;
+```
+
+### Shrink to Content
+
+In the default `auto` layout, use `style={{ width: "1%" }}` to minimize a column to fit its content. The browser's table algorithm ensures the column still renders at least as wide as its content, while giving all remaining space to other columns. This is useful for action columns or icon-only columns.
+
+```tsx
+<TableHead style={{ width: "1%" }}>{/* Actions */}</TableHead>
+```
+
+## Truncation
+
+---
+
+Use the `truncate` prop on `<TableHead>` and `<TableCell>` to clip overflowing text with an ellipsis. This works best with `tableLayout="fixed"` and an explicit column width so the cell has a defined boundary to truncate against.
+
+<TableDemo client:only="react" variant="truncation" />
+
+#### Usage
+
+```tsx
+<TableContainer tableLayout="fixed">
+  <TableHeader>
+    <TableRow>
+      <TableHead style={{ width: "25%" }}>Name</TableHead>
+      <TableHead style={{ width: "40%" }} truncate>
+        Email
+      </TableHead>
+    </TableRow>
+  </TableHeader>
+  <TableBody>
+    <TableRow>
+      <TableCell>Alice Cooper</TableCell>
+      <TableCell truncate>alice.cooper.very.long.email@example.com</TableCell>
+    </TableRow>
+  </TableBody>
+</TableContainer>
+```
+
+## Responsive Columns
+
+---
+
+Use [container queries](https://tailwindcss.com/docs/responsive-design#what-are-container-queries) to show or hide columns based on the table's container width. Wrap the table in a `@container` element and apply `hidden @md:table-cell` (or similar) to both the `<TableHead>` and `<TableCell>` for columns that should collapse.
+
+<TableDemo client:only="react" variant="responsive" />
+
+#### Usage
+
+```tsx
+<div className="@container">
+  <TableContainer>
+    <TableHeader>
+      <TableRow>
+        <TableHead>Name</TableHead>
+        <TableHead className="hidden @md:table-cell">Email</TableHead>
+        <TableHead className="hidden @lg:table-cell">Role</TableHead>
+        <TableHead>Status</TableHead>
+      </TableRow>
+    </TableHeader>
+    <TableBody>
+      <TableRow>
+        <TableCell>Alice Cooper</TableCell>
+        <TableCell className="hidden @md:table-cell">
+          alice@example.com
+        </TableCell>
+        <TableCell className="hidden @lg:table-cell">Admin</TableCell>
+        <TableCell>
+          <Badge variant="success">Active</Badge>
+        </TableCell>
+      </TableRow>
+    </TableBody>
+  </TableContainer>
+</div>
+```
+
 ## Elevations
+
+---
 
 ### Sunken
 
@@ -120,10 +284,35 @@ The `emptyState` prop accepts any `ReactNode`, so you can pass a custom componen
 
 ## Props
 
-| Name         | Description                                                  | Type                                  | Default | Required |
-| ------------ | ------------------------------------------------------------ | ------------------------------------- | ------- | -------- |
-| `columns`    | Column definitions with key, content, and optional className | `TableColumn[]`                       |         | ✅       |
-| `rows`       | Row data with key, cells, and optional onClick/className     | `TableRowData[]`                      |         | ✅       |
-| `border`     | Adds a border and rounded corners around the table           | `boolean`                             | `false` | ❌       |
-| `elevation`  | Controls the shadow and border elevation level               | `sunken`, `base`, `raised`, `overlay` | `base`  | ❌       |
-| `emptyState` | Content rendered when rows is empty, spanning all columns    | `ReactNode`                           |         | ❌       |
+---
+
+### TableContainer
+
+| Name          | Description                                | Type                                  | Default | Required |
+| ------------- | ------------------------------------------ | ------------------------------------- | ------- | -------- |
+| `elevation`   | Controls the shadow and background styling | `sunken`, `base`, `raised`, `overlay` | `base`  | ❌       |
+| `tableLayout` | Controls the CSS table-layout algorithm    | `auto`, `fixed`                       | `auto`  | ❌       |
+
+### TableHeader
+
+| Name     | Description                                      | Type      | Default | Required |
+| -------- | ------------------------------------------------ | --------- | ------- | -------- |
+| `sticky` | Keeps the header visible while the table scrolls | `boolean` | `false` | ❌       |
+
+### TableRow
+
+| Name        | Description                                 | Type      | Default | Required |
+| ----------- | ------------------------------------------- | --------- | ------- | -------- |
+| `clickable` | Applies hover and cursor interaction styles | `boolean` | `false` | ❌       |
+
+### TableHead
+
+| Name       | Description                                | Type      | Default | Required |
+| ---------- | ------------------------------------------ | --------- | ------- | -------- |
+| `truncate` | Clips overflowing content with an ellipsis | `boolean` | `false` | ❌       |
+
+### TableCell
+
+| Name       | Description                                | Type      | Default | Required |
+| ---------- | ------------------------------------------ | --------- | ------- | -------- |
+| `truncate` | Clips overflowing content with an ellipsis | `boolean` | `false` | ❌       |

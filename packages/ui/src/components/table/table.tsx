@@ -39,6 +39,7 @@ interface TableProps extends VariantProps<typeof tableElevationVariants> {
   className?: string;
   border?: boolean;
   emptyState?: React.ReactNode;
+  tableLayout?: 'auto' | 'fixed';
 }
 
 const tableElevationVariants = generateElevationVariants(styles, 'table', ELEVATION.BASE);
@@ -50,6 +51,7 @@ const Table = ({
   border = false,
   elevation = ELEVATION.BASE,
   emptyState,
+  tableLayout,
 }: TableProps) => {
   const isEmpty = rows.length === 0;
 
@@ -62,7 +64,7 @@ const Table = ({
         className
       )}
     >
-      <TableContainer elevation={elevation}>
+      <TableContainer elevation={elevation} tableLayout={tableLayout}>
         <TableHeader>
           <TableRow>
             {columns.map((column) => (
@@ -85,7 +87,8 @@ const Table = ({
             {rows.map((row) => (
               <TableRow
                 key={row.key}
-                className={cn(row.className, row.onClick && styles['table-row-clickable'])}
+                className={row.className}
+                clickable={!!row.onClick}
                 onClick={row.onClick}
               >
                 {row.cells.map((cell) => (
