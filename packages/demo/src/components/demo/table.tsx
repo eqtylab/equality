@@ -200,10 +200,7 @@ export const TableDemo = ({
 
   if (variant === "sticky-header") {
     return (
-      <TableContainer
-        elevation={elevation}
-        className="max-h-[240px] overflow-hidden rounded-md border"
-      >
+      <TableContainer elevation={elevation} className="max-h-[240px]" border>
         <TableHeader sticky>
           <TableRow>
             <TableHead>Name</TableHead>
@@ -372,10 +369,7 @@ export const TableDemo = ({
 
   if (variant === "empty-state") {
     return (
-      <TableContainer
-        elevation={elevation}
-        className="overflow-hidden rounded-md border"
-      >
+      <TableContainer elevation={elevation} border>
         <TableHeader>
           <TableRow>
             <TableHead>Name</TableHead>
@@ -401,10 +395,7 @@ export const TableDemo = ({
 
   if (variant === "empty-state-custom") {
     return (
-      <TableContainer
-        elevation={elevation}
-        className="overflow-hidden rounded-md border"
-      >
+      <TableContainer elevation={elevation} border>
         <TableHeader>
           <TableRow>
             <TableHead>Name</TableHead>
@@ -432,14 +423,7 @@ export const TableDemo = ({
   }
 
   return (
-    <TableContainer
-      elevation={elevation}
-      className={
-        variant === "with-border"
-          ? "overflow-hidden rounded-md border"
-          : undefined
-      }
-    >
+    <TableContainer elevation={elevation} border={variant === "with-border"}>
       <TableHeader>
         <TableRow>
           <TableHead>Name</TableHead>

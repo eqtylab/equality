@@ -106,9 +106,23 @@ import {
 
 ### With Border
 
-Apply a border to tables by adding `overflow-hidden rounded-md border` to the `TableContainer` className. This should be added most places the table is used, except when it lives within a container that already has a border.
+Use the `border` prop on `TableContainer` to apply an elevation-aware border with rounded corners. This should be added most places the table is used, except when it lives within a container that already has a border.
 
 <TableDemo client:only="react" variant="with-border" />
+
+#### Usage
+
+```tsx
+<TableContainer border>
+  <TableHeader>
+    <TableRow>
+      <TableHead>Name</TableHead>
+      <TableHead>Email</TableHead>
+    </TableRow>
+  </TableHeader>
+  <TableBody>{/* rows */}</TableBody>
+</TableContainer>
+```
 
 ### Empty State
 
@@ -288,10 +302,11 @@ Use [container queries](https://tailwindcss.com/docs/responsive-design#what-are-
 
 ### TableContainer
 
-| Name          | Description                                | Type                                  | Default | Required |
-| ------------- | ------------------------------------------ | ------------------------------------- | ------- | -------- |
-| `elevation`   | Controls the shadow and background styling | `sunken`, `base`, `raised`, `overlay` | `base`  | ❌       |
-| `tableLayout` | Controls the CSS table-layout algorithm    | `auto`, `fixed`                       | `auto`  | ❌       |
+| Name          | Description                                            | Type                                  | Default  | Required |
+| ------------- | ------------------------------------------------------ | ------------------------------------- | -------- | -------- |
+| `elevation`   | Controls the shadow and background styling             | `sunken`, `base`, `raised`, `overlay` | `raised` | ❌       |
+| `tableLayout` | Controls the CSS table-layout algorithm                | `auto`, `fixed`                       | `auto`   | ❌       |
+| `border`      | Applies an elevation-aware border with rounded corners | `boolean`                             | `false`  | ❌       |
 
 ### TableHeader
 

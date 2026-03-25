@@ -44,6 +44,7 @@ interface TableProps extends VariantProps<typeof tableElevationVariants> {
 
 const tableElevationVariants = generateElevationVariants(styles, 'table', ELEVATION.BASE);
 
+/** @deprecated Use the compositional table primitives (`TableContainer`, `TableHeader`, `TableBody`, `TableRow`, `TableHead`, `TableCell`) instead. */
 const Table = ({
   columns,
   rows,

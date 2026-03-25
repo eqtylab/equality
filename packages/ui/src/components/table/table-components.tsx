@@ -10,10 +10,18 @@ const tableElevationVariants = generateElevationVariants(styles, 'table', ELEVAT
 const TableContainer = React.forwardRef<
   HTMLTableElement,
   React.HTMLAttributes<HTMLTableElement> &
-    VariantProps<typeof tableElevationVariants> & { tableLayout?: 'auto' | 'fixed' }
->(({ className, style, elevation = ELEVATION.RAISED, tableLayout, ...props }, ref) => (
+    VariantProps<typeof tableElevationVariants> & {
+      tableLayout?: 'auto' | 'fixed';
+      border?: boolean;
+    }
+>(({ className, style, elevation = ELEVATION.RAISED, tableLayout, border, ...props }, ref) => (
   <div
-    className={cn(styles['table'], tableElevationVariants({ elevation }), className)}
+    className={cn(
+      styles['table'],
+      tableElevationVariants({ elevation }),
+      border && styles['table-border'],
+      className
+    )}
     style={style}
   >
     <table

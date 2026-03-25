@@ -61,6 +61,13 @@
   @apply text-text-secondary mt-4 text-sm;
 }
 
+/* BORDER */
+
+.table-border {
+  @apply border;
+  @apply overflow-hidden rounded-md;
+}
+
 /* ELEVATION */
 
 .table--sunken .table-header,
@@ -109,6 +116,19 @@
     color-mix(in oklch, var(--color-background-overlay), black 2%),
     color-mix(in oklch, var(--color-background-overlay), white 4%)
   );
+}
+
+.table--sunken.table-border {
+  @apply border-border-sunken;
+}
+.table--base.table-border {
+  @apply border-border-base;
+}
+.table--raised.table-border {
+  @apply border-border-raised;
+}
+.table--overlay.table-border {
+  @apply border-border-overlay;
 }
 
 .table-body .table-row:nth-child(even) {
