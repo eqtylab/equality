@@ -11,7 +11,7 @@ import { ELEVATION } from "@eqtylab/equality";
 
 ---
 
-The Table is built from compositional primitives that map directly to HTML table elements. Each primitive is a styled wrapper that accepts all native HTML attributes, giving you full control over layout, sizing, and responsiveness.
+Tables are built from compositional primitives that map directly to [HTML table elements](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/table). Each primitive is a styled wrapper that accepts all native HTML attributes, giving you full control over layout, sizing, and responsiveness.
 
 - **TableContainer:** Wraps the `<table>` in a scrollable container with elevation styling.
 - **TableHeader / TableBody / TableFooter:** Semantic section wrappers (`<thead>`, `<tbody>`, `<tfoot>`).
@@ -65,7 +65,7 @@ Basic usage:
 
 ### Clickable Rows
 
-Rows accept an `onClick` handler, which enables interaction styling.
+Rows accept an `onClick` handler, which enables hover interactions.
 
 <TableDemo client:only="react" variant="clickable" />
 
