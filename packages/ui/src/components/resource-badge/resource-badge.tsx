@@ -11,6 +11,8 @@ export type ResourceType =
   | 'database'
   | 'dataset'
   | 'document'
+  | 'media'
+  | 'skill'
   | 'guardrail'
   | 'model'
   | 'prompt'
@@ -94,6 +96,18 @@ const getTypeConfig = (type: ResourceType): { icon: string; className: string; l
         icon: 'FileText',
         className: styles['badge--document'],
         label: 'Document',
+      };
+    case 'skill':
+      return {
+        icon: 'FileCog',
+        className: styles['badge--skill'],
+        label: 'Skill',
+      };
+    case 'media':
+      return {
+        icon: 'FileImage',
+        className: styles['badge--media'],
+        label: 'Media',
       };
     case 'guardrail':
       return {

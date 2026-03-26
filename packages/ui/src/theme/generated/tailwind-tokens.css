@@ -183,9 +183,11 @@
   --color-resource-background-document: var(--color-resource-background-document);
   --color-resource-background-guardrail: var(--color-resource-background-guardrail);
   --color-resource-background-inference: var(--color-resource-background-inference);
+  --color-resource-background-media: var(--color-resource-background-media);
   --color-resource-background-model: var(--color-resource-background-model);
   --color-resource-background-prompt: var(--color-resource-background-prompt);
   --color-resource-background-reasoning: var(--color-resource-background-reasoning);
+  --color-resource-background-skill: var(--color-resource-background-skill);
   --color-resource-background-system-prompt: var(--color-resource-background-system-prompt);
   --color-resource-background-token: var(--color-resource-background-token);
   --color-resource-background-tool: var(--color-resource-background-tool);
@@ -202,9 +204,11 @@
   --color-resource-document: var(--color-resource-document);
   --color-resource-guardrail: var(--color-resource-guardrail);
   --color-resource-inference: var(--color-resource-inference);
+  --color-resource-media: var(--color-resource-media);
   --color-resource-model: var(--color-resource-model);
   --color-resource-prompt: var(--color-resource-prompt);
   --color-resource-reasoning: var(--color-resource-reasoning);
+  --color-resource-skill: var(--color-resource-skill);
   --color-resource-system-prompt: var(--color-resource-system-prompt);
   --color-resource-text-agent: var(--color-resource-text-agent);
   --color-resource-text-benchmark-result: var(--color-resource-text-benchmark-result);
@@ -217,12 +221,13 @@
   --color-resource-text-database: var(--color-resource-text-database);
   --color-resource-text-dataset: var(--color-resource-text-dataset);
   --color-resource-text-document: var(--color-resource-text-document);
-  --color-resource-text-guard: var(--color-resource-text-guard);
   --color-resource-text-guardrail: var(--color-resource-text-guardrail);
   --color-resource-text-inference: var(--color-resource-text-inference);
+  --color-resource-text-media: var(--color-resource-text-media);
   --color-resource-text-model: var(--color-resource-text-model);
   --color-resource-text-prompt: var(--color-resource-text-prompt);
   --color-resource-text-reasoning: var(--color-resource-text-reasoning);
+  --color-resource-text-skill: var(--color-resource-text-skill);
   --color-resource-text-system-prompt: var(--color-resource-text-system-prompt);
   --color-resource-text-token: var(--color-resource-text-token);
   --color-resource-text-tool: var(--color-resource-text-tool);

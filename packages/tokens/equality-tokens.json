@@ -515,16 +515,16 @@
             "$type": "color",
             "$value": {
               "colorSpace": "display-p3",
-              "components": [0.2598, 0.1437, 0.07482],
-              "hex": "#422513"
+              "components": [0.2359, 0.0912, 0.2602],
+              "hex": "#3C1742"
             }
           },
           "benchmark-result": {
             "$type": "color",
             "$value": {
               "colorSpace": "display-p3",
-              "components": [0.2598, 0.1437, 0.07482],
-              "hex": "#422513"
+              "components": [0.2359, 0.0912, 0.2602],
+              "hex": "#3C1742"
             }
           },
           "binary": {
@@ -595,8 +595,8 @@
             "$type": "color",
             "$value": {
               "colorSpace": "display-p3",
-              "components": [0.2598, 0.1437, 0.07482],
-              "hex": "#422513"
+              "components": [0.2359, 0.0912, 0.2602],
+              "hex": "#3C1742"
             }
           },
           "inference": {
@@ -605,6 +605,14 @@
               "colorSpace": "display-p3",
               "components": [0.1689, 0.3045, 0.136],
               "hex": "#2B4E23"
+            }
+          },
+          "media": {
+            "$type": "color",
+            "$value": {
+              "colorSpace": "display-p3",
+              "components": [0.5752, 0.2954, 0.1593],
+              "hex": "#934B29"
             }
           },
           "model": {
@@ -629,6 +637,14 @@
               "colorSpace": "display-p3",
               "components": [0.1394, 0.2691, 0.3776],
               "hex": "#244560"
+            }
+          },
+          "skill": {
+            "$type": "color",
+            "$value": {
+              "colorSpace": "display-p3",
+              "components": [0.5752, 0.2954, 0.1593],
+              "hex": "#934B29"
             }
           },
           "system-prompt": {
@@ -677,16 +693,16 @@
             "$type": "color",
             "$value": {
               "colorSpace": "display-p3",
-              "components": [0.8711, 0.6538, 0.5378],
-              "hex": "#DEA789"
+              "components": [0.8027, 0.5791, 0.8394],
+              "hex": "#CD94D6"
             }
           },
           "benchmark-result": {
             "$type": "color",
             "$value": {
               "colorSpace": "display-p3",
-              "components": [0.8711, 0.6538, 0.5378],
-              "hex": "#DEA789"
+              "components": [0.8027, 0.5791, 0.8394],
+              "hex": "#CD94D6"
             }
           },
           "binary": {
@@ -753,20 +769,12 @@
               "hex": "#ECC9B4"
             }
           },
-          "guard": {
-            "$type": "color",
-            "$value": {
-              "colorSpace": "display-p3",
-              "components": [0.8711, 0.6538, 0.5378],
-              "hex": "#DEA789"
-            }
-          },
           "guardrail": {
             "$type": "color",
             "$value": {
               "colorSpace": "display-p3",
-              "components": [0.8711, 0.6538, 0.5378],
-              "hex": "#DEA789"
+              "components": [0.8027, 0.5791, 0.8394],
+              "hex": "#CD94D6"
             }
           },
           "inference": {
@@ -775,6 +783,14 @@
               "colorSpace": "display-p3",
               "components": [0.7403, 0.8486, 0.7417],
               "hex": "#BDD8BD"
+            }
+          },
+          "media": {
+            "$type": "color",
+            "$value": {
+              "colorSpace": "display-p3",
+              "components": [0.9272, 0.788, 0.7058],
+              "hex": "#ECC9B4"
             }
           },
           "model": {
@@ -799,6 +815,14 @@
               "colorSpace": "display-p3",
               "components": [0.7072, 0.8271, 0.9059],
               "hex": "#B4D3E7"
+            }
+          },
+          "skill": {
+            "$type": "color",
+            "$value": {
+              "colorSpace": "display-p3",
+              "components": [0.9272, 0.788, 0.7058],
+              "hex": "#ECC9B4"
             }
           },
           "system-prompt": {
@@ -2275,16 +2299,16 @@
             "$type": "color",
             "$value": {
               "colorSpace": "display-p3",
-              "components": [0.8711, 0.6538, 0.5378],
-              "hex": "#DEA789"
+              "components": [0.8027, 0.5791, 0.8394],
+              "hex": "#CD94D6"
             }
           },
           "benchmark-result": {
             "$type": "color",
             "$value": {
               "colorSpace": "display-p3",
-              "components": [0.8711, 0.6538, 0.5378],
-              "hex": "#DEA789"
+              "components": [0.8027, 0.5791, 0.8394],
+              "hex": "#CD94D6"
             }
           },
           "binary": {
@@ -2355,8 +2379,8 @@
             "$type": "color",
             "$value": {
               "colorSpace": "display-p3",
-              "components": [0.8711, 0.6538, 0.5378],
-              "hex": "#DEA789"
+              "components": [0.8027, 0.5791, 0.8394],
+              "hex": "#CD94D6"
             }
           },
           "inference": {
@@ -2365,6 +2389,14 @@
               "colorSpace": "display-p3",
               "components": [0.7403, 0.8486, 0.7417],
               "hex": "#BDD8BD"
+            }
+          },
+          "media": {
+            "$type": "color",
+            "$value": {
+              "colorSpace": "display-p3",
+              "components": [0.9272, 0.788, 0.7058],
+              "hex": "#ECC9B4"
             }
           },
           "model": {
@@ -2389,6 +2421,14 @@
               "colorSpace": "display-p3",
               "components": [0.7072, 0.8271, 0.9059],
               "hex": "#B4D3E7"
+            }
+          },
+          "skill": {
+            "$type": "color",
+            "$value": {
+              "colorSpace": "display-p3",
+              "components": [0.9272, 0.788, 0.7058],
+              "hex": "#ECC9B4"
             }
           },
           "system-prompt": {
@@ -2428,16 +2468,16 @@
           "$type": "color",
           "$value": {
             "colorSpace": "display-p3",
-            "components": [0.4118, 0.2185, 0.1135],
-            "hex": "#69381D"
+            "components": [0.6289, 0.209, 0.6944],
+            "hex": "#A035B1"
           }
         },
         "benchmark-result": {
           "$type": "color",
           "$value": {
             "colorSpace": "display-p3",
-            "components": [0.4118, 0.2185, 0.1135],
-            "hex": "#69381D"
+            "components": [0.6289, 0.209, 0.6944],
+            "hex": "#A035B1"
           }
         },
         "binary": {
@@ -2508,8 +2548,8 @@
           "$type": "color",
           "$value": {
             "colorSpace": "display-p3",
-            "components": [0.4118, 0.2185, 0.1135],
-            "hex": "#69381D"
+            "components": [0.6289, 0.209, 0.6944],
+            "hex": "#A035B1"
           }
         },
         "inference": {
@@ -2518,6 +2558,14 @@
             "colorSpace": "display-p3",
             "components": [0.2946, 0.5328, 0.2433],
             "hex": "#4B883E"
+          }
+        },
+        "media": {
+          "$type": "color",
+          "$value": {
+            "colorSpace": "display-p3",
+            "components": [0.7481, 0.374, 0.214],
+            "hex": "#BF5F37"
           }
         },
         "model": {
@@ -2544,6 +2592,14 @@
             "hex": "#357AA5"
           }
         },
+        "skill": {
+          "$type": "color",
+          "$value": {
+            "colorSpace": "display-p3",
+            "components": [0.7481, 0.374, 0.214],
+            "hex": "#BF5F37"
+          }
+        },
         "system-prompt": {
           "$type": "color",
           "$value": {
@@ -2565,16 +2621,16 @@
             "$type": "color",
             "$value": {
               "colorSpace": "display-p3",
-              "components": [0.2598, 0.1437, 0.07482],
-              "hex": "#422513"
+              "components": [0.2359, 0.0912, 0.2602],
+              "hex": "#3C1742"
             }
           },
           "benchmark-result": {
             "$type": "color",
             "$value": {
               "colorSpace": "display-p3",
-              "components": [0.2598, 0.1437, 0.07482],
-              "hex": "#422513"
+              "components": [0.2359, 0.0912, 0.2602],
+              "hex": "#3C1742"
             }
           },
           "binary": {
@@ -2641,20 +2697,12 @@
               "hex": "#422513"
             }
           },
-          "guard": {
-            "$type": "color",
-            "$value": {
-              "colorSpace": "display-p3",
-              "components": [0.2598, 0.1437, 0.07482],
-              "hex": "#422513"
-            }
-          },
           "guardrail": {
             "$type": "color",
             "$value": {
               "colorSpace": "display-p3",
-              "components": [0.2598, 0.1437, 0.07482],
-              "hex": "#422513"
+              "components": [0.2359, 0.0912, 0.2602],
+              "hex": "#3C1742"
             }
           },
           "inference": {
@@ -2663,6 +2711,14 @@
               "colorSpace": "display-p3",
               "components": [0.1097, 0.1998, 0.08667],
               "hex": "#1C3316"
+            }
+          },
+          "media": {
+            "$type": "color",
+            "$value": {
+              "colorSpace": "display-p3",
+              "components": [0.2598, 0.1437, 0.07482],
+              "hex": "#422513"
             }
           },
           "model": {
@@ -2687,6 +2743,14 @@
               "colorSpace": "display-p3",
               "components": [0.09755, 0.1752, 0.2506],
               "hex": "#192D40"
+            }
+          },
+          "skill": {
+            "$type": "color",
+            "$value": {
+              "colorSpace": "display-p3",
+              "components": [0.2598, 0.1437, 0.07482],
+              "hex": "#422513"
             }
           },
           "system-prompt": {

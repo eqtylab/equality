@@ -45,6 +45,16 @@
   @apply text-resource-text-document;
 }
 
+.badge--media {
+  @apply bg-resource-background-media;
+  @apply text-resource-text-media;
+}
+
+.badge--skill {
+  @apply bg-resource-background-skill;
+  @apply text-resource-text-skill;
+}
+
 .badge--guardrail {
   @apply bg-resource-background-guardrail;
   @apply text-resource-text-guardrail;
