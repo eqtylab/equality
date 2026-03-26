@@ -1,25 +1,29 @@
 import { Badge, type BadgeDisplayMode } from '@/components/badge/badge';
 import styles from '@/components/resource-badge/resource-badge.module.css';
 
+// These are all asset types from integrity-py.
+// If you want to add a resource type here, it should exist there first.
+
 export type ResourceType =
   | 'agent'
   | 'benchmark'
+  | 'benchmark-result'
+  | 'binary'
   | 'code'
   | 'compute'
   | 'database'
   | 'dataset'
   | 'document'
-  | 'guard'
+  | 'media'
+  | 'skill'
   | 'guardrail'
-  | 'inference'
   | 'model'
   | 'prompt'
   | 'system-prompt'
-  | 'context'
   | 'reasoning'
-  | 'system-parameters'
+  | 'config'
   | 'token'
-  | 'tools'
+  | 'tool'
   | 'unknown';
 
 export type ResourceDisplayMode = BadgeDisplayMode;
@@ -40,7 +44,7 @@ const ResourceBadge = ({ type, display = 'both' }: ResourceBadgeProps) => {
 };
 
 // Helper function
-const getTypeConfig = (type: ResourceType) => {
+const getTypeConfig = (type: ResourceType): { icon: string; className: string; label: string } => {
   switch (type) {
     case 'agent':
       return {
@@ -54,11 +58,23 @@ const getTypeConfig = (type: ResourceType) => {
         className: styles['badge--benchmark'],
         label: 'Benchmark',
       };
+    case 'benchmark-result':
+      return {
+        icon: 'FileChartLine',
+        className: styles['badge--benchmark-result'],
+        label: 'Benchmark Result',
+      };
     case 'code':
       return {
         icon: 'Code',
         className: styles['badge--code'],
         label: 'Code',
+      };
+    case 'binary':
+      return {
+        icon: 'Binary',
+        className: styles['badge--binary'],
+        label: 'Binary',
       };
     case 'compute':
       return {
@@ -84,23 +100,23 @@ const getTypeConfig = (type: ResourceType) => {
         className: styles['badge--document'],
         label: 'Document',
       };
-    case 'guard':
+    case 'skill':
       return {
-        icon: 'Shield',
-        className: styles['badge--guard'],
-        label: 'Guard',
+        icon: 'FileCog',
+        className: styles['badge--skill'],
+        label: 'Skill',
+      };
+    case 'media':
+      return {
+        icon: 'FileImage',
+        className: styles['badge--media'],
+        label: 'Media',
       };
     case 'guardrail':
       return {
         icon: 'Fence',
         className: styles['badge--guardrail'],
         label: 'Guardrail',
-      };
-    case 'inference':
-      return {
-        icon: 'Zap',
-        className: styles['badge--inference'],
-        label: 'Inference',
       };
     case 'model':
       return {
@@ -120,12 +136,6 @@ const getTypeConfig = (type: ResourceType) => {
         className: styles['badge--system-prompt'],
         label: 'System Prompt',
       };
-    case 'context':
-      return {
-        icon: 'MessageSquareQuote',
-        className: styles['badge--context'],
-        label: 'Context',
-      };
     case 'reasoning':
       return {
         icon: 'MessageSquareMore',
@@ -138,19 +148,20 @@ const getTypeConfig = (type: ResourceType) => {
         className: styles['badge--token'],
         label: 'Token',
       };
-    case 'tools':
+    case 'tool':
       return {
         icon: 'Wrench',
-        className: styles['badge--tools'],
-        label: 'Tools',
+        className: styles['badge--tool'],
+        label: 'Tool',
       };
-    case 'system-parameters':
+    case 'config':
       return {
         icon: 'Settings2',
-        className: styles['badge--system-parameters'],
-        label: 'System Parameters',
+        className: styles['badge--config'],
+        label: 'Configuration',
       };
     case 'unknown':
+    default:
       return {
         icon: 'Box',
         className: styles['badge--unknown'],
