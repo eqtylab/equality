@@ -10,7 +10,7 @@ import { ResourceBadge, PanelLabel } from "@eqtylab/equality";
 
 ---
 
-The `ResourceBadge` component is a specialized badge wrapper that provides predefined configurations for displaying different resource types. It automatically applies appropriate icons, colors, and labels.
+The `ResourceBadge` component is a specialized badge wrapper that provides predefined configurations for displaying different resource types as defined by [integrity-py](https://github.com/eqtylab/integrity-py). It automatically applies appropriate icons, colors, and labels.
 
 ## Usage
 
@@ -40,19 +40,17 @@ Basic usage requires only a `type` prop:
     <ResourceBadge type="database" />
     <ResourceBadge type="dataset" />
     <ResourceBadge type="document" />
-    <ResourceBadge type="guard" />
     <ResourceBadge type="guardrail" />
     <ResourceBadge type="benchmark" />
+    <ResourceBadge type="benchmark-result" />
     <ResourceBadge type="agent" />
-    <ResourceBadge type="inference" />
     <ResourceBadge type="model" />
     <ResourceBadge type="prompt" />
     <ResourceBadge type="system-prompt" />
-    <ResourceBadge type="context" />
     <ResourceBadge type="reasoning" />
     <ResourceBadge type="token" />
-    <ResourceBadge type="tools" />
-    <ResourceBadge type="system-parameters" />
+    <ResourceBadge type="tool" />
+    <ResourceBadge type="config" />
     <ResourceBadge type="unknown" />
   </div>
   <div className="flex flex-col items-start space-y-3">
@@ -62,19 +60,17 @@ Basic usage requires only a `type` prop:
     <ResourceBadge type="database" display="text-only" />
     <ResourceBadge type="dataset" display="text-only" />
     <ResourceBadge type="document" display="text-only" />
-    <ResourceBadge type="guard" display="text-only" />
     <ResourceBadge type="guardrail" display="text-only" />
     <ResourceBadge type="benchmark" display="text-only" />
+    <ResourceBadge type="benchmark-result" display="text-only" />
     <ResourceBadge type="agent" display="text-only" />
-    <ResourceBadge type="inference" display="text-only" />
     <ResourceBadge type="model" display="text-only" />
     <ResourceBadge type="prompt" display="text-only" />
     <ResourceBadge type="system-prompt" display="text-only" />
-    <ResourceBadge type="context" display="text-only" />
     <ResourceBadge type="reasoning" display="text-only" />
     <ResourceBadge type="token" display="text-only" />
-    <ResourceBadge type="tools" display="text-only" />
-    <ResourceBadge type="system-parameters" display="text-only" />
+    <ResourceBadge type="tool" display="text-only" />
+    <ResourceBadge type="config" display="text-only" />
     <ResourceBadge type="unknown" display="text-only" />
   </div>
   <div className="flex flex-col items-start space-y-3">
@@ -84,19 +80,17 @@ Basic usage requires only a `type` prop:
     <ResourceBadge type="database" display="icon-only" />
     <ResourceBadge type="dataset" display="icon-only" />
     <ResourceBadge type="document" display="icon-only" />
-    <ResourceBadge type="guard" display="icon-only" />
     <ResourceBadge type="guardrail" display="icon-only" />
     <ResourceBadge type="benchmark" display="icon-only" />
+    <ResourceBadge type="benchmark-result" display="icon-only" />
     <ResourceBadge type="agent" display="icon-only" />
-    <ResourceBadge type="inference" display="icon-only" />
     <ResourceBadge type="model" display="icon-only" />
     <ResourceBadge type="prompt" display="icon-only" />
     <ResourceBadge type="system-prompt" display="icon-only" />
-    <ResourceBadge type="context" display="icon-only" />
     <ResourceBadge type="reasoning" display="icon-only" />
     <ResourceBadge type="token" display="icon-only" />
-    <ResourceBadge type="tools" display="icon-only" />
-    <ResourceBadge type="system-parameters" display="icon-only" />
+    <ResourceBadge type="tool" display="icon-only" />
+    <ResourceBadge type="config" display="icon-only" />
     <ResourceBadge type="unknown" display="icon-only" />
   </div>
 </div>
@@ -126,14 +120,14 @@ Show only the icon by setting `display` to `"icon-only"`:
 Show only the text by setting `display` to `"text-only"`:
 
 ```tsx
-<ResourceBadge type="inference" display="text-only" />
+<ResourceBadge type="document" display="text-only" />
 ```
 
 ## Props
 
 ---
 
-| Prop      | Type                                                                                                                                                                                                   | Default      | Description                                                                                                                       |
-| --------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------ | --------------------------------------------------------------------------------------------------------------------------------- |
-| `type`    | `"agent"` \| `"benchmark"` \| `"code"` \| `"compute"` \| `"database"` \| `"dataset"` \| `"document"` \| `"guard"` \| `"inference"` \| `"model"` \| `"prompt"` \| `"token"` \| `"tools"` \| `"unknown"` | **Required** | The resource type that determines the badge variant, icon, and label.                                                             |
-| `display` | `"both"` \| `"text-only"` \| `"icon-only"`                                                                                                                                                             | `"both"`     | Controls what elements are displayed. `"both"` shows icon and text, `"text-only"` shows only text, `"icon-only"` shows only icon. |
+| Name      | Description                                                           | Type                                                                                                                                                                                                                                 | Default  | Required |
+| --------- | --------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | -------- | -------- |
+| `type`    | The resource type that determines the badge variant, icon, and label. | `"agent"`, `"benchmark"`, `"benchmark-result"`, `"code"`, `"compute"`, `"database"`, `"dataset"`, `"document"`, `"guardrail"`, `"model"`, `"prompt"`, `"system-prompt"`, `"reasoning"`, `"config"`, `"token"`, `"tool"`, `"unknown"` |          | ✅       |
+| `display` | Controls what elements are displayed: icon, text, or both.            | `"both"`, `"text-only"`, `"icon-only"`                                                                                                                                                                                               | `"both"` | ❌       |

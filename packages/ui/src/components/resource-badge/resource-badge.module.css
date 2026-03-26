@@ -10,6 +10,11 @@
   @apply text-resource-text-benchmark;
 }
 
+.badge--benchmark-result {
+  @apply bg-resource-background-benchmark-result;
+  @apply text-resource-text-benchmark-result;
+}
+
 .badge--code {
   @apply bg-resource-background-code;
   @apply text-resource-text-code;
@@ -35,19 +40,9 @@
   @apply text-resource-text-document;
 }
 
-.badge--guard {
-  @apply bg-resource-background-guard;
-  @apply text-resource-text-guard;
-}
-
 .badge--guardrail {
   @apply bg-resource-background-guardrail;
   @apply text-resource-text-guardrail;
-}
-
-.badge--inference {
-  @apply bg-resource-background-inference;
-  @apply text-resource-text-inference;
 }
 
 .badge--model {
@@ -80,14 +75,14 @@
   @apply text-resource-text-token;
 }
 
-.badge--tools {
-  @apply bg-resource-background-tools;
-  @apply text-resource-text-tools;
+.badge--tool {
+  @apply bg-resource-background-tool;
+  @apply text-resource-text-tool;
 }
 
-.badge--system-parameters {
-  @apply bg-resource-background-system-parameters;
-  @apply text-resource-text-system-parameters;
+.badge--config {
+  @apply bg-resource-background-config;
+  @apply text-resource-text-config;
 }
 
 .badge--unknown {

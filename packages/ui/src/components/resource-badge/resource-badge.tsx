@@ -4,22 +4,20 @@ import styles from '@/components/resource-badge/resource-badge.module.css';
 export type ResourceType =
   | 'agent'
   | 'benchmark'
+  | 'benchmark-result'
   | 'code'
   | 'compute'
   | 'database'
   | 'dataset'
   | 'document'
-  | 'guard'
   | 'guardrail'
-  | 'inference'
   | 'model'
   | 'prompt'
   | 'system-prompt'
-  | 'context'
   | 'reasoning'
-  | 'system-parameters'
+  | 'config'
   | 'token'
-  | 'tools'
+  | 'tool'
   | 'unknown';
 
 export type ResourceDisplayMode = BadgeDisplayMode;
@@ -40,7 +38,7 @@ const ResourceBadge = ({ type, display = 'both' }: ResourceBadgeProps) => {
 };
 
 // Helper function
-const getTypeConfig = (type: ResourceType) => {
+const getTypeConfig = (type: ResourceType): { icon: string; className: string; label: string } => {
   switch (type) {
     case 'agent':
       return {
@@ -53,6 +51,12 @@ const getTypeConfig = (type: ResourceType) => {
         icon: 'LineChart',
         className: styles['badge--benchmark'],
         label: 'Benchmark',
+      };
+    case 'benchmark-result':
+      return {
+        icon: 'FileChartLine',
+        className: styles['badge--benchmark-result'],
+        label: 'Benchmark Result',
       };
     case 'code':
       return {
@@ -84,23 +88,11 @@ const getTypeConfig = (type: ResourceType) => {
         className: styles['badge--document'],
         label: 'Document',
       };
-    case 'guard':
-      return {
-        icon: 'Shield',
-        className: styles['badge--guard'],
-        label: 'Guard',
-      };
     case 'guardrail':
       return {
         icon: 'Fence',
         className: styles['badge--guardrail'],
         label: 'Guardrail',
-      };
-    case 'inference':
-      return {
-        icon: 'Zap',
-        className: styles['badge--inference'],
-        label: 'Inference',
       };
     case 'model':
       return {
@@ -120,12 +112,6 @@ const getTypeConfig = (type: ResourceType) => {
         className: styles['badge--system-prompt'],
         label: 'System Prompt',
       };
-    case 'context':
-      return {
-        icon: 'MessageSquareQuote',
-        className: styles['badge--context'],
-        label: 'Context',
-      };
     case 'reasoning':
       return {
         icon: 'MessageSquareMore',
@@ -138,19 +124,20 @@ const getTypeConfig = (type: ResourceType) => {
         className: styles['badge--token'],
         label: 'Token',
       };
-    case 'tools':
+    case 'tool':
       return {
         icon: 'Wrench',
-        className: styles['badge--tools'],
-        label: 'Tools',
+        className: styles['badge--tool'],
+        label: 'Tool',
       };
-    case 'system-parameters':
+    case 'config':
       return {
         icon: 'Settings2',
-        className: styles['badge--system-parameters'],
-        label: 'System Parameters',
+        className: styles['badge--config'],
+        label: 'Configuration',
       };
     case 'unknown':
+    default:
       return {
         icon: 'Box',
         className: styles['badge--unknown'],

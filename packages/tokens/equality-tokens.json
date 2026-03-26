@@ -519,6 +519,14 @@
               "hex": "#422513"
             }
           },
+          "benchmark-result": {
+            "$type": "color",
+            "$value": {
+              "colorSpace": "display-p3",
+              "components": [0.2598, 0.1437, 0.07482],
+              "hex": "#422513"
+            }
+          },
           "code": {
             "$type": "color",
             "$value": {
@@ -533,6 +541,14 @@
               "colorSpace": "display-p3",
               "components": [0.4487, 0.322, 0.1436],
               "hex": "#725225"
+            }
+          },
+          "config": {
+            "$type": "color",
+            "$value": {
+              "colorSpace": "display-p3",
+              "components": [0.6137, 0.3942, 0.177],
+              "hex": "#9C652D"
             }
           },
           "context": {
@@ -565,14 +581,6 @@
               "colorSpace": "display-p3",
               "components": [0.5752, 0.2954, 0.1593],
               "hex": "#934B29"
-            }
-          },
-          "guard": {
-            "$type": "color",
-            "$value": {
-              "colorSpace": "display-p3",
-              "components": [0.2598, 0.1437, 0.07482],
-              "hex": "#422513"
             }
           },
           "guardrail": {
@@ -615,14 +623,6 @@
               "hex": "#244560"
             }
           },
-          "system-parameters": {
-            "$type": "color",
-            "$value": {
-              "colorSpace": "display-p3",
-              "components": [0.6137, 0.3942, 0.177],
-              "hex": "#9C652D"
-            }
-          },
           "system-prompt": {
             "$type": "color",
             "$value": {
@@ -639,7 +639,7 @@
               "hex": "#414719"
             }
           },
-          "tools": {
+          "tool": {
             "$type": "color",
             "$value": {
               "colorSpace": "display-p3",
@@ -673,6 +673,14 @@
               "hex": "#DEA789"
             }
           },
+          "benchmark-result": {
+            "$type": "color",
+            "$value": {
+              "colorSpace": "display-p3",
+              "components": [0.8711, 0.6538, 0.5378],
+              "hex": "#DEA789"
+            }
+          },
           "code": {
             "$type": "color",
             "$value": {
@@ -687,6 +695,14 @@
               "colorSpace": "display-p3",
               "components": [0.9327, 0.8528, 0.7204],
               "hex": "#EED9B8"
+            }
+          },
+          "config": {
+            "$type": "color",
+            "$value": {
+              "colorSpace": "display-p3",
+              "components": [0.9376, 0.8222, 0.7184],
+              "hex": "#EFD2B7"
             }
           },
           "context": {
@@ -769,14 +785,6 @@
               "hex": "#B4D3E7"
             }
           },
-          "system-parameters": {
-            "$type": "color",
-            "$value": {
-              "colorSpace": "display-p3",
-              "components": [0.9376, 0.8222, 0.7184],
-              "hex": "#EFD2B7"
-            }
-          },
           "system-prompt": {
             "$type": "color",
             "$value": {
@@ -793,7 +801,7 @@
               "hex": "#CDD3B4"
             }
           },
-          "tools": {
+          "tool": {
             "$type": "color",
             "$value": {
               "colorSpace": "display-p3",
@@ -2255,6 +2263,14 @@
               "hex": "#DEA789"
             }
           },
+          "benchmark-result": {
+            "$type": "color",
+            "$value": {
+              "colorSpace": "display-p3",
+              "components": [0.8711, 0.6538, 0.5378],
+              "hex": "#DEA789"
+            }
+          },
           "code": {
             "$type": "color",
             "$value": {
@@ -2269,6 +2285,14 @@
               "colorSpace": "display-p3",
               "components": [0.9327, 0.8528, 0.7204],
               "hex": "#EED9B8"
+            }
+          },
+          "config": {
+            "$type": "color",
+            "$value": {
+              "colorSpace": "display-p3",
+              "components": [0.9376, 0.8222, 0.7184],
+              "hex": "#EFD2B7"
             }
           },
           "context": {
@@ -2301,14 +2325,6 @@
               "colorSpace": "display-p3",
               "components": [0.9272, 0.788, 0.7058],
               "hex": "#ECC9B4"
-            }
-          },
-          "guard": {
-            "$type": "color",
-            "$value": {
-              "colorSpace": "display-p3",
-              "components": [0.8711, 0.6538, 0.5378],
-              "hex": "#DEA789"
             }
           },
           "guardrail": {
@@ -2351,14 +2367,6 @@
               "hex": "#B4D3E7"
             }
           },
-          "system-parameters": {
-            "$type": "color",
-            "$value": {
-              "colorSpace": "display-p3",
-              "components": [0.9376, 0.8222, 0.7184],
-              "hex": "#EFD2B7"
-            }
-          },
           "system-prompt": {
             "$type": "color",
             "$value": {
@@ -2375,7 +2383,7 @@
               "hex": "#CDD3B4"
             }
           },
-          "tools": {
+          "tool": {
             "$type": "color",
             "$value": {
               "colorSpace": "display-p3",
@@ -2400,6 +2408,14 @@
             "hex": "#69381D"
           }
         },
+        "benchmark-result": {
+          "$type": "color",
+          "$value": {
+            "colorSpace": "display-p3",
+            "components": [0.4118, 0.2185, 0.1135],
+            "hex": "#69381D"
+          }
+        },
         "code": {
           "$type": "color",
           "$value": {
@@ -2414,6 +2430,14 @@
             "colorSpace": "display-p3",
             "components": [0.8263, 0.6154, 0.2247],
             "hex": "#D39D39"
+          }
+        },
+        "config": {
+          "$type": "color",
+          "$value": {
+            "colorSpace": "display-p3",
+            "components": [0.805, 0.5129, 0.2188],
+            "hex": "#CD8338"
           }
         },
         "context": {
@@ -2446,14 +2470,6 @@
             "colorSpace": "display-p3",
             "components": [0.7481, 0.374, 0.214],
             "hex": "#BF5F37"
-          }
-        },
-        "guard": {
-          "$type": "color",
-          "$value": {
-            "colorSpace": "display-p3",
-            "components": [0.4118, 0.2185, 0.1135],
-            "hex": "#69381D"
           }
         },
         "guardrail": {
@@ -2496,14 +2512,6 @@
             "hex": "#357AA5"
           }
         },
-        "system-parameters": {
-          "$type": "color",
-          "$value": {
-            "colorSpace": "display-p3",
-            "components": [0.805, 0.5129, 0.2188],
-            "hex": "#CD8338"
-          }
-        },
         "system-prompt": {
           "$type": "color",
           "$value": {
@@ -2529,6 +2537,14 @@
               "hex": "#422513"
             }
           },
+          "benchmark-result": {
+            "$type": "color",
+            "$value": {
+              "colorSpace": "display-p3",
+              "components": [0.2598, 0.1437, 0.07482],
+              "hex": "#422513"
+            }
+          },
           "code": {
             "$type": "color",
             "$value": {
@@ -2543,6 +2559,14 @@
               "colorSpace": "display-p3",
               "components": [0.2723, 0.1933, 0.09642],
               "hex": "#453119"
+            }
+          },
+          "config": {
+            "$type": "color",
+            "$value": {
+              "colorSpace": "display-p3",
+              "components": [0.2643, 0.1753, 0.09139],
+              "hex": "#432D17"
             }
           },
           "context": {
@@ -2625,14 +2649,6 @@
               "hex": "#192D40"
             }
           },
-          "system-parameters": {
-            "$type": "color",
-            "$value": {
-              "colorSpace": "display-p3",
-              "components": [0.2643, 0.1753, 0.09139],
-              "hex": "#432D17"
-            }
-          },
           "system-prompt": {
             "$type": "color",
             "$value": {
@@ -2649,7 +2665,7 @@
               "hex": "#2A2F0D"
             }
           },
-          "tools": {
+          "tool": {
             "$type": "color",
             "$value": {
               "colorSpace": "display-p3",
@@ -2674,7 +2690,7 @@
             "hex": "#727C32"
           }
         },
-        "tools": {
+        "tool": {
           "$type": "color",
           "$value": {
             "colorSpace": "display-p3",
