@@ -587,8 +587,8 @@
             "$type": "color",
             "$value": {
               "colorSpace": "display-p3",
-              "components": [0.4118, 0.2185, 0.1135],
-              "hex": "#69381D"
+              "components": [0.5752, 0.2954, 0.1593],
+              "hex": "#934B29"
             }
           },
           "guardrail": {
@@ -611,8 +611,8 @@
             "$type": "color",
             "$value": {
               "colorSpace": "display-p3",
-              "components": [0.4118, 0.2185, 0.1135],
-              "hex": "#69381D"
+              "components": [0.5752, 0.2954, 0.1593],
+              "hex": "#934B29"
             }
           },
           "model": {
@@ -643,8 +643,8 @@
             "$type": "color",
             "$value": {
               "colorSpace": "display-p3",
-              "components": [0.4118, 0.2185, 0.1135],
-              "hex": "#69381D"
+              "components": [0.5752, 0.2954, 0.1593],
+              "hex": "#934B29"
             }
           },
           "system-prompt": {

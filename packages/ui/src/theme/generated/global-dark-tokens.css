@@ -70,14 +70,14 @@ html[data-equality-theme='dark'] {
   --color-resource-background-context: color(display-p3 0.1394 0.2691 0.3776);
   --color-resource-background-database: color(display-p3 0.2473 0.1645 0.5241);
   --color-resource-background-dataset: color(display-p3 0.2473 0.1645 0.5241);
-  --color-resource-background-document: color(display-p3 0.4118 0.2185 0.1135);
+  --color-resource-background-document: color(display-p3 0.5752 0.2954 0.1593);
   --color-resource-background-guardrail: color(display-p3 0.3593 0.1309 0.3967);
   --color-resource-background-inference: color(display-p3 0.1689 0.3045 0.136);
-  --color-resource-background-media: color(display-p3 0.4118 0.2185 0.1135);
+  --color-resource-background-media: color(display-p3 0.5752 0.2954 0.1593);
   --color-resource-background-model: color(display-p3 0.1442 0.2013 0.4303);
   --color-resource-background-prompt: color(display-p3 0.1394 0.2691 0.3776);
   --color-resource-background-reasoning: color(display-p3 0.1394 0.2691 0.3776);
-  --color-resource-background-skill: color(display-p3 0.4118 0.2185 0.1135);
+  --color-resource-background-skill: color(display-p3 0.5752 0.2954 0.1593);
   --color-resource-background-system-prompt: color(display-p3 0.1394 0.2691 0.3776);
   --color-resource-background-token: color(display-p3 0.2534 0.2782 0.09737);
   --color-resource-background-tool: color(display-p3 0.4113 0.1505 0.1319);
