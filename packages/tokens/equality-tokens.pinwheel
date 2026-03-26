@@ -1832,6 +1832,13 @@
             <buildGroupId>86B9D7D8-F74A-4CAE-B006-65451BBEDAB9</buildGroupId>
           </alias>
           <alias>
+            <name>Binary</name>
+            <type>3</type>
+            <referencedItemId>5A2CAF75-068B-4595-80BE-55284ED860D2</referencedItemId>
+            <subIndex>4</subIndex>
+            <buildGroupId>86B9D7D8-F74A-4CAE-B006-65451BBEDAB9</buildGroupId>
+          </alias>
+          <alias>
             <name>Code</name>
             <type>3</type>
             <referencedItemId>5A2CAF75-068B-4595-80BE-55284ED860D2</referencedItemId>
@@ -1986,6 +1993,17 @@
               <referencedItemId>C0C0A4D2-2348-4A7F-A8D3-80FBA6568876</referencedItemId>
               <subIndex>7</subIndex>
               <referencedItemIdDark>C0C0A4D2-2348-4A7F-A8D3-80FBA6568876</referencedItemIdDark>
+              <subIndexDark>1</subIndexDark>
+              <buildGroupId>86B9D7D8-F74A-4CAE-B006-65451BBEDAB9</buildGroupId>
+            </alias>
+            <alias>
+              <name>Binary</name>
+              <type>3</type>
+              <typeDark>3</typeDark>
+              <appearance>lightanddark</appearance>
+              <referencedItemId>5A2CAF75-068B-4595-80BE-55284ED860D2</referencedItemId>
+              <subIndex>7</subIndex>
+              <referencedItemIdDark>5A2CAF75-068B-4595-80BE-55284ED860D2</referencedItemIdDark>
               <subIndexDark>1</subIndexDark>
               <buildGroupId>86B9D7D8-F74A-4CAE-B006-65451BBEDAB9</buildGroupId>
             </alias>
@@ -2214,6 +2232,17 @@
               <subIndex>1</subIndex>
               <referencedItemIdDark>C0C0A4D2-2348-4A7F-A8D3-80FBA6568876</referencedItemIdDark>
               <subIndexDark>6</subIndexDark>
+              <buildGroupId>86B9D7D8-F74A-4CAE-B006-65451BBEDAB9</buildGroupId>
+            </alias>
+            <alias>
+              <name>Binary</name>
+              <type>3</type>
+              <typeDark>3</typeDark>
+              <appearance>lightanddark</appearance>
+              <referencedItemId>5A2CAF75-068B-4595-80BE-55284ED860D2</referencedItemId>
+              <subIndex>1</subIndex>
+              <referencedItemIdDark>5A2CAF75-068B-4595-80BE-55284ED860D2</referencedItemIdDark>
+              <subIndexDark>5</subIndexDark>
               <buildGroupId>86B9D7D8-F74A-4CAE-B006-65451BBEDAB9</buildGroupId>
             </alias>
             <alias>

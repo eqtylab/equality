@@ -5,6 +5,7 @@ export type ResourceType =
   | 'agent'
   | 'benchmark'
   | 'benchmark-result'
+  | 'binary'
   | 'code'
   | 'compute'
   | 'database'
@@ -63,6 +64,12 @@ const getTypeConfig = (type: ResourceType): { icon: string; className: string; l
         icon: 'Code',
         className: styles['badge--code'],
         label: 'Code',
+      };
+    case 'binary':
+      return {
+        icon: 'Binary',
+        className: styles['badge--binary'],
+        label: 'Binary',
       };
     case 'compute':
       return {

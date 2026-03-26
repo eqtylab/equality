@@ -175,6 +175,7 @@
   --color-resource-background-agent: color(display-p3 0.7135 0.8482 0.7942);
   --color-resource-background-benchmark-result: color(display-p3 0.8711 0.6538 0.5378);
   --color-resource-background-benchmark: color(display-p3 0.8711 0.6538 0.5378);
+  --color-resource-background-binary: color(display-p3 0.9376 0.8222 0.7184);
   --color-resource-background-code: color(display-p3 0.9376 0.8222 0.7184);
   --color-resource-background-compute: color(display-p3 0.9327 0.8528 0.7204);
   --color-resource-background-config: color(display-p3 0.9376 0.8222 0.7184);
@@ -193,6 +194,7 @@
   --color-resource-background-unknown: color(display-p3 0.8698 0.8698 0.8698);
   --color-resource-benchmark-result: color(display-p3 0.4118 0.2185 0.1135);
   --color-resource-benchmark: color(display-p3 0.4118 0.2185 0.1135);
+  --color-resource-binary: color(display-p3 0.805 0.5129 0.2188);
   --color-resource-code: color(display-p3 0.805 0.5129 0.2188);
   --color-resource-compute: color(display-p3 0.8263 0.6154 0.2247);
   --color-resource-config: color(display-p3 0.805 0.5129 0.2188);
@@ -209,6 +211,7 @@
   --color-resource-text-agent: color(display-p3 0.09443 0.1941 0.159);
   --color-resource-text-benchmark-result: color(display-p3 0.2598 0.1437 0.07482);
   --color-resource-text-benchmark: color(display-p3 0.2598 0.1437 0.07482);
+  --color-resource-text-binary: color(display-p3 0.2643 0.1753 0.09139);
   --color-resource-text-code: color(display-p3 0.2643 0.1753 0.09139);
   --color-resource-text-compute: color(display-p3 0.2723 0.1933 0.09642);
   --color-resource-text-config: color(display-p3 0.2643 0.1753 0.09139);

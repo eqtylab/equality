@@ -15,6 +15,11 @@
   @apply text-resource-text-benchmark-result;
 }
 
+.badge--binary {
+  @apply bg-resource-background-binary;
+  @apply text-resource-text-binary;
+}
+
 .badge--code {
   @apply bg-resource-background-code;
   @apply text-resource-text-code;

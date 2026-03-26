@@ -173,6 +173,7 @@
   --color-resource-background-agent: var(--color-resource-background-agent);
   --color-resource-background-benchmark-result: var(--color-resource-background-benchmark-result);
   --color-resource-background-benchmark: var(--color-resource-background-benchmark);
+  --color-resource-background-binary: var(--color-resource-background-binary);
   --color-resource-background-code: var(--color-resource-background-code);
   --color-resource-background-compute: var(--color-resource-background-compute);
   --color-resource-background-config: var(--color-resource-background-config);
@@ -191,6 +192,7 @@
   --color-resource-background-unknown: var(--color-resource-background-unknown);
   --color-resource-benchmark-result: var(--color-resource-benchmark-result);
   --color-resource-benchmark: var(--color-resource-benchmark);
+  --color-resource-binary: var(--color-resource-binary);
   --color-resource-code: var(--color-resource-code);
   --color-resource-compute: var(--color-resource-compute);
   --color-resource-config: var(--color-resource-config);
@@ -207,6 +209,7 @@
   --color-resource-text-agent: var(--color-resource-text-agent);
   --color-resource-text-benchmark-result: var(--color-resource-text-benchmark-result);
   --color-resource-text-benchmark: var(--color-resource-text-benchmark);
+  --color-resource-text-binary: var(--color-resource-text-binary);
   --color-resource-text-code: var(--color-resource-text-code);
   --color-resource-text-compute: var(--color-resource-text-compute);
   --color-resource-text-config: var(--color-resource-text-config);

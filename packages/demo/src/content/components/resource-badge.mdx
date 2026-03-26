@@ -36,6 +36,7 @@ Basic usage requires only a `type` prop:
   <div className="flex flex-col items-start space-y-3">
     <PanelLabel label="With Icons (default)" />
     <ResourceBadge type="code" />
+    <ResourceBadge type="binary" />
     <ResourceBadge type="compute" />
     <ResourceBadge type="database" />
     <ResourceBadge type="dataset" />
@@ -56,6 +57,7 @@ Basic usage requires only a `type` prop:
   <div className="flex flex-col items-start space-y-3">
     <PanelLabel label="Label Only" />
     <ResourceBadge type="code" display="text-only" />
+    <ResourceBadge type="binary" display="text-only" />
     <ResourceBadge type="compute" display="text-only" />
     <ResourceBadge type="database" display="text-only" />
     <ResourceBadge type="dataset" display="text-only" />
@@ -76,6 +78,7 @@ Basic usage requires only a `type` prop:
   <div className="flex flex-col items-start space-y-3">
     <PanelLabel label="Icon Only" />
     <ResourceBadge type="code" display="icon-only" />
+    <ResourceBadge type="binary" display="icon-only" />
     <ResourceBadge type="compute" display="icon-only" />
     <ResourceBadge type="database" display="icon-only" />
     <ResourceBadge type="dataset" display="icon-only" />
@@ -127,7 +130,7 @@ Show only the text by setting `display` to `"text-only"`:
 
 ---
 
-| Name      | Description                                                           | Type                                                                                                                                                                                                                                 | Default  | Required |
-| --------- | --------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | -------- | -------- |
-| `type`    | The resource type that determines the badge variant, icon, and label. | `"agent"`, `"benchmark"`, `"benchmark-result"`, `"code"`, `"compute"`, `"database"`, `"dataset"`, `"document"`, `"guardrail"`, `"model"`, `"prompt"`, `"system-prompt"`, `"reasoning"`, `"config"`, `"token"`, `"tool"`, `"unknown"` |          | ✅       |
-| `display` | Controls what elements are displayed: icon, text, or both.            | `"both"`, `"text-only"`, `"icon-only"`                                                                                                                                                                                               | `"both"` | ❌       |
+| Name      | Description                                                           | Type                                                                                                                                                                                                                                             | Default  | Required |
+| --------- | --------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | -------- | -------- |
+| `type`    | The resource type that determines the badge variant, icon, and label. | `"agent"`, `"benchmark"`, `"benchmark-result"`, `"binary"`, `"code"`, `"compute"`, `"database"`, `"dataset"`, `"document"`, `"guardrail"`, `"model"`, `"prompt"`, `"system-prompt"`, `"reasoning"`, `"config"`, `"token"`, `"tool"`, `"unknown"` |          | ✅       |
+| `display` | Controls what elements are displayed: icon, text, or both.            | `"both"`, `"text-only"`, `"icon-only"`                                                                                                                                                                                                           | `"both"` | ❌       |
