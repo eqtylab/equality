@@ -173,8 +173,8 @@
   --color-red-900: color(display-p3 0.1251 0.06706 0.05944);
   --color-resource-agent: color(display-p3 0.2615 0.5132 0.4268);
   --color-resource-background-agent: color(display-p3 0.7135 0.8482 0.7942);
-  --color-resource-background-benchmark-result: color(display-p3 0.8027 0.5791 0.8394);
-  --color-resource-background-benchmark: color(display-p3 0.8027 0.5791 0.8394);
+  --color-resource-background-benchmark-result: color(display-p3 0.8859 0.7455 0.9086);
+  --color-resource-background-benchmark: color(display-p3 0.8859 0.7455 0.9086);
   --color-resource-background-binary: color(display-p3 0.9376 0.8222 0.7184);
   --color-resource-background-code: color(display-p3 0.9376 0.8222 0.7184);
   --color-resource-background-compute: color(display-p3 0.9327 0.8528 0.7204);
@@ -183,7 +183,7 @@
   --color-resource-background-database: color(display-p3 0.795 0.7755 0.9866);
   --color-resource-background-dataset: color(display-p3 0.795 0.7755 0.9866);
   --color-resource-background-document: color(display-p3 0.9272 0.788 0.7058);
-  --color-resource-background-guardrail: color(display-p3 0.8027 0.5791 0.8394);
+  --color-resource-background-guardrail: color(display-p3 0.8859 0.7455 0.9086);
   --color-resource-background-inference: color(display-p3 0.7403 0.8486 0.7417);
   --color-resource-background-media: color(display-p3 0.9272 0.788 0.7058);
   --color-resource-background-model: color(display-p3 0.7289 0.7853 0.9401);
