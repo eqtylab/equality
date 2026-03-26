@@ -1,6 +1,9 @@
 import { Badge, type BadgeDisplayMode } from '@/components/badge/badge';
 import styles from '@/components/resource-badge/resource-badge.module.css';
 
+// These are all asset types from integrity-py.
+// If you want to add a resource type here, it should exist there first.
+
 export type ResourceType =
   | 'agent'
   | 'benchmark'
