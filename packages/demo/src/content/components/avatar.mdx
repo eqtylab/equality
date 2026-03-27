@@ -4,42 +4,99 @@ heading: "Avatar"
 description: "Avatar with sizes and variants"
 ---
 
-import { AvatarDemo } from "@demo/components/demo/avatar";
+import {
+  AvatarDemo,
+  AvatarSizesDemo,
+  AvatarShapeDemo,
+} from "@demo/components/demo/avatar";
 
-## Components
+## Overview
 
-### Avatar Image
+Avatars represent a user or entity with a profile image or initials fallback.
+
+## Usage
+
+Import the component:
+
+```ts
+import { Avatar, AvatarImage, AvatarFallback } from "@eqtylab/equality";
+```
+
+Basic usage with an image and fallback:
+
+```tsx
+<Avatar>
+  <AvatarImage src="/path/to/image.jpg" alt="User name" />
+  <AvatarFallback>AB</AvatarFallback>
+</Avatar>
+```
+
+## Variants
+
+### Image
+
+When a valid `src` is provided to `AvatarImage`, the avatar displays the image.
 
 <AvatarDemo client:only="react" />
 
-### Avatar Fallback
+### Fallback
+
+When no image is provided or the image fails to load, `AvatarFallback` is displayed instead, typically showing initials.
 
 <AvatarDemo client:only="react" variant="fallback" />
 
-## Size Variants
+## Sizes
 
-### Small
+The `size` prop controls the dimensions of the avatar.
 
-<AvatarDemo client:only="react" variant="fallback" size="sm" />
+<AvatarSizesDemo client:only="react" />
 
-### Medium (Default)
+```tsx
+<Avatar size="sm">...</Avatar>
+<Avatar size="md">...</Avatar>
+<Avatar size="lg">...</Avatar>
+<Avatar size="xl">...</Avatar>
+```
 
-<AvatarDemo client:only="react" variant="fallback" />
+## Shape
 
-### Large
-
-<AvatarDemo client:only="react" variant="fallback" size="lg" />
-
-### Extra Large
-
-<AvatarDemo client:only="react" variant="fallback" size="xl" />
-
-## Shape Variants
+The `shape` prop controls the border radius of the avatar.
 
 ### Circle (Default)
 
-<AvatarDemo client:only="react" variant="fallback" />
+<AvatarShapeDemo client:only="react" shape="circle" />
 
 ### Square
 
-<AvatarDemo client:only="react" variant="fallback" shape="square" />
+<AvatarShapeDemo client:only="react" shape="square" />
+
+```tsx
+<Avatar shape="circle">...</Avatar>
+<Avatar shape="square">...</Avatar>
+```
+
+## Slots
+
+| Name       | Description                                            |
+| ---------- | ------------------------------------------------------ |
+| `children` | Accepts `AvatarImage` and `AvatarFallback` as children |
+
+## Props
+
+### Avatar
+
+| Name    | Description             | Type                   | Default  | Required |
+| ------- | ----------------------- | ---------------------- | -------- | -------- |
+| `size`  | The size of the avatar  | `sm`, `md`, `lg`, `xl` | `md`     | ❌       |
+| `shape` | The shape of the avatar | `circle`, `square`     | `circle` | ❌       |
+
+### AvatarImage
+
+| Name  | Description                   | Type     | Default | Required |
+| ----- | ----------------------------- | -------- | ------- | -------- |
+| `src` | The image source URL          | `string` | -       | ❌       |
+| `alt` | Accessible alt text for image | `string` | -       | ❌       |
+
+### AvatarFallback
+
+No properties, but needs child content to render.
