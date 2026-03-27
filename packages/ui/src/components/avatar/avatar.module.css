@@ -3,6 +3,7 @@
 .avatar {
   @apply relative flex;
   @apply overflow-hidden;
+  @apply aspect-square;
 }
 
 .avatar-image {
@@ -21,24 +22,36 @@
 
 /* Size Variants */
 
+/* .avatar.xs {
+  @apply size-3;
+} */
+
 .avatar.sm {
-  @apply size-8;
+  @apply size-4;
 }
 
 .avatar.md {
-  @apply size-10;
+  @apply size-6;
 }
 
 .avatar.lg {
-  @apply size-12;
+  @apply size-8;
 }
 
 .avatar.xl {
-  @apply size-14;
+  @apply size-10;
 }
 
+/* .avatar.xs .avatar-fallback {
+  @apply text-[0.4rem];
+} */
+
 .avatar.sm .avatar-fallback {
-  @apply text-xs;
+  @apply text-[0.5rem];
+}
+
+.avatar.md .avatar-fallback {
+  @apply text-sm;
 }
 
 .avatar.lg .avatar-fallback {

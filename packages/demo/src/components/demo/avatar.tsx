@@ -1,4 +1,7 @@
 import { Avatar, AvatarFallback, AvatarImage } from "@eqtylab/equality";
+import avatarSrc from "@demo/assets/avatar.avif";
+
+const IMAGE_SRC = avatarSrc.src;
 
 export const AvatarDemo = ({
   variant = "default",
@@ -12,13 +15,54 @@ export const AvatarDemo = ({
   return (
     <Avatar size={size} shape={shape}>
       <AvatarImage
-        src={
-          variant === "default"
-            ? "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-            : undefined
-        }
+        src={variant === "default" ? IMAGE_SRC : undefined}
+        alt="User avatar"
       />
       <AvatarFallback>RG</AvatarFallback>
     </Avatar>
+  );
+};
+
+export const AvatarSizesDemo = ({
+  variant = "fallback",
+  shape,
+}: {
+  variant?: "default" | "fallback";
+  shape?: "circle" | "square";
+}) => {
+  const sizes = ["sm", "md", "lg", "xl"] as const;
+  const labels = { sm: "SM", md: "MD", lg: "LG", xl: "XL" };
+  return (
+    <div className="flex items-end gap-4">
+      {sizes.map((s) => (
+        <Avatar key={s} size={s} shape={shape}>
+          <AvatarImage
+            src={variant === "default" ? IMAGE_SRC : undefined}
+            alt="User avatar"
+          />
+          <AvatarFallback>{labels[s]}</AvatarFallback>
+        </Avatar>
+      ))}
+    </div>
+  );
+};
+
+export const AvatarShapeDemo = ({
+  variant = "fallback",
+  shape,
+}: {
+  variant?: "default" | "fallback";
+  shape: "circle" | "square";
+}) => {
+  return (
+    <div className="flex items-center gap-4">
+      <Avatar shape={shape}>
+        <AvatarFallback>RG</AvatarFallback>
+      </Avatar>
+      <Avatar shape={shape}>
+        <AvatarImage src={IMAGE_SRC} alt="User avatar" />
+        <AvatarFallback>RG</AvatarFallback>
+      </Avatar>
+    </div>
   );
 };
