@@ -11,10 +11,10 @@ const TableContainer = React.forwardRef<
   HTMLTableElement,
   React.HTMLAttributes<HTMLTableElement> &
     VariantProps<typeof tableElevationVariants> & {
-      tableLayout?: 'auto' | 'fixed';
       border?: boolean;
+      columns?: string;
     }
->(({ className, style, elevation = ELEVATION.RAISED, tableLayout, border, ...props }, ref) => (
+>(({ className, style, elevation = ELEVATION.RAISED, border, columns, ...props }, ref) => (
   <div
     className={cn(
       styles['table'],
@@ -22,14 +22,9 @@ const TableContainer = React.forwardRef<
       border && styles['table-border'],
       className
     )}
-    style={style}
+    style={columns ? ({ ...style, '--table-columns': columns } as React.CSSProperties) : style}
   >
-    <table
-      ref={ref}
-      className={styles['table-inner']}
-      style={tableLayout ? { tableLayout } : undefined}
-      {...props}
-    />
+    <table ref={ref} className={styles['table-inner']} {...props} />
   </div>
 ));
 TableContainer.displayName = 'Table';
@@ -76,23 +71,20 @@ TableRow.displayName = 'TableRow';
 
 const TableHead = React.forwardRef<
   HTMLTableCellElement,
-  React.ThHTMLAttributes<HTMLTableCellElement> & { truncate?: boolean }
->(({ className, truncate, ...props }, ref) => (
-  <th
-    ref={ref}
-    className={cn(styles['table-head'], truncate && styles['table-head--truncate'], className)}
-    {...props}
-  />
+  React.ThHTMLAttributes<HTMLTableCellElement>
+>(({ className, ...props }, ref) => (
+  <th ref={ref} className={cn(styles['table-head'], className)} {...props} />
 ));
 TableHead.displayName = 'TableHead';
 
 const TableCell = React.forwardRef<
   HTMLTableCellElement,
-  React.TdHTMLAttributes<HTMLTableCellElement> & { truncate?: boolean }
->(({ className, truncate, ...props }, ref) => (
+  React.TdHTMLAttributes<HTMLTableCellElement>
+>(({ className, colSpan, style, ...props }, ref) => (
   <td
     ref={ref}
-    className={cn(styles['table-cell'], truncate && styles['table-cell--truncate'], className)}
+    className={cn(styles['table-cell'], className)}
+    style={colSpan ? { gridColumn: `span ${colSpan}`, ...style } : style}
     {...props}
   />
 ));

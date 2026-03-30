@@ -27,20 +27,22 @@ interface TableDemoProps {
   elevation?: Elevation;
 }
 
+const defaultCols = "1fr 1fr auto auto auto";
+
 export const TableDemo = ({
   variant = "default",
   elevation,
 }: TableDemoProps) => {
   if (variant === "column-sizing") {
     return (
-      <TableContainer tableLayout="fixed" elevation={elevation}>
+      <TableContainer elevation={elevation} columns="3fr 3fr 100px 100px 60px">
         <TableHeader>
           <TableRow>
-            <TableHead className="w-[30%]">Name</TableHead>
-            <TableHead className="w-[30%]">Email</TableHead>
-            <TableHead className="w-[100px]">Role</TableHead>
-            <TableHead className="w-[100px]">Status</TableHead>
-            <TableHead className="w-[60px]" />
+            <TableHead>Name</TableHead>
+            <TableHead>Email</TableHead>
+            <TableHead>Role</TableHead>
+            <TableHead>Status</TableHead>
+            <TableHead />
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -84,22 +86,23 @@ export const TableDemo = ({
 
   if (variant === "truncation") {
     return (
-      <TableContainer tableLayout="fixed" elevation={elevation}>
+      <TableContainer
+        elevation={elevation}
+        columns="minmax(0,5fr) minmax(0,8fr) 100px 100px 60px"
+      >
         <TableHeader>
           <TableRow>
-            <TableHead className="w-[25%]">Name</TableHead>
-            <TableHead className="w-[40%]" truncate>
-              Email
-            </TableHead>
-            <TableHead className="w-[100px]">Role</TableHead>
-            <TableHead className="w-[100px]">Status</TableHead>
-            <TableHead className="w-[60px]" />
+            <TableHead>Name</TableHead>
+            <TableHead className="min-w-0 truncate">Email</TableHead>
+            <TableHead>Role</TableHead>
+            <TableHead>Status</TableHead>
+            <TableHead />
           </TableRow>
         </TableHeader>
         <TableBody>
           <TableRow>
             <TableCell>Alice Cooper</TableCell>
-            <TableCell truncate>
+            <TableCell className="min-w-0 truncate">
               alice.cooper.very.long.email.address@example.com
             </TableCell>
             <TableCell>Admin</TableCell>
@@ -112,7 +115,7 @@ export const TableDemo = ({
           </TableRow>
           <TableRow>
             <TableCell>Bob Smith</TableCell>
-            <TableCell truncate>bob@example.com</TableCell>
+            <TableCell className="min-w-0 truncate">bob@example.com</TableCell>
             <TableCell>User</TableCell>
             <TableCell>
               <Badge variant="success">Active</Badge>
@@ -123,7 +126,7 @@ export const TableDemo = ({
           </TableRow>
           <TableRow>
             <TableCell>Charlie Brown</TableCell>
-            <TableCell truncate>
+            <TableCell className="min-w-0 truncate">
               charlie.brown.another.really.long.address@longdomain.example.com
             </TableCell>
             <TableCell>Viewer</TableCell>
@@ -142,23 +145,27 @@ export const TableDemo = ({
   if (variant === "responsive") {
     return (
       <div className="@container">
-        <TableContainer elevation={elevation}>
+        <TableContainer
+          elevation={elevation}
+          columns="1fr auto auto"
+          className="@md:[--table-columns:1fr_1fr_auto_auto] @lg:[--table-columns:1fr_1fr_auto_auto_auto]"
+        >
           <TableHeader>
             <TableRow>
               <TableHead>Name</TableHead>
-              <TableHead className="hidden @md:table-cell">Email</TableHead>
-              <TableHead className="hidden @lg:table-cell">Role</TableHead>
+              <TableHead className="hidden @md:block">Email</TableHead>
+              <TableHead className="hidden @lg:block">Role</TableHead>
               <TableHead>Status</TableHead>
-              <TableHead className="w-[1%]" />
+              <TableHead />
             </TableRow>
           </TableHeader>
           <TableBody>
             <TableRow>
               <TableCell>Alice Cooper</TableCell>
-              <TableCell className="hidden @md:table-cell">
+              <TableCell className="hidden @md:block">
                 alice@example.com
               </TableCell>
-              <TableCell className="hidden @lg:table-cell">Admin</TableCell>
+              <TableCell className="hidden @lg:block">Admin</TableCell>
               <TableCell>
                 <Badge variant="success">Active</Badge>
               </TableCell>
@@ -168,10 +175,10 @@ export const TableDemo = ({
             </TableRow>
             <TableRow>
               <TableCell>Bob Smith</TableCell>
-              <TableCell className="hidden @md:table-cell">
+              <TableCell className="hidden @md:block">
                 bob@example.com
               </TableCell>
-              <TableCell className="hidden @lg:table-cell">User</TableCell>
+              <TableCell className="hidden @lg:block">User</TableCell>
               <TableCell>
                 <Badge variant="success">Active</Badge>
               </TableCell>
@@ -181,10 +188,10 @@ export const TableDemo = ({
             </TableRow>
             <TableRow>
               <TableCell>Charlie Brown</TableCell>
-              <TableCell className="hidden @md:table-cell">
+              <TableCell className="hidden @md:block">
                 charlie@example.com
               </TableCell>
-              <TableCell className="hidden @lg:table-cell">Viewer</TableCell>
+              <TableCell className="hidden @lg:block">Viewer</TableCell>
               <TableCell>
                 <Badge variant="neutral">Inactive</Badge>
               </TableCell>
@@ -200,14 +207,19 @@ export const TableDemo = ({
 
   if (variant === "sticky-header") {
     return (
-      <TableContainer elevation={elevation} className="max-h-[240px]" border>
+      <TableContainer
+        elevation={elevation}
+        className="max-h-[240px]"
+        columns={defaultCols}
+        border
+      >
         <TableHeader sticky>
           <TableRow>
             <TableHead>Name</TableHead>
             <TableHead>Email</TableHead>
             <TableHead>Role</TableHead>
             <TableHead>Status</TableHead>
-            <TableHead className="w-[1%]" />
+            <TableHead />
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -282,7 +294,7 @@ export const TableDemo = ({
 
   if (variant === "with-sorter") {
     return (
-      <TableContainer elevation={elevation}>
+      <TableContainer elevation={elevation} columns={defaultCols}>
         <TableHeader>
           <TableRow>
             <TableHead>
@@ -325,7 +337,7 @@ export const TableDemo = ({
                 Status
               </SortButton>
             </TableHead>
-            <TableHead className="w-[1%]" />
+            <TableHead />
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -369,14 +381,14 @@ export const TableDemo = ({
 
   if (variant === "empty-state") {
     return (
-      <TableContainer elevation={elevation} border>
+      <TableContainer elevation={elevation} columns={defaultCols} border>
         <TableHeader>
           <TableRow>
             <TableHead>Name</TableHead>
             <TableHead>Email</TableHead>
             <TableHead>Role</TableHead>
             <TableHead>Status</TableHead>
-            <TableHead className="w-[1%]" />
+            <TableHead />
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -395,14 +407,14 @@ export const TableDemo = ({
 
   if (variant === "empty-state-custom") {
     return (
-      <TableContainer elevation={elevation} border>
+      <TableContainer elevation={elevation} columns={defaultCols} border>
         <TableHeader>
           <TableRow>
             <TableHead>Name</TableHead>
             <TableHead>Email</TableHead>
             <TableHead>Role</TableHead>
             <TableHead>Status</TableHead>
-            <TableHead className="w-[1%]" />
+            <TableHead />
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -423,14 +435,18 @@ export const TableDemo = ({
   }
 
   return (
-    <TableContainer elevation={elevation} border={variant === "with-border"}>
+    <TableContainer
+      elevation={elevation}
+      columns={defaultCols}
+      border={variant === "with-border"}
+    >
       <TableHeader>
         <TableRow>
           <TableHead>Name</TableHead>
           <TableHead>Email</TableHead>
           <TableHead>Role</TableHead>
           <TableHead>Status</TableHead>
-          <TableHead className="w-[1%]" />
+          <TableHead />
         </TableRow>
       </TableHeader>
       <TableBody>
