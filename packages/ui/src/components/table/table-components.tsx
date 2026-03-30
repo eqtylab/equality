@@ -80,13 +80,8 @@ TableHead.displayName = 'TableHead';
 const TableCell = React.forwardRef<
   HTMLTableCellElement,
   React.TdHTMLAttributes<HTMLTableCellElement>
->(({ className, colSpan, style, ...props }, ref) => (
-  <td
-    ref={ref}
-    className={cn(styles['table-cell'], className)}
-    style={colSpan ? { gridColumn: `span ${colSpan}`, ...style } : style}
-    {...props}
-  />
+>(({ className, ...props }, ref) => (
+  <td ref={ref} className={cn(styles['table-cell'], className)} {...props} />
 ));
 TableCell.displayName = 'TableCell';
 

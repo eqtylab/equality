@@ -19,7 +19,7 @@ Rows use CSS Grid with [subgrid](https://developer.mozilla.org/en-US/docs/Web/CS
 - **TableHeader / TableBody / TableFooter:** Semantic section wrappers (`<thead>`, `<tbody>`, `<tfoot>`).
 - **TableRow:** A table row (`<tr>`) that inherits column tracks via subgrid.
 - **TableHead:** A column header cell (`<th>`).
-- **TableCell:** A data cell (`<td>`). Supports `colSpan` which auto-converts to `grid-column`.
+- **TableCell:** A data cell (`<td>`).
 
 ## Usage
 
@@ -130,7 +130,7 @@ Use the `border` prop on `TableContainer` to apply an elevation-aware border wit
 
 ### Empty State
 
-When there are no rows, render empty state content in a `<TableCell>` that spans all columns with `colSpan`. The `colSpan` value is automatically converted to `grid-column` for CSS Grid compatibility.
+When there are no rows, render empty state content in a `<TableCell>` that spans all columns with `style={{ gridColumn: '1 / -1' }}`.
 
 <TableDemo client:only="react" variant="empty-state" />
 

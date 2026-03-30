@@ -393,7 +393,7 @@ export const TableDemo = ({
         <TableBody>
           <TableRow>
             <TableCell
-              colSpan={5}
+              style={{ gridColumn: "1 / -1" }}
               className="text-text-secondary py-8 text-center"
             >
               No data available
@@ -418,7 +418,7 @@ export const TableDemo = ({
         </TableHeader>
         <TableBody>
           <TableRow>
-            <TableCell colSpan={5}>
+            <TableCell style={{ gridColumn: "1 / -1" }}>
               <EmptyTableState
                 icon="SearchX"
                 title="No Members Found"
