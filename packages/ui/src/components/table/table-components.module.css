@@ -37,7 +37,7 @@
 
 .table-head {
   @apply h-10;
-  @apply px-4;
+  @apply content-center px-4;
   @apply text-text-primary text-left font-medium transition-colors;
   @apply [&:has([role=checkbox])]:pr-0;
 }

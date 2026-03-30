@@ -147,8 +147,7 @@ export const TableDemo = ({
       <div className="@container">
         <TableContainer
           elevation={elevation}
-          columns="1fr auto auto"
-          className="@md:[--table-columns:1fr_1fr_auto_auto] @lg:[--table-columns:1fr_1fr_auto_auto_auto]"
+          className="[--table-columns:1fr_auto_auto] @md:[--table-columns:1fr_1fr_auto_auto] @lg:[--table-columns:1fr_1fr_auto_auto_auto]"
         >
           <TableHeader>
             <TableRow>

@@ -235,7 +235,7 @@ Use Tailwind's `truncate min-w-0` classes directly on `<TableHead>` and `<TableC
 
 ---
 
-Use [container queries](https://tailwindcss.com/docs/responsive-design#what-are-container-queries) to override the `--table-columns` CSS variable at breakpoints. Apply `hidden`/`@md:block` on cells for columns that should collapse.
+Use [container queries](https://tailwindcss.com/docs/responsive-design#what-are-container-queries) to override the `--table-columns` CSS variable at each breakpoint, matching the number of visible columns. Apply `hidden`/`@md:block` on cells for columns that should collapse. Hidden cells are removed from the grid flow, and the remaining visible cells auto-place into the available tracks. Use `className` instead of the `columns` prop so that responsive overrides aren't blocked by inline style specificity.
 
 <TableDemo client:only="react" variant="responsive" />
 
@@ -243,10 +243,7 @@ Use [container queries](https://tailwindcss.com/docs/responsive-design#what-are-
 
 ```tsx
 <div className="@container">
-  <TableContainer
-    columns="1fr auto auto"
-    className="@md:[--table-columns:1fr_1fr_auto_auto] @lg:[--table-columns:1fr_1fr_auto_auto_auto]"
-  >
+  <TableContainer className="[--table-columns:1fr_auto_auto] @md:[--table-columns:1fr_1fr_auto_auto] @lg:[--table-columns:1fr_1fr_auto_auto_auto]">
     <TableHeader>
       <TableRow>
         <TableHead>Name</TableHead>
