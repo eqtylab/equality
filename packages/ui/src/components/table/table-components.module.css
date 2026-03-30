@@ -5,12 +5,16 @@
 }
 
 .table-inner {
-  @apply w-full;
+  @apply grid w-full;
   @apply caption-bottom text-sm;
+  grid-template-columns: var(--table-columns);
 }
 
 .table-header {
   @apply [&_tr]:border-b;
+  @apply grid;
+  grid-template-columns: subgrid;
+  grid-column: 1 / -1;
 }
 
 .table-header--sticky {
@@ -19,24 +23,34 @@
 
 .table-body {
   @apply [&_tr:last-child]:border-0;
+  @apply grid;
+  grid-template-columns: subgrid;
+  grid-column: 1 / -1;
 }
 
 .table-footer {
   @apply border-t last:[&>tr]:border-b-0;
-  @apply font-medium;
+  @apply grid font-medium;
+  grid-template-columns: subgrid;
+  grid-column: 1 / -1;
 }
 
 .table-head {
   @apply h-10;
-  @apply px-4 align-middle;
+  @apply content-center px-4;
   @apply text-text-primary text-left font-medium transition-colors;
   @apply [&:has([role=checkbox])]:pr-0;
 }
 
 .table-cell {
   @apply px-4 py-2;
-  @apply align-middle;
   @apply [&:has([role=checkbox])]:pr-0;
+}
+
+.table-row {
+  @apply grid items-center;
+  grid-template-columns: subgrid;
+  grid-column: 1 / -1;
 }
 
 /* Clickable Variant */
@@ -48,13 +62,6 @@
   @apply cursor-pointer;
   @apply hover:bg-mixed-light! dark:hover:bg-mixed-dark!;
   @apply data-[state=selected]:bg-mixed-light dark:data-[state=selected]:bg-mixed-dark;
-}
-
-/* Truncate Variants */
-
-.table-head--truncate,
-.table-cell--truncate {
-  @apply max-w-0 overflow-hidden text-ellipsis whitespace-nowrap;
 }
 
 .table-caption {

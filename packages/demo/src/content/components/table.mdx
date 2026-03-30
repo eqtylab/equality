@@ -13,11 +13,13 @@ import { ELEVATION } from "@eqtylab/equality";
 
 Tables are built from compositional primitives that map directly to [HTML table elements](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/table). Each primitive is a styled wrapper that accepts all native HTML attributes, giving you full control over layout, sizing, and responsiveness.
 
-- **TableContainer:** Wraps the `<table>` in a scrollable container with elevation styling.
+Rows use CSS Grid with [subgrid](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_grid_layout/Subgrid) for column sizing. Define columns once via the `columns` prop on `<TableContainer>` — all rows share the same column tracks.
+
+- **TableContainer:** Wraps the `<table>` in a scrollable container with elevation styling. Accepts a `columns` prop for CSS Grid column sizing.
 - **TableHeader / TableBody / TableFooter:** Semantic section wrappers (`<thead>`, `<tbody>`, `<tfoot>`).
-- **TableRow:** A table row (`<tr>`) that accepts `onClick` for clickable rows.
-- **TableHead:** A column header cell (`<th>`) with a `truncate` prop for overflow control.
-- **TableCell:** A data cell (`<td>`) with a `truncate` prop for overflow control.
+- **TableRow:** A table row (`<tr>`) that inherits column tracks via subgrid.
+- **TableHead:** A column header cell (`<th>`).
+- **TableCell:** A data cell (`<td>`).
 
 ## Usage
 
@@ -39,17 +41,19 @@ import {
 Basic usage:
 
 ```tsx
-<TableContainer>
+<TableContainer columns="1fr 1fr auto">
   <TableHeader>
     <TableRow>
       <TableHead>Name</TableHead>
       <TableHead>Email</TableHead>
+      <TableHead>Role</TableHead>
     </TableRow>
   </TableHeader>
   <TableBody>
     <TableRow>
       <TableCell>Alice Cooper</TableCell>
       <TableCell>alice@example.com</TableCell>
+      <TableCell>Admin</TableCell>
     </TableRow>
   </TableBody>
 </TableContainer>
@@ -86,7 +90,7 @@ import {
   TableHead,
 } from "@eqtylab/equality";
 
-<TableContainer>
+<TableContainer columns="1fr 1fr auto auto">
   <TableHeader>
     <TableRow>
       <TableHead>
@@ -113,7 +117,7 @@ Use the `border` prop on `TableContainer` to apply an elevation-aware border wit
 #### Usage
 
 ```tsx
-<TableContainer border>
+<TableContainer columns="1fr 1fr auto" border>
   <TableHeader>
     <TableRow>
       <TableHead>Name</TableHead>
@@ -126,7 +130,7 @@ Use the `border` prop on `TableContainer` to apply an elevation-aware border wit
 
 ### Empty State
 
-When there are no rows, render empty state content in a `<TableCell>` that spans all columns with `colSpan`.
+When there are no rows, render empty state content in a `<TableCell>` that spans all columns with `style={{ gridColumn: '1 / -1' }}`.
 
 <TableDemo client:only="react" variant="empty-state" />
 
@@ -145,7 +149,7 @@ Use the `sticky` prop on `<TableHeader>` to keep column headers visible while sc
 #### Usage
 
 ```tsx
-<TableContainer className="max-h-[400px]">
+<TableContainer columns="1fr 1fr auto" className="max-h-[400px]">
   <TableHeader sticky>
     <TableRow>
       <TableHead>Name</TableHead>
@@ -160,80 +164,68 @@ Use the `sticky` prop on `<TableHeader>` to keep column headers visible while sc
 
 ---
 
-Use the `tableLayout` prop on `TableContainer` to control how column widths are calculated. Set explicit widths on `<TableHead>` cells using Tailwind classes.
+The `columns` prop accepts a CSS [`grid-template-columns`](https://developer.mozilla.org/en-US/docs/Web/CSS/grid-template-columns) value. All rows share the same column tracks via CSS subgrid.
 
-### Fixed Layout
+### Fixed and Flexible Columns
 
-With `tableLayout="fixed"`, columns respect explicit widths exactly. This is the recommended approach when you need predictable column sizing.
+Mix `fr` units for flexible columns with fixed pixel values for predictable sizing.
 
 <TableDemo client:only="react" variant="column-sizing" />
 
 #### Usage
 
 ```tsx
-<TableContainer tableLayout="fixed">
+<TableContainer columns="3fr 3fr 100px 100px 60px">
   <TableHeader>
     <TableRow>
-      <TableHead className="w-[30%]">Name</TableHead>
-      <TableHead className="w-[30%]">Email</TableHead>
-      <TableHead className="w-[100px]">Role</TableHead>
-      <TableHead className="w-[100px]">Status</TableHead>
-      <TableHead className="w-[60px]" />
+      <TableHead>Name</TableHead>
+      <TableHead>Email</TableHead>
+      <TableHead>Role</TableHead>
+      <TableHead>Status</TableHead>
+      <TableHead />
     </TableRow>
   </TableHeader>
 </TableContainer>
 ```
 
-### Min and Max Width
+### Content-Sized Columns
 
-Use `min-w-` or `max-w-` Tailwind classes on `<TableHead>` to constrain column sizes. `min-w-` works in both `auto` and `fixed` layouts. `max-w-` works best with the default `auto` layout.
-
-```tsx
-{
-  /* Column won't shrink below 150px */
-}
-<TableHead className="min-w-[150px]">Description</TableHead>;
-
-{
-  /* Column won't grow beyond 300px — pair with truncate */
-}
-<TableHead className="max-w-[300px]" truncate>
-  Email
-</TableHead>;
-```
-
-### Shrink to Content
-
-In the default `auto` layout, use `w-[1%]` to minimize a column to fit its content. The browser's table algorithm ensures the column still renders at least as wide as its content, while giving all remaining space to other columns. This is useful for action columns or icon-only columns.
+Use `auto` for columns that should shrink to fit their content. This is useful for action columns or icon-only columns.
 
 ```tsx
-<TableHead className="w-[1%]">{/* Actions */}</TableHead>
+<TableContainer columns="1fr 1fr auto auto auto">
 ```
 
 ## Truncation
 
 ---
 
-Use the `truncate` prop on `<TableHead>` and `<TableCell>` to clip overflowing text with an ellipsis. This works best with `tableLayout="fixed"` and an explicit column width so the cell has a defined boundary to truncate against.
+Use Tailwind's `truncate min-w-0` classes directly on `<TableHead>` and `<TableCell>` to clip overflowing text with an ellipsis. For truncation to work, the column must use `minmax(0, *)` in the `columns` definition so cells can shrink below their content size.
 
 <TableDemo client:only="react" variant="truncation" />
 
 #### Usage
 
 ```tsx
-<TableContainer tableLayout="fixed">
+<TableContainer columns="minmax(0,5fr) minmax(0,8fr) 100px 100px 60px">
   <TableHeader>
     <TableRow>
-      <TableHead className="w-[25%]">Name</TableHead>
-      <TableHead className="w-[40%]" truncate>
-        Email
-      </TableHead>
+      <TableHead>Name</TableHead>
+      <TableHead className="min-w-0 truncate">Email</TableHead>
+      <TableHead>Role</TableHead>
+      <TableHead>Status</TableHead>
+      <TableHead />
     </TableRow>
   </TableHeader>
   <TableBody>
     <TableRow>
       <TableCell>Alice Cooper</TableCell>
-      <TableCell truncate>alice.cooper.very.long.email@example.com</TableCell>
+      <TableCell className="min-w-0 truncate">
+        alice.cooper.very.long.email@example.com
+      </TableCell>
+      <TableCell>Admin</TableCell>
+      <TableCell>Active</TableCell>
+      <TableCell />
     </TableRow>
   </TableBody>
 </TableContainer>
@@ -243,7 +235,7 @@ Use the `truncate` prop on `<TableHead>` and `<TableCell>` to clip overflowing t
 
 ---
 
-Use [container queries](https://tailwindcss.com/docs/responsive-design#what-are-container-queries) to show or hide columns based on the table's container width. Wrap the table in a `@container` element and apply `hidden @md:table-cell` (or similar) to both the `<TableHead>` and `<TableCell>` for columns that should collapse.
+Use [container queries](https://tailwindcss.com/docs/responsive-design#what-are-container-queries) to override the `--table-columns` CSS variable at each breakpoint, matching the number of visible columns. Apply `hidden`/`@md:block` on cells for columns that should collapse. Hidden cells are removed from the grid flow, and the remaining visible cells auto-place into the available tracks. Use `className` instead of the `columns` prop so that responsive overrides aren't blocked by inline style specificity.
 
 <TableDemo client:only="react" variant="responsive" />
 
@@ -251,25 +243,25 @@ Use [container queries](https://tailwindcss.com/docs/responsive-design#what-are-
 
 ```tsx
 <div className="@container">
-  <TableContainer>
+  <TableContainer className="[--table-columns:1fr_auto_auto] @md:[--table-columns:1fr_1fr_auto_auto] @lg:[--table-columns:1fr_1fr_auto_auto_auto]">
     <TableHeader>
       <TableRow>
         <TableHead>Name</TableHead>
-        <TableHead className="hidden @md:table-cell">Email</TableHead>
-        <TableHead className="hidden @lg:table-cell">Role</TableHead>
+        <TableHead className="hidden @md:block">Email</TableHead>
+        <TableHead className="hidden @lg:block">Role</TableHead>
         <TableHead>Status</TableHead>
+        <TableHead />
       </TableRow>
     </TableHeader>
     <TableBody>
       <TableRow>
         <TableCell>Alice Cooper</TableCell>
-        <TableCell className="hidden @md:table-cell">
-          alice@example.com
-        </TableCell>
-        <TableCell className="hidden @lg:table-cell">Admin</TableCell>
+        <TableCell className="hidden @md:block">alice@example.com</TableCell>
+        <TableCell className="hidden @lg:block">Admin</TableCell>
         <TableCell>
           <Badge variant="success">Active</Badge>
         </TableCell>
+        <TableCell />
       </TableRow>
     </TableBody>
   </TableContainer>
@@ -302,11 +294,11 @@ Use [container queries](https://tailwindcss.com/docs/responsive-design#what-are-
 
 ### TableContainer
 
-| Name          | Description                                            | Type                                  | Default  | Required |
-| ------------- | ------------------------------------------------------ | ------------------------------------- | -------- | -------- |
-| `elevation`   | Controls the shadow and background styling             | `sunken`, `base`, `raised`, `overlay` | `raised` | ❌       |
-| `tableLayout` | Controls the CSS table-layout algorithm                | `auto`, `fixed`                       | `auto`   | ❌       |
-| `border`      | Applies an elevation-aware border with rounded corners | `boolean`                             | `false`  | ❌       |
+| Name        | Description                                            | Type                                  | Default  | Required |
+| ----------- | ------------------------------------------------------ | ------------------------------------- | -------- | -------- |
+| `columns`   | CSS `grid-template-columns` value for column sizing    | `string`                              | —        | ❌       |
+| `elevation` | Controls the shadow and background styling             | `sunken`, `base`, `raised`, `overlay` | `raised` | ❌       |
+| `border`    | Applies an elevation-aware border with rounded corners | `boolean`                             | `false`  | ❌       |
 
 ### TableHeader
 
@@ -319,15 +311,3 @@ Use [container queries](https://tailwindcss.com/docs/responsive-design#what-are-
 | Name        | Description                                 | Type      | Default | Required |
 | ----------- | ------------------------------------------- | --------- | ------- | -------- |
 | `clickable` | Applies hover and cursor interaction styles | `boolean` | `false` | ❌       |
-
-### TableHead
-
-| Name       | Description                                | Type      | Default | Required |
-| ---------- | ------------------------------------------ | --------- | ------- | -------- |
-| `truncate` | Clips overflowing content with an ellipsis | `boolean` | `false` | ❌       |
-
-### TableCell
-
-| Name       | Description                                | Type      | Default | Required |
-| ---------- | ------------------------------------------ | --------- | ------- | -------- |
-| `truncate` | Clips overflowing content with an ellipsis | `boolean` | `false` | ❌       |
