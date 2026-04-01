@@ -12,8 +12,6 @@ import {
 
 ## Overview
 
----
-
 The Badge component comes with four color variants to visually communicate different statuses or contexts:
 
 - **Primary:** The default style, suitable for general labeling.
@@ -26,8 +24,6 @@ The Badge component comes with four color variants to visually communicate diffe
 For control compliance and resource types see [ControlStatusBadge](control-status-badge) and [ResourceBadge](resource-badge) respectively.
 
 ## Usage
-
----
 
 Import the component:
 
@@ -42,8 +38,6 @@ import { Badge } from "@eqtylab/equality";
 ```
 
 ## Basic Variants
-
----
 
 <div className="grid grid-cols-[auto_auto_auto] gap-6">
   <div className="flex flex-col items-start space-y-3">
@@ -83,8 +77,6 @@ import { Badge } from "@eqtylab/equality";
 
 ## Sizes
 
----
-
 The Badge comes in two sizes. The default `md` size is 20px tall and should be used in most situations, while `sm` is 16px tall for use in tighter layouts where density is desired (such as log viewers). Small badges generally look better with `pill={false}` applied.
 
 <div className="flex items-center gap-3">
@@ -107,8 +99,6 @@ The Badge comes in two sizes. The default `md` size is 20px tall and should be u
 
 ## Pill Shape
 
----
-
 Badges are pill-shaped by default. Set `pill={false}` when using badges along with dense in-line text.
 
 <div className="flex items-center gap-3">
@@ -124,8 +114,6 @@ Badges are pill-shaped by default. Set `pill={false}` when using badges along wi
 ```
 
 ## Display Modes
-
----
 
 The Badge component supports three display modes to control what content is shown:
 
@@ -172,15 +160,11 @@ The closable variant of the Badge is commonly used to represent active filters o
 
 ## Truncation
 
----
-
 The Badge component supports text truncation for long content. Use the `truncate` prop to enable truncation, and optionally set a custom `truncateLength` (defaults to 50 characters). When text exceeds the specified length, it will be truncated with an ellipsis ("..."), and the full text will be displayed in a tooltip on hover. This is particularly useful for maintaining consistent badge sizes when displaying variable-length content.
 
 <BadgeTruncateDemo client:only="react" />
 
 ## Monospace
-
----
 
 Use the `monospace` prop when badges will be rendered atop one another and their contents always or often share the same character count.
 
@@ -202,8 +186,6 @@ Use the `monospace` prop when badges will be rendered atop one another and their
 
 ## Icons
 
----
-
 You can enhance your badge by displaying an icon. The `icon` prop accepts either a string corresponding to any [Lucide React](https://lucide.dev/icons/) icon key (such as `"Layers"` or `"CheckCircle"`), or you can provide a custom icon component. For custom icons, pass a React component or element to the `icon` prop.
 
 <Badge icon="Layers">This is a badge</Badge>
@@ -219,8 +201,6 @@ You can enhance your badge by displaying an icon. The `icon` prop accepts either
 ```
 
 ## Props
-
----
 
 | Prop             | Type                                                                                    | Default     | Description                                                                                                                       |
 | ---------------- | --------------------------------------------------------------------------------------- | ----------- | --------------------------------------------------------------------------------------------------------------------------------- |
