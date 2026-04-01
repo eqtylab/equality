@@ -1,8 +1,48 @@
 ---
 layout: "@demo/layouts/mdx-layout.astro"
 heading: "Filter Dropdown"
+description: "A dropdown menu for selecting multiple filter options"
 ---
 
 import { FilterDropdownDemo } from "@demo/components/demo/filter-dropdown";
 
+## Overview
+
+The Filter Dropdown component provides a multi-select dropdown for filtering content in tables or lists. The dropdown menu lists checkbox options that users can toggle on and off, with a "Clear all" action to reset selections within the component.
+
+## Usage
+
+Import the component:
+
+```tsx
+import { FilterDropdown } from "@eqtylab/equality";
+```
+
+Basic usage:
+
+```tsx
+<FilterDropdown
+  label="Scope"
+  options={[
+    { value: "organization", label: "Organization" },
+    { value: "project", label: "Project" },
+  ]}
+  selectedFilters={selectedFilters}
+  onToggleFilter={onToggleFilter}
+  onClearAll={onClearAll}
+/>
+```
+
+## Example
+
 <FilterDropdownDemo client:only="react" />
+
+## Props
+
+| Name              | Description                                                  | Type                                  | Default | Required |
+| ----------------- | ------------------------------------------------------------ | ------------------------------------- | ------- | -------- |
+| `label`           | The text displayed on the trigger button.                    | `string`                              | -       | ✅       |
+| `options`         | The list of filter options to display in the dropdown.       | `{ value: string; label: string; }[]` | -       | ✅       |
+| `selectedFilters` | Array of currently selected filter values.                   | `string[]`                            | -       | ✅       |
+| `onToggleFilter`  | Callback fired when a filter option is checked or unchecked. | `(value: string) => void`             | -       | ✅       |
+| `onClearAll`      | Callback fired when the "Clear all" button is clicked.       | `() => void`                          | -       | ✅       |
