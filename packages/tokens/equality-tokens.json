@@ -535,6 +535,14 @@
               "hex": "#9C652D"
             }
           },
+          "certificate": {
+            "$type": "color",
+            "$value": {
+              "colorSpace": "display-p3",
+              "components": [0.2534, 0.2782, 0.09737],
+              "hex": "#414719"
+            }
+          },
           "code": {
             "$type": "color",
             "$value": {
@@ -567,6 +575,14 @@
               "hex": "#244560"
             }
           },
+          "credential": {
+            "$type": "color",
+            "$value": {
+              "colorSpace": "display-p3",
+              "components": [0.2534, 0.2782, 0.09737],
+              "hex": "#414719"
+            }
+          },
           "database": {
             "$type": "color",
             "$value": {
@@ -597,14 +613,6 @@
               "colorSpace": "display-p3",
               "components": [0.3593, 0.1309, 0.3967],
               "hex": "#5C2165"
-            }
-          },
-          "inference": {
-            "$type": "color",
-            "$value": {
-              "colorSpace": "display-p3",
-              "components": [0.1689, 0.3045, 0.136],
-              "hex": "#2B4E23"
             }
           },
           "media": {
@@ -713,6 +721,14 @@
               "hex": "#EFD2B7"
             }
           },
+          "certificate": {
+            "$type": "color",
+            "$value": {
+              "colorSpace": "display-p3",
+              "components": [0.8033, 0.8266, 0.7044],
+              "hex": "#CDD3B4"
+            }
+          },
           "code": {
             "$type": "color",
             "$value": {
@@ -745,6 +761,14 @@
               "hex": "#B4D3E7"
             }
           },
+          "credential": {
+            "$type": "color",
+            "$value": {
+              "colorSpace": "display-p3",
+              "components": [0.8033, 0.8266, 0.7044],
+              "hex": "#CDD3B4"
+            }
+          },
           "database": {
             "$type": "color",
             "$value": {
@@ -775,14 +799,6 @@
               "colorSpace": "display-p3",
               "components": [0.8027, 0.5791, 0.8394],
               "hex": "#CD94D6"
-            }
-          },
-          "inference": {
-            "$type": "color",
-            "$value": {
-              "colorSpace": "display-p3",
-              "components": [0.7403, 0.8486, 0.7417],
-              "hex": "#BDD8BD"
             }
           },
           "media": {
@@ -2319,6 +2335,14 @@
               "hex": "#EFD2B7"
             }
           },
+          "certificate": {
+            "$type": "color",
+            "$value": {
+              "colorSpace": "display-p3",
+              "components": [0.8033, 0.8266, 0.7044],
+              "hex": "#CDD3B4"
+            }
+          },
           "code": {
             "$type": "color",
             "$value": {
@@ -2351,6 +2375,14 @@
               "hex": "#B4D3E7"
             }
           },
+          "credential": {
+            "$type": "color",
+            "$value": {
+              "colorSpace": "display-p3",
+              "components": [0.8033, 0.8266, 0.7044],
+              "hex": "#CDD3B4"
+            }
+          },
           "database": {
             "$type": "color",
             "$value": {
@@ -2381,14 +2413,6 @@
               "colorSpace": "display-p3",
               "components": [0.8859, 0.7455, 0.9086],
               "hex": "#E2BEE8"
-            }
-          },
-          "inference": {
-            "$type": "color",
-            "$value": {
-              "colorSpace": "display-p3",
-              "components": [0.7403, 0.8486, 0.7417],
-              "hex": "#BDD8BD"
             }
           },
           "media": {
@@ -2488,6 +2512,14 @@
             "hex": "#CD8338"
           }
         },
+        "certificate": {
+          "$type": "color",
+          "$value": {
+            "colorSpace": "display-p3",
+            "components": [0.4451, 0.4851, 0.1956],
+            "hex": "#727C32"
+          }
+        },
         "code": {
           "$type": "color",
           "$value": {
@@ -2520,6 +2552,14 @@
             "hex": "#357AA5"
           }
         },
+        "credential": {
+          "$type": "color",
+          "$value": {
+            "colorSpace": "display-p3",
+            "components": [0.4451, 0.4851, 0.1956],
+            "hex": "#727C32"
+          }
+        },
         "database": {
           "$type": "color",
           "$value": {
@@ -2550,14 +2590,6 @@
             "colorSpace": "display-p3",
             "components": [0.6289, 0.209, 0.6944],
             "hex": "#A035B1"
-          }
-        },
-        "inference": {
-          "$type": "color",
-          "$value": {
-            "colorSpace": "display-p3",
-            "components": [0.2946, 0.5328, 0.2433],
-            "hex": "#4B883E"
           }
         },
         "media": {
@@ -2641,6 +2673,14 @@
               "hex": "#432D17"
             }
           },
+          "certificate": {
+            "$type": "color",
+            "$value": {
+              "colorSpace": "display-p3",
+              "components": [0.1652, 0.183, 0.0523],
+              "hex": "#2A2F0D"
+            }
+          },
           "code": {
             "$type": "color",
             "$value": {
@@ -2673,6 +2713,14 @@
               "hex": "#192D40"
             }
           },
+          "credential": {
+            "$type": "color",
+            "$value": {
+              "colorSpace": "display-p3",
+              "components": [0.1652, 0.183, 0.0523],
+              "hex": "#2A2F0D"
+            }
+          },
           "database": {
             "$type": "color",
             "$value": {
@@ -2703,14 +2751,6 @@
               "colorSpace": "display-p3",
               "components": [0.2359, 0.0912, 0.2602],
               "hex": "#3C1742"
-            }
-          },
-          "inference": {
-            "$type": "color",
-            "$value": {
-              "colorSpace": "display-p3",
-              "components": [0.1097, 0.1998, 0.08667],
-              "hex": "#1C3316"
             }
           },
           "media": {

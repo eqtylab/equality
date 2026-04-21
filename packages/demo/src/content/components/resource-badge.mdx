@@ -8,13 +8,9 @@ import { ResourceBadge, PanelLabel } from "@eqtylab/equality";
 
 ## Overview
 
----
-
 The `ResourceBadge` component is a specialized badge wrapper that provides predefined configurations for displaying different resource types as defined by [integrity-py](https://github.com/eqtylab/integrity-py). It automatically applies appropriate icons, colors, and labels.
 
 ## Usage
-
----
 
 Import the component:
 
@@ -29,8 +25,6 @@ Basic usage requires only a `type` prop:
 ```
 
 ## Variants
-
----
 
 <div className="grid grid-cols-[auto_auto_auto] gap-6">
   <div className="flex flex-col items-start space-y-3">
@@ -53,6 +47,8 @@ Basic usage requires only a `type` prop:
     <ResourceBadge type="system-prompt" />
     <ResourceBadge type="reasoning" />
     <ResourceBadge type="token" />
+    <ResourceBadge type="certificate" />
+    <ResourceBadge type="credential" />
     <ResourceBadge type="tool" />
     <ResourceBadge type="unknown" />
   </div>
@@ -76,6 +72,8 @@ Basic usage requires only a `type` prop:
     <ResourceBadge type="system-prompt" display="text-only" />
     <ResourceBadge type="reasoning" display="text-only" />
     <ResourceBadge type="token" display="text-only" />
+    <ResourceBadge type="certificate" display="text-only" />
+    <ResourceBadge type="credential" display="text-only" />
     <ResourceBadge type="tool" display="text-only" />
     <ResourceBadge type="unknown" display="text-only" />
   </div>
@@ -99,14 +97,14 @@ Basic usage requires only a `type` prop:
     <ResourceBadge type="system-prompt" display="icon-only" />
     <ResourceBadge type="reasoning" display="icon-only" />
     <ResourceBadge type="token" display="icon-only" />
+    <ResourceBadge type="certificate" display="icon-only" />
+    <ResourceBadge type="credential" display="icon-only" />
     <ResourceBadge type="tool" display="icon-only" />
     <ResourceBadge type="unknown" display="icon-only" />
   </div>
 </div>
 
 ## Display Options
-
----
 
 ### With Icon and Label (Default)
 
@@ -134,9 +132,7 @@ Show only the text by setting `display` to `"text-only"`:
 
 ## Props
 
----
-
-| Name      | Description                                                           | Type                                                                                                                                                                                                                                                                   | Default  | Required |
-| --------- | --------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------- | -------- |
-| `type`    | The resource type that determines the badge variant, icon, and label. | `"agent"`, `"benchmark"`, `"benchmark-result"`, `"binary"`, `"code"`, `"compute"`, `"config"`, `"database"`, `"dataset"`, `"document"`, `"guardrail"`, `"media"`, `"model"`, `"prompt"`, `"reasoning"`, `"skill"`, `"system-prompt"`, `"token"`, `"tool"`, `"unknown"` |          | ✅       |
-| `display` | Controls what elements are displayed: icon, text, or both.            | `"both"`, `"text-only"`, `"icon-only"`                                                                                                                                                                                                                                 | `"both"` | ❌       |
+| Name      | Description                                                           | Type                                                                                                                                                                                                                                                                                                    | Default  | Required |
+| --------- | --------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------- | -------- |
+| `type`    | The resource type that determines the badge variant, icon, and label. | `"agent"`, `"benchmark"`, `"benchmark-result"`, `"binary"`, `"certificate"`, `"code"`, `"compute"`, `"config"`, `"credential"`, `"database"`, `"dataset"`, `"document"`, `"guardrail"`, `"media"`, `"model"`, `"prompt"`, `"reasoning"`, `"skill"`, `"system-prompt"`, `"token"`, `"tool"`, `"unknown"` |          | ✅       |
+| `display` | Controls what elements are displayed: icon, text, or both.            | `"both"`, `"text-only"`, `"icon-only"`                                                                                                                                                                                                                                                                  | `"both"` | ❌       |

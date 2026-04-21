@@ -9,8 +9,10 @@ export type ResourceType =
   | 'benchmark'
   | 'benchmark-result'
   | 'binary'
+  | 'certificate'
   | 'code'
   | 'compute'
+  | 'credential'
   | 'database'
   | 'dataset'
   | 'document'
@@ -76,11 +78,23 @@ const getTypeConfig = (type: ResourceType): { icon: string; className: string; l
         className: styles['badge--binary'],
         label: 'Binary',
       };
+    case 'certificate':
+      return {
+        icon: 'Award',
+        className: styles['badge--certificate'],
+        label: 'Certificate',
+      };
     case 'compute':
       return {
         icon: 'Cpu',
         className: styles['badge--compute'],
         label: 'Compute',
+      };
+    case 'credential':
+      return {
+        icon: 'IdCardLanyard',
+        className: styles['badge--credential'],
+        label: 'Credential',
       };
     case 'database':
       return {
