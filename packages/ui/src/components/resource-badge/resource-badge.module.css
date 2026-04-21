@@ -20,6 +20,11 @@
   @apply text-resource-text-binary;
 }
 
+.badge--certificate {
+  @apply bg-resource-background-certificate;
+  @apply text-resource-text-certificate;
+}
+
 .badge--code {
   @apply bg-resource-background-code;
   @apply text-resource-text-code;
@@ -28,6 +33,11 @@
 .badge--compute {
   @apply bg-resource-background-compute;
   @apply text-resource-text-compute;
+}
+
+.badge--credential {
+  @apply bg-resource-background-credential;
+  @apply text-resource-text-credential;
 }
 
 .badge--database {
