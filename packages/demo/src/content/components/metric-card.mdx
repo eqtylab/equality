@@ -6,11 +6,31 @@ description: "Metric Card with sizes and variants"
 
 import { MetricCard } from "@eqtylab/equality";
 
-## Color Variants
+## Overview
+
+Metric Card displays a single numeric value alongside a descriptive label and icon, useful for surfacing key statistics on dashboards and summary views.
+
+## Usage
+
+Import the component:
+
+```tsx
+import { MetricCard } from "@eqtylab/equality";
+```
+
+Basic usage with required properties:
+
+```tsx
+<MetricCard label="Total" value={100} />
+```
+
+## Variants
+
+Metric Card ships with five color variants to communicate status. `default` is used for neutral metrics.
 
 ### Default
 
-<MetricCard label="Total" value={100} elevation="raised" icon="Layers" />
+<MetricCard label="Total" value={100} icon="Layers" />
 
 ### Primary
 
@@ -27,3 +47,33 @@ import { MetricCard } from "@eqtylab/equality";
 ### Danger
 
 <MetricCard label="Failure" value={80} variant="danger" icon="AlertTriangle" />
+
+### Usage
+
+```tsx
+<MetricCard label="Total" value={100} icon="Layers" />
+<MetricCard label="Total" value={80} variant="primary" icon="Layers" />
+<MetricCard label="Success" value={20} variant="success" icon="CheckCircle2" />
+<MetricCard label="Pending" value={45} variant="warning" icon="Clock" />
+<MetricCard label="Failure" value={80} variant="danger" icon="AlertTriangle" />
+```
+
+### Without an Icon
+
+The `icon` prop is optional. Use it only when a descriptive icon makes sense to display.
+
+<MetricCard label="Total" value={100} />
+
+```tsx
+<MetricCard label="Total" value={100} />
+```
+
+## Props
+
+| Name        | Description                                                             | Type                                                 | Default   | Required |
+| ----------- | ----------------------------------------------------------------------- | ---------------------------------------------------- | --------- | -------- |
+| `value`     | The numeric or text value to display prominently on the card.           | `string` \| `number`                                 | -         | ✅       |
+| `label`     | Descriptive label shown beneath the value.                              | `string`                                             | -         | ✅       |
+| `icon`      | Icon to display. Can be a Lucide icon name or a custom React element.   | `string` \| `ReactElement`                           | -         | ❌       |
+| `variant`   | The visual style variant that communicates the metric's status or tone. | `default`, `primary`, `danger`, `success`, `warning` | `default` | ❌       |
+| `elevation` | Elevation level of the card surface.                                    | `sunken`, `base`, `raised`, `overlay`                | `raised`  | ❌       |
