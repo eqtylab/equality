@@ -16,7 +16,7 @@ type Variant = 'default' | 'primary' | 'danger' | 'success' | 'warning';
 interface MetricCardProps extends VariantProps<typeof metricCardElevationVariants> {
   value: string | number;
   label: string;
-  icon: React.ReactElement | string;
+  icon?: React.ReactElement | string;
   variant?: Variant;
   className?: string;
 }
@@ -59,12 +59,14 @@ const MetricCard = ({
       <div className={styles['value-container']}>
         <p className={cn(styles.value)}>{value}</p>
         {/* TODO: these status based icon styles are incompatible with the elevation system.  Refactor them into the icon component as variants and make icon a slot instead of a hardcoded element with a property in metric card (this component) */}
-        <Icon
-          icon={icon}
-          size="md"
-          background="circle"
-          className={cn(variantStyles.iconBg, variantStyles.text)}
-        />
+        {icon && (
+          <Icon
+            icon={icon}
+            size="md"
+            background="circle"
+            className={cn(variantStyles.iconBg, variantStyles.text)}
+          />
+        )}
       </div>
       <p className={styles.label}>{label}</p>
     </div>
