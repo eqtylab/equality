@@ -11,6 +11,7 @@ import {
   TableHeader,
   TableRow,
 } from "@eqtylab/equality";
+import { useState } from "react";
 
 interface TableDemoProps {
   variant?:
@@ -33,6 +34,9 @@ export const TableDemo = ({
   variant = "default",
   elevation,
 }: TableDemoProps) => {
+  const [selectedRow, setSelectedRow] = useState<number | null>(null);
+  const toggleRow = (row: number) =>
+    setSelectedRow((current) => (current === row ? null : row));
   if (variant === "column-sizing") {
     return (
       <TableContainer elevation={elevation} columns="3fr 3fr 100px 100px 60px">
@@ -451,11 +455,8 @@ export const TableDemo = ({
       <TableBody>
         <TableRow
           clickable={variant === "clickable"}
-          onClick={
-            variant === "clickable"
-              ? () => console.log("Clicked row 1")
-              : undefined
-          }
+          data-state={selectedRow === 0 ? "selected" : undefined}
+          onClick={variant === "clickable" ? () => toggleRow(0) : undefined}
         >
           <TableCell>Alice Cooper</TableCell>
           <TableCell>alice@example.com</TableCell>
@@ -469,11 +470,8 @@ export const TableDemo = ({
         </TableRow>
         <TableRow
           clickable={variant === "clickable"}
-          onClick={
-            variant === "clickable"
-              ? () => console.log("Clicked row 2")
-              : undefined
-          }
+          data-state={selectedRow === 1 ? "selected" : undefined}
+          onClick={variant === "clickable" ? () => toggleRow(1) : undefined}
         >
           <TableCell>Bob Smith</TableCell>
           <TableCell>bob@example.com</TableCell>
@@ -487,11 +485,8 @@ export const TableDemo = ({
         </TableRow>
         <TableRow
           clickable={variant === "clickable"}
-          onClick={
-            variant === "clickable"
-              ? () => console.log("Clicked row 3")
-              : undefined
-          }
+          data-state={selectedRow === 2 ? "selected" : undefined}
+          onClick={variant === "clickable" ? () => toggleRow(2) : undefined}
         >
           <TableCell>Charlie Brown</TableCell>
           <TableCell>charlie@example.com</TableCell>

@@ -130,9 +130,46 @@ Show only the text by setting `display` to `"text-only"`:
 <ResourceBadge type="document" display="text-only" />
 ```
 
+## Custom Content
+
+By default, Resource Badge displays the label associated with the `type`. You can pass `children` to override that label.
+
+This _may_ be used to display the name of a resource on the badge, though displaying names separately is generally preferred.
+
+<div className="flex items-center gap-3">
+  <ResourceBadge type="model">claude-opus-4-7</ResourceBadge>
+  <ResourceBadge type="dataset">Dataset Group</ResourceBadge>
+  <ResourceBadge type="credential">aws-prod-key</ResourceBadge>
+</div>
+
+### Usage
+
+```tsx
+<ResourceBadge type="model">claude-opus-4-7</ResourceBadge>
+```
+
+## Closable
+
+Set `closeable` and provide a `handleClosable` callback to render a close button on the badge. This is useful for representing active filters or selections that the user can dismiss.
+
+### Usage
+
+```tsx
+<ResourceBadge
+  type="dataset"
+  closeable
+  handleClosable={() => removeFilter("dataset")}
+>
+  customer-events-2026
+</ResourceBadge>
+```
+
 ## Props
 
-| Name      | Description                                                           | Type                                                                                                                                                                                                                                                                                                    | Default  | Required |
-| --------- | --------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------- | -------- |
-| `type`    | The resource type that determines the badge variant, icon, and label. | `"agent"`, `"benchmark"`, `"benchmark-result"`, `"binary"`, `"certificate"`, `"code"`, `"compute"`, `"config"`, `"credential"`, `"database"`, `"dataset"`, `"document"`, `"guardrail"`, `"media"`, `"model"`, `"prompt"`, `"reasoning"`, `"skill"`, `"system-prompt"`, `"token"`, `"tool"`, `"unknown"` |          | ✅       |
-| `display` | Controls what elements are displayed: icon, text, or both.            | `"both"`, `"text-only"`, `"icon-only"`                                                                                                                                                                                                                                                                  | `"both"` | ❌       |
+| Name             | Description                                                           | Type                                                                                                                                                                                                                                                                                                    | Default  | Required |
+| ---------------- | --------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------- | -------- |
+| `type`           | The resource type that determines the badge variant, icon, and label. | `"agent"`, `"benchmark"`, `"benchmark-result"`, `"binary"`, `"certificate"`, `"code"`, `"compute"`, `"config"`, `"credential"`, `"database"`, `"dataset"`, `"document"`, `"guardrail"`, `"media"`, `"model"`, `"prompt"`, `"reasoning"`, `"skill"`, `"system-prompt"`, `"token"`, `"tool"`, `"unknown"` |          | ✅       |
+| `display`        | Controls what elements are displayed: icon, text, or both.            | `"both"`, `"text-only"`, `"icon-only"`                                                                                                                                                                                                                                                                  | `"both"` | ❌       |
+| `children`       | Custom content to display in place of the default type label.         | `ReactNode`                                                                                                                                                                                                                                                                                             |          | ❌       |
+| `closeable`      | When true, displays a close button on the badge.                      | `boolean`                                                                                                                                                                                                                                                                                               | `false`  | ❌       |
+| `handleClosable` | Callback called when the close button is clicked.                     | `() => void`                                                                                                                                                                                                                                                                                            |          | ❌       |
