@@ -1,116 +1,116 @@
 @reference '../../theme/theme.module.css';
 
 .badge--agent {
-  @apply bg-resource-background-agent;
-  @apply text-resource-text-agent;
+  --badge-bg-color: var(--color-resource-background-agent);
+  --badge-fg-color: var(--color-resource-text-agent);
 }
 
 .badge--benchmark {
-  @apply bg-resource-background-benchmark;
-  @apply text-resource-text-benchmark;
+  --badge-bg-color: var(--color-resource-background-benchmark);
+  --badge-fg-color: var(--color-resource-text-benchmark);
 }
 
 .badge--benchmark-result {
-  @apply bg-resource-background-benchmark-result;
-  @apply text-resource-text-benchmark-result;
+  --badge-bg-color: var(--color-resource-background-benchmark-result);
+  --badge-fg-color: var(--color-resource-text-benchmark-result);
 }
 
 .badge--binary {
-  @apply bg-resource-background-binary;
-  @apply text-resource-text-binary;
+  --badge-bg-color: var(--color-resource-background-binary);
+  --badge-fg-color: var(--color-resource-text-binary);
 }
 
 .badge--certificate {
-  @apply bg-resource-background-certificate;
-  @apply text-resource-text-certificate;
+  --badge-bg-color: var(--color-resource-background-certificate);
+  --badge-fg-color: var(--color-resource-text-certificate);
 }
 
 .badge--code {
-  @apply bg-resource-background-code;
-  @apply text-resource-text-code;
+  --badge-bg-color: var(--color-resource-background-code);
+  --badge-fg-color: var(--color-resource-text-code);
 }
 
 .badge--compute {
-  @apply bg-resource-background-compute;
-  @apply text-resource-text-compute;
+  --badge-bg-color: var(--color-resource-background-compute);
+  --badge-fg-color: var(--color-resource-text-compute);
 }
 
 .badge--credential {
-  @apply bg-resource-background-credential;
-  @apply text-resource-text-credential;
+  --badge-bg-color: var(--color-resource-background-credential);
+  --badge-fg-color: var(--color-resource-text-credential);
 }
 
 .badge--database {
-  @apply bg-resource-background-database;
-  @apply text-resource-text-database;
+  --badge-bg-color: var(--color-resource-background-database);
+  --badge-fg-color: var(--color-resource-text-database);
 }
 
 .badge--dataset {
-  @apply bg-resource-background-dataset;
-  @apply text-resource-text-dataset;
+  --badge-bg-color: var(--color-resource-background-dataset);
+  --badge-fg-color: var(--color-resource-text-dataset);
 }
 
 .badge--document {
-  @apply bg-resource-background-document;
-  @apply text-resource-text-document;
+  --badge-bg-color: var(--color-resource-background-document);
+  --badge-fg-color: var(--color-resource-text-document);
 }
 
 .badge--media {
-  @apply bg-resource-background-media;
-  @apply text-resource-text-media;
+  --badge-bg-color: var(--color-resource-background-media);
+  --badge-fg-color: var(--color-resource-text-media);
 }
 
 .badge--skill {
-  @apply bg-resource-background-skill;
-  @apply text-resource-text-skill;
+  --badge-bg-color: var(--color-resource-background-skill);
+  --badge-fg-color: var(--color-resource-text-skill);
 }
 
 .badge--guardrail {
-  @apply bg-resource-background-guardrail;
-  @apply text-resource-text-guardrail;
+  --badge-bg-color: var(--color-resource-background-guardrail);
+  --badge-fg-color: var(--color-resource-text-guardrail);
 }
 
 .badge--model {
-  @apply bg-resource-background-model;
-  @apply text-resource-text-model;
+  --badge-bg-color: var(--color-resource-background-model);
+  --badge-fg-color: var(--color-resource-text-model);
 }
 
 .badge--prompt {
-  @apply bg-resource-background-prompt;
-  @apply text-resource-text-prompt;
+  --badge-bg-color: var(--color-resource-background-prompt);
+  --badge-fg-color: var(--color-resource-text-prompt);
 }
 
 .badge--system-prompt {
-  @apply bg-resource-background-system-prompt;
-  @apply text-resource-text-system-prompt;
+  --badge-bg-color: var(--color-resource-background-system-prompt);
+  --badge-fg-color: var(--color-resource-text-system-prompt);
 }
 
 .badge--context {
-  @apply bg-resource-background-context;
-  @apply text-resource-text-context;
+  --badge-bg-color: var(--color-resource-background-context);
+  --badge-fg-color: var(--color-resource-text-context);
 }
 
 .badge--reasoning {
-  @apply bg-resource-background-reasoning;
-  @apply text-resource-text-reasoning;
+  --badge-bg-color: var(--color-resource-background-reasoning);
+  --badge-fg-color: var(--color-resource-text-reasoning);
 }
 
 .badge--token {
-  @apply bg-resource-background-token;
-  @apply text-resource-text-token;
+  --badge-bg-color: var(--color-resource-background-token);
+  --badge-fg-color: var(--color-resource-text-token);
 }
 
 .badge--tool {
-  @apply bg-resource-background-tool;
-  @apply text-resource-text-tool;
+  --badge-bg-color: var(--color-resource-background-tool);
+  --badge-fg-color: var(--color-resource-text-tool);
 }
 
 .badge--config {
-  @apply bg-resource-background-config;
-  @apply text-resource-text-config;
+  --badge-bg-color: var(--color-resource-background-config);
+  --badge-fg-color: var(--color-resource-text-config);
 }
 
 .badge--unknown {
-  @apply bg-resource-background-unknown;
-  @apply text-resource-text-unknown;
+  --badge-bg-color: var(--color-resource-background-unknown);
+  --badge-fg-color: var(--color-resource-text-unknown);
 }
