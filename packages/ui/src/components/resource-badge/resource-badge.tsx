@@ -1,3 +1,5 @@
+import * as React from 'react';
+
 import { Badge, type BadgeDisplayMode } from '@/components/badge/badge';
 import styles from '@/components/resource-badge/resource-badge.module.css';
 
@@ -33,14 +35,30 @@ export type ResourceDisplayMode = BadgeDisplayMode;
 interface ResourceBadgeProps {
   type: ResourceType;
   display?: ResourceDisplayMode;
+  closeable?: boolean;
+  handleClosable?: () => void;
+  children?: React.ReactNode;
 }
 
-const ResourceBadge = ({ type, display = 'both' }: ResourceBadgeProps) => {
+const ResourceBadge = ({
+  type,
+  display = 'both',
+  closeable,
+  handleClosable,
+  children,
+}: ResourceBadgeProps) => {
   const config = getTypeConfig(type);
 
   return (
-    <Badge icon={config.icon} display={display} className={config.className} variant={null}>
-      {config.label}
+    <Badge
+      icon={config.icon}
+      display={display}
+      className={config.className}
+      variant={null}
+      closeable={closeable}
+      handleClosable={handleClosable}
+    >
+      {children ?? config.label}
     </Badge>
   );
 };
