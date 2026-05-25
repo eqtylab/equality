@@ -1,0 +1,33 @@
+@reference '../../theme/theme.module.css';
+
+.bar-graph {
+  @apply flex w-full flex-col gap-2;
+}
+
+.bar {
+  @apply bg-greyscale-800;
+  @apply flex h-2 w-full gap-0.5 overflow-hidden rounded-full;
+}
+
+.segment {
+  @apply h-full;
+  flex: 1 1 0%;
+  @apply outline-none;
+  @apply focus-visible:ring-focus-ring focus-visible:ring-2 focus-visible:ring-inset;
+}
+
+.legend {
+  @apply m-0 flex list-none flex-wrap gap-x-4 gap-y-1 p-0;
+}
+
+.legend-item {
+  @apply flex items-center gap-1.5;
+}
+
+.legend-swatch {
+  @apply size-2.5 shrink-0 rounded-full;
+}
+
+.legend-label {
+  @apply text-text-primary text-xs;
+}
