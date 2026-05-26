@@ -139,12 +139,13 @@ If a step has neither `href` nor `onClick`, it renders as a non-interactive `<di
 
 ### ProgressIndicator
 
-| Name           | Description                                    | Type                     | Default      | Required |
-| -------------- | ---------------------------------------------- | ------------------------ | ------------ | -------- |
-| `layout`       | Orientation of the steps                       | `horizontal`, `vertical` | `horizontal` | ❌       |
-| `currentIndex` | Array index of the current (active) step       | `number`                 | 0            | ✅       |
-| `aria-label`   | Accessible label for the step list             | `string`                 | `"Progress"` | ❌       |
-| `children`     | One or more `ProgressIndicatorStep` components | `ReactNode`              | —            | ✅       |
+| Name           | Description                                    | Type                                  | Default      | Required |
+| -------------- | ---------------------------------------------- | ------------------------------------- | ------------ | -------- |
+| `layout`       | Orientation of the steps                       | `horizontal`, `vertical`              | `horizontal` | ❌       |
+| `currentIndex` | Array index of the current (active) step       | `number`                              | 0            | ✅       |
+| `elevation`    | Elevation applied to each step's marker icon   | `sunken`, `base`, `raised`, `overlay` | `raised`     | ❌       |
+| `aria-label`   | Accessible label for the step list             | `string`                              | `"Progress"` | ❌       |
+| `children`     | One or more `ProgressIndicatorStep` components | `ReactNode`                           | —            | ✅       |
 
 ### ProgressIndicatorStep
 

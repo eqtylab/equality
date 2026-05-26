@@ -4,6 +4,7 @@ import { cva, type VariantProps } from 'class-variance-authority';
 import { Icon } from '@/components/icon/icon';
 import styles from '@/components/progress-indicator/progress-indicator.module.css';
 import { Progress } from '@/components/progress/progress';
+import { ELEVATION, type Elevation } from '@/lib/elevations';
 import { cn } from '@/lib/utils';
 
 type ProgressIndicatorLayout = 'horizontal' | 'vertical';
@@ -67,12 +68,15 @@ export interface ProgressIndicatorProps
   layout?: ProgressIndicatorLayout;
   /** Index of the current step. Each step compares its own index to this. */
   currentIndex: number;
+  /** Elevation passed down to each step's marker Icon. */
+  elevation?: Elevation;
   children: React.ReactNode;
 }
 
 function ProgressIndicator({
   layout = 'horizontal',
   currentIndex = 0,
+  elevation = ELEVATION.RAISED,
   className,
   children,
   'aria-label': ariaLabel = 'Progress',
@@ -98,6 +102,7 @@ function ProgressIndicator({
     return React.cloneElement(child as React.ReactElement<ProgressIndicatorStepProps>, {
       index,
       currentIndex,
+      elevation,
     });
   });
 
@@ -145,6 +150,8 @@ export interface ProgressIndicatorStepProps extends Omit<
   index?: number;
   /** @internal Injected by ProgressIndicator — the current step's index. */
   currentIndex?: number;
+  /** @internal Injected by ProgressIndicator — elevation for the marker Icon. */
+  elevation?: Elevation;
 }
 
 function ProgressIndicatorStep({
@@ -156,6 +163,7 @@ function ProgressIndicatorStep({
   className,
   index,
   currentIndex,
+  elevation,
   ...props
 }: ProgressIndicatorStepProps) {
   const interactive = Boolean(href || onClick);
@@ -172,6 +180,7 @@ function ProgressIndicatorStep({
         icon={statusIcon}
         background="circle"
         size="md"
+        elevation={elevation}
         aria-hidden="true"
         className={markerVariants({ status: effectiveStatus, active })}
       />
