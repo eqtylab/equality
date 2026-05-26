@@ -9,12 +9,11 @@ interface Props {
 const { label, list } = Astro.props;
 const currentPath = Astro.url.pathname;
 
-const isActive = (href: string) => {
-  if (href === "/") {
-    return currentPath === "/";
-  }
-  return currentPath.startsWith(href);
-};
+const stripTrailingSlash = (path: string) =>
+  path.length > 1 ? path.replace(/\/$/, "") : path;
+
+const isActive = (href: string) =>
+  stripTrailingSlash(currentPath) === stripTrailingSlash(href);
 ---
 
 <div class="space-y-3">

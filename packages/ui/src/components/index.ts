@@ -32,6 +32,7 @@ export * from './pagination/pagination';
 export * from './panel-label/panel-label';
 export * from './popover/popover';
 export * from './progress/progress';
+export * from './progress-indicator/progress-indicator';
 export * from './radial-graph/radial-graph';
 export * from './radio-dropdown/radio-dropdown';
 export * from './radio-group/radio-group';
