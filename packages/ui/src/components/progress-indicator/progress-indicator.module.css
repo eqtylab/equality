@@ -27,21 +27,22 @@
   height: 100% !important;
 }
 
-/* The <Progress> indicator (its direct child) is the filled portion. We
-   constrain it to exactly one step's segment and translate it by the active
-   step index so it aligns with the current step. !important overrides the
-   inline transform/size Radix sets on the indicator. */
+/* The <Progress> indicator (its direct child) is the filled portion. It grows
+   from the start of the rail up to the active step's marker, like a progress
+   bar. !important overrides the inline transform/size Radix sets on it. */
 .progress-indicator--horizontal .progress-indicator-rail > * {
-  width: var(--pi-segment-size) !important;
-  transform: translateX(calc(var(--pi-active-index) * 100%)) !important;
-  transition: transform 0.4s ease-in-out;
+  width: var(--pi-fill-size) !important;
+  transform: none !important;
+  transition: width 0.4s ease-in-out;
+  @apply rounded-full;
 }
 
 .progress-indicator--vertical .progress-indicator-rail > * {
   width: 100% !important;
-  height: var(--pi-segment-size) !important;
-  transform: translateY(calc(var(--pi-active-index) * 100%)) !important;
-  transition: transform 0.4s ease-in-out;
+  height: var(--pi-fill-size) !important;
+  transform: none !important;
+  transition: height 0.4s ease-in-out;
+  @apply rounded-full;
 }
 
 /* STEPS LIST */
@@ -70,6 +71,8 @@
 .progress-indicator--vertical .progress-indicator-step {
   /* Equal-height bands so each step owns exactly 1 / n of the rail. */
   min-height: 4.5rem;
+  display: flex;
+  align-items: center;
 }
 
 .progress-indicator-step-inner {

@@ -82,6 +82,10 @@ function ProgressIndicator({
   const stepCount = stepChildren.length;
   const hasActive = currentIndex >= 0 && currentIndex < stepCount;
   const segmentSize = stepCount > 0 ? 100 / stepCount : 0;
+  // Fill from the start up to the centre of the active step's marker, or the
+  // full rail once the final step is reached.
+  const isLastStep = currentIndex === stepCount - 1;
+  const fillSize = hasActive ? (isLastStep ? 100 : (currentIndex + 0.5) * segmentSize) : 0;
 
   // Pass each step its own array index plus the current index so it can work
   // out whether it is the active step. Only ProgressIndicatorStep children are
@@ -99,8 +103,8 @@ function ProgressIndicator({
 
   return (
     <div className={cn(layoutVariants({ layout }), className)} {...props}>
-      {/* The rail spans the full length of the steps, the fill is constrained
-          to one segment and offset to sit over the active step with CSS */}
+      {/* The rail spans the full length of the steps; the fill grows from the
+          start up to the active step's marker with CSS */}
       <div className={styles['progress-indicator-track']} aria-hidden="true">
         <Progress
           value={100}
@@ -108,8 +112,7 @@ function ProgressIndicator({
           className={styles['progress-indicator-rail']}
           style={
             {
-              '--pi-segment-size': hasActive ? `${segmentSize}%` : '0%',
-              '--pi-active-index': hasActive ? `${currentIndex}` : '0',
+              '--pi-fill-size': `${fillSize}%`,
             } as React.CSSProperties
           }
         />
