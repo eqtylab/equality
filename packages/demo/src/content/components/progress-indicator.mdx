@@ -1,0 +1,188 @@
+---
+layout: "@demo/layouts/mdx-layout.astro"
+heading: "Progress Indicator"
+description: "Communicates a user's progress through a sequence of steps"
+---
+
+import {
+  ProgressIndicatorDemo,
+  ProgressIndicatorInteractiveDemo,
+  ProgressIndicatorLinkDemo,
+} from "@demo/components/demo/progress-indicator";
+
+## Overview
+
+The Progress Indicator communicates a user's position within a multi-step process,
+such as a policy creation or indicator configurations. It renders a sequence
+of steps along a track, with the current step highlighted and each step's state
+conveyed through a status icon.
+
+It is composed of two components: `ProgressIndicator` (the parent that draws the
+track and arranges the steps) and `ProgressIndicatorStep` (each individual step).
+The parent takes a `currentIndex` and positions the track's filled segment over
+that step; each step derives its own active state by comparing its index to it.
+
+## Usage
+
+Import the components:
+
+```ts
+import { ProgressIndicator, ProgressIndicatorStep } from "@eqtylab/equality";
+```
+
+Basic usage with required properties:
+
+```tsx
+<ProgressIndicator aria-label="Account setup progress" currentIndex={1}>
+  <ProgressIndicatorStep name="Account" status="success" />
+  <ProgressIndicatorStep name="Verification" status="editing" />
+  <ProgressIndicatorStep name="Confirm" status="neutral" />
+</ProgressIndicator>
+```
+
+## Variants
+
+### Horizontal (default)
+
+The default layout arranges steps in a row. The example below mixes every status
+so each icon is visible. The step at `currentIndex` (`Verification`) is marked
+with `aria-current="step"` and the track fills its segment.
+
+<ProgressIndicatorDemo client:only="react" />
+
+```tsx
+<ProgressIndicator aria-label="Progress Indicator" currentIndex={2}>
+  <ProgressIndicatorStep
+    name="Success"
+    description="Completed"
+    status="success"
+  />
+  <ProgressIndicatorStep
+    name="Danger"
+    description="Action required"
+    status="danger"
+  />
+  <ProgressIndicatorStep
+    name="Editing"
+    description="In progress"
+    status="editing"
+  />
+  <ProgressIndicatorStep name="Info" description="Optional" status="info" />
+  <ProgressIndicatorStep name="Neutral" status="neutral" />
+  <ProgressIndicatorStep name="Empty" status="empty" />
+</ProgressIndicator>
+```
+
+### Vertical
+
+Set `layout="vertical"` to stack the steps. The track and fill re-orient
+automatically.
+
+<ProgressIndicatorDemo layout="vertical" client:only="react" />
+
+```tsx
+<ProgressIndicator
+  layout="vertical"
+  currentIndex={2}
+  aria-label="Progress Indicator"
+>
+  <ProgressIndicatorStep
+    name="Success"
+    description="Completed"
+    status="success"
+  />
+  {/* …remaining steps… */}
+</ProgressIndicator>
+```
+
+### Status icons
+
+Each step's `status` controls its icon and colour:
+
+| Status    | Icon              | Meaning                            |
+| --------- | ----------------- | ---------------------------------- |
+| `editing` | Square pen        | The step is currently being edited |
+| `empty`   | Dashed circle     | The step has not been started      |
+| `neutral` | Empty circle      | A pending step (default)           |
+| `success` | Circle with check | The step has been completed        |
+| `info`    | Circle with `i`   | The step has informational context |
+| `danger`  | Triangle alert    | The step has an error              |
+
+### Interactive (onClick)
+
+When a step is given an `onClick` handler it renders as a `<button>`, making it
+focusable and keyboard-operable. Click a step to make it the current one.
+
+<ProgressIndicatorInteractiveDemo client:only="react" />
+
+```tsx
+const [active, setActive] = useState(1);
+
+<ProgressIndicator aria-label="Policy creation steps" currentIndex={active}>
+  {steps.map((name, index) => (
+    <ProgressIndicatorStep
+      key={name}
+      name={name}
+      status={
+        index < active ? "success" : index === active ? "editing" : "neutral"
+      }
+      onClick={() => setActive(index)}
+    />
+  ))}
+</ProgressIndicator>;
+```
+
+### Link (href)
+
+When a step is given an `href` it renders as an `<a>`.
+
+<ProgressIndicatorLinkDemo client:only="react" />
+
+```tsx
+<ProgressIndicator aria-label="Documentation progress" currentIndex={1}>
+  <ProgressIndicatorStep
+    name="Introduction"
+    status="success"
+    href="#introduction"
+  />
+  <ProgressIndicatorStep
+    name="Installation"
+    status="editing"
+    href="#installation"
+  />
+  <ProgressIndicatorStep name="Usage" status="neutral" href="#usage" />
+</ProgressIndicator>
+```
+
+If a step has neither `href` nor `onClick`, it renders as a non-interactive
+`<div>` that is not focusable.
+
+## Accessibility
+
+- The steps are wrapped in a `<ul>` labelled by the `aria-label` prop (defaults to
+  `"Progress"`); each step is an `<li>`.
+- The active step is marked with `aria-current="step"`.
+- Status is conveyed to assistive technology with visually-hidden text (for example
+  "Completed" on a `success` step), since the icons are `aria-hidden`.
+- Interactive steps (`href` / `onClick`) are focusable; non-interactive steps are not.
+
+## Props
+
+### ProgressIndicator
+
+| Name           | Description                                    | Type                     | Default      | Required |
+| -------------- | ---------------------------------------------- | ------------------------ | ------------ | -------- |
+| `layout`       | Orientation of the steps                       | `horizontal`, `vertical` | `horizontal` | ❌       |
+| `currentIndex` | Array index of the current (active) step       | `number`                 | 0            | ✅       |
+| `aria-label`   | Accessible label for the step list             | `string`                 | `"Progress"` | ❌       |
+| `children`     | One or more `ProgressIndicatorStep` components | `ReactNode`              | —            | ✅       |
+
+### ProgressIndicatorStep
+
+| Name          | Description                           | Type                                                       | Default   | Required |
+| ------------- | ------------------------------------- | ---------------------------------------------------------- | --------- | -------- |
+| `name`        | The step label                        | `string`                                                   | —         | ✅       |
+| `description` | Secondary text shown beneath the name | `string`                                                   | —         | ❌       |
+| `status`      | Controls the step's icon and colour   | `editing`, `empty`, `neutral`, `success`, `info`, `danger` | `neutral` | ❌       |
+| `href`        | Renders the step as an `<a>`          | `string`                                                   | —         | ❌       |
+| `onClick`     | Renders the step as a `<button>`      | `(e: MouseEvent) => void`                                  | —         | ❌       |

@@ -1,0 +1,127 @@
+@reference '../../theme/theme.module.css';
+
+.progress-indicator {
+  /* Space between the rail and the icons so they never overlap. */
+  --pi-rail-gap: 1rem;
+  @apply text-text-primary relative;
+}
+
+/* TRACK */
+
+.progress-indicator-track {
+  @apply pointer-events-none absolute z-0;
+}
+
+.progress-indicator--horizontal .progress-indicator-track {
+  @apply inset-x-0 top-0;
+}
+
+/* VERTICAL PROGRESS */
+
+.progress-indicator--vertical .progress-indicator-track {
+  @apply inset-y-0 left-0;
+}
+
+.progress-indicator--vertical .progress-indicator-rail {
+  width: 0.375rem !important;
+  height: 100% !important;
+}
+
+/* The <Progress> indicator (its direct child) is the filled portion. We
+   constrain it to exactly one step's segment and translate it by the active
+   step index so it aligns with the current step. !important overrides the
+   inline transform/size Radix sets on the indicator. */
+.progress-indicator--horizontal .progress-indicator-rail > * {
+  width: var(--pi-segment-size) !important;
+  transform: translateX(calc(var(--pi-active-index) * 100%)) !important;
+  transition: transform 0.4s ease-in-out;
+}
+
+.progress-indicator--vertical .progress-indicator-rail > * {
+  width: 100% !important;
+  height: var(--pi-segment-size) !important;
+  transform: translateY(calc(var(--pi-active-index) * 100%)) !important;
+  transition: transform 0.4s ease-in-out;
+}
+
+/* STEPS LIST */
+
+.progress-indicator-steps {
+  @apply relative z-10 m-0 flex list-none p-0;
+}
+
+.progress-indicator--horizontal .progress-indicator-steps {
+  @apply flex-row items-start;
+  padding-top: var(--pi-rail-gap);
+}
+
+.progress-indicator--vertical .progress-indicator-steps {
+  @apply flex-col;
+  padding-left: var(--pi-rail-gap);
+}
+
+/* STEP */
+
+.progress-indicator--horizontal .progress-indicator-step {
+  /* Equal-width segments so each step owns exactly 1 / n of the rail. */
+  @apply min-w-0 flex-1;
+}
+
+.progress-indicator--vertical .progress-indicator-step {
+  /* Equal-height bands so each step owns exactly 1 / n of the rail. */
+  min-height: 4.5rem;
+}
+
+.progress-indicator-step-inner {
+  @apply flex w-full appearance-none border-0 bg-transparent text-left text-inherit no-underline;
+}
+
+.progress-indicator--horizontal .progress-indicator-step-inner {
+  @apply flex-col items-center gap-2 text-center;
+}
+
+.progress-indicator--vertical .progress-indicator-step-inner {
+  @apply h-full flex-row items-center gap-3;
+}
+
+.progress-indicator-step-inner--interactive {
+  @apply focus-ring cursor-pointer rounded-md;
+}
+
+/* MARKER */
+
+.progress-indicator-step-marker {
+  @apply shrink-0;
+}
+
+/* STATUS COLORS */
+
+.progress-indicator-step-marker--success {
+  @apply bg-badge-background-success! text-badge-text-success!;
+}
+
+.progress-indicator-step-marker--danger {
+  @apply bg-badge-background-danger! text-badge-text-danger!;
+}
+
+.progress-indicator-step-marker--active {
+  @apply bg-badge-background-primary! text-badge-text-primary!;
+}
+
+/* TEXT */
+
+.progress-indicator-step-text {
+  @apply flex min-w-0 flex-col gap-0.5;
+}
+
+.progress-indicator-step-name {
+  @apply text-text-primary text-sm font-medium;
+}
+
+.progress-indicator-step-description {
+  @apply text-text-secondary text-xs;
+}
+
+.progress-indicator-step-status {
+  @apply sr-only;
+}
