@@ -101,8 +101,16 @@ function ProgressIndicator({
     });
   });
 
+  // When steps are links/buttons the indicator is a navigation landmark.
+  const interactive = stepChildren.some((child) => {
+    if (!React.isValidElement(child)) return false;
+    const stepProps = child.props as ProgressIndicatorStepProps;
+    return Boolean(stepProps.href || stepProps.onClick);
+  });
+  const Container = interactive ? 'nav' : 'div';
+
   return (
-    <div className={cn(layoutVariants({ layout }), className)} {...props}>
+    <Container className={cn(layoutVariants({ layout }), className)} {...props}>
       {/* The rail spans the full length of the steps; the fill grows from the
           start up to the active step's marker with CSS */}
       <div className={styles['progress-indicator-track']} aria-hidden="true">
@@ -120,7 +128,7 @@ function ProgressIndicator({
       <ul className={styles['progress-indicator-steps']} aria-label={ariaLabel}>
         {steps}
       </ul>
-    </div>
+    </Container>
   );
 }
 
