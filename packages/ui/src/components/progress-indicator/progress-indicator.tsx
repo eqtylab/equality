@@ -158,10 +158,13 @@ function ProgressIndicatorStep({
   currentIndex,
   ...props
 }: ProgressIndicatorStepProps) {
-  const statusIcon = STATUS_ICONS[status];
-  const statusLabel = STATUS_LABELS[status];
   const interactive = Boolean(href || onClick);
   const active = index !== undefined && index === currentIndex;
+  // The active step reads as "in progress" (editing), except `info`, which is a
+  // read-only state — it keeps its own icon but still gets the active styling.
+  const effectiveStatus = active && status !== 'info' ? 'editing' : status;
+  const statusIcon = STATUS_ICONS[effectiveStatus];
+  const statusLabel = STATUS_LABELS[effectiveStatus];
 
   const content = (
     <>
@@ -170,7 +173,7 @@ function ProgressIndicatorStep({
         background="circle"
         size="md"
         aria-hidden="true"
-        className={markerVariants({ status, active })}
+        className={markerVariants({ status: effectiveStatus, active })}
       />
       <span className={styles['progress-indicator-step-text']}>
         <span className={styles['progress-indicator-step-name']}>{name}</span>
