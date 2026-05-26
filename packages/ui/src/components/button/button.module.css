@@ -32,7 +32,8 @@
   @apply bg-(--mix-color);
   @apply border-button-secondary-border border;
   @apply text-button-secondary-text;
-  @apply hover:not-disabled:bg-mixed-dark;
+  @apply hover:not-disabled:bg-mixed-light;
+  @apply dark:hover:not-disabled:bg-mixed-dark;
 }
 
 .button--tertiary {
