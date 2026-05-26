@@ -33,11 +33,15 @@ export function ProgressIndicatorDemo({
         />
         <ProgressIndicatorStep
           name="Info"
-          description="Optional"
+          description="Read only step"
           status="info"
         />
         <ProgressIndicatorStep name="Neutral" status="neutral" />
-        <ProgressIndicatorStep name="Empty" status="empty" />
+        <ProgressIndicatorStep
+          name="Empty"
+          description="Not yet edited"
+          status="empty"
+        />
       </ProgressIndicator>
     </div>
   );
