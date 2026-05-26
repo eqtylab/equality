@@ -6,6 +6,9 @@ description: "Single line segmented bar graph with segment tooltips"
 
 import {
   BarGraphDemo,
+  BarGraphSizeSmDemo,
+  BarGraphSizeMdDemo,
+  BarGraphSizeLgDemo,
   BarGraphWithLabelsDemo,
   BarGraphRichTooltipDemo,
 } from "@demo/components/demo/bar-graph";
@@ -59,6 +62,26 @@ Labels are screen-reader only by default. Hover or focus a segment to reveal its
 
 <BarGraphDemo client:only="react" />
 
+### Sizes
+
+Use `size` to control the bar's height. `sm` is a thin pill; the default `md` and `lg` are bolder and use rounded rectangles instead of a full pill. Note the small `Failure` segment, which is floored at 2px so it stays visible and focusable at every size.
+
+#### Small
+
+<BarGraphSizeSmDemo client:only="react" />
+
+#### Medium (default)
+
+<BarGraphSizeMdDemo client:only="react" />
+
+#### Large
+
+<BarGraphSizeLgDemo client:only="react" />
+
+```tsx
+<BarGraph size="lg">{/* segments */}</BarGraph>
+```
+
 ### With visible labels
 
 Set `showLabels` to render a legend beneath the bar.
@@ -75,10 +98,11 @@ The `tooltip` prop accepts a string or any `ReactNode`, so segments can show for
 
 ### `BarGraph`
 
-| Name         | Description                                                     | Type              | Default | Required |
-| ------------ | --------------------------------------------------------------- | ----------------- | ------- | -------- |
-| `showLabels` | Render a visible legend (color swatch + label) beneath the bar. | `boolean`         | `false` | ❌       |
-| `children`   | One or more segments to render.                                 | `BarGraphSegment` | —       | ✅       |
+| Name         | Description                                                              | Type              | Default | Required |
+| ------------ | ------------------------------------------------------------------------ | ----------------- | ------- | -------- |
+| `size`       | Bar height. `md` and `lg` use rounded rectangles instead of a full pill. | `sm`, `md`, `lg`  | `md`    | ❌       |
+| `showLabels` | Render a visible legend (color swatch + label) beneath the bar.          | `boolean`         | `false` | ❌       |
+| `children`   | One or more segments to render.                                          | `BarGraphSegment` | —       | ✅       |
 
 ### `BarGraphSegment`
 

@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { cva, type VariantProps } from 'class-variance-authority';
 
 import styles from '@/components/bar-graph/bar-graph.module.css';
 import {
@@ -51,6 +52,19 @@ const BarGraphSegment = React.forwardRef<HTMLDivElement, BarGraphSegmentProps>(
 );
 BarGraphSegment.displayName = 'BarGraphSegment';
 
+const barVariants = cva(styles['bar'], {
+  variants: {
+    size: {
+      sm: styles['size--sm'],
+      md: styles['size--md'],
+      lg: styles['size--lg'],
+    },
+  },
+  defaultVariants: {
+    size: 'md',
+  },
+});
+
 /**
  * A single `BarGraphSegment` element. False values are allowed so conditional
  * rendering (`{condition && <BarGraphSegment … />}`) keeps working. Non-segment
@@ -58,9 +72,12 @@ BarGraphSegment.displayName = 'BarGraphSegment';
  */
 type BarGraphChild = React.ReactElement<BarGraphSegmentProps> | boolean | null | undefined;
 
-export interface BarGraphProps extends Omit<React.HTMLAttributes<HTMLDivElement>, 'children'> {
+export interface BarGraphProps
+  extends Omit<React.HTMLAttributes<HTMLDivElement>, 'children'>, VariantProps<typeof barVariants> {
   /** Render a visible legend (color swatch + label) beneath the bar. Defaults to `false` (labels are screen-reader only). */
   showLabels?: boolean;
+  /** Bar height. `md` and `lg` use rounded rectangles instead of a full pill. Defaults to `md`. */
+  size?: 'sm' | 'md' | 'lg';
   /** One or more `BarGraphSegment` elements. */
   children: BarGraphChild | BarGraphChild[];
 }
@@ -71,6 +88,7 @@ const BarGraph = React.forwardRef<HTMLDivElement, BarGraphProps>(
       className,
       children,
       showLabels = false,
+      size,
       'aria-label': ariaLabel,
       'aria-labelledby': ariaLabelledby,
       ...props
@@ -89,7 +107,7 @@ const BarGraph = React.forwardRef<HTMLDivElement, BarGraphProps>(
             role="img"
             aria-label={ariaLabel}
             aria-labelledby={ariaLabelledby}
-            className={styles['bar']}
+            className={barVariants({ size })}
           >
             {segments}
           </div>

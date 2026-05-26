@@ -6,7 +6,21 @@
 
 .bar {
   @apply bg-greyscale-800;
-  @apply flex h-2 w-full gap-0.5 overflow-hidden rounded-full;
+  @apply flex w-full gap-0.5 overflow-hidden;
+}
+
+/* Size Variants */
+
+.size--sm {
+  @apply h-2 rounded-full;
+}
+
+.size--md {
+  @apply h-5 rounded-sm;
+}
+
+.size--lg {
+  @apply h-8 rounded-sm;
 }
 
 .segment {
