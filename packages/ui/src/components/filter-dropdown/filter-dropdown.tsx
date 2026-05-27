@@ -41,12 +41,10 @@ const FilterDropdown = ({
   contentClassName,
 }: FilterDropdownProps) => {
   const hasSelectedFilters = selectedFilters.length > 0;
-  const filteredOptions = options
-    .filter(
-      (option) =>
-        option.value && option.value.trim() !== '' && option.label && option.label.trim() !== ''
-    )
-    .sort((a, b) => a.label.localeCompare(b.label));
+  const filteredOptions = options.filter(
+    (option) =>
+      option.value && option.value.trim() !== '' && option.label && option.label.trim() !== ''
+  );
 
   return (
     <DropdownMenu>
