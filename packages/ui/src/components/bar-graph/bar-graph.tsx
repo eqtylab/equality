@@ -109,11 +109,10 @@ const BarGraph = React.forwardRef<HTMLDivElement, BarGraphProps>(
         <div ref={ref} className={cn(styles['bar-graph'], className)} {...props}>
           <div className={barVariants({ size })}>{segments}</div>
           {showLabels && (
-            <ul className={styles['legend']}>
+            <ul className={styles['legend']} aria-hidden="true">
               {segments.map((child, index) => (
                 <li key={index} className={styles['legend-item']}>
                   <span
-                    aria-hidden="true"
                     className={styles['legend-swatch']}
                     style={{ backgroundColor: child.props.color }}
                   />
