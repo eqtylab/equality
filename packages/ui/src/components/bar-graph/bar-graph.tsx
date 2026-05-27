@@ -30,13 +30,20 @@ export interface BarGraphSegmentProps extends Omit<React.HTMLAttributes<HTMLDivE
 const BarGraphSegment = React.forwardRef<HTMLDivElement, BarGraphSegmentProps>(
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   ({ value, color, label, tooltip, className, style, ...props }, ref) => {
-    // The segment's accessible name is the tooltip content.
-    // It's announced immediately on focus.
     const tooltipId = React.useId();
 
     return (
       // Widths are proportional (`value / sum`): each segment grows by its `value`
       // within the flex row, so the parent never needs to know the total.
+      //
+      // Accessibility: `tooltip` is the segment's accessible *name*, not its
+      // description. VoiceOver treats `aria-describedby` as an optional, delayed
+      // hint (only spoken when "Speak hints" is on), so a description can't be
+      // relied on to convey the value — the name always is. We expose it via
+      // `aria-labelledby` → a visually-hidden copy, and null Radix's own
+      // `aria-describedby` so its `role="tooltip"` announcer isn't read on top.
+      // This means `tooltip` is rendered twice (hidden name + visible popup); the
+      // duplication is the cost of a reliably-announced ReactNode name.
       <Tooltip>
         <TooltipTrigger asChild>
           <div
@@ -47,20 +54,22 @@ const BarGraphSegment = React.forwardRef<HTMLDivElement, BarGraphSegmentProps>(
             className={cn(styles['segment'], className)}
             style={{
               flexGrow: value,
-              // Floor every segment at 2px so small (and zero) values stay visible
-              // and focusable. This slightly skews the proportions for tiny slices.
+              // Floor every segment at 2px so small (and zero) values stay visible.
               minWidth: 2,
               backgroundColor: color,
               ...style,
             }}
             {...props}
           >
-            <div id={tooltipId} className={styles['visually-hidden']}>
+            <div id={tooltipId} className={styles['visually-hidden']} aria-hidden="true">
               {tooltip}
             </div>
           </div>
         </TooltipTrigger>
-        <TooltipContent>{tooltip}</TooltipContent>
+
+        <TooltipContent>
+          <span>{tooltip}</span>
+        </TooltipContent>
       </Tooltip>
     );
   }
