@@ -1,0 +1,52 @@
+@reference '../../theme/theme.module.css';
+
+.bar-graph {
+  @apply flex w-full flex-col gap-2;
+}
+
+.bar {
+  @apply bg-greyscale-800;
+  @apply flex w-full gap-0.5 overflow-hidden;
+}
+
+/* Size Variants */
+
+.size--sm {
+  @apply h-2 rounded-full;
+}
+
+.size--md {
+  @apply h-5 rounded-sm;
+}
+
+.size--lg {
+  @apply h-8 rounded-sm;
+}
+
+.segment {
+  @apply h-full;
+  flex: 1 1 0%;
+  @apply outline-none;
+  @apply focus-visible:ring-focus-ring focus-visible:ring-2 focus-visible:ring-inset;
+}
+
+/* Screen-reader-only text that backs each segment's accessible name. */
+.visually-hidden {
+  @apply sr-only;
+}
+
+.legend {
+  @apply m-0 flex list-none flex-wrap gap-x-4 gap-y-1 p-0;
+}
+
+.legend-item {
+  @apply flex items-center gap-1.5;
+}
+
+.legend-swatch {
+  @apply size-2.5 shrink-0 rounded-full;
+}
+
+.legend-label {
+  @apply text-text-primary text-xs;
+}
