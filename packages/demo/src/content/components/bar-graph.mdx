@@ -19,7 +19,7 @@ import {
 
 Add a `BarGraphSegment` for each part. Widths come from each segment's `value` as a share of the total (`value / sum of all values`), so you pass raw numbers rather than percentages. Children that aren't a `BarGraphSegment` are ignored.
 
-Segments are focusable and show a [Tooltip](tooltip) on hover and focus, so they work by keyboard alone. The bar itself uses `role="img"` and is described by `aria-label`. Give every segment a `label` and `tooltip`, since color on its own doesn't carry meaning.
+Segments are focusable and show a [Tooltip](tooltip) on hover and focus, so they work by keyboard alone. Each segment is exposed individually to screen readers, with its `tooltip` as the accessible name — there's no single label for the bar as a whole, so screen reader users read it one segment at a time. Write each `tooltip` to describe its segment on its own.
 
 ## Usage
 
@@ -32,7 +32,7 @@ import { BarGraph, BarGraphSegment } from "@eqtylab/equality";
 Basic usage with required properties:
 
 ```tsx
-<BarGraph aria-label="Sprint capacity: 12 done, 3 in progress, 28 remaining">
+<BarGraph>
   <BarGraphSegment
     value={12}
     color="var(--color-brand-green)"
@@ -58,7 +58,7 @@ Basic usage with required properties:
 
 ### Default
 
-Labels are screen-reader only by default. Hover or focus a segment to reveal its tooltip.
+There's no visible legend by default — each segment's accessible name comes from its tooltip. Hover or focus a segment to reveal it.
 
 <BarGraphDemo client:only="react" />
 
@@ -110,5 +110,5 @@ The `tooltip` prop accepts a string or any `ReactNode`, so segments can show for
 | --------- | ------------------------------------------------------------------------------------------------------------------------------------------------------ | --------------------- | ------- | -------- |
 | `value`   | Sets the segment's width as a share of the total (`value / sum of all values`). Every segment is floored at 2px so small and zero values stay visible. | `number`              | —       | ✅       |
 | `color`   | Any valid CSS color (e.g. a token like `var(--color-brand-green)` or `#10b981`).                                                                       | `string`              | —       | ✅       |
-| `label`   | Accessible name; shown visibly in the legend when `showLabels` is set, else SR-only.                                                                   | `string`              | —       | ✅       |
-| `tooltip` | Tooltip content shown on hover and keyboard focus.                                                                                                     | `string \| ReactNode` | —       | ✅       |
+| `label`   | Visible legend label, shown when `showLabels` is set. Not announced to screen readers.                                                                 | `string`              | —       | ✅       |
+| `tooltip` | Tooltip content shown on hover and keyboard focus; also the segment's accessible name, so it must describe the segment on its own.                     | `string \| ReactNode` | —       | ✅       |

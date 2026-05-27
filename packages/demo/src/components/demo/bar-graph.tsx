@@ -3,7 +3,7 @@ import { BarGraph, BarGraphSegment } from "@eqtylab/equality";
 export function BarGraphDemo() {
   return (
     <div style={{ margin: "1rem 0 2rem" }}>
-      <BarGraph aria-label="Sprint capacity: 12 done, 3 in progress, 28 remaining">
+      <BarGraph>
         <BarGraphSegment
           value={12}
           color="var(--color-brand-green)"
@@ -33,33 +33,28 @@ const controlsSegments = () => [
     value={12}
     color="var(--color-brand-green)"
     label="Success"
-    tooltip="12 controls"
+    tooltip="12 controls succeeded"
   />,
   <BarGraphSegment
     key="pending"
     value={190}
     color="var(--color-brand-yellow)"
     label="Pending"
-    tooltip="190 controls"
+    tooltip="190 controls pending"
   />,
   <BarGraphSegment
     key="failure"
     value={1}
     color="var(--color-brand-red)"
     label="Failure"
-    tooltip="1 control"
+    tooltip="1 control failed"
   />,
 ];
 
 export function BarGraphSizeSmDemo() {
   return (
     <div style={{ margin: "1rem 0 2rem" }}>
-      <BarGraph
-        size="sm"
-        aria-label="Controls status: 12 success, 3 pending, 28 failure"
-      >
-        {controlsSegments()}
-      </BarGraph>
+      <BarGraph size="sm">{controlsSegments()}</BarGraph>
     </div>
   );
 }
@@ -67,12 +62,7 @@ export function BarGraphSizeSmDemo() {
 export function BarGraphSizeMdDemo() {
   return (
     <div style={{ margin: "1rem 0 2rem" }}>
-      <BarGraph
-        size="md"
-        aria-label="Controls status: 12 success, 3 pending, 28 failure"
-      >
-        {controlsSegments()}
-      </BarGraph>
+      <BarGraph size="md">{controlsSegments()}</BarGraph>
     </div>
   );
 }
@@ -80,12 +70,7 @@ export function BarGraphSizeMdDemo() {
 export function BarGraphSizeLgDemo() {
   return (
     <div style={{ margin: "1rem 0 2rem" }}>
-      <BarGraph
-        size="lg"
-        aria-label="Controls status: 12 success, 3 pending, 28 failure"
-      >
-        {controlsSegments()}
-      </BarGraph>
+      <BarGraph size="lg">{controlsSegments()}</BarGraph>
     </div>
   );
 }
@@ -93,10 +78,7 @@ export function BarGraphSizeLgDemo() {
 export function BarGraphWithLabelsDemo() {
   return (
     <div style={{ margin: "1rem 0 2rem" }}>
-      <BarGraph
-        aria-label="Sprint capacity: 12 done, 3 in progress, 28 remaining"
-        showLabels
-      >
+      <BarGraph showLabels>
         <BarGraphSegment
           value={12}
           color="var(--color-brand-green)"
@@ -123,10 +105,7 @@ export function BarGraphWithLabelsDemo() {
 export function BarGraphRichTooltipDemo() {
   return (
     <div style={{ margin: "1rem 0 2rem" }}>
-      <BarGraph
-        aria-label="Storage usage: 240GB documents, 80GB media, 120GB free"
-        showLabels
-      >
+      <BarGraph showLabels>
         <BarGraphSegment
           value={10}
           color="var(--color-brand-green)"

@@ -16,39 +16,54 @@ export interface BarGraphSegmentProps extends Omit<React.HTMLAttributes<HTMLDivE
   /** Any valid CSS color, applied as the segment's background. */
   color: string;
   /**
-   * Accessible name for the segment. Shown visibly in the legend when `showLabels`
-   * is set on the parent `BarGraph`, otherwise it is screen-reader only.
+   * Visible legend label, shown when `showLabels` is set on the parent `BarGraph`.
+   * Not announced to screen readers — the segment's accessible name is its `tooltip`.
    */
   label: string;
-  /** Tooltip content shown on hover and keyboard focus. Required. */
+  /**
+   * Tooltip content shown on hover and keyboard focus. Also the segment's accessible
+   * name, so it must describe the segment on its own. Required.
+   */
   tooltip: React.ReactNode;
 }
 
 const BarGraphSegment = React.forwardRef<HTMLDivElement, BarGraphSegmentProps>(
-  ({ value, color, label, tooltip, className, style, ...props }, ref) => (
-    // Widths are proportional (`value / sum`): each segment grows by its `value`
-    // within the flex row, so the parent never needs to know the total.
-    <Tooltip>
-      <TooltipTrigger asChild>
-        <div
-          ref={ref}
-          tabIndex={0}
-          aria-label={label}
-          className={cn(styles['segment'], className)}
-          style={{
-            flexGrow: value,
-            // Floor every segment at 2px so small (and zero) values stay visible
-            // and focusable. This slightly skews the proportions for tiny slices.
-            minWidth: 2,
-            backgroundColor: color,
-            ...style,
-          }}
-          {...props}
-        />
-      </TooltipTrigger>
-      <TooltipContent>{tooltip}</TooltipContent>
-    </Tooltip>
-  )
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  ({ value, color, label, tooltip, className, style, ...props }, ref) => {
+    // The segment's accessible name is the tooltip content.
+    // It's announced immediately on focus.
+    const tooltipId = React.useId();
+
+    return (
+      // Widths are proportional (`value / sum`): each segment grows by its `value`
+      // within the flex row, so the parent never needs to know the total.
+      <Tooltip>
+        <TooltipTrigger asChild>
+          <div
+            ref={ref}
+            tabIndex={0}
+            aria-labelledby={tooltipId}
+            aria-describedby={undefined}
+            className={cn(styles['segment'], className)}
+            style={{
+              flexGrow: value,
+              // Floor every segment at 2px so small (and zero) values stay visible
+              // and focusable. This slightly skews the proportions for tiny slices.
+              minWidth: 2,
+              backgroundColor: color,
+              ...style,
+            }}
+            {...props}
+          >
+            <div id={tooltipId} className={styles['visually-hidden']}>
+              {tooltip}
+            </div>
+          </div>
+        </TooltipTrigger>
+        <TooltipContent>{tooltip}</TooltipContent>
+      </Tooltip>
+    );
+  }
 );
 BarGraphSegment.displayName = 'BarGraphSegment';
 
@@ -74,7 +89,7 @@ type BarGraphChild = React.ReactElement<BarGraphSegmentProps> | boolean | null |
 
 export interface BarGraphProps
   extends Omit<React.HTMLAttributes<HTMLDivElement>, 'children'>, VariantProps<typeof barVariants> {
-  /** Render a visible legend (color swatch + label) beneath the bar. Defaults to `false` (labels are screen-reader only). */
+  /** Render a visible legend (color swatch + label) beneath the bar. Defaults to `false`. */
   showLabels?: boolean;
   /** Bar height. `md` and `lg` use rounded rectangles instead of a full pill. Defaults to `md`. */
   size?: 'sm' | 'md' | 'lg';
@@ -83,18 +98,7 @@ export interface BarGraphProps
 }
 
 const BarGraph = React.forwardRef<HTMLDivElement, BarGraphProps>(
-  (
-    {
-      className,
-      children,
-      showLabels = false,
-      size,
-      'aria-label': ariaLabel,
-      'aria-labelledby': ariaLabelledby,
-      ...props
-    },
-    ref
-  ) => {
+  ({ className, children, showLabels = false, size, ...props }, ref) => {
     const validChildren = React.Children.toArray(children).filter(React.isValidElement);
     const segments = validChildren.filter(
       (child): child is React.ReactElement<BarGraphSegmentProps> => child.type === BarGraphSegment
@@ -103,14 +107,7 @@ const BarGraph = React.forwardRef<HTMLDivElement, BarGraphProps>(
     return (
       <TooltipProvider>
         <div ref={ref} className={cn(styles['bar-graph'], className)} {...props}>
-          <div
-            role="img"
-            aria-label={ariaLabel}
-            aria-labelledby={ariaLabelledby}
-            className={barVariants({ size })}
-          >
-            {segments}
-          </div>
+          <div className={barVariants({ size })}>{segments}</div>
           {showLabels && (
             <ul className={styles['legend']}>
               {segments.map((child, index) => (
