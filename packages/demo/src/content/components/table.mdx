@@ -69,7 +69,12 @@ Basic usage:
 
 ### Clickable Rows
 
-Rows accept an `onClick` handler, which enables hover interactions. Use `data-state="selected"` to mark a row as selected.
+Rows can be made interactive in two ways:
+
+- **`onClick`** — Pass a click handler for custom behavior (e.g., toggling selection state).
+- **`href`** — Pass a URL to make the row navigable on click. This also adds keyboard accessibility (`Enter`/`Space` to activate) and proper ARIA semantics. Add an `hrefLabel` prop to tell screen reader users where the link will go.
+
+Both props enable hover interactions automatically. Use `data-state="selected"` to mark a row as selected.
 
 Try clicking a row below to toggle its selected state!
 
@@ -310,6 +315,8 @@ Use [container queries](https://tailwindcss.com/docs/responsive-design#what-are-
 
 ### TableRow
 
-| Name        | Description                                 | Type      | Default | Required |
-| ----------- | ------------------------------------------- | --------- | ------- | -------- |
-| `clickable` | Applies hover and cursor interaction styles | `boolean` | `false` | ❌       |
+| Name        | Description                                                 | Type      | Default          | Required |
+| ----------- | ----------------------------------------------------------- | --------- | ---------------- | -------- |
+| `clickable` | Applies hover and cursor interaction styles                 | `boolean` | `false`          | ❌       |
+| `href`      | URL to navigate to on click                                 | `string`  | —                | ❌       |
+| `hrefLabel` | Accessible label for the link (announced by screen readers) | `string`  | `"View details"` | ❌       |

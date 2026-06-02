@@ -483,11 +483,7 @@ export const TableDemo = ({
             <IconButton name="EllipsisVertical" label="Row actions" />
           </TableCell>
         </TableRow>
-        <TableRow
-          clickable={variant === "clickable"}
-          data-state={selectedRow === 2 ? "selected" : undefined}
-          onClick={variant === "clickable" ? () => toggleRow(2) : undefined}
-        >
+        <TableRow href="https://eqtylab.io">
           <TableCell>Charlie Brown</TableCell>
           <TableCell>charlie@example.com</TableCell>
           <TableCell>Viewer</TableCell>

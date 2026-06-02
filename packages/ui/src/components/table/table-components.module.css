@@ -64,7 +64,31 @@
   --hover-darken: 50%;
   --hover-lighten: 50%;
   @apply cursor-pointer;
-  @apply hover:bg-mixed-light! dark:hover:bg-mixed-dark!;
+}
+
+/* Prevent row from highlighting when the user hovers clickable tags in the table */
+.table-row--clickable:not([data-state='selected']):hover:not(
+    :has(button:hover, a:not(.table-row-link):hover)
+  ) {
+  @apply bg-mixed-light! dark:bg-mixed-dark!;
+}
+
+/* Linked Row (stretched link pattern) */
+
+.table-row--linked {
+  @apply relative;
+}
+
+.table-row-link {
+  @apply absolute inset-0 z-10;
+}
+
+.table-row--linked :is(button, a:not(.table-row-link)) {
+  @apply relative z-20;
+}
+
+.table-row--linked:has(.table-row-link:focus-visible) {
+  @apply outline-brand-primary outline outline-2 outline-offset-[-2px];
 }
 
 .table-body .table-row--clickable[data-state='selected'] {
