@@ -59,14 +59,49 @@ TableFooter.displayName = 'TableFooter';
 
 const TableRow = React.forwardRef<
   HTMLTableRowElement,
-  React.HTMLAttributes<HTMLTableRowElement> & { clickable?: boolean }
->(({ className, clickable, ...props }, ref) => (
-  <tr
-    ref={ref}
-    className={cn(styles['table-row'], clickable && styles['table-row--clickable'], className)}
-    {...props}
-  />
-));
+  React.HTMLAttributes<HTMLTableRowElement> & {
+    clickable?: boolean;
+    href?: string;
+    hrefLabel?: string;
+  }
+>(
+  (
+    { className, clickable, href, hrefLabel = 'View details', children, onClick, ...props },
+    ref
+  ) => {
+    const isClickable = clickable || !!href;
+
+    const handleClick = (e: React.MouseEvent<HTMLTableRowElement>) => {
+      // Don't trigger row click if an interactive element was clicked
+      const target = e.target as HTMLElement;
+      if (target.closest('button, a:not([data-table-row-link])')) {
+        return;
+      }
+      onClick?.(e);
+    };
+
+    return (
+      <tr
+        ref={ref}
+        className={cn(
+          styles['table-row'],
+          isClickable && styles['table-row--clickable'],
+          href && styles['table-row--linked'],
+          className
+        )}
+        onClick={onClick ? handleClick : undefined}
+        {...props}
+      >
+        {href && (
+          <a href={href} className={styles['table-row-link']} data-table-row-link>
+            <span className="sr-only">{hrefLabel}</span>
+          </a>
+        )}
+        {children}
+      </tr>
+    );
+  }
+);
 TableRow.displayName = 'TableRow';
 
 const TableHead = React.forwardRef<
