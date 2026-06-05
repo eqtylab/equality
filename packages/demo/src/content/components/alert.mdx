@@ -4,7 +4,7 @@ heading: "Alert"
 description: "Alert with sizes and variants"
 ---
 
-import { Alert, AlertTitle, AlertDescription } from "@eqtylab/equality";
+import { Alert } from "@eqtylab/equality";
 
 ## Overview
 
@@ -12,7 +12,8 @@ import { Alert, AlertTitle, AlertDescription } from "@eqtylab/equality";
 
 The Alert component displays important messages to users, usually as a result of an action they took. Use alerts to communicate status, warnings, errors, or success states.
 
-- **Default:** General information.
+- **Primary:** General information.
+- **Neutral:** Low-emphasis, informational messages.
 - **Success:** Positive outcomes or confirmations.
 - **Warning:** Cautionary information that needs attention.
 - **Danger:** Critical errors or destructive actions.
@@ -24,75 +25,89 @@ The Alert component displays important messages to users, usually as a result of
 Import the component:
 
 ```tsx
-import { Alert, AlertTitle, AlertDescription } from "@eqtylab/equality";
+import { Alert } from "@eqtylab/equality";
 ```
 
 Basic usage with title and description:
 
 ```tsx
-<Alert>
-  <AlertTitle>Heads up!</AlertTitle>
-  <AlertDescription>This is an important message.</AlertDescription>
-</Alert>
+<Alert title="Heads up!" description="This is an important message." />
 ```
 
 ## Variants
 
 ---
 
-<div className="flex flex-col gap-4">
-  <Alert>
-    <AlertTitle>Default</AlertTitle>
-    <AlertDescription>This is a default alert for general information.</AlertDescription>
-  </Alert>
+The `success`, `warning`, and `danger` variants show a default icon. The `primary` and `neutral` variants have no icon by default.
 
-<Alert variant="success">
-  <AlertTitle>Success</AlertTitle>
-  <AlertDescription>
-    Your changes have been saved successfully.
-  </AlertDescription>
-</Alert>
-
-<Alert variant="warning">
-  <AlertTitle>Warning</AlertTitle>
-  <AlertDescription>
-    Please review your input before continuing.
-  </AlertDescription>
-</Alert>
-
-  <Alert variant="danger">
-    <AlertTitle>Danger</AlertTitle>
-    <AlertDescription>A serious error occurred.</AlertDescription>
-  </Alert>
+<div className="mt-4 flex max-w-[50%] flex-col gap-4">
+  <Alert
+    variant="primary"
+    title="Primary"
+    description="This is a general notification for your information."
+  />
+  <Alert
+    variant="neutral"
+    title="Neutral"
+    description="This is a low-emphasis, informational message."
+  />
+  <Alert
+    variant="success"
+    title="Success"
+    description="Your changes have been saved successfully."
+  />
+  <Alert
+    variant="warning"
+    title="Warning"
+    description="Please review your input before continuing."
+  />
+  <Alert
+    variant="danger"
+    title="Danger"
+    description="A serious error occurred."
+  />
 </div>
 
 ### Usage
 
 ```tsx
-<Alert variant="success">
-  <AlertTitle>Success</AlertTitle>
-  <AlertDescription>Your changes have been saved successfully.</AlertDescription>
-</Alert>
-
-<Alert variant="warning">
-  <AlertTitle>Warning</AlertTitle>
-  <AlertDescription>Please review your input before continuing.</AlertDescription>
-</Alert>
-
-<Alert variant="danger">
-  <AlertTitle>Danger</AlertTitle>
-  <AlertDescription>A serious error occurred.</AlertDescription>
-</Alert>
+<Alert variant="primary" title="Primary" description="This is a general notification for your information." />
+<Alert variant="neutral" title="Neutral" description="This is a low-emphasis, informational message." />
+<Alert variant="success" title="Success" description="Your changes have been saved successfully." />
+<Alert variant="warning" title="Warning" description="Please review your input before continuing." />
+<Alert variant="danger" title="Danger" description="A serious error occurred." />
 ```
 
-## Slots
+### Icons
 
----
+The `success`, `warning`, and `danger` variants apply a default icon automatically. Override it with the `icon` prop by passing a [Lucide](https://lucide.dev/icons/) icon name or a React element. Pass `icon={null}` to remove a variant's default icon, or add an icon to a variant that has none.
 
-| Name               | Description                                          |
-| ------------------ | ---------------------------------------------------- |
-| `AlertTitle`       | Renders the alert heading as an `<h5>` element.      |
-| `AlertDescription` | Renders the alert body content as a `<div>` element. |
+<div className="my-4 flex max-w-[50%] flex-col gap-4">
+  <Alert
+    variant="primary"
+    icon="Info"
+    title="Custom icon"
+    description="A primary alert with an explicitly provided icon."
+  />
+  <Alert
+    variant="success"
+    icon="PartyPopper"
+    title="Overridden icon"
+    description="A success alert with a custom icon instead of the default."
+  />
+  <Alert
+    variant="danger"
+    icon={null}
+    title="No icon"
+    description="A danger alert with its default icon removed."
+  />
+</div>
+
+```tsx
+<Alert variant="primary" icon="Info" title="Custom icon" description="A primary alert with an explicitly provided icon." />
+<Alert variant="success" icon="PartyPopper" title="Overridden icon" description="A success alert with a custom icon instead of the default." />
+<Alert variant="danger" icon={null} title="No icon" description="A danger alert with its default icon removed." />
+```
 
 ## Props
 
@@ -100,14 +115,9 @@ Basic usage with title and description:
 
 ### Alert
 
-| Name      | Description                   | Type                                      | Default   | Required |
-| --------- | ----------------------------- | ----------------------------------------- | --------- | -------- |
-| `variant` | The visual style of the alert | `default`, `success`, `warning`, `danger` | `default` | ❌       |
-
-### AlertTitle
-
-Accepts all standard HTML heading attributes.
-
-### AlertDescription
-
-Accepts all standard HTML paragraph attributes.
+| Name          | Description                                                                   | Type                                                 | Default         | Required |
+| ------------- | ----------------------------------------------------------------------------- | ---------------------------------------------------- | --------------- | -------- |
+| `title`       | The alert heading, rendered as an `<h4>`                                      | `string`                                             | —               | ✅       |
+| `description` | The alert body text, rendered as a `<p>`                                      | `string`                                             | —               | ✅       |
+| `variant`     | The visual style of the alert                                                 | `primary`, `neutral`, `success`, `warning`, `danger` | `primary`       | ❌       |
+| `icon`        | Overrides the variant's default icon. Lucide name, element, or `null` to hide | `string`, `ReactElement`, `null`                     | Variant default | ❌       |
