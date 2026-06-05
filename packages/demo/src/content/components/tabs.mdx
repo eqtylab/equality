@@ -169,6 +169,42 @@ Combine icons with the filled background variant for a more prominent tab design
 />
 ```
 
+### With suffix
+
+Use the `suffix` property to render any React component after a tab's label. This is useful for badges, counts, or status indicators. The suffix works alongside icons and both background variants:
+
+<TabsDemo client:only="react" variant="with-suffix" />
+
+#### Example
+
+```tsx
+<Tabs
+  id="with-suffix-tabs"
+  items={[
+    {
+      label: "Declarations",
+      value: "declarations",
+      suffix: (
+        <Badge variant="neutral" size="sm">
+          12
+        </Badge>
+      ),
+      content: <div>Declarations Content</div>,
+    },
+    {
+      label: "Reviews",
+      value: "reviews",
+      suffix: (
+        <Badge variant="primary" size="sm">
+          3
+        </Badge>
+      ),
+      content: <div>Reviews Content</div>,
+    },
+  ]}
+/>
+```
+
 ## Props
 
 ---
@@ -190,4 +226,5 @@ Each item in the `items` array should have the following structure:
 | `label`   | Text label displayed on the tab trigger                      | `string`                       | -       | ✅       |
 | `value`   | Unique value that identifies this tab                        | `string`                       | -       | ✅       |
 | `icon`    | Icon to display alongside the label (Lucide name or element) | `React.ReactElement`, `string` | -       | ❌       |
+| `suffix`  | Content rendered after the label (e.g. a badge or count)     | `React.ReactNode`              | -       | ❌       |
 | `content` | Content to display when this tab is active                   | `React.ReactNode`              | -       | ✅       |
