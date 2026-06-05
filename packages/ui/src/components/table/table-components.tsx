@@ -31,11 +31,18 @@ TableContainer.displayName = 'Table';
 
 const TableHeader = React.forwardRef<
   HTMLTableSectionElement,
-  React.HTMLAttributes<HTMLTableSectionElement> & { sticky?: boolean }
->(({ className, sticky, ...props }, ref) => (
+  React.HTMLAttributes<HTMLTableSectionElement> & {
+    sticky?: false | 'container' | 'page';
+  }
+>(({ className, sticky = false, ...props }, ref) => (
   <thead
     ref={ref}
-    className={cn(styles['table-header'], sticky && styles['table-header--sticky'], className)}
+    className={cn(
+      styles['table-header'],
+      sticky === 'container' && styles['table-header--sticky-container'],
+      sticky === 'page' && styles['table-header--sticky-page'],
+      className
+    )}
     {...props}
   />
 ));

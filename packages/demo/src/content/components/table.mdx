@@ -149,22 +149,45 @@ The empty state cell accepts any `ReactNode`, so you can use a custom component 
 
 ### Sticky Header
 
-Use the `sticky` prop on `<TableHeader>` to keep column headers visible while scrolling. The height of the `<TableContainer>` must be constrained for this to work as expected.
+Use the `sticky` prop on `<TableHeader>` to keep column headers visible while scrolling. It accepts two modes:
+
+- **`container`** — the header sticks within the table's own scroll area. The `<TableContainer>` must have a constrained height (e.g. `max-h-*`), which makes it scroll internally.
+- **`page`** — the header sticks against the document as the whole page scrolls. No height constraint is needed; use this for full-page data tables. Pin offset can be adjusted with the `--table-sticky-top` CSS variable to clear fixed app chrome.
+
+#### On container
 
 <TableDemo client:only="react" variant="sticky-header" />
+
+#### On page
+
+<TableDemo client:only="react" variant="sticky-header-page-offset" />
 
 #### Usage
 
 ```tsx
+{
+  /* Sticks within a height-constrained, internally scrolling table */
+}
 <TableContainer columns="1fr 1fr auto" className="max-h-[400px]">
-  <TableHeader sticky>
+  <TableHeader sticky="container">
     <TableRow>
       <TableHead>Name</TableHead>
       <TableHead>Email</TableHead>
     </TableRow>
   </TableHeader>
   <TableBody>{/* rows */}</TableBody>
-</TableContainer>
+</TableContainer>;
+
+{
+  /* Sticks against the document as the page scrolls */
+}
+<TableContainer
+  columns="1fr 1fr auto"
+  style={{ "--table-sticky-top": "100px" }}
+>
+  <TableHeader sticky="page">{/* … */}</TableHeader>
+  <TableBody>{/* rows */}</TableBody>
+</TableContainer>;
 ```
 
 ## Column Sizing
@@ -309,9 +332,9 @@ Use [container queries](https://tailwindcss.com/docs/responsive-design#what-are-
 
 ### TableHeader
 
-| Name     | Description                                      | Type      | Default | Required |
-| -------- | ------------------------------------------------ | --------- | ------- | -------- |
-| `sticky` | Keeps the header visible while the table scrolls | `boolean` | `false` | ❌       |
+| Name     | Description                                                                                                                                    | Type                             | Default | Required |
+| -------- | ---------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------- | ------- | -------- |
+| `sticky` | Pins the header while scrolling. `container` sticks within a height-constrained table; `page` sticks against the document as the page scrolls. | `false \| 'container' \| 'page'` | `false` | ❌       |
 
 ### TableRow
 

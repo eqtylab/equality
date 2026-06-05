@@ -11,7 +11,7 @@ import {
   TableHeader,
   TableRow,
 } from "@eqtylab/equality";
-import { useState } from "react";
+import { type CSSProperties, useState } from "react";
 
 interface TableDemoProps {
   variant?:
@@ -24,11 +24,21 @@ interface TableDemoProps {
     | "column-sizing"
     | "truncation"
     | "responsive"
-    | "sticky-header";
+    | "sticky-header"
+    | "sticky-header-page"
+    | "sticky-header-page-offset";
   elevation?: Elevation;
 }
 
 const defaultCols = "1fr 1fr auto auto auto";
+
+const roles = ["Admin", "User", "Viewer"] as const;
+const longTableData = Array.from({ length: 10 }, (_, i) => ({
+  name: `User ${i + 1}`,
+  email: `user${i + 1}@example.com`,
+  role: roles[i % roles.length],
+  active: i % 4 !== 0,
+}));
 
 export const TableDemo = ({
   variant = "default",
@@ -216,7 +226,7 @@ export const TableDemo = ({
         columns={defaultCols}
         border
       >
-        <TableHeader sticky>
+        <TableHeader sticky="container">
           <TableRow>
             <TableHead>Name</TableHead>
             <TableHead>Email</TableHead>
@@ -276,6 +286,53 @@ export const TableDemo = ({
               active: true,
             },
           ].map((user) => (
+            <TableRow key={user.name}>
+              <TableCell>{user.name}</TableCell>
+              <TableCell>{user.email}</TableCell>
+              <TableCell>{user.role}</TableCell>
+              <TableCell>
+                <Badge variant={user.active ? "success" : "neutral"}>
+                  {user.active ? "Active" : "Inactive"}
+                </Badge>
+              </TableCell>
+              <TableCell>
+                <IconButton name="EllipsisVertical" label="Row actions" />
+              </TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      </TableContainer>
+    );
+  }
+
+  if (
+    variant === "sticky-header-page" ||
+    variant === "sticky-header-page-offset"
+  ) {
+    const offset = variant === "sticky-header-page-offset";
+    return (
+      <TableContainer
+        elevation={elevation}
+        columns={defaultCols}
+        border
+        style={
+          offset
+            ? ({ "--table-sticky-top": "57px" } as CSSProperties)
+            : undefined
+        }
+      >
+        <TableHeader sticky="page">
+          <TableRow>
+            <TableHead>Name</TableHead>
+            <TableHead>Email</TableHead>
+            <TableHead>Role</TableHead>
+            <TableHead>Status</TableHead>
+            <TableHead />
+          </TableRow>
+        </TableHeader>
+        <TableBody>
+          {/* sticky="page" keeps the header pinned to the viewport as the page scrolls */}
+          {longTableData.map((user) => (
             <TableRow key={user.name}>
               <TableCell>{user.name}</TableCell>
               <TableCell>{user.email}</TableCell>
