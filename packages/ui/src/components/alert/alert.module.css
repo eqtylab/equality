@@ -1,38 +1,58 @@
 @reference '../../theme/theme.module.css';
 
 .alert {
-  @apply [&>svg]:text-text-primary [&>svg+div]:translate-y-[-3px] [&>svg]:absolute [&>svg]:left-4 [&>svg]:top-4 [&>svg~*]:pl-7;
   @apply relative w-full;
   @apply rounded-lg border;
   @apply px-4 py-3;
   @apply text-sm;
+  @apply grid gap-y-1;
 }
 
-.alert--default {
-  @apply text-badge-text-neutral [&>svg]:text-badge-text-neutral;
+.alert--primary {
+  @apply text-badge-text-primary;
+  @apply bg-badge-background-primary border-badge-text-primary;
+}
+
+.alert--neutral {
+  @apply text-badge-text-neutral;
   @apply bg-badge-background-neutral border-badge-text-neutral;
 }
 
 .alert--success {
-  @apply text-badge-text-success [&>svg]:text-badge-text-success;
+  @apply text-badge-text-success;
   @apply bg-badge-background-success border-badge-text-success;
 }
 
 .alert--warning {
-  @apply text-badge-text-warning [&>svg]:text-badge-text-warning;
+  @apply text-badge-text-warning;
   @apply bg-badge-background-warning border-badge-text-warning;
 }
 
 .alert--danger {
-  @apply text-badge-text-danger [&>svg]:text-badge-text-danger;
+  @apply text-badge-text-danger;
   @apply bg-badge-background-danger border-badge-text-danger;
+}
+
+.alert .alert-icon {
+  @apply text-inherit;
 }
 
 .alert-title {
   @apply font-medium leading-none tracking-tight;
-  @apply mb-1;
 }
 
 .alert-description {
   @apply text-sm [&_p]:leading-relaxed;
+}
+
+.alert--with-icon {
+  @apply grid-cols-[auto_1fr] gap-x-2;
+}
+
+.alert--with-icon .alert-title {
+  @apply col-start-2 self-center;
+}
+
+.alert--with-icon .alert-description {
+  @apply col-start-2;
 }
