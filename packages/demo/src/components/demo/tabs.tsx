@@ -1,4 +1,4 @@
-import { Card, CardContent, Tabs } from "@eqtylab/equality";
+import { Badge, Card, CardContent, Tabs } from "@eqtylab/equality";
 
 export function TabsDemo({
   variant = "default",
@@ -7,7 +7,8 @@ export function TabsDemo({
     | "default"
     | "with-icons"
     | "with-active-fill"
-    | "with-icons-and-active-fill";
+    | "with-icons-and-active-fill"
+    | "with-suffix";
 }) {
   if (variant === "default") {
     return (
@@ -142,6 +143,44 @@ export function TabsDemo({
           },
         ]}
         tabsListBackground="filled"
+      />
+    );
+  }
+
+  if (variant === "with-suffix") {
+    return (
+      <Tabs
+        id="with-suffix-tabs"
+        items={[
+          {
+            label: "Declarations",
+            value: "declarations",
+            suffix: (
+              <Badge variant="neutral" size="sm">
+                12
+              </Badge>
+            ),
+            content: (
+              <Card>
+                <CardContent>Declarations Content</CardContent>
+              </Card>
+            ),
+          },
+          {
+            label: "Reviews",
+            value: "reviews",
+            suffix: (
+              <Badge variant="primary" size="sm">
+                3
+              </Badge>
+            ),
+            content: (
+              <Card>
+                <CardContent>Reviews Content</CardContent>
+              </Card>
+            ),
+          },
+        ]}
       />
     );
   }

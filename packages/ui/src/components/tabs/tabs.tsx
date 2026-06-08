@@ -17,6 +17,7 @@ interface TabsProps {
     label: string;
     value: string;
     icon?: React.ReactElement | string;
+    suffix?: React.ReactNode;
     content: React.ReactNode;
   }[];
   className?: string;
@@ -79,7 +80,7 @@ const Tabs = ({
           isFilled ? styles['tabs-list--filled'] : styles['tabs-list--transparent']
         )}
       >
-        {items.map(({ label, value, icon }) => {
+        {items.map(({ label, value, icon, suffix }) => {
           const isActive = activeTab === value;
 
           return (
@@ -94,6 +95,7 @@ const Tabs = ({
             >
               {renderIcon(icon)}
               {label}
+              {suffix}
               {renderActiveStyle(isActive)}
             </TabsTrigger>
           );
