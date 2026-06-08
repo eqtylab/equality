@@ -11,13 +11,9 @@ import React from "react";
 
 ---
 
-`EmptyTableState` provides a consistent placeholder for tables, lists, or other
-collections that have no content to show. It pairs an [`Icon`](/components/icon)
-with a title and optional description, and can surface a "Clear Filters" action
-when an empty result is caused by active filters.
+`EmptyTableState` provides a consistent placeholder for tables, lists, or other collections that have no content to show. It pairs an [`Icon`](/components/icon) with a title and optional description, and can surface a "Clear Filters" action when an empty result is caused by active filters.
 
-It is commonly rendered inside a [`Table`](/components/table) empty state cell,
-but works anywhere an empty collection needs to be communicated.
+It is commonly rendered inside a [`Table`](/components/table) empty state cell, but works anywhere an empty collection needs to be communicated.
 
 ## Usage
 
@@ -55,9 +51,7 @@ The `description` is optional — omit it for a more compact state.
 
 ### With Clear Button
 
-When an empty result is the consequence of active filters, set `showClearButton`
-and provide an `onClear` handler to let users reset their filters. The button
-only renders when both props are present.
+When an empty result is the consequence of active filters, set `showClearButton` and provide an `onClear` handler to let users reset their filters. The button only renders when both props are present.
 
 <EmptyTableState
   icon="SearchX"
@@ -81,9 +75,7 @@ only renders when both props are present.
 
 ### Elevation
 
-Use the `elevation` prop to control the elevation of the icon's background so it
-sits correctly against the surface it's placed on. It accepts the same elevation
-values as the rest of the design system and defaults to `raised`.
+Use the `elevation` prop to control the elevation of the icon's background so it sits correctly against the surface it's placed on. It accepts the same elevation values as the rest of the design system and defaults to `raised`.
 
 <EmptyTableState
   icon="SearchX"
