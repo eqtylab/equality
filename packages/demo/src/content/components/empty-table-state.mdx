@@ -1,13 +1,43 @@
 ---
 layout: "@demo/layouts/mdx-layout.astro"
 heading: "Empty Table State"
-description: "Empty Table State with sizes and variants"
+description: "A placeholder shown when a table or list has no rows to display."
 ---
 
 import { EmptyTableState } from "@eqtylab/equality";
 import React from "react";
 
+## Overview
+
+---
+
+`EmptyTableState` provides a consistent placeholder for tables, lists, or other
+collections that have no content to show. It pairs an [`Icon`](/components/icon)
+with a title and optional description, and can surface a "Clear Filters" action
+when an empty result is caused by active filters.
+
+It is commonly rendered inside a [`Table`](/components/table) empty state cell,
+but works anywhere an empty collection needs to be communicated.
+
+## Usage
+
+---
+
+Import the component:
+
+```tsx
+import { EmptyTableState } from "@eqtylab/equality";
+```
+
+Basic usage with required properties:
+
+```tsx
+<EmptyTableState icon="SearchX" title="No Members Available" />
+```
+
 ## Variants
+
+---
 
 ### Default
 
@@ -17,11 +47,17 @@ import React from "react";
   description="Members will appear here once they are available to be added."
 />
 
-### Without description
+### Without Description
+
+The `description` is optional — omit it for a more compact state.
 
 <EmptyTableState icon="SearchX" title="No Members Available" />
 
 ### With Clear Button
+
+When an empty result is the consequence of active filters, set `showClearButton`
+and provide an `onClear` handler to let users reset their filters. The button
+only renders when both props are present.
 
 <EmptyTableState
   icon="SearchX"
@@ -30,3 +66,53 @@ import React from "react";
   showClearButton
   onClear={() => {}}
 />
+
+#### Usage
+
+```tsx
+<EmptyTableState
+  icon="SearchX"
+  title="No External Users Found"
+  description="Try refining your search terms or clearing filters."
+  showClearButton
+  onClear={() => handleClearFilters()}
+/>
+```
+
+### Elevation
+
+Use the `elevation` prop to control the elevation of the icon's background so it
+sits correctly against the surface it's placed on. It accepts the same elevation
+values as the rest of the design system and defaults to `raised`.
+
+<EmptyTableState
+  icon="SearchX"
+  title="No Members Available"
+  description="Members will appear here once they are available to be added."
+  elevation="overlay"
+/>
+
+#### Usage
+
+```tsx
+import { ELEVATION } from "@eqtylab/equality";
+
+<EmptyTableState
+  icon="SearchX"
+  title="No Members Available"
+  elevation={ELEVATION.OVERLAY}
+/>;
+```
+
+## Props
+
+---
+
+| Name              | Description                                               | Type                                  | Default  | Required |
+| ----------------- | --------------------------------------------------------- | ------------------------------------- | -------- | -------- |
+| `icon`            | Lucide icon name or a React element shown above the title | `string`, `React.ReactElement`        | —        | ✅       |
+| `title`           | Heading text describing the empty state                   | `string`                              | —        | ✅       |
+| `description`     | Supporting text shown below the title                     | `string`                              | —        | ❌       |
+| `elevation`       | Elevation applied to the icon's background                | `sunken`, `base`, `raised`, `overlay` | `raised` | ❌       |
+| `showClearButton` | Shows the "Clear Filters" button (requires `onClear`)     | `boolean`                             | `false`  | ❌       |
+| `onClear`         | Callback fired when the "Clear Filters" button is clicked | `() => void`                          | —        | ❌       |
