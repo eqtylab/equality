@@ -21,7 +21,7 @@ export interface FormatDateProps extends Omit<
   displayAs?: FormatDateDisplayMode;
   /** Time zone used for absolute formatting. Defaults to "UTC". */
   timeZone?: string;
-  /** BCP 47 locale used for formatting. Defaults to the runtime locale. */
+  /** BCP 47 locale used for formatting. Defaults to "en-US". */
   locale?: string;
   /** When relative, show a tooltip with the absolute time on hover/focus. Defaults to true. */
   tooltip?: boolean;
