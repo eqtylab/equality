@@ -31,6 +31,9 @@ export interface FormatDateProps extends Omit<
   absoluteOptions?: Intl.DateTimeFormatOptions;
 }
 
+// BCP 47 locale used for all formatting. Explicit so server and client always agree
+const DEFAULT_LOCALE = 'en-US';
+
 const DEFAULT_ABSOLUTE_OPTIONS: Intl.DateTimeFormatOptions = {
   year: 'numeric',
   month: 'short',
@@ -65,12 +68,12 @@ function formatAbsolute(
   date: Date,
   timeZone: string,
   options: Intl.DateTimeFormatOptions,
-  locale?: string
+  locale: string
 ): string {
   return new Intl.DateTimeFormat(locale, { ...options, timeZone }).format(date);
 }
 
-function formatRelative(date: Date, now: Date, locale?: string): string {
+function formatRelative(date: Date, now: Date, locale: string): string {
   let duration = (date.getTime() - now.getTime()) / 1000;
   if (Math.abs(duration) < 45) return 'Just now';
 
@@ -88,7 +91,7 @@ function FormatDate({
   date,
   displayAs = 'absolute',
   timeZone = 'UTC',
-  locale,
+  locale = DEFAULT_LOCALE,
   tooltip = true,
   live = true,
   absoluteOptions,
