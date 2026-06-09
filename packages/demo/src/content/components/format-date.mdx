@@ -6,6 +6,7 @@ description: "Render a date as relative or absolute time using a semantic <time>
 
 import { FormatDate } from "@eqtylab/equality";
 import {
+  FormatDateIsoDemo,
   FormatDateOptionsDemo,
   FormatDateRelativeDemo,
   FormatDateTimeZoneDemo,
@@ -90,6 +91,20 @@ Pass `absoluteOptions` to override the [`Intl.DateTimeFormat`](https://developer
 <FormatDate
   date="2026-06-09T18:42:03Z"
   absoluteOptions={{ dateStyle: "short", timeStyle: "short" }}
+/>
+```
+
+#### ISO 8601 short date
+
+For a short numeric date like `2026-06-09`, use numeric options. Digit _order_ is decided by the `locale`, not the options, so the default `en-US` renders this as `06/09/2026`. Pair the preset with `locale="en-CA"` (which orders numerically as `yyyy-mm-dd`) to get true ISO 8601:
+
+<FormatDateIsoDemo client:only="react" />
+
+```tsx
+<FormatDate
+  date="2026-06-09T18:42:03Z"
+  locale="en-CA"
+  absoluteOptions={{ year: "numeric", month: "2-digit", day: "2-digit" }}
 />
 ```
 

@@ -160,3 +160,42 @@ export function FormatDateOptionsDemo() {
     </div>
   );
 }
+
+export function FormatDateIsoDemo() {
+  const date = useMemo(() => new Date("2026-06-09T18:42:03Z"), []);
+
+  // en-CA orders numeric dates as yyyy-mm-dd
+  // en-US would render dd/mm/yyyy
+  const options: Intl.DateTimeFormatOptions = {
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+  };
+
+  return (
+    <div className="my-4">
+      <Card>
+        <CardContent className="divide-border divide-y divide-solid">
+          <div className="flex items-center gap-3 py-1">
+            <PanelLabel label="en-CA" className="w-28" />
+            <FormatDate
+              date={date}
+              displayAs="absolute"
+              locale="en-CA"
+              absoluteOptions={options}
+            />
+          </div>
+          <div className="flex items-center gap-3 py-1">
+            <PanelLabel label="en-US" className="w-28" />
+            <FormatDate
+              date={date}
+              displayAs="absolute"
+              locale="en-US"
+              absoluteOptions={options}
+            />
+          </div>
+        </CardContent>
+      </Card>
+    </div>
+  );
+}
