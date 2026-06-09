@@ -52,6 +52,7 @@ export * from './table/table-components';
 export * from './tabs/tabs-components';
 export * from './tabs/tabs';
 export * from './textarea/textarea';
+export * from './format-date/format-date';
 export * from './toast/toast-components';
 export * from './toast/toast';
 export * from './tooltip/tooltip';
