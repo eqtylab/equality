@@ -100,8 +100,11 @@ function FormatDate({
 }: FormatDateProps) {
   const parsed = React.useMemo(() => toDate(date), [date]);
   const [now, setNow] = React.useState(() => new Date());
+  const [mounted, setMounted] = React.useState(false);
 
   const isRelative = displayAs === 'relative';
+
+  React.useEffect(() => setMounted(true), []);
 
   React.useEffect(() => {
     if (!isRelative || !live) return;
@@ -133,7 +136,8 @@ function FormatDate({
     );
   }
 
-  const relative = formatRelative(parsed, now, locale);
+  // Until mounted, show the absolute string so SSR and first client render match
+  const relative = mounted ? formatRelative(parsed, now, locale) : absolute;
 
   if (!tooltip) {
     return (
