@@ -30,7 +30,7 @@ const defaultVariantIcons: Record<string, string> = {
 interface AlertProps
   extends React.HTMLAttributes<HTMLDivElement>, VariantProps<typeof alertVariants> {
   title: string;
-  description: string;
+  description?: string | React.ReactNode;
   icon?: React.ReactElement | string | null;
 }
 
@@ -61,7 +61,7 @@ const Alert = React.forwardRef<HTMLDivElement, AlertProps>(
           />
         ) : null}
         <h4 className={styles['alert-title']}>{title}</h4>
-        <p className={styles['alert-description']}>{description}</p>
+        {description ? <p className={styles['alert-description']}>{description}</p> : null}
       </div>
     );
   }
