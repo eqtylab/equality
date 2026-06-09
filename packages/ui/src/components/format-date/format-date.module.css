@@ -1,0 +1,10 @@
+@reference '../../theme/theme.module.css';
+
+.format-date {
+  @apply tabular-nums;
+}
+
+.format-date--interactive {
+  @apply focus-ring rounded-sm;
+  @apply cursor-default;
+}

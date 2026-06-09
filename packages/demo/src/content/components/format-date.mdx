@@ -1,0 +1,106 @@
+---
+layout: "@demo/layouts/mdx-layout.astro"
+heading: "Format Date"
+description: "Render a date as relative or absolute time using a semantic <time> element"
+---
+
+import { FormatDate } from "@eqtylab/equality";
+import {
+  FormatDateOptionsDemo,
+  FormatDateRelativeDemo,
+  FormatDateTimeZoneDemo,
+} from "@demo/components/demo/format-date";
+
+## Overview
+
+The <code>FormatDate</code> component renders a date as either **relative** time (e.g. "2 weeks ago", "Just now") or **absolute** time (e.g. "9 Jun 2026, 18:42:03 UTC"). It always renders as a semantic HTML [`<time>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/time) element with a `dateTime` attribute, so it's available to browsers, screen readers, and crawlers regardless of how it is displayed.
+
+When showing relative time, a tooltip reveals the absolute time on hover or keyboard focus.
+
+## Time zones
+
+Absolute time is formatted in **UTC by default**. To render in a different zone, pass a `timeZone` (e.g. `"America/New_York"`). Relative time reads the same everywhere.
+
+## Usage
+
+Import the component:
+
+```tsx
+import { FormatDate } from "@eqtylab/equality";
+```
+
+Basic usage with the required `date` property, which accepts an ISO 8601 string, epoch milliseconds, or a `Date`. Each of these renders the same instant:
+
+```tsx
+<FormatDate date="2026-06-09T18:42:03Z" />
+<FormatDate date={1781030523000} />
+<FormatDate date={new Date("2026-06-09T18:42:03Z")} />
+```
+
+## Variants
+
+### Absolute
+
+The default. Renders the full date and time in the configured `timeZone` (UTC unless overridden).
+
+<FormatDateTimeZoneDemo client:only="react" />
+
+```tsx
+<FormatDate date="2026-06-09T18:42:03Z" />
+<FormatDate date="2026-06-09T18:42:03Z" timeZone="America/New_York" />
+<FormatDate date="2026-06-09T18:42:03Z" timeZone="Asia/Tokyo" />
+<FormatDate date="2026-06-09T18:42:03Z" timeZone="Pacific/Auckland" />
+<FormatDate date="2026-06-09T18:42:03Z" timeZone="America/Toronto" />
+<FormatDate date="2026-06-09T18:42:03Z" timeZone="America/Los_Angeles" />
+<FormatDate date="2026-06-09T18:42:03Z" timeZone="America/Buenos_Aires" />
+<FormatDate date="2026-06-09T18:42:03Z" timeZone="Europe/London" />
+```
+
+### Relative
+
+Set `displayAs="relative"` to render distance from now. The value updates automatically on an interval, and hovering or focusing the date reveals the absolute time in a tooltip.
+
+<FormatDateRelativeDemo client:only="react" />
+
+```tsx
+<FormatDate date={data.updatedAt} displayAs="relative" />
+```
+
+Disable the tooltip with `tooltip={false}`, or stop the auto-updating with `live={false}`.
+
+### Custom formatting
+
+Pass `absoluteOptions` to override the [`Intl.DateTimeFormat`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/DateTimeFormat/DateTimeFormat#options) options used for absolute time. For example to show a date without a time, a time without a date, or a weekday.
+
+<FormatDateOptionsDemo client:only="react" />
+
+```tsx
+<FormatDate
+  date="2026-06-09T18:42:03Z"
+  absoluteOptions={{ year: "numeric", month: "long", day: "numeric" }}
+/>
+<FormatDate
+  date="2026-06-09T18:42:03Z"
+  absoluteOptions={{ hour: "2-digit", minute: "2-digit" }}
+/>
+<FormatDate
+  date="2026-06-09T18:42:03Z"
+  absoluteOptions={{ weekday: "long", year: "numeric", month: "long", day: "numeric" }}
+/>
+<FormatDate
+  date="2026-06-09T18:42:03Z"
+  absoluteOptions={{ dateStyle: "short", timeStyle: "short" }}
+/>
+```
+
+## Props
+
+| Name              | Description                                                             | Type                         | Default    | Required |
+| ----------------- | ----------------------------------------------------------------------- | ---------------------------- | ---------- | -------- |
+| `date`            | The date to display                                                     | `string`, `number`, `Date`   | —          | ✅       |
+| `displayAs`       | Render relative or absolute time                                        | `relative`, `absolute`       | `absolute` | ❌       |
+| `timeZone`        | Time zone used for absolute formatting                                  | `string`                     | `UTC`      | ❌       |
+| `locale`          | BCP 47 locale used for formatting                                       | `string`                     | runtime    | ❌       |
+| `tooltip`         | When relative, show a tooltip with the absolute time on hover/focus     | `boolean`                    | `true`     | ❌       |
+| `live`            | When relative, re-render on an interval so the value stays current      | `boolean`                    | `true`     | ❌       |
+| `absoluteOptions` | Override the `Intl.DateTimeFormat` options used for absolute formatting | `Intl.DateTimeFormatOptions` | —          | ❌       |
