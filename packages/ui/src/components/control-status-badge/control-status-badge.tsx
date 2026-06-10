@@ -1,5 +1,9 @@
+import type { ReactElement } from 'react';
+
 import { Badge, type BadgeDisplayMode } from '@/components/badge/badge';
 import styles from '@/components/control-status-badge/control-status-badge.module.css';
+import { Icon } from '@/components/icon/icon';
+import { cn } from '@/lib/utils';
 
 export type ControlStatusBadgeDisplayMode = BadgeDisplayMode;
 
@@ -8,8 +12,41 @@ interface ControlStatusBadgeProps {
   display?: ControlStatusBadgeDisplayMode;
 }
 
+interface StatusConfig {
+  icon: string | ReactElement;
+  className: string;
+  label: string;
+  // When present, the badge renders as a segmented pill: a filled status
+  // segment ("In Review") followed by a border-only sub-status segment.
+  subLabel?: string;
+}
+
 const ControlStatusBadge = ({ status, display = 'both' }: ControlStatusBadgeProps) => {
   const config = getStatusConfig(status);
+
+  // "In Review" statuses split into a filled status + a border-only sub-status.
+  if (config.subLabel) {
+    // Icon-only collapses to just the filled "In Review" indicator.
+    if (display === 'icon-only') {
+      return (
+        <Badge icon={config.icon} display="icon-only" className={config.className} variant={null}>
+          {config.label}
+        </Badge>
+      );
+    }
+
+    return (
+      <div className={cn(styles['split-badge'], config.className)}>
+        <span className={styles['split-badge__status']}>
+          {display !== 'text-only' && (
+            <Icon icon={config.icon} size="xs" className={styles['icon']} />
+          )}
+          {config.label}
+        </span>
+        <span className={styles['split-badge__sub-status']}>{config.subLabel}</span>
+      </div>
+    );
+  }
 
   return (
     <Badge icon={config.icon} display={display} className={config.className} variant={null}>
@@ -19,7 +56,7 @@ const ControlStatusBadge = ({ status, display = 'both' }: ControlStatusBadgeProp
 };
 
 // Helper function
-const getStatusConfig = (status: string) => {
+const getStatusConfig = (status: string): StatusConfig => {
   switch (status) {
     case 'in-progress':
       return {
@@ -29,7 +66,7 @@ const getStatusConfig = (status: string) => {
       };
     case 'not-started':
       return {
-        icon: 'Circle',
+        icon: 'CircleDashed',
         className: styles['badge--not-started'],
         label: 'Not Started',
       };
@@ -47,9 +84,10 @@ const getStatusConfig = (status: string) => {
       };
     case 'comment':
       return {
-        icon: 'MessageCircle',
+        icon: 'Eye',
         className: styles['badge--comment'],
-        label: 'Comment',
+        label: 'In Review',
+        subLabel: 'General',
       };
     case 'not-applicable':
       return {
@@ -59,37 +97,33 @@ const getStatusConfig = (status: string) => {
       };
     case 'accepted':
       return {
-        icon: <MessageCircleCheckIcon />,
+        icon: 'Eye',
         className: styles['badge--accepted'],
-        label: 'Accepted',
+        label: 'In Review',
+        subLabel: 'Accepted',
       };
     case 'questioned':
       return {
-        icon: 'MessageCircleQuestion',
+        icon: 'Eye',
         className: styles['badge--question'],
-        label: 'Questioned',
-      };
-    case 'general':
-      return {
-        icon: 'MessageCircle',
-        className: styles['badge--comment'],
-        label: 'General',
+        label: 'In Review',
+        subLabel: 'Questioned',
       };
     case 'compliant':
       return {
-        icon: 'Check',
+        icon: <CircleCheckFillIcon />,
         className: styles['badge--compliant'],
         label: 'Compliant',
       };
     case 'non-compliant':
       return {
-        icon: 'TriangleAlert',
+        icon: 'X',
         className: styles['badge--non-compliant'],
         label: 'Non-compliant',
       };
     default:
       return {
-        icon: 'Circle',
+        icon: 'CircleDashed',
         className: styles['badge--not-started'],
         label: status,
       };
@@ -98,8 +132,8 @@ const getStatusConfig = (status: string) => {
 
 export { ControlStatusBadge };
 
-// TODO: Remove and replace with Lucide icon once PR #3770 gets merged into their repo.
-const MessageCircleCheckIcon = ({ className }: { className?: string }) => {
+// Custom filled icon — intentionally uses a fill, which Lucide's icon set never does.
+const CircleCheckFillIcon = ({ className }: { className?: string }) => {
   return (
     <svg
       className={className}
@@ -107,14 +141,9 @@ const MessageCircleCheckIcon = ({ className }: { className?: string }) => {
       width="12"
       height="12"
       viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      stroke-width="2"
-      stroke-linecap="round"
-      stroke-linejoin="round"
+      fill="currentColor"
     >
-      <path d="M2.992 16.342a2 2 0 0 1 .094 1.167l-1.065 3.29a1 1 0 0 0 1.236 1.168l3.413-.998a2 2 0 0 1 1.099.092 10 10 0 1 0-4.777-4.719" />
-      <path d="m9 12 2 2 4-4" />
+      <path d="M12 1C18.0751 1 23 5.92487 23 12C23 18.0751 18.0751 23 12 23C5.92487 23 1 18.0751 1 12C1 5.92487 5.92487 1 12 1ZM15.707 9.29297C15.3165 8.90245 14.6835 8.90244 14.293 9.29297L11 12.5859L9.70703 11.293C9.31651 10.9024 8.68349 10.9024 8.29297 11.293C7.90244 11.6835 7.90245 12.3165 8.29297 12.707L10.293 14.707C10.6835 15.0976 11.3165 15.0976 11.707 14.707L15.707 10.707C16.0976 10.3165 16.0976 9.68349 15.707 9.29297Z" />
     </svg>
   );
 };

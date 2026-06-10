@@ -54,3 +54,34 @@
   --badge-bg-color: var(--color-badge-background-compliant);
   --badge-fg-color: var(--color-badge-text-compliant);
 }
+
+/* "In Review" segmented pill: a filled status segment joined to a
+   border-only sub-status segment. The status color tokens are inherited
+   from the .badge--* class applied alongside .split-badge. */
+.split-badge {
+  @apply inline-flex w-max items-center;
+  @apply text-xs font-medium tabular-nums;
+}
+
+.split-badge__status {
+  @apply inline-flex items-center gap-1;
+  @apply min-h-5 px-2 py-0.5;
+  @apply rounded-l-full;
+  border: 1px solid transparent;
+  background-color: var(--badge-bg-color);
+  color: var(--badge-fg-color);
+}
+
+.split-badge__sub-status {
+  @apply inline-flex items-center;
+  @apply min-h-5 px-2 py-0.5;
+  @apply rounded-r-full;
+  /* Overlap the status segment so the divider reads as a single 1px line. */
+  margin-left: -1px;
+  border: 1px solid var(--badge-bg-color);
+  color: var(--badge-fg-color);
+}
+
+.split-badge .icon {
+  @apply text-inherit;
+}
