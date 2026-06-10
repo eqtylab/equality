@@ -1,5 +1,9 @@
+import type { ReactElement } from 'react';
+
 import { Badge, type BadgeDisplayMode } from '@/components/badge/badge';
 import styles from '@/components/control-status-badge/control-status-badge.module.css';
+import { Icon } from '@/components/icon/icon';
+import { cn } from '@/lib/utils';
 
 export type ControlStatusBadgeDisplayMode = BadgeDisplayMode;
 
@@ -8,8 +12,41 @@ interface ControlStatusBadgeProps {
   display?: ControlStatusBadgeDisplayMode;
 }
 
+interface StatusConfig {
+  icon: string | ReactElement;
+  className: string;
+  label: string;
+  // When present, the badge renders as a segmented pill: a filled status
+  // segment ("In Review") followed by a border-only sub-status segment.
+  subLabel?: string;
+}
+
 const ControlStatusBadge = ({ status, display = 'both' }: ControlStatusBadgeProps) => {
   const config = getStatusConfig(status);
+
+  // "In Review" statuses split into a filled status + a border-only sub-status.
+  if (config.subLabel) {
+    // Icon-only collapses to just the filled "In Review" indicator.
+    if (display === 'icon-only') {
+      return (
+        <Badge icon={config.icon} display="icon-only" className={config.className} variant={null}>
+          {config.label}
+        </Badge>
+      );
+    }
+
+    return (
+      <div className={cn(styles['split-badge'], config.className)}>
+        <span className={styles['split-badge__status']}>
+          {display !== 'text-only' && (
+            <Icon icon={config.icon} size="xs" className={styles['icon']} />
+          )}
+          {config.label}
+        </span>
+        <span className={styles['split-badge__sub-status']}>{config.subLabel}</span>
+      </div>
+    );
+  }
 
   return (
     <Badge icon={config.icon} display={display} className={config.className} variant={null}>
@@ -19,7 +56,7 @@ const ControlStatusBadge = ({ status, display = 'both' }: ControlStatusBadgeProp
 };
 
 // Helper function
-const getStatusConfig = (status: string) => {
+const getStatusConfig = (status: string): StatusConfig => {
   switch (status) {
     case 'in-progress':
       return {
@@ -47,9 +84,10 @@ const getStatusConfig = (status: string) => {
       };
     case 'comment':
       return {
-        icon: 'MessageCircle',
+        icon: 'Eye',
         className: styles['badge--comment'],
-        label: 'In Review: General',
+        label: 'In Review',
+        subLabel: 'General',
       };
     case 'not-applicable':
       return {
@@ -59,15 +97,17 @@ const getStatusConfig = (status: string) => {
       };
     case 'accepted':
       return {
-        icon: 'MessageCircleCheck',
+        icon: 'Eye',
         className: styles['badge--accepted'],
-        label: 'In Review: Accepted',
+        label: 'In Review',
+        subLabel: 'Accepted',
       };
     case 'questioned':
       return {
-        icon: 'MessageCircleQuestion',
+        icon: 'Eye',
         className: styles['badge--question'],
-        label: 'In Review: Questioned',
+        label: 'In Review',
+        subLabel: 'Questioned',
       };
     case 'compliant':
       return {
