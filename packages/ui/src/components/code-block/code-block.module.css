@@ -31,11 +31,12 @@
 
 .content {
   @apply bg-card-background border-t-border border-t;
-  @apply font-mono text-xs;
+  @apply text-xs;
   @apply flex-1;
   @apply flex flex-col;
   @apply overflow-scroll;
   @apply min-w-0;
+  font-family: var(--font-mono);
 }
 
 .neutral {
@@ -65,7 +66,8 @@
 
 .code-label-text {
   @apply text-text-secondary;
-  @apply font-mono text-xs;
+  @apply text-xs;
+  font-family: var(--font-mono);
 }
 
 .pre {
