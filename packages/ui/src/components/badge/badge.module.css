@@ -84,7 +84,7 @@
 }
 
 .badge--monospace {
-  @apply font-mono;
+  font-family: var(--font-mono);
 }
 
 .badge--square {

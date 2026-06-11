@@ -35,8 +35,8 @@
 
 .content {
   @apply block w-full overflow-y-clip;
-  @apply font-mono;
   @apply px-3 py-2;
+  font-family: var(--font-mono);
 }
 
 .actions {

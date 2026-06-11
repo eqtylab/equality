@@ -77,9 +77,7 @@
   :global(#equality-theme-provider-root) kbd,
   :global(#equality-theme-provider-root) samp,
   :global(#equality-theme-provider-root) pre {
-    font-family:
-      ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New',
-      monospace;
+    font-family: var(--font-mono), monospace;
     font-size: 1em;
   }
 
