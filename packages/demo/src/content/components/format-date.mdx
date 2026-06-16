@@ -18,6 +18,8 @@ The <code>FormatDate</code> component renders a date as either **relative** time
 
 When showing relative time, a tooltip reveals the absolute time on hover or keyboard focus.
 
+If no date is provided (`null`, `undefined`, or an empty string), the component renders a `---` placeholder instead.
+
 ## Time zones
 
 Absolute time is formatted in **UTC by default**. To render in a different zone, pass a `timeZone` (e.g. `"America/New_York"`). Relative time reads the same everywhere.
@@ -108,14 +110,26 @@ For a short numeric date like `2026-06-09`, use numeric options. Digit _order_ i
 />
 ```
 
+## Empty state
+
+When `date` is missing — `null`, `undefined`, or an empty string — the component renders a `---` placeholder with an accessible "No date" label. This is distinct from passing a present-but-unparseable value (e.g. `"not-a-date"`), which renders `Invalid date`.
+
+<FormatDate date={null} />
+
+```tsx
+<FormatDate date={null} />
+<FormatDate date={undefined} />
+<FormatDate date="" />
+```
+
 ## Props
 
-| Name              | Description                                                             | Type                         | Default    | Required |
-| ----------------- | ----------------------------------------------------------------------- | ---------------------------- | ---------- | -------- |
-| `date`            | The date to display                                                     | `string`, `number`, `Date`   | —          | ✅       |
-| `displayAs`       | Render relative or absolute time                                        | `relative`, `absolute`       | `absolute` | ❌       |
-| `timeZone`        | Time zone used for absolute formatting                                  | `string`                     | `UTC`      | ❌       |
-| `locale`          | BCP 47 locale used for formatting                                       | `string`                     | `en-US`    | ❌       |
-| `tooltip`         | When relative, show a tooltip with the absolute time on hover/focus     | `boolean`                    | `true`     | ❌       |
-| `live`            | When relative, re-render on an interval so the value stays current      | `boolean`                    | `true`     | ❌       |
-| `absoluteOptions` | Override the `Intl.DateTimeFormat` options used for absolute formatting | `Intl.DateTimeFormatOptions` | —          | ❌       |
+| Name              | Description                                                             | Type                               | Default    | Required |
+| ----------------- | ----------------------------------------------------------------------- | ---------------------------------- | ---------- | -------- |
+| `date`            | The date to display                                                     | `string`, `number`, `Date`, `null` | —          | ✅       |
+| `displayAs`       | Render relative or absolute time                                        | `relative`, `absolute`             | `absolute` | ❌       |
+| `timeZone`        | Time zone used for absolute formatting                                  | `string`                           | `UTC`      | ❌       |
+| `locale`          | BCP 47 locale used for formatting                                       | `string`                           | `en-US`    | ❌       |
+| `tooltip`         | When relative, show a tooltip with the absolute time on hover/focus     | `boolean`                          | `true`     | ❌       |
+| `live`            | When relative, re-render on an interval so the value stays current      | `boolean`                          | `true`     | ❌       |
+| `absoluteOptions` | Override the `Intl.DateTimeFormat` options used for absolute formatting | `Intl.DateTimeFormatOptions`       | —          | ❌       |

@@ -15,8 +15,8 @@ export interface FormatDateProps extends Omit<
   React.TimeHTMLAttributes<HTMLTimeElement>,
   'dateTime' | 'children'
 > {
-  /** The date to display. Accepts an ISO 8601 string, epoch milliseconds, or a Date. */
-  date: string | number | Date;
+  /** The date to display. Accepts an ISO 8601 string, epoch milliseconds, or a Date. A missing value (null, undefined, or empty string) renders a placeholder. */
+  date: string | number | Date | null | undefined;
   /** Render relative ("2 weeks ago") or absolute ("Jun 9 2026, 18:42:03 UTC") time. */
   displayAs?: FormatDateDisplayMode;
   /** Time zone used for absolute formatting. Defaults to "UTC". */
@@ -58,7 +58,16 @@ const RELATIVE_DIVISIONS: { amount: number; unit: Intl.RelativeTimeFormatUnit }[
 // Re-render relative time so values like "Just now" stay accurate without busy-looping
 const LIVE_INTERVAL_MS = 30_000;
 
-// Parse any date-like input into a Date, or null if missing/invalid
+// Shown when no date is provided, as distinct from a date that fails to parse
+const NO_DATE_PLACEHOLDER = '---';
+
+// A missing value (null, undefined, or empty/whitespace string) is "no date",
+// as opposed to a present-but-unparseable value, which is "Invalid date"
+function isMissing(value: string | number | Date | null | undefined): value is null | undefined {
+  return value == null || (typeof value === 'string' && value.trim() === '');
+}
+
+// Parse any date-like input into a Date, or null if invalid
 function toDate(value: string | number | Date): Date | null {
   const date = value instanceof Date ? value : new Date(value);
   return Number.isNaN(date.getTime()) ? null : date;
@@ -98,7 +107,8 @@ function FormatDate({
   className,
   ...props
 }: FormatDateProps) {
-  const parsed = React.useMemo(() => toDate(date), [date]);
+  const missing = isMissing(date);
+  const parsed = React.useMemo(() => (isMissing(date) ? null : toDate(date)), [date]);
   const [now, setNow] = React.useState(() => new Date());
   const [mounted, setMounted] = React.useState(false);
 
@@ -112,11 +122,19 @@ function FormatDate({
     return () => clearInterval(id);
   }, [isRelative, live]);
 
+  if (missing) {
+    return (
+      <span className={cn(styles['format-date'], className)} aria-label="No date" {...props}>
+        {NO_DATE_PLACEHOLDER}
+      </span>
+    );
+  }
+
   if (!parsed) {
     return (
-      <time className={cn(styles['format-date'], className)} {...props}>
+      <span className={cn(styles['format-date'], className)} {...props}>
         Invalid date
-      </time>
+      </span>
     );
   }
 
