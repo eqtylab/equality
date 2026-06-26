@@ -39,10 +39,11 @@ Basic usage:
 
 ## Props
 
-| Name              | Description                                                  | Type                                  | Default | Required |
-| ----------------- | ------------------------------------------------------------ | ------------------------------------- | ------- | -------- |
-| `label`           | The text displayed on the trigger button.                    | `string`                              | -       | ✅       |
-| `options`         | The list of filter options to display in the dropdown.       | `{ value: string; label: string; }[]` | -       | ✅       |
-| `selectedFilters` | Array of currently selected filter values.                   | `string[]`                            | -       | ✅       |
-| `onToggleFilter`  | Callback fired when a filter option is checked or unchecked. | `(value: string) => void`             | -       | ✅       |
-| `onClearAll`      | Callback fired when the "Clear all" button is clicked.       | `() => void`                          | -       | ✅       |
+| Name              | Description                                                                       | Type                                  | Default | Required |
+| ----------------- | --------------------------------------------------------------------------------- | ------------------------------------- | ------- | -------- |
+| `label`           | The text displayed on the trigger button.                                         | `string`                              | -       | ✅       |
+| `options`         | The list of filter options to display in the dropdown.                            | `{ value: string; label: string; }[]` | -       | ✅       |
+| `selectedFilters` | Array of currently selected filter values.                                        | `string[]`                            | -       | ✅       |
+| `onToggleFilter`  | Callback fired when a filter option is checked or unchecked.                      | `(value: string) => void`             | -       | ✅       |
+| `onClearAll`      | Callback fired when the "Clear all" button is clicked.                            | `() => void`                          | -       | ✅       |
+| `disabled`        | When `true`, the trigger button is unclickable and the dropdown cannot be opened. | `boolean`                             | `false` | ❌       |

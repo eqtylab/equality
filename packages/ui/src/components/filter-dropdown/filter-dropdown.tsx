@@ -29,6 +29,7 @@ interface FilterDropdownProps {
   onClearAll: () => void;
   buttonClassName?: string;
   contentClassName?: string;
+  disabled?: boolean;
 }
 
 const FilterDropdown = ({
@@ -39,6 +40,7 @@ const FilterDropdown = ({
   onClearAll,
   buttonClassName,
   contentClassName,
+  disabled = false,
 }: FilterDropdownProps) => {
   const hasSelectedFilters = selectedFilters.length > 0;
   const filteredOptions = options.filter(
@@ -49,7 +51,11 @@ const FilterDropdown = ({
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="tertiary" className={cn(styles['selector-button'], buttonClassName)}>
+        <Button
+          variant="tertiary"
+          disabled={disabled}
+          className={cn(styles['selector-button'], buttonClassName)}
+        >
           <span className={styles['selector-button-content']}>
             {label}
             {hasSelectedFilters && <Badge variant="primary">{selectedFilters.length}</Badge>}
