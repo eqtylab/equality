@@ -18,7 +18,7 @@ const EmptyTableState = ({
   icon,
   title,
   description,
-  elevation = ELEVATION.RAISED,
+  elevation = ELEVATION.OVERLAY,
   showClearButton = false,
   onClear,
   className,
