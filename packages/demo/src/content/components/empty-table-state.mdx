@@ -75,13 +75,13 @@ When an empty result is the consequence of active filters, set `showClearButton`
 
 ### Elevation
 
-Use the `elevation` prop to control the elevation of the icon's background so it sits correctly against the surface it's placed on. It accepts the same elevation values as the rest of the design system and defaults to `raised`.
+Use the `elevation` prop to control the elevation of the icon's background so it sits correctly against the surface it's placed on. It accepts the same elevation values as the rest of the design system and defaults to `overlay` (the example below sets `elevation="raised"` to demonstrate overriding the default).
 
 <EmptyTableState
   icon="SearchX"
   title="No Members Available"
   description="Members will appear here once they are available to be added."
-  elevation="overlay"
+  elevation="raised"
 />
 
 #### Usage
@@ -92,7 +92,7 @@ import { ELEVATION } from "@eqtylab/equality";
 <EmptyTableState
   icon="SearchX"
   title="No Members Available"
-  elevation={ELEVATION.OVERLAY}
+  elevation={ELEVATION.RAISED}
 />;
 ```
 
@@ -100,11 +100,11 @@ import { ELEVATION } from "@eqtylab/equality";
 
 ---
 
-| Name              | Description                                               | Type                                  | Default  | Required |
-| ----------------- | --------------------------------------------------------- | ------------------------------------- | -------- | -------- |
-| `icon`            | Lucide icon name or a React element shown above the title | `string`, `React.ReactElement`        | —        | ✅       |
-| `title`           | Heading text describing the empty state                   | `string`                              | —        | ✅       |
-| `description`     | Supporting text shown below the title                     | `string`                              | —        | ❌       |
-| `elevation`       | Elevation applied to the icon's background                | `sunken`, `base`, `raised`, `overlay` | `raised` | ❌       |
-| `showClearButton` | Shows the "Clear Filters" button (requires `onClear`)     | `boolean`                             | `false`  | ❌       |
-| `onClear`         | Callback fired when the "Clear Filters" button is clicked | `() => void`                          | —        | ❌       |
+| Name              | Description                                               | Type                                  | Default   | Required |
+| ----------------- | --------------------------------------------------------- | ------------------------------------- | --------- | -------- |
+| `icon`            | Lucide icon name or a React element shown above the title | `string`, `React.ReactElement`        | —         | ✅       |
+| `title`           | Heading text describing the empty state                   | `string`                              | —         | ✅       |
+| `description`     | Supporting text shown below the title                     | `string`                              | —         | ❌       |
+| `elevation`       | Elevation applied to the icon's background                | `sunken`, `base`, `raised`, `overlay` | `overlay` | ❌       |
+| `showClearButton` | Shows the "Clear Filters" button (requires `onClear`)     | `boolean`                             | `false`   | ❌       |
+| `onClear`         | Callback fired when the "Clear Filters" button is clicked | `() => void`                          | —         | ❌       |
