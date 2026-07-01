@@ -34,7 +34,7 @@
   @apply text-xs;
   @apply flex-1;
   @apply flex flex-col;
-  @apply overflow-scroll;
+  @apply overflow-auto;
   @apply min-w-0;
   font-family: var(--font-mono);
 }
@@ -71,7 +71,7 @@
 }
 
 .pre {
-  @apply bg-transparent! px-3! my-0!;
+  @apply bg-transparent! px-3! my-0! overflow-visible!;
   @apply py-3;
 }
 
