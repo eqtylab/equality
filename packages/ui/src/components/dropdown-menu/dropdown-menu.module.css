@@ -30,6 +30,14 @@
   @apply dropdown-item;
 }
 
+.dropdown-menu-item-danger {
+  --mix-color: var(--color-button-danger-fill);
+  --hover-darken: 50%;
+  --hover-lighten: 50%;
+  @apply text-button-danger-fill!;
+  @apply dark:hover:not-disabled:bg-mixed-dark dark:focus:bg-mixed-dark hover:not-disabled:bg-mixed-light focus:bg-mixed-light;
+}
+
 .dropdown-menu-item-indicator-checkbox,
 .dropdown-menu-item-indicator-radio {
   @apply absolute left-2 size-3.5;
