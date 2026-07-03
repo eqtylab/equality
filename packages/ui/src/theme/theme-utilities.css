@@ -32,15 +32,22 @@
   @apply data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95;
 }
 
+@utility dropdown-item-hover {
+  @apply hover:not-disabled:text-lilac-700! focus:text-lilac-700!;
+  @apply hover:not-disabled:bg-lilac-300/50! focus:bg-lilac-300/50!;
+  @apply hover:not-disabled:shadow-sm;
+  @apply dark:hover:not-disabled:bg-lilac-600/50! dark:focus:bg-lilac-600/50!;
+  @apply dark:hover:not-disabled:text-lilac-100! dark:focus:text-lilac-100!;
+}
+
 @utility dropdown-item {
-  --mix-color: var(--color-background);
   @apply cursor-pointer;
   @apply flex items-center;
   @apply text-sm transition-colors;
   @apply relative rounded-sm;
   @apply outline-hidden select-none;
-  @apply dark:hover:not-disabled:bg-mixed-light dark:focus:bg-mixed-light hover:not-disabled:bg-mixed-dark focus:bg-mixed-dark;
   @apply data-disabled:pointer-events-none data-disabled:opacity-50;
+  @apply dropdown-item-hover;
 }
 
 @utility animate-popup-overlay {
