@@ -74,7 +74,7 @@
   @apply cursor-pointer select-none;
   @apply [&_svg:not([class*='text-'])]:text-text-secondary [&_svg:not([class*='size-'])]:size-4 [&_svg]:pointer-events-none [&_svg]:shrink-0;
   @apply data-[disabled=true]:pointer-events-none data-[disabled=true]:opacity-50;
-  @apply data-[selected=true]:bg-mixed-light;
+  @apply dark:data-[selected=true]:bg-mixed-light data-[selected=true]:bg-mixed-dark;
 }
 
 .command-shortcut {

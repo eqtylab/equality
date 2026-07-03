@@ -876,6 +876,14 @@
         }
       },
       "text": {
+        "danger": {
+          "$type": "color",
+          "$value": {
+            "colorSpace": "display-p3",
+            "components": [0.8779, 0.5865, 0.5474],
+            "hex": "#E0968C"
+          }
+        },
         "link": {
           "$type": "color",
           "$value": {
@@ -2926,6 +2934,14 @@
         }
       },
       "text": {
+        "danger": {
+          "$type": "color",
+          "$value": {
+            "colorSpace": "display-p3",
+            "components": [0.5698, 0.1873, 0.1674],
+            "hex": "#91302B"
+          }
+        },
         "link": {
           "$type": "color",
           "$value": {

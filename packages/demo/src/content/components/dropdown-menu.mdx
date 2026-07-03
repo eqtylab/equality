@@ -1,38 +1,237 @@
 ---
 layout: "@demo/layouts/mdx-layout.astro"
 heading: "Dropdown Menu"
-description: "Dropdown Menu with sizes and variants"
+description: "A menu of actions or options triggered by a button"
 ---
 
 import { DropdownMenuDemo } from "@demo/components/demo/dropdown-menu";
-import { ELEVATION } from "@eqtylab/equality";
 
-## Variants
+## Overview
 
-### Default
+A dropdown menu displays a list of actions or options in a floating panel anchored to a trigger. Use it for contextual actions, account menus, view options, and settings. It supports labels, separators, checkboxes, radio groups, keyboard shortcuts, grouping, and nested submenus, and is fully keyboard navigable.
+
+## Usage
+
+Import the components:
+
+```ts
+import {
+  DropdownMenu,
+  DropdownMenuTrigger,
+  DropdownMenuContent,
+  DropdownMenuItem,
+} from "@eqtylab/equality";
+```
+
+Basic usage:
+
+```jsx
+<DropdownMenu>
+  <DropdownMenuTrigger asChild>
+    <Button size="sm" variant="tertiary">
+      Open Menu
+    </Button>
+  </DropdownMenuTrigger>
+  <DropdownMenuContent align="start">
+    <DropdownMenuItem>Profile</DropdownMenuItem>
+    <DropdownMenuItem>Settings</DropdownMenuItem>
+    <DropdownMenuItem danger>Logout</DropdownMenuItem>
+  </DropdownMenuContent>
+</DropdownMenu>
+```
 
 <DropdownMenuDemo client:only="react" />
 
+## Variants
+
 ### With Separators and Labels
+
+Use `DropdownMenuLabel` to title a section and `DropdownMenuSeparator` to divide groups of items. Items accept icons as children alongside a `<span>` label.
 
 <DropdownMenuDemo client:only="react" variant="with-separators" />
 
+```jsx
+<DropdownMenuContent align="start">
+  <DropdownMenuLabel>My Account</DropdownMenuLabel>
+  <DropdownMenuSeparator />
+  <DropdownMenuItem>
+    <User />
+    <span>Profile</span>
+  </DropdownMenuItem>
+  <DropdownMenuItem>
+    <Settings />
+    <span>Settings</span>
+  </DropdownMenuItem>
+  <DropdownMenuSeparator />
+  <DropdownMenuItem>
+    <LogOut />
+    <span>Logout</span>
+  </DropdownMenuItem>
+</DropdownMenuContent>
+```
+
 ### With Checkboxes
+
+Use `DropdownMenuCheckboxItem` for options that toggle on and off independently. Control each item with `checked` and `onCheckedChange`.
 
 <DropdownMenuDemo client:only="react" variant="with-checkboxes" />
 
+```jsx
+const [showStatusBar, setShowStatusBar] = useState(true);
+
+<DropdownMenuCheckboxItem
+  checked={showStatusBar}
+  onCheckedChange={setShowStatusBar}
+>
+  Status Bar
+</DropdownMenuCheckboxItem>;
+```
+
 ### With Radio Items
+
+Use `DropdownMenuRadioGroup` with `DropdownMenuRadioItem` to select a single option from a set. The group is controlled with `value` and `onValueChange`.
 
 <DropdownMenuDemo client:only="react" variant="with-radio" />
 
+```jsx
+const [position, setPosition] = useState("bottom");
+
+<DropdownMenuRadioGroup value={position} onValueChange={setPosition}>
+  <DropdownMenuRadioItem value="top">Top</DropdownMenuRadioItem>
+  <DropdownMenuRadioItem value="bottom">Bottom</DropdownMenuRadioItem>
+  <DropdownMenuRadioItem value="right">Right</DropdownMenuRadioItem>
+</DropdownMenuRadioGroup>;
+```
+
 ### With Shortcuts
+
+Use `DropdownMenuShortcut` to display a keyboard shortcut hint aligned to the end of an item.
 
 <DropdownMenuDemo client:only="react" variant="with-shortcuts" />
 
+```jsx
+<DropdownMenuItem>
+  <span>New Tab</span>
+  <DropdownMenuShortcut>⌘T</DropdownMenuShortcut>
+</DropdownMenuItem>
+```
+
 ### With Submenu
+
+Use `DropdownMenuSub`, `DropdownMenuSubTrigger`, and `DropdownMenuSubContent` to nest a menu inside an item. The submenu opens on hover or keyboard focus.
 
 <DropdownMenuDemo client:only="react" variant="with-submenu" />
 
+```jsx
+<DropdownMenuSub>
+  <DropdownMenuSubTrigger>
+    <span>More Tools</span>
+  </DropdownMenuSubTrigger>
+  <DropdownMenuSubContent>
+    <DropdownMenuItem>Save Page As...</DropdownMenuItem>
+    <DropdownMenuItem>Create Shortcut...</DropdownMenuItem>
+    <DropdownMenuSeparator />
+    <DropdownMenuItem>Developer Tools</DropdownMenuItem>
+  </DropdownMenuSubContent>
+</DropdownMenuSub>
+```
+
 ### With Groups
 
+Wrap related items in `DropdownMenuGroup` to associate a label with its items for assistive technology.
+
 <DropdownMenuDemo client:only="react" variant="with-groups" />
+
+```jsx
+<DropdownMenuGroup>
+  <DropdownMenuLabel>File</DropdownMenuLabel>
+  <DropdownMenuItem>
+    <span>New File</span>
+    <DropdownMenuShortcut>⌘N</DropdownMenuShortcut>
+  </DropdownMenuItem>
+  <DropdownMenuItem>
+    <span>Open File</span>
+    <DropdownMenuShortcut>⌘O</DropdownMenuShortcut>
+  </DropdownMenuItem>
+</DropdownMenuGroup>
+```
+
+## Slots
+
+| Name                       | Description                                      |
+| -------------------------- | ------------------------------------------------ |
+| `DropdownMenu`             | Root component, manages open state               |
+| `DropdownMenuTrigger`      | Element that opens the menu on click             |
+| `DropdownMenuContent`      | Floating panel containing the menu items         |
+| `DropdownMenuItem`         | A single actionable menu item                    |
+| `DropdownMenuCheckboxItem` | A toggleable item with a checkmark indicator     |
+| `DropdownMenuRadioGroup`   | Groups radio items into a single-select set      |
+| `DropdownMenuRadioItem`    | A single-select item within a radio group        |
+| `DropdownMenuLabel`        | Non-interactive section title                    |
+| `DropdownMenuSeparator`    | Divider between groups of items                  |
+| `DropdownMenuShortcut`     | Keyboard shortcut hint aligned to the item's end |
+| `DropdownMenuGroup`        | Groups related items for assistive technology    |
+| `DropdownMenuSub`          | Root for a nested submenu                        |
+| `DropdownMenuSubTrigger`   | Item that opens a nested submenu                 |
+| `DropdownMenuSubContent`   | Floating panel for a nested submenu              |
+
+## Props
+
+### DropdownMenu
+
+| Name           | Description                        | Type                      | Default | Required |
+| -------------- | ---------------------------------- | ------------------------- | ------- | -------- |
+| `open`         | Controls the open state            | `boolean`                 | -       | ❌       |
+| `defaultOpen`  | Open state when initially rendered | `boolean`                 | -       | ❌       |
+| `onOpenChange` | Called when the open state changes | `(open: boolean) => void` | -       | ❌       |
+
+### DropdownMenuTrigger
+
+| Name      | Description                                              | Type      | Default | Required |
+| --------- | -------------------------------------------------------- | --------- | ------- | -------- |
+| `asChild` | Merge props onto the child instead of rendering a button | `boolean` | `false` | ❌       |
+
+### DropdownMenuContent
+
+| Name         | Description                         | Type                             | Default  | Required |
+| ------------ | ----------------------------------- | -------------------------------- | -------- | -------- |
+| `align`      | Alignment against the trigger       | `start`, `center`, `end`         | `center` | ❌       |
+| `side`       | Side of the trigger to render on    | `top`, `right`, `bottom`, `left` | `bottom` | ❌       |
+| `sideOffset` | Distance in pixels from the trigger | `number`                         | `4`      | ❌       |
+
+### DropdownMenuItem
+
+| Name       | Description                                           | Type         | Default | Required |
+| ---------- | ----------------------------------------------------- | ------------ | ------- | -------- |
+| `danger`   | Styles the item as a destructive action               | `boolean`    | `false` | ❌       |
+| `inset`    | Adds left padding to align with items that have icons | `boolean`    | `false` | ❌       |
+| `disabled` | Prevents interaction and dims the item                | `boolean`    | `false` | ❌       |
+| `onSelect` | Called when the item is selected                      | `() => void` | -       | ❌       |
+
+### DropdownMenuCheckboxItem
+
+| Name              | Description                            | Type                         | Default | Required |
+| ----------------- | -------------------------------------- | ---------------------------- | ------- | -------- |
+| `checked`         | Whether the item is checked            | `boolean`                    | -       | ❌       |
+| `onCheckedChange` | Called when the checked state changes  | `(checked: boolean) => void` | -       | ❌       |
+| `disabled`        | Prevents interaction and dims the item | `boolean`                    | `false` | ❌       |
+
+### DropdownMenuRadioGroup
+
+| Name            | Description                            | Type                      | Default | Required |
+| --------------- | -------------------------------------- | ------------------------- | ------- | -------- |
+| `value`         | The value of the selected item         | `string`                  | -       | ❌       |
+| `onValueChange` | Called when the selected value changes | `(value: string) => void` | -       | ❌       |
+
+### DropdownMenuRadioItem
+
+| Name       | Description                            | Type      | Default | Required |
+| ---------- | -------------------------------------- | --------- | ------- | -------- |
+| `value`    | The unique value of the item           | `string`  | -       | ✅       |
+| `disabled` | Prevents interaction and dims the item | `boolean` | `false` | ❌       |
+
+### DropdownMenuLabel & DropdownMenuSubTrigger
+
+| Name    | Description                                           | Type      | Default | Required |
+| ------- | ----------------------------------------------------- | --------- | ------- | -------- |
+| `inset` | Adds left padding to align with items that have icons | `boolean` | `false` | ❌       |

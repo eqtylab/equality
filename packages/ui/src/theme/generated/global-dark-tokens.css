@@ -106,6 +106,7 @@ html[data-equality-theme='dark'] {
   --color-resource-text-token: color(display-p3 0.8033 0.8266 0.7044);
   --color-resource-text-tool: color(display-p3 0.9358 0.751 0.7228);
   --color-resource-text-unknown: color(display-p3 0.8698 0.8698 0.8698);
+  --color-text-danger: color(display-p3 0.8779 0.5865 0.5474);
   --color-text-link: color(display-p3 0.7319 0.6108 0.8873);
   --color-text-primary: color(display-p3 1 1 1);
   --color-text-secondary: color(display-p3 0.7432 0.7432 0.7432);
