@@ -40,6 +40,7 @@ export * from './radio-group/radio-group';
 export * from './scroll-area/scroll-area';
 export * from './search-bar/search-bar';
 export * from './section-heading/section-heading';
+export * from './segmented-controls/segmented-controls';
 export * from './select/select';
 export * from './separator/separator';
 export * from './sheet/sheet';
