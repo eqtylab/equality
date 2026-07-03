@@ -75,17 +75,26 @@ function Badge({
   const effectiveIcon = icon ?? (variant ? defaultVariantIcons[variant] : undefined);
 
   const renderClosable = () => {
-    if (closeable && handleClosable)
+    if (closeable && handleClosable) {
+      const ariaLabel = `Remove${typeof props.children === 'string' ? ` ${props.children}` : ''}`;
+
       return (
         <Button
           variant="tertiary"
           size="sm"
-          onClick={handleClosable}
+          type="button"
+          aria-label={ariaLabel}
+          onPointerDown={(e) => e.stopPropagation()}
+          onClick={(e) => {
+            e.stopPropagation();
+            handleClosable();
+          }}
           className={styles['closable-btn']}
         >
           <XIcon />
         </Button>
       );
+    }
     return null;
   };
 
