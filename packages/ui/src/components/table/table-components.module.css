@@ -1,7 +1,11 @@
 @reference '../../theme/theme.module.css';
 
 .table {
-  @apply w-full overflow-auto;
+  @apply w-full;
+}
+
+.table:has(.table-header--sticky-container) {
+  @apply overflow-auto;
 }
 
 .table-inner {
@@ -17,8 +21,15 @@
   grid-column: 1 / -1;
 }
 
-.table-header--sticky {
+/* Sticks to the top of the scrollable container (requires a constrained height). */
+.table-header--sticky-container {
   @apply sticky top-0 z-10;
+}
+
+/* Sticks to the document/viewport as the page scrolls. */
+.table-header--sticky-page {
+  @apply sticky z-10;
+  top: var(--table-sticky-top, 0);
 }
 
 .table-body {
@@ -88,7 +99,7 @@
 }
 
 .table-row--linked:has(.table-row-link:focus-visible) {
-  @apply outline-brand-primary outline outline-2 outline-offset-[-2px];
+  @apply outline-brand-primary outline-2 outline-offset-[-2px];
 }
 
 .table-body .table-row--clickable[data-state='selected'] {
@@ -105,8 +116,7 @@
 /* BORDER */
 
 .table-border {
-  @apply border;
-  @apply overflow-hidden rounded-md;
+  @apply overflow-clip rounded-md border;
 }
 
 /* ELEVATION */
