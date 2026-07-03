@@ -66,7 +66,6 @@
 }
 
 .command-item {
-  --mix-color: var(--color-popover-background);
   @apply outline-hidden rounded-sm;
   @apply text-sm;
   @apply flex items-center gap-2;
@@ -74,7 +73,7 @@
   @apply cursor-pointer select-none;
   @apply [&_svg:not([class*='text-'])]:text-text-secondary [&_svg:not([class*='size-'])]:size-4 [&_svg]:pointer-events-none [&_svg]:shrink-0;
   @apply data-[disabled=true]:pointer-events-none data-[disabled=true]:opacity-50;
-  @apply dark:data-[selected=true]:bg-mixed-light data-[selected=true]:bg-mixed-dark;
+  @apply dropdown-item-hover;
 }
 
 .command-shortcut {
