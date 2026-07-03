@@ -39,7 +39,7 @@
   @apply text-sm transition-colors;
   @apply relative rounded-sm;
   @apply outline-hidden select-none;
-  @apply hover:not-disabled:bg-mixed-light focus:bg-mixed-light;
+  @apply dark:hover:not-disabled:bg-mixed-light dark:focus:bg-mixed-light hover:not-disabled:bg-mixed-dark focus:bg-mixed-dark;
   @apply data-disabled:pointer-events-none data-disabled:opacity-50;
 }
 
