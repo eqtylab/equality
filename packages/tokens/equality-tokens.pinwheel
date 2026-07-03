@@ -1425,7 +1425,6 @@
         <group>
           <id>3AF4332D-089A-4B0F-B382-199809A5D0F8</id>
           <name>Badge</name>
-          <expanded>1</expanded>
           <namespace>1</namespace>
           <group>
             <id>1B345E6F-7BFA-4A29-A8DE-903B2EB193A0</id>
@@ -1611,7 +1610,6 @@
           <group>
             <id>DA9E770F-29ED-4A78-9EDB-DD9F456BB566</id>
             <name>Background</name>
-            <expanded>1</expanded>
             <namespace>1</namespace>
             <alias>
               <name>Primary</name>
@@ -1794,7 +1792,6 @@
         <group>
           <id>F4FC786D-8F79-4199-A3D3-35667F6E2DCD</id>
           <name>Resource</name>
-          <expanded>1</expanded>
           <namespace>1</namespace>
           <alias>
             <name>Agent</name>
@@ -2622,6 +2619,7 @@
         <group>
           <id>4EC67953-4547-4883-B947-D73CF2D3DF18</id>
           <name>Text</name>
+          <expanded>1</expanded>
           <namespace>1</namespace>
           <alias>
             <name>Primary</name>
@@ -2665,6 +2663,17 @@
             <subIndexDark>2</subIndexDark>
             <buildGroupId>86B9D7D8-F74A-4CAE-B006-65451BBEDAB9</buildGroupId>
           </alias>
+          <alias>
+            <name>Danger</name>
+            <type>3</type>
+            <typeDark>3</typeDark>
+            <appearance>lightanddark</appearance>
+            <referencedItemId>CCD80E1D-24ED-4193-A845-891C968555AF</referencedItemId>
+            <subIndex>5</subIndex>
+            <referencedItemIdDark>CCD80E1D-24ED-4193-A845-891C968555AF</referencedItemIdDark>
+            <subIndexDark>2</subIndexDark>
+            <buildGroupId>86B9D7D8-F74A-4CAE-B006-65451BBEDAB9</buildGroupId>
+          </alias>
         </group>
         <group>
           <id>635BED27-D972-4FC5-BD7E-AE05C08B92FD</id>
@@ -2696,7 +2705,6 @@
         <group>
           <id>C2525A18-4A97-4EEC-BE78-A03DF3113E10</id>
           <name>Brand</name>
-          <expanded>1</expanded>
           <namespace>1</namespace>
           <alias>
             <name>Primary</name>

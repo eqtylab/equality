@@ -60,7 +60,9 @@
 /* Clickable Variant */
 
 .table-row--clickable:not([data-state='selected']) {
-  --mix-color: var(--color-background);
+  --mix-color: var(--color-brand-primary);
+  --hover-darken: 55%;
+  --hover-lighten: 55%;
   @apply cursor-pointer;
 }
 
@@ -68,7 +70,7 @@
 .table-row--clickable:not([data-state='selected']):hover:not(
     :has(button:hover, a:not(.table-row-link):hover)
   ) {
-  @apply bg-mixed-dark! dark:bg-mixed-light!;
+  @apply dark:bg-mixed-dark! bg-mixed-light!;
 }
 
 /* Linked Row (stretched link pattern) */
