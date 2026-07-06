@@ -6,6 +6,40 @@ description: "Text label for a form control"
 
 import { LabelDemo } from "@demo/components/demo/label";
 
+## Overview
+
+Label provides an accessible caption for a form control. It is built on [Radix UI Label](https://www.radix-ui.com/primitives/docs/components/label), which associates the label with its control so that clicking the label focuses the input and screen readers announce the caption when the control is focused.
+
+Associate a label with a control in one of two ways: give the label an `htmlFor` prop matching the control's `id`, or nest the control inside the label. For fields built with [Form](form), use `FormLabel` instead — it wires up this association automatically.
+
+## Usage
+
+Import the component:
+
+```tsx
+import { Label } from "@eqtylab/equality";
+```
+
+Link the label to a control via `htmlFor` and a matching `id`:
+
+```tsx
+import { Label, Input } from "@eqtylab/equality";
+
+<div className="space-y-2">
+  <Label htmlFor="email">Email</Label>
+  <Input id="email" type="email" placeholder="user@example.com" />
+</div>;
+```
+
 ## Default
 
 <LabelDemo client:only="react" label="Form Label" />
+
+## Props
+
+Label accepts all standard `<label>` attributes (including `htmlFor`) plus `className`.
+
+| Name       | Description                                                  | Type        | Default | Required |
+| ---------- | ------------------------------------------------------------ | ----------- | ------- | -------- |
+| `htmlFor`  | The `id` of the control this label describes. Links the two. | `string`    | —       | ❌       |
+| `children` | The label text.                                              | `ReactNode` | —       | ✅       |

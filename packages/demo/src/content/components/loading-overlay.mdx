@@ -6,6 +6,51 @@ description: "Overlay indicating content is loading"
 
 import { LoadingOverlayDemo } from "@demo/components/demo/loading-overlay";
 
+## Overview
+
+Loading Overlay covers the interface with a dimmed backdrop and a centered [Spinner](spinner) and message, signalling that a blocking operation is in progress. Use it for actions the user should wait on — saving a form, running a process, loading a view — where interacting with the underlying content should be prevented until it completes.
+
+Its visibility is fully controlled through the `isVisible` prop: when `false`, the component renders nothing. For skeleton-style, non-blocking loading of individual elements, use [Skeleton](skeleton) instead.
+
+## Usage
+
+Import the component:
+
+```tsx
+import { LoadingOverlay } from "@eqtylab/equality";
+```
+
+Toggle it with state around an async action:
+
+```tsx
+const [isVisible, setIsVisible] = useState(false);
+
+const handleSave = async () => {
+  setIsVisible(true);
+  await save();
+  setIsVisible(false);
+};
+
+<LoadingOverlay isVisible={isVisible} message="Saving changes..." />;
+```
+
 ## Default
 
+Click the button to show the overlay for a few seconds.
+
 <LoadingOverlayDemo client:only="react" />
+
+## Custom Message
+
+The `message` prop replaces the default "Loading..." text.
+
+```tsx
+<LoadingOverlay isVisible message="Generating report..." />
+```
+
+## Props
+
+| Name        | Description                                                      | Type      | Default        | Required |
+| ----------- | ---------------------------------------------------------------- | --------- | -------------- | -------- |
+| `isVisible` | Whether the overlay is shown. When `false`, nothing is rendered. | `boolean` | —              | ✅       |
+| `message`   | Text displayed beneath the spinner.                              | `string`  | `"Loading..."` | ❌       |
