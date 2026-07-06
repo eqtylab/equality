@@ -5,6 +5,35 @@ description: "Toggle control for boolean or multi-select choices"
 ---
 
 import { Checkbox } from "@eqtylab/equality";
+import { CheckboxCustomIconDemo } from "@demo/components/demo/checkbox";
+
+## Overview
+
+Checkbox is a toggle control for boolean or multi-select choices, such as accepting terms or selecting rows in a table. It is built on [Radix UI Checkbox](https://www.radix-ui.com/primitives/docs/components/checkbox), so it is keyboard accessible and works with assistive technology out of the box.
+
+The checkbox can be controlled or uncontrolled, comes in two sizes, and supports a custom indicator icon. Pair it with a [Label](label) (using a shared `id`/`htmlFor`) to give it an accessible, clickable caption.
+
+## Usage
+
+Import the component:
+
+```tsx
+import { Checkbox } from "@eqtylab/equality";
+```
+
+Uncontrolled, with a default state:
+
+```tsx
+<Checkbox defaultChecked />
+```
+
+Controlled, driving state yourself:
+
+```tsx
+const [checked, setChecked] = useState(false);
+
+<Checkbox checked={checked} onCheckedChange={setChecked} />;
+```
 
 ## States
 
@@ -26,6 +55,8 @@ import { Checkbox } from "@eqtylab/equality";
 
 ## Size Variants
 
+The checkbox comes in two sizes. `md` is the default; use `sm` in denser layouts.
+
 ### Medium (default)
 
 <Checkbox checked={true} client:only="react" />
@@ -33,3 +64,37 @@ import { Checkbox } from "@eqtylab/equality";
 ### Small
 
 <Checkbox checked={true} size="sm" client:only="react" />
+
+### Usage
+
+```tsx
+<Checkbox size="md" defaultChecked />
+<Checkbox size="sm" defaultChecked />
+```
+
+## Custom Icon
+
+Use the `icon` prop to replace the default check mark with any icon component, for example to represent an indeterminate state.
+
+<CheckboxCustomIconDemo client:only="react" />
+
+### Usage
+
+```tsx
+import { Minus } from "lucide-react";
+
+<Checkbox checked icon={Minus} />;
+```
+
+## Props
+
+Checkbox extends the [Radix Checkbox Root](https://www.radix-ui.com/primitives/docs/components/checkbox#root) props (including `onCheckedChange`, `defaultChecked`, `required`, `name`, and `value`). The most commonly used are listed below.
+
+| Name              | Description                                           | Type                                            | Default | Required |
+| ----------------- | ----------------------------------------------------- | ----------------------------------------------- | ------- | -------- |
+| `checked`         | The controlled checked state.                         | `boolean`, `"indeterminate"`                    | —       | ❌       |
+| `onCheckedChange` | Callback fired when the checked state changes.        | `(checked: boolean \| "indeterminate") => void` | —       | ❌       |
+| `defaultChecked`  | The initial checked state when uncontrolled.          | `boolean`                                       | —       | ❌       |
+| `disabled`        | Prevents interaction and visually mutes the checkbox. | `boolean`                                       | `false` | ❌       |
+| `size`            | The size of the checkbox.                             | `sm`, `md`                                      | `md`    | ❌       |
+| `icon`            | Custom indicator icon component shown when checked.   | `React.ElementType`                             | —       | ❌       |
