@@ -1,10 +1,82 @@
 ---
 layout: "@demo/layouts/mdx-layout.astro"
 heading: "Pagination"
+description: "Page navigation with items-per-page and result info"
 ---
 
 import { PaginationDemo } from "@demo/components/demo/pagination";
 
+## Overview
+
+Pagination provides controls for moving through a paginated list: previous/next buttons, a windowed set of numbered page buttons, an optional "showing X to Y of Z" info line, and an optional items-per-page [Select](select). It is a controlled component — you own the current page and page size, and it calls back when the user changes them.
+
+It does **not** slice your data; it only renders the controls. Compute the current page's items yourself from `currentPage` and `itemsPerPage`, and pass the counts in. To keep the UI uncluttered when pagination isn't needed, the component renders nothing when `totalItems` is at or below the smallest items-per-page option.
+
+### totalItems vs. filteredItems
+
+Two counts are required because they serve different purposes:
+
+- **`totalItems`** — the full, unfiltered size of the dataset. Used only to decide whether to render the controls at all.
+- **`filteredItems`** — the number of items after any active filtering. Drives the page count, the info text, and the numbered buttons.
+
+When no filtering is applied, pass the same value for both.
+
+## Usage
+
+Import the component:
+
+```tsx
+import { Pagination } from "@eqtylab/equality";
+```
+
+Hold the page and page size in state, slice your data from them, and wire the callbacks:
+
+```tsx
+const [currentPage, setCurrentPage] = useState(1);
+const [itemsPerPage, setItemsPerPage] = useState(10);
+
+const pageItems = allItems.slice(
+  (currentPage - 1) * itemsPerPage,
+  currentPage * itemsPerPage,
+);
+
+<Pagination
+  currentPage={currentPage}
+  totalItems={allItems.length}
+  filteredItems={allItems.length}
+  itemsPerPage={itemsPerPage}
+  onPageChange={setCurrentPage}
+  onItemsPerPageChange={setItemsPerPage}
+  type="items"
+/>;
+```
+
+Changing the page size resets to page 1 automatically.
+
 ## Default
 
 <PaginationDemo client:only="react" />
+
+## Configuration
+
+- **Items-per-page dropdown** — only shown when you pass `onItemsPerPageChange`. Without it, the info line shows a static end count instead. Customise the choices with `itemsPerPageOptions`.
+- **Info line** — set `showInfo={false}` to hide the "showing X to Y of Z" text. Use `type` to append a noun (e.g. `type="items"` → "of 100 items").
+- **Windowing** — `maxVisiblePages` controls how many numbered buttons appear at once; the window slides to keep the current page centered.
+- **Scroll on change** — pass `scrollTargetRef` (a ref or an element `id` string) to smooth-scroll that element into view whenever the page changes.
+
+## Props
+
+| Name                   | Description                                                                         | Type                               | Default             | Required |
+| ---------------------- | ----------------------------------------------------------------------------------- | ---------------------------------- | ------------------- | -------- |
+| `currentPage`          | The active page (1-based).                                                          | `number`                           | —                   | ✅       |
+| `totalItems`           | Full dataset size. Controls whether the component renders.                          | `number`                           | —                   | ✅       |
+| `filteredItems`        | Item count after filtering. Drives page count and info text.                        | `number`                           | —                   | ✅       |
+| `itemsPerPage`         | Number of items shown per page.                                                     | `number`                           | —                   | ✅       |
+| `onPageChange`         | Called with the new page when the user navigates.                                   | `(page: number) => void`           | —                   | ✅       |
+| `onItemsPerPageChange` | Called with the new page size. When provided, the items-per-page dropdown is shown. | `(itemsPerPage: number) => void`   | —                   | ❌       |
+| `itemsPerPageOptions`  | Choices offered in the items-per-page dropdown.                                     | `number[]`                         | `[10, 25, 50, 100]` | ❌       |
+| `showInfo`             | Whether to show the "showing X to Y of Z" info line.                                | `boolean`                          | `true`              | ❌       |
+| `maxVisiblePages`      | Maximum number of numbered page buttons shown at once.                              | `number`                           | `5`                 | ❌       |
+| `type`                 | Noun appended to the info line (e.g. `"items"`).                                    | `string`                           | `""`                | ❌       |
+| `scrollTargetRef`      | Element (ref or `id` string) scrolled into view on page change.                     | `RefObject<HTMLElement>`, `string` | —                   | ❌       |
+| `className`            | Additional CSS classes applied to the container.                                    | `string`                           | —                   | ❌       |
