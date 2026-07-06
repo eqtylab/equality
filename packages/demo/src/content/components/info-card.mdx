@@ -6,12 +6,54 @@ description: "Card displaying a labeled piece of information"
 
 import { InfoCard } from "@eqtylab/equality";
 import { ELEVATION } from "@eqtylab/equality";
+import { InfoCardClickableDemo } from "@demo/components/demo/info-card";
+
+## Overview
+
+Info Card surfaces a single labelled piece of information alongside an icon — for example a metadata field, a setting, or a summary value. It composes a [Card](card) with an [Icon](icon) and a label/description pair, giving these small facts a consistent treatment across the interface.
+
+The `description` accepts any node, so it can hold plain text, a number, or richer content such as a [Badge](badge). Passing an `onClick` makes the whole card interactive (inheriting Card's hover and click affordance), which is useful when the card links somewhere.
+
+## Usage
+
+Import the component:
+
+```tsx
+import { InfoCard } from "@eqtylab/equality";
+```
+
+Basic usage — `label`, `description`, and `icon` are all required:
+
+```tsx
+<InfoCard label="Policy Type" description="Custom" icon="Shield" />
+```
+
+The `icon` accepts a [Lucide](https://lucide.dev/icons/) icon name or a React element, matching the [Icon](icon) component.
 
 ## Default
 
 <InfoCard label="Policy Type" description="Custom" icon="Shield" />
 
+## Interactive (onClick)
+
+Passing an `onClick` handler makes the whole card clickable and adds a hover affordance, inheriting the behavior from [Card](card). Use it when the card links somewhere or triggers an action. Click the card below to see it respond.
+
+<InfoCardClickableDemo client:only="react" />
+
+### Usage
+
+```tsx
+<InfoCard
+  label="Policy Type"
+  description="Custom"
+  icon="Shield"
+  onClick={() => handleSelect()}
+/>
+```
+
 ## Elevations
+
+Use the `elevation` prop with the `ELEVATION` constant to place the card on the elevation scale (`raised` is the default). The inner icon's background is automatically set one level below the card so it stays visually nested.
 
 ### Sunken
 
@@ -48,3 +90,26 @@ import { ELEVATION } from "@eqtylab/equality";
   icon="Shield"
   elevation={ELEVATION.OVERLAY}
 />
+
+### Usage
+
+```tsx
+import { InfoCard, ELEVATION } from "@eqtylab/equality";
+
+<InfoCard
+  label="Policy Type"
+  description="Custom"
+  icon="Shield"
+  elevation={ELEVATION.SUNKEN}
+/>;
+```
+
+## Props
+
+| Name          | Description                                                                      | Type                                  | Default  | Required |
+| ------------- | -------------------------------------------------------------------------------- | ------------------------------------- | -------- | -------- |
+| `label`       | The label shown above the description.                                           | `string`                              | —        | ✅       |
+| `description` | The value or content shown below the label. Accepts text, a number, or any node. | `string`, `number`, `ReactNode`       | —        | ✅       |
+| `icon`        | Icon shown beside the content. A Lucide icon name or a React element.            | `string`, `ReactElement`              | —        | ✅       |
+| `elevation`   | Position on the elevation scale. Use the `ELEVATION` constant.                   | `sunken`, `base`, `raised`, `overlay` | `raised` | ❌       |
+| `onClick`     | Click handler. Providing it makes the card interactive with hover affordance.    | `() => void`                          | —        | ❌       |
