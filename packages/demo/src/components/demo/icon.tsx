@@ -21,7 +21,7 @@ const CustomIcon = ({ className, ...props }: React.SVGProps<SVGSVGElement>) => {
 
 export const IconDemo = () => {
   return (
-    <div>
+    <div style={{ marginBottom: "1rem" }}>
       <Icon icon={<CustomIcon />} background="circle" />
     </div>
   );

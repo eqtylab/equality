@@ -6,7 +6,33 @@ description: "Icon-only button with an accessible label"
 
 import { IconButton } from "@eqtylab/equality";
 
-## Small (default)
+## Overview
+
+Icon Button is a compact, icon-only button for actions where a label would be redundant or space is tight — toolbars, table rows, and card headers. The icon is a [Lucide](https://lucide.dev/icons/) icon referenced by name.
+
+Because there is no visible text, the `label` prop is important: it sets the button's `aria-label` so screen reader users know what the action does. Always provide a `label` that describes the action (e.g. "Delete", not "Trash icon"). When an `href` is supplied, Icon Button renders as an anchor (`<a>`) instead of a `<button>`.
+
+## Usage
+
+Import the component:
+
+```tsx
+import { IconButton } from "@eqtylab/equality";
+```
+
+Basic usage — `name` and a descriptive `label` are the essentials:
+
+```tsx
+<IconButton name="Settings" label="Settings" onClick={handleClick} />
+```
+
+The `name` must be a valid Lucide icon (PascalCase). An unknown name logs a warning and renders nothing.
+
+## Sizes
+
+Icon Button comes in three sizes; `sm` is the default.
+
+### Small (default)
 
 <IconButton
   name="Settings"
@@ -16,7 +42,7 @@ import { IconButton } from "@eqtylab/equality";
   client:only="react"
 />
 
-## Medium
+### Medium
 
 <IconButton
   name="Heart"
@@ -26,7 +52,7 @@ import { IconButton } from "@eqtylab/equality";
   client:only="react"
 />
 
-## Large
+### Large
 
 <IconButton
   name="Share2"
@@ -36,11 +62,56 @@ import { IconButton } from "@eqtylab/equality";
   client:only="react"
 />
 
+### Usage
+
+```tsx
+<IconButton name="Settings" label="Settings" size="sm" />
+<IconButton name="Heart" label="Like" size="md" />
+<IconButton name="Share2" label="Share" size="lg" />
+```
+
+## Color Variants
+
+Two variants communicate intent. Use `danger` for destructive actions like delete.
+
+### Primary (default)
+
+<IconButton
+  name="User"
+  label="User profile"
+  variant="primary"
+  onClick={() => console.log("Profile clicked")}
+  client:only="react"
+/>
+
+### Danger
+
+<IconButton
+  name="Trash2"
+  label="Delete"
+  variant="danger"
+  onClick={() => console.log("Delete clicked")}
+  client:only="react"
+/>
+
+### Usage
+
+```tsx
+<IconButton name="User" label="User profile" variant="primary" />
+<IconButton name="Trash2" label="Delete" variant="danger" />
+```
+
 ## Disabled
+
+A disabled Icon Button is non-interactive and visually muted. Note that an `href` is ignored while disabled, so it renders as a `<button>` rather than a link.
 
 <IconButton name="Trash2" label="Delete" disabled client:only="react" />
 
-## As Link
+## As a Link
+
+When an `href` is provided, Icon Button renders as an anchor while keeping its styling. Use this for navigation instead of an `onClick`. It also accepts `target` and `download`; when `target="_blank"`, `rel="noopener noreferrer"` is added automatically.
+
+### As Link
 
 <IconButton
   name="ExternalLink"
@@ -49,7 +120,7 @@ import { IconButton } from "@eqtylab/equality";
   client:only="react"
 />
 
-## As Link with Target
+### As Link with Target and Download
 
 <IconButton
   name="Download"
@@ -60,24 +131,30 @@ import { IconButton } from "@eqtylab/equality";
   client:only="react"
 />
 
-## Color Variants
+### Usage
 
-### Primary (default)
-
+```tsx
+<IconButton name="ExternalLink" label="Open link" href="https://example.com" />
 <IconButton
-  name="User"
-  label="User profile"
-  variant="primary"
-  onClick={() => console.log("Share clicked")}
-  client:only="react"
+  name="Download"
+  label="Download file"
+  href="https://example.com/file.pdf"
+  target="_blank"
+  download
 />
+```
 
-### Danger
+## Props
 
-<IconButton
-  name="Trash2"
-  label="Delete"
-  variant="danger"
-  onClick={() => console.log("Share clicked")}
-  client:only="react"
-/>
+The component also accepts standard `button` attributes (`onClick`, `type`, etc.) when rendered as a button.
+
+| Name       | Description                                                                    | Type                | Default   | Required |
+| ---------- | ------------------------------------------------------------------------------ | ------------------- | --------- | -------- |
+| `name`     | The [Lucide](https://lucide.dev/icons/) icon to display, by PascalCase name.   | `string`            | —         | ✅       |
+| `label`    | Accessible label (`aria-label`) describing the action. Strongly recommended.   | `string`            | —         | ❌       |
+| `size`     | The size of the button.                                                        | `sm`, `md`, `lg`    | `sm`      | ❌       |
+| `variant`  | The visual style, communicating intent.                                        | `primary`, `danger` | `primary` | ❌       |
+| `disabled` | Disables the button and ignores `href`.                                        | `boolean`           | `false`   | ❌       |
+| `href`     | Renders the button as an anchor pointing at this URL.                          | `string`            | —         | ❌       |
+| `target`   | Anchor target (when `href` is set). `_blank` adds `rel="noopener noreferrer"`. | `string`            | —         | ❌       |
+| `download` | Marks the link as a download (when `href` is set).                             | `string`, `boolean` | —         | ❌       |
