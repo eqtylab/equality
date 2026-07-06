@@ -42,6 +42,7 @@ export interface BadgeProps
   extends React.HTMLAttributes<HTMLDivElement>, VariantProps<typeof badgeVariants> {
   closeable?: boolean;
   handleClosable?: () => void;
+  closeLabel?: string;
   truncate?: boolean;
   truncateLength?: number;
   icon?: React.ReactElement | string;
@@ -63,6 +64,7 @@ function Badge({
   size,
   closeable,
   handleClosable,
+  closeLabel = 'Remove',
   truncate = false,
   truncateLength = 50,
   icon,
@@ -81,6 +83,7 @@ function Badge({
           variant="tertiary"
           size="sm"
           onClick={handleClosable}
+          aria-label={closeLabel}
           className={styles['closable-btn']}
         >
           <XIcon />

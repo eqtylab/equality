@@ -37,6 +37,7 @@ interface ResourceBadgeProps {
   display?: ResourceDisplayMode;
   closeable?: boolean;
   handleClosable?: () => void;
+  closeLabel?: string;
   children?: React.ReactNode;
 }
 
@@ -45,6 +46,7 @@ const ResourceBadge = ({
   display = 'both',
   closeable,
   handleClosable,
+  closeLabel,
   children,
 }: ResourceBadgeProps) => {
   const config = getTypeConfig(type);
@@ -57,6 +59,7 @@ const ResourceBadge = ({
       variant={null}
       closeable={closeable}
       handleClosable={handleClosable}
+      closeLabel={closeLabel}
     >
       {children ?? config.label}
     </Badge>
