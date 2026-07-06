@@ -1,9 +1,44 @@
 ---
 layout: "@demo/layouts/mdx-layout.astro"
 heading: "Sort Selector"
+description: "Dropdown for choosing a list's sort field and order"
 ---
 
 import { SortSelectorDemo } from "@demo/components/demo/sort-selector";
+
+## Overview
+
+Sort Selector is a dropdown for choosing how a list is sorted. It presents a curated set of field-and-direction options — Name (A–Z / Z–A) plus date options — and reflects the current choice on its trigger. It's built on a [Dropdown Menu](dropdown-menu) with a [Button](button) trigger.
+
+It is a controlled component: you hold the current `sortField` and `sortOrder` and update them from the `setSortField`/`setSortOrder` callbacks. When the current sort differs from the configured defaults, a **Reset** link appears in the menu to return to them.
+
+## Usage
+
+Import the component:
+
+```tsx
+import { SortSelector } from "@eqtylab/equality";
+```
+
+Hold the field and order in state, then apply them to your data:
+
+```tsx
+const [sortField, setSortField] = useState("name");
+const [sortOrder, setSortOrder] = useState("asc");
+
+<SortSelector
+  sortField={sortField}
+  sortOrder={sortOrder}
+  setSortField={setSortField}
+  setSortOrder={setSortOrder}
+/>;
+```
+
+The component only selects the sort preference — apply it to your list yourself, for example:
+
+```tsx
+const sorted = [...items].sort(compareBy(sortField, sortOrder));
+```
 
 ## Default
 
@@ -11,29 +46,36 @@ Shows the Sort Selector with default sorting (by Name, ascending):
 
 <SortSelectorDemo client:only="react" />
 
-## Props
+## Sort Mode
 
-The Sort Selector component accepts several props to customize its behavior:
+The `sortMode` prop determines which date options are offered. It accepts `"created"` (default) or `"updated"`:
 
-- **`sortField`** (`"name"`, `"type"`, `"createdAt"`, `"updatedAt"`): The field by which to sort.
-- **`sortOrder`** (`"asc"` or `"desc"`): The sort direction (ascending/descending).
-- **`sortMode`** (`"created"` or `"updated"`, default: `"created"`): Determines which date-related sorting options are offered.
-- **`showDateOptions`** (`true` or `false`, default: `true`): Controls whether date sorting options (created/updated) are displayed.
-- **`setSortField`** and **`setSortOrder`**: Handler functions to update the current sort field and order.
-
-You can combine these props to control and respond to sorting preference changes in your UI.
-
-### Sort mode options
-
-The `sortMode` prop determines which set of date-related sorting options are shown in the Sort Selector. It accepts either `"created"` (default) or `"updated"`.
-
-- When `sortMode="created"`, you will see options to sort by "Recently Created" or "Oldest Created".
-- When `sortMode="updated"`, you will see options to sort by "Recently Updated" or "Oldest Updated".
+- `sortMode="created"` → "Recently Created" / "Oldest Created"
+- `sortMode="updated"` → "Recently Updated" / "Oldest Updated"
 
 <SortSelectorDemo client:only="react" sortMode="updated" />
 
-### Hide date options
+## Hide Date Options
 
-Set `showDateOptions={false}` to hide sorting options for creation date:
+Set `showDateOptions={false}` to offer only the Name options:
 
 <SortSelectorDemo client:only="react" showDateOptions={false} />
+
+## Reset
+
+When the current sort no longer matches `defaultSortField`/`defaultSortOrder` (both `name`/`asc` by default), a **Reset** link appears in the dropdown that restores the defaults. Open the menu and pick a different option to see it.
+
+## Props
+
+| Name               | Description                                                   | Type                                     | Default   | Required |
+| ------------------ | ------------------------------------------------------------- | ---------------------------------------- | --------- | -------- |
+| `sortField`        | The currently selected sort field (controlled).               | `name`, `type`, `createdAt`, `updatedAt` | —         | ✅       |
+| `sortOrder`        | The current sort direction (controlled).                      | `asc`, `desc`                            | —         | ✅       |
+| `setSortField`     | Called with the new field when the selection changes.         | `(field: SortField) => void`             | —         | ✅       |
+| `setSortOrder`     | Called with the new order when the selection changes.         | `(order: SortOrder) => void`             | —         | ✅       |
+| `sortMode`         | Which date options are offered.                               | `created`, `updated`                     | `created` | ❌       |
+| `showDateOptions`  | Whether the date options are shown.                           | `boolean`                                | `true`    | ❌       |
+| `defaultSortField` | The field the Reset link restores to.                         | `name`, `type`, `createdAt`, `updatedAt` | `name`    | ❌       |
+| `defaultSortOrder` | The order the Reset link restores to.                         | `asc`, `desc`                            | `asc`     | ❌       |
+| `setCurrentPage`   | Optional. Called with `1` on any change, to reset pagination. | `(page: number) => void`                 | —         | ❌       |
+| `className`        | Additional CSS classes applied to the trigger button.         | `string`                                 | —         | ❌       |
