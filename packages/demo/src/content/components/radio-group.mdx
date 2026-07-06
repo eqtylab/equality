@@ -6,6 +6,60 @@ description: "Group of radio buttons for single selection"
 
 import { RadioGroupDemo } from "@demo/components/demo/radio-group";
 
+## Overview
+
+Radio Group lets users pick exactly one option from a small, visible set — permission levels, plans, or any mutually exclusive choice. It's built on [Radix UI Radio Group](https://www.radix-ui.com/primitives/docs/components/radio-group), so arrow keys move between options, only one can be selected at a time, and the group is exposed correctly to assistive technology.
+
+It is a compound component: a `RadioGroup` wraps a set of `RadioGroupItem`s. Pair each item with a [Label](label) so the choice has a visible, clickable caption. Use it for a handful of always-visible options; when space is tight or the list is long, prefer a [Select](select) or [Radio Dropdown](radio-dropdown).
+
+## Usage
+
+Import the parts:
+
+```tsx
+import { RadioGroup, RadioGroupItem, Label } from "@eqtylab/equality";
+```
+
+Give each `RadioGroupItem` an `id` and point its `Label` at it with `htmlFor`, so clicking the label selects the option:
+
+```tsx
+const [value, setValue] = useState("read");
+
+<RadioGroup value={value} onValueChange={setValue}>
+  <div className="flex items-center gap-2">
+    <RadioGroupItem value="read" id="read" />
+    <Label htmlFor="read">Read Only</Label>
+  </div>
+  <div className="flex items-center gap-2">
+    <RadioGroupItem value="write" id="write" />
+    <Label htmlFor="write">Read & Write</Label>
+  </div>
+</RadioGroup>;
+```
+
+Radio Group can be controlled (`value` + `onValueChange`) or uncontrolled (`defaultValue`).
+
 ## Default
 
 <RadioGroupDemo client:only="react" />
+
+## Slots
+
+| Name             | Description                                                              |
+| ---------------- | ------------------------------------------------------------------------ |
+| `RadioGroup`     | The container that manages the selection and keyboard navigation.        |
+| `RadioGroupItem` | A single selectable option. Pair each with a `Label` via `id`/`htmlFor`. |
+
+## Props
+
+Both parts forward their [Radix](https://www.radix-ui.com/primitives/docs/components/radio-group) props (and `className`). The most commonly used are below.
+
+| Name            | Applies to       | Description                                           | Type                      | Required |
+| --------------- | ---------------- | ----------------------------------------------------- | ------------------------- | -------- |
+| `value`         | `RadioGroup`     | The selected value (controlled).                      | `string`                  | ❌       |
+| `defaultValue`  | `RadioGroup`     | The initial selected value (uncontrolled).            | `string`                  | ❌       |
+| `onValueChange` | `RadioGroup`     | Called with the new value when the selection changes. | `(value: string) => void` | ❌       |
+| `disabled`      | `RadioGroup`     | Disables the entire group.                            | `boolean`                 | ❌       |
+| `value`         | `RadioGroupItem` | The value this item represents. Required per item.    | `string`                  | ✅       |
+| `id`            | `RadioGroupItem` | Links the item to its `Label` via `htmlFor`.          | `string`                  | ❌       |
+| `disabled`      | `RadioGroupItem` | Disables just this option.                            | `boolean`                 | ❌       |
