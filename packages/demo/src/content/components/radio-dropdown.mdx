@@ -6,6 +6,48 @@ description: "Dropdown for single-choice filtering with counts"
 
 import { RadioDropdownDemo } from "@demo/components/demo/radio-dropdown";
 
+## Overview
+
+Radio Dropdown is a compact control for picking a single option from a list — typically a filter such as a status or category. It renders as a [Button](button) showing the current selection, opening a [Dropdown Menu](dropdown-menu) of radio options. Each option can carry an optional `count`, shown as a [Badge](badge) on the trigger and inline in the menu, which is handy for surfacing how many items match each filter.
+
+It is a controlled component: you provide the `options` and the `selectedValue`, and it calls `onSelect` when the user chooses a different one. Options with an empty `value` or `label` are filtered out automatically.
+
+## Usage
+
+Import the component:
+
+```tsx
+import { RadioDropdown } from "@eqtylab/equality";
+```
+
+Hold the selected value in state and update it from `onSelect`:
+
+```tsx
+const [status, setStatus] = useState("active");
+
+<RadioDropdown
+  label="Status"
+  options={[
+    { value: "active", label: "Active", count: 5 },
+    { value: "archived", label: "Archived", count: 2 },
+  ]}
+  selectedValue={status}
+  onSelect={setStatus}
+/>;
+```
+
+The `label` is shown on the trigger before anything is selected, and as the heading inside the menu. Once an option is selected, its label replaces the trigger text.
+
 ## Default
 
 <RadioDropdownDemo client:only="react" />
+
+## Props
+
+| Name            | Description                                                         | Type                                                 | Default | Required |
+| --------------- | ------------------------------------------------------------------- | ---------------------------------------------------- | ------- | -------- |
+| `label`         | Trigger text before selection, and the menu heading.                | `string`                                             | —       | ✅       |
+| `options`       | The selectable options. Each is `{ value, label, count? }`.         | `{ value: string; label: string; count?: number }[]` | —       | ✅       |
+| `selectedValue` | The `value` of the currently selected option.                       | `string`                                             | —       | ✅       |
+| `onSelect`      | Called with the chosen option's `value` when the selection changes. | `(value: string) => void`                            | —       | ✅       |
+| `className`     | Additional CSS classes applied to the trigger button.               | `string`                                             | —       | ❌       |
