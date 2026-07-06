@@ -11,52 +11,127 @@ import {
 } from "@demo/components/demo/display-field";
 import { ELEVATION } from "@eqtylab/equality";
 
-## Neutral
+## Overview
+
+Display Field presents a read-only value — such as an ID, hash, key, or DID — in a bordered, surfaced container. By default it includes a [CopyButton](copy-button) so users can copy the value in one click. It supports an optional labelled prefix, status variants with matching icons, truncation strategies for long values, custom action buttons, and an expandable slot for supplementary content.
+
+It sits on the elevation scale via the `elevation` prop (defaulting to `base`), so it can be nested inside cards and other surfaces without clashing.
+
+## Usage
+
+Import the component:
+
+```tsx
+import { DisplayField } from "@eqtylab/equality";
+```
+
+The value is passed as `children`:
+
+```tsx
+<DisplayField>zQ3shrGxRrYyWixJGrr45jJ1MEY76YQZ4KVbt9CYRsTWZ5MWV</DisplayField>
+```
+
+The copy button uses the string children as its value, so copy only works when `children` is a plain string.
+
+## Variants
+
+### Neutral
 
 <DisplayFieldDemo client:only="react" />
 
-## Neutral Truncated
-
-<DisplayFieldDemo truncate client:only="react" />
-
-## Neutral Middle Truncated
-
-<DisplayFieldDemo truncate="middle" client:only="react" />
-
-## Success with Prefix
-
-<DisplayFieldDemo prefix="DID" variant="success" client:only="react" />
-
-## Failure with Prefix
-
-<DisplayFieldDemo prefix="DID" variant="failure" client:only="react" />
-
-## Neutral with Prefix
+### Neutral with Prefix
 
 <DisplayFieldDemo prefix="DID" client:only="react" />
 
-## Without Copy Button
+### Neutral Check with Prefix
+
+`neutralCheck` shows a check icon like `success`, but keeps the neutral colouring.
+
+<DisplayFieldDemo prefix="DID" variant="neutralCheck" client:only="react" />
+
+### Success with Prefix
+
+The `success` and `failure` variants show a status icon alongside the `prefix` (a check and a warning triangle respectively).
+
+<DisplayFieldDemo prefix="DID" variant="success" client:only="react" />
+
+### Failure with Prefix
+
+<DisplayFieldDemo prefix="DID" variant="failure" client:only="react" />
+
+## Truncation
+
+Long values can be shortened with the `truncate` prop. `true` truncates at the end with an ellipsis, while `"middle"` keeps the start and end visible (useful for hashes and keys where both ends matter). Left as `false`, the value scrolls horizontally.
+
+### End Truncated
+
+<div className="w-80">
+  <DisplayFieldDemo prefix="DID" truncate client:only="react" />
+</div>
+
+### Middle Truncated
+
+<div className="w-80">
+  <DisplayFieldDemo prefix="DID" truncate="middle" client:only="react" />
+</div>
+
+### Horizontall Scroll
+
+<div className="w-80">
+  <DisplayFieldDemo prefix="DID" client:only="react" />
+</div>
+
+## Actions
+
+The copy button is shown by default. Set `copy={false}` to hide it, and pass `actions` to render your own buttons before the copy button.
+
+### Without Copy Button
 
 <DisplayFieldDemo copy={false} client:only="react" />
 
-## With Additional Action
+### With Additional Action
 
 <DisplayFieldWithActionsDemo client:only="react" />
 
-## Copy Disabled with Custom Actions
+### Copy Disabled with Custom Actions
 
 <DisplayFieldWithActionsDemo client:only="react" copy={false} />
 
-## With Slot Content
+### Usage
 
-<DisplayFieldWithSlotDemo prefix="Key" client:only="react" />
+```tsx
+<DisplayField
+  copy={false}
+  actions={
+    <>
+      <IconButton
+        name="ExternalLink"
+        label="Open"
+        size="sm"
+        onClick={handleOpen}
+      />
+      <IconButton name="Share2" label="Share" size="sm" onClick={handleShare} />
+    </>
+  }
+>
+  zQ3shrGxRrYyWixJGrr45jJ1MEY76YQZ4KVbt9CYRsTWZ5MWV
+</DisplayField>
+```
+
+## Slot
+
+Use the `slot` prop to render supplementary content in a separate section beneath the value — for example related metadata or an empty-state message.
+
+<DisplayFieldWithSlotDemo prefix="KEY" client:only="react" />
 
 ## Elevations
+
+Use the `elevation` prop with the `ELEVATION` constant to place the field on the elevation scale. `base` is the default. These examples are nested in a [Card](card) to show the effect.
 
 ### Sunken
 
 <DisplayFieldWithSlotDemo
-  prefix="Key"
+  prefix="KEY"
   client:only="react"
   elevation={ELEVATION.SUNKEN}
   withinCard
@@ -65,7 +140,7 @@ import { ELEVATION } from "@eqtylab/equality";
 ### Base (default)
 
 <DisplayFieldWithSlotDemo
-  prefix="Key"
+  prefix="KEY"
   client:only="react"
   elevation={ELEVATION.BASE}
   withinCard
@@ -74,7 +149,7 @@ import { ELEVATION } from "@eqtylab/equality";
 ### Raised
 
 <DisplayFieldWithSlotDemo
-  prefix="Key"
+  prefix="KEY"
   client:only="react"
   elevation={ELEVATION.RAISED}
   withinCard
@@ -83,8 +158,26 @@ import { ELEVATION } from "@eqtylab/equality";
 ### Overlay
 
 <DisplayFieldWithSlotDemo
-  prefix="Key"
+  prefix="KEY"
   client:only="react"
   elevation={ELEVATION.OVERLAY}
   withinCard
 />
+
+## Slots
+
+| Name       | Description                                                        |
+| ---------- | ------------------------------------------------------------------ |
+| `children` | The value displayed in the field. Use a string for copy support.   |
+| `actions`  | Custom action nodes rendered before the copy button.               |
+| `slot`     | Supplementary content shown in a separate section below the value. |
+
+## Props
+
+| Name        | Description                                                                                      | Type                                            | Default   | Required |
+| ----------- | ------------------------------------------------------------------------------------------------ | ----------------------------------------------- | --------- | -------- |
+| `prefix`    | Label shown before the value, alongside the variant status icon.                                 | `string`                                        | —         | ❌       |
+| `variant`   | Status style. `success`/`failure` add an icon and colour; `neutralCheck` adds a plain check.     | `neutral`, `neutralCheck`, `success`, `failure` | `neutral` | ❌       |
+| `truncate`  | How to shorten long values. `true` truncates the end; `middle` keeps both ends; `false` scrolls. | `true`, `false`, `"middle"`                     | `false`   | ❌       |
+| `copy`      | Whether to show the built-in copy button.                                                        | `boolean`                                       | `true`    | ❌       |
+| `elevation` | Position on the elevation scale. Use the `ELEVATION` constant.                                   | `sunken`, `base`, `raised`, `overlay`           | `base`    | ❌       |
