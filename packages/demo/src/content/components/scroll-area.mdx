@@ -6,10 +6,33 @@ description: "Scrollable container with custom scrollbars"
 
 import { ScrollArea } from "@eqtylab/equality";
 
-## Default
+## Overview
 
-<ScrollArea client:only="react">
-  <div style="max-height: 300px;">
+Scroll Area is a container that adds a styled, cross-browser scrollbar to overflowing content, replacing the inconsistent native one. It's built on [Radix UI Scroll Area](https://www.radix-ui.com/primitives/docs/components/scroll-area), so the scrollbar is themable and unobtrusive while normal wheel, touch, and keyboard scrolling continue to work.
+
+Give the Scroll Area a constrained height (via `className` or `style`); when its content is taller, a vertical scrollbar appears. Use it for long lists, panels, and menus where you want a consistent scrollbar treatment.
+
+## Usage
+
+Import the component:
+
+```tsx
+import { ScrollArea } from "@eqtylab/equality";
+```
+
+Set a height on the Scroll Area and place your content inside:
+
+```tsx
+<ScrollArea className="h-48 max-w-lg">
+  <div>{/* long content */}</div>
+</ScrollArea>
+```
+
+## Example
+
+<ScrollArea client:only="react" className="h-48 max-w-lg">
+  <div className="pr-4">
+    <p>
       Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod
       tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
       veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
@@ -17,49 +40,51 @@ import { ScrollArea } from "@eqtylab/equality";
       velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat
       cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id
       est laborum.
- 
+    </p>
+    <p>
       Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium
       doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo
       inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.
       Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut
       fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem
       sequi nesciunt.
- 
+    </p>
+    <p>
       Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet,
       consectetur, adipisci velit, sed quia non numquam eius modi tempora
       incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad
       minima veniam, quis nostrum exercitationem ullam corporis suscipit
       laboriosam, nisi ut aliquid ex ea commodi consequatur.
-
+    </p>
+    <p>
       Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam
       nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas
       nulla pariatur. At vero eos et accusamus et iusto odio dignissimos ducimus
       qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores
       et quas molestias excepturi sint occaecati cupiditate non provident.
-
+    </p>
+    <p>
       Similique sunt in culpa qui officia deserunt mollitia animi, id est
       laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita
       distinctio. Nam libero tempore, cum soluta nobis est eligendi optio cumque
       nihil impedit quo minus id quod maxime placeat facere possimus, omnis
       voluptas assumenda est, omnis dolor repellendus.
-
-      Temporibus autem quibusdam et aut officiis debitis aut rerum
-      necessitatibus saepe eveniet ut et voluptates repudiandae sint et
-      molestiae non recusandae. Itaque earum rerum hic tenetur a sapiente
-      delectus, ut aut reiciendis voluptatibus maiores alias consequatur aut
-      perferendis doloribus asperiores repellat.
-
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod
-      tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
-      veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-      commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
-      velit esse cillum dolore eu fugiat nulla pariatur.
-
-      Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia
-      deserunt mollit anim id est laborum. Sed ut perspiciatis unde omnis iste
-      natus error sit voluptatem accusantium doloremque laudantium, totam rem
-      aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto
-      beatae vitae dicta sunt explicabo.
-
+    </p>
   </div>
 </ScrollArea>
+
+## Slots
+
+| Name         | Description                                                                           |
+| ------------ | ------------------------------------------------------------------------------------- |
+| `ScrollArea` | The scrollable container. Wraps your content and renders a styled vertical scrollbar. |
+| `ScrollBar`  | The scrollbar element, exported for advanced composition (e.g. a horizontal bar).     |
+
+## Props
+
+Scroll Area forwards the underlying [Radix Scroll Area Root](https://www.radix-ui.com/primitives/docs/components/scroll-area#root) props (such as `type` and `scrollHideDelay`) in addition to the props below.
+
+| Name        | Description                                           | Type        | Default | Required |
+| ----------- | ----------------------------------------------------- | ----------- | ------- | -------- |
+| `children`  | The content to render inside the scrollable viewport. | `ReactNode` | —       | ✅       |
+| `className` | Additional CSS classes applied to the container.      | `string`    | —       | ❌       |
