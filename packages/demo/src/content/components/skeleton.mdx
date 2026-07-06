@@ -1,11 +1,87 @@
 ---
 layout: "@demo/layouts/mdx-layout.astro"
 heading: "Skeleton"
-description: "Skeleton components"
+description: "Animated placeholder shown while content loads"
 ---
 
 import { Skeleton } from "@eqtylab/equality";
 
-## Skeleton
+## Overview
+
+Skeleton is a low-fidelity, animated placeholder that stands in for content while it loads. Showing the rough shape of the incoming UI keeps layout stable and feels faster than a spinner, because the page doesn't jump when data arrives.
+
+It has no built-in dimensions — you shape each placeholder with `className` (width, height, border radius) to mirror the element it replaces. Compose several skeletons to mock up a card, list row, or avatar-and-text block. For a full-screen blocking indicator instead, use a [Loading Overlay](loading-overlay).
+
+## Usage
+
+Import the component:
+
+```tsx
+import { Skeleton } from "@eqtylab/equality";
+```
+
+Size it with utility classes to match the content:
+
+```tsx
+<Skeleton className="h-12 w-full" />
+```
+
+Show a skeleton while data is loading, then swap in the real content:
+
+```tsx
+{
+  isLoading ? <Skeleton className="h-6 w-40" /> : <p>{user.name}</p>;
+}
+```
+
+## Examples
+
+### Single Line
 
 <Skeleton className="h-12" />
+
+### Shapes
+
+Use border-radius and sizing utilities to match different elements — a circle for an avatar, short bars for text.
+
+<div className="flex items-center gap-4">
+  <Skeleton className="size-12 rounded-full" />
+  <div className="flex flex-col gap-2">
+    <Skeleton className="h-4 w-40" />
+    <Skeleton className="h-4 w-24" />
+  </div>
+</div>
+
+### Card Placeholder
+
+Compose several skeletons to stand in for a whole block of content.
+
+<div className="flex max-w-sm flex-col gap-3">
+  <Skeleton className="h-32 w-full rounded-lg" />
+  <Skeleton className="h-5 w-3/4" />
+  <Skeleton className="h-4 w-full" />
+  <Skeleton className="h-4 w-5/6" />
+</div>
+
+### Usage
+
+```tsx
+{
+  /* Avatar + text */
+}
+<div className="flex items-center gap-4">
+  <Skeleton className="size-12 rounded-full" />
+  <div className="flex flex-col gap-2">
+    <Skeleton className="h-4 w-40" />
+    <Skeleton className="h-4 w-24" />
+  </div>
+</div>;
+```
+
+## Props
+
+Skeleton accepts all standard `div` attributes. Size and shape it with `className`.
+
+| Name        | Description                                                          | Type     | Default | Required |
+| ----------- | -------------------------------------------------------------------- | -------- | ------- | -------- |
+| `className` | Utility classes that set the placeholder's size, shape, and spacing. | `string` | —       | ❌       |
