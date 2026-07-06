@@ -42,6 +42,7 @@ export interface BadgeProps
   extends React.HTMLAttributes<HTMLDivElement>, VariantProps<typeof badgeVariants> {
   closeable?: boolean;
   handleClosable?: () => void;
+  closeLabel?: string;
   truncate?: boolean;
   truncateLength?: number;
   icon?: React.ReactElement | string;
@@ -63,6 +64,7 @@ function Badge({
   size,
   closeable,
   handleClosable,
+  closeLabel = 'Remove',
   truncate = false,
   truncateLength = 50,
   icon,
@@ -76,19 +78,16 @@ function Badge({
 
   const renderClosable = () => {
     if (closeable && handleClosable) {
-      const ariaLabel = `Remove${typeof props.children === 'string' ? ` ${props.children}` : ''}`;
-
       return (
         <Button
+          type="button"
           variant="tertiary"
           size="sm"
-          type="button"
-          aria-label={ariaLabel}
-          onPointerDown={(e) => e.stopPropagation()}
           onClick={(e) => {
             e.stopPropagation();
             handleClosable();
           }}
+          aria-label={closeLabel}
           className={styles['closable-btn']}
         >
           <XIcon />
