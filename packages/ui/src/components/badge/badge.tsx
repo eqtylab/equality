@@ -83,6 +83,7 @@ function Badge({
           type="button"
           variant="tertiary"
           size="sm"
+          onPointerDown={(e) => e.stopPropagation()}
           onClick={(e) => {
             e.stopPropagation();
             handleClosable();
