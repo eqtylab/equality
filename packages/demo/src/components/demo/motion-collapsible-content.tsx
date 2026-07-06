@@ -6,7 +6,9 @@ export const MotionCollapsibleContentDemo = () => {
 
   return (
     <div className="flex flex-col space-y-6">
-      <Button onClick={() => setIsOpen(!isOpen)}>Click me</Button>
+      <Button onClick={() => setIsOpen(!isOpen)} className="w-max">
+        Click me
+      </Button>
       <MotionCollapsibleContent isOpen={isOpen}>
         <div>
           <h3 className="text-lg font-medium">Motion Collapsible Content</h3>
