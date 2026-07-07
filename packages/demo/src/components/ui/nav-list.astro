@@ -1,9 +1,10 @@
 ---
 import { cn } from "@demo/lib/utils";
+import { Badge } from "@eqtylab/equality";
 
 interface Props {
   label: string;
-  list: Array<{ text: string; href: string }>;
+  list: Array<{ text: string; href: string; deprecated?: boolean }>;
 }
 
 const { label, list } = Astro.props;
@@ -33,7 +34,12 @@ const isActive = (href: string) =>
                   : "text-text-secondary hover:border-text-primary hover:text-text-primary",
               )}
             >
-              {item.text}
+              <span class="inline-flex items-center gap-2">
+                {item.text}
+                {item.deprecated && (
+                   <Badge variant="warning" className="shrink-0">Deprecated</Badge>
+                )}
+              </span>
             </a>
           </li>
         );

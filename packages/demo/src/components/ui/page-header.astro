@@ -1,9 +1,9 @@
 ---
 import Heading from "@demo/components/ui/heading.astro";
-import { Icon } from "@eqtylab/equality";
+import { Badge, Icon } from "@eqtylab/equality";
 import { getEntry } from "astro:content";
 
-const { heading, description } = Astro.props;
+const { heading, description, deprecated, deprecatedMessage } = Astro.props;
 
 const slug = Astro.url.pathname.replace(/\/$/, "").split("/").pop();
 const componentEntry = slug ? await getEntry("components", slug) : undefined;
@@ -13,6 +13,11 @@ const markdownHref = componentEntry ? `/components/${slug}.md` : null;
 <section class="space-y-3 border-b pb-4">
   <div class="flex items-center gap-3">
     <Heading as="h1">{heading}</Heading>
+    {
+      deprecated && (
+        <Badge variant="warning" size="md">Deprecated</Badge>
+      )
+    }
   </div>
   <div class="flex gap-2 justify-between items-center">
     {
@@ -36,4 +41,15 @@ const markdownHref = componentEntry ? `/components/${slug}.md` : null;
       )
     }
   </div>
+  {
+    deprecated && (
+      <div
+        role="alert"
+        class="bg-badge-background-warning text-badge-text-warning flex items-start gap-2 rounded-md px-4 py-3"
+      >
+        <Icon icon="OctagonAlert" size="sm" background="transparent" className="mt-1 shrink-0 text-badge-text-warning!" />
+        <p class="[&_a]:underline [&_a]:underline-offset-2" set:html={deprecatedMessage ?? "This component is deprecated."} />
+      </div>
+    )
+  }
 </section>
