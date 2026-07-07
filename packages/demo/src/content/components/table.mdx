@@ -9,8 +9,6 @@ import { ELEVATION } from "@eqtylab/equality";
 
 ## Overview
 
----
-
 Tables are built from compositional primitives that map directly to [HTML table elements](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/table). Each primitive is a styled wrapper that accepts all native HTML attributes, giving you full control over layout, sizing, and responsiveness.
 
 Rows use CSS Grid with [subgrid](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_grid_layout/Subgrid) for column sizing. Define columns once via the `columns` prop on `<TableContainer>` — all rows share the same column tracks.
@@ -22,8 +20,6 @@ Rows use CSS Grid with [subgrid](https://developer.mozilla.org/en-US/docs/Web/CS
 - **TableCell:** A data cell (`<td>`).
 
 ## Usage
-
----
 
 Import the components:
 
@@ -60,8 +56,6 @@ Basic usage:
 ```
 
 ## Variants
-
----
 
 ### Default
 
@@ -192,8 +186,6 @@ Use the `sticky` prop on `<TableHeader>` to keep column headers visible while sc
 
 ## Column Sizing
 
----
-
 The `columns` prop accepts a CSS [`grid-template-columns`](https://developer.mozilla.org/en-US/docs/Web/CSS/grid-template-columns) value. All rows share the same column tracks via CSS subgrid.
 
 ### Fixed and Flexible Columns
@@ -228,8 +220,6 @@ Use `auto` for columns that should shrink to fit their content. This is useful f
 
 ## Truncation
 
----
-
 Use Tailwind's `truncate min-w-0` classes directly on `<TableHead>` and `<TableCell>` to clip overflowing text with an ellipsis. For truncation to work, the column must use `minmax(0, *)` in the `columns` definition so cells can shrink below their content size.
 
 <TableDemo client:only="react" variant="truncation" />
@@ -262,8 +252,6 @@ Use Tailwind's `truncate min-w-0` classes directly on `<TableHead>` and `<TableC
 ```
 
 ## Responsive Columns
-
----
 
 Use [container queries](https://tailwindcss.com/docs/responsive-design#what-are-container-queries) to override the `--table-columns` CSS variable at each breakpoint, matching the number of visible columns. Apply `hidden`/`@md:block` on cells for columns that should collapse. Hidden cells are removed from the grid flow, and the remaining visible cells auto-place into the available tracks. Use `className` instead of the `columns` prop so that responsive overrides aren't blocked by inline style specificity.
 
@@ -300,8 +288,6 @@ Use [container queries](https://tailwindcss.com/docs/responsive-design#what-are-
 
 ## Elevations
 
----
-
 ### Sunken
 
 <TableDemo client:only="react" elevation={ELEVATION.SUNKEN} />
@@ -319,8 +305,6 @@ Use [container queries](https://tailwindcss.com/docs/responsive-design#what-are-
 <TableDemo client:only="react" elevation={ELEVATION.OVERLAY} />
 
 ## Props
-
----
 
 ### TableContainer
 
