@@ -6,16 +6,39 @@ description: "Multi-line text input field"
 
 import { Textarea } from "@eqtylab/equality";
 
+## Overview
+
+Textarea is a multi-line text field for longer free-form input such as comments, descriptions, or messages. It wraps a native `<textarea>`, so it accepts all standard textarea attributes and forwards a `ref` to the underlying element.
+
+For single-line input use an [Input](input); pair the textarea with a [Label](label) via a shared `id`/`htmlFor`, or use it inside a [Form](form) field for validation and accessible wiring.
+
+## Usage
+
+Import the component:
+
+```tsx
+import { Textarea } from "@eqtylab/equality";
+```
+
+Basic usage:
+
+```tsx
+<Textarea placeholder="Enter your message here..." />
+```
+
+Controlled, driving the value yourself:
+
+```tsx
+const [value, setValue] = useState("");
+
+<Textarea value={value} onChange={(e) => setValue(e.target.value)} />;
+```
+
 ## Variants
 
 ### Default
 
-<Textarea
-  id="textarea-default"
-  placeholder="Enter your message here..."
-  value=""
-  onChange={() => {}}
-/>
+<Textarea id="textarea-default" placeholder="Enter your message here..." />
 
 ### Disabled
 
@@ -23,13 +46,32 @@ import { Textarea } from "@eqtylab/equality";
   id="textarea-disabled"
   placeholder="Disabled textarea"
   disabled
-  value="This textarea is disabled"
+  defaultValue="This textarea is disabled"
 />
 
-### Large Textarea
+### Custom Height
+
+The textarea's height can be set with `className` (or the native `rows` attribute) for longer content.
 
 <Textarea
   id="textarea-large"
   placeholder="Large textarea for longer content..."
-  className="min-h-[120px]"
+  className="h-42"
 />
+
+### Usage
+
+```tsx
+<Textarea placeholder="Enter your message here..." />
+<Textarea placeholder="Disabled textarea" disabled />
+<Textarea placeholder="Longer content..." className="h-42" />
+<Textarea placeholder="By rows" rows={5} />
+```
+
+## Props
+
+Textarea accepts all standard `<textarea>` attributes (`placeholder`, `value`, `defaultValue`, `onChange`, `rows`, `maxLength`, `disabled`, etc.) plus `className`. It does not add any props of its own.
+
+| Name        | Description                                     | Type     | Default | Required |
+| ----------- | ----------------------------------------------- | -------- | ------- | -------- |
+| `className` | Additional CSS classes applied to the textarea. | `string` | —       | ❌       |
