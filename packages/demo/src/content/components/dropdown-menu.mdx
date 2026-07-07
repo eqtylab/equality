@@ -35,7 +35,7 @@ Basic usage:
   <DropdownMenuContent align="start">
     <DropdownMenuItem>Profile</DropdownMenuItem>
     <DropdownMenuItem>Settings</DropdownMenuItem>
-    <DropdownMenuItem danger>Logout</DropdownMenuItem>
+    <DropdownMenuItem variant="danger">Logout</DropdownMenuItem>
   </DropdownMenuContent>
 </DropdownMenu>
 ```
@@ -201,12 +201,12 @@ Wrap related items in `DropdownMenuGroup` to associate a label with its items fo
 
 ### DropdownMenuItem
 
-| Name       | Description                                           | Type         | Default | Required |
-| ---------- | ----------------------------------------------------- | ------------ | ------- | -------- |
-| `danger`   | Styles the item as a destructive action               | `boolean`    | `false` | ❌       |
-| `inset`    | Adds left padding to align with items that have icons | `boolean`    | `false` | ❌       |
-| `disabled` | Prevents interaction and dims the item                | `boolean`    | `false` | ❌       |
-| `onSelect` | Called when the item is selected                      | `() => void` | -       | ❌       |
+| Name       | Description                                           | Type                | Default   | Required |
+| ---------- | ----------------------------------------------------- | ------------------- | --------- | -------- |
+| `variant`  | Visual style; `danger` marks a destructive action     | `neutral`, `danger` | `neutral` | ❌       |
+| `inset`    | Adds left padding to align with items that have icons | `boolean`           | `false`   | ❌       |
+| `disabled` | Prevents interaction and dims the item                | `boolean`           | `false`   | ❌       |
+| `onSelect` | Called when the item is selected                      | `() => void`        | -         | ❌       |
 
 ### DropdownMenuCheckboxItem
 

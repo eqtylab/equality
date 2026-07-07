@@ -77,15 +77,15 @@ const DropdownMenuItem = React.forwardRef<
   React.ElementRef<typeof DropdownMenuPrimitive.Item>,
   React.ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.Item> & {
     inset?: boolean;
-    danger?: boolean;
+    variant?: 'neutral' | 'danger';
   }
->(({ className, inset, danger, ...props }, ref) => (
+>(({ className, inset, variant = 'neutral', ...props }, ref) => (
   <DropdownMenuPrimitive.Item
     ref={ref}
     className={cn(
       styles['dropdown-menu-item'],
       inset && styles['dropdown-menu-inset'],
-      danger && styles['dropdown-menu-item-danger'],
+      variant === 'danger' && styles['dropdown-menu-item-danger'],
       className
     )}
     {...props}
