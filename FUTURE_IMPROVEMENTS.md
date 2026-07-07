@@ -72,6 +72,11 @@ Most components are built on Radix and inherit good accessibility. The items bel
 - **Page Not Found** — the component is exported as `NotFound` but the doc/page is titled "Page Not Found". Not a bug, just a naming mismatch to be aware of.
   `packages/ui/src/components/page-not-found/page-not-found.tsx`
 
+## Incomplete / Undocumented Components
+
+- **Drawer** — appears unfinished. Its documentation page has been **removed from the docs site only** (the component still exists in the `ui` package) pending a decision to either complete and document it, or deprecate and remove it. If other components have superseded it (e.g. [Sheet](packages/ui/src/components/sheet), Dialog), lean toward deprecation to avoid a half-supported component in the public API.
+  `packages/ui/src/components/drawer/`
+
 ## Notes
 
 - Items were identified during documentation and have **not** been verified with tests. Confirm each before acting.
