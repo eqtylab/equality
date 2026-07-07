@@ -6,8 +6,73 @@ description: "Hover hint showing contextual text"
 
 import { TooltipDemo } from "@demo/components/demo/tooltip";
 
-## Variants
+## Overview
 
-### Default
+Tooltip shows a small hint anchored to an element when the user hovers or focuses it — a label for an icon button, or a brief explanation of a control. It's built on [Radix UI Tooltip](https://www.radix-ui.com/primitives/docs/components/tooltip), so it opens on hover and keyboard focus, dismisses on blur or <kbd>Esc</kbd>, and includes a pointer arrow.
+
+Keep tooltips short and non-essential. For rich or interactive overlays use a [Popover](popover). The content renders in a portal, so it escapes overflow clipping.
+
+## Usage
+
+Import the parts:
+
+```tsx
+import {
+  Tooltip,
+  TooltipTrigger,
+  TooltipContent,
+  TooltipProvider,
+} from "@eqtylab/equality";
+```
+
+Wrap the app (or a section) in a single `TooltipProvider`, then compose a trigger and content. Use `asChild` so your own element (like a [Button](button) or [Icon Button](icon-button)) becomes the trigger:
+
+```tsx
+<TooltipProvider>
+  <Tooltip>
+    <TooltipTrigger asChild>
+      <Button variant="tertiary">Hover me</Button>
+    </TooltipTrigger>
+    <TooltipContent>
+      <p>This is a tooltip</p>
+    </TooltipContent>
+  </Tooltip>
+</TooltipProvider>
+```
+
+`TooltipProvider` shares timing (open/close delays) across all tooltips within it, so place one high in your tree rather than wrapping each tooltip individually.
+
+## Default
 
 <TooltipDemo client:only="react" />
+
+## Placement
+
+Use `side` and `align` on `TooltipContent` to position the tooltip relative to its trigger, and `sideOffset` to adjust the gap.
+
+```tsx
+<TooltipContent side="right" align="center">
+  <p>Shown to the right</p>
+</TooltipContent>
+```
+
+## Slots
+
+| Name              | Description                                                                            |
+| ----------------- | -------------------------------------------------------------------------------------- |
+| `TooltipProvider` | Shares hover/focus timing across the tooltips it wraps. Place one near the root.       |
+| `Tooltip`         | The root for a single tooltip, wrapping its trigger and content.                       |
+| `TooltipTrigger`  | The element that shows the tooltip on hover/focus. Use `asChild` for your own element. |
+| `TooltipContent`  | The floating hint. Owns placement, offset, and the arrow.                              |
+
+## Props
+
+The parts forward their [Radix Tooltip](https://www.radix-ui.com/primitives/docs/components/tooltip) props (and `className`). The most commonly used are below.
+
+| Name            | Applies to        | Description                                                    | Type                             | Default  |
+| --------------- | ----------------- | -------------------------------------------------------------- | -------------------------------- | -------- |
+| `side`          | `TooltipContent`  | Preferred side of the trigger to render on.                    | `top`, `right`, `bottom`, `left` | `top`    |
+| `align`         | `TooltipContent`  | Alignment against the trigger.                                 | `start`, `center`, `end`         | `center` |
+| `sideOffset`    | `TooltipContent`  | Distance in pixels between the tooltip and the trigger.        | `number`                         | `4`      |
+| `asChild`       | `TooltipTrigger`  | Render the trigger as the child element instead of a `button`. | `boolean`                        | `false`  |
+| `delayDuration` | `TooltipProvider` | Delay in ms before the tooltip opens on hover.                 | `number`                         | `700`    |
