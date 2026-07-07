@@ -13,8 +13,6 @@ import {
 
 ## Overview
 
----
-
 Segmented Controls present a developer-defined set of two or more mutually exclusive
 options in a single, connected control. They are commonly used to switch between views,
 filters, or modes where a dropdown would be excessive.
@@ -23,8 +21,6 @@ Each option supports a prefix `icon`, a required text `label`, and an optional `
 slot. The currently selected option is highlighted using the primary button colour.
 
 ## Usage
-
----
 
 Import the component:
 
@@ -51,8 +47,6 @@ const [view, setView] = useState("day");
 
 ## Examples
 
----
-
 ### Text only
 
 <SegmentedControlsTextDemo client:only="react" />
@@ -72,8 +66,6 @@ label.
 <SegmentedControlsSuffixDemo client:only="react" />
 
 ## Display modes
-
----
 
 Like the [Badge](/components/badge) component, the `display` prop controls what is rendered
 inside each segment: `both` (the default), `text-only`, or `icon-only`.
@@ -99,8 +91,6 @@ option is missing one. Because `label` is mandatory, it is used as the accessibl
 ```
 
 ## Props
-
----
 
 | Name            | Description                                           | Type                             | Default | Required |
 | --------------- | ----------------------------------------------------- | -------------------------------- | ------- | -------- |
