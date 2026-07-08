@@ -35,7 +35,7 @@
   @apply hover:not-disabled:text-red-700! focus:text-red-700!;
   @apply hover:not-disabled:bg-red-300/50! focus:bg-red-300/50!;
   @apply dark:hover:not-disabled:bg-red-600/50! dark:focus:bg-red-600/50!;
-  @apply dark:hover:not-disabled:text-red-100! dark:focus:text-red-100!;
+  @apply dark:hover:not-disabled:text-red-200! dark:focus:text-red-200!;
 }
 
 .dropdown-menu-item-indicator-checkbox,
