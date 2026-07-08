@@ -1,0 +1,110 @@
+---
+layout: "@demo/layouts/mdx-layout.astro"
+heading: "Segmented Controls"
+description: "A linear set of two or more segments used to switch between mutually exclusive options or views."
+---
+
+import {
+  SegmentedControlsTextDemo,
+  SegmentedControlsIconDemo,
+  SegmentedControlsSuffixDemo,
+  SegmentedControlsIconOnlyDemo,
+} from "@demo/components/demo/segmented-controls";
+
+## Overview
+
+Segmented Controls present a developer-defined set of two or more mutually exclusive
+options in a single, connected control. They are commonly used to switch between views,
+filters, or modes where a dropdown would be excessive.
+
+Each option supports a prefix `icon`, a required text `label`, and an optional `suffix`
+slot. The currently selected option is highlighted using the primary button colour.
+
+## Usage
+
+Import the component:
+
+```tsx
+import { SegmentedControls } from "@eqtylab/equality";
+```
+
+`options`, `value`, and `onValueChange` are required. `value` and `onValueChange` should be
+controlled by the parent component.
+
+```tsx
+const [view, setView] = useState("day");
+
+<SegmentedControls
+  value={view}
+  onValueChange={setView}
+  options={[
+    { value: "day", label: "Day" },
+    { value: "week", label: "Week" },
+    { value: "month", label: "Month" },
+  ]}
+/>;
+```
+
+## Examples
+
+### Text only
+
+<SegmentedControlsTextDemo client:only="react" />
+
+### With prefix icons
+
+Provide an `icon` (a [Lucide](https://lucide.dev) icon name or a React element) to render a
+prefix before the label.
+
+<SegmentedControlsIconDemo client:only="react" />
+
+### With a suffix slot
+
+Use the `suffix` slot to render supplementary content, such as a count `Badge`, after the
+label.
+
+<SegmentedControlsSuffixDemo client:only="react" />
+
+## Display modes
+
+Like the [Badge](/components/badge) component, the `display` prop controls what is rendered
+inside each segment: `both` (the default), `text-only`, or `icon-only`.
+
+`icon-only` requires **every** option to define an `icon`, and it falls back to `both` if any
+option is missing one. Because `label` is mandatory, it is used as the accessible label
+(`aria-label`) and tooltip for each segment in `icon-only` mode.
+
+### Icon only
+
+<SegmentedControlsIconOnlyDemo client:only="react" />
+
+```tsx
+<SegmentedControls
+  display="icon-only"
+  value={view}
+  onValueChange={setView}
+  options={[
+    { value: "grid", label: "Table view", icon: "Grid3X3" },
+    { value: "list", label: "List view", icon: "List" },
+  ]}
+/>
+```
+
+## Props
+
+| Name            | Description                                           | Type                             | Default | Required |
+| --------------- | ----------------------------------------------------- | -------------------------------- | ------- | -------- |
+| `options`       | The set of segments to render.                        | `SegmentedControlOption[]`       | -       | ✅       |
+| `value`         | The value of the currently selected option.           | `string`                         | -       | ✅       |
+| `onValueChange` | Called with the new value when a segment is selected. | `(value: string) => void`        | -       | ✅       |
+| `display`       | Controls what is rendered inside each segment.        | `both`, `text-only`, `icon-only` | `both`  | ❌       |
+| `className`     | Additional CSS classes to apply to the control.       | `string`                         | -       | ❌       |
+
+### `SegmentedControlOption`
+
+| Name     | Description                                                     | Type                           | Default | Required |
+| -------- | --------------------------------------------------------------- | ------------------------------ | ------- | -------- |
+| `value`  | Unique value used to identify the option.                       | `string`                       | -       | ✅       |
+| `label`  | Text label. Also used as the accessible label when `icon-only`. | `string`                       | -       | ✅       |
+| `icon`   | Prefix icon: a Lucide icon name or a React element.             | `string`, `React.ReactElement` | -       | ❌       |
+| `suffix` | Content rendered after the label.                               | `React.ReactNode`              | -       | ❌       |

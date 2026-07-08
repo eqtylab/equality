@@ -13,6 +13,9 @@ interface ListOrGridViewToggleProps {
   className?: string;
 }
 
+/**
+ * @deprecated Use `SegmentedControls` instead.
+ */
 const ListOrGridViewToggle = ({
   viewMode,
   onViewModeChange,
