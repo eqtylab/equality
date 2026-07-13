@@ -57,8 +57,7 @@ function IconButton({
   const IconComponent = Icon as React.ComponentType<{ size?: number }>;
 
   if (!Icon) {
-    console.warn(`Icon "${name}" not found in lucide-react`);
-    return null;
+    throw new Error(`Icon "${name}" not found in lucide-react`);
   }
 
   const content = <IconComponent size={iconSize} />;
