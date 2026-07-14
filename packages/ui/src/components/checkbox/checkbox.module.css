@@ -3,7 +3,7 @@
 .checkbox {
   @apply shrink-0;
   @apply border-text-primary rounded-sm border;
-  @apply data-[state=checked]:bg-text-primary data-[state=checked]:text-background;
+  @apply data-[state=checked]:bg-button-primary-fill data-[state=checked]:border-button-primary-border data-[state=checked]:text-button-primary-text;
   @apply disabled:cursor-not-allowed disabled:opacity-50;
   @apply focus-ring;
 }
