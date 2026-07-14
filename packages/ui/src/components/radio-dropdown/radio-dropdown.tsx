@@ -6,9 +6,11 @@ import { Button } from '@/components/button/button';
 import {
   DropdownMenu,
   DropdownMenuContent,
+  DropdownMenuEmpty,
   DropdownMenuLabel,
   DropdownMenuRadioGroup,
   DropdownMenuRadioItem,
+  DropdownMenuSearch,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/dropdown-menu/dropdown-menu';
@@ -28,14 +30,21 @@ interface RadioDropdownProps {
   selectedValue: string;
   onSelect: (value: string) => void;
   className?: string;
+  searchPlaceholder?: string;
+  emptyPlaceholder?: string;
 }
 
+/*
+ * TODO: Add searchPlaceholder and emptyPlaceholder to the docs
+ */
 const RadioDropdown = ({
   label,
   options,
   selectedValue,
   onSelect,
   className,
+  searchPlaceholder = 'Search options...',
+  emptyPlaceholder = 'No options found',
 }: RadioDropdownProps) => {
   const selectedOption = options.find((opt) => opt.value === selectedValue);
   const hasSelectedCount = selectedOption?.count !== undefined;
@@ -57,6 +66,8 @@ const RadioDropdown = ({
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className={styles['dropdown-menu-content']}>
+        <DropdownMenuSearch placeholder={searchPlaceholder} />
+        <DropdownMenuEmpty>{emptyPlaceholder}</DropdownMenuEmpty>
         <DropdownMenuLabel>{label}</DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuRadioGroup value={selectedValue} onValueChange={onSelect}>

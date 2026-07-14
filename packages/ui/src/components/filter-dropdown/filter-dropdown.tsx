@@ -7,7 +7,9 @@ import {
   DropdownMenu,
   DropdownMenuCheckboxItem,
   DropdownMenuContent,
+  DropdownMenuEmpty,
   DropdownMenuLabel,
+  DropdownMenuSearch,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/dropdown-menu/dropdown-menu';
@@ -30,8 +32,13 @@ interface FilterDropdownProps {
   buttonClassName?: string;
   contentClassName?: string;
   disabled?: boolean;
+  searchPlaceholder?: string;
+  emptyPlaceholder?: string;
 }
 
+/*
+ * TODO: Add searchPlaceholder and emptyPlaceholder to docs
+ */
 const FilterDropdown = ({
   label,
   options,
@@ -41,6 +48,8 @@ const FilterDropdown = ({
   buttonClassName,
   contentClassName,
   disabled = false,
+  searchPlaceholder = 'Search filters...',
+  emptyPlaceholder = 'No filters found',
 }: FilterDropdownProps) => {
   const hasSelectedFilters = selectedFilters.length > 0;
   const filteredOptions = options.filter(
@@ -67,6 +76,8 @@ const FilterDropdown = ({
         align="end"
         className={cn(styles['dropdown-menu-content'], contentClassName)}
       >
+        <DropdownMenuSearch placeholder={searchPlaceholder} />
+        <DropdownMenuEmpty>{emptyPlaceholder}</DropdownMenuEmpty>
         <DropdownMenuLabel>
           Filters
           {hasSelectedFilters && (
