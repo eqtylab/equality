@@ -27,3 +27,24 @@ Documentation updates to apply after the accessibility work lands and feat/docs 
      | Name    | Description                                  | Type     | Default   | Required |
      | ------- | -------------------------------------------- | -------- | --------- | -------- |
      | `label` | Accessible label announced by screen readers | `string` | `Loading` | ❌       |
+
+## Loading Overlay
+
+`packages/demo/src/content/components/loading-overlay.mdx`
+
+- **Now a modal built on Radix Dialog.** Previously a plain overlay `<div>`, the
+  Loading Overlay is now backed by a modal Radix Dialog. When `isVisible` is true it:
+  - traps keyboard focus inside the overlay and makes background content inert to
+    keyboard and screen reader users,
+  - locks background scroll,
+  - announces the `message` to screen readers when it appears, and
+  - restores focus to the previously focused element when it hides.
+
+  It is intentionally **non-dismissable** — Escape and outside clicks do nothing;
+  visibility is controlled solely by the `isVisible` prop.
+
+  Suggested additions:
+  1. An **Accessibility** section describing the modal/focus-trap behaviour and that
+     `message` doubles as the announced accessible name.
+  2. Confirm the existing **Props** table lists `isVisible` (`boolean`, required) and
+     `message` (`string`, default `Loading...`). No prop API changed — only behaviour.

@@ -11,10 +11,6 @@
   @apply flex-center flex-col;
 }
 
-.icon {
-  @apply text-brand-primary h-10 w-10 animate-spin;
-}
-
 .message {
   @apply text-text-primary mt-4 text-lg font-medium;
 }
