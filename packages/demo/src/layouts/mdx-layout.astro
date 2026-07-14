@@ -7,16 +7,27 @@ interface Props {
   frontmatter?: {
     heading?: string;
     description?: string;
+    deprecated?: boolean;
+    deprecatedMessage?: string;
   };
 }
 
 const { frontmatter = {} } = Astro.props;
-const { heading, description } = frontmatter;
+const { heading, description, deprecated, deprecatedMessage } = frontmatter;
 ---
 
 <PageWrapper>
   <PageContentWrapper>
-    {heading && <PageHeader heading={heading} description={description} />}
+    {
+      heading && (
+        <PageHeader
+          heading={heading}
+          description={description}
+          deprecated={deprecated}
+          deprecatedMessage={deprecatedMessage}
+        />
+      )
+    }
     <section id="markdown-content">
       <slot />
     </section>

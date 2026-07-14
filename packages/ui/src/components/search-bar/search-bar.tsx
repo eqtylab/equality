@@ -40,7 +40,7 @@ const SearchBar = ({
         suffix={
           searchQuery && (
             <IconButton
-              name="XIcon"
+              name="X"
               onClick={handleClear}
               className={styles['clear-button']}
               label="Clear search"

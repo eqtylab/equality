@@ -50,7 +50,7 @@ const FilterDropdown = ({
 
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger asChild>
+      <DropdownMenuTrigger asChild disabled={disabled}>
         <Button
           variant="tertiary"
           disabled={disabled}

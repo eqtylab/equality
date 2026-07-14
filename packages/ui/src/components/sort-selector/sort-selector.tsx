@@ -4,9 +4,10 @@ import { ChevronDown } from 'lucide-react';
 import { Button } from '@/components/button/button';
 import {
   DropdownMenu,
-  DropdownMenuCheckboxItem,
   DropdownMenuContent,
   DropdownMenuLabel,
+  DropdownMenuRadioGroup,
+  DropdownMenuRadioItem,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/dropdown-menu/dropdown-menu';
@@ -103,20 +104,17 @@ function SortSelector({
           )}
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
-        {filteredOptions.map((option) => {
-          const isSelected = currentValue === option.value;
-
-          return (
-            <DropdownMenuCheckboxItem
+        <DropdownMenuRadioGroup value={currentValue} onValueChange={handleChange}>
+          {filteredOptions.map((option) => (
+            <DropdownMenuRadioItem
               key={option.value}
-              checked={isSelected}
-              onCheckedChange={() => handleChange(option.value)}
+              value={option.value}
               onSelect={(e) => e.preventDefault()}
             >
               {option.label}
-            </DropdownMenuCheckboxItem>
-          );
-        })}
+            </DropdownMenuRadioItem>
+          ))}
+        </DropdownMenuRadioGroup>
       </DropdownMenuContent>
     </DropdownMenu>
   );

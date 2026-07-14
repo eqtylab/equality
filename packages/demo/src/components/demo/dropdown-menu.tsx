@@ -47,7 +47,7 @@ export const DropdownMenuDemo = ({
           <DropdownMenuContent align="start">
             <DropdownMenuItem>Profile</DropdownMenuItem>
             <DropdownMenuItem>Settings</DropdownMenuItem>
-            <DropdownMenuItem danger>Logout</DropdownMenuItem>
+            <DropdownMenuItem variant="danger">Logout</DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       </div>

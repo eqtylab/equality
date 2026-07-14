@@ -29,6 +29,7 @@ const gettingStartedLinks = [
 const componentsLinks = components.map((component: any) => ({
   text: component.data.heading,
   href: `/components/${component.id}`,
+  deprecated: component.data.deprecated,
 }));
 ---
 
