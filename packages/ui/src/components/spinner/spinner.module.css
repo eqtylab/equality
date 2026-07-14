@@ -4,6 +4,10 @@
   @apply relative;
 }
 
+.visually-hidden {
+  @apply sr-only;
+}
+
 .spinner {
   @apply border-t-transparent;
   @apply rounded-full;
