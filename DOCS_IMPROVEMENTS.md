@@ -56,6 +56,10 @@ Documentation updates to apply after the accessibility work lands and feat/docs 
 - **Current page is now exposed to assistive tech.** The active page button previously
   differed only by colour (`primary` vs `tertiary`), which conveyed the current page by
   colour alone. It now also carries `aria-current="page"`.
+- **Page buttons are explicitly labelled.** Each numbered button has `aria-label="Page N"`,
+  so it announces as "Page 3, button". The active page
+  announces as "Page 3, current page, button" (the "current page" comes from
+  `aria-current`, so the label doesn't repeat it).
 - **The page controls are now a landmark.** Prev / page numbers / next are wrapped in
   `<nav aria-label="Pagination">`, so screen reader users can jump straight to it. The
   "Showing X to Y of Z" info and the items-per-page `Select` sit _outside_ the landmark

@@ -125,6 +125,7 @@ const Pagination = ({
           variant={currentPage === i ? 'primary' : 'tertiary'}
           size="sm"
           onClick={() => handlePageChange(i)}
+          aria-label={`Page ${i}`}
           aria-current={currentPage === i ? 'page' : undefined}
         >
           {i}
