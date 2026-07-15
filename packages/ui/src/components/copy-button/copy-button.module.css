@@ -1,0 +1,5 @@
+@reference '../../theme/theme.module.css';
+
+.visually-hidden {
+  @apply sr-only;
+}

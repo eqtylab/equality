@@ -1,6 +1,13 @@
 import * as React from 'react';
 
+import styles from '@/components/copy-button/copy-button.module.css';
 import { IconButton } from '@/components/icon-button/icon-button';
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from '@/components/tooltip/tooltip';
 
 export interface CopyButtonProps {
   value: string;
@@ -59,13 +66,25 @@ function CopyButton({
   };
 
   return (
-    <IconButton
-      name={copied ? 'Check' : 'Copy'}
-      label={copied ? 'Copied!' : label}
-      size={size}
-      onClick={handleClick}
-      className={className}
-    />
+    <TooltipProvider>
+      {/* The tooltip is a confirmation shown on copy, not on hover */}
+      <Tooltip open={copied}>
+        <TooltipTrigger asChild>
+          <IconButton
+            name={copied ? 'Check' : 'Copy'}
+            label={label}
+            size={size}
+            onClick={handleClick}
+            className={className}
+            aria-describedby={undefined}
+          />
+        </TooltipTrigger>
+        <TooltipContent>Copied!</TooltipContent>
+      </Tooltip>
+      <span className={styles['visually-hidden']} role="status">
+        {copied ? 'Copied!' : ''}
+      </span>
+    </TooltipProvider>
   );
 }
 

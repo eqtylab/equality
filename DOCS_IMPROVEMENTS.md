@@ -67,3 +67,23 @@ Documentation updates to apply after the accessibility work lands and feat/docs 
 
   Suggested addition: a short **Accessibility** section noting both of the above. No
   prop API changed — semantics only.
+
+## Copy Button
+
+`packages/demo/src/content/components/copy-button.mdx`
+
+- **"Copied!" is now announced.** A visually-hidden `role="status"` live region is
+  always mounted and its text flips to "Copied!" on success, so screen readers announce
+  the confirmation.
+- **"Copied!" tooltip on copy.** A tooltip now appears on successful copy. It is
+  _controlled_ (tied to the copied state), so it is a confirmation — it does **not**
+  appear on hover. It carries its own `TooltipProvider`, so consumers don't need to
+  supply one.
+- **Behaviour change — the accessible name is now stable.** The button previously
+  swapped its `aria-label` to "Copied!" on success; it now always uses `label`
+  (default `Copy to clipboard`). A button's name should describe its action, not a
+  state, and the live region already conveys the state. The icon still swaps
+  `Copy` → `Check` for the visual cue.
+
+  Suggested addition: an **Accessibility** section covering the above. No prop API
+  changed.
