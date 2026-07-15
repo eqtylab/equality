@@ -125,6 +125,7 @@ const Pagination = ({
           variant={currentPage === i ? 'primary' : 'tertiary'}
           size="sm"
           onClick={() => handlePageChange(i)}
+          aria-current={currentPage === i ? 'page' : undefined}
         >
           {i}
         </Button>
@@ -165,7 +166,7 @@ const Pagination = ({
       </div>
 
       {/* Right side: Page navigation */}
-      <div className={styles['page-navigation-container']}>
+      <nav className={styles['page-navigation-container']} aria-label="Pagination">
         <Button
           variant="tertiary"
           size="sm"
@@ -187,7 +188,7 @@ const Pagination = ({
         >
           <ChevronRightIcon />
         </Button>
-      </div>
+      </nav>
     </div>
   );
 };

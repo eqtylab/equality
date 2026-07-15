@@ -48,3 +48,18 @@ Documentation updates to apply after the accessibility work lands and feat/docs 
      `message` doubles as the announced accessible name.
   2. Confirm the existing **Props** table lists `isVisible` (`boolean`, required) and
      `message` (`string`, default `Loading...`). No prop API changed — only behaviour.
+
+## Pagination
+
+`packages/demo/src/content/components/pagination.mdx`
+
+- **Current page is now exposed to assistive tech.** The active page button previously
+  differed only by colour (`primary` vs `tertiary`), which conveyed the current page by
+  colour alone. It now also carries `aria-current="page"`.
+- **The page controls are now a landmark.** Prev / page numbers / next are wrapped in
+  `<nav aria-label="Pagination">`, so screen reader users can jump straight to it. The
+  "Showing X to Y of Z" info and the items-per-page `Select` sit _outside_ the landmark
+  — they're status/settings, not navigation.
+
+  Suggested addition: a short **Accessibility** section noting both of the above. No
+  prop API changed — semantics only.
