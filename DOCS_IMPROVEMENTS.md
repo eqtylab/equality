@@ -87,3 +87,15 @@ Documentation updates to apply after the accessibility work lands and feat/docs 
 
   Suggested addition: an **Accessibility** section covering the above. No prop API
   changed.
+
+## Form / FormMessage
+
+`packages/demo/src/content/components/form.mdx`
+
+- **Validation errors are now announced.** `FormMessage` carries `role="alert"` when it
+  is rendering a validation error, so an error appearing while focus stays in the field
+  is announced to screen readers. Previously it was a plain `<p>`, so the message was
+  only reachable by browsing to it.
+
+  Suggested addition: a short **Accessibility** section noting that errors announce
+  automatically. No prop API changed — semantics only.

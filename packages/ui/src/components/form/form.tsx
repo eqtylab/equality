@@ -144,7 +144,13 @@ const FormMessage = React.forwardRef<
   }
 
   return (
-    <p ref={ref} id={formMessageId} className={cn(styles['form-message'], className)} {...props}>
+    <p
+      ref={ref}
+      id={formMessageId}
+      role={error ? 'alert' : undefined}
+      className={cn(styles['form-message'], className)}
+      {...props}
+    >
       {body}
     </p>
   );
