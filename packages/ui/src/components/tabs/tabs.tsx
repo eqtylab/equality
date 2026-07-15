@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, type ComponentPropsWithoutRef } from 'react';
 import { motion } from 'motion/react';
 
 import { Icon } from '@/components/icon/icon';
@@ -19,6 +19,7 @@ interface TabsProps {
     icon?: React.ReactElement | string;
     suffix?: React.ReactNode;
     content: React.ReactNode;
+    triggerProps?: Omit<ComponentPropsWithoutRef<typeof TabsTrigger>, 'value'>;
   }[];
   className?: string;
   tabsListBackground?: 'transparent' | 'filled';
@@ -80,18 +81,19 @@ const Tabs = ({
           isFilled ? styles['tabs-list--filled'] : styles['tabs-list--transparent']
         )}
       >
-        {items.map(({ label, value, icon, suffix }) => {
+        {items.map(({ label, value, icon, suffix, triggerProps }) => {
           const isActive = activeTab === value;
 
           return (
             <TabsTrigger
+              {...triggerProps}
               key={value}
               value={value}
               className={cn(
                 styles['tabs-trigger'],
-                isFilled ? styles['tabs-trigger--filled'] : styles['tabs-trigger--transparent']
+                isFilled ? styles['tabs-trigger--filled'] : styles['tabs-trigger--transparent'],
+                triggerProps?.className
               )}
-              data-tour={`${value}-tab-overview`}
             >
               {renderIcon(icon)}
               {label}

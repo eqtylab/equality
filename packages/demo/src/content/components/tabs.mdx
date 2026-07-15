@@ -205,6 +205,38 @@ Use the `suffix` property to render any React component after a tab's label. Thi
 />
 ```
 
+### Forwarding trigger props
+
+Use the `triggerProps` field on an item to forward props onto that individual tab's trigger. This is useful for attaching event handlers to a specific tab — for example, warming a destination's data on hover or focus (prefetching) when the user shows intent toward that tab.
+
+Any props are spread onto the trigger before the component's own `value` and styling, so tab selection and internal classes are never overridden, and a custom `className` is merged with the internal ones. Event handlers compose with the component's built-in behavior, so tab activation and keyboard navigation are unchanged.
+
+```tsx
+<Tabs
+  id="prefetch-tabs"
+  items={[
+    {
+      label: "Declarations",
+      value: "declarations",
+      content: <div>Declarations Content</div>,
+      triggerProps: {
+        onPointerEnter: () => prefetchDeclarations(),
+        onFocus: () => prefetchDeclarations(),
+      },
+    },
+    {
+      label: "Reviews",
+      value: "reviews",
+      content: <div>Reviews Content</div>,
+      triggerProps: {
+        onPointerEnter: () => prefetchReviews(),
+        onFocus: () => prefetchReviews(),
+      },
+    },
+  ]}
+/>
+```
+
 ## Props
 
 ---
@@ -221,10 +253,11 @@ Use the `suffix` property to render any React component after a tab's label. Thi
 
 Each item in the `items` array should have the following structure:
 
-| Name      | Description                                                  | Type                           | Default | Required |
-| --------- | ------------------------------------------------------------ | ------------------------------ | ------- | -------- |
-| `label`   | Text label displayed on the tab trigger                      | `string`                       | -       | ✅       |
-| `value`   | Unique value that identifies this tab                        | `string`                       | -       | ✅       |
-| `icon`    | Icon to display alongside the label (Lucide name or element) | `React.ReactElement`, `string` | -       | ❌       |
-| `suffix`  | Content rendered after the label (e.g. a badge or count)     | `React.ReactNode`              | -       | ❌       |
-| `content` | Content to display when this tab is active                   | `React.ReactNode`              | -       | ✅       |
+| Name           | Description                                                                                         | Type                                                          | Default | Required |
+| -------------- | --------------------------------------------------------------------------------------------------- | ------------------------------------------------------------- | ------- | -------- |
+| `label`        | Text label displayed on the tab trigger                                                             | `string`                                                      | -       | ✅       |
+| `value`        | Unique value that identifies this tab                                                               | `string`                                                      | -       | ✅       |
+| `icon`         | Icon to display alongside the label (Lucide name or element)                                        | `React.ReactElement`, `string`                                | -       | ❌       |
+| `suffix`       | Content rendered after the label (e.g. a badge or count)                                            | `React.ReactNode`                                             | -       | ❌       |
+| `content`      | Content to display when this tab is active                                                          | `React.ReactNode`                                             | -       | ✅       |
+| `triggerProps` | Props forwarded onto this tab's trigger (see [Forwarding trigger props](#forwarding-trigger-props)) | `Omit<ComponentPropsWithoutRef<typeof TabsTrigger>, "value">` | -       | ❌       |
