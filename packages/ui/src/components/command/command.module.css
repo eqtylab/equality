@@ -5,17 +5,17 @@
   @apply border-card-border border;
   @apply size-full overflow-hidden rounded-md;
   @apply flex flex-col;
+  @apply ring-offset-background outline-none;
+  @apply has-[:focus-visible]:ring-focus-ring has-[:focus-visible]:ring-2 has-[:focus-visible]:ring-offset-2;
 }
 
 .command-dialog-header {
   @apply sr-only;
 }
 
-.command-dialog-content {
-  @apply overflow-hidden p-0;
-}
-
 .command-dialog-content-inner {
+  @apply rounded-none border-0 bg-transparent;
+  @apply has-[:focus-visible]:ring-0 has-[:focus-visible]:ring-offset-0;
   @apply data-[slot=command-input-wrapper]:**:h-12;
   @apply [&_[cmdk-input]]:h-12;
   @apply [&_[cmdk-item]]:px-2 [&_[cmdk-item]]:py-3 [&_[cmdk-item]_svg]:size-5;

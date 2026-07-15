@@ -49,6 +49,29 @@ Documentation updates to apply after the accessibility work lands and feat/docs 
   2. Confirm the existing **Props** table lists `isVisible` (`boolean`, required) and
      `message` (`string`, default `Loading...`). No prop API changed — only behaviour.
 
+## Command — ⚠️ work in progress, do not document yet
+
+`packages/demo/src/content/components/command.mdx`
+
+> **Blocked:** command items are still not reachable by keyboard in the demo. Confirm
+> behaviour before writing any of this up.
+
+- **`CommandDialog` now works.** It was missing `DialogContainer` (portal + overlay +
+  positioning), so it never rendered as a modal — exported but unused. Now a real
+  centred palette; title/description stay `sr-only` for Radix.
+- **`CommandList` is required for keyboard navigation** — not optional. cmdk queries
+  items through a ref only `CommandList` mounts; without it items render and are
+  clickable but can't be navigated by keyboard. The demo was missing it (which is why
+  in-app search worked but the demo didn't). Examples must show the full
+  `Command → CommandInput → CommandList → CommandEmpty/CommandGroup/CommandItem` nesting.
+- **Focus ring** via `has-[:focus-visible]` on `.command`, since cmdk renders the root
+  with `tabIndex={-1}` (a plain `focus-ring` would never fire). Suppressed in the dialog,
+  where it'd be clipped.
+- Demo now shows both a dialog palette and an inline `Command`.
+
+Known gaps: items not keyboard-accessible in the demo; `.command-item` has no
+`data-[selected=true]` style, so the keyboard-selected item isn't highlighted.
+
 ## Pagination
 
 `packages/demo/src/content/components/pagination.mdx`

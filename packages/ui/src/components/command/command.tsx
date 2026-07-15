@@ -5,7 +5,7 @@ import { SearchIcon } from 'lucide-react';
 import styles from '@/components/command/command.module.css';
 import {
   Dialog,
-  DialogContent,
+  DialogContainer,
   DialogDescription,
   DialogHeader,
   DialogTitle,
@@ -29,13 +29,13 @@ function CommandDialog({
 }) {
   return (
     <Dialog {...props}>
-      <DialogHeader className={styles['command-dialog-header']}>
-        <DialogTitle>{title}</DialogTitle>
-        <DialogDescription>{description}</DialogDescription>
-      </DialogHeader>
-      <DialogContent className={styles['command-dialog-content']}>
+      <DialogContainer>
+        <DialogHeader className={styles['command-dialog-header']}>
+          <DialogTitle>{title}</DialogTitle>
+          <DialogDescription>{description}</DialogDescription>
+        </DialogHeader>
         <Command className={styles['command-dialog-content-inner']}>{children}</Command>
-      </DialogContent>
+      </DialogContainer>
     </Dialog>
   );
 }
