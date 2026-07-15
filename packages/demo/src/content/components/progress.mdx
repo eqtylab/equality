@@ -10,7 +10,7 @@ import { Progress } from "@eqtylab/equality";
 
 Progress is a horizontal bar that communicates how far along a determinate task is — an upload, a multi-step flow, or a quota. It is built on [Radix UI Progress](https://www.radix-ui.com/primitives/docs/components/progress), so it exposes the correct progress roles and values to assistive technology.
 
-The fill is driven by the `value` prop (a percentage from 0 to 100), and its colour maps to a brand colour via the `color` prop. For an indeterminate or spinning state, use a [Spinner](spinner); for circular progress, see [Radial Graph](radial-graph).
+The fill is driven by the `value` prop (a percentage from 0 to 100), and its color maps to a brand color via the `color` prop. For an indeterminate or spinning state, use a [Spinner](spinner); for circular progress, see [Radial Graph](radial-graph).
 
 ## Usage
 
@@ -42,7 +42,7 @@ Basic usage — pass a `value` between 0 and 100:
 
 ## Color Variants
 
-The `color` prop maps the bar to a brand colour — `primary` (default), `secondary`, `green`, `red`, and `yellow` — so you can distinguish progress by context.
+The `color` prop maps the bar to a brand color — `primary` (default), `secondary`, `green`, `red`, and `yellow` — so you can distinguish progress by context.
 
 ### Primary (default)
 
@@ -81,4 +81,4 @@ Progress also accepts the underlying [Radix Progress Root](https://www.radix-ui.
 | Name    | Description                               | Type                                             | Default   | Required |
 | ------- | ----------------------------------------- | ------------------------------------------------ | --------- | -------- |
 | `value` | The completion percentage, from 0 to 100. | `number`                                         | —         | ❌       |
-| `color` | Brand colour of the progress fill.        | `primary`, `secondary`, `green`, `red`, `yellow` | `primary` | ❌       |
+| `color` | Brand color of the progress fill.         | `primary`, `secondary`, `green`, `red`, `yellow` | `primary` | ❌       |

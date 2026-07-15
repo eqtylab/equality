@@ -10,7 +10,7 @@ import { RadialGraph } from "@eqtylab/equality";
 
 Radial Graph shows a single percentage as a circular gauge, with a centered label and optional sub-label. It's built from radial bars that fill and animate to represent the value, making it well suited to compliance scores, completion rates, and other at-a-glance metrics.
 
-By default the label displays the rounded percentage, but you can override it with any text. The `variant` prop ties the colour to a status (success, danger, warning), so the value's meaning reads at a glance. For a simple linear bar, use [Progress](progress) instead.
+By default the label displays the rounded percentage, but you can override it with any text. The `variant` prop ties the color to a status (success, danger, warning), so the value's meaning reads at a glance. For a simple linear bar, use [Progress](progress) instead.
 
 ## Usage
 
@@ -81,7 +81,7 @@ Three sizes are available; `md` is the default.
 
 ## Variants
 
-The `variant` prop sets the fill colour. Use `primary` (default) for a plain metric, or `success`/`danger`/`warning` to give the value meaning.
+The `variant` prop sets the fill color. Use `primary` (default) for a plain metric, or `success`/`danger`/`warning` to give the value meaning.
 
 ### Primary (default)
 
@@ -116,4 +116,4 @@ The `variant` prop sets the fill colour. Use `primary` (default) for a plain met
 | `displayLabel` | Text shown in the center, replacing the percentage.                     | `string`                                  | `"{percentage}%"` | ❌       |
 | `subLabel`     | Secondary text shown beneath the label.                                 | `string`                                  | —                 | ❌       |
 | `graphSize`    | The size of the graph.                                                  | `sm`, `md`, `lg`                          | `md`              | ❌       |
-| `variant`      | The fill colour, communicating status or tone.                          | `primary`, `success`, `danger`, `warning` | `primary`         | ❌       |
+| `variant`      | The fill color, communicating status or tone.                           | `primary`, `success`, `danger`, `warning` | `primary`         | ❌       |
