@@ -67,6 +67,22 @@ export function SelectDemo({
           <SelectItem value="option12">Option 12</SelectItem>
           <SelectItem value="option13">Option 13</SelectItem>
           <SelectItem value="option14">Option 14</SelectItem>
+          <SelectItem value="option15">Option 15</SelectItem>
+          <SelectItem value="option16">Option 16</SelectItem>
+          <SelectItem value="option17">Option 17</SelectItem>
+          <SelectItem value="option18">Option 18</SelectItem>
+          <SelectItem value="option19">Option 19</SelectItem>
+          <SelectItem value="option20">Option 20</SelectItem>
+          <SelectItem value="option21">Option 21</SelectItem>
+          <SelectItem value="option22">Option 22</SelectItem>
+          <SelectItem value="option23">Option 23</SelectItem>
+          <SelectItem value="option24">Option 24</SelectItem>
+          <SelectItem value="option25">Option 25</SelectItem>
+          <SelectItem value="option26">Option 26</SelectItem>
+          <SelectItem value="option27">Option 27</SelectItem>
+          <SelectItem value="option28">Option 28</SelectItem>
+          <SelectItem value="option29">Option 29</SelectItem>
+          <SelectItem value="option30">Option 30</SelectItem>
         </SelectContent>
       </Select>
     );

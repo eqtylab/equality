@@ -1,33 +1,78 @@
 ---
 layout: "@demo/layouts/mdx-layout.astro"
 heading: "Select"
-description: "Select with sizes and variants"
+description: "Dropdown for choosing one option from a list"
 ---
 
 import { SelectDemo } from "@demo/components/demo/select";
 import { ELEVATION } from "@eqtylab/equality";
 
+## Overview
+
+Select lets users choose a single option from a dropdown list. It's built on [Radix UI Select](https://www.radix-ui.com/primitives/docs/components/select), so it's fully keyboard accessible (type-ahead, arrow keys, <kbd>Esc</kbd>), manages focus, and exposes the right roles to assistive technology. Long lists scroll within the popover.
+
+It is a compound component: a `Select` root wraps a `SelectTrigger` (showing the current `SelectValue`) and a `SelectContent` holding the `SelectItem`s. Use it for choosing from a moderate set of options; for free-text entry use an [Input](input), and for a lightweight filter with counts use a [Radio Dropdown](radio-dropdown).
+
+## Usage
+
+Import the parts you need:
+
+```tsx
+import {
+  Select,
+  SelectTrigger,
+  SelectValue,
+  SelectContent,
+  SelectItem,
+} from "@eqtylab/equality";
+```
+
+Compose a controlled select. `SelectValue`'s `placeholder` shows before a choice is made:
+
+```tsx
+const [value, setValue] = useState("");
+
+<Select value={value} onValueChange={setValue}>
+  <SelectTrigger id="fruit">
+    <SelectValue placeholder="Select an option" />
+  </SelectTrigger>
+  <SelectContent>
+    <SelectItem value="apple">Apple</SelectItem>
+    <SelectItem value="orange">Orange</SelectItem>
+    <SelectItem value="pear">Pear</SelectItem>
+  </SelectContent>
+</Select>;
+```
+
+Select can be controlled (`value` + `onValueChange`) or uncontrolled (`defaultValue`). Pair the trigger with a [Label](label) via `id`/`htmlFor` for an accessible caption.
+
 ## Variants
 
-### Default Select
+### Default
 
 <SelectDemo client:only="react" />
 
-### Disabled Select
+### Disabled
+
+Set `disabled` on the `Select` root to disable the whole control.
 
 <SelectDemo client:only="react" variant="disabled" />
 
-### Pre-selected Select
+### Pre-selected
+
+Use `defaultValue` on the root to start with an option chosen. Long lists scroll within the popover.
 
 <SelectDemo client:only="react" variant="pre-selected" />
 
 ## Elevations
 
+Set the `elevation` prop on `SelectContent` to place the dropdown on the elevation scale. `overlay` is the default.
+
 ### Sunken
 
 <SelectDemo client:only="react" elevation={ELEVATION.SUNKEN} />
 
-### Base (default)
+### Base
 
 <SelectDemo client:only="react" elevation={ELEVATION.BASE} />
 
@@ -35,6 +80,42 @@ import { ELEVATION } from "@eqtylab/equality";
 
 <SelectDemo client:only="react" elevation={ELEVATION.RAISED} />
 
-### Overlay
+### Overlay (default)
 
 <SelectDemo client:only="react" elevation={ELEVATION.OVERLAY} />
+
+### Usage
+
+```tsx
+import { ELEVATION } from "@eqtylab/equality";
+
+<SelectContent elevation={ELEVATION.RAISED}>…</SelectContent>;
+```
+
+## Slots
+
+| Name              | Description                                                            |
+| ----------------- | ---------------------------------------------------------------------- |
+| `Select`          | The root that manages selection state. Owns `value`/`onValueChange`.   |
+| `SelectTrigger`   | The button that opens the dropdown and displays the value.             |
+| `SelectValue`     | Renders the selected value, or a `placeholder` when nothing is chosen. |
+| `SelectContent`   | The dropdown popover holding the options. Owns `elevation`.            |
+| `SelectItem`      | A selectable option. Requires a `value`.                               |
+| `SelectGroup`     | Groups related items.                                                  |
+| `SelectLabel`     | A heading for a group of items.                                        |
+| `SelectSeparator` | A divider between items or groups.                                     |
+
+## Props
+
+The parts forward their [Radix Select](https://www.radix-ui.com/primitives/docs/components/select) props (and `className`). The most commonly used are below.
+
+| Name            | Applies to      | Description                                           | Type                                  | Default   |
+| --------------- | --------------- | ----------------------------------------------------- | ------------------------------------- | --------- |
+| `value`         | `Select`        | The selected value (controlled).                      | `string`                              | —         |
+| `defaultValue`  | `Select`        | The initial selected value (uncontrolled).            | `string`                              | —         |
+| `onValueChange` | `Select`        | Called with the new value when the selection changes. | `(value: string) => void`             | —         |
+| `disabled`      | `Select`        | Disables the entire control.                          | `boolean`                             | `false`   |
+| `placeholder`   | `SelectValue`   | Text shown before a value is selected.                | `string`                              | —         |
+| `value`         | `SelectItem`    | The value this item represents. Required per item.    | `string`                              | —         |
+| `disabled`      | `SelectItem`    | Disables just this option.                            | `boolean`                             | `false`   |
+| `elevation`     | `SelectContent` | Position of the dropdown on the elevation scale.      | `sunken`, `base`, `raised`, `overlay` | `overlay` |

@@ -1,10 +1,63 @@
 ---
 layout: "@demo/layouts/mdx-layout.astro"
 heading: "Page Not Found"
+description: "Full-page 404 state with a return-home action"
 ---
 
 import { NotFound } from "@eqtylab/equality";
 
+## Overview
+
+Page Not Found is a ready-made 404 state for routes and resources that don't exist. It presents an alert icon, a heading, a description, and — by default — a "Return Home" button, so you can drop it into a catch-all route with no configuration.
+
+Every piece of copy and the action are customisable: override the `title` and `description` if needed, and provide an `onHomeClick` handler to integrate with your router instead of the default full-page navigation to `/`.
+
+## Usage
+
+Import the component:
+
+```tsx
+import { NotFound } from "@eqtylab/equality";
+```
+
+Basic usage — renders with sensible defaults:
+
+```tsx
+<NotFound />
+```
+
+By default the home button navigates to `/` with a full page load. Pass `onHomeClick` to hook into client-side routing instead:
+
+```tsx
+import { useNavigate } from "react-router";
+
+const navigate = useNavigate();
+
+<NotFound onHomeClick={() => navigate("/")} />;
+```
+
 ## Default
 
 <NotFound client:only="react" />
+
+## Custom Content
+
+Override the `title` and `description`, and hide the button with `showHomeButton={false}` when a return action isn't appropriate.
+
+```tsx
+<NotFound
+  title="We couldn't find that report"
+  description="It may have been deleted or the link is out of date."
+  showHomeButton={false}
+/>
+```
+
+## Props
+
+| Name             | Description                                                 | Type         | Default                                                                      | Required |
+| ---------------- | ----------------------------------------------------------- | ------------ | ---------------------------------------------------------------------------- | -------- |
+| `title`          | The heading text.                                           | `string`     | `"Oops! Page Not Found"`                                                     | ❌       |
+| `description`    | The supporting text shown beneath the title.                | `string`     | `"The page or resource you're looking for doesn't exist or has been moved."` | ❌       |
+| `showHomeButton` | Whether to render the "Return Home" button.                 | `boolean`    | `true`                                                                       | ❌       |
+| `onHomeClick`    | Handler for the home button. Defaults to navigating to `/`. | `() => void` | navigates to `/`                                                             | ❌       |
+| `className`      | Additional CSS classes applied to the container.            | `string`     | —                                                                            | ❌       |

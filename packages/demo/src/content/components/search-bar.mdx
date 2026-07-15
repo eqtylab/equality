@@ -1,11 +1,62 @@
 ---
 layout: "@demo/layouts/mdx-layout.astro"
 heading: "Search Bar"
-description: "Search Bar with sizes and variants"
+description: "Text input for searching or filtering"
 ---
 
 import { SearchBarDemo } from "@demo/components/demo/search-bar";
 
+## Overview
+
+Search Bar is a purpose-built [Input](input) for searching and filtering. It shows a leading search icon and, once text is entered, a trailing clear button that empties the field. It renders inside a semantic `<search>` landmark, so assistive technology can identify it as the page's search region.
+
+It is a controlled component: you pass the query string with `searchQuery`, updating it from `setSearchQuery` on every change. This makes it easy to drive live filtering or debounce the value before querying.
+
+## Usage
+
+Import the component:
+
+```tsx
+import { SearchBar } from "@eqtylab/equality";
+```
+
+Hold the query in state and pass it back through `setSearchQuery`:
+
+```tsx
+const [searchQuery, setSearchQuery] = useState("");
+
+<SearchBar searchQuery={searchQuery} setSearchQuery={setSearchQuery} />;
+```
+
+Then filter your data from `searchQuery`:
+
+```tsx
+const results = items.filter((item) =>
+  item.name.toLowerCase().includes(searchQuery.toLowerCase()),
+);
+```
+
 ## Default
 
 <SearchBarDemo client:only="react" />
+
+## Custom Placeholder
+
+The placeholder defaults to "Search...". Override it with the `placeholder` prop to hint at what's being searched.
+
+```tsx
+<SearchBar
+  searchQuery={searchQuery}
+  setSearchQuery={setSearchQuery}
+  placeholder="Search policies..."
+/>
+```
+
+## Props
+
+| Name             | Description                                                      | Type                      | Default       | Required |
+| ---------------- | ---------------------------------------------------------------- | ------------------------- | ------------- | -------- |
+| `searchQuery`    | The current search value (controlled).                           | `string`                  | —             | ✅       |
+| `setSearchQuery` | Called with the new value on change, and with `""` when cleared. | `(query: string) => void` | —             | ✅       |
+| `placeholder`    | Placeholder text for the input.                                  | `string`                  | `"Search..."` | ❌       |
+| `className`      | Additional CSS classes applied to the container.                 | `string`                  | —             | ❌       |

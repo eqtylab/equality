@@ -1,11 +1,36 @@
 ---
 layout: "@demo/layouts/mdx-layout.astro"
 heading: "Panel Label"
-description: "Panel Label with sizes and variants"
+description: "Small heading label for a panel section"
 ---
 
 import { PanelLabel } from "@eqtylab/equality";
 
+## Overview
+
+Panel Label is a small, understated heading for labelling a section of a panel, sidebar, or column of controls. It gives grouped content a consistent caption without the weight of a full [Heading](heading) — use it for column titles, filter group labels, and other minor section markers.
+
+## Usage
+
+Import the component:
+
+```tsx
+import { PanelLabel } from "@eqtylab/equality";
+```
+
+Basic usage — `label` is required:
+
+```tsx
+<PanelLabel label="Panel label" />
+```
+
 ## Default
 
 <PanelLabel label="Panel label" />
+
+## Props
+
+| Name        | Description                                  | Type     | Default | Required |
+| ----------- | -------------------------------------------- | -------- | ------- | -------- |
+| `label`     | The text shown as the label.                 | `string` | —       | ✅       |
+| `className` | Additional CSS classes applied to the label. | `string` | —       | ❌       |

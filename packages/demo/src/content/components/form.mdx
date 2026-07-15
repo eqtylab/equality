@@ -1,10 +1,65 @@
 ---
 layout: "@demo/layouts/mdx-layout.astro"
 heading: "Form"
-description: "Form components built on top of react-hook-form"
+description: "Accessible form primitives built on react-hook-form"
 ---
 
 import { FormDemo } from "@demo/components/demo/form";
+
+## Overview
+
+Form is a set of composable primitives that connect your fields to [react-hook-form](https://react-hook-form.com/) while wiring up the accessibility relationships between labels, controls, descriptions, and error messages for you.
+
+Each field is wrapped in a `FormField` (a typed `Controller`) and a `FormItem`, which generates the `id`s that link a [Label](label), the control, its description, and its validation message via `htmlFor` and `aria-describedby`. When a field has an error, the label takes on an error style and the control receives `aria-invalid`, so validation state is conveyed to assistive technology automatically.
+
+The primitives are unstyled containers around your own inputs — pair them with [Input](input), [Textarea](textarea), [Select](select), [Checkbox](checkbox), and other controls.
+
+## Usage
+
+Import the primitives you need:
+
+```tsx
+import {
+  Form,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormControl,
+  FormDescription,
+  FormMessage,
+} from "@eqtylab/equality";
+```
+
+Create a form with `useForm`, spread it into `Form`, and compose each field:
+
+```tsx
+import { useForm } from "react-hook-form";
+
+const form = useForm({ defaultValues: { username: "" } });
+
+<Form {...form}>
+  <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+    <FormField
+      control={form.control}
+      name="username"
+      rules={{ required: "Username is required" }}
+      render={({ field }) => (
+        <FormItem>
+          <FormLabel>Username</FormLabel>
+          <FormControl>
+            <Input placeholder="Enter username" {...field} />
+          </FormControl>
+          <FormDescription>Your public display name.</FormDescription>
+          <FormMessage />
+        </FormItem>
+      )}
+    />
+    <Button type="submit">Submit</Button>
+  </form>
+</Form>;
+```
+
+`FormControl` wraps a single form control and forwards the accessibility attributes to it via a [Radix Slot](https://www.radix-ui.com/primitives/docs/utilities/slot), so the child must accept a `ref` and standard input props. `FormMessage` renders the field's validation error automatically — you can also pass custom children, and it renders nothing when there is no message.
 
 ## Examples
 
@@ -14,8 +69,75 @@ import { FormDemo } from "@demo/components/demo/form";
 
 ### Form with Validation Errors
 
+Validation rules are declared on `FormField` via `rules`. When validation fails, `FormMessage` displays the error and the label switches to its error style.
+
 <FormDemo client:only="react" variant="with-errors" />
 
 ### Form with Description
 
+`FormDescription` renders helper text that is linked to the control through `aria-describedby`.
+
 <FormDemo client:only="react" variant="with-description" />
+
+## Custom Field Parts
+
+The built-in parts cover most needs, but you can build your own with the exported `useFormField()` hook. Called inside a `FormField`, it returns the current field's linking `id`s and its react-hook-form state (`error`, `isDirty`, `isTouched`, and so on), so a custom part can react to validation without prop-drilling.
+
+For example, a status icon that appears once the field has been edited:
+
+```tsx
+import { useFormField } from "@eqtylab/equality";
+import { Check, TriangleAlert } from "lucide-react";
+
+function FieldStatus() {
+  const { error, isDirty } = useFormField();
+
+  if (!isDirty) return null;
+
+  return error ? (
+    <TriangleAlert className="text-text-failure" />
+  ) : (
+    <Check className="text-text-success" />
+  );
+}
+```
+
+Drop it inside a `FormItem`, alongside the other parts:
+
+```tsx
+<FormItem>
+  <FormLabel>Email</FormLabel>
+  <FormControl>
+    <Input type="email" {...field} />
+  </FormControl>
+  <FieldStatus />
+  <FormMessage />
+</FormItem>
+```
+
+`useFormField()` only works inside a `FormField` (it reads the field via context) and throws otherwise.
+
+## Slots
+
+Compose a form from the following parts:
+
+| Name              | Description                                                                                           |
+| ----------------- | ----------------------------------------------------------------------------------------------------- |
+| `Form`            | Provider that shares the `useForm` instance with the fields. Spread your `form` object onto it.       |
+| `FormField`       | Connects a named field to react-hook-form. Wraps a `Controller`; use its `render` prop for the field. |
+| `FormItem`        | Groups a single field's parts and generates the linking `id`s.                                        |
+| `FormLabel`       | Label for the control. Automatically targets the control and reflects error state.                    |
+| `FormControl`     | Wraps the actual input, forwarding `id`, `aria-describedby`, and `aria-invalid`.                      |
+| `FormDescription` | Helper text linked to the control via `aria-describedby`.                                             |
+| `FormMessage`     | Displays the field's validation error (or custom children); renders nothing when empty.               |
+
+## Props
+
+`Form` receives the object returned by `useForm`. `FormField` forwards all [react-hook-form `Controller`](https://react-hook-form.com/docs/usecontroller/controller) props; the most commonly used are listed below. The remaining parts accept standard element attributes plus `className`.
+
+| Name      | Applies to  | Description                                                               | Type                                      | Required |
+| --------- | ----------- | ------------------------------------------------------------------------- | ----------------------------------------- | -------- |
+| `control` | `FormField` | The `control` object from `useForm`.                                      | `Control`                                 | ✅       |
+| `name`    | `FormField` | The field name; must match a key in your form values.                     | `string`                                  | ✅       |
+| `render`  | `FormField` | Render function receiving `field` (and `fieldState`) to render the input. | `({ field, fieldState }) => ReactElement` | ✅       |
+| `rules`   | `FormField` | Validation rules applied to the field.                                    | `RegisterOptions`                         | ❌       |

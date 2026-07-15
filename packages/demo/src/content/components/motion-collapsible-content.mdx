@@ -1,10 +1,44 @@
 ---
 layout: "@demo/layouts/mdx-layout.astro"
 heading: "Motion Collapsible Content"
+description: "Animated container that expands and collapses its content"
 ---
 
 import { MotionCollapsibleContentDemo } from "@demo/components/demo/motion-collapsible-content";
 
+## Overview
+
+Motion Collapsible Content smoothly expands and collapses a region of content, animating both its height and opacity. It measures its children (and re-measures them as they change) so the open animation always transitions to the correct height, even for dynamic content.
+
+Its open state is fully controlled through the `isOpen` prop — pair it with your own trigger (such as a [Button](button)) that toggles the state. Use it for show/more panels, expandable rows, and inline disclosure sections. It is built on [Motion](https://motion.dev/), so the animation respects the transition timing defined by the component.
+
+## Usage
+
+Import the component:
+
+```tsx
+import { MotionCollapsibleContent } from "@eqtylab/equality";
+```
+
+Drive `isOpen` from state and toggle it with a trigger:
+
+```tsx
+const [isOpen, setIsOpen] = useState(false);
+
+<Button onClick={() => setIsOpen((open) => !open)}>Toggle</Button>
+<MotionCollapsibleContent isOpen={isOpen}>
+  <p>Content revealed when open.</p>
+</MotionCollapsibleContent>;
+```
+
 ## Default
 
 <MotionCollapsibleContentDemo client:only="react" />
+
+## Props
+
+| Name        | Description                                                       | Type        | Default | Required |
+| ----------- | ----------------------------------------------------------------- | ----------- | ------- | -------- |
+| `isOpen`    | Whether the content is expanded. Toggling it animates the change. | `boolean`   | —       | ✅       |
+| `children`  | The content to reveal when open.                                  | `ReactNode` | —       | ✅       |
+| `className` | Additional CSS classes applied to the animated container.         | `string`    | —       | ❌       |

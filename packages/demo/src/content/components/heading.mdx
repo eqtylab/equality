@@ -1,17 +1,66 @@
 ---
 layout: "@demo/layouts/mdx-layout.astro"
 heading: "Heading"
-description: "Heading with sizes and variants"
+description: "Semantic heading with configurable visual level"
 ---
 
 import { HeadingDemo } from "@demo/components/demo/heading";
 
-## HTML headings
+## Overview
+
+Heading renders a semantic HTML heading (`h1`–`h6`) with the design system's typographic styling. It separates _meaning_ from _appearance_: the `as` prop sets the actual heading tag (for document structure and accessibility), while the optional `displayAs` prop lets you borrow the visual style of a different level without changing the underlying element.
+
+## Usage
+
+Import the component:
+
+```tsx
+import { Heading } from "@eqtylab/equality";
+```
+
+Basic usage — `as` is required and determines both the tag and its style:
+
+```tsx
+<Heading as="h1">Page title</Heading>
+```
+
+## HTML Headings
+
+Each level has its own type styling. Set `as` to the appropriate level for its place in the document outline.
 
 <HeadingDemo client:only="react" />
 
+### Usage
+
+```tsx
+<Heading as="h1">This is an h1 heading</Heading>
+<Heading as="h2">This is an h2 heading</Heading>
+<Heading as="h3">This is an h3 heading</Heading>
+<Heading as="h4">This is an h4 heading</Heading>
+<Heading as="h5">This is an h5 heading</Heading>
+<Heading as="h6">This is an h6 heading</Heading>
+```
+
 ## Display As
 
-Use `displayAs` to render a different semantic level while maintaining visual styling:
+Use `displayAs` to render one semantic level while applying the visual style of another. Here an `h3` is rendered with `h1` styling — the element stays an `<h3>` in the DOM, so the heading hierarchy is preserved while the text looks larger.
 
 <HeadingDemo as="h3" displayAs="h1" client:only="react" />
+
+### Usage
+
+```tsx
+<Heading as="h3" displayAs="h1">
+  This is an h3 styled as h1 heading
+</Heading>
+```
+
+## Props
+
+The component also accepts standard heading attributes (`id`, `className`, etc.).
+
+| Name        | Description                                                                               | Type                               | Default       | Required |
+| ----------- | ----------------------------------------------------------------------------------------- | ---------------------------------- | ------------- | -------- |
+| `as`        | The semantic HTML heading element to render. Drives both the tag and its default styling. | `h1`, `h2`, `h3`, `h4`, `h5`, `h6` | —             | ✅       |
+| `displayAs` | Visual style to apply instead of `as`'s. Does not change the rendered element.            | `h1`, `h2`, `h3`, `h4`, `h5`, `h6` | value of `as` | ❌       |
+| `children`  | The heading content.                                                                      | `ReactNode`                        | —             | ✅       |
