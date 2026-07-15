@@ -3,6 +3,7 @@
 .radial-graph {
   @apply relative;
   @apply aspect-square w-full;
+  @apply focus-ring;
 }
 
 .radial-graph.sm {

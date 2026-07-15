@@ -99,3 +99,29 @@ Documentation updates to apply after the accessibility work lands and feat/docs 
 
   Suggested addition: a short **Accessibility** section noting that errors announce
   automatically. No prop API changed — semantics only.
+
+## Radial Graph
+
+`packages/demo/src/content/components/radial-graph.mdx`
+
+- **Now exposes ARIA progressbar semantics.** The root carries `role="progressbar"`
+  with `aria-valuenow` / `aria-valuemin={0}` / `aria-valuemax={100}`, so the value is
+  real data to assistive tech. `aria-valuenow` is clamped to 0–100
+  (the bars still use the raw `percentage`). The bars and the visible
+  label are `aria-hidden` — they're surfaced through the ARIA name/value instead, so
+  nothing is read twice.
+- **It is now focusable.** The root is `tabIndex={0}` with the standard focus ring, so
+  keyboard and screen reader users can Tab straight to the value.
+- **`aria-label` is now accepted, and recommended.** `RadialGraphProps` extends
+  `HTMLAttributes<HTMLDivElement>`, so `aria-label` (and any other div prop) passes
+  through — previously it couldn't.
+
+  Suggested additions:
+  1. An **Accessibility** section recommending `aria-label` for a meaningful name:
+
+     > ```tsx
+     > <RadialGraph percentage={75} subLabel="Compliant" aria-label="Compliance score" />
+     > ```
+
+  2. The **Props** table should note `aria-label` is recommended, and that the component
+     accepts standard `div` attributes.
