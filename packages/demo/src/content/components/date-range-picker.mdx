@@ -10,10 +10,6 @@ import { DateRangePickerDemo } from "@demo/components/demo/date-range-picker";
 
 Date Range Picker lets users choose a start and end date from a calendar. It renders as a [Button](button) showing the current range, which opens a [Popover](popover) containing a month calendar with navigation.
 
-Selection is two-step: the first click sets the start date, the second sets the end date. If the second date falls before the first, the two are swapped automatically so the range always reads chronologically. Once a range is set, a clear (✕) button appears in the trigger to reset it.
-
-The component is fully controlled — you own the `dateRange` state and update it from the `onSelect` callback.
-
 ## Usage
 
 Import the component:

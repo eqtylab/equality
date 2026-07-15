@@ -10,7 +10,9 @@ import { IconButton } from "@eqtylab/equality";
 
 Icon Button is a compact, icon-only button for actions where a label would be redundant or space is tight — toolbars, table rows, and card headers. The icon is a [Lucide](https://lucide.dev/icons/) icon referenced by name.
 
-Because there is no visible text, the `label` prop is important: it sets the button's `aria-label` so screen reader users know what the action does. Always provide a `label` that describes the action (e.g. "Delete", not "Trash icon"). When an `href` is supplied, Icon Button renders as an anchor (`<a>`) instead of a `<button>`.
+Because there is no visible text, the `label` prop is important: it sets the button's `aria-label` so screen reader users know what the action does. Always provide a `label` that describes the action (e.g. "Delete", not "Trash icon"), except when Icon Button is wrapped in a [Tooltip](tooltip), where the tooltip content will be read aloud as context instead.
+
+When an `href` is supplied, Icon Button renders as an anchor (`<a>`) instead of a `<button>`.
 
 ## Usage
 

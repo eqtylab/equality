@@ -8,7 +8,7 @@ import { LoadingOverlayDemo } from "@demo/components/demo/loading-overlay";
 
 ## Overview
 
-Loading Overlay covers the interface with a dimmed backdrop and a centered [Spinner](spinner) and message, signalling that a blocking operation is in progress. Use it for actions the user should wait on — saving a form, running a process, loading a view — where interacting with the underlying content should be prevented until it completes.
+Loading Overlay covers the interface with a dimmed backdrop and a centered [Spinner](spinner) and message, signalling that a blocking operation is in progress. Use it for situations where interacting with the underlying content should be _entirely_ prevented until it completes. Try to avoid putting users in these situations where possible!
 
 Its visibility is fully controlled through the `isVisible` prop: when `false`, the component renders nothing. For skeleton-style, non-blocking loading of individual elements, use [Skeleton](skeleton) instead.
 

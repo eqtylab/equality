@@ -10,10 +10,6 @@ import { BgGradientDemo } from "@demo/components/demo/bg-gradient";
 
 The Background Gradient renders a slowly animating field of soft, blurred colour blobs onto a full-viewport `<canvas>`. It is intended as a decorative backdrop for hero sections, landing pages, and empty states, sitting behind foreground content.
 
-The gradient colour is driven directly by the brand colours in `equality-tokens.json`. The `theme` prop accepts any brand colour key (`primary`, `secondary`, `green`, `red`, `yellow`), and the component reads the corresponding hex value straight from the tokens — so any brand colours added in the future are picked up automatically. An unrecognised theme falls back to black.
-
-The `<canvas>` is sized to the window and positioned by its container, so place `BgGradient` inside a `relative`, sized wrapper.
-
 ## Usage
 
 Import the component:
@@ -32,7 +28,7 @@ Basic usage. `theme` is required; `placement` defaults to `"full"`. Wrap it in a
 
 ## Theme Variants
 
-Set the `theme` prop to any brand colour key to recolour the gradient.
+Set the `theme` prop to any brand colour key to recolor the gradient.
 
 ### Primary
 
@@ -66,7 +62,7 @@ Set the `theme` prop to any brand colour key to recolour the gradient.
 
 ## Placement Variants
 
-Use the `placement` prop to control where the blobs are distributed. `"full"` (the default) scatters four blobs around all four corners for total coverage, while `"top"` uses two blobs anchored near the top edge for a subtler decoration that leaves the lower area clear for content.
+Use the `placement` prop to control where the blobs are distributed. `"full"` (the default) scatters four blobs around all four corners, while `"top"` uses two blobs anchored near the top edge for a subtler decoration that leaves the lower area clear for content.
 
 ### Placement Full
 
