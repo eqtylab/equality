@@ -1,51 +1,87 @@
 ---
 layout: "@demo/layouts/mdx-layout.astro"
 heading: "Input"
-description: "Input with sizes and variants"
+description: "Single-line text input field"
 ---
 
 import React from "react";
 import { Input, IconButton } from "@eqtylab/equality";
 import { Search, Eye, Mail, Check, User } from "lucide-react";
 
-## Default
+## Overview
+
+Input is a single-line text field for collecting short values such as names, emails, passwords, and numbers. It wraps a native `<input>`, so it accepts all standard input attributes (`type`, `placeholder`, `value`, `disabled`, `min`/`max`, and so on) and forwards a `ref` to the underlying element.
+
+Beyond the native element, it adds `prefix` and `suffix` slots for placing an icon or other content inside the field — useful for a leading search icon or a trailing password-reveal toggle. Pair the input with a [Label](label) (via a shared `id`/`htmlFor`) so it has an accessible caption, or use it inside a [Form](form) field.
+
+## Usage
+
+Import the component:
+
+```tsx
+import { Input } from "@eqtylab/equality";
+```
+
+Basic usage:
+
+```tsx
+<Input type="text" placeholder="Enter text here..." />
+```
+
+Controlled, driving the value yourself:
+
+```tsx
+const [value, setValue] = useState("");
+
+<Input value={value} onChange={(e) => setValue(e.target.value)} />;
+```
+
+## States
+
+### Default
 
 <Input
   id="input-default"
   type="text"
   placeholder="Enter text here..."
-  value="Default input"
+  defaultValue="Default input"
 />
 
-## Disabled Input
+### Disabled
 
 <Input
   id="input-disabled"
   type="text"
   placeholder="Disabled input"
   disabled
-  value="Disabled value"
+  defaultValue="Disabled value"
 />
 
-## Error State Input
+### Error
+
+There is no dedicated error variant — apply error styling with `className`, or use [Form](form), which applies invalid styling automatically from validation state.
 
 <Input
   id="input-error"
   type="text"
   placeholder="Invalid input"
   className="border-red focus-visible:ring-red"
-  value="Invalid value"
+  defaultValue="Invalid value"
 />
 
-## Email Input
+## Input Types
+
+Because the underlying element is a native `<input>`, set the `type` prop to any standard value.
+
+### Email
 
 <Input id="input-email" type="email" placeholder="user@example.com" />
 
-## Password Input
+### Password
 
 <Input id="input-password" type="password" placeholder="Enter password" />
 
-## Number Input
+### Number
 
 <Input
   id="input-number"
@@ -55,7 +91,19 @@ import { Search, Eye, Mail, Check, User } from "lucide-react";
   max="100"
 />
 
-## With Prefix Icon
+### Usage
+
+```tsx
+<Input type="email" placeholder="user@example.com" />
+<Input type="password" placeholder="Enter password" />
+<Input type="number" min="0" max="100" />
+```
+
+## Prefix & Suffix
+
+Use the `prefix` and `suffix` props to render content inside the field, before or after the text. Any node works, though an icon is the most common.
+
+### With Prefix Icon
 
 {(() => {
 const searchIcon = React.createElement(Search);
@@ -83,7 +131,7 @@ return (
 </div>
 ); })()}
 
-## With Suffix Icon
+### With Suffix Icon
 
 {(() => {
 const eyeIcon = React.createElement(Eye);
@@ -101,7 +149,26 @@ return (
     type="text"
     placeholder="Verified input"
     suffix={React.createElement(Check)}
-    value="john@example.com"
+    defaultValue="john@example.com"
   />
 </div>
 ); })()}
+
+### Usage
+
+```tsx
+import { Search, Eye } from "lucide-react";
+
+<Input placeholder="Search..." prefix={<Search />} />
+<Input type="password" placeholder="Password" suffix={<Eye />} />
+```
+
+## Props
+
+Input accepts all standard `<input>` attributes (`type`, `placeholder`, `value`, `defaultValue`, `onChange`, `disabled`, `min`, `max`, etc.) in addition to the props below.
+
+| Name     | Description                                         | Type        | Default | Required |
+| -------- | --------------------------------------------------- | ----------- | ------- | -------- |
+| `prefix` | Content rendered inside the field, before the text. | `ReactNode` | —       | ❌       |
+| `suffix` | Content rendered inside the field, after the text.  | `ReactNode` | —       | ❌       |
+| `type`   | The native input type.                              | `string`    | `text`  | ❌       |

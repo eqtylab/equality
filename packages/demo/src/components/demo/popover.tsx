@@ -7,17 +7,21 @@ import {
 
 export function PopoverDemo({
   align = "center",
+  arrow = false,
 }: {
   align?: "start" | "end" | "center";
+  arrow?: boolean;
 }) {
   return (
-    <Popover>
-      <PopoverTrigger asChild>
-        <Button size="sm">Click me</Button>
-      </PopoverTrigger>
-      <PopoverContent align={align}>
-        <p>This is a popover</p>
-      </PopoverContent>
-    </Popover>
+    <div style={{ marginBottom: "1rem" }}>
+      <Popover>
+        <PopoverTrigger asChild>
+          <Button size="sm">Click me</Button>
+        </PopoverTrigger>
+        <PopoverContent align={align} arrow={arrow}>
+          <p>This is a popover</p>
+        </PopoverContent>
+      </Popover>
+    </div>
   );
 }

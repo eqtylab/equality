@@ -1,7 +1,7 @@
 ---
 layout: "@demo/layouts/mdx-layout.astro"
 heading: "Icon"
-description: "Icon with sizes and variants"
+description: "Renders a named icon at various sizes"
 ---
 
 import React from "react";
@@ -9,9 +9,31 @@ import { Icon } from "@eqtylab/equality";
 import { IconDemo } from "@demo/components/demo/icon";
 import { ELEVATION } from "@eqtylab/equality";
 
+## Overview
+
+Icon renders a graphic inside a consistently sized, optionally surfaced container. Pass a [Lucide](https://lucide.dev/icons/) icon name as a string, or provide your own SVG as a React element and Icon will size and style it to match. Use the `background` prop to place the icon on a square or circular surface, and the `elevation` prop to sit it on the elevation scale.
+
+Icons are decorative by default. When an icon conveys meaning on its own (for example a standalone status indicator), give the container an accessible label via `aria-label` and `role="img"`, or provide adjacent text. For an interactive, clickable icon, use [IconButton](icon-button) instead.
+
+## Usage
+
+Import the component:
+
+```tsx
+import { Icon } from "@eqtylab/equality";
+```
+
+Render a Lucide icon by name:
+
+```tsx
+<Icon icon="Shield" />
+```
+
+An unknown string throws `Icon "<name>" not found in lucide-react`, so make sure the name matches a Lucide icon exactly (PascalCase).
+
 ## Sizes
 
----
+The icon comes in four sizes. `md` is the default.
 
 ### Extra Small
 
@@ -29,9 +51,18 @@ import { ELEVATION } from "@eqtylab/equality";
 
 <Icon icon="Shield" size="lg" client:only="react" />
 
+### Usage
+
+```tsx
+<Icon icon="Shield" size="xs" />
+<Icon icon="Shield" size="sm" />
+<Icon icon="Shield" size="md" />
+<Icon icon="Shield" size="lg" />
+```
+
 ## Background
 
----
+The `background` prop places the icon on a surface. `transparent` (the default) renders the icon on its own; `square` and `circle` add a contained background.
 
 ### Transparent (default)
 
@@ -45,19 +76,47 @@ import { ELEVATION } from "@eqtylab/equality";
 
 <Icon icon="Shield" client:only="react" background="circle" />
 
-## Icons
+### Usage
 
----
+```tsx
+<Icon icon="Shield" background="transparent" />
+<Icon icon="Shield" background="square" />
+<Icon icon="Shield" background="circle" />
+```
+
+## Icons
 
 ### Lucide React
 
-<Icon icon="BadgeInfo" client:only="react" background="circle" />
+Reference any [Lucide](https://lucide.dev/icons/) icon by its PascalCase name.
+
+<div style={{ marginBottom: "1rem" }}>
+  <Icon icon="BadgeInfo" client:only="react" background="circle" />
+</div>
+
+```tsx
+<Icon icon="BadgeInfo" background="circle" />
+```
 
 ### Custom Icons
 
+Pass a React element to use your own SVG. Icon clones it and injects the sizing class, so your SVG should forward `className`.
+
 <IconDemo client:only="react" />
 
+```tsx
+const CustomIcon = ({ className, ...props }: React.SVGProps<SVGSVGElement>) => (
+  <svg viewBox="0 0 20 20" className={className} {...props}>
+    {/* … */}
+  </svg>
+);
+
+<Icon icon={<CustomIcon />} background="circle" />;
+```
+
 ## Elevations
+
+Use the `elevation` prop with the `ELEVATION` constant to place the icon's background on the elevation scale. `raised` is the default. Elevation is most visible with a `square` or `circle` background.
 
 ### Sunken
 
@@ -94,3 +153,14 @@ import { ELEVATION } from "@eqtylab/equality";
   background="square"
   elevation={ELEVATION.OVERLAY}
 />
+
+## Props
+
+The component also accepts standard `div` attributes (`className`, `aria-label`, etc.), which are applied to the container.
+
+| Name         | Description                                                                      | Type                                  | Default       | Required |
+| ------------ | -------------------------------------------------------------------------------- | ------------------------------------- | ------------- | -------- |
+| `icon`       | The icon to render: a Lucide icon name or a React element (your own SVG).        | `string`, `ReactElement`              | —             | ✅       |
+| `size`       | The size of the icon.                                                            | `xs`, `sm`, `md`, `lg`                | `md`          | ❌       |
+| `background` | The surface behind the icon.                                                     | `transparent`, `square`, `circle`     | `transparent` | ❌       |
+| `elevation`  | Position of the background on the elevation scale. Use the `ELEVATION` constant. | `sunken`, `base`, `raised`, `overlay` | `raised`      | ❌       |

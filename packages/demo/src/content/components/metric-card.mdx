@@ -1,10 +1,10 @@
 ---
 layout: "@demo/layouts/mdx-layout.astro"
 heading: "Metric Card"
-description: "Metric Card with sizes and variants"
+description: "Card surfacing a numeric metric with label and icon"
 ---
 
-import { MetricCard } from "@eqtylab/equality";
+import { MetricCard, ELEVATION } from "@eqtylab/equality";
 
 ## Overview
 
@@ -68,12 +68,65 @@ The `icon` prop is optional. Use it only when a descriptive icon makes sense to 
 <MetricCard label="Total" value={100} />
 ```
 
+## Elevations
+
+Use the `elevation` prop with the `ELEVATION` constant to place the card on the elevation scale. `raised` is the default.
+
+### Sunken
+
+<MetricCard
+  label="Total"
+  value={100}
+  icon="Layers"
+  elevation={ELEVATION.SUNKEN}
+/>
+
+### Base
+
+<MetricCard
+  label="Total"
+  value={100}
+  icon="Layers"
+  elevation={ELEVATION.BASE}
+/>
+
+### Raised (default)
+
+<MetricCard
+  label="Total"
+  value={100}
+  icon="Layers"
+  elevation={ELEVATION.RAISED}
+/>
+
+### Overlay
+
+<MetricCard
+  label="Total"
+  value={100}
+  icon="Layers"
+  elevation={ELEVATION.OVERLAY}
+/>
+
+### Usage
+
+```tsx
+import { MetricCard, ELEVATION } from "@eqtylab/equality";
+
+<MetricCard
+  label="Total"
+  value={100}
+  icon="Layers"
+  elevation={ELEVATION.SUNKEN}
+/>;
+```
+
 ## Props
 
 | Name        | Description                                                             | Type                                                 | Default   | Required |
 | ----------- | ----------------------------------------------------------------------- | ---------------------------------------------------- | --------- | -------- |
-| `value`     | The numeric or text value to display prominently on the card.           | `string` \| `number`                                 | -         | ✅       |
-| `label`     | Descriptive label shown beneath the value.                              | `string`                                             | -         | ✅       |
-| `icon`      | Icon to display. Can be a Lucide icon name or a custom React element.   | `string` \| `ReactElement`                           | -         | ❌       |
+| `value`     | The numeric or text value to display prominently on the card.           | `string`, `number`                                   | —         | ✅       |
+| `label`     | Descriptive label shown beneath the value.                              | `string`                                             | —         | ✅       |
+| `icon`      | Icon to display. Can be a Lucide icon name or a custom React element.   | `string`, `ReactElement`                             | —         | ❌       |
 | `variant`   | The visual style variant that communicates the metric's status or tone. | `default`, `primary`, `danger`, `success`, `warning` | `default` | ❌       |
-| `elevation` | Elevation level of the card surface.                                    | `sunken`, `base`, `raised`, `overlay`                | `raised`  | ❌       |
+| `elevation` | Position on the elevation scale. Use the `ELEVATION` constant.          | `sunken`, `base`, `raised`, `overlay`                | `raised`  | ❌       |

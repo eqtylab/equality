@@ -1,18 +1,48 @@
 ---
 layout: "@demo/layouts/mdx-layout.astro"
 heading: "Switch"
-description: "Switch with sizes and variants"
+description: "Toggle switch for on/off states"
 ---
 
 import { SwitchDemo } from "@demo/components/demo/switch";
 
-## Size Variants
+## Overview
+
+Switch is a toggle for a single on/off setting that takes effect immediately — like enabling a feature or notification. It's built on [Radix UI Switch](https://www.radix-ui.com/primitives/docs/components/switch), so it's keyboard accessible and exposes the correct toggle role and state to assistive technology.
+
+It comes in three sizes and a `danger` variant, and can show an icon on its thumb. Use a Switch for instant-effect settings; when a choice only applies after submitting a form, prefer a [Checkbox](checkbox). Pair it with a [Label](label) for an accessible caption.
+
+## Usage
+
+Import the component:
+
+```tsx
+import { Switch } from "@eqtylab/equality";
+```
+
+Controlled, driving the state yourself:
+
+```tsx
+const [enabled, setEnabled] = useState(false);
+
+<Switch checked={enabled} onCheckedChange={setEnabled} />;
+```
+
+Uncontrolled, with an initial state:
+
+```tsx
+<Switch defaultChecked />
+```
+
+## Sizes
+
+Three sizes are available; `md` is the default.
 
 ### Small
 
 <SwitchDemo client:only="react" variant="small" />
 
-### Medium (Default)
+### Medium (default)
 
 <SwitchDemo client:only="react" variant="medium" />
 
@@ -20,22 +50,21 @@ import { SwitchDemo } from "@demo/components/demo/switch";
 
 <SwitchDemo client:only="react" variant="large" />
 
-## With Thumb Icon
+### Usage
 
-<SwitchDemo
-  client:only="react"
-  thumbIcon="X"
-  thumbIconChecked="Check"
-  variant="default"
-/>
+```tsx
+<Switch size="sm" />
+<Switch size="md" />
+<Switch size="lg" />
+```
 
 ## States
 
-### Default Off
+### Off
 
 <SwitchDemo client:only="react" variant="default-off" />
 
-### Default On
+### On
 
 <SwitchDemo client:only="react" variant="default-on" />
 
@@ -47,12 +76,54 @@ import { SwitchDemo } from "@demo/components/demo/switch";
 
 <SwitchDemo client:only="react" variant="disabled-on" />
 
-## Variants
+## Color Variants
 
-### Default
-
-<SwitchDemo client:only="react" variant="default" />
-
-### Danger
+Use the `danger` variant for toggles with a destructive or high-risk consequence.
 
 <SwitchDemo client:only="react" variant="danger" />
+
+### Usage
+
+```tsx
+<Switch variant="default" />
+<Switch variant="danger" />
+```
+
+## Thumb Icon
+
+Set `thumbIcon` to render an icon on the switch thumb — a [Lucide](https://lucide.dev/icons/) icon name or a React element. The switch shows a single icon; to display a different icon per state, swap `thumbIcon` yourself based on `checked`.
+
+<SwitchDemo
+  client:only="react"
+  thumbIcon="X"
+  thumbIconChecked="Check"
+  variant="default"
+/>
+
+### Usage
+
+```tsx
+// Single icon
+<Switch thumbIcon="Check" defaultChecked />
+
+// Different icon per state
+<Switch
+  checked={enabled}
+  onCheckedChange={setEnabled}
+  thumbIcon={enabled ? "Check" : "X"}
+/>
+```
+
+## Props
+
+Switch also accepts the underlying [Radix Switch Root](https://www.radix-ui.com/primitives/docs/components/switch) props (`checked`, `onCheckedChange`, `defaultChecked`, `required`, `name`, `value`) and `className`.
+
+| Name              | Description                                                | Type                         | Default   | Required |
+| ----------------- | ---------------------------------------------------------- | ---------------------------- | --------- | -------- |
+| `checked`         | The controlled on/off state.                               | `boolean`                    | —         | ❌       |
+| `onCheckedChange` | Called with the new state when toggled.                    | `(checked: boolean) => void` | —         | ❌       |
+| `defaultChecked`  | The initial state when uncontrolled.                       | `boolean`                    | —         | ❌       |
+| `disabled`        | Prevents interaction and visually mutes the switch.        | `boolean`                    | `false`   | ❌       |
+| `size`            | The size of the switch.                                    | `sm`, `md`, `lg`             | `md`      | ❌       |
+| `variant`         | The visual style, communicating intent.                    | `default`, `danger`          | `default` | ❌       |
+| `thumbIcon`       | Icon shown on the thumb. A Lucide name or a React element. | `string`, `ReactElement`     | —         | ❌       |

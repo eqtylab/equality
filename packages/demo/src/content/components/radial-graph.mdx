@@ -1,22 +1,63 @@
 ---
 layout: "@demo/layouts/mdx-layout.astro"
 heading: "Radial Graph"
-description: "Radial Graph with sizes and variants"
+description: "Circular graph for progress or percentages"
 ---
 
 import { RadialGraph } from "@eqtylab/equality";
 
-## Text variants
+## Overview
+
+Radial Graph shows a single percentage as a circular gauge, with a centered label and optional sub-label. It's built from radial bars that fill and animate to represent the value, making it well suited to compliance scores, completion rates, and other at-a-glance metrics.
+
+By default the label displays the rounded percentage, but you can override it with any text. The `variant` prop ties the color to a status (success, danger, warning), so the value's meaning reads at a glance. For a simple linear bar, use [Progress](progress) instead.
+
+## Usage
+
+Import the component:
+
+```tsx
+import { RadialGraph } from "@eqtylab/equality";
+```
+
+Basic usage — `percentage` is required:
+
+```tsx
+<RadialGraph percentage={75} />
+```
+
+## Labels
+
+The center label defaults to the rounded `percentage`. Add a `subLabel` for context, or set `displayLabel` to replace the percentage text entirely.
 
 ### Default
 
 <RadialGraph percentage={100} />
 
-### With sub label
+### With Sub Label
 
 <RadialGraph percentage={75} subLabel="Compliant" />
 
+### Custom Display Label
+
+<RadialGraph
+  percentage={50}
+  displayLabel="Halfway"
+  subLabel="There"
+  graphSize="lg"
+/>
+
+### Usage
+
+```tsx
+<RadialGraph percentage={100} />
+<RadialGraph percentage={75} subLabel="Compliant" />
+<RadialGraph percentage={50} displayLabel="Halfway" subLabel="There" />
+```
+
 ## Graph Sizes
+
+Three sizes are available; `md` is the default.
 
 ### Small
 
@@ -30,18 +71,17 @@ import { RadialGraph } from "@eqtylab/equality";
 
 <RadialGraph percentage={60} graphSize="lg" />
 
-## Custom display label
+### Usage
 
-<RadialGraph
-  percentage={50}
-  displayLabel="Halfway"
-  subLabel="There"
-  graphSize="lg"
-/>
+```tsx
+<RadialGraph percentage={60} graphSize="sm" />
+<RadialGraph percentage={60} graphSize="md" />
+<RadialGraph percentage={60} graphSize="lg" />
+```
 
 ## Variants
 
-This component supports color variants using either the brand primary color or status options. Available variants are `primary` (brand primary color), `success`, `danger`, and `warning`. Use these to visually distinguish different types of radial graphs or their context according to your design needs.
+The `variant` prop sets the fill color. Use `primary` (default) for a plain metric, or `success`/`danger`/`warning` to give the value meaning.
 
 ### Primary (default)
 
@@ -58,3 +98,22 @@ This component supports color variants using either the brand primary color or s
 ### Warning
 
 <RadialGraph percentage={50} variant="warning" />
+
+### Usage
+
+```tsx
+<RadialGraph percentage={60} variant="primary" />
+<RadialGraph percentage={95} variant="success" />
+<RadialGraph percentage={10} variant="danger" />
+<RadialGraph percentage={50} variant="warning" />
+```
+
+## Props
+
+| Name           | Description                                                             | Type                                      | Default           | Required |
+| -------------- | ----------------------------------------------------------------------- | ----------------------------------------- | ----------------- | -------- |
+| `percentage`   | The value to display, from 0 to 100. Drives the fill and default label. | `number`                                  | —                 | ✅       |
+| `displayLabel` | Text shown in the center, replacing the percentage.                     | `string`                                  | `"{percentage}%"` | ❌       |
+| `subLabel`     | Secondary text shown beneath the label.                                 | `string`                                  | —                 | ❌       |
+| `graphSize`    | The size of the graph.                                                  | `sm`, `md`, `lg`                          | `md`              | ❌       |
+| `variant`      | The fill color, communicating status or tone.                           | `primary`, `success`, `danger`, `warning` | `primary`         | ❌       |

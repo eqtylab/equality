@@ -6,7 +6,6 @@ const generateItems = (count: number) => {
   return Array.from({ length: count }, (_, i) => ({
     id: i + 1,
     name: `Item ${i + 1}`,
-    description: `Description for item ${i + 1}`,
   }));
 };
 
@@ -38,12 +37,9 @@ export const PaginationDemo = () => {
         {paginatedItems.map((item) => (
           <div
             key={item.id}
-            className="border-border bg-muted/50 rounded-md border p-3"
+            className="border-border bg-muted/50 rounded-md border px-3 py-2"
           >
             <div className="font-medium">{item.name}</div>
-            <div className="text-text-secondary text-sm">
-              {item.description}
-            </div>
           </div>
         ))}
       </div>

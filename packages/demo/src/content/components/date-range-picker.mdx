@@ -1,11 +1,43 @@
 ---
 layout: "@demo/layouts/mdx-layout.astro"
 heading: "Date Range Picker"
-description: "Date Range Picker with sizes and variants"
+description: "Input for selecting a start and end date"
 ---
 
 import { DateRangePickerDemo } from "@demo/components/demo/date-range-picker";
 
+## Overview
+
+Date Range Picker lets users choose a start and end date from a calendar. It renders as a [Button](button) showing the current range, which opens a [Popover](popover) containing a month calendar with navigation.
+
+## Usage
+
+Import the component:
+
+```tsx
+import { DateRangePicker } from "@eqtylab/equality";
+```
+
+Hold the range in state and pass it back through `onSelect`:
+
+```tsx
+import { useState } from "react";
+
+const [dateRange, setDateRange] = useState<{ from?: Date; to?: Date }>({});
+
+<DateRangePicker dateRange={dateRange} onSelect={setDateRange} />;
+```
+
+Both `from` and `to` are optional `Date` objects. `from` is normalized to the start of the day (`00:00:00`) and `to` to the end of the day (`23:59:59`), so a completed range covers both selected days in full.
+
 ## Default
 
 <DateRangePickerDemo client:only="react" />
+
+## Props
+
+| Name        | Description                                                                           | Type                                          | Default | Required |
+| ----------- | ------------------------------------------------------------------------------------- | --------------------------------------------- | ------- | -------- |
+| `dateRange` | The currently selected range. `{ from, to }` — both optional `Date` values.           | `{ from?: Date; to?: Date }`                  | —       | ✅       |
+| `onSelect`  | Called with the updated range whenever the user picks a date or clears the selection. | `(range: { from?: Date; to?: Date }) => void` | —       | ✅       |
+| `className` | Additional CSS classes applied to the trigger button.                                 | `string`                                      | —       | ❌       |

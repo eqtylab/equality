@@ -33,7 +33,7 @@ export const AvatarSizesDemo = ({
   const sizes = ["sm", "md", "lg", "xl"] as const;
   const labels = { sm: "SM", md: "MD", lg: "LG", xl: "XL" };
   return (
-    <div className="flex items-end gap-4">
+    <div className="mb-4 flex items-end gap-4">
       {sizes.map((s) => (
         <Avatar key={s} size={s} shape={shape}>
           <AvatarImage
@@ -55,7 +55,7 @@ export const AvatarShapeDemo = ({
   shape: "circle" | "square";
 }) => {
   return (
-    <div className="flex items-center gap-4">
+    <div className="mb-4 flex items-center gap-4">
       <Avatar shape={shape}>
         <AvatarFallback>RG</AvatarFallback>
       </Avatar>

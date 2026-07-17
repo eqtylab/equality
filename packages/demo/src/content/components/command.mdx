@@ -1,11 +1,108 @@
 ---
 layout: "@demo/layouts/mdx-layout.astro"
 heading: "Command"
-description: "Command with variants"
+description: "Searchable command palette for running commands"
 ---
 
 import { CommandDemo } from "@demo/components/demo/command";
 
+## Overview
+
+Command is a searchable, keyboard-navigable list for filtering and running commands or selecting from a set of options. It is built on [cmdk](https://cmdk.paco.me/), so typing in the input filters the list in real time, and the arrow keys plus <kbd>Enter</kbd> move through and select items.
+
+It is a compound component: compose a `Command` from an input, a list, groups, and items. Use it inline (as an embedded searchable list) or wrap it in `CommandDialog` to present it as a modal command palette.
+
+## Usage
+
+Import the parts you need:
+
+```tsx
+import {
+  Command,
+  CommandInput,
+  CommandList,
+  CommandEmpty,
+  CommandGroup,
+  CommandItem,
+} from "@eqtylab/equality";
+```
+
+A basic inline command list:
+
+```tsx
+<Command>
+  <CommandInput placeholder="Search repositories..." />
+  <CommandEmpty>No repositories found.</CommandEmpty>
+  <CommandGroup heading="Repositories">
+    <CommandItem value="option-1" onSelect={() => handleSelect("option-1")}>
+      Option 1
+    </CommandItem>
+    <CommandItem value="option-2" onSelect={() => handleSelect("option-2")}>
+      Option 2
+    </CommandItem>
+  </CommandGroup>
+</Command>
+```
+
 ## Default
 
 <CommandDemo client:only="react" />
+
+## As a Dialog
+
+Wrap the command list in `CommandDialog` to present it as a modal command palette — commonly opened with a keyboard shortcut such as <kbd>⌘K</kbd>. `CommandDialog` accepts the same `open`/`onOpenChange` props as [Dialog](dialog), plus an optional `title` and `description` (visually part of the dialog header and read by screen readers).
+
+```tsx
+import {
+  CommandDialog,
+  CommandInput,
+  CommandList,
+  CommandEmpty,
+  CommandGroup,
+  CommandItem,
+} from "@eqtylab/equality";
+
+const [open, setOpen] = useState(false);
+
+<CommandDialog open={open} onOpenChange={setOpen}>
+  <CommandInput placeholder="Type a command or search..." />
+  <CommandList>
+    <CommandEmpty>No results found.</CommandEmpty>
+    <CommandGroup heading="Actions">
+      <CommandItem onSelect={() => runAction()}>Run action</CommandItem>
+    </CommandGroup>
+  </CommandList>
+</CommandDialog>;
+```
+
+## Slots
+
+Compose a command interface from the following parts:
+
+| Name               | Description                                                                     |
+| ------------------ | ------------------------------------------------------------------------------- |
+| `Command`          | The root container that owns filtering and keyboard navigation.                 |
+| `CommandDialog`    | Wraps `Command` in a modal dialog for a command-palette experience.             |
+| `CommandInput`     | The search input; typing filters the list. Renders a leading search icon.       |
+| `CommandList`      | Scrollable container for the items.                                             |
+| `CommandEmpty`     | Content shown when no items match the current search.                           |
+| `CommandGroup`     | Groups related items under an optional `heading`.                               |
+| `CommandItem`      | A selectable row. Use `value` for filtering and `onSelect` to handle selection. |
+| `CommandSeparator` | A divider line between groups or items.                                         |
+| `CommandShortcut`  | Right-aligned text for showing an item's keyboard shortcut.                     |
+
+## Props
+
+Each part forwards its underlying `cmdk` props (and `className`). The most commonly used are listed below.
+
+| Name           | Applies to      | Description                                             | Type                      | Default                            |
+| -------------- | --------------- | ------------------------------------------------------- | ------------------------- | ---------------------------------- |
+| `value`        | `CommandItem`   | The value used for filtering and passed to `onSelect`.  | `string`                  | —                                  |
+| `onSelect`     | `CommandItem`   | Called when the item is selected via click or keyboard. | `(value: string) => void` | —                                  |
+| `disabled`     | `CommandItem`   | Prevents the item from being selected.                  | `boolean`                 | `false`                            |
+| `heading`      | `CommandGroup`  | Optional label rendered above the group's items.        | `string`                  | —                                  |
+| `placeholder`  | `CommandInput`  | Placeholder text for the search input.                  | `string`                  | —                                  |
+| `open`         | `CommandDialog` | Controls whether the dialog is open.                    | `boolean`                 | —                                  |
+| `onOpenChange` | `CommandDialog` | Called when the dialog requests to open or close.       | `(open: boolean) => void` | —                                  |
+| `title`        | `CommandDialog` | Accessible dialog title shown in the header.            | `string`                  | `"Command Palette"`                |
+| `description`  | `CommandDialog` | Accessible dialog description shown in the header.      | `string`                  | `"Search for a command to run..."` |

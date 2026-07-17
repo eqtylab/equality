@@ -1,14 +1,12 @@
 ---
 layout: "@demo/layouts/mdx-layout.astro"
 heading: "Code Block"
-description: "Code Block with sizes and variants"
+description: "Syntax-highlighted code display with status variants"
 ---
 
 import { CodeBlock } from "@eqtylab/equality";
 
 ## Overview
-
----
 
 The Code Block component comes with syntax highlighting and four color variants to visually communicate different statuses or contexts:
 
@@ -19,8 +17,6 @@ The Code Block component comes with syntax highlighting and four color variants 
 - **Success:** Highlights recommended or preferred code patterns.
 
 ## Usage
-
----
 
 Import the component:
 
@@ -48,8 +44,6 @@ console.log('Hello, world!');
 
 ## Code Language Support
 
----
-
 The Code Block component uses refractor and Prism for syntax highlighting. Most languages are supported - those that aren't will fallback to general `text` syntax highlighting.
 
 See [Refractor's readme](https://github.com/wooorm/refractor/blob/main/readme.md#data) for the full list of languages supported by this package (all languages in the list are supported - this package uses `refractor/all`).
@@ -63,8 +57,6 @@ For example:
 ```
 
 ## Color Variants
-
----
 
 Code blocks support color variants using either the brand primary color or status options. Available variants are `neutral`, `primary` (brand primary color), `success`, `danger`, and `warning`. Use these to visually distinguish different types of code or contexts according to your design needs.
 
@@ -178,8 +170,6 @@ client:only="react"
 
 ## Title
 
----
-
 The Code Block component supports arbitrary titles:
 
 <CodeBlock
@@ -190,8 +180,6 @@ The Code Block component supports arbitrary titles:
 />
 
 ## Code label
-
----
 
 The Code Block component supports arbitrary code labels:
 
@@ -204,8 +192,6 @@ The Code Block component supports arbitrary code labels:
 />
 
 ## Props
-
----
 
 | Prop        | Type                                                                   | Default     | Description                                                                           |
 | ----------- | ---------------------------------------------------------------------- | ----------- | ------------------------------------------------------------------------------------- |

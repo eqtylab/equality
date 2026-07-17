@@ -1,27 +1,74 @@
 ---
 layout: "@demo/layouts/mdx-layout.astro"
 heading: "Section Heading"
-description: "Section Heading with sizes and variants"
+description: "Section title with optional description and actions"
 ---
 
 import { SectionHeading, Button } from "@eqtylab/equality";
 import { UserPlus } from "lucide-react";
 import { SectionHeadingDemo } from "@demo/components/demo/section-heading";
 
+## Overview
+
+Section Heading introduces a section of a page or panel with a title, an optional supporting description, and optional actions aligned to the right. Use it above lists, tables, cards, and settings groups to give each section a consistent header with room for controls like a "Clear Filters" link or an "Add" button.
+
+The title renders as an `h3`. When right content is provided, the heading switches to a spread layout with the title/description on the left and the actions on the right.
+
+## Usage
+
+Import the component:
+
+```tsx
+import { SectionHeading } from "@eqtylab/equality";
+```
+
+Basic usage — `heading` is required:
+
+```tsx
+<SectionHeading heading="Project Members" />
+```
+
+Add actions with `renderRightContent`, a function that returns the nodes to place on the right:
+
+```tsx
+<SectionHeading
+  heading="Project Members"
+  description="Manage member access and roles for this project"
+  renderRightContent={() => (
+    <Button>
+      <UserPlus />
+      Add Member
+    </Button>
+  )}
+/>
+```
+
 ## Variants
 
 ### Default
 
-<SectionHeading heading="Filter Results" />
+<SectionHeading heading="Project Members" />
 
 ### With Description
 
-<SectionHeading heading="Filter Results" description="This is a description" />
+<SectionHeading
+  heading="Project Members"
+  description="Manage member access and roles for this project"
+/>
 
-### With right content
+### With Right Content
 
 <SectionHeadingDemo client:load />
 
-### With description and right content
+### With Description and Right Content
 
 <SectionHeadingDemo client:load withDescription />
+
+## Props
+
+| Name                 | Description                                                                 | Type              | Default | Required |
+| -------------------- | --------------------------------------------------------------------------- | ----------------- | ------- | -------- |
+| `heading`            | The section title, rendered as an `h3`.                                     | `string`          | —       | ✅       |
+| `description`        | Optional supporting text shown beneath the title.                           | `string`          | —       | ❌       |
+| `renderRightContent` | Function returning nodes (e.g. buttons) placed on the right of the heading. | `() => ReactNode` | —       | ❌       |
+| `className`          | Additional CSS classes applied to the container.                            | `string`          | —       | ❌       |

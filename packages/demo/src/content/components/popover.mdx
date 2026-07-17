@@ -1,19 +1,93 @@
 ---
 layout: "@demo/layouts/mdx-layout.astro"
 heading: "Popover"
-description: "Popover with sizes and variants"
+description: "Floating content anchored to a trigger element"
 ---
 
 import { PopoverDemo } from "@demo/components/demo/popover";
+
+## Overview
+
+Popover displays floating content anchored to a trigger, opening on click and closing on outside click or <kbd>Esc</kbd>. It's built on [Radix UI Popover](https://www.radix-ui.com/primitives/docs/components/popover), so it handles positioning, focus management, and keyboard interaction, and manages its own open state (it can also be controlled).
+
+Use it for rich, interactive overlays — filters, pickers, small forms, or menus of actions. For simple hover hints use a [Tooltip](tooltip); for a modal use a [Dialog](dialog). The content is rendered in a portal, so it escapes overflow clipping from ancestors.
+
+## Usage
+
+Import the parts:
+
+```tsx
+import { Popover, PopoverTrigger, PopoverContent } from "@eqtylab/equality";
+```
+
+Wrap a trigger and content in `Popover`. Use `asChild` on the trigger to render your own element (such as a [Button](button)) as the trigger:
+
+```tsx
+<Popover>
+  <PopoverTrigger asChild>
+    <Button size="sm">Click me</Button>
+  </PopoverTrigger>
+  <PopoverContent>
+    <p>This is a popover</p>
+  </PopoverContent>
+</Popover>
+```
 
 ## Default
 
 <PopoverDemo client:only="react" />
 
-## Align: start
+## Alignment
+
+Use the `align` prop on `PopoverContent` to align it against the trigger. `center` is the default; `start` and `end` align to the trigger's edges. Fine-tune the gap with `sideOffset`.
+
+### Align: start
 
 <PopoverDemo align="start" client:only="react" />
 
-## Align: end
+### Align: center (default)
+
+<PopoverDemo align="center" client:only="react" />
+
+### Align: end
 
 <PopoverDemo align="end" client:only="react" />
+
+### Usage
+
+```tsx
+<PopoverContent align="start">…</PopoverContent>
+<PopoverContent align="center">…</PopoverContent>
+<PopoverContent align="end">…</PopoverContent>
+```
+
+## Arrow
+
+Set `arrow` on `PopoverContent` to render a small pointer connecting the content to its trigger.
+
+<PopoverDemo arrow client:only="react" />
+
+```tsx
+<PopoverContent arrow>
+  <p>Popover with an arrow</p>
+</PopoverContent>
+```
+
+## Slots
+
+| Name             | Description                                                                  |
+| ---------------- | ---------------------------------------------------------------------------- |
+| `Popover`        | The root that manages open state. Wraps the trigger and content.             |
+| `PopoverTrigger` | The element that toggles the popover. Use `asChild` to use your own element. |
+| `PopoverContent` | The floating panel. Owns alignment, offset, and the optional arrow.          |
+
+## Props
+
+`Popover` and `PopoverTrigger` forward their [Radix](https://www.radix-ui.com/primitives/docs/components/popover) props (e.g. `open`, `onOpenChange`, `defaultOpen` on the root). The props most commonly set on `PopoverContent` are below.
+
+| Name         | Applies to       | Description                                                    | Type                     | Default  |
+| ------------ | ---------------- | -------------------------------------------------------------- | ------------------------ | -------- |
+| `align`      | `PopoverContent` | Alignment against the trigger.                                 | `start`, `center`, `end` | `center` |
+| `sideOffset` | `PopoverContent` | Distance in pixels between the content and the trigger.        | `number`                 | `4`      |
+| `arrow`      | `PopoverContent` | Renders a pointer arrow connecting the content to the trigger. | `boolean`                | `false`  |
+| `asChild`    | `PopoverTrigger` | Render the trigger as the child element instead of a `button`. | `boolean`                | `false`  |

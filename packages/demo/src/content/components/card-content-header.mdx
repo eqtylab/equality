@@ -1,7 +1,7 @@
 ---
 layout: "@demo/layouts/mdx-layout.astro"
 heading: "Card Content Header"
-description: "Card Content Header with sizes and variants"
+description: "Header row for card content with icon, heading, and action"
 ---
 
 import {
@@ -10,6 +10,28 @@ import {
   CardContent,
   CardDescription,
 } from "@eqtylab/equality";
+
+## Overview
+
+Card Content Header is a header row for the top of a card's content, pairing a circular icon with a heading and an optional "See All" action button. It is designed to sit inside [CardContent](card), giving grouped content a consistent title treatment.
+
+The component renders nothing unless a `heading` or an `onButtonClick` handler is provided. When `onButtonClick` is set, a tertiary "See All" button is shown and the layout adjusts to accommodate it.
+
+## Usage
+
+Import the component:
+
+```tsx
+import { CardContentHeader } from "@eqtylab/equality";
+```
+
+Basic usage with the required `icon` and a heading:
+
+```tsx
+<CardContentHeader icon="SquareChartGantt" heading="Activity Logs" />
+```
+
+The `icon` prop accepts either a [Lucide](https://lucide.dev/icons/) icon name or a React element, and is rendered inside a circular, elevated background.
 
 ## Variants
 
@@ -35,3 +57,28 @@ import {
     <CardDescription>Card with CardContentHeader</CardDescription>
   </CardContent>
 </Card>
+
+### Usage
+
+```tsx
+<Card>
+  <CardContent className="space-y-2">
+    <CardContentHeader
+      icon="SquareChartGantt"
+      heading="Activity Logs"
+      onButtonClick={() => handleSeeAll()}
+    />
+    <CardDescription>Card with CardContentHeader</CardDescription>
+  </CardContent>
+</Card>
+```
+
+## Props
+
+| Name            | Description                                                                               | Type                     | Default | Required |
+| --------------- | ----------------------------------------------------------------------------------------- | ------------------------ | ------- | -------- |
+| `icon`          | Icon shown in the circular background. A Lucide icon name or a React element.             | `string`, `ReactElement` | —       | ✅       |
+| `heading`       | Heading text rendered as an `h3`.                                                         | `string`                 | —       | ❌       |
+| `onButtonClick` | Handler for the "See All" button. Providing it renders the button and adjusts the layout. | `() => void`             | —       | ❌       |
+
+> **Note:** The component renders `null` when neither `heading` nor `onButtonClick` is provided, since there would be nothing meaningful to show.

@@ -1,19 +1,66 @@
 ---
 layout: "@demo/layouts/mdx-layout.astro"
 heading: "Separator"
-description: "Separator with sizes and variants"
+description: "Visual divider line, horizontal or vertical"
 ---
 
 import { Separator } from "@eqtylab/equality";
 
+## Overview
+
+Separator draws a thin dividing line to visually separate content or groups of controls. It's built on [Radix UI Separator](https://www.radix-ui.com/primitives/docs/components/separator) and can run horizontally (the default) or vertically.
+
+By default the separator is `decorative`, meaning it's purely visual and hidden from assistive technology. If the line represents a meaningful boundary between sections of content, set `decorative={false}` so it's exposed as a semantic separator to screen readers.
+
+## Usage
+
+Import the component:
+
+```tsx
+import { Separator } from "@eqtylab/equality";
+```
+
+Basic usage:
+
+```tsx
+<Separator />
+```
+
+A vertical separator needs a parent with height to be visible:
+
+```tsx
+<div className="flex h-12 items-center gap-4">
+  <span>Left</span>
+  <Separator orientation="vertical" />
+  <span>Right</span>
+</div>
+```
+
 ## Variants
 
-### Orientation: horizontal
+### Horizontal orientation (default)
 
 <Separator client:only="react" />
 
-### Orientation: vertical
+### Vertical orientation
 
 <div className="h-12">
   <Separator client:only="react" orientation="vertical" />
 </div>
+
+### Usage
+
+```tsx
+<Separator orientation="horizontal" />
+<Separator orientation="vertical" />
+```
+
+## Props
+
+Separator also accepts standard element attributes and `className`.
+
+| Name          | Description                                                                                                       | Type                     | Default      | Required |
+| ------------- | ----------------------------------------------------------------------------------------------------------------- | ------------------------ | ------------ | -------- |
+| `orientation` | The direction of the line.                                                                                        | `horizontal`, `vertical` | `horizontal` | ❌       |
+| `decorative`  | When `true`, the separator is purely visual and hidden from assistive tech. Set `false` for a meaningful divider. | `boolean`                | `true`       | ❌       |
+| `className`   | Additional CSS classes applied to the separator.                                                                  | `string`                 | —            | ❌       |
