@@ -25,7 +25,7 @@ type DropdownMenuSearchContextValue = {
   reveal: (seed: string) => void;
   query: string;
   setQuery: (value: string) => void;
-  /* Re focus the search input from outside DropdownMenuSearch */
+  /* Re-focus the search input from outside DropdownMenuSearch */
   focusSignal: number;
   requestFocus: () => void;
   /* Item registry, used for the optional empty state */
