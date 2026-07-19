@@ -229,7 +229,6 @@ export const DropdownMenuDemo = ({
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="start">
-            <DropdownMenuSearch placeholder="Search tools…" />
             <DropdownMenuItem>Back</DropdownMenuItem>
             <DropdownMenuItem>Forward</DropdownMenuItem>
             <DropdownMenuItem>Reload</DropdownMenuItem>
@@ -266,7 +265,6 @@ export const DropdownMenuDemo = ({
             </DropdownMenuSub>
             <DropdownMenuSeparator />
             <DropdownMenuItem>Settings</DropdownMenuItem>
-            <DropdownMenuEmpty>No results found</DropdownMenuEmpty>
           </DropdownMenuContent>
         </DropdownMenu>
       </div>
