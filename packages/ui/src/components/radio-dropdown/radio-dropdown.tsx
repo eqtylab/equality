@@ -34,9 +34,6 @@ interface RadioDropdownProps {
   emptyPlaceholder?: string;
 }
 
-/*
- * TODO: Add searchPlaceholder and emptyPlaceholder to the docs
- */
 const RadioDropdown = ({
   label,
   options,
