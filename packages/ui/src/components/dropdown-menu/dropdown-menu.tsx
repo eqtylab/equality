@@ -416,7 +416,11 @@ const DropdownMenuSearch = ({
 DropdownMenuSearch.displayName = 'DropdownMenuSearch';
 
 /*
- * Empty search state - renders only when a query doesn't match any items
+ * Empty search state - shows its message only when a query doesn't match any items
+ *
+ * The wrapper stays mounted (empty, unstyled, zero height) so screen readers have
+ * the live region in the tree before the message arrives - a region inserted with
+ * its text already in place is frequently missed
  */
 const DropdownMenuEmpty = ({
   className,
@@ -424,11 +428,19 @@ const DropdownMenuEmpty = ({
   ...props
 }: React.HTMLAttributes<HTMLDivElement>) => {
   const ctx = useDropdownMenuSearch();
-  const query = ctx?.query.trim() ?? '';
-  if (!ctx || !query || ctx.matchCount > 0) return null;
+  if (!ctx) return null;
+
+  const query = ctx.query.trim();
+  const isEmpty = !!query && ctx.matchCount === 0;
+
   return (
-    <div className={cn(styles['dropdown-menu-empty'], className)} {...props}>
-      {children}
+    <div
+      role="status"
+      aria-live="polite"
+      className={isEmpty ? cn(styles['dropdown-menu-empty'], className) : undefined}
+      {...props}
+    >
+      {isEmpty ? children : null}
     </div>
   );
 };
