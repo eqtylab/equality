@@ -1,7 +1,5 @@
 import { useState } from "react";
 import {
-  Avatar,
-  AvatarFallback,
   Button,
   DropdownMenu,
   DropdownMenuTrigger,
