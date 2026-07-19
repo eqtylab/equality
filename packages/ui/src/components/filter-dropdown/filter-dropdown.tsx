@@ -36,9 +36,6 @@ interface FilterDropdownProps {
   emptyPlaceholder?: string;
 }
 
-/*
- * TODO: Add searchPlaceholder and emptyPlaceholder to docs
- */
 const FilterDropdown = ({
   label,
   options,
