@@ -353,12 +353,13 @@ Flattening only works when `DropdownMenuSubContent` is placed directly inside `D
 
 Also accepts standard `input` attributes, except `value` and `onChange`, which are managed internally.
 
-| Name            | Description                                                       | Type        | Default     | Required |
-| --------------- | ----------------------------------------------------------------- | ----------- | ----------- | -------- |
-| `alwaysVisible` | Show the input immediately instead of revealing on first keypress | `boolean`   | `false`     | ❌       |
-| `placeholder`   | Placeholder text for the input                                    | `string`    | `Search...` | ❌       |
-| `icon`          | Custom leading icon; defaults to a search icon                    | `ReactNode` | -           | ❌       |
+| Name            | Description                                                       | Type        | Default       | Required |
+| --------------- | ----------------------------------------------------------------- | ----------- | ------------- | -------- |
+| `alwaysVisible` | Show the input immediately instead of revealing on first keypress | `boolean`   | `false`       | ❌       |
+| `placeholder`   | Placeholder text for the input                                    | `string`    | `Search...`   | ❌       |
+| `icon`          | Custom leading icon; defaults to a search icon                    | `ReactNode` | -             | ❌       |
+| `aria-label`    | Accessible name for the input; defaults to the `placeholder` text | `string`    | `placeholder` | ❌       |
 
 ### DropdownMenuEmpty
 
-Renders its `children` as a "no results" message, shown only while a search query matches no items. Also accepts standard `div` attributes.
+Renders its `children` as a "no results" message, shown only while a search query matches no items. It is a live region (`role="status"`), so the message is announced when filtering empties the list. Also accepts standard `div` attributes.

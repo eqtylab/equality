@@ -333,6 +333,8 @@ const DropdownMenuSearch = ({
   /* Render the input immediately instead of revealing on first keypress */
   alwaysVisible = false,
   onKeyDown,
+  /* Pulled out of props so the placeholder fallback below isn't overwritten by the spread */
+  'aria-label': ariaLabel,
   ...props
 }: Omit<React.InputHTMLAttributes<HTMLInputElement>, 'value' | 'onChange'> & {
   icon?: React.ReactNode;
@@ -378,6 +380,7 @@ const DropdownMenuSearch = ({
         className={cn(styles['dropdown-menu-search-input'], className)}
         value={ctx.query}
         placeholder={placeholder}
+        aria-label={ariaLabel ?? placeholder}
         onChange={(event) => ctx.setQuery(event.target.value)}
         onKeyDown={(event) => {
           onKeyDown?.(event);
