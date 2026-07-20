@@ -207,7 +207,7 @@ By default the search box is hidden and reveals as soon as you start typing — 
     <Icon icon="User" />
     <span>Ada Lovelace</span>
   </DropdownMenuItem>
-  {/* …more members… */}
+  {/* ...more members... */}
   <DropdownMenuEmpty>No members found</DropdownMenuEmpty>
 </DropdownMenuContent>
 ```
@@ -220,7 +220,7 @@ Pass `alwaysVisible` to show the search box the moment the menu opens instead of
 
 ```jsx
 <DropdownMenuContent align="start">
-  <DropdownMenuSearch alwaysVisible placeholder="Search columns…" />
+  <DropdownMenuSearch alwaysVisible placeholder="Search columns..." />
   <DropdownMenuLabel>Toggle columns</DropdownMenuLabel>
   <DropdownMenuCheckboxItem
     checked={columns.email}
@@ -229,7 +229,7 @@ Pass `alwaysVisible` to show the search box the moment the menu opens instead of
   >
     Email
   </DropdownMenuCheckboxItem>
-  {/* …more columns… */}
+  {/* ...more columns... */}
   <DropdownMenuEmpty>No columns found</DropdownMenuEmpty>
 </DropdownMenuContent>
 ```
@@ -242,7 +242,7 @@ Items nested in a `DropdownMenuSub` are flattened into the main list while searc
 
 ```jsx
 <DropdownMenuContent align="start">
-  <DropdownMenuSearch placeholder="Search actions…" />
+  <DropdownMenuSearch placeholder="Search actions..." />
   <DropdownMenuItem>Cut</DropdownMenuItem>
   <DropdownMenuItem>Copy</DropdownMenuItem>
   <DropdownMenuItem>Paste</DropdownMenuItem>
@@ -353,11 +353,11 @@ Flattening only works when `DropdownMenuSubContent` is placed directly inside `D
 
 Also accepts standard `input` attributes, except `value` and `onChange`, which are managed internally.
 
-| Name            | Description                                                       | Type        | Default   | Required |
-| --------------- | ----------------------------------------------------------------- | ----------- | --------- | -------- |
-| `alwaysVisible` | Show the input immediately instead of revealing on first keypress | `boolean`   | `false`   | ❌       |
-| `placeholder`   | Placeholder text for the input                                    | `string`    | `Search…` | ❌       |
-| `icon`          | Custom leading icon; defaults to a search icon                    | `ReactNode` | -         | ❌       |
+| Name            | Description                                                       | Type        | Default     | Required |
+| --------------- | ----------------------------------------------------------------- | ----------- | ----------- | -------- |
+| `alwaysVisible` | Show the input immediately instead of revealing on first keypress | `boolean`   | `false`     | ❌       |
+| `placeholder`   | Placeholder text for the input                                    | `string`    | `Search...` | ❌       |
+| `icon`          | Custom leading icon; defaults to a search icon                    | `ReactNode` | -           | ❌       |
 
 ### DropdownMenuEmpty
 

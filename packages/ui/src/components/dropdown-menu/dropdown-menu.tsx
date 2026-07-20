@@ -328,7 +328,7 @@ DropdownMenuContent.displayName = DropdownMenuPrimitive.Content.displayName;
  */
 const DropdownMenuSearch = ({
   className,
-  placeholder = 'Search…',
+  placeholder = 'Search...',
   icon,
   /* Render the input immediately instead of revealing on first keypress */
   alwaysVisible = false,

@@ -355,7 +355,7 @@ export const DropdownMenuDemo = ({
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="start">
-            <DropdownMenuSearch alwaysVisible placeholder="Search columns…" />
+            <DropdownMenuSearch alwaysVisible placeholder="Search columns..." />
             <DropdownMenuLabel>Toggle columns</DropdownMenuLabel>
             {Object.entries(COLUMN_LABELS).map(([key, label]) => (
               <DropdownMenuCheckboxItem
@@ -386,7 +386,7 @@ export const DropdownMenuDemo = ({
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="start">
-            <DropdownMenuSearch placeholder="Search actions…" />
+            <DropdownMenuSearch placeholder="Search actions..." />
             <DropdownMenuItem>Cut</DropdownMenuItem>
             <DropdownMenuItem>Copy</DropdownMenuItem>
             <DropdownMenuItem>Paste</DropdownMenuItem>
