@@ -103,11 +103,17 @@ function useFilterableItem(textValue: string | undefined, children: React.ReactN
   const query = ctx?.query.trim().toLowerCase() ?? '';
   const visible = !query || (textValue ?? getNodeText(children)).toLowerCase().includes(query);
 
+  // registerItem/unregisterItem are stable, so this now only
+  // fires when an item's own visibility actually flips
+  const enabled = ctx?.enabled ?? false;
+  const registerItem = ctx?.registerItem;
+  const unregisterItem = ctx?.unregisterItem;
+
   React.useEffect(() => {
-    if (!ctx || !ctx.enabled) return;
-    ctx.registerItem(id, visible);
-    return () => ctx.unregisterItem(id);
-  }, [ctx, ctx?.enabled, id, visible]);
+    if (!enabled || !registerItem || !unregisterItem) return;
+    registerItem(id, visible);
+    return () => unregisterItem(id);
+  }, [enabled, registerItem, unregisterItem, id, visible]);
 
   return visible;
 }
