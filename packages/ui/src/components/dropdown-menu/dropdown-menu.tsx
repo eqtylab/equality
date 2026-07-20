@@ -330,98 +330,124 @@ const DropdownMenuContent = React.forwardRef<
 DropdownMenuContent.displayName = DropdownMenuPrimitive.Content.displayName;
 
 /*
- * Search input - renders the search input and manages the search context
+ * Point every given ref at the same node. Written as a plain assignment (rather than a
+ * callback ref returning a cleanup) so it behaves identically on React 18 and 19 - 18
+ * ignores callback ref cleanups and passes null on unmount instead
  */
-const DropdownMenuSearch = ({
-  className,
-  placeholder = 'Search...',
-  icon,
-  /* Render the input immediately instead of revealing on first keypress */
-  alwaysVisible = false,
-  onKeyDown,
-  /* Pulled out of props so the placeholder fallback below isn't overwritten by the spread */
-  'aria-label': ariaLabel,
-  ...props
-}: Omit<React.InputHTMLAttributes<HTMLInputElement>, 'value' | 'onChange'> & {
+function assignRefs<T>(node: T | null, ...refs: (React.Ref<T> | undefined)[]) {
+  refs.forEach((ref) => {
+    if (typeof ref === 'function') ref(node);
+    else if (ref) (ref as React.MutableRefObject<T | null>).current = node;
+  });
+}
+
+type DropdownMenuSearchProps = Omit<
+  React.InputHTMLAttributes<HTMLInputElement>,
+  'value' | 'onChange'
+> & {
   icon?: React.ReactNode;
   alwaysVisible?: boolean;
-}) => {
-  const ctx = useDropdownMenuSearch();
-  if (!ctx) {
-    throw new Error('DropdownMenuSearch must be used within a DropdownMenu');
-  }
-  const { setEnabled, reveal, visible, focusSignal } = ctx;
-
-  const inputRef = React.useRef<HTMLInputElement>(null);
-
-  // Tell Content a search exists so it knows to intercept keystrokes
-  React.useEffect(() => {
-    setEnabled(true);
-    return () => setEnabled(false);
-  }, [setEnabled]);
-
-  // Focus the input when it becomes visible AND whenever focus is requested from Content
-  React.useEffect(() => {
-    if (!visible) return;
-    const el = inputRef.current;
-    if (!el) return;
-    el.focus();
-    const end = el.value.length;
-    el.setSelectionRange(end, end);
-  }, [visible, focusSignal]);
-
-  // If always visible, reveal as soon as the menu opens
-  React.useEffect(() => {
-    if (alwaysVisible && !visible) reveal('');
-  }, [alwaysVisible, visible, reveal]);
-
-  if (!alwaysVisible && !visible) return null;
-
-  return (
-    <div className={styles['dropdown-menu-search']}>
-      {icon ?? <SearchIcon className={styles['icon-size']} />}
-      <input
-        ref={inputRef}
-        data-dropdown-search=""
-        className={cn(styles['dropdown-menu-search-input'], className)}
-        value={ctx.query}
-        placeholder={placeholder}
-        aria-label={ariaLabel ?? placeholder}
-        onChange={(event) => ctx.setQuery(event.target.value)}
-        onKeyDown={(event) => {
-          onKeyDown?.(event);
-
-          // Arrow keys move focus into the list - Radix won't do this for us because focus
-          // is on the input, not a menu item. Jump to the first/last currently-visible item
-          if (event.key === 'ArrowDown' || event.key === 'ArrowUp') {
-            const menu = event.currentTarget.closest('[role="menu"]');
-            const items = menu
-              ? Array.from(
-                  menu.querySelectorAll<HTMLElement>(
-                    '[role="menuitem"]:not([data-disabled]),' +
-                      '[role="menuitemcheckbox"]:not([data-disabled]),' +
-                      '[role="menuitemradio"]:not([data-disabled])'
-                  )
-                )
-              : [];
-            if (items.length) {
-              event.preventDefault();
-              (event.key === 'ArrowDown' ? items[0] : items[items.length - 1]).focus();
-            }
-            return;
-          }
-
-          // Bubble events to Radix (close / select / tab out)
-          if (['Enter', 'Escape', 'Tab'].includes(event.key)) return;
-
-          // Everything else stays in the input so Radix typeahead / shortcuts don't fire
-          event.stopPropagation();
-        }}
-        {...props}
-      />
-    </div>
-  );
 };
+
+/*
+ * Search input - renders the search input and manages the search context
+ */
+const DropdownMenuSearch = React.forwardRef<HTMLInputElement, DropdownMenuSearchProps>(
+  (
+    {
+      className,
+      placeholder = 'Search...',
+      icon,
+      /* Render the input immediately instead of revealing on first keypress */
+      alwaysVisible = false,
+      onKeyDown,
+      /* Pulled out of props so the placeholder fallback below isn't overwritten by the spread */
+      'aria-label': ariaLabel,
+      ...props
+    },
+    forwardedRef
+  ) => {
+    const ctx = useDropdownMenuSearch();
+    if (!ctx) {
+      throw new Error('DropdownMenuSearch must be used within a DropdownMenu');
+    }
+    const { setEnabled, reveal, visible, focusSignal } = ctx;
+
+    const inputRef = React.useRef<HTMLInputElement>(null);
+
+    // Tell Content a search exists so it knows to intercept keystrokes
+    React.useEffect(() => {
+      setEnabled(true);
+      return () => setEnabled(false);
+    }, [setEnabled]);
+
+    // Focus the input when it becomes visible AND whenever focus is requested from Content
+    React.useEffect(() => {
+      if (!visible) return;
+      const el = inputRef.current;
+      if (!el) return;
+      el.focus();
+      const end = el.value.length;
+      el.setSelectionRange(end, end);
+    }, [visible, focusSignal]);
+
+    // If always visible, reveal as soon as the menu opens
+    React.useEffect(() => {
+      if (alwaysVisible && !visible) reveal('');
+    }, [alwaysVisible, visible, reveal]);
+
+    if (!alwaysVisible && !visible) return null;
+
+    return (
+      <div className={styles['dropdown-menu-search']}>
+        {icon ?? <SearchIcon className={styles['icon-size']} />}
+        <input
+          /* Keep the internal ref - focus management depends on it - and mirror the node
+             onto whatever the consumer passed */
+          ref={(node) => {
+            assignRefs(node, inputRef, forwardedRef);
+          }}
+          data-dropdown-search=""
+          className={cn(styles['dropdown-menu-search-input'], className)}
+          value={ctx.query}
+          placeholder={placeholder}
+          aria-label={ariaLabel ?? placeholder}
+          onChange={(event) => ctx.setQuery(event.target.value)}
+          onKeyDown={(event) => {
+            onKeyDown?.(event);
+
+            // Arrow keys move focus into the list - Radix won't do this for us because focus
+            // is on the input, not a menu item. Jump to the first/last currently-visible item
+            if (event.key === 'ArrowDown' || event.key === 'ArrowUp') {
+              const menu = event.currentTarget.closest('[role="menu"]');
+              const items = menu
+                ? Array.from(
+                    menu.querySelectorAll<HTMLElement>(
+                      '[role="menuitem"]:not([data-disabled]),' +
+                        '[role="menuitemcheckbox"]:not([data-disabled]),' +
+                        '[role="menuitemradio"]:not([data-disabled])'
+                    )
+                  )
+                : [];
+              if (items.length) {
+                event.preventDefault();
+                (event.key === 'ArrowDown' ? items[0] : items[items.length - 1]).focus();
+              }
+              return;
+            }
+
+            // Bubble events to Radix (close / select / tab out)
+            if (['Enter', 'Escape', 'Tab'].includes(event.key)) return;
+
+            // Everything else stays in the input so Radix typeahead / shortcuts don't fire
+            event.stopPropagation();
+          }}
+          {...props}
+        />
+      </div>
+    );
+  }
+);
 DropdownMenuSearch.displayName = 'DropdownMenuSearch';
 
 /*
