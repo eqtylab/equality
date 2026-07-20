@@ -10,7 +10,7 @@ import { RadioDropdownDemo } from "@demo/components/demo/radio-dropdown";
 
 Radio Dropdown is a compact control for picking a single option from a list — typically a filter such as a status or category. It renders as a [Button](button) showing the current selection, opening a [Dropdown Menu](dropdown-menu) of radio options. Each option can carry an optional `count`, shown as a [Badge](badge) on the trigger and inline in the menu, which is handy for surfacing how many items match each filter.
 
-It is a controlled component: you provide the `options` and the `selectedValue`, and it calls `onSelect` when the user chooses a different one. Options with an empty `value` or `label` are filtered out automatically. The menu is searchable by default, so it stays usable as the list of options grows.
+It is a controlled component: you provide the `options` and the `selectedValue`, and it calls `onSelect` when the user chooses a different one. Options with an empty `value` or `label` are filtered out automatically. For longer lists, `searchable` adds in-menu search.
 
 ## Usage
 
@@ -44,9 +44,13 @@ The `label` is shown on the trigger before anything is selected, and as the head
 
 ## Search
 
-Every Radio Dropdown includes the [Dropdown Menu](dropdown-menu)'s in-place search. The search box is hidden until the user starts typing with the menu open — the first keystroke reveals it and seeds the query. Options that don't match hide themselves, matching against each option's `label`.
+Pass `searchable` to add the [Dropdown Menu](dropdown-menu)'s in-place search. It is off by default. Reach for it once the list is long enough.
 
-Use `searchPlaceholder` to describe what is being searched, and `emptyPlaceholder` for the message shown when a query matches nothing:
+The search box is hidden until the user starts typing with the menu open — the first keystroke reveals it and seeds the query. Options that don't match hide themselves, matching against each option's `label`.
+
+<RadioDropdownDemo client:only="react" variant="searchable" />
+
+Use `searchPlaceholder` to describe what is being searched, and `emptyPlaceholder` for the message shown when a query matches nothing. Both are ignored unless `searchable` is set:
 
 ```tsx
 <RadioDropdown
@@ -54,8 +58,9 @@ Use `searchPlaceholder` to describe what is being searched, and `emptyPlaceholde
   options={statuses}
   selectedValue={status}
   onSelect={setStatus}
-  searchPlaceholder="Search statuses..."
-  emptyPlaceholder="No statuses match"
+  searchable
+  searchPlaceholder="Search categories..."
+  emptyPlaceholder="No categories match"
 />
 ```
 
@@ -63,12 +68,13 @@ The empty message only appears while a query is active — an empty `options` ar
 
 ## Props
 
-| Name                | Description                                                         | Type                                                 | Default             | Required |
-| ------------------- | ------------------------------------------------------------------- | ---------------------------------------------------- | ------------------- | -------- |
-| `label`             | Trigger text before selection, and the menu heading.                | `string`                                             | —                   | ✅       |
-| `options`           | The selectable options. Each is `{ value, label, count? }`.         | `{ value: string; label: string; count?: number }[]` | —                   | ✅       |
-| `selectedValue`     | The `value` of the currently selected option.                       | `string`                                             | —                   | ✅       |
-| `onSelect`          | Called with the chosen option's `value` when the selection changes. | `(value: string) => void`                            | —                   | ✅       |
-| `className`         | Additional CSS classes applied to the trigger button.               | `string`                                             | —                   | ❌       |
-| `searchPlaceholder` | Placeholder text for the in-menu search input.                      | `string`                                             | `Search options...` | ❌       |
-| `emptyPlaceholder`  | Message shown when a search query matches no options.               | `string`                                             | `No options found`  | ❌       |
+| Name                | Description                                                                  | Type                                                 | Default             | Required |
+| ------------------- | ---------------------------------------------------------------------------- | ---------------------------------------------------- | ------------------- | -------- |
+| `label`             | Trigger text before selection, and the menu heading.                         | `string`                                             | —                   | ✅       |
+| `options`           | The selectable options. Each is `{ value, label, count? }`.                  | `{ value: string; label: string; count?: number }[]` | —                   | ✅       |
+| `selectedValue`     | The `value` of the currently selected option.                                | `string`                                             | —                   | ✅       |
+| `onSelect`          | Called with the chosen option's `value` when the selection changes.          | `(value: string) => void`                            | —                   | ✅       |
+| `className`         | Additional CSS classes applied to the trigger button.                        | `string`                                             | —                   | ❌       |
+| `searchable`        | Adds in-menu search, revealed on the first keystroke.                        | `boolean`                                            | `false`             | ❌       |
+| `searchPlaceholder` | Placeholder text for the in-menu search input. Requires `searchable`.        | `string`                                             | `Search options...` | ❌       |
+| `emptyPlaceholder`  | Message shown when a search query matches no options. Requires `searchable`. | `string`                                             | `No options found`  | ❌       |

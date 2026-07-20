@@ -8,7 +8,7 @@ import { FilterDropdownDemo } from "@demo/components/demo/filter-dropdown";
 
 ## Overview
 
-The Filter Dropdown component provides a multi-select dropdown for filtering content in tables or lists. The dropdown menu lists checkbox options that users can toggle on and off, with a "Clear all" action to reset selections within the component. The menu is searchable by default, so it stays usable as the list of options grows.
+The Filter Dropdown component provides a multi-select dropdown for filtering content in tables or lists. The dropdown menu lists checkbox options that users can toggle on and off, with a "Clear all" action to reset selections within the component. For longer lists, `searchable` adds in-menu search.
 
 ## Usage
 
@@ -33,15 +33,19 @@ Basic usage:
 />
 ```
 
-## Example
+## Default
 
 <FilterDropdownDemo client:only="react" />
 
 ## Search
 
-Every Filter Dropdown includes the [Dropdown Menu](dropdown-menu)'s in-place search. The search box is hidden until the user starts typing with the menu open — the first keystroke reveals it and seeds the query. Options that don't match hide themselves, matching against each option's `label`.
+Pass `searchable` to add the [Dropdown Menu](dropdown-menu)'s in-place search. It is off by default, reach for it once the list is long enough.
 
-Use `searchPlaceholder` to describe what is being searched, and `emptyPlaceholder` for the message shown when a query matches nothing:
+The search box is hidden until the user starts typing with the menu open — the first keystroke reveals it and seeds the query. Options that don't match hide themselves, matching against each option's `label`.
+
+<FilterDropdownDemo client:only="react" variant="searchable" />
+
+Use `searchPlaceholder` to describe what is being searched, and `emptyPlaceholder` for the message shown when a query matches nothing. Both are ignored unless `searchable` is set:
 
 ```tsx
 <FilterDropdown
@@ -50,8 +54,9 @@ Use `searchPlaceholder` to describe what is being searched, and `emptyPlaceholde
   selectedFilters={selectedFilters}
   onToggleFilter={onToggleFilter}
   onClearAll={onClearAll}
-  searchPlaceholder="Search scopes..."
-  emptyPlaceholder="No scopes match"
+  searchable
+  searchPlaceholder="Search teams..."
+  emptyPlaceholder="No teams match"
 />
 ```
 
@@ -69,5 +74,6 @@ Note that the "Filters" heading and its "Clear all" action are hidden while a se
 | `onToggleFilter`    | Callback fired when a filter option is checked or unchecked.                      | `(value: string) => void`             | -                   | ✅       |
 | `onClearAll`        | Callback fired when the "Clear all" button is clicked.                            | `() => void`                          | -                   | ✅       |
 | `disabled`          | When `true`, the trigger button is unclickable and the dropdown cannot be opened. | `boolean`                             | `false`             | ❌       |
-| `searchPlaceholder` | Placeholder text for the in-menu search input.                                    | `string`                              | `Search filters...` | ❌       |
-| `emptyPlaceholder`  | Message shown when a search query matches no options.                             | `string`                              | `No filters found`  | ❌       |
+| `searchable`        | Adds in-menu search, revealed on the first keystroke.                             | `boolean`                             | `false`             | ❌       |
+| `searchPlaceholder` | Placeholder text for the in-menu search input. Requires `searchable`.             | `string`                              | `Search filters...` | ❌       |
+| `emptyPlaceholder`  | Message shown when a search query matches no options. Requires `searchable`.      | `string`                              | `No filters found`  | ❌       |

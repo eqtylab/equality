@@ -32,6 +32,8 @@ interface FilterDropdownProps {
   buttonClassName?: string;
   contentClassName?: string;
   disabled?: boolean;
+  /* Opt in to in-menu search */
+  searchable?: boolean;
   searchPlaceholder?: string;
   emptyPlaceholder?: string;
 }
@@ -45,6 +47,7 @@ const FilterDropdown = ({
   buttonClassName,
   contentClassName,
   disabled = false,
+  searchable = false,
   searchPlaceholder = 'Search filters...',
   emptyPlaceholder = 'No filters found',
 }: FilterDropdownProps) => {
@@ -73,8 +76,12 @@ const FilterDropdown = ({
         align="end"
         className={cn(styles['dropdown-menu-content'], contentClassName)}
       >
-        <DropdownMenuSearch placeholder={searchPlaceholder} />
-        <DropdownMenuEmpty>{emptyPlaceholder}</DropdownMenuEmpty>
+        {searchable && (
+          <>
+            <DropdownMenuSearch placeholder={searchPlaceholder} />
+            <DropdownMenuEmpty>{emptyPlaceholder}</DropdownMenuEmpty>
+          </>
+        )}
         <DropdownMenuLabel>
           Filters
           {hasSelectedFilters && (

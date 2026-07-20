@@ -30,6 +30,8 @@ interface RadioDropdownProps {
   selectedValue: string;
   onSelect: (value: string) => void;
   className?: string;
+  /* Opt in to in-menu search */
+  searchable?: boolean;
   searchPlaceholder?: string;
   emptyPlaceholder?: string;
 }
@@ -40,6 +42,7 @@ const RadioDropdown = ({
   selectedValue,
   onSelect,
   className,
+  searchable = false,
   searchPlaceholder = 'Search options...',
   emptyPlaceholder = 'No options found',
 }: RadioDropdownProps) => {
@@ -63,8 +66,12 @@ const RadioDropdown = ({
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className={styles['dropdown-menu-content']}>
-        <DropdownMenuSearch placeholder={searchPlaceholder} />
-        <DropdownMenuEmpty>{emptyPlaceholder}</DropdownMenuEmpty>
+        {searchable && (
+          <>
+            <DropdownMenuSearch placeholder={searchPlaceholder} />
+            <DropdownMenuEmpty>{emptyPlaceholder}</DropdownMenuEmpty>
+          </>
+        )}
         <DropdownMenuLabel>{label}</DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuRadioGroup value={selectedValue} onValueChange={onSelect}>
