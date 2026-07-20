@@ -8,7 +8,7 @@ import { DropdownMenuDemo } from "@demo/components/demo/dropdown-menu";
 
 ## Overview
 
-A dropdown menu displays a list of actions or options in a floating panel anchored to a trigger. Use it for contextual actions, account menus, view options, and settings. It supports labels, separators, checkboxes, radio groups, keyboard shortcuts, grouping, and nested submenus, and is fully keyboard navigable.
+A dropdown menu displays a list of actions or options in a floating panel anchored to a trigger. Use it for contextual actions, account menus, view options, and settings. It supports labels, separators, checkboxes, radio groups, keyboard shortcuts, grouping, nested submenus, and optional in-place search, and is fully keyboard navigable.
 
 ## Usage
 
@@ -118,22 +118,49 @@ Use `DropdownMenuShortcut` to display a keyboard shortcut hint aligned to the en
 
 ### With Submenu
 
-Use `DropdownMenuSub`, `DropdownMenuSubTrigger`, and `DropdownMenuSubContent` to nest a menu inside an item. The submenu opens on hover or keyboard focus.
+Use `DropdownMenuSub`, `DropdownMenuSubTrigger`, and `DropdownMenuSubContent` to nest a menu inside an item. The submenu opens on hover or keyboard focus. Submenus can be nested to any depth — place another `DropdownMenuSub` inside a `DropdownMenuSubContent` to create a further level.
 
 <DropdownMenuDemo client:only="react" variant="with-submenu" />
 
 ```jsx
-<DropdownMenuSub>
-  <DropdownMenuSubTrigger>
-    <span>More Tools</span>
-  </DropdownMenuSubTrigger>
-  <DropdownMenuSubContent>
-    <DropdownMenuItem>Save Page As...</DropdownMenuItem>
-    <DropdownMenuItem>Create Shortcut...</DropdownMenuItem>
-    <DropdownMenuSeparator />
-    <DropdownMenuItem>Developer Tools</DropdownMenuItem>
-  </DropdownMenuSubContent>
-</DropdownMenuSub>
+<DropdownMenuContent align="start">
+  <DropdownMenuItem>Back</DropdownMenuItem>
+  <DropdownMenuItem>Forward</DropdownMenuItem>
+  <DropdownMenuItem>Reload</DropdownMenuItem>
+  <DropdownMenuSeparator />
+  <DropdownMenuSub>
+    <DropdownMenuSubTrigger>
+      <span>More Tools</span>
+    </DropdownMenuSubTrigger>
+    <DropdownMenuSubContent>
+      <DropdownMenuItem>Save Page As...</DropdownMenuItem>
+      <DropdownMenuItem>Create Shortcut...</DropdownMenuItem>
+      <DropdownMenuItem>Name Window...</DropdownMenuItem>
+      <DropdownMenuSeparator />
+      <DropdownMenuSub>
+        <DropdownMenuSubTrigger>
+          <span>Developer Tools</span>
+        </DropdownMenuSubTrigger>
+        <DropdownMenuSubContent>
+          <DropdownMenuItem>Console</DropdownMenuItem>
+          <DropdownMenuItem>Network</DropdownMenuItem>
+          <DropdownMenuSeparator />
+          <DropdownMenuSub>
+            <DropdownMenuSubTrigger>
+              <span>Profiling</span>
+            </DropdownMenuSubTrigger>
+            <DropdownMenuSubContent>
+              <DropdownMenuItem>Performance</DropdownMenuItem>
+              <DropdownMenuItem>Memory</DropdownMenuItem>
+            </DropdownMenuSubContent>
+          </DropdownMenuSub>
+        </DropdownMenuSubContent>
+      </DropdownMenuSub>
+    </DropdownMenuSubContent>
+  </DropdownMenuSub>
+  <DropdownMenuSeparator />
+  <DropdownMenuItem>Settings</DropdownMenuItem>
+</DropdownMenuContent>
 ```
 
 ### With Groups
@@ -156,24 +183,107 @@ Wrap related items in `DropdownMenuGroup` to associate a label with its items fo
 </DropdownMenuGroup>
 ```
 
+## Search & filtering
+
+Add a `DropdownMenuSearch` inside `DropdownMenuContent` to filter items in place. It is opt-in per menu — without it, the menu behaves exactly as before and the built-in typeahead still works. Items hide themselves when they don't match, and matching is done against each item's `textValue`, falling back to its rendered text.
+
+Import the additional parts:
+
+```ts
+import { DropdownMenuSearch, DropdownMenuEmpty } from "@eqtylab/equality";
+```
+
+### Reveal on typing
+
+By default the search box is hidden and reveals as soon as you start typing — the first keystroke seeds the query. Add a `DropdownMenuEmpty` to show a "no results" row when nothing matches. Give items that lead with an icon or avatar a `textValue` so they filter on the label rather than the icon's contents.
+
+<DropdownMenuDemo client:only="react" variant="with-search" />
+
+```jsx
+<DropdownMenuContent align="start">
+  <DropdownMenuSearch placeholder="Search members..." />
+  <DropdownMenuLabel>Team members</DropdownMenuLabel>
+  <DropdownMenuItem textValue="Ada Lovelace">
+    <Icon icon="User" />
+    <span>Ada Lovelace</span>
+  </DropdownMenuItem>
+  {/* ...more members... */}
+  <DropdownMenuEmpty>No members found</DropdownMenuEmpty>
+</DropdownMenuContent>
+```
+
+### Always visible
+
+Pass `alwaysVisible` to show the search box the moment the menu opens instead of waiting for the first keystroke. Filtering works across every item type, including checkbox and radio items. Labels, separators, and submenu triggers hide while a search is active so results stay compact.
+
+<DropdownMenuDemo client:only="react" variant="with-search-always" />
+
+```jsx
+<DropdownMenuContent align="start">
+  <DropdownMenuSearch alwaysVisible placeholder="Search columns..." />
+  <DropdownMenuLabel>Toggle columns</DropdownMenuLabel>
+  <DropdownMenuCheckboxItem
+    checked={columns.email}
+    onCheckedChange={(checked) => setColumns({ ...columns, email: checked })}
+    onSelect={(event) => event.preventDefault()}
+  >
+    Email
+  </DropdownMenuCheckboxItem>
+  {/* ...more columns... */}
+  <DropdownMenuEmpty>No columns found</DropdownMenuEmpty>
+</DropdownMenuContent>
+```
+
+### Searching submenus
+
+Items nested in a `DropdownMenuSub` are flattened into the main list while searching, so submenu items appear in the results without opening the submenu. Try searching for "developer" below.
+
+<DropdownMenuDemo client:only="react" variant="with-search-submenu" />
+
+```jsx
+<DropdownMenuContent align="start">
+  <DropdownMenuSearch placeholder="Search actions..." />
+  <DropdownMenuItem>Cut</DropdownMenuItem>
+  <DropdownMenuItem>Copy</DropdownMenuItem>
+  <DropdownMenuItem>Paste</DropdownMenuItem>
+  <DropdownMenuSeparator />
+  <DropdownMenuSub>
+    <DropdownMenuSubTrigger>
+      <span>More Tools</span>
+    </DropdownMenuSubTrigger>
+    <DropdownMenuSubContent>
+      <DropdownMenuItem>Save Page As...</DropdownMenuItem>
+      <DropdownMenuItem>Create Shortcut...</DropdownMenuItem>
+      <DropdownMenuItem>Developer Tools</DropdownMenuItem>
+      <DropdownMenuItem>Task Manager</DropdownMenuItem>
+    </DropdownMenuSubContent>
+  </DropdownMenuSub>
+  <DropdownMenuEmpty>No actions found</DropdownMenuEmpty>
+</DropdownMenuContent>
+```
+
+Flattening only works when `DropdownMenuSubContent` is placed directly inside `DropdownMenuSub` — wrapping it in another element prevents its items from being searched.
+
 ## Slots
 
-| Name                       | Description                                      |
-| -------------------------- | ------------------------------------------------ |
-| `DropdownMenu`             | Root component, manages open state               |
-| `DropdownMenuTrigger`      | Element that opens the menu on click             |
-| `DropdownMenuContent`      | Floating panel containing the menu items         |
-| `DropdownMenuItem`         | A single actionable menu item                    |
-| `DropdownMenuCheckboxItem` | A toggleable item with a checkmark indicator     |
-| `DropdownMenuRadioGroup`   | Groups radio items into a single-select set      |
-| `DropdownMenuRadioItem`    | A single-select item within a radio group        |
-| `DropdownMenuLabel`        | Non-interactive section title                    |
-| `DropdownMenuSeparator`    | Divider between groups of items                  |
-| `DropdownMenuShortcut`     | Keyboard shortcut hint aligned to the item's end |
-| `DropdownMenuGroup`        | Groups related items for assistive technology    |
-| `DropdownMenuSub`          | Root for a nested submenu                        |
-| `DropdownMenuSubTrigger`   | Item that opens a nested submenu                 |
-| `DropdownMenuSubContent`   | Floating panel for a nested submenu              |
+| Name                       | Description                                       |
+| -------------------------- | ------------------------------------------------- |
+| `DropdownMenu`             | Root component, manages open state                |
+| `DropdownMenuTrigger`      | Element that opens the menu on click              |
+| `DropdownMenuContent`      | Floating panel containing the menu items          |
+| `DropdownMenuSearch`       | Optional search input that filters items in place |
+| `DropdownMenuEmpty`        | "No results" row shown only when nothing matches  |
+| `DropdownMenuItem`         | A single actionable menu item                     |
+| `DropdownMenuCheckboxItem` | A toggleable item with a checkmark indicator      |
+| `DropdownMenuRadioGroup`   | Groups radio items into a single-select set       |
+| `DropdownMenuRadioItem`    | A single-select item within a radio group         |
+| `DropdownMenuLabel`        | Non-interactive section title                     |
+| `DropdownMenuSeparator`    | Divider between groups of items                   |
+| `DropdownMenuShortcut`     | Keyboard shortcut hint aligned to the item's end  |
+| `DropdownMenuGroup`        | Groups related items for assistive technology     |
+| `DropdownMenuSub`          | Root for a nested submenu                         |
+| `DropdownMenuSubTrigger`   | Item that opens a nested submenu                  |
+| `DropdownMenuSubContent`   | Floating panel for a nested submenu               |
 
 ## Props
 
@@ -201,20 +311,22 @@ Wrap related items in `DropdownMenuGroup` to associate a label with its items fo
 
 ### DropdownMenuItem
 
-| Name       | Description                                           | Type                | Default   | Required |
-| ---------- | ----------------------------------------------------- | ------------------- | --------- | -------- |
-| `variant`  | Visual style; `danger` marks a destructive action     | `neutral`, `danger` | `neutral` | ❌       |
-| `inset`    | Adds left padding to align with items that have icons | `boolean`           | `false`   | ❌       |
-| `disabled` | Prevents interaction and dims the item                | `boolean`           | `false`   | ❌       |
-| `onSelect` | Called when the item is selected                      | `() => void`        | -         | ❌       |
+| Name        | Description                                                            | Type                | Default   | Required |
+| ----------- | ---------------------------------------------------------------------- | ------------------- | --------- | -------- |
+| `variant`   | Visual style; `danger` marks a destructive action                      | `neutral`, `danger` | `neutral` | ❌       |
+| `inset`     | Adds left padding to align with items that have icons                  | `boolean`           | `false`   | ❌       |
+| `disabled`  | Prevents interaction and dims the item                                 | `boolean`           | `false`   | ❌       |
+| `textValue` | Text used for search filtering; falls back to the item's rendered text | `string`            | -         | ❌       |
+| `onSelect`  | Called when the item is selected                                       | `() => void`        | -         | ❌       |
 
 ### DropdownMenuCheckboxItem
 
-| Name              | Description                            | Type                         | Default | Required |
-| ----------------- | -------------------------------------- | ---------------------------- | ------- | -------- |
-| `checked`         | Whether the item is checked            | `boolean`                    | -       | ❌       |
-| `onCheckedChange` | Called when the checked state changes  | `(checked: boolean) => void` | -       | ❌       |
-| `disabled`        | Prevents interaction and dims the item | `boolean`                    | `false` | ❌       |
+| Name              | Description                                                            | Type                         | Default | Required |
+| ----------------- | ---------------------------------------------------------------------- | ---------------------------- | ------- | -------- |
+| `checked`         | Whether the item is checked                                            | `boolean`                    | -       | ❌       |
+| `onCheckedChange` | Called when the checked state changes                                  | `(checked: boolean) => void` | -       | ❌       |
+| `disabled`        | Prevents interaction and dims the item                                 | `boolean`                    | `false` | ❌       |
+| `textValue`       | Text used for search filtering; falls back to the item's rendered text | `string`                     | -       | ❌       |
 
 ### DropdownMenuRadioGroup
 
@@ -225,13 +337,30 @@ Wrap related items in `DropdownMenuGroup` to associate a label with its items fo
 
 ### DropdownMenuRadioItem
 
-| Name       | Description                            | Type      | Default | Required |
-| ---------- | -------------------------------------- | --------- | ------- | -------- |
-| `value`    | The unique value of the item           | `string`  | -       | ✅       |
-| `disabled` | Prevents interaction and dims the item | `boolean` | `false` | ❌       |
+| Name        | Description                                                            | Type      | Default | Required |
+| ----------- | ---------------------------------------------------------------------- | --------- | ------- | -------- |
+| `value`     | The unique value of the item                                           | `string`  | -       | ✅       |
+| `disabled`  | Prevents interaction and dims the item                                 | `boolean` | `false` | ❌       |
+| `textValue` | Text used for search filtering; falls back to the item's rendered text | `string`  | -       | ❌       |
 
 ### DropdownMenuLabel & DropdownMenuSubTrigger
 
 | Name    | Description                                           | Type      | Default | Required |
 | ------- | ----------------------------------------------------- | --------- | ------- | -------- |
 | `inset` | Adds left padding to align with items that have icons | `boolean` | `false` | ❌       |
+
+### DropdownMenuSearch
+
+Also accepts standard `input` attributes, except `value` and `onChange`, which are managed internally.
+
+| Name            | Description                                                                   | Type                    | Default       | Required |
+| --------------- | ----------------------------------------------------------------------------- | ----------------------- | ------------- | -------- |
+| `alwaysVisible` | Show the input immediately instead of revealing on first keypress             | `boolean`               | `false`       | ❌       |
+| `placeholder`   | Placeholder text for the input                                                | `string`                | `Search...`   | ❌       |
+| `icon`          | Custom leading icon; defaults to a search icon                                | `ReactNode`             | -             | ❌       |
+| `aria-label`    | Accessible name for the input; defaults to the `placeholder` text             | `string`                | `placeholder` | ❌       |
+| `ref`           | Forwarded to the underlying `<input>`; `null` while the input is not rendered | `Ref<HTMLInputElement>` | -             | ❌       |
+
+### DropdownMenuEmpty
+
+Renders its `children` as a "no results" message, shown only while a search query matches no items. It is a live region (`role="status"`), so the message is announced when filtering empties the list. Also accepts standard `div` attributes.

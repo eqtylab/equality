@@ -63,7 +63,7 @@
 
 .dropdown-menu-label {
   @apply flex-center-between gap-2;
-  @apply px-2 py-1.5 text-sm font-medium;
+  @apply text-text-secondary px-2 py-1.5 text-xs font-medium;
 }
 
 .dropdown-menu-separator {
@@ -78,4 +78,26 @@
 
 .dropdown-menu-content {
   @apply bg-background-overlay shadow-shadow-overlay border-border-overlay;
+}
+
+.dropdown-menu-search {
+  @apply flex-center gap-2;
+  @apply px-2 py-1.5;
+  @apply mb-1;
+  @apply border-border-overlay border-b;
+}
+
+.dropdown-menu-search-input {
+  @apply min-w-0 flex-1;
+  @apply border-none bg-transparent outline-none;
+  @apply text-text-primary text-sm;
+}
+
+.dropdown-menu-search-input::placeholder {
+  @apply text-text-secondary;
+}
+
+.dropdown-menu-empty {
+  @apply px-2 py-1.5;
+  @apply text-text-secondary text-center text-xs;
 }

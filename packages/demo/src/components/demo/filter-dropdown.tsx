@@ -1,12 +1,33 @@
-import { useState } from "react";
+import { useState, type Dispatch, type SetStateAction } from "react";
 
 import { FilterDropdown } from "@eqtylab/equality";
 
-export const FilterDropdownDemo = () => {
-  const [selectedFilters, setSelectedFilters] = useState<string[]>([]);
+const TEAMS = [
+  { value: "applied-research", label: "Applied research" },
+  { value: "data-platform", label: "Data platform" },
+  { value: "design-system", label: "Design system" },
+  { value: "developer-relations", label: "Developer relations" },
+  { value: "governance", label: "Governance" },
+  { value: "infrastructure", label: "Infrastructure" },
+  { value: "legal", label: "Legal" },
+  { value: "security", label: "Security" },
+  { value: "solutions-engineering", label: "Solutions engineering" },
+  { value: "trust-and-safety", label: "Trust and safety" },
+];
 
-  const onToggleFilter = (value: string) => {
-    setSelectedFilters((prev: string[]) => {
+export const FilterDropdownDemo = ({
+  variant = "default",
+}: {
+  variant?: "default" | "searchable";
+}) => {
+  const [selectedFilters, setSelectedFilters] = useState<string[]>([]);
+  const [selectedTeams, setSelectedTeams] = useState<string[]>([]);
+
+  const toggle = (
+    setter: Dispatch<SetStateAction<string[]>>,
+    value: string,
+  ) => {
+    setter((prev: string[]) => {
       if (prev.includes(value)) {
         return prev.filter((v) => v !== value);
       }
@@ -14,9 +35,22 @@ export const FilterDropdownDemo = () => {
     });
   };
 
-  const onClearAll = () => {
-    setSelectedFilters([]);
-  };
+  if (variant === "searchable") {
+    return (
+      <div className="mb-4">
+        <FilterDropdown
+          label="Team"
+          options={TEAMS}
+          selectedFilters={selectedTeams}
+          onToggleFilter={(value) => toggle(setSelectedTeams, value)}
+          onClearAll={() => setSelectedTeams([])}
+          searchable
+          searchPlaceholder="Search teams..."
+          emptyPlaceholder="No teams match"
+        />
+      </div>
+    );
+  }
 
   return (
     <FilterDropdown
@@ -26,8 +60,8 @@ export const FilterDropdownDemo = () => {
         { value: "project", label: "Project" },
       ]}
       selectedFilters={selectedFilters}
-      onToggleFilter={onToggleFilter}
-      onClearAll={onClearAll}
+      onToggleFilter={(value) => toggle(setSelectedFilters, value)}
+      onClearAll={() => setSelectedFilters([])}
     />
   );
 };
