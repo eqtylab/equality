@@ -68,7 +68,7 @@
 
 .dropdown-menu-separator {
   @apply bg-border;
-  @apply -mx-1 my-1 h-px;
+  @apply mx-1 my-1 h-px;
 }
 
 .dropdown-menu-shortcut {
