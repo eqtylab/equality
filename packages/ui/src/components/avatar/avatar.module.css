@@ -13,8 +13,7 @@
 }
 
 .avatar-fallback {
-  @apply border-border border;
-  @apply from-greyscale-500 to-greyscale-700 dark:from-greyscale-800 dark:to-greyscale-900 bg-gradient-to-br;
+  @apply from-greyscale-500 to-greyscale-600 dark:from-greyscale-700 dark:to-greyscale-800 bg-gradient-to-b;
   @apply size-full;
   @apply text-greyscale-200 dark:text-text-secondary select-none font-semibold;
   @apply flex-center;
@@ -69,7 +68,22 @@
   @apply rounded-full;
 }
 
-.avatar.square,
-.avatar.square .avatar-fallback {
+.avatar.square.sm,
+.avatar.square.sm .avatar-fallback {
+  @apply rounded-sm;
+}
+
+.avatar.square.md,
+.avatar.square.md .avatar-fallback {
+  @apply rounded-md;
+}
+
+.avatar.square.lg,
+.avatar.square.lg .avatar-fallback {
   @apply rounded-lg;
+}
+
+.avatar.square.xl,
+.avatar.square.xl .avatar-fallback {
+  @apply rounded-xl;
 }
