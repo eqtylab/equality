@@ -28,6 +28,9 @@ type DropdownMenuSearchContextValue = {
   /* Re-focus the search input from outside DropdownMenuSearch */
   focusSignal: number;
   requestFocus: () => void;
+  /* The Radix menu's id (read off the DOM), so the search input can aria-controls the list */
+  listId: string | undefined;
+  setListId: (id: string | undefined) => void;
   /* Item registry, used for the optional empty state */
   registerItem: (id: string, matches: boolean) => void;
   unregisterItem: (id: string) => void;
@@ -134,6 +137,10 @@ const DropdownMenu = ({
   const [focusSignal, setFocusSignal] = React.useState(0);
   const requestFocus = React.useCallback(() => setFocusSignal((n) => n + 1), []);
 
+  // Radix owns the menu's id; Content mirrors it here so the search input can point
+  // aria-controls at the list it filters
+  const [listId, setListId] = React.useState<string | undefined>(undefined);
+
   // Item registry for the empty state
   const itemsRef = React.useRef<Map<string, boolean>>(new Map());
   const [matchCount, setMatchCount] = React.useState(0);
@@ -186,6 +193,8 @@ const DropdownMenu = ({
       setQuery,
       focusSignal,
       requestFocus,
+      listId,
+      setListId,
       registerItem,
       unregisterItem,
       matchCount,
@@ -197,6 +206,7 @@ const DropdownMenu = ({
       query,
       focusSignal,
       requestFocus,
+      listId,
       registerItem,
       unregisterItem,
       matchCount,
@@ -280,24 +290,67 @@ const DropdownMenuSub = ({
   return <DropdownMenuPrimitive.Sub {...props}>{children}</DropdownMenuPrimitive.Sub>;
 };
 
+/** Shared selector for the menu items search/keyboard nav jump between */
+const MENU_ITEM_SELECTOR =
+  '[role="menuitem"]:not([data-disabled]),' +
+  '[role="menuitemcheckbox"]:not([data-disabled]),' +
+  '[role="menuitemradio"]:not([data-disabled])';
+
 /*
- * Content - intercepts the first printable key to reveal the search input
+ * Content - intercepts the first printable key to reveal the search input, and sends
+ * ArrowUp back to the search input when it's pressed on the first item
  */
 const DropdownMenuContent = React.forwardRef<
   React.ElementRef<typeof DropdownMenuPrimitive.Content>,
   React.ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.Content>
->(({ className, sideOffset = 4, onKeyDown, ...props }, ref) => {
+>(({ className, sideOffset = 4, onKeyDown, children, ...props }, ref) => {
   const ctx = useDropdownMenuSearch();
+  const setListId = ctx?.setListId;
+  const searching = !!ctx && ctx.query.trim().length > 0;
+  const resultCount = ctx?.matchCount ?? 0;
+
+  // Stable ref so React attaches once (mount) / detaches once (unmount) rather than
+  // flip-flopping setListId every render, which a fresh inline callback would trigger
+  const composedContentRef = React.useCallback(
+    (node: HTMLDivElement | null) => {
+      assignRefs(node, ref);
+      // Read Radix's generated id rather than override it (the trigger's aria-controls
+      // depends on it); the search input then points aria-controls at the same list
+      setListId?.(node?.id || undefined);
+    },
+    [ref, setListId]
+  );
 
   return (
     <DropdownMenuPortal>
       <DropdownMenuPrimitive.Content
-        ref={ref}
+        ref={composedContentRef}
         sideOffset={sideOffset}
         className={cn(styles['dropdown-menu-content'], className)}
         onKeyDown={(event) => {
           onKeyDown?.(event);
-          if (!ctx?.enabled || event.defaultPrevented) return;
+          if (!ctx?.enabled) return;
+
+          // ArrowUp on the first item sends focus back to the search input instead of doing
+          // nothing (the roving focus group doesn't loop). Handled ahead of the
+          // defaultPrevented bail-out below because that group already calls preventDefault()
+          // on ArrowUp - for its own empty, non-looping candidate search - before the event
+          // bubbles up to us. Tab is deliberately left to Radix's standard menu handling.
+          if (event.key === 'ArrowUp' && ctx.visible) {
+            const itemTarget = (event.target as HTMLElement | null)?.closest<HTMLElement>(
+              MENU_ITEM_SELECTOR
+            );
+            const items = Array.from(
+              event.currentTarget.querySelectorAll<HTMLElement>(MENU_ITEM_SELECTOR)
+            );
+            if (itemTarget && items[0] === itemTarget) {
+              event.preventDefault();
+              ctx.requestFocus();
+              return;
+            }
+          }
+
+          if (event.defaultPrevented) return;
 
           const isPrintable =
             event.key.length === 1 &&
@@ -323,7 +376,19 @@ const DropdownMenuContent = React.forwardRef<
           }
         }}
         {...props}
-      />
+      >
+        {/* Polite live region announcing how many items match as the query narrows.
+            It stays mounted while the menu is open so the update isn't missed; the
+            zero-match case is left to DropdownMenuEmpty so the two don't double-speak. */}
+        {ctx?.enabled ? (
+          <div className="sr-only" role="status" aria-live="polite">
+            {searching && resultCount > 0
+              ? `${resultCount} result${resultCount === 1 ? '' : 's'} available`
+              : null}
+          </div>
+        ) : null}
+        {children}
+      </DropdownMenuPrimitive.Content>
     </DropdownMenuPortal>
   );
 });
@@ -400,7 +465,9 @@ const DropdownMenuSearch = React.forwardRef<HTMLInputElement, DropdownMenuSearch
 
     return (
       <div className={styles['dropdown-menu-search']}>
-        {icon ?? <SearchIcon className={styles['icon-size']} />}
+        <span aria-hidden="true" className="flex shrink-0">
+          {icon ?? <SearchIcon className={styles['icon-size']} />}
+        </span>
         <input
           /* Keep the internal ref - focus management depends on it - and mirror the node
              onto whatever the consumer passed */
@@ -412,31 +479,31 @@ const DropdownMenuSearch = React.forwardRef<HTMLInputElement, DropdownMenuSearch
           value={ctx.query}
           placeholder={placeholder}
           aria-label={ariaLabel ?? placeholder}
+          /* The list uses menu/menuitem semantics, so this is a searchbox controlling the
+             menu - not a combobox, which would imply a listbox of options that doesn't
+             exist here. Match counts are surfaced by the live region in DropdownMenuContent. */
+          role="searchbox"
+          aria-controls={ctx.listId}
+          aria-autocomplete="list"
           onChange={(event) => ctx.setQuery(event.target.value)}
           onKeyDown={(event) => {
             onKeyDown?.(event);
 
             // Arrow keys move focus into the list - Radix won't do this for us because focus
-            // is on the input, not a menu item. Jump to the first/last currently-visible item
+            // is on the input, not a menu item. Jump to the first/last currently-visible item.
             if (event.key === 'ArrowDown' || event.key === 'ArrowUp') {
               const menu = event.currentTarget.closest('[role="menu"]');
               const items = menu
-                ? Array.from(
-                    menu.querySelectorAll<HTMLElement>(
-                      '[role="menuitem"]:not([data-disabled]),' +
-                        '[role="menuitemcheckbox"]:not([data-disabled]),' +
-                        '[role="menuitemradio"]:not([data-disabled])'
-                    )
-                  )
+                ? Array.from(menu.querySelectorAll<HTMLElement>(MENU_ITEM_SELECTOR))
                 : [];
               if (items.length) {
                 event.preventDefault();
-                (event.key === 'ArrowDown' ? items[0] : items[items.length - 1]).focus();
+                (event.key === 'ArrowUp' ? items[items.length - 1] : items[0]).focus();
               }
               return;
             }
 
-            // Bubble events to Radix (close / select / tab out)
+            // Bubble events to Radix for its standard menu handling (close / select / Tab)
             if (['Enter', 'Escape', 'Tab'].includes(event.key)) return;
 
             // Everything else stays in the input so Radix typeahead / shortcuts don't fire
