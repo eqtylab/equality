@@ -187,6 +187,8 @@ Wrap related items in `DropdownMenuGroup` to associate a label with its items fo
 
 Add a `DropdownMenuSearch` inside `DropdownMenuContent` to filter items in place. It is opt-in per menu — without it, the menu behaves exactly as before and the built-in typeahead still works. Items hide themselves when they don't match, and matching is done against each item's `textValue`, falling back to its rendered text.
 
+Generally using `DropdownMenuSearch` over the default typeahead is encouraged for _most_ dropdown menus in our apps.
+
 Import the additional parts:
 
 ```ts
