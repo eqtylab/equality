@@ -76,6 +76,18 @@
   @apply ml-auto;
 }
 
+/* Ancestor path prefixed to flattened submenu items while searching (Parent > Child) */
+.dropdown-menu-breadcrumb {
+  @apply text-text-secondary;
+  @apply inline-flex items-center gap-1;
+}
+
+/* Keep the separator chevrons small; size-3! beats the item's [&_svg]:size-4 rule
+   (equal specificity otherwise) */
+.dropdown-menu-breadcrumb svg {
+  @apply size-3!;
+}
+
 .dropdown-menu-content {
   @apply bg-background-overlay shadow-shadow-overlay border-border-overlay;
 }

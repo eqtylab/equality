@@ -47,6 +47,16 @@ const useIsSearching = () => {
   return !!ctx && ctx.query.trim().length > 0;
 };
 
+/*
+ * Ancestry of SubTrigger contents for the current branch, used to render the "Parent >"
+ * breadcrumb on flattened submenu items while searching. Separate from the search context
+ * (which is a single Root-level instance) because ancestry is per-branch and stacks as the
+ * tree nests. Default [] so items outside any flattened submenu render no breadcrumb.
+ */
+const DropdownMenuBreadcrumbContext = React.createContext<string[]>([]);
+
+const useBreadcrumbAncestry = () => React.useContext(DropdownMenuBreadcrumbContext);
+
 /* Pull plain text out of children so we can match against it */
 function getNodeText(node: React.ReactNode): string {
   if (node == null || typeof node === 'boolean') return '';
@@ -58,18 +68,31 @@ function getNodeText(node: React.ReactNode): string {
   return '';
 }
 
-/** Stable name used to identify DropdownMenuSubContent regardless of reference identity */
+/** Stable names used to identify sub components regardless of reference identity */
 const SUB_CONTENT_NAME = 'DropdownMenuSubContent';
+const SUB_TRIGGER_NAME = 'DropdownMenuSubTrigger';
 
-function isSubContent(
-  node: React.ReactNode
+/* Match an element by its component displayName, skipping host elements like <div> */
+function hasDisplayName(
+  node: React.ReactNode,
+  name: string
 ): node is React.ReactElement<{ children?: React.ReactNode }> {
   return (
     React.isValidElement(node) &&
-    typeof node.type !== 'string' && // skip host elements like <div>
-    (node.type as { displayName?: string }).displayName === SUB_CONTENT_NAME
+    typeof node.type !== 'string' &&
+    (node.type as { displayName?: string }).displayName === name
   );
 }
+
+const isSubContent = (
+  node: React.ReactNode
+): node is React.ReactElement<{ children?: React.ReactNode }> =>
+  hasDisplayName(node, SUB_CONTENT_NAME);
+
+const isSubTrigger = (
+  node: React.ReactNode
+): node is React.ReactElement<{ children?: React.ReactNode }> =>
+  hasDisplayName(node, SUB_TRIGGER_NAME);
 
 /*
  * Find the first DropdownMenuSubContent's children, descending recursively
@@ -94,6 +117,16 @@ function findSubContentChildren(nodes: React.ReactNode): React.ReactNode {
 
   walk(nodes);
   return result;
+}
+
+/*
+ * Grab the SubTrigger's label text for the breadcrumb. getNodeText drops any leading icon,
+ * so the breadcrumb stays text-only. Shallow on purpose: Radix requires SubTrigger to be a
+ * direct child of Sub, and recursing could pick up a nested submenu's trigger instead.
+ */
+function getSubTriggerLabel(nodes: React.ReactNode): string {
+  const trigger = React.Children.toArray(nodes).find(isSubTrigger);
+  return trigger ? getNodeText(trigger.props.children) : '';
 }
 
 /*
@@ -280,11 +313,20 @@ const DropdownMenuSub = ({
   ...props
 }: React.ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.Sub>) => {
   const searching = useIsSearching();
+  const parentAncestry = useBreadcrumbAncestry();
 
   if (searching) {
     // Flatten: pull the SubContent's items inline so they participate in the filter
-    // Recursive so it survives fragments / arrays / host-element wrapping
-    return <>{findSubContentChildren(children)}</>;
+    // (recursive so it survives fragments / arrays / host-element wrapping), and push this
+    // sub's label onto the ancestry so the flattened items can show a "Parent >" prefix.
+    // Nested subs in the flattened output re-read this context and append their own crumb.
+    const label = getSubTriggerLabel(children);
+    const ancestry = label ? [...parentAncestry, label] : parentAncestry;
+    return (
+      <DropdownMenuBreadcrumbContext.Provider value={ancestry}>
+        {findSubContentChildren(children)}
+      </DropdownMenuBreadcrumbContext.Provider>
+    );
   }
 
   return <DropdownMenuPrimitive.Sub {...props}>{children}</DropdownMenuPrimitive.Sub>;
@@ -549,6 +591,28 @@ const DropdownMenuEmpty = ({
 DropdownMenuEmpty.displayName = 'DropdownMenuEmpty';
 
 /*
+ * Breadcrumb prefix for flattened submenu items while searching - shows the ancestor
+ * submenu path ("Parent > Child") de-emphasized. aria-hidden so the item's accessible
+ * name stays just its own label; the ancestry is purely visual context. Renders nothing
+ * for items that aren't inside a flattened submenu (empty ancestry).
+ */
+const ItemBreadcrumb = () => {
+  const ancestry = useBreadcrumbAncestry();
+  if (!ancestry.length) return null;
+
+  return (
+    <span className={styles['dropdown-menu-breadcrumb']} aria-hidden="true">
+      {ancestry.map((crumb, index) => (
+        <React.Fragment key={index}>
+          {crumb}
+          <ChevronRightIcon />
+        </React.Fragment>
+      ))}
+    </span>
+  );
+};
+
+/*
  * Items - each variant hides itself when it doesn't match the active query
  */
 const DropdownMenuItem = React.forwardRef<
@@ -573,6 +637,7 @@ const DropdownMenuItem = React.forwardRef<
       )}
       {...props}
     >
+      <ItemBreadcrumb />
       {children}
     </DropdownMenuPrimitive.Item>
   );
@@ -599,6 +664,7 @@ const DropdownMenuCheckboxItem = React.forwardRef<
           <CheckIcon className={styles['icon-size']} />
         </DropdownMenuPrimitive.ItemIndicator>
       </span>
+      <ItemBreadcrumb />
       {children}
     </DropdownMenuPrimitive.CheckboxItem>
   );
@@ -624,6 +690,7 @@ const DropdownMenuRadioItem = React.forwardRef<
           <CircleIcon className={styles['radio-icon']} />
         </DropdownMenuPrimitive.ItemIndicator>
       </span>
+      <ItemBreadcrumb />
       {children}
     </DropdownMenuPrimitive.RadioItem>
   );

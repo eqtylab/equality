@@ -216,7 +216,7 @@ By default the search box is hidden and reveals as soon as you start typing — 
 
 ### Always visible
 
-Pass `alwaysVisible` to show the search box the moment the menu opens instead of waiting for the first keystroke. Filtering works across every item type, including checkbox and radio items. Labels, separators, and submenu triggers hide while a search is active so results stay compact.
+Pass `alwaysVisible` to show the search box the moment the menu opens instead of waiting for the first keystroke. Filtering works across every item type, including checkbox and radio items. Labels and separators hide while a search is active so results stay compact, and submenu items are flattened into the main list (see below).
 
 <DropdownMenuDemo client:only="react" variant="with-search-always" />
 
@@ -238,7 +238,7 @@ Pass `alwaysVisible` to show the search box the moment the menu opens instead of
 
 ### Searching submenus
 
-Items nested in a `DropdownMenuSub` are flattened into the main list while searching, so submenu items appear in the results without opening the submenu. Try searching for "developer" below.
+Items nested in a `DropdownMenuSub` are flattened into the main list while searching, so submenu items appear in the results without opening the submenu. Each flattened item is prefixed with its submenu path (e.g. `More Tools › Save Page As…`), dimmed like a keyboard shortcut so the item's own label stays legible. Nested submenus stack the full path. Try searching for "console" below.
 
 <DropdownMenuDemo client:only="react" variant="with-search-submenu" />
 
@@ -256,8 +256,16 @@ Items nested in a `DropdownMenuSub` are flattened into the main list while searc
     <DropdownMenuSubContent>
       <DropdownMenuItem>Save Page As...</DropdownMenuItem>
       <DropdownMenuItem>Create Shortcut...</DropdownMenuItem>
-      <DropdownMenuItem>Developer Tools</DropdownMenuItem>
-      <DropdownMenuItem>Task Manager</DropdownMenuItem>
+      <DropdownMenuSub>
+        <DropdownMenuSubTrigger>
+          <span>Developer Tools</span>
+        </DropdownMenuSubTrigger>
+        <DropdownMenuSubContent>
+          <DropdownMenuItem>Console</DropdownMenuItem>
+          <DropdownMenuItem>Network</DropdownMenuItem>
+          <DropdownMenuItem>Task Manager</DropdownMenuItem>
+        </DropdownMenuSubContent>
+      </DropdownMenuSub>
     </DropdownMenuSubContent>
   </DropdownMenuSub>
   <DropdownMenuEmpty>No actions found</DropdownMenuEmpty>

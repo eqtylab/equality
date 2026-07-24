@@ -396,8 +396,16 @@ export const DropdownMenuDemo = ({
               <DropdownMenuSubContent>
                 <DropdownMenuItem>Save Page As...</DropdownMenuItem>
                 <DropdownMenuItem>Create Shortcut...</DropdownMenuItem>
-                <DropdownMenuItem>Developer Tools</DropdownMenuItem>
-                <DropdownMenuItem>Task Manager</DropdownMenuItem>
+                <DropdownMenuSub>
+                  <DropdownMenuSubTrigger>
+                    <span>Developer Tools</span>
+                  </DropdownMenuSubTrigger>
+                  <DropdownMenuSubContent>
+                    <DropdownMenuItem>Console</DropdownMenuItem>
+                    <DropdownMenuItem>Network</DropdownMenuItem>
+                    <DropdownMenuItem>Task Manager</DropdownMenuItem>
+                  </DropdownMenuSubContent>
+                </DropdownMenuSub>
               </DropdownMenuSubContent>
             </DropdownMenuSub>
             <DropdownMenuEmpty>No actions found</DropdownMenuEmpty>
