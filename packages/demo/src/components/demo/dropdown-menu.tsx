@@ -17,17 +17,18 @@ import {
   DropdownMenuSubTrigger,
   DropdownMenuSearch,
   DropdownMenuEmpty,
-  Icon,
+  Avatar,
+  AvatarFallback,
 } from "@eqtylab/equality";
 import { Settings, User, LogOut } from "lucide-react";
 
 const MEMBERS = [
-  { name: "Ada Lovelace", icon: "User" },
-  { name: "Alan Turing", icon: "UserCog" },
-  { name: "Grace Hopper", icon: "User" },
-  { name: "Katherine Johnson", icon: "UserCog" },
-  { name: "Linus Torvalds", icon: "UserStar" },
-  { name: "Margaret Hamilton", icon: "User" },
+  { name: "Ada Lovelace", initials: "AL" },
+  { name: "Alan Turing", initials: "AT" },
+  { name: "Grace Hopper", initials: "GH" },
+  { name: "Katherine Johnson", initials: "KJ" },
+  { name: "Linus Torvalds", initials: "LT" },
+  { name: "Margaret Hamilton", initials: "MH" },
 ];
 
 const COLUMN_LABELS: Record<string, string> = {
@@ -329,12 +330,9 @@ export const DropdownMenuDemo = ({
                 textValue={person.name}
                 onSelect={() => setAssignee(person.name)}
               >
-                <Icon
-                  icon={person.icon}
-                  size="xs"
-                  background="circle"
-                  elevation="raised"
-                />
+                <Avatar size="sm">
+                  <AvatarFallback>{person.initials}</AvatarFallback>
+                </Avatar>
                 <span>{person.name}</span>
               </DropdownMenuItem>
             ))}

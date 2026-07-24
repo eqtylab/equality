@@ -13,7 +13,6 @@
 }
 
 .avatar-fallback {
-  @apply border-border border;
   @apply from-greyscale-500 to-greyscale-700 dark:from-greyscale-800 dark:to-greyscale-900 bg-gradient-to-br;
   @apply size-full;
   @apply text-greyscale-200 dark:text-text-secondary select-none font-semibold;
