@@ -16,6 +16,7 @@
   @apply bg-(--mix-color);
   @apply border-button-primary-border border;
   @apply text-button-primary-text;
+  @apply no-underline;
   @apply hover:not-disabled:bg-mixed-dark;
 }
 
@@ -24,6 +25,7 @@
   @apply bg-(--mix-color);
   @apply border-button-danger-border border;
   @apply text-button-danger-text;
+  @apply no-underline;
   @apply hover:not-disabled:bg-mixed-dark;
 }
 
@@ -32,6 +34,7 @@
   @apply bg-(--mix-color);
   @apply border-button-secondary-border border;
   @apply text-button-secondary-text;
+  @apply no-underline;
   @apply hover:not-disabled:bg-mixed-light;
   @apply dark:hover:not-disabled:bg-mixed-dark;
 }
@@ -41,6 +44,7 @@
   @apply bg-(--mix-color);
   @apply border-button-tertiary-border border;
   @apply text-button-tertiary-text;
+  @apply no-underline;
   @apply hover:dark:not-disabled:bg-mixed-light hover:not-disabled:bg-mixed-dark;
 }
 
@@ -53,6 +57,7 @@
 
 .button--navigation {
   @apply text-text-link;
+  @apply no-underline;
   @apply not-disabled:hover:bg-lilac-400/25 not-disabled:hover:text-lilac-800 not-disabled:dark:hover:bg-lilac-500/25 not-disabled:dark:hover:text-lilac-200;
 }
 
