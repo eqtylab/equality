@@ -5,7 +5,8 @@ import { Check, ChevronDown, ChevronUp } from 'lucide-react';
 
 import styles from '@/components/select/select.module.css';
 import { ELEVATION, generateElevationVariants } from '@/lib/elevations';
-import { cn, getThemeProviderRoot } from '@/lib/utils';
+import { cn } from '@/lib/utils';
+import { usePortalContainer } from '@/theme/portal-container';
 
 const CheckIcon = Check as React.ComponentType<{ className?: string }>;
 const ChevronDownIcon = ChevronDown as React.ComponentType<{ className?: string }>;
@@ -59,7 +60,7 @@ const SelectScrollDownButton = React.forwardRef<
 SelectScrollDownButton.displayName = SelectPrimitive.ScrollDownButton.displayName;
 
 const SelectPortal = ({ children }: { children: React.ReactNode }) => (
-  <SelectPrimitive.Portal container={getThemeProviderRoot()}>{children}</SelectPrimitive.Portal>
+  <SelectPrimitive.Portal container={usePortalContainer()}>{children}</SelectPrimitive.Portal>
 );
 
 const selectContentElevationVariants = generateElevationVariants(

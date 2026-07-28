@@ -2,7 +2,8 @@ import * as React from 'react';
 import { Drawer as DrawerPrimitive } from 'vaul';
 
 import styles from '@/components/drawer/drawer.module.css';
-import { cn, getThemeProviderRoot } from '@/lib/utils';
+import { cn } from '@/lib/utils';
+import { usePortalContainer } from '@/theme/portal-container';
 
 const Drawer = ({
   shouldScaleBackground = true,
@@ -15,7 +16,7 @@ Drawer.displayName = 'Drawer';
 const DrawerTrigger = DrawerPrimitive.Trigger;
 
 const DrawerPortal = ({ children }: { children: React.ReactNode }) => (
-  <DrawerPrimitive.Portal container={getThemeProviderRoot()}>{children}</DrawerPrimitive.Portal>
+  <DrawerPrimitive.Portal container={usePortalContainer()}>{children}</DrawerPrimitive.Portal>
 );
 
 const DrawerClose = DrawerPrimitive.Close;

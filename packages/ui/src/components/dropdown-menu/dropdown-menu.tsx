@@ -3,7 +3,8 @@ import * as DropdownMenuPrimitive from '@radix-ui/react-dropdown-menu';
 import { Check, ChevronRight, Circle, Search } from 'lucide-react';
 
 import styles from '@/components/dropdown-menu/dropdown-menu.module.css';
-import { cn, getThemeProviderRoot } from '@/lib/utils';
+import { cn } from '@/lib/utils';
+import { usePortalContainer } from '@/theme/portal-container';
 
 const CheckIcon = Check as React.ComponentType<{ className?: string }>;
 const ChevronRightIcon = ChevronRight as React.ComponentType<{ className?: string }>;
@@ -260,7 +261,7 @@ const DropdownMenuTrigger = DropdownMenuPrimitive.Trigger;
 const DropdownMenuGroup = DropdownMenuPrimitive.Group;
 
 const DropdownMenuPortal = ({ children }: { children: React.ReactNode }) => (
-  <DropdownMenuPrimitive.Portal container={getThemeProviderRoot()}>
+  <DropdownMenuPrimitive.Portal container={usePortalContainer()}>
     {children}
   </DropdownMenuPrimitive.Portal>
 );

@@ -4,7 +4,8 @@ import { cva, type VariantProps } from 'class-variance-authority';
 
 import { IconButton } from '@/components/icon-button/icon-button';
 import styles from '@/components/sheet/sheet.module.css';
-import { cn, getThemeProviderRoot } from '@/lib/utils';
+import { cn } from '@/lib/utils';
+import { usePortalContainer } from '@/theme/portal-container';
 
 const Sheet = SheetPrimitive.Root;
 
@@ -13,7 +14,7 @@ const SheetTrigger = SheetPrimitive.Trigger;
 const SheetClose = SheetPrimitive.Close;
 
 const SheetPortal = ({ children }: { children: React.ReactNode }) => (
-  <SheetPrimitive.Portal container={getThemeProviderRoot()}>{children}</SheetPrimitive.Portal>
+  <SheetPrimitive.Portal container={usePortalContainer()}>{children}</SheetPrimitive.Portal>
 );
 
 const SheetOverlay = React.forwardRef<
