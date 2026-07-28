@@ -43,6 +43,21 @@ import { ThemeProvider } from "@eqtylab/equality";
 </ThemeProvider>;
 ```
 
+### Portalled surfaces
+
+Tooltips, popovers, selects, dialogs, sheets, drawers, and dropdown menus render into a portal that `<ThemeProvider />` supplies automatically, so they stay inside the themed subtree. Two cases need you to provide that container yourself, via the `portalContainer` prop:
+
+- **Shadow DOM** — the default document lookup can't see into a shadow root, so portalled surfaces escape the boundary and render unstyled.
+- **More than one theme root on a page** — otherwise the second root's portals can land inside the first one's container.
+
+```tsx
+<ThemeProvider portalContainer={myElement}>
+  <YourApp />
+</ThemeProvider>
+```
+
+Pass `portalContainer={null}` to portal to `document.body`. To supply a container without rendering a `<ThemeProvider />` at all, use the exported `<PortalContainerProvider container={myElement} />`.
+
 ## Use components
 
 Each component includes its own scoped `.module.css` file — no need to import a global stylesheet.

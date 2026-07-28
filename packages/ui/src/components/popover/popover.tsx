@@ -2,14 +2,15 @@ import * as React from 'react';
 import * as PopoverPrimitive from '@radix-ui/react-popover';
 
 import styles from '@/components/popover/popover.module.css';
-import { cn, getThemeProviderRoot } from '@/lib/utils';
+import { cn } from '@/lib/utils';
+import { usePortalContainer } from '@/theme/portal-container';
 
 const Popover = PopoverPrimitive.Root;
 
 const PopoverTrigger = PopoverPrimitive.Trigger;
 
 const PopoverPortal = ({ children }: { children: React.ReactNode }) => (
-  <PopoverPrimitive.Portal container={getThemeProviderRoot()}>{children}</PopoverPrimitive.Portal>
+  <PopoverPrimitive.Portal container={usePortalContainer()}>{children}</PopoverPrimitive.Portal>
 );
 
 const PopoverContent = React.forwardRef<

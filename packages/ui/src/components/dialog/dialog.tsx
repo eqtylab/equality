@@ -3,14 +3,15 @@ import * as DialogPrimitive from '@radix-ui/react-dialog';
 
 import styles from '@/components/dialog/dialog.module.css';
 import { IconButton } from '@/components/icon-button/icon-button';
-import { cn, getThemeProviderRoot } from '@/lib/utils';
+import { cn } from '@/lib/utils';
+import { usePortalContainer } from '@/theme/portal-container';
 
 const Dialog = DialogPrimitive.Root;
 
 const DialogTrigger = DialogPrimitive.Trigger;
 
 const DialogPortal = ({ children }: { children: React.ReactNode }) => (
-  <DialogPrimitive.Portal container={getThemeProviderRoot()}>{children}</DialogPrimitive.Portal>
+  <DialogPrimitive.Portal container={usePortalContainer()}>{children}</DialogPrimitive.Portal>
 );
 
 const DialogClose = DialogPrimitive.Close;

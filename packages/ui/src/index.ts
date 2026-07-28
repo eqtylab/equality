@@ -3,6 +3,8 @@ export * from './components';
 
 /* THEME */
 export * from './theme/theme-provider';
+export { PORTAL_ROOT_ID, usePortalContainer } from './theme/portal-container';
+export * from './theme/portal-container-provider';
 export * from './theme/hooks/use-theme';
 
 /* HOOKS */

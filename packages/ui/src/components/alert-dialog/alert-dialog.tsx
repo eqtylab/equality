@@ -4,14 +4,15 @@ import { type VariantProps } from 'class-variance-authority';
 
 import styles from '@/components/alert-dialog/alert-dialog.module.css';
 import { buttonVariants } from '@/components/button/button';
-import { cn, getThemeProviderRoot } from '@/lib/utils';
+import { cn } from '@/lib/utils';
+import { usePortalContainer } from '@/theme/portal-container';
 
 const AlertDialog = AlertDialogPrimitive.Root;
 
 const AlertDialogTrigger = AlertDialogPrimitive.Trigger;
 
 const AlertDialogPortal = ({ children }: { children: React.ReactNode }) => (
-  <AlertDialogPrimitive.Portal container={getThemeProviderRoot()}>
+  <AlertDialogPrimitive.Portal container={usePortalContainer()}>
     {children}
   </AlertDialogPrimitive.Portal>
 );

@@ -2,7 +2,8 @@ import * as React from 'react';
 import * as TooltipPrimitive from '@radix-ui/react-tooltip';
 
 import styles from '@/components/tooltip/tooltip.module.css';
-import { cn, getThemeProviderRoot } from '@/lib/utils';
+import { cn } from '@/lib/utils';
+import { usePortalContainer } from '@/theme/portal-container';
 
 const TooltipProvider = TooltipPrimitive.Provider;
 
@@ -11,7 +12,7 @@ const Tooltip = TooltipPrimitive.Root;
 const TooltipTrigger = TooltipPrimitive.Trigger;
 
 const TooltipPortal = ({ children }: { children: React.ReactNode }) => (
-  <TooltipPrimitive.Portal container={getThemeProviderRoot()}>{children}</TooltipPrimitive.Portal>
+  <TooltipPrimitive.Portal container={usePortalContainer()}>{children}</TooltipPrimitive.Portal>
 );
 
 const TooltipContent = React.forwardRef<
