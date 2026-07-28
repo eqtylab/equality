@@ -56,32 +56,6 @@ function formatCssGroup(obj, prefix = '') {
   return tokens.sort().join('\n') + '\n';
 }
 
-function formatTailwindGroup(obj) {
-  const tokens = [];
-
-  function traverse(obj, path) {
-    for (const [key, token] of Object.entries(obj)) {
-      if (key === '$type' || key === '$value') continue;
-
-      const currentPath = path ? [...path, key] : [key];
-
-      if (token && typeof token === 'object') {
-        const colorValue = token.$value;
-        if (colorValue) {
-          const name = currentPath.join('-').toLowerCase();
-          tokens.push(`--${name}: var(--${name});`);
-        } else {
-          traverse(token, currentPath);
-        }
-      }
-    }
-  }
-
-  traverse(obj);
-
-  return tokens.sort().join('\n') + '\n';
-}
-
 /* SCOPED */
 sd.registerFormat({
   name: 'css/dark',
@@ -160,14 +134,20 @@ sd.registerFormat({
 sd.registerFormat({
   name: 'tailwind',
   format: async ({ dictionary }) => {
-    const tokens = formatTailwindGroup(dictionary.tokens.Light);
+    // Non-inline `@theme` with real Light values: utilities compile to
+    // `var(--color-*)` (overridable) and the emitted `:root,:host` block holds a
+    // plain value rather than a self-reference (`var(--color-x)`), which would be
+    // cyclic and resolve to nothing wherever Tailwind's theme output is unlayered.
+    const tokens = formatCssGroup(dictionary.tokens.Light);
 
     return await prettier.format(
       `@theme inline {
 
       --color-mixed-light: color-mix(in oklch, var(--mix-color), white var(--hover-lighten, 20%));
       --color-mixed-dark: color-mix(in oklch, var(--mix-color), black var(--hover-darken, 20%));
+    }
 
+    @theme {
       ${tokens}
     }`,
       { ...prettierConfig, parser: 'css' }
