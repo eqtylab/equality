@@ -42,6 +42,18 @@ console.log('Hello, world!');
 <CodeBlock title="Error" variant="danger" language="js" code={code} />
 ```
 
+## Theming
+
+The syntax palette follows the surrounding theme. Unlike the rest of the library, which themes purely through CSS, this component resolves the theme in JavaScript — so it needs to be told which theme it is on whenever the page-wide value would be wrong. That happens inside a shadow root, where the page-wide lookup can't reach, and when more than one theme is on screen at once.
+
+Set it on the surrounding `<ThemeProvider theme="dark">`, or on a `<ThemeScopeProvider theme="dark">` if you theme a subtree yourself. An explicit prop overrides both:
+
+```tsx
+<CodeBlock theme="dark" language="js" code={code} />
+```
+
+With none of these, the component falls back to the page-wide theme, which is correct for a single-theme page outside a shadow root.
+
 ## Code Language Support
 
 The Code Block component uses refractor and Prism for syntax highlighting. Most languages are supported - those that aren't will fallback to general `text` syntax highlighting.
