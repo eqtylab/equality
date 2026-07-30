@@ -58,6 +58,23 @@ Tooltips, popovers, selects, dialogs, sheets, drawers, and dropdown menus render
 
 Pass `portalContainer={null}` to portal to `document.body`. To supply a container without rendering a `<ThemeProvider />` at all, use the exported `<PortalContainerProvider container={myElement} />`.
 
+### Theme-aware components
+
+Almost everything themes through CSS custom properties on the nearest `[data-equality-theme]` ancestor, so it follows the surrounding theme with no help. `<CodeBlock />` is the exception — it picks a syntax palette in JavaScript, and without being told otherwise it reads the page-wide theme. That is wrong in the same two cases as portals:
+
+- **Shadow DOM** — the page-wide lookup walks the document, which can't see into a shadow root.
+- **More than one theme root on a page** — the page-wide value is a single global, so a dark subtree can render the light palette.
+
+Tell `<ThemeProvider />` which theme its subtree is on:
+
+```tsx
+<ThemeProvider theme="dark">
+  <YourApp />
+</ThemeProvider>
+```
+
+To declare a theme without rendering a `<ThemeProvider />`, use the exported `<ThemeScopeProvider theme="dark" />`. Either way, an explicit `theme` prop on `<CodeBlock />` still wins.
+
 ## Use components
 
 Each component includes its own scoped `.module.css` file — no need to import a global stylesheet.
