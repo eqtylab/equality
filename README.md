@@ -77,7 +77,10 @@ pnpm add @eqtylab/equality
 
 ```css
 @import '@eqtylab/equality/theme-config.css';
+@import '@eqtylab/equality/preflight.css' layer(base);
 ```
+
+See the [Usage guide](https://equality.eqtylab.io/getting-started/usage) for the available stylesheets and how to embed Equality in a site that has its own base styles.
 
 Or
 
@@ -159,4 +162,4 @@ Requirements:
 ## Troubleshooting
 
 - If the demo doesn’t start, ensure Node ≥ 18 and pnpm ≥ 9.
-- If styles don't appear, confirm the CSS import: `@import '@eqtylab/equality/theme-config.css'`.
+- If styles don't appear, confirm the CSS imports listed in the [Usage guide](https://equality.eqtylab.io/getting-started/usage).

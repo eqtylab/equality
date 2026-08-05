@@ -1,6 +1,7 @@
 @import "tailwindcss";
 
 @import "@eqtylab/equality/theme-config.css";
+@import "@eqtylab/equality/preflight.css" layer(base);
 
 @layer components {
   body {
