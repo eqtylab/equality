@@ -28,7 +28,12 @@ const ThemeProvider = ({ customVars, portalContainer, children }: ThemeProviderP
 
   return (
     <PortalContainerProvider container={usesOwnPortal ? ownPortalContainer : portalContainer}>
-      <div id="equality-theme-provider-root" className={styles.root} style={customVars}>
+      <div
+        id="equality-theme-provider-root"
+        data-equality-root
+        className={styles.root}
+        style={customVars}
+      >
         {children}
         {usesOwnPortal && <Portal ref={setOwnPortalContainer} />}
       </div>
