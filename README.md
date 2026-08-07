@@ -4,11 +4,11 @@
 [![Publish Equality Package](https://github.com/eqtylab/equality/actions/workflows/publish.yaml/badge.svg)](https://github.com/eqtylab/equality/actions/workflows/publish.yaml)
 [![Code Quality Checks](https://github.com/eqtylab/equality/actions/workflows/code-quality.yaml/badge.svg)](https://github.com/eqtylab/equality/actions/workflows/code-quality.yaml)
 
-EQTY's design system — a shared component library and demo app.
+EQTY Lab's design system — accessible React components and design tokens, built on Radix UI and Tailwind CSS v4.
 
 ## Prerequisites
 
-- Node 18+ (Vite 5 requires Node ≥ 18)
+- Node 22.12+ (Astro 6 requires Node ≥ 22.12.0)
 - pnpm 9.x (workspace uses `packageManager: pnpm@9.12.3`)
 
 Verify versions:
@@ -30,7 +30,7 @@ This installs all workspace packages under `packages/`.
 
 ## Useful commands (from repo root)
 
-- Start demo (Vite dev server):
+- Start dev servers (Astro docs site + design token watcher):
 
   ```bash
   pnpm dev
