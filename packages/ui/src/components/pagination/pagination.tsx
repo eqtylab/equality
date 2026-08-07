@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight } from 'lucide-react';
 
 import { Button } from '@/components/button/button';
 import styles from '@/components/pagination/pagination.module.css';
@@ -14,6 +14,8 @@ import { cn } from '@/lib/utils';
 
 const ChevronLeftIcon = ChevronLeft as React.ComponentType<{ className?: string }>;
 const ChevronRightIcon = ChevronRight as React.ComponentType<{ className?: string }>;
+const ChevronsLeftIcon = ChevronsLeft as React.ComponentType<{ className?: string }>;
+const ChevronsRightIcon = ChevronsRight as React.ComponentType<{ className?: string }>;
 
 interface PaginationProps {
   currentPage: number;
@@ -24,6 +26,7 @@ interface PaginationProps {
   onItemsPerPageChange?: (itemsPerPage: number) => void;
   itemsPerPageOptions?: number[];
   showInfo?: boolean;
+  showFirstLast?: boolean;
   maxVisiblePages?: number;
   className?: string;
   type?: string;
@@ -39,6 +42,7 @@ const Pagination = ({
   onItemsPerPageChange,
   itemsPerPageOptions = [10, 25, 50, 100],
   showInfo = true,
+  showFirstLast = true,
   maxVisiblePages = 5,
   className = '',
   type = '',
@@ -48,8 +52,9 @@ const Pagination = ({
   const startItem = Math.min(filteredItems, 1 + (currentPage - 1) * itemsPerPage);
   const endItem = Math.min(currentPage * itemsPerPage, filteredItems);
   const hasFilteredItems = filteredItems > 0;
-  const isFirstPage = currentPage === 1;
-  const isLastPage = currentPage === totalPages;
+  const isFirstPage = currentPage <= 1;
+  const isLastPage = currentPage >= totalPages;
+  const showFirstLastButtons = showFirstLast && totalPages > maxVisiblePages;
 
   // Don't render if there's only one page or no items
   if (totalItems <= itemsPerPageOptions[0]) {
@@ -88,12 +93,20 @@ const Pagination = ({
     onPageChange(1);
   };
 
+  const handleFirstPage = () => {
+    handlePageChange(1);
+  };
+
   const handlePreviousPage = () => {
     handlePageChange(Math.max(1, currentPage - 1));
   };
 
   const handleNextPage = () => {
     handlePageChange(Math.min(totalPages, currentPage + 1));
+  };
+
+  const handleLastPage = () => {
+    handlePageChange(totalPages);
   };
 
   // Calculate which page numbers to show
@@ -114,7 +127,7 @@ const Pagination = ({
       } else {
         // Show pages centered around current page
         startPage = currentPage - halfVisible;
-        endPage = currentPage + halfVisible;
+        endPage = startPage + maxVisiblePages - 1;
       }
     }
 
@@ -125,6 +138,8 @@ const Pagination = ({
           variant={currentPage === i ? 'primary' : 'tertiary'}
           size="sm"
           onClick={() => handlePageChange(i)}
+          aria-label={`Page ${i} of ${totalPages}`}
+          aria-current={currentPage === i ? 'page' : undefined}
         >
           {i}
         </Button>
@@ -143,7 +158,10 @@ const Pagination = ({
             <span>Showing {startItem} to</span>
             {onItemsPerPageChange ? (
               <Select value={itemsPerPage.toString()} onValueChange={handleItemsPerPageChange}>
-                <SelectTrigger>
+                <SelectTrigger
+                  className={styles['items-per-page-trigger']}
+                  aria-label="Items per page"
+                >
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
@@ -165,7 +183,19 @@ const Pagination = ({
       </div>
 
       {/* Right side: Page navigation */}
-      <div className={styles['page-navigation-container']}>
+      <nav className={styles['page-navigation-container']} aria-label="Pagination">
+        {showFirstLastButtons && (
+          <Button
+            variant="tertiary"
+            size="sm"
+            onClick={handleFirstPage}
+            disabled={isFirstPage}
+            aria-label="First page"
+          >
+            <ChevronsLeftIcon />
+          </Button>
+        )}
+
         <Button
           variant="tertiary"
           size="sm"
@@ -187,7 +217,19 @@ const Pagination = ({
         >
           <ChevronRightIcon />
         </Button>
-      </div>
+
+        {showFirstLastButtons && (
+          <Button
+            variant="tertiary"
+            size="sm"
+            onClick={handleLastPage}
+            disabled={isLastPage}
+            aria-label={`Last page (${totalPages})`}
+          >
+            <ChevronsRightIcon />
+          </Button>
+        )}
+      </nav>
     </div>
   );
 };
