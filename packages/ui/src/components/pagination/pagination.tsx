@@ -127,7 +127,7 @@ const Pagination = ({
       } else {
         // Show pages centered around current page
         startPage = currentPage - halfVisible;
-        endPage = currentPage + halfVisible;
+        endPage = startPage + maxVisiblePages - 1;
       }
     }
 
