@@ -13,6 +13,10 @@
   @apply focus-ring;
 }
 
+.input-container {
+  @apply flex w-full flex-col;
+}
+
 .input-wrapper {
   @apply border-border bg-popover-background border;
   @apply flex h-10 w-full items-center gap-2 rounded-lg;
@@ -36,4 +40,34 @@
 .input-prefix,
 .input-suffix {
   @apply text-text-secondary flex items-center;
+}
+
+.input-wrapper--error {
+  @apply border-brand-red;
+}
+
+/* padding sits inside the collapsible so it animates away with the message */
+.input-help-text,
+.input-error-text {
+  @apply pt-2 text-xs;
+}
+
+.input-help-text {
+  @apply text-text-secondary;
+}
+
+.input-error-text {
+  @apply text-brand-red flex items-center gap-1;
+}
+
+.input-error-list {
+  @apply space-y-1 pt-2;
+}
+
+.input-error-list .input-error-text {
+  @apply pt-0;
+}
+
+.input-error-icon {
+  @apply size-3 shrink-0;
 }
