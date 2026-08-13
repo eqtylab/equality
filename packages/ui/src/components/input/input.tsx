@@ -89,7 +89,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
             type={type}
             className={styles['input-element']}
             ref={ref}
-            aria-invalid={hasError || undefined}
+            aria-invalid={isMarkedInvalid ? ariaInvalid : hasErrorText || undefined}
             aria-describedby={describedBy}
             {...props}
           />
