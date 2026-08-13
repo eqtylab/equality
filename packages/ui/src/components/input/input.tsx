@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { CircleAlert } from 'lucide-react';
+import { TriangleAlert } from 'lucide-react';
 
 import styles from '@/components/input/input.module.css';
 import { MotionCollapsibleContent } from '@/components/motion-collapsible/motion-collapsible';
@@ -55,7 +55,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
         .filter(Boolean)
         .join(' ') || undefined;
 
-    const errorIcon = <CircleAlert className={styles['input-error-icon']} aria-hidden="true" />;
+    const errorIcon = <TriangleAlert className={styles['input-error-icon']} aria-hidden="true" />;
 
     // role="alert" announces the message on insert, so no input carries a standing live region
     const errorMessage =
