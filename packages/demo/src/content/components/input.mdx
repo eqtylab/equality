@@ -112,7 +112,7 @@ The first field below has help text, the second does not. Type a short password 
 />
 ```
 
-Whichever message is showing is wired to the input with `aria-describedby`, and the slot is a polite live region, so a screen reader reads the error when it appears. Do not repeat the error in a separate element — that double-announces it.
+Whichever message is showing is wired to the input with `aria-describedby`, and the error carries `role="alert"`, so a screen reader announces it as soon as it appears. Do not repeat the error in a separate element — that double-announces it.
 
 When the constraint is a character limit, pair the help text with a counter beside the label (`0/80 characters`) rather than spending the help text on the number.
 

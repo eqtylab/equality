@@ -34,9 +34,11 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
     const errorTextId = `${id}-error-text`;
 
     // a validator that reports several problems at once gets a row each, deduped
-    const errorList = Array.isArray(errorText)
-      ? [...new Set(errorText.filter((message) => !!message))]
-      : null;
+    const errorList =
+      Array.isArray(errorText) &&
+      errorText.every((message): message is string => typeof message === 'string')
+        ? [...new Set(errorText.filter((message) => !!message))]
+        : null;
     const hasErrorText = errorList ? errorList.length > 0 : !!errorText;
 
     // errorText drives the error state, but a caller can still mark the field invalid on its own
