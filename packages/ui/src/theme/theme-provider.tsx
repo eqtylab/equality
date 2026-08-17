@@ -3,7 +3,7 @@ import * as React from 'react';
 import type { Theme } from './lib/utils';
 import { Portal } from './portal';
 import { PortalContainerProvider } from './portal-container-provider';
-import { ThemeScopeProvider } from './theme-scope-provider';
+import { ThemeScopeContext } from './theme-scope';
 import styles from './theme.module.css';
 
 interface ThemeProviderProps {
@@ -20,7 +20,8 @@ interface ThemeProviderProps {
    */
   portalContainer?: HTMLElement | null;
   /**
-   * The theme this subtree renders on.
+   * The theme this subtree renders on. This is the only place a theme is set —
+   * components take it from here rather than from a prop of their own.
    *
    * Only components that branch on the theme in JavaScript need it — `CodeBlock` and
    * its syntax palette. Everything else themes through CSS custom properties. Without
@@ -40,7 +41,12 @@ const ThemeProvider = ({ customVars, portalContainer, theme, children }: ThemePr
   return (
     <PortalContainerProvider container={usesOwnPortal ? ownPortalContainer : portalContainer}>
       <div id="equality-theme-provider-root" className={styles.root} style={customVars}>
-        {theme ? <ThemeScopeProvider theme={theme}>{children}</ThemeScopeProvider> : children}
+        {/* Left alone when unset, so a nested provider keeps the theme it sits inside. */}
+        {theme ? (
+          <ThemeScopeContext.Provider value={theme}>{children}</ThemeScopeContext.Provider>
+        ) : (
+          children
+        )}
         {usesOwnPortal && <Portal ref={setOwnPortalContainer} />}
       </div>
     </PortalContainerProvider>

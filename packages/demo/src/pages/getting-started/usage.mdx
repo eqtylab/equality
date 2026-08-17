@@ -73,7 +73,7 @@ Tell `<ThemeProvider />` which theme its subtree is on:
 </ThemeProvider>
 ```
 
-To declare a theme without rendering a `<ThemeProvider />`, use the exported `<ThemeScopeProvider theme="dark" />`. Either way, an explicit `theme` prop on `<CodeBlock />` still wins.
+This is the only place a theme is set. Components have no `theme` prop of their own — they all take it from the provider they sit inside, so a subtree can never disagree with itself.
 
 ## Use components
 

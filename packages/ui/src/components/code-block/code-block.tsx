@@ -7,7 +7,6 @@ import styles from '@/components/code-block/code-block.module.css';
 import { CopyButton } from '@/components/copy-button/copy-button';
 import { cn } from '@/lib/utils';
 import { useTheme } from '@/theme/hooks/use-theme';
-import type { Theme } from '@/theme/lib/utils';
 import { useThemeScope } from '@/theme/theme-scope';
 
 interface CodeBlockProps {
@@ -18,11 +17,6 @@ interface CodeBlockProps {
   variant?: 'neutral' | 'primary' | 'success' | 'danger' | 'warning';
   codeLabel?: string;
   copy?: string;
-  /**
-   * Theme to pick the syntax palette from. Defaults to the surrounding
-   * `ThemeScopeProvider`, then to the page-wide theme.
-   */
-  theme?: Theme;
 }
 
 const WRAP = true;
@@ -35,14 +29,13 @@ const CodeBlock = ({
   variant = 'neutral',
   codeLabel,
   copy,
-  theme: themeProp,
 }: CodeBlockProps) => {
   const scopedTheme = useThemeScope();
-  // Page-wide state is the last resort: it is a single value, so it is wrong whenever
+  // Page-wide state is the fallback: it is a single value, so it is wrong whenever
   // two themes are on screen, and it resolves by walking the document, which cannot
   // see into a shadow tree.
   const [globalTheme] = useTheme();
-  const theme = themeProp ?? scopedTheme ?? globalTheme;
+  const theme = scopedTheme ?? globalTheme;
 
   return (
     <div className={cn(styles['code-block'], styles[variant], className)}>
