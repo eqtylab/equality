@@ -212,12 +212,6 @@
   font-family: var(--font-mono);
 }
 
-/*
- No `!important` anywhere here: with the palette in CSS the highlighter sets no inline
- styles, so there is nothing left to out-rank. `line-height` and `tab-size` used to
- arrive from the palette by accident and are kept deliberately; plain, untokenised text
- now inherits `--color-text-primary` rather than the palette's hardcoded black.
-*/
 .pre {
   @apply my-0 p-3;
   line-height: 1.5;

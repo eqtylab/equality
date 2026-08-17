@@ -95,10 +95,6 @@ Tooltips, popovers, selects, dialogs, sheets, drawers, and dropdown menus render
 
 Pass `portalContainer={null}` to portal to `document.body`. To supply a container without rendering a `<ThemeProvider />` at all, use the exported `<PortalContainerProvider container={myElement} />`.
 
-### Theme-aware components
-
-Every component themes through CSS custom properties on the nearest `[data-equality-theme]` ancestor, so each one follows the theme surrounding it with no configuration — including inside a shadow root, and with more than one theme on a page. Nothing in the library resolves a theme in JavaScript, so there is no second place for a theme to be declared and no way for the two to disagree.
-
 ## Use components
 
 Each component includes its own scoped `.module.css` file — no need to import a global stylesheet.

@@ -42,12 +42,6 @@ console.log('Hello, world!');
 <CodeBlock title="Error" variant="danger" language="js" code={code} />
 ```
 
-## Theming
-
-The syntax palette is defined in CSS and resolves against the nearest theme root, so a code block follows whatever theme surrounds it with no configuration. That holds inside a shadow root, and with more than one theme on a page.
-
-To restyle it, override the `--syntax-*` custom properties on the code block or on any ancestor.
-
 ## Code Language Support
 
 The Code Block component uses refractor and Prism for syntax highlighting. Most languages are supported - those that aren't will fallback to general `text` syntax highlighting.
