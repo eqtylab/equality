@@ -110,7 +110,17 @@ Tell `<ThemeProvider />` which theme its subtree is on:
 </ThemeProvider>
 ```
 
-This is the only place a theme is set. Components have no `theme` prop of their own — they all take it from the provider they sit inside, so a subtree can never disagree with itself.
+Components have no `theme` prop of their own — they all take it from the provider they sit inside, so a subtree can never disagree with itself.
+
+Where a second `<ThemeProvider />` is too much — it brings the scoped theme CSS and an unstyled wrapper element with it, which a host's layout may not survive — use `<ThemeScopeProvider />` instead. It declares the theme and nothing else: no styles, no DOM.
+
+```tsx
+<ThemeScopeProvider theme="dark">
+  <CodeBlock language="js" code={code} />
+</ThemeScopeProvider>
+```
+
+Reach for `<ThemeProvider />` in an app you own, and this only where you can't.
 
 ## Use components
 

@@ -3,7 +3,7 @@ import * as React from 'react';
 import type { Theme } from './lib/utils';
 import { Portal } from './portal';
 import { PortalContainerProvider } from './portal-container-provider';
-import { ThemeScopeContext } from './theme-scope';
+import { ThemeScopeProvider } from './theme-scope-provider';
 import styles from './theme.module.css';
 
 interface ThemeProviderProps {
@@ -47,11 +47,7 @@ const ThemeProvider = ({ customVars, portalContainer, theme, children }: ThemePr
         style={customVars}
       >
         {/* Left alone when unset, so a nested provider keeps the theme it sits inside. */}
-        {theme ? (
-          <ThemeScopeContext.Provider value={theme}>{children}</ThemeScopeContext.Provider>
-        ) : (
-          children
-        )}
+        {theme ? <ThemeScopeProvider theme={theme}>{children}</ThemeScopeProvider> : children}
         {usesOwnPortal && <Portal ref={setOwnPortalContainer} />}
       </div>
     </PortalContainerProvider>

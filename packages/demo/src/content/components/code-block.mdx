@@ -52,7 +52,7 @@ The syntax palette follows the surrounding theme, and there is no prop to set it
 </ThemeProvider>
 ```
 
-Without it, the component falls back to the page-wide theme, which is correct for a single-theme page outside a shadow root.
+Somewhere a second `<ThemeProvider />` doesn't belong, `<ThemeScopeProvider theme="dark">` declares the theme without the styles or the wrapper element. Without either, the component falls back to the page-wide theme, which is correct for a single-theme page outside a shadow root.
 
 ## Code Language Support
 
