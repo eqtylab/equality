@@ -97,26 +97,7 @@ Pass `portalContainer={null}` to portal to `document.body`. To supply a containe
 
 ### Theme-aware components
 
-Almost everything themes through CSS custom properties on the nearest `[data-equality-theme]` ancestor, so it follows the surrounding theme with no help. `<CodeBlock />` is the exception — it picks a syntax palette in JavaScript, and without being told otherwise it reads the page-wide theme. That is wrong in the same two cases as portals:
-
-- **Shadow DOM** — the page-wide lookup walks the document, which can't see into a shadow root.
-- **More than one theme root on a page** — the page-wide value is a single global, so a dark subtree can render the light palette.
-
-Tell `<ThemeProvider />` which theme its subtree is on:
-
-```tsx
-<ThemeProvider theme="dark">
-  <YourApp />
-</ThemeProvider>
-```
-
-Where a second `<ThemeProvider />` is too much — it brings the scoped theme CSS and an unstyled wrapper element with it, which a host's layout may not survive — use `<ThemeScopeProvider />` instead. It declares the theme and nothing else: no styles, no DOM.
-
-```tsx
-<ThemeScopeProvider theme="dark">
-  <YourDarkSection />
-</ThemeScopeProvider>
-```
+Every component themes through CSS custom properties on the nearest `[data-equality-theme]` ancestor, so each one follows the theme surrounding it with no configuration — including inside a shadow root, and with more than one theme on a page. Nothing in the library resolves a theme in JavaScript, so there is no second place for a theme to be declared and no way for the two to disagree.
 
 ## Use components
 

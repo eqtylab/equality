@@ -44,9 +44,9 @@ console.log('Hello, world!');
 
 ## Theming
 
-The syntax palette follows the surrounding theme as set by `<ThemeProvider />`. Unlike the rest of the library, which propagates themes purely through CSS, `<CodeBlock>` resolves the theme in JavaScript, so the provider needs to be told which theme it is on whenever the page-wide value would be wrong. That happens inside a shadow root, where the page-wide lookup can't reach, and when more than one theme is on screen at once.
+The syntax palette is defined in CSS and resolves against the nearest theme root, so a code block follows whatever theme surrounds it with no configuration. That holds inside a shadow root, and with more than one theme on a page.
 
-See [Theme-aware components](/getting-started/usage#theme-aware-components) for how to set it.
+To restyle it, override the `--syntax-*` custom properties on the code block or on any ancestor.
 
 ## Code Language Support
 
