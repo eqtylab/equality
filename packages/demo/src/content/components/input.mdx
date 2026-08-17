@@ -7,12 +7,13 @@ description: "Single-line text input field"
 import React from "react";
 import { Input, IconButton } from "@eqtylab/equality";
 import { Search, Eye, Mail, Check, User } from "lucide-react";
+import { InputErrorTextDemo } from "@demo/components/demo/input";
 
 ## Overview
 
 Input is a single-line text field for collecting short values such as names, emails, passwords, and numbers. It wraps a native `<input>`, so it accepts all standard input attributes (`type`, `placeholder`, `value`, `disabled`, `min`/`max`, and so on) and forwards a `ref` to the underlying element.
 
-Beyond the native element, it adds `prefix` and `suffix` slots for placing an icon or other content inside the field — useful for a leading search icon or a trailing password-reveal toggle. Pair the input with a [Label](label) (via a shared `id`/`htmlFor`) so it has an accessible caption, or use it inside a [Form](form) field.
+Beyond the native element, it adds `prefix` and `suffix` slots for placing an icon or other content inside the field — useful for a leading search icon or a trailing password-reveal toggle. It also owns its supplementary copy: `helpText` and `errorText` render below the field, so every form in the product spaces and styles those messages the same way. Pair the input with a [Label](label) (via a shared `id`/`htmlFor`) so it has an accessible caption, or use it inside a [Form](form) field.
 
 ## Usage
 
@@ -59,15 +60,61 @@ const [value, setValue] = useState("");
 
 ### Error
 
-There is no dedicated error variant — apply error styling with `className`, or use [Form](form), which applies invalid styling automatically from validation state.
+Pass `errorText` to put the field in its error state. The border turns red, the input is marked `aria-invalid`, and the message is rendered below the field.
 
 <Input
+  client:load
   id="input-error"
   type="text"
   placeholder="Invalid input"
-  className="border-red focus-visible:ring-red"
   defaultValue="Invalid value"
+  errorText="Enter a value between 1 and 100."
 />
+
+## Help & Error Text
+
+The component renders one message slot below the field, so spacing and styling stay consistent across every form. The two props share that slot: **the error replaces the help text** rather than stacking under it, and the help text returns once the field is valid again. A field never shows two competing lines of small print.
+
+### Help Text
+
+`helpText` is supplementary copy shown whenever the field is not in error. Use it for the technical constraints a user cannot infer from the label — character limits, password requirements, accepted formats, units. Keep it short and write it before the user makes a mistake, not after.
+
+<Input
+  id="input-help-text"
+  type="text"
+  placeholder="acme-production"
+  helpText="Lowercase letters, numbers, and hyphens. Maximum 32 characters."
+/>
+
+### Error Text
+
+`errorText` appears only when the field is in the error state. Tell the user what is wrong and how to fix it — "Enter a valid email address", not "Invalid input". Leave the prop `undefined` (or empty) when the field is valid.
+
+Because the error hides the help text, an error about a stated constraint should restate it: "Name must be 32 characters or fewer", not "Too long". Otherwise the user loses the requirement at the moment they need it.
+
+A validator that reports several problems at once can pass them as an array — `errorText={["Code is duplicated.", "Use letters, numbers, hyphens, and periods."]}` — and each gets its own row, deduped. Pass a single string whenever you can; a stack of red rows is harder to act on than one clear sentence.
+
+How the message enters depends on whether there is help text:
+
+- **With help text** — the slot is already occupied, so the error swaps in place. Nothing moves, and there is no animation to sit through before the message is readable.
+- **Without help text** — the error collapses open and closed, so validating on change never makes the layout jump.
+
+The first field below has help text, the second does not. Type a short password into each.
+
+<InputErrorTextDemo client:only="react" />
+
+### Usage
+
+```tsx
+<Input
+  helpText="Lowercase letters, numbers, and hyphens. Maximum 32 characters."
+  errorText={nameError}
+/>
+```
+
+Whichever message is showing is wired to the input with `aria-describedby`, and the error carries `role="alert"`, so a screen reader announces it as soon as it appears. Do not repeat the error in a separate element — that double-announces it.
+
+When the constraint is a character limit, pair the help text with a counter beside the label (`0/80 characters`) rather than spending the help text on the number.
 
 ## Input Types
 
@@ -167,8 +214,10 @@ import { Search, Eye } from "lucide-react";
 
 Input accepts all standard `<input>` attributes (`type`, `placeholder`, `value`, `defaultValue`, `onChange`, `disabled`, `min`, `max`, etc.) in addition to the props below.
 
-| Name     | Description                                         | Type        | Default | Required |
-| -------- | --------------------------------------------------- | ----------- | ------- | -------- |
-| `prefix` | Content rendered inside the field, before the text. | `ReactNode` | —       | ❌       |
-| `suffix` | Content rendered inside the field, after the text.  | `ReactNode` | —       | ❌       |
-| `type`   | The native input type.                              | `string`    | `text`  | ❌       |
+| Name        | Description                                                                                                                                   | Type                      | Default | Required |
+| ----------- | --------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------- | ------- | -------- |
+| `prefix`    | Content rendered inside the field, before the text.                                                                                           | `ReactNode`               | —       | ❌       |
+| `suffix`    | Content rendered inside the field, after the text.                                                                                            | `ReactNode`               | —       | ❌       |
+| `helpText`  | Supplementary copy below the field. Hidden while an error is showing.                                                                         | `ReactNode`               | —       | ❌       |
+| `errorText` | Error message below the field. Setting it puts the field in its error state and replaces the help text. An array renders one row per message. | `ReactNode` \| `string[]` | —       | ❌       |
+| `type`      | The native input type.                                                                                                                        | `string`                  | `text`  | ❌       |

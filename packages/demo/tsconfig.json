@@ -15,6 +15,12 @@
       "@eqtylab/equality/theme-config.css": [
         "../ui/src/theme/global-theme-config.css"
       ],
+      "@eqtylab/equality/preflight.css": [
+        "../ui/src/theme/theme-preflight-global.css"
+      ],
+      "@eqtylab/equality/preflight-scoped.css": [
+        "../ui/src/theme/theme-preflight-scoped.css"
+      ],
       "@eqtylab/equality/*": ["../ui/src/*"],
       "@/": ["../ui/src"],
       "@/*": ["../ui/src/*"]

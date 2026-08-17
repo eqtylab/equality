@@ -11,6 +11,15 @@
   @apply whitespace-nowrap;
 }
 
+.items-per-page-trigger.items-per-page-trigger {
+  @apply text-xs;
+  @apply h-7 w-auto px-2 py-0;
+}
+
+.items-per-page-trigger.items-per-page-trigger:focus-visible {
+  @apply ring-0 ring-offset-0;
+}
+
 .page-navigation-container {
   @apply flex gap-1;
 }

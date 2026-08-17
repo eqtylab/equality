@@ -40,7 +40,12 @@ const ThemeProvider = ({ customVars, portalContainer, theme, children }: ThemePr
 
   return (
     <PortalContainerProvider container={usesOwnPortal ? ownPortalContainer : portalContainer}>
-      <div id="equality-theme-provider-root" className={styles.root} style={customVars}>
+      <div
+        id="equality-theme-provider-root"
+        data-equality-root
+        className={styles.root}
+        style={customVars}
+      >
         {/* Left alone when unset, so a nested provider keeps the theme it sits inside. */}
         {theme ? (
           <ThemeScopeContext.Provider value={theme}>{children}</ThemeScopeContext.Provider>

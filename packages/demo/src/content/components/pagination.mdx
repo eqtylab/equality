@@ -8,7 +8,7 @@ import { PaginationDemo } from "@demo/components/demo/pagination";
 
 ## Overview
 
-Pagination provides controls for moving through a paginated list: previous/next buttons, a windowed set of numbered page buttons, an optional "showing X to Y of Z" info line, and an optional items-per-page [Select](select). It is a controlled component — you own the current page and page size, and it calls back when the user changes them.
+Pagination provides controls for moving through a paginated list: first/last and previous/next buttons, a windowed set of numbered page buttons, an optional "showing X to Y of Z" info line, and an optional items-per-page [Select](select). It is a controlled component — you own the current page and page size, and it calls back when the user changes them.
 
 It does **not** slice your data; it only renders the controls. Compute the current page's items yourself from `currentPage` and `itemsPerPage`, and pass the counts in. To keep the UI uncluttered when pagination isn't needed, the component renders nothing when `totalItems` is at or below the smallest items-per-page option.
 
@@ -61,22 +61,24 @@ Changing the page size resets to page 1 automatically.
 
 - **Items-per-page dropdown** — only shown when you pass `onItemsPerPageChange`. Without it, the info line shows a static end count instead. Customise the choices with `itemsPerPageOptions`.
 - **Info line** — set `showInfo={false}` to hide the "showing X to Y of Z" text. Use `type` to append a noun (e.g. `type="items"` → "of 100 items").
+- **First/last jumps** — double-chevron buttons bookend the navigation so users can jump straight to the first or last page. They appear only once there are more pages than `maxVisiblePages`; while every page still has its own numbered button, they would duplicate it. Set `showFirstLast={false}` to render only previous/next.
 - **Windowing** — `maxVisiblePages` controls how many numbered buttons appear at once; the window slides to keep the current page centered.
 - **Scroll on change** — pass `scrollTargetRef` (a ref or an element `id` string) to smooth-scroll that element into view whenever the page changes.
 
 ## Props
 
-| Name                   | Description                                                                         | Type                               | Default             | Required |
-| ---------------------- | ----------------------------------------------------------------------------------- | ---------------------------------- | ------------------- | -------- |
-| `currentPage`          | The active page (1-based).                                                          | `number`                           | —                   | ✅       |
-| `totalItems`           | Full dataset size. Controls whether the component renders.                          | `number`                           | —                   | ✅       |
-| `filteredItems`        | Item count after filtering. Drives page count and info text.                        | `number`                           | —                   | ✅       |
-| `itemsPerPage`         | Number of items shown per page.                                                     | `number`                           | —                   | ✅       |
-| `onPageChange`         | Called with the new page when the user navigates.                                   | `(page: number) => void`           | —                   | ✅       |
-| `onItemsPerPageChange` | Called with the new page size. When provided, the items-per-page dropdown is shown. | `(itemsPerPage: number) => void`   | —                   | ❌       |
-| `itemsPerPageOptions`  | Choices offered in the items-per-page dropdown.                                     | `number[]`                         | `[10, 25, 50, 100]` | ❌       |
-| `showInfo`             | Whether to show the "showing X to Y of Z" info line.                                | `boolean`                          | `true`              | ❌       |
-| `maxVisiblePages`      | Maximum number of numbered page buttons shown at once.                              | `number`                           | `5`                 | ❌       |
-| `type`                 | Noun appended to the info line (e.g. `"items"`).                                    | `string`                           | `""`                | ❌       |
-| `scrollTargetRef`      | Element (ref or `id` string) scrolled into view on page change.                     | `RefObject<HTMLElement>`, `string` | —                   | ❌       |
-| `className`            | Additional CSS classes applied to the container.                                    | `string`                           | —                   | ❌       |
+| Name                   | Description                                                                                                  | Type                               | Default             | Required |
+| ---------------------- | ------------------------------------------------------------------------------------------------------------ | ---------------------------------- | ------------------- | -------- |
+| `currentPage`          | The active page (1-based).                                                                                   | `number`                           | —                   | ✅       |
+| `totalItems`           | Full dataset size. Controls whether the component renders.                                                   | `number`                           | —                   | ✅       |
+| `filteredItems`        | Item count after filtering. Drives page count and info text.                                                 | `number`                           | —                   | ✅       |
+| `itemsPerPage`         | Number of items shown per page.                                                                              | `number`                           | —                   | ✅       |
+| `onPageChange`         | Called with the new page when the user navigates.                                                            | `(page: number) => void`           | —                   | ✅       |
+| `onItemsPerPageChange` | Called with the new page size. When provided, the items-per-page dropdown is shown.                          | `(itemsPerPage: number) => void`   | —                   | ❌       |
+| `itemsPerPageOptions`  | Choices offered in the items-per-page dropdown.                                                              | `number[]`                         | `[10, 25, 50, 100]` | ❌       |
+| `showInfo`             | Whether to show the "showing X to Y of Z" info line.                                                         | `boolean`                          | `true`              | ❌       |
+| `showFirstLast`        | Whether to show the jump-to-first and jump-to-last buttons when there are more pages than `maxVisiblePages`. | `boolean`                          | `true`              | ❌       |
+| `maxVisiblePages`      | Maximum number of numbered page buttons shown at once.                                                       | `number`                           | `5`                 | ❌       |
+| `type`                 | Noun appended to the info line (e.g. `"items"`).                                                             | `string`                           | `""`                | ❌       |
+| `scrollTargetRef`      | Element (ref or `id` string) scrolled into view on page change.                                              | `RefObject<HTMLElement>`, `string` | —                   | ❌       |
+| `className`            | Additional CSS classes applied to the container.                                                             | `string`                           | —                   | ❌       |

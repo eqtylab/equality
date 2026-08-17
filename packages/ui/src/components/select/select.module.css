@@ -1,14 +1,19 @@
 @reference '../../theme/theme.module.css';
 
 .select-trigger {
+  --mix-color: var(--color-border);
+  --hover-darken: 12%;
+  --hover-lighten: 12%;
   @apply text-sm;
   @apply px-3 py-2;
   @apply h-10 w-full rounded-md;
-  @apply border-button-tertiary-border bg-button-tertiary-fill border;
+  @apply border-border bg-background border;
   @apply flex-center-between gap-2;
   @apply focus-ring;
   @apply data-placeholder:text-text-secondary;
   @apply disabled:cursor-not-allowed disabled:opacity-50;
+  @apply hover:not-disabled:border-mixed-dark;
+  @apply dark:hover:not-disabled:border-mixed-light;
   @apply [&>span]:line-clamp-1;
 }
 

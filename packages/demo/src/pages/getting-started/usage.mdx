@@ -25,10 +25,47 @@ Please follow either of the setup configurations below depending on your project
 
 ### Tailwind v4
 
-Import the Equality Tailwind v4 configuration into your global stylesheet (this includes preflight (base styles), theme colors, variables, utilities and components):
+The package ships three stylesheets:
+
+| Stylesheet                               | Contains                                              |
+| ---------------------------------------- | ----------------------------------------------------- |
+| `@eqtylab/equality/theme-config.css`     | Tokens, theme, utilities and components. No reset.    |
+| `@eqtylab/equality/preflight.css`        | Base styles reset for `html` and everything under it. |
+| `@eqtylab/equality/preflight-scoped.css` | The same reset, only inside `[data-equality-root]`.   |
+
+In an app you own, import the config followed by the global preflight:
 
 ```css
 @import "@eqtylab/equality/theme-config.css";
+@import "@eqtylab/equality/preflight.css" layer(base);
+```
+
+`theme-config.css` must come first — it declares the `theme, base, components, utilities` layer order that the preflight relies on.
+
+### Embedding in a host site
+
+The preflight is a document-wide reset, so it will flatten the typography of a site that ships its own base styles, such as a Starlight or Zensical documentation site. Use the scoped preflight there instead:
+
+```css
+@import "@eqtylab/equality/theme-config.css";
+@import "@eqtylab/equality/preflight-scoped.css" layer(base);
+```
+
+`<ThemeProvider />` sets `data-equality-root` for you. You can also mark a plain wrapper, as many times per page as you need:
+
+```html
+<div data-equality-root>...</div>
+```
+
+Neither preflight declares a layer of its own, so `layer()` can place the reset wherever the host's cascade needs it — for example `layer(equality-reset)` ordered against Starlight's own layer.
+
+Note that Equality's dark palette activates on `html[data-equality-theme="dark"]`, which a host's theme toggle won't set. Mirror the host's attribute to follow its switcher:
+
+```js
+const html = document.documentElement;
+new MutationObserver(() => {
+  html.dataset.equalityTheme = html.dataset.theme;
+}).observe(html, { attributes: true, attributeFilter: ["data-theme"] });
 ```
 
 ### Other CSS frameworks

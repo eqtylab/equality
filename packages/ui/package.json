@@ -2,7 +2,7 @@
   "name": "@eqtylab/equality",
   "description": "EQTYLab's component and token-based design system",
   "homepage": "https://equality.eqtylab.io/",
-  "version": "2.5.0",
+  "version": "3.2.2",
   "license": "Apache-2.0",
   "keywords": [
     "component library",
@@ -25,7 +25,9 @@
       "import": "./dist/scripts.js",
       "require": "./dist/scripts.cjs"
     },
-    "./theme-config.css": "./dist/global-theme-config.css"
+    "./theme-config.css": "./dist/global-theme-config.css",
+    "./preflight.css": "./dist/theme-preflight-global.css",
+    "./preflight-scoped.css": "./dist/theme-preflight-scoped.css"
   },
   "files": [
     "dist",
@@ -93,7 +95,8 @@
     "dev": "pnpm run watch:tokens",
     "build": "pnpm run build:tokens && pnpm run build:lib",
     "build:tokens": "node src/scripts/build-tokens.js && prettier --write ../tokens/equality-tokens.json",
-    "build:lib": "tsup --config tsup.config.ts && cp src/theme/*.css dist/ && mkdir -p dist/generated && cp src/theme/generated/*.css dist/generated/",
+    "build:preflight": "node src/scripts/build-preflight.js && prettier --write src/theme/theme-preflight-global.css",
+    "build:lib": "pnpm run build:preflight && tsup --config tsup.config.ts && cp src/theme/*.css dist/ && mkdir -p dist/generated && cp src/theme/generated/*.css dist/generated/",
     "watch": "tsup --config tsup.config.ts --watch",
     "watch:tokens": "chokidar '../tokens/equality-tokens.json' --debounce 300 --initial=false -c 'pnpm run build:tokens'",
     "release": "pnpm run build && pnpm publish --access public --no-git-checks"

@@ -1,259 +1,265 @@
-@layer base {
-  /* =========================================================
-     SCOPED PREFLIGHT (kept intact; selectors retargeted)
-     ========================================================= */
+/* =========================================================
+   SCOPED PREFLIGHT — CANONICAL SOURCE
 
-  /* 1) Box model + resets + border-color */
-  :global(#equality-theme-provider-root),
-  :global(#equality-theme-provider-root) *,
-  :global(#equality-theme-provider-root) ::after,
-  :global(#equality-theme-provider-root) ::before,
-  :global(#equality-theme-provider-root) ::backdrop,
-  :global(#equality-theme-provider-root) ::file-selector-button {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-    border: 0 solid;
-    border-color: var(--color-border);
-  }
+   Edit this file. `theme-preflight-global.css` is generated from it by
+   `src/scripts/build-preflight.js`, which swaps `[data-equality-root]` for
+   `html`. Run `pnpm build:preflight` after changing anything here.
 
-  /* Cursor for buttons */
-  :global(#equality-theme-provider-root) button {
-    cursor: pointer;
-  }
+   Deliberately carries no `@layer` wrapper: the importer assigns the layer,
+   so a consumer can place the reset wherever their cascade needs it.
 
-  /* Typography + platform defaults */
-  :global(#equality-theme-provider-root) {
-    line-height: 1.5;
-    -webkit-text-size-adjust: 100%;
-    tab-size: 4;
-    font-family: var(--font-sans);
-    -webkit-tap-highlight-color: transparent;
-    font-synthesis: none;
-    text-rendering: optimizeLegibility;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-  }
+     @import '@eqtylab/equality/preflight-scoped.css' layer(base);
+   ========================================================= */
 
-  /* Horizontal rule */
-  :global(#equality-theme-provider-root) hr {
-    height: 0;
-    color: inherit;
-    border-top-width: 1px;
-  }
+/* 1) Box model + resets + border-color */
+[data-equality-root],
+[data-equality-root] *,
+[data-equality-root] ::after,
+[data-equality-root] ::before,
+[data-equality-root] ::backdrop,
+[data-equality-root] ::file-selector-button {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  border: 0 solid;
+  border-color: var(--color-border);
+}
 
-  /* Abbr */
-  :global(#equality-theme-provider-root) abbr:where([title]) {
-    -webkit-text-decoration: underline dotted;
-    text-decoration: underline dotted;
-  }
+/* Cursor for buttons */
+[data-equality-root] button {
+  cursor: pointer;
+}
 
-  /* Headings reset */
-  :global(#equality-theme-provider-root) h1,
-  :global(#equality-theme-provider-root) h2,
-  :global(#equality-theme-provider-root) h3,
-  :global(#equality-theme-provider-root) h4,
-  :global(#equality-theme-provider-root) h5,
-  :global(#equality-theme-provider-root) h6 {
-    font-size: inherit;
-    font-weight: inherit;
-  }
+/* Typography + platform defaults */
+[data-equality-root] {
+  line-height: 1.5;
+  -webkit-text-size-adjust: 100%;
+  tab-size: 4;
+  font-family: var(--font-sans);
+  -webkit-tap-highlight-color: transparent;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
 
-  /* Links */
-  :global(#equality-theme-provider-root) a {
-    color: inherit;
-    -webkit-text-decoration: inherit;
-    text-decoration: inherit;
-  }
+/* Horizontal rule */
+[data-equality-root] hr {
+  height: 0;
+  color: inherit;
+  border-top-width: 1px;
+}
 
-  /* Strong */
-  :global(#equality-theme-provider-root) b,
-  :global(#equality-theme-provider-root) strong {
-    font-weight: bolder;
-  }
+/* Abbr */
+[data-equality-root] abbr:where([title]) {
+  -webkit-text-decoration: underline dotted;
+  text-decoration: underline dotted;
+}
 
-  /* Code fonts */
-  :global(#equality-theme-provider-root) code,
-  :global(#equality-theme-provider-root) kbd,
-  :global(#equality-theme-provider-root) samp,
-  :global(#equality-theme-provider-root) pre {
-    font-family: var(--font-mono), monospace;
-    font-size: 1em;
-  }
+/* Headings reset */
+[data-equality-root] h1,
+[data-equality-root] h2,
+[data-equality-root] h3,
+[data-equality-root] h4,
+[data-equality-root] h5,
+[data-equality-root] h6 {
+  font-size: inherit;
+  font-weight: inherit;
+}
 
-  /* Small */
-  :global(#equality-theme-provider-root) small {
-    font-size: 80%;
-  }
+/* Links */
+[data-equality-root] a {
+  color: inherit;
+  -webkit-text-decoration: inherit;
+  text-decoration: inherit;
+}
 
-  /* Sub/Sup */
-  :global(#equality-theme-provider-root) sub,
-  :global(#equality-theme-provider-root) sup {
-    font-size: 75%;
-    line-height: 0;
-    position: relative;
-    vertical-align: baseline;
-  }
-  :global(#equality-theme-provider-root) sub {
-    bottom: -0.25em;
-  }
-  :global(#equality-theme-provider-root) sup {
-    top: -0.5em;
-  }
+/* Strong */
+[data-equality-root] b,
+[data-equality-root] strong {
+  font-weight: bolder;
+}
 
-  /* Tables */
-  :global(#equality-theme-provider-root) table {
-    text-indent: 0;
-    border-color: inherit;
-    border-collapse: collapse;
-  }
+/* Code fonts */
+[data-equality-root] code,
+[data-equality-root] kbd,
+[data-equality-root] samp,
+[data-equality-root] pre {
+  font-family: var(--font-mono), monospace;
+  font-size: 1em;
+}
 
-  /* Firefox focus */
-  :global(#equality-theme-provider-root) :-moz-focusring {
-    outline: auto;
-  }
+/* Small */
+[data-equality-root] small {
+  font-size: 80%;
+}
 
-  /* Progress baseline */
-  :global(#equality-theme-provider-root) progress {
-    vertical-align: baseline;
-  }
+/* Sub/Sup */
+[data-equality-root] sub,
+[data-equality-root] sup {
+  font-size: 75%;
+  line-height: 0;
+  position: relative;
+  vertical-align: baseline;
+}
+[data-equality-root] sub {
+  bottom: -0.25em;
+}
+[data-equality-root] sup {
+  top: -0.5em;
+}
 
-  /* Summary display */
-  :global(#equality-theme-provider-root) summary {
-    display: list-item;
-  }
+/* Tables */
+[data-equality-root] table {
+  text-indent: 0;
+  border-color: inherit;
+  border-collapse: collapse;
+}
 
-  /* Lists unstyled */
-  :global(#equality-theme-provider-root) ol,
-  :global(#equality-theme-provider-root) ul,
-  :global(#equality-theme-provider-root) menu {
-    list-style: none;
-  }
+/* Firefox focus */
+[data-equality-root] :-moz-focusring {
+  outline: auto;
+}
 
-  /* Replaced elements */
-  :global(#equality-theme-provider-root) img,
-  :global(#equality-theme-provider-root) svg,
-  :global(#equality-theme-provider-root) video,
-  :global(#equality-theme-provider-root) canvas,
-  :global(#equality-theme-provider-root) audio,
-  :global(#equality-theme-provider-root) iframe,
-  :global(#equality-theme-provider-root) embed,
-  :global(#equality-theme-provider-root) object {
-    display: block;
-    vertical-align: middle;
-  }
+/* Progress baseline */
+[data-equality-root] progress {
+  vertical-align: baseline;
+}
 
-  /* Media constraints */
-  :global(#equality-theme-provider-root) img,
-  :global(#equality-theme-provider-root) video {
-    max-width: 100%;
-    height: auto;
-  }
+/* Summary display */
+[data-equality-root] summary {
+  display: list-item;
+}
 
-  /* Form element normalizations */
-  :global(#equality-theme-provider-root) button,
-  :global(#equality-theme-provider-root) input,
-  :global(#equality-theme-provider-root) select,
-  :global(#equality-theme-provider-root) optgroup,
-  :global(#equality-theme-provider-root) textarea,
-  :global(#equality-theme-provider-root) ::file-selector-button {
-    font: inherit;
-    font-feature-settings: inherit;
-    font-variation-settings: inherit;
-    letter-spacing: inherit;
-    color: inherit;
-    border-radius: 0;
-    background-color: transparent;
-    opacity: 1;
-  }
+/* Lists unstyled */
+[data-equality-root] ol,
+[data-equality-root] ul,
+[data-equality-root] menu {
+  list-style: none;
+}
 
-  /* Select optgroup weight */
-  :global(#equality-theme-provider-root) :where(select:is([multiple], [size])) optgroup {
-    font-weight: bolder;
-  }
+/* Replaced elements */
+[data-equality-root] img,
+[data-equality-root] svg,
+[data-equality-root] video,
+[data-equality-root] canvas,
+[data-equality-root] audio,
+[data-equality-root] iframe,
+[data-equality-root] embed,
+[data-equality-root] object {
+  display: block;
+  vertical-align: middle;
+}
 
-  /* Select optgroup option indent */
-  :global(#equality-theme-provider-root) :where(select:is([multiple], [size])) optgroup option {
-    padding-inline-start: 20px;
-  }
+/* Media constraints */
+[data-equality-root] img,
+[data-equality-root] video {
+  max-width: 100%;
+  height: auto;
+}
 
-  /* File button spacing */
-  :global(#equality-theme-provider-root) ::file-selector-button {
-    margin-inline-end: 4px;
-  }
+/* Form element normalizations */
+[data-equality-root] button,
+[data-equality-root] input,
+[data-equality-root] select,
+[data-equality-root] optgroup,
+[data-equality-root] textarea,
+[data-equality-root] ::file-selector-button {
+  font: inherit;
+  font-feature-settings: inherit;
+  font-variation-settings: inherit;
+  letter-spacing: inherit;
+  color: inherit;
+  border-radius: 0;
+  background-color: transparent;
+  opacity: 1;
+}
 
-  /* Placeholder */
-  :global(#equality-theme-provider-root) ::placeholder {
-    opacity: 1;
-  }
+/* Select optgroup weight */
+[data-equality-root] :where(select:is([multiple], [size])) optgroup {
+  font-weight: bolder;
+}
 
-  @supports (not (-webkit-appearance: -apple-pay-button)) or (contain-intrinsic-size: 1px) {
-    :global(#equality-theme-provider-root) ::placeholder {
-      color: color-mix(in oklab, currentcolor 50%, transparent);
-    }
-  }
+/* Select optgroup option indent */
+[data-equality-root] :where(select:is([multiple], [size])) optgroup option {
+  padding-inline-start: 20px;
+}
 
-  /* Textarea resize */
-  :global(#equality-theme-provider-root) textarea {
-    resize: vertical;
-  }
+/* File button spacing */
+[data-equality-root] ::file-selector-button {
+  margin-inline-end: 4px;
+}
 
-  /* WebKit search decoration */
-  :global(#equality-theme-provider-root) ::-webkit-search-decoration {
-    -webkit-appearance: none;
-  }
+/* Placeholder */
+[data-equality-root] ::placeholder {
+  opacity: 1;
+}
 
-  /* iOS date/time */
-  :global(#equality-theme-provider-root) ::-webkit-date-and-time-value {
-    min-height: 1lh;
-    text-align: inherit;
+@supports (not (-webkit-appearance: -apple-pay-button)) or (contain-intrinsic-size: 1px) {
+  [data-equality-root] ::placeholder {
+    color: color-mix(in oklab, currentcolor 50%, transparent);
   }
+}
 
-  :global(#equality-theme-provider-root) ::-webkit-datetime-edit {
-    display: inline-flex;
-  }
+/* Textarea resize */
+[data-equality-root] textarea {
+  resize: vertical;
+}
 
-  :global(#equality-theme-provider-root) ::-webkit-datetime-edit-fields-wrapper {
-    padding: 0;
-  }
+/* WebKit search decoration */
+[data-equality-root] ::-webkit-search-decoration {
+  -webkit-appearance: none;
+}
 
-  :global(#equality-theme-provider-root) ::-webkit-datetime-edit,
-  :global(#equality-theme-provider-root) ::-webkit-datetime-edit-year-field,
-  :global(#equality-theme-provider-root) ::-webkit-datetime-edit-month-field,
-  :global(#equality-theme-provider-root) ::-webkit-datetime-edit-day-field,
-  :global(#equality-theme-provider-root) ::-webkit-datetime-edit-hour-field,
-  :global(#equality-theme-provider-root) ::-webkit-datetime-edit-minute-field,
-  :global(#equality-theme-provider-root) ::-webkit-datetime-edit-second-field,
-  :global(#equality-theme-provider-root) ::-webkit-datetime-edit-millisecond-field,
-  :global(#equality-theme-provider-root) ::-webkit-datetime-edit-meridiem-field {
-    padding-block: 0;
-  }
+/* iOS date/time */
+[data-equality-root] ::-webkit-date-and-time-value {
+  min-height: 1lh;
+  text-align: inherit;
+}
 
-  :global(#equality-theme-provider-root) ::-webkit-calendar-picker-indicator {
-    line-height: 1;
-  }
+[data-equality-root] ::-webkit-datetime-edit {
+  display: inline-flex;
+}
 
-  /* Firefox invalid */
-  :global(#equality-theme-provider-root) :-moz-ui-invalid {
-    box-shadow: none;
-  }
+[data-equality-root] ::-webkit-datetime-edit-fields-wrapper {
+  padding: 0;
+}
 
-  /* Button appearances */
-  :global(#equality-theme-provider-root) button,
-  :global(#equality-theme-provider-root)
-    input:where([type='button'], [type='reset'], [type='submit']),
-  :global(#equality-theme-provider-root) ::file-selector-button {
-    appearance: button;
-  }
+[data-equality-root] ::-webkit-datetime-edit,
+[data-equality-root] ::-webkit-datetime-edit-year-field,
+[data-equality-root] ::-webkit-datetime-edit-month-field,
+[data-equality-root] ::-webkit-datetime-edit-day-field,
+[data-equality-root] ::-webkit-datetime-edit-hour-field,
+[data-equality-root] ::-webkit-datetime-edit-minute-field,
+[data-equality-root] ::-webkit-datetime-edit-second-field,
+[data-equality-root] ::-webkit-datetime-edit-millisecond-field,
+[data-equality-root] ::-webkit-datetime-edit-meridiem-field {
+  padding-block: 0;
+}
 
-  /* Safari spin buttons */
-  :global(#equality-theme-provider-root) ::-webkit-inner-spin-button,
-  :global(#equality-theme-provider-root) ::-webkit-outer-spin-button {
-    height: auto;
-  }
+[data-equality-root] ::-webkit-calendar-picker-indicator {
+  line-height: 1;
+}
 
-  /* Hidden */
-  :global(#equality-theme-provider-root) [hidden]:where(:not([hidden='until-found'])) {
-    display: none !important;
-  }
+/* Firefox invalid */
+[data-equality-root] :-moz-ui-invalid {
+  box-shadow: none;
+}
+
+/* Button appearances */
+[data-equality-root] button,
+[data-equality-root] input:where([type='button'], [type='reset'], [type='submit']),
+[data-equality-root] ::file-selector-button {
+  appearance: button;
+}
+
+/* Safari spin buttons */
+[data-equality-root] ::-webkit-inner-spin-button,
+[data-equality-root] ::-webkit-outer-spin-button {
+  height: auto;
+}
+
+/* Hidden */
+[data-equality-root] [hidden]:where(:not([hidden='until-found'])) {
+  display: none !important;
 }

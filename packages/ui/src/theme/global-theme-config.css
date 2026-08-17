@@ -10,6 +10,14 @@
 @import './generated/tailwind-tokens.css';
 
 @import './theme-base.css';
-@import './theme-preflight-global.css';
 @import './theme-components.css';
 @import './theme-utilities.css';
+
+/* NOTE: preflight is deliberately NOT imported here. It is an opt-in import so
+   that host sites with their own base styles can skip it or scope it:
+
+     @import '@eqtylab/equality/preflight.css' layer(base);          // own the document
+     @import '@eqtylab/equality/preflight-scoped.css' layer(base);   // reset only inside
+                                                                    // [data-equality-root]
+   Import this file first so the layer order above is registered before the
+   preflight lands in `base`. */

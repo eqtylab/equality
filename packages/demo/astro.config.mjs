@@ -17,6 +17,13 @@ const uiSrc = resolve(__dirname, "../ui/src");
 
 // Resolve @eqty/equality to local ui package when viewing demo
 const PKG = "@eqtylab/equality";
+// Published CSS subpaths whose specifier doesn't match its path under src/.
+/** @type {Record<string, string | undefined>} */
+const CSS_SUBPATHS = {
+  "theme-config.css": "theme/global-theme-config.css",
+  "preflight.css": "theme/theme-preflight-global.css",
+  "preflight-scoped.css": "theme/theme-preflight-scoped.css",
+};
 const resolveUiFromSource = {
   name: "resolve-ui-from-source",
   enforce: /** @type {const} */ ("pre"),
@@ -29,8 +36,11 @@ const resolveUiFromSource = {
   async resolveId(id, importer, options) {
     /** @type {string | undefined} */
     let target;
-    if (id === `${PKG}/theme-config.css`) {
-      target = resolve(uiSrc, "theme/global-theme-config.css");
+    const cssSubpath = id.startsWith(`${PKG}/`)
+      ? CSS_SUBPATHS[id.slice(PKG.length + 1)]
+      : undefined;
+    if (cssSubpath) {
+      target = resolve(uiSrc, cssSubpath);
     } else if (id === PKG) {
       target = uiSrc; // directory -> index.ts
     } else if (id.startsWith(`${PKG}/`)) {

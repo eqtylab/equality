@@ -4,11 +4,11 @@
 [![Publish Equality Package](https://github.com/eqtylab/equality/actions/workflows/publish.yaml/badge.svg)](https://github.com/eqtylab/equality/actions/workflows/publish.yaml)
 [![Code Quality Checks](https://github.com/eqtylab/equality/actions/workflows/code-quality.yaml/badge.svg)](https://github.com/eqtylab/equality/actions/workflows/code-quality.yaml)
 
-EQTY's design system — a shared component library and demo app.
+EQTY Lab's design system — accessible React components and design tokens, built on Radix UI and Tailwind CSS v4.
 
 ## Prerequisites
 
-- Node 18+ (Vite 5 requires Node ≥ 18)
+- Node 22.12+ (Astro 6 requires Node ≥ 22.12.0)
 - pnpm 9.x (workspace uses `packageManager: pnpm@9.12.3`)
 
 Verify versions:
@@ -30,7 +30,7 @@ This installs all workspace packages under `packages/`.
 
 ## Useful commands (from repo root)
 
-- Start demo (Vite dev server):
+- Start dev servers (Astro docs site + design token watcher):
 
   ```bash
   pnpm dev
@@ -77,7 +77,10 @@ pnpm add @eqtylab/equality
 
 ```css
 @import '@eqtylab/equality/theme-config.css';
+@import '@eqtylab/equality/preflight.css' layer(base);
 ```
+
+See the [Usage guide](https://equality.eqtylab.io/getting-started/usage) for the available stylesheets and how to embed Equality in a site that has its own base styles.
 
 Or
 
@@ -159,4 +162,4 @@ Requirements:
 ## Troubleshooting
 
 - If the demo doesn’t start, ensure Node ≥ 18 and pnpm ≥ 9.
-- If styles don't appear, confirm the CSS import: `@import '@eqtylab/equality/theme-config.css'`.
+- If styles don't appear, confirm the CSS imports listed in the [Usage guide](https://equality.eqtylab.io/getting-started/usage).
