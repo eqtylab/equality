@@ -44,15 +44,9 @@ console.log('Hello, world!');
 
 ## Theming
 
-The syntax palette follows the surrounding theme, and there is no prop to set it here — the theme comes from `<ThemeProvider />`, like every other component's. Unlike the rest of the library, which themes purely through CSS, this one resolves the theme in JavaScript, so the provider needs to be told which theme it is on whenever the page-wide value would be wrong. That happens inside a shadow root, where the page-wide lookup can't reach, and when more than one theme is on screen at once.
+The syntax palette follows the surrounding theme as set by `<ThemeProvider />`. Unlike the rest of the library, which propagates themes purely through CSS, `<CodeBlock>` resolves the theme in JavaScript, so the provider needs to be told which theme it is on whenever the page-wide value would be wrong. That happens inside a shadow root, where the page-wide lookup can't reach, and when more than one theme is on screen at once.
 
-```tsx
-<ThemeProvider theme="dark">
-  <CodeBlock language="js" code={code} />
-</ThemeProvider>
-```
-
-Somewhere a second `<ThemeProvider />` doesn't belong, `<ThemeScopeProvider theme="dark">` declares the theme without the styles or the wrapper element. Without either, the component falls back to the page-wide theme, which is correct for a single-theme page outside a shadow root.
+See [Theme-aware components](/getting-started/usage#theme-aware-components) for how to set it.
 
 ## Code Language Support
 

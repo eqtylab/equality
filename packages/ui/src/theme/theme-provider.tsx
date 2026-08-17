@@ -20,8 +20,7 @@ interface ThemeProviderProps {
    */
   portalContainer?: HTMLElement | null;
   /**
-   * The theme this subtree renders on. This is the only place a theme is set —
-   * components take it from here rather than from a prop of their own.
+   * The theme this subtree renders on.
    *
    * Only components that branch on the theme in JavaScript need it — `CodeBlock` and
    * its syntax palette. Everything else themes through CSS custom properties. Without
