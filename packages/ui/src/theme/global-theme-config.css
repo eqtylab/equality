@@ -16,8 +16,10 @@
 /* NOTE: preflight is deliberately NOT imported here. It is an opt-in import so
    that host sites with their own base styles can skip it or scope it:
 
-     @import '@eqtylab/equality/preflight.css' layer(base);          // own the document
-     @import '@eqtylab/equality/preflight-scoped.css' layer(base);   // reset only inside
-                                                                    // [data-equality-root]
+     preflight.css        -> own the document
+     preflight-scoped.css -> reset only inside [data-equality-root]
+
+   Import whichever you want yourself, into layer(base).
+
    Import this file first so the layer order above is registered before the
    preflight lands in `base`. */
