@@ -14,7 +14,7 @@ import {
 
 ## Overview
 
-The <code>FormatDate</code> component renders a date as either **relative** time (e.g. "2 weeks ago", "Just now") or **absolute** time (e.g. "Jun 9 2026, 18:42:03 UTC"). It always renders as a semantic HTML [`<time>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/time) element with a `dateTime` attribute.
+The <code>FormatDate</code> component renders a date as either **relative** time (e.g. "2 weeks ago", "Just now") or **absolute** time (e.g. "Jun 09 2026, 18:42:03 UTC"). It always renders as a semantic HTML [`<time>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/time) element with a `dateTime` attribute.
 
 When showing relative time, a tooltip reveals the absolute time on hover or keyboard focus.
 
@@ -44,7 +44,7 @@ Basic usage with the required `date` property, which accepts an ISO 8601 string,
 
 ### Absolute
 
-The default. Renders the full date and time in the configured `timeZone` (UTC unless overridden).
+The default. Renders the full date and time in the configured `timeZone` (UTC unless overridden). The day, hour, minute, and second are all zero-padded to two digits, so dates stacked in a column or table line up on every character.
 
 <FormatDateTimeZoneDemo client:only="react" />
 

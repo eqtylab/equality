@@ -17,7 +17,7 @@ export interface FormatDateProps extends Omit<
 > {
   /** The date to display. Accepts an ISO 8601 string, epoch milliseconds, or a Date. A missing value (null, undefined, or empty string) renders a placeholder. */
   date: string | number | Date | null | undefined;
-  /** Render relative ("2 weeks ago") or absolute ("Jun 9 2026, 18:42:03 UTC") time. */
+  /** Render relative ("2 weeks ago") or absolute ("Jun 09 2026, 18:42:03 UTC") time. */
   displayAs?: FormatDateDisplayMode;
   /** Time zone used for absolute formatting. Defaults to "UTC". */
   timeZone?: string;
@@ -37,7 +37,7 @@ const DEFAULT_LOCALE = 'en-US';
 const DEFAULT_ABSOLUTE_OPTIONS: Intl.DateTimeFormatOptions = {
   year: 'numeric',
   month: 'short',
-  day: 'numeric',
+  day: '2-digit',
   hour: '2-digit',
   minute: '2-digit',
   second: '2-digit',
