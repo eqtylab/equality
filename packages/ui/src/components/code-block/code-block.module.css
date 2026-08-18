@@ -37,6 +37,142 @@
   @apply overflow-auto;
   @apply min-w-0;
   font-family: var(--font-mono);
+
+  /*
+   The highlighter usually ships its themes as JS objects that it applies as inline styles on
+   every token span, which forces the component to resolve the theme in JS — the only
+   place in the library that does. That resolution reads a single page-wide value by
+   walking the document, so it picks the wrong palette whenever two themes are on
+   screen, and can't see the theme at all from inside a shadow root.
+
+   Expressed here instead, the cascade answers the question: the `dark:` variant matches
+   against the nearest theme root, so every one of those cases is correct by
+   construction, a live theme flip needs no re-render, and no component has to be told
+   which theme it is on.
+  */
+  --syntax-comment: slategray;
+  --syntax-punctuation: #999;
+  --syntax-tag: #905;
+  --syntax-number: #905;
+  --syntax-string: #690;
+  --syntax-operator: #9a6e3a;
+  --syntax-variable: #e90;
+  --syntax-atrule: #07a;
+  --syntax-keyword: #07a;
+  --syntax-function: #dd4a68;
+  --syntax-class-name: #dd4a68;
+  --syntax-regex: #e90;
+
+  @variant dark {
+    --syntax-comment: #d4d0ab;
+    --syntax-punctuation: #fefefe;
+    --syntax-tag: #ffa07a;
+    --syntax-number: #00e0e0;
+    --syntax-string: #abe338;
+    --syntax-operator: #00e0e0;
+    --syntax-variable: #00e0e0;
+    --syntax-atrule: #ffd700;
+    --syntax-keyword: #00e0e0;
+    --syntax-function: #ffd700;
+    --syntax-class-name: #ffd700;
+    --syntax-regex: #ffd700;
+  }
+}
+
+/*
+ Prism emits these class names at runtime, so they can't be hashed — hence `:global`.
+ Nesting them under `.content` keeps them scoped to a code block all the same.
+
+ Deliberately dropped from both source themes: the light theme's `text-shadow: 0 1px
+ white` and the matching `background: hsla(0 0% 100% / .5)` on operators. Both are the
+ same white-halo trick, and both render as doubled, barely legible glyphs on a dark
+ surface — which is what happens today whenever the JS lookup picks the wrong palette.
+*/
+.content :global(.token.comment),
+.content :global(.token.prolog),
+.content :global(.token.doctype),
+.content :global(.token.cdata) {
+  color: var(--syntax-comment);
+}
+
+.content :global(.token.punctuation) {
+  color: var(--syntax-punctuation);
+}
+
+.content :global(.token.property),
+.content :global(.token.tag),
+.content :global(.token.constant),
+.content :global(.token.symbol),
+.content :global(.token.deleted) {
+  color: var(--syntax-tag);
+}
+
+.content :global(.token.boolean),
+.content :global(.token.number) {
+  color: var(--syntax-number);
+}
+
+.content :global(.token.selector),
+.content :global(.token.attr-name),
+.content :global(.token.string),
+.content :global(.token.char),
+.content :global(.token.builtin),
+.content :global(.token.inserted) {
+  color: var(--syntax-string);
+}
+
+.content :global(.token.operator),
+.content :global(.token.entity),
+.content :global(.token.url),
+.content :global(.language-css .token.string),
+.content :global(.style .token.string) {
+  color: var(--syntax-operator);
+}
+
+.content :global(.token.entity) {
+  cursor: help;
+}
+
+.content :global(.token.variable) {
+  color: var(--syntax-variable);
+}
+
+.content :global(.token.atrule),
+.content :global(.token.attr-value) {
+  color: var(--syntax-atrule);
+}
+
+.content :global(.token.keyword) {
+  color: var(--syntax-keyword);
+}
+
+.content :global(.token.function) {
+  color: var(--syntax-function);
+}
+
+.content :global(.token.class-name) {
+  color: var(--syntax-class-name);
+}
+
+.content :global(.token.regex) {
+  color: var(--syntax-regex);
+}
+
+.content :global(.token.important) {
+  color: var(--syntax-regex);
+  font-weight: bold;
+}
+
+.content :global(.token.bold) {
+  font-weight: bold;
+}
+
+.content :global(.token.italic) {
+  font-style: italic;
+}
+
+.content :global(.namespace) {
+  opacity: 0.7;
 }
 
 .neutral {
@@ -71,8 +207,9 @@
 }
 
 .pre {
-  @apply bg-transparent! px-3! my-0! overflow-visible!;
-  @apply py-3;
+  @apply my-0 p-3;
+  line-height: 1.5;
+  tab-size: 4;
 }
 
 .code.wrap {
