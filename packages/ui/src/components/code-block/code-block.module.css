@@ -39,9 +39,7 @@
   font-family: var(--font-mono);
 
   /*
-   The syntax palette
-
-   The highlighter ships its themes as JS objects that it applies as inline styles on
+   The highlighter usually ships its themes as JS objects that it applies as inline styles on
    every token span, which forces the component to resolve the theme in JS — the only
    place in the library that does. That resolution reads a single page-wide value by
    walking the document, so it picks the wrong palette whenever two themes are on
@@ -51,10 +49,6 @@
    against the nearest theme root, so every one of those cases is correct by
    construction, a live theme flip needs no re-render, and no component has to be told
    which theme it is on.
-
-   Values are ported from the highlighter's `prism` (light) and `a11y-dark` (dark)
-   themes. Roles are the finest grouping that shares *both* values: `boolean`/`number`
-   sit with `property`/`tag` in light but split from them in dark.
   */
   --syntax-comment: slategray;
   --syntax-punctuation: #999;
