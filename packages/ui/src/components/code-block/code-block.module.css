@@ -39,7 +39,7 @@
   font-family: var(--font-mono);
 
   /*
-   The syntax palette, as CSS rather than JavaScript.
+   The syntax palette
 
    The highlighter ships its themes as JS objects that it applies as inline styles on
    every token span, which forces the component to resolve the theme in JS — the only
