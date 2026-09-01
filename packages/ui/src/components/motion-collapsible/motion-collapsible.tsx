@@ -16,6 +16,7 @@ const MotionCollapsibleContent = ({
   className,
 }: MotionCollapsibleContentProps) => {
   const [contentHeight, setContentHeight] = useState<number>(0);
+  const [isSettled, setIsSettled] = useState(false);
 
   const contentRef = useRef<HTMLDivElement>(null);
 
@@ -43,7 +44,13 @@ const MotionCollapsibleContent = ({
           animate={{ height: contentHeight, opacity: 1 }}
           exit={{ height: 0, opacity: 0 }}
           transition={{ duration: 0.3, ease: 'easeInOut' }}
-          className={cn(styles['motion-collapsible'], className)}
+          onAnimationStart={() => setIsSettled(false)}
+          onAnimationComplete={() => setIsSettled(isOpen)}
+          className={cn(
+            styles['motion-collapsible'],
+            isSettled && styles['motion-collapsible--settled'],
+            className
+          )}
         >
           <div ref={contentRef}>{children}</div>
         </motion.div>

@@ -3,3 +3,7 @@
 .motion-collapsible {
   @apply overflow-hidden;
 }
+
+.motion-collapsible--settled {
+  @apply overflow-visible;
+}
