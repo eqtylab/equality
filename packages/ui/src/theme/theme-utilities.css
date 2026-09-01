@@ -7,7 +7,7 @@
 }
 
 @utility overlay-background {
-  @apply backdrop-blur-xs bg-black/80;
+  @apply bg-black/80;
 }
 
 @utility overlay-content {
