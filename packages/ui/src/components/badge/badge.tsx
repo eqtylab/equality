@@ -24,6 +24,7 @@ const badgeVariants = cva(styles['badge'], {
       neutral: styles['badge--neutral'],
       warning: styles['badge--warning'],
       success: styles['badge--success'],
+      archived: styles['badge--archived'],
     },
     size: {
       sm: styles['badge--sm'],
@@ -56,6 +57,7 @@ const defaultVariantIcons: Record<string, string> = {
   success: 'Check',
   warning: 'OctagonAlert',
   danger: 'TriangleAlert',
+  archived: 'Archive',
 };
 
 function Badge({

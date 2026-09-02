@@ -21,6 +21,7 @@ html {
   --color-background-top: color(display-p3 0.9294 0.9355 0.9426);
   --color-background: color(display-p3 1 1 1);
   --color-badge-background-accepted: color(display-p3 0.795 0.7755 0.9866);
+  --color-badge-background-archived: color(display-p3 0.9272 0.788 0.7058);
   --color-badge-background-comment: color(display-p3 0.795 0.7755 0.9866);
   --color-badge-background-compliant: color(display-p3 0.7403 0.8486 0.7417);
   --color-badge-background-danger: color(display-p3 0.9358 0.751 0.7228);
@@ -37,6 +38,7 @@ html {
   --color-badge-background-success: color(display-p3 0.7403 0.8486 0.7417);
   --color-badge-background-warning: color(display-p3 0.9327 0.8528 0.7204);
   --color-badge-text-accepted: color(display-p3 0.1608 0.1145 0.3417);
+  --color-badge-text-archived: color(display-p3 0.2598 0.1437 0.0748);
   --color-badge-text-comment: color(display-p3 0.1608 0.1145 0.3417);
   --color-badge-text-compliant: color(display-p3 0.1097 0.1998 0.08667);
   --color-badge-text-danger: color(display-p3 0.2625 0.1106 0.09605);
@@ -70,6 +72,7 @@ html {
   --color-border-top: color(display-p3 0.8011 0.807 0.814);
   --color-border: color(display-p3 0.7432 0.7432 0.7432);
   --color-brand-green: color(display-p3 0.4374 0.6383 0.4134);
+  --color-brand-orange: color(display-p3 0.9843 0.5725 0.2353);
   --color-brand-primary: color(display-p3 0.7319 0.6108 0.8873);
   --color-brand-red: color(display-p3 0.8114 0.4167 0.3761);
   --color-brand-secondary: color(display-p3 0.3895 0.4853 0.8187);

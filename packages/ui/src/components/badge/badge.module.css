@@ -54,6 +54,11 @@
   --badge-fg-color: var(--color-badge-text-success);
 }
 
+.badge--archived {
+  --badge-bg-color: var(--color-badge-background-archived);
+  --badge-fg-color: var(--color-badge-text-archived);
+}
+
 /* Closable Variant */
 
 .badge .closable-btn {

@@ -1497,6 +1497,17 @@
               <buildGroupId>86B9D7D8-F74A-4CAE-B006-65451BBEDAB9</buildGroupId>
             </alias>
             <alias>
+              <name>Archived</name>
+              <type>3</type>
+              <typeDark>3</typeDark>
+              <appearance>lightanddark</appearance>
+              <referencedItemId>E70AEB3A-46D2-4910-AA0C-8DE1F122368D</referencedItemId>
+              <subIndex>7</subIndex>
+              <referencedItemIdDark>E70AEB3A-46D2-4910-AA0C-8DE1F122368D</referencedItemIdDark>
+              <subIndexDark>1</subIndexDark>
+              <buildGroupId>86B9D7D8-F74A-4CAE-B006-65451BBEDAB9</buildGroupId>
+            </alias>
+            <alias>
               <name>Not Started</name>
               <type>3</type>
               <typeDark>3</typeDark>
@@ -1674,6 +1685,17 @@
               <referencedItemId>CCD80E1D-24ED-4193-A845-891C968555AF</referencedItemId>
               <subIndex>1</subIndex>
               <referencedItemIdDark>CCD80E1D-24ED-4193-A845-891C968555AF</referencedItemIdDark>
+              <subIndexDark>6</subIndexDark>
+              <buildGroupId>86B9D7D8-F74A-4CAE-B006-65451BBEDAB9</buildGroupId>
+            </alias>
+            <alias>
+              <name>Archived</name>
+              <type>3</type>
+              <typeDark>3</typeDark>
+              <appearance>lightanddark</appearance>
+              <referencedItemId>E70AEB3A-46D2-4910-AA0C-8DE1F122368D</referencedItemId>
+              <subIndex>1</subIndex>
+              <referencedItemIdDark>E70AEB3A-46D2-4910-AA0C-8DE1F122368D</referencedItemIdDark>
               <subIndexDark>6</subIndexDark>
               <buildGroupId>86B9D7D8-F74A-4CAE-B006-65451BBEDAB9</buildGroupId>
             </alias>
@@ -2741,6 +2763,20 @@
             <subIndex>3</subIndex>
             <buildGroupId>86B9D7D8-F74A-4CAE-B006-65451BBEDAB9</buildGroupId>
           </alias>
+          <colorItem>
+            <id>4C6C13BE-9A84-4771-9D54-32BE6DF8FB1A</id>
+            <name>Orange</name>
+            <profile>DisplayP3</profile>
+            <format>7</format>
+            <color>
+              <variants>
+                <variant>
+                  <rgba>0.98431 0.57255 0.23529 1</rgba>
+                </variant>
+              </variants>
+            </color>
+            <buildGroupId>86B9D7D8-F74A-4CAE-B006-65451BBEDAB9</buildGroupId>
+          </colorItem>
         </group>
         <group>
           <id>D7B954B6-4112-44FA-A9F9-570423BEA0FB</id>

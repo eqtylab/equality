@@ -8,6 +8,7 @@
   --color-background-top: color(display-p3 0.1399 0.14 0.1485);
   --color-background: color(display-p3 0.06018 0.06019 0.06787);
   --color-badge-background-accepted: color(display-p3 0.2473 0.1645 0.5241);
+  --color-badge-background-archived: color(display-p3 0.4118 0.2185 0.1135);
   --color-badge-background-comment: color(display-p3 0.2473 0.1645 0.5241);
   --color-badge-background-compliant: color(display-p3 0.1689 0.3045 0.136);
   --color-badge-background-danger: color(display-p3 0.4113 0.1505 0.1319);
@@ -24,6 +25,7 @@
   --color-badge-background-success: color(display-p3 0.1689 0.3045 0.136);
   --color-badge-background-warning: color(display-p3 0.4487 0.322 0.1436);
   --color-badge-text-accepted: color(display-p3 0.795 0.7755 0.9866);
+  --color-badge-text-archived: color(display-p3 0.9272 0.788 0.7058);
   --color-badge-text-comment: color(display-p3 0.795 0.7755 0.9866);
   --color-badge-text-compliant: color(display-p3 0.7403 0.8486 0.7417);
   --color-badge-text-danger: color(display-p3 0.9358 0.751 0.7228);
