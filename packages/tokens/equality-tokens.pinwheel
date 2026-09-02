@@ -2,7 +2,7 @@
 <pinwheel xmlns="https://bjango.com/pinwheel" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="https://bjango.com/pinwheel/schema/pinwheel.xsd">
   <project>
     <header>
-      <version>1.6</version>
+      <version>1.7</version>
       <description></description>
     </header>
     <settings>
@@ -2660,7 +2660,7 @@
             <referencedItemId>68A1562E-D9B7-40A5-BFB2-31353FD45D3D</referencedItemId>
             <subIndex>5</subIndex>
             <referencedItemIdDark>68A1562E-D9B7-40A5-BFB2-31353FD45D3D</referencedItemIdDark>
-            <subIndexDark>2</subIndexDark>
+            <subIndexDark>3</subIndexDark>
             <buildGroupId>86B9D7D8-F74A-4CAE-B006-65451BBEDAB9</buildGroupId>
           </alias>
           <alias>
@@ -2669,9 +2669,9 @@
             <typeDark>3</typeDark>
             <appearance>lightanddark</appearance>
             <referencedItemId>CCD80E1D-24ED-4193-A845-891C968555AF</referencedItemId>
-            <subIndex>5</subIndex>
+            <subIndex>4</subIndex>
             <referencedItemIdDark>CCD80E1D-24ED-4193-A845-891C968555AF</referencedItemIdDark>
-            <subIndexDark>2</subIndexDark>
+            <subIndexDark>3</subIndexDark>
             <buildGroupId>86B9D7D8-F74A-4CAE-B006-65451BBEDAB9</buildGroupId>
           </alias>
         </group>
