@@ -2615,6 +2615,39 @@
               <buildGroupId>86B9D7D8-F74A-4CAE-B006-65451BBEDAB9</buildGroupId>
             </alias>
           </group>
+          <group>
+            <id>5A31F3CF-7D77-4209-8306-BE84DCD28B3C</id>
+            <name>Warning</name>
+            <namespace>1</namespace>
+            <alias>
+              <name>Fill</name>
+              <type>3</type>
+              <typeDark>3</typeDark>
+              <appearance>lightanddark</appearance>
+              <referencedItemId>BB783E8C-1914-4094-BE1D-37E41EB42641</referencedItemId>
+              <subIndex>4</subIndex>
+              <referencedItemIdDark>BB783E8C-1914-4094-BE1D-37E41EB42641</referencedItemIdDark>
+              <subIndexDark>3</subIndexDark>
+              <buildGroupId>86B9D7D8-F74A-4CAE-B006-65451BBEDAB9</buildGroupId>
+            </alias>
+            <alias>
+              <name>Border</name>
+              <type>3</type>
+              <typeDark>3</typeDark>
+              <appearance>lightanddark</appearance>
+              <referencedItemId>BB783E8C-1914-4094-BE1D-37E41EB42641</referencedItemId>
+              <subIndex>5</subIndex>
+              <referencedItemIdDark>BB783E8C-1914-4094-BE1D-37E41EB42641</referencedItemIdDark>
+              <subIndexDark>4</subIndexDark>
+              <buildGroupId>86B9D7D8-F74A-4CAE-B006-65451BBEDAB9</buildGroupId>
+            </alias>
+            <alias>
+              <name>Text</name>
+              <type>1</type>
+              <referencedItemId>68E685CF-C64F-4A8C-8DE3-886255A54EC0</referencedItemId>
+              <buildGroupId>86B9D7D8-F74A-4CAE-B006-65451BBEDAB9</buildGroupId>
+            </alias>
+          </group>
         </group>
         <group>
           <id>4EC67953-4547-4883-B947-D73CF2D3DF18</id>
@@ -2671,6 +2704,17 @@
             <referencedItemId>CCD80E1D-24ED-4193-A845-891C968555AF</referencedItemId>
             <subIndex>4</subIndex>
             <referencedItemIdDark>CCD80E1D-24ED-4193-A845-891C968555AF</referencedItemIdDark>
+            <subIndexDark>3</subIndexDark>
+            <buildGroupId>86B9D7D8-F74A-4CAE-B006-65451BBEDAB9</buildGroupId>
+          </alias>
+          <alias>
+            <name>Warning</name>
+            <type>3</type>
+            <typeDark>3</typeDark>
+            <appearance>lightanddark</appearance>
+            <referencedItemId>BB783E8C-1914-4094-BE1D-37E41EB42641</referencedItemId>
+            <subIndex>4</subIndex>
+            <referencedItemIdDark>BB783E8C-1914-4094-BE1D-37E41EB42641</referencedItemIdDark>
             <subIndexDark>3</subIndexDark>
             <buildGroupId>86B9D7D8-F74A-4CAE-B006-65451BBEDAB9</buildGroupId>
           </alias>

@@ -463,6 +463,32 @@
               "hex": "#FFFFFF"
             }
           }
+        },
+        "warning": {
+          "border": {
+            "$type": "color",
+            "$value": {
+              "colorSpace": "display-p3",
+              "components": [0.8263, 0.6154, 0.2247],
+              "hex": "#D39D39"
+            }
+          },
+          "fill": {
+            "$type": "color",
+            "$value": {
+              "colorSpace": "display-p3",
+              "components": [0.863, 0.6958, 0.4108],
+              "hex": "#DCB169"
+            }
+          },
+          "text": {
+            "$type": "color",
+            "$value": {
+              "colorSpace": "display-p3",
+              "components": [0, 0, 0],
+              "hex": "#000000"
+            }
+          }
         }
       },
       "card": {
@@ -914,6 +940,14 @@
             "colorSpace": "display-p3",
             "components": [0.5021, 0.5021, 0.5021],
             "hex": "#808080"
+          }
+        },
+        "warning": {
+          "$type": "color",
+          "$value": {
+            "colorSpace": "display-p3",
+            "components": [0.863, 0.6958, 0.4108],
+            "hex": "#DCB169"
           }
         }
       }
@@ -1587,6 +1621,32 @@
               "colorSpace": "display-p3",
               "components": [1, 1, 1],
               "hex": "#FFFFFF"
+            }
+          },
+          "text": {
+            "$type": "color",
+            "$value": {
+              "colorSpace": "display-p3",
+              "components": [0, 0, 0],
+              "hex": "#000000"
+            }
+          }
+        },
+        "warning": {
+          "border": {
+            "$type": "color",
+            "$value": {
+              "colorSpace": "display-p3",
+              "components": [0.6345, 0.463, 0.1863],
+              "hex": "#A27630"
+            }
+          },
+          "fill": {
+            "$type": "color",
+            "$value": {
+              "colorSpace": "display-p3",
+              "components": [0.8263, 0.6154, 0.2247],
+              "hex": "#D39D39"
             }
           },
           "text": {
@@ -2972,6 +3032,14 @@
             "colorSpace": "display-p3",
             "components": [0.5021, 0.5021, 0.5021],
             "hex": "#808080"
+          }
+        },
+        "warning": {
+          "$type": "color",
+          "$value": {
+            "colorSpace": "display-p3",
+            "components": [0.8263, 0.6154, 0.2247],
+            "hex": "#D39D39"
           }
         }
       },
