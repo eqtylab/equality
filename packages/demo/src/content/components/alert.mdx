@@ -101,13 +101,41 @@ The `success`, `warning`, and `danger` variants apply a default icon automatical
 <Alert variant="danger" icon={null} title="No icon" description="A danger alert with its default icon removed." />
 ```
 
+### Longer bodies and standing callouts
+
+`description` renders in a `<p>`, so it suits a sentence. For a body with paragraphs,
+lists or code, use `children` instead — it renders in a `<div>`, where block content is
+valid:
+
+```tsx
+<Alert variant="warning" title="Heads up">
+  <p>This body has real block content.</p>
+  <ul>
+    <li>Including a list</li>
+  </ul>
+</Alert>
+```
+
+By default `Alert` renders a `<div role="alert">`. That is an assertive live region:
+screen readers announce it immediately, which is right for a message that appears in
+response to something the user did, and wrong for content that is simply part of the
+page. For a standing callout, render an `aside` instead — this drops the live region:
+
+```tsx
+<Alert as="aside" variant="neutral" title="Note">
+  <p>Standing page content, not announced on load.</p>
+</Alert>
+```
+
 ## Props
 
 ### Alert
 
-| Name          | Description                                                                   | Type                                                 | Default         | Required |
-| ------------- | ----------------------------------------------------------------------------- | ---------------------------------------------------- | --------------- | -------- |
-| `title`       | The alert heading, rendered as an `<h4>`                                      | `string`                                             | —               | ✅       |
-| `description` | The alert body text, rendered as a `<p>`                                      | `string`, `ReactNode`                                | —               | ❌       |
-| `variant`     | The visual style of the alert                                                 | `primary`, `neutral`, `success`, `warning`, `danger` | `primary`       | ❌       |
-| `icon`        | Overrides the variant's default icon. Lucide name, element, or `null` to hide | `string`, `ReactElement`, `null`                     | Variant default | ❌       |
+| Name          | Description                                                                                        | Type                                                 | Default         | Required |
+| ------------- | -------------------------------------------------------------------------------------------------- | ---------------------------------------------------- | --------------- | -------- |
+| `title`       | The alert heading, rendered as an `<h4>`                                                           | `string`                                             | —               | ✅       |
+| `description` | The alert body text, rendered as a `<p>`                                                           | `string`, `ReactNode`                                | —               | ❌       |
+| `variant`     | The visual style of the alert                                                                      | `primary`, `neutral`, `success`, `warning`, `danger` | `primary`       | ❌       |
+| `icon`        | Overrides the variant's default icon. Lucide name, element, or `null` to hide                      | `string`, `ReactElement`, `null`                     | Variant default | ❌       |
+| `children`    | Body content, as an alternative to `description`. Rendered in a `<div>`, so block content is valid | `ReactNode`                                          | —               | ❌       |
+| `as`          | Element to render. `aside` or `section` drop the `role="alert"` live region                        | `div`, `aside`, `section`                            | `div`           | ❌       |
