@@ -1,0 +1,56 @@
+---
+import { getCollection, render } from 'astro:content';
+import CONFIG from 'virtual:eqty-docs/config';
+import { docsHref, idToPath, normalizePath } from '@eqtylab/docs/paths';
+import DocsPage from '../layouts/DocsPage.astro';
+import { buildTocTree, docsNav, pathContext } from '../lib/nav-data.ts';
+import { mdxComponents } from '../lib/mdx-components.ts';
+import Prose from '../chrome/Prose.astro';
+
+export async function getStaticPaths() {
+  const entries = await getCollection('docs', ({ data }: { data: { draft?: boolean } }) =>
+    import.meta.env.DEV ? true : !data.draft
+  );
+
+  const owned = new Set((CONFIG.ownedByConsumer ?? []).map(normalizePath));
+
+  return entries
+    // Astro does not de-duplicate injected routes against file-based ones, so a
+    // path a consumer page already owns must be dropped here or the static
+    // build emits it twice.
+    .filter((entry) => !owned.has(normalizePath(docsHref(entry.id, pathContext()))))
+    .map((entry) => ({
+      // `undefined` (not '') is how a rest param matches the empty path.
+      params: { slug: idToPath(entry.id) || undefined },
+      props: { entry },
+    }));
+}
+
+const { entry } = Astro.props;
+const { Content, headings } = await render(entry);
+
+const tocConfig = entry.data.tableOfContents ?? CONFIG.tableOfContents;
+const showToc = tocConfig !== false;
+const toc = showToc
+  ? buildTocTree(headings, {
+      minLevel: (tocConfig as { minLevel?: number })?.minLevel ?? 2,
+      maxLevel: (tocConfig as { maxLevel?: number })?.maxLevel ?? 3,
+    })
+  : [];
+
+const nav = await docsNav(Astro.url.pathname);
+const splash = entry.data.template === 'splash';
+---
+
+<DocsPage
+  title={entry.data.title}
+  description={entry.data.description}
+  nav={nav}
+  toc={toc}
+  showToc={showToc}
+  splash={splash}
+>
+  <Prose title={entry.data.title} description={entry.data.description} deprecated={entry.data.deprecated}>
+    <Content components={mdxComponents} />
+  </Prose>
+</DocsPage>

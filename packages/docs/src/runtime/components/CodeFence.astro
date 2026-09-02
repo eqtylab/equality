@@ -1,0 +1,38 @@
+---
+/**
+ * MDX fenced code, rendered through Equality's CodeBlock -- with no client React.
+ *
+ * CodeBlock has no hooks or state, so Astro renders it to static HTML when given
+ * no client: directive. Its `useInlineStyles={false}` means Prism emits bare
+ * .token.* classes and the palette resolves from --syntax-* custom properties
+ * through the CSS cascade, so a server-rendered block gets correct light AND
+ * dark colours for free.
+ *
+ * The only interactive part is the copy button (a React island inside
+ * CodeBlock), so we suppress it and attach a vanilla-JS handler instead.
+ */
+import { CodeBlock } from '@eqtylab/equality';
+import styles from './CodeFence.module.css';
+
+interface Props {
+  code: string;
+  lang?: string;
+  title?: string;
+}
+
+const { code, lang = 'text', title } = Astro.props;
+
+// react-syntax-highlighter's Prism build falls back silently on unknown
+// languages, so clamp to what it actually supports rather than passing through.
+const SUPPORTED = new Set([
+  'bash', 'shell', 'sh', 'json', 'jsonc', 'javascript', 'js', 'jsx', 'typescript',
+  'ts', 'tsx', 'css', 'scss', 'html', 'xml', 'yaml', 'yml', 'markdown', 'md',
+  'python', 'go', 'rust', 'java', 'sql', 'diff', 'toml', 'graphql', 'text',
+]);
+const language = SUPPORTED.has(lang.toLowerCase()) ? lang.toLowerCase() : 'text';
+---
+
+<div class={styles.fence} data-eq-chrome data-eq-copy={code}>
+  <CodeBlock code={code} language={language} title={title} />
+</div>
+<script src="@eqtylab/docs/scripts/eq-copy.ts"></script>

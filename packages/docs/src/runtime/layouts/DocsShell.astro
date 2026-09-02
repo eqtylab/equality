@@ -1,0 +1,53 @@
+---
+/** The <html> document: head, theme bootstrap, and a slot for the page body. */
+import { initializeTheme } from '@eqtylab/equality/scripts';
+import CONFIG from 'virtual:eqty-docs/config';
+import { withBase } from '@eqtylab/docs/paths';
+
+// The package owns its own baseline: theme tokens, preflight, prose and chrome.
+// A consumer only needs their own stylesheet if they write their own utilities.
+import '../styles/docs.css';
+
+interface Props {
+  title?: string;
+  description?: string;
+  /** Emit robots noindex. Set for every pinned version build. */
+  noIndex?: boolean;
+  /** Canonical URL, when it differs from the current page. */
+  canonical?: string;
+}
+
+const { title, description, noIndex, canonical } = Astro.props;
+
+const paths = {
+  base: import.meta.env.BASE_URL,
+  pathPrefix: CONFIG.pathPrefix,
+};
+
+const pageTitle = title && title !== CONFIG.title ? `${title} · ${CONFIG.title}` : CONFIG.title;
+const pageDescription = description ?? CONFIG.description;
+
+// Every pinned /vX.Y/ build is noindex: a version that is latest today is not
+// latest tomorrow, and historical artifacts are never rewritten, so deciding at
+// build time is the only choice that stays correct.
+const robots = noIndex ?? !CONFIG.env.isLatest;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{pageTitle}</title>
+    {pageDescription && <meta name="description" content={pageDescription} />}
+    {robots && <meta name="robots" content="noindex, follow" />}
+    {canonical && <link rel="canonical" href={canonical} />}
+    <link rel="icon" href={withBase(CONFIG.favicon, paths)} />
+    {/* Blocking, inline: sets the theme attribute before first paint. */}
+    <script is:inline set:html={initializeTheme({ shouldStoreTheme: CONFIG.theme.persist })} />
+    <slot name="head" />
+  </head>
+  <body>
+    <slot />
+  </body>
+</html>

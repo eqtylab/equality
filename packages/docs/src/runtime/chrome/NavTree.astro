@@ -1,0 +1,75 @@
+---
+/** Recursive sidebar list. Uses <details> for groups so it works without JS. */
+import type { NavNode } from '@eqtylab/docs/types';
+import { Badge, Icon } from '@eqtylab/equality';
+import styles from './NavTree.module.css';
+
+interface Props {
+  nodes: NavNode[];
+  depth?: number;
+}
+
+const { nodes, depth = 0 } = Astro.props;
+const NavTree = Astro.self;
+---
+
+<ul class={styles.list} data-depth={depth}>
+  {
+    nodes.map((node) => (
+      <li class={styles.item}>
+        {node.kind === 'group' && node.children?.length ? (
+          <details class={styles.group} open={node.open}>
+            <summary class={styles.summary}>
+              <span class={styles.summaryLabel}>
+                {node.icon && <Icon icon={node.icon} size="sm" />}
+                {node.href ? (
+                  <a
+                    class={styles.groupLink}
+                    href={node.href}
+                    aria-current={node.current ? 'page' : undefined}
+                  >
+                    {node.label}
+                  </a>
+                ) : (
+                  <span>{node.label}</span>
+                )}
+                {node.badge && (
+                  <Badge variant={node.badge.variant} size="sm" class={styles.badge}>
+                    {node.badge.text}
+                  </Badge>
+                )}
+              </span>
+              <span class={styles.chevron} aria-hidden="true">
+                <Icon icon="ChevronRight" size="xs" />
+              </span>
+            </summary>
+            <NavTree nodes={node.children} depth={depth + 1} />
+          </details>
+        ) : (
+          <a
+            class={styles.link}
+            href={node.href}
+            aria-current={node.current ? 'page' : undefined}
+            data-current={node.current ? '' : undefined}
+            target={node.external ? '_blank' : undefined}
+            rel={node.external ? 'noopener noreferrer' : undefined}
+            {...(node.attrs ?? {})}
+          >
+            {node.icon && <Icon icon={node.icon} size="sm" />}
+            <span class={styles.linkLabel}>{node.label}</span>
+            {node.badge && (
+              <Badge variant={node.badge.variant} size="sm" class={styles.badge}>
+                {node.badge.text}
+              </Badge>
+            )}
+            {node.external && (
+              <span class={styles.externalIcon} aria-hidden="true">
+                <Icon icon="ArrowUpRight" size="xs" />
+              </span>
+            )}
+          </a>
+        )}
+      </li>
+    ))
+  }
+</ul>

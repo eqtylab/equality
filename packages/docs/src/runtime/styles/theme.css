@@ -1,0 +1,8 @@
+/*
+ * @reference target for every *.module.css in this package.
+ *
+ * Kept as a package-internal indirection on purpose: module CSS references this
+ * file by relative path (always resolvable), and the single bare specifier lives
+ * here, resolving from this package's own node_modules.
+ */
+@import '@eqtylab/equality/theme-config.css';

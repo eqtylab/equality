@@ -1,0 +1,124 @@
+{
+  "name": "@eqtylab/docs",
+  "description": "Astro documentation framework built on the Equality design system",
+  "version": "0.1.0",
+  "license": "Apache-2.0",
+  "homepage": "https://equality.eqtylab.io/",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/eqtylab/equality.git",
+    "directory": "packages/docs"
+  },
+  "type": "module",
+  "keywords": [
+    "astro-integration",
+    "astro-component",
+    "withastro",
+    "documentation",
+    "docs"
+  ],
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./config": {
+      "types": "./dist/config.d.ts",
+      "default": "./dist/config.js"
+    },
+    "./env": {
+      "types": "./dist/env.d.ts",
+      "default": "./dist/env.js"
+    },
+    "./schema": {
+      "types": "./dist/schema.d.ts",
+      "default": "./dist/schema.js"
+    },
+    "./loaders": {
+      "types": "./dist/loaders.d.ts",
+      "default": "./dist/loaders.js"
+    },
+    "./nav": {
+      "types": "./dist/nav.d.ts",
+      "default": "./dist/nav.js"
+    },
+    "./paths": {
+      "types": "./dist/paths.d.ts",
+      "default": "./dist/paths.js"
+    },
+    "./types": {
+      "types": "./dist/types.d.ts",
+      "default": "./dist/types.js"
+    },
+    "./dev": {
+      "types": "./dist/dev.d.ts",
+      "default": "./dist/dev.js"
+    },
+    "./internal/rehype-base-url": {
+      "types": "./dist/internal/rehype-base-url.d.ts",
+      "default": "./dist/internal/rehype-base-url.js"
+    },
+    "./components": "./dist/runtime/components/index.ts",
+    "./components/*": "./dist/runtime/components/*",
+    "./chrome/*": "./dist/runtime/chrome/*",
+    "./layouts/*": "./dist/runtime/layouts/*",
+    "./routes/*": "./dist/runtime/routes/*",
+    "./scripts/*": "./dist/runtime/scripts/*",
+    "./styles.css": "./dist/runtime/styles/docs.css",
+    "./prose.css": "./dist/runtime/styles/prose.css",
+    "./theme.css": "./dist/runtime/styles/theme.css",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "sideEffects": [
+    "**/*.css"
+  ],
+  "engines": {
+    "node": ">=22.12"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org",
+    "access": "public"
+  },
+  "scripts": {
+    "build": "pnpm run check:no-utilities && pnpm run build:node && pnpm run build:runtime && pnpm run build:types",
+    "build:node": "tsup",
+    "build:runtime": "node scripts/copy-runtime.mjs",
+    "build:types": "tsc -p tsconfig.build.json",
+    "dev": "node scripts/copy-runtime.mjs --watch",
+    "check:no-utilities": "node scripts/check-no-utilities.mjs",
+    "test": "node --test tests/*.test.ts",
+    "release": "pnpm run build && pnpm publish --access public --no-git-checks"
+  },
+  "dependencies": {
+    "@astrojs/mdx": "^5.0.2",
+    "@astrojs/react": "^5.0.1",
+    "@tailwindcss/vite": "^4.1.16",
+    "github-slugger": "^2.0.0",
+    "tailwindcss": "^4.1.16",
+    "tinyglobby": "^0.2.15",
+    "unist-util-visit": "^5.1.0",
+    "yaml": "^2.8.2"
+  },
+  "peerDependencies": {
+    "@eqtylab/equality": ">=3.2.6 <5",
+    "astro": "^6.0.0",
+    "react": "^18.2.0 || ^19.0.0",
+    "react-dom": "^18.2.0 || ^19.0.0"
+  },
+  "devDependencies": {
+    "@eqtylab/equality": "workspace:*",
+    "@types/node": "^24.9.2",
+    "@types/react": "^19.2.2",
+    "@types/react-dom": "^19.2.2",
+    "astro": "^6.0.8",
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0",
+    "tsup": "^8.5.0",
+    "typescript": ">=5.4.x",
+    "vite": "^7.0.0"
+  }
+}

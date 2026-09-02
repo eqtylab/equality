@@ -1,0 +1,18 @@
+/*
+ * The consumer's stylesheet entry:
+ *
+ *   @import '@eqtylab/docs/styles.css';
+ *   @source './';   -- your files; ours need no scanning
+ *
+ * A pure @import manifest with no @apply of its own, so it is safe to ship raw.
+ *
+ * Note there is deliberately no `@import 'tailwindcss'` here: theme-config.css
+ * already imports tailwindcss/theme.css and tailwindcss/utilities.css with the
+ * layer order it needs, and importing tailwindcss separately re-registers those
+ * layers and can reorder them.
+ */
+@import '@eqtylab/equality/theme-config.css';
+@import '@eqtylab/equality/preflight.css' layer(base);
+
+@import './prose.css';
+@import './chrome.css';

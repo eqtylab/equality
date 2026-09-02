@@ -1,0 +1,36 @@
+@reference '../styles/theme.css';
+
+.callout {
+  @apply border-border bg-background-raised mb-4 rounded-md border border-l-4 p-4;
+}
+.title {
+  @apply text-text-primary mb-2 flex items-center gap-2 text-sm font-semibold;
+}
+.body {
+  @apply text-text-secondary text-sm/6;
+}
+.body > :first-child {
+  @apply mt-0;
+}
+.body > :last-child {
+  @apply mb-0;
+}
+
+.callout[data-variant='note'] {
+  @apply border-l-lilac-400;
+}
+.callout[data-variant='tip'] {
+  @apply border-l-lilac-400;
+}
+.callout[data-variant='important'] {
+  @apply border-l-lilac-400;
+}
+.callout[data-variant='success'] {
+  @apply border-l-green-400;
+}
+.callout[data-variant='warning'] {
+  @apply border-l-yellow-400;
+}
+.callout[data-variant='caution'] {
+  @apply border-l-red-400;
+}

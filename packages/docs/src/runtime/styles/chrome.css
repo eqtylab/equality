@@ -1,0 +1,14 @@
+/* Layout-level custom properties for the docs shell. Component styling lives in
+ * co-located *.module.css files; this only holds the shared geometry tokens. */
+@reference './theme.css';
+
+:root {
+  --eq-docs-header-height: 3.5rem;
+  --eq-docs-sidebar-width: 18rem;
+  --eq-docs-toc-width: 15rem;
+  --eq-docs-content-max: 48rem;
+}
+
+body {
+  @apply bg-background text-text-primary;
+}

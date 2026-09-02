@@ -1,0 +1,49 @@
+---
+/**
+ * The article wrapper: page heading, optional deprecation notice, and the prose
+ * container.
+ *
+ * `data-pagefind-body` bounds the search index to real content, so nav labels
+ * do not make every page match every query.
+ */
+import { rewriteHtmlBase } from '@eqtylab/docs/internal/rehype-base-url';
+import Callout from '../components/Callout.astro';
+import styles from './Prose.module.css';
+
+interface Props {
+  title: string;
+  description?: string;
+  deprecated?: boolean | { message?: string; replacedBy?: string };
+}
+
+const { title, description, deprecated } = Astro.props;
+
+const deprecation =
+  deprecated === true ? {} : deprecated && typeof deprecated === 'object' ? deprecated : null;
+
+// Authored frontmatter HTML bypasses rehype entirely, so base-prefix it here.
+const deprecationMessage = deprecation?.message
+  ? rewriteHtmlBase(deprecation.message, import.meta.env.BASE_URL)
+  : undefined;
+---
+
+<article class="eq-prose" data-eq-prose data-pagefind-body>
+  <header class={styles.header} data-eq-chrome>
+    <h1 class={styles.title} data-pagefind-meta="title">{title}</h1>
+    {description && <p class={styles.description}>{description}</p>}
+  </header>
+
+  {
+    deprecation && (
+      <Callout type="warning" title="Deprecated">
+        {deprecationMessage ? (
+          <p set:html={deprecationMessage} />
+        ) : (
+          <p>This page documents a deprecated feature.</p>
+        )}
+      </Callout>
+    )
+  }
+
+  <slot />
+</article>

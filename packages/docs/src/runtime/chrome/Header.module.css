@@ -1,0 +1,27 @@
+@reference '../styles/theme.css';
+
+.header {
+  @apply bg-background-raised border-border sticky top-0 z-50 border-b;
+  height: var(--eq-docs-header-height);
+}
+.inner {
+  @apply flex h-full items-center justify-between gap-4 px-4;
+}
+.brand {
+  @apply text-text-primary flex items-center gap-2 no-underline;
+}
+.logo {
+  @apply h-6 w-auto;
+}
+.title {
+  @apply text-base font-semibold;
+}
+.actions {
+  @apply flex items-center gap-2;
+}
+.navLink {
+  @apply text-text-secondary hover:text-text-primary flex items-center gap-1.5 rounded-md px-2 py-1.5 text-sm no-underline transition-colors;
+}
+.navLinkLabel {
+  @apply hidden sm:inline;
+}

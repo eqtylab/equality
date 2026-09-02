@@ -1,0 +1,32 @@
+---
+/**
+ * Bridges an unhighlighted markdown <pre> to CodeFence.
+ *
+ * With `markdown.syntaxHighlight: false`, a fence compiles to
+ * <pre><code class="language-ts">...</code></pre>. We need the raw text and the
+ * language, so render the default slot to a string and unwrap it -- this is why
+ * Shiki is disabled rather than left on: recovering raw source from Shiki's
+ * tokenised hast would be strictly worse than never highlighting twice.
+ */
+import CodeFence from './CodeFence.astro';
+
+const html = await Astro.slots.render('default');
+
+const languageMatch = html.match(/class="[^"]*language-([A-Za-z0-9+#-]+)/);
+const lang = languageMatch?.[1] ?? 'text';
+
+function decodeEntities(value: string): string {
+  return value
+    .replace(/<[^>]+>/g, '')
+    .replace(/&lt;/g, '<')
+    .replace(/&gt;/g, '>')
+    .replace(/&quot;/g, '"')
+    .replace(/&#39;/g, "'")
+    .replace(/&#(\d+);/g, (_, code) => String.fromCharCode(Number(code)))
+    .replace(/&amp;/g, '&');
+}
+
+const code = decodeEntities(html).replace(/\n$/, '');
+---
+
+<CodeFence code={code} lang={lang} />

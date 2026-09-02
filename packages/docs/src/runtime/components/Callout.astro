@@ -1,0 +1,46 @@
+---
+/**
+ * A docs aside.
+ *
+ * Not a wrapper around Equality's `Alert` for two reasons: Alert takes its body
+ * as a `description` prop so slotted MDX children cannot reach it, and its
+ * role="alert" is an ARIA live region that screen readers announce on page load
+ * -- wrong for a static note. Visuals come from the same badge tokens, so the
+ * two stay aligned by token rather than by duplicated code.
+ */
+import { Icon } from '@eqtylab/equality';
+import styles from './Callout.module.css';
+
+type Variant = 'note' | 'tip' | 'important' | 'warning' | 'caution' | 'success';
+
+interface Props {
+  type?: Variant;
+  title?: string;
+  icon?: string | null;
+}
+
+const { type = 'note', title, icon } = Astro.props;
+
+const DEFAULTS: Record<Variant, { icon: string; label: string }> = {
+  note: { icon: 'Info', label: 'Note' },
+  tip: { icon: 'Lightbulb', label: 'Tip' },
+  important: { icon: 'MessageSquareWarning', label: 'Important' },
+  warning: { icon: 'OctagonAlert', label: 'Warning' },
+  caution: { icon: 'TriangleAlert', label: 'Caution' },
+  success: { icon: 'Check', label: 'Success' },
+};
+
+const preset = DEFAULTS[type] ?? DEFAULTS.note;
+const heading = title ?? preset.label;
+const iconName = icon === null ? null : (icon ?? preset.icon);
+---
+
+<aside class={styles.callout} data-variant={type} data-eq-chrome>
+  <p class={styles.title}>
+    {iconName && <Icon icon={iconName} size="sm" />}
+    <span>{heading}</span>
+  </p>
+  <div class={styles.body}>
+    <slot />
+  </div>
+</aside>

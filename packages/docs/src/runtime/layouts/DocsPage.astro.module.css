@@ -1,0 +1,21 @@
+@reference '../styles/theme.css';
+
+.layout {
+  @apply flex items-start;
+}
+
+.main {
+  @apply mx-auto flex w-full min-w-0 items-start gap-12 px-6 py-10 xl:gap-16;
+  max-width: calc(var(--eq-docs-content-max) + var(--eq-docs-toc-width) + 8rem);
+}
+
+.content {
+  @apply min-w-0 flex-1;
+}
+.content > :global(.eq-prose) {
+  max-width: var(--eq-docs-content-max);
+}
+
+.main[data-splash] {
+  @apply max-w-none;
+}

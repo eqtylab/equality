@@ -1,0 +1,22 @@
+---
+import { isExternalHref } from '@eqtylab/docs/paths';
+import styles from './Link.module.css';
+
+interface Props {
+  href?: string;
+  [key: string]: unknown;
+}
+
+const { href = '', ...rest } = Astro.props;
+const external = isExternalHref(href);
+---
+
+<a
+  href={href}
+  class={styles.link}
+  target={external ? '_blank' : undefined}
+  rel={external ? 'noopener noreferrer' : undefined}
+  {...rest}
+>
+  <slot />
+</a>

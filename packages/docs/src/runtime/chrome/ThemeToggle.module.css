@@ -1,0 +1,7 @@
+@reference '../styles/theme.css';
+.toggle {
+  @apply inline-flex cursor-pointer items-center gap-2;
+}
+.icon {
+  @apply text-text-secondary;
+}

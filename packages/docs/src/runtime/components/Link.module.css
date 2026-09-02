@@ -1,0 +1,4 @@
+@reference '../styles/theme.css';
+.link {
+  @apply text-inherit;
+}

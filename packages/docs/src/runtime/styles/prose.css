@@ -1,0 +1,97 @@
+/*
+ * Docs typography.
+ *
+ * Two deliberate departures from the hand-rolled `#markdown-content` block this
+ * replaces:
+ *
+ * 1. Keyed on a class, not an ID, so it composes.
+ * 2. Descendant selectors with an explicit opt-out, instead of direct-child
+ *    selectors. Direct-child rules mean prose inside a callout, tab panel or
+ *    step list gets nothing, and any structural wrapping silently kills the
+ *    styling. Components mark their own root `data-eq-chrome` to opt out.
+ *
+ * Wrapping the exclusion in :where() keeps specificity at zero, so a consumer
+ * override wins without !important.
+ */
+@reference './theme.css';
+
+.eq-prose {
+  --eq-prose-chrome: : where([data-eq-chrome], [data-eq-chrome] *);
+}
+
+.eq-prose :is(h1, h2, h3, h4, h5, h6):not(:where([data-eq-chrome], [data-eq-chrome] *)) {
+  @apply scroll-mt-24;
+}
+
+.eq-prose h1:not(:where([data-eq-chrome], [data-eq-chrome] *)) {
+  @apply mb-4 mt-12 text-4xl font-bold [&>code]:text-3xl;
+}
+.eq-prose h2:not(:where([data-eq-chrome], [data-eq-chrome] *)) {
+  @apply mb-4 mt-12 text-2xl font-semibold [&>code]:text-xl;
+}
+.eq-prose h3:not(:where([data-eq-chrome], [data-eq-chrome] *)) {
+  @apply mb-4 mt-8 text-xl font-medium [&>code]:text-lg;
+}
+.eq-prose h4:not(:where([data-eq-chrome], [data-eq-chrome] *)) {
+  @apply mb-4 mt-6 text-lg font-medium [&>code]:text-base;
+}
+.eq-prose h5:not(:where([data-eq-chrome], [data-eq-chrome] *)) {
+  @apply mb-4 mt-4 text-base font-medium [&>code]:text-sm;
+}
+.eq-prose h6:not(:where([data-eq-chrome], [data-eq-chrome] *)) {
+  @apply mb-4 mt-4 text-sm font-medium [&>code]:text-xs;
+}
+
+.eq-prose p:not(:where([data-eq-chrome], [data-eq-chrome] *)) {
+  @apply text-text-secondary mb-2 text-base/7 font-normal;
+}
+
+.eq-prose :is(p, li) :is(b, strong):not(:where([data-eq-chrome], [data-eq-chrome] *)) {
+  @apply text-text-primary font-medium;
+}
+
+.eq-prose :is(ul, ol):not(:where([data-eq-chrome], [data-eq-chrome] *)) {
+  @apply text-text-secondary mb-2 space-y-1 pl-4;
+}
+.eq-prose ul:not(:where([data-eq-chrome], [data-eq-chrome] *)) {
+  @apply list-disc;
+}
+.eq-prose ol:not(:where([data-eq-chrome], [data-eq-chrome] *)) {
+  @apply list-decimal;
+}
+
+.eq-prose a:not(:where([data-eq-chrome], [data-eq-chrome] *)) {
+  @apply text-text-primary hover:text-lilac-400 font-medium underline underline-offset-4 transition-all;
+}
+
+/* Inline code, but never the contents of a highlighted block. */
+.eq-prose :not(pre) > code:not(:where([data-eq-chrome], [data-eq-chrome] *)) {
+  @apply dark:bg-background-overlay bg-greyscale-200 text-text-secondary rounded-sm p-1 text-sm;
+}
+
+.eq-prose table:not(:where([data-eq-chrome], [data-eq-chrome] *)) {
+  @apply border-border bg-background-raised mb-2 w-full overflow-hidden rounded-md border;
+}
+.eq-prose table thead:not(:where([data-eq-chrome], [data-eq-chrome] *)) {
+  @apply dark:bg-background-overlay bg-background-sunken;
+}
+.eq-prose table tr:not(:where([data-eq-chrome], [data-eq-chrome] *)) {
+  @apply border-b;
+}
+.eq-prose table th:not(:where([data-eq-chrome], [data-eq-chrome] *)) {
+  @apply p-3 text-left font-semibold;
+}
+.eq-prose table td:not(:where([data-eq-chrome], [data-eq-chrome] *)) {
+  @apply p-3;
+}
+
+.eq-prose hr:not(:where([data-eq-chrome], [data-eq-chrome] *)) {
+  @apply border-border mb-4;
+}
+
+.eq-prose > :first-child {
+  @apply mt-0;
+}
+.eq-prose > :last-child {
+  @apply mb-0;
+}

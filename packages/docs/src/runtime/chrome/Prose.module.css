@@ -1,0 +1,11 @@
+@reference '../styles/theme.css';
+
+.header {
+  @apply mb-8;
+}
+.title {
+  @apply text-text-primary text-4xl font-bold;
+}
+.description {
+  @apply text-text-secondary mt-3 text-lg/7;
+}

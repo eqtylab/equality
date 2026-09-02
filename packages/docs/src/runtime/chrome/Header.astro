@@ -1,0 +1,49 @@
+---
+import CONFIG from 'virtual:eqty-docs/config';
+import { withBase } from '@eqtylab/docs/paths';
+import { Icon } from '@eqtylab/equality';
+import ThemeToggle from './ThemeToggle.tsx';
+import styles from './Header.module.css';
+
+const paths = { base: import.meta.env.BASE_URL, pathPrefix: CONFIG.pathPrefix };
+const homeHref = withBase(CONFIG.pathPrefix ? `/${CONFIG.pathPrefix}/` : '/', {
+  base: import.meta.env.BASE_URL,
+});
+---
+
+<header class={styles.header} data-eq-chrome data-pagefind-ignore>
+  <div class={styles.inner}>
+    <a class={styles.brand} href={homeHref}>
+      {
+        CONFIG.logo && (
+          <img
+            class={styles.logo}
+            src={withBase(CONFIG.logo.src, paths)}
+            alt={CONFIG.logo.alt}
+            height="24"
+          />
+        )
+      }
+      {!CONFIG.logo?.replacesTitle && <span class={styles.title}>{CONFIG.title}</span>}
+    </a>
+
+    <div class={styles.actions}>
+      <slot name="search" />
+      <slot name="versions" />
+      {
+        CONFIG.header.links.map((link) => (
+          <a
+            class={styles.navLink}
+            href={link.href}
+            target={link.external ? '_blank' : undefined}
+            rel={link.external ? 'noopener noreferrer' : undefined}
+          >
+            {link.icon && <Icon icon={link.icon} size="sm" />}
+            <span class={styles.navLinkLabel}>{link.label}</span>
+          </a>
+        ))
+      }
+      {CONFIG.header.showThemeToggle && <ThemeToggle client:load />}
+    </div>
+  </div>
+</header>

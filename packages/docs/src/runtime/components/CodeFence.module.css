@@ -1,0 +1,12 @@
+@reference '../styles/theme.css';
+
+.fence {
+  @apply mb-4;
+}
+
+/* CodeBlock caps its own height at max-h-64, which is right for a product
+ * surface and wrong for a docs sample. Lift the cap here rather than forking
+ * the component; a `maxHeight` prop upstream would let this rule go away. */
+.fence :global([class*='code-block']) {
+  max-height: none;
+}
