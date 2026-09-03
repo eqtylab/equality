@@ -6,36 +6,24 @@
  * which is every versioned build, and every GitHub Pages project site.
  *
  * Applied to `markdown.rehypePlugins`; @astrojs/mdx inherits those by default
- * via `extendMarkdownConfig`, so .md and .mdx are both covered.
+ * via `extendMarkdownConfig`, which is how it reaches MDX content.
  */
 import { visit } from 'unist-util-visit';
 
 interface ElementNode {
   type: string;
-  tagName?: string;
   properties?: Record<string, unknown>;
 }
 
-/** Attributes holding a single URL. */
-const URL_ATTRS: Record<string, string[]> = {
-  a: ['href'],
-  area: ['href'],
-  img: ['src'],
-  source: ['src'],
-  video: ['src', 'poster'],
-  audio: ['src'],
-  embed: ['src'],
-  iframe: ['src'],
-  track: ['src'],
-  script: ['src'],
-  link: ['href'],
-};
-
-/** Attributes holding a comma-separated candidate list. */
-const SRCSET_ATTRS: Record<string, string[]> = {
-  img: ['srcSet', 'srcset'],
-  source: ['srcSet', 'srcset'],
-};
+/**
+ * Attributes whose value is a single URL, and those holding a candidate list.
+ *
+ * Matched on any element rather than per tag: a root-relative `href` or `src`
+ * needs the base prefix wherever it appears, so a tag table would only be a
+ * list of things to forget to add.
+ */
+const URL_ATTRS = ['href', 'src', 'poster'];
+const SRCSET_ATTRS = ['srcSet', 'srcset'];
 
 function shouldRewrite(value: string, base: string): boolean {
   if (!value.startsWith('/')) return false; // relative, fragment, query, or absolute URL
@@ -68,16 +56,15 @@ export function rehypeBaseUrl(options: { base: string }) {
     if (base === '/') return;
 
     visit(tree as never, 'element', (node: ElementNode) => {
-      const tag = node.tagName;
       const props = node.properties;
-      if (!tag || !props) return;
+      if (!props) return;
 
-      for (const attr of URL_ATTRS[tag] ?? []) {
+      for (const attr of URL_ATTRS) {
         const value = props[attr];
         if (typeof value === 'string') props[attr] = rewrite(value, base);
       }
 
-      for (const attr of SRCSET_ATTRS[tag] ?? []) {
+      for (const attr of SRCSET_ATTRS) {
         const value = props[attr];
         if (typeof value === 'string') props[attr] = rewriteSrcset(value, base);
       }

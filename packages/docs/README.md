@@ -30,7 +30,12 @@ export const collections = docsCollections();
 ```
 
 Then write MDX under `src/content/docs/`. That's the whole setup: the integration injects the
-page routes, `.md` twins, `/llms.txt`, a search index, and a 404.
+page routes, a Markdown twin per page, `/llms.txt`, a search index, and a 404.
+
+Content is **MDX-only**. Component overrides apply exclusively to MDX, so a `.md` page would
+render its tables, code fences and callouts differently from every other page. A `.md` file in
+the content tree fails the build rather than going silently missing — renaming it is usually the
+only change needed, since MDX is a superset of Markdown.
 
 ## Navigation comes from folders
 
@@ -74,6 +79,47 @@ correct light _and_ dark colours for free.
 Set `code: { highlighter: 'shiki' }` to use Astro's Shiki instead: wider language coverage, line
 highlighting and `meta` support, at the cost of a different look from the product.
 
+## Everything renders through Equality
+
+The framework contributes layout, navigation and prose typography. Everything that renders
+_content_ is an Equality component, server-rendered with no client React, so docs and
+product surfaces cannot drift:
+
+| Authored as     | Renders as                                                                              |
+| --------------- | --------------------------------------------------------------------------------------- |
+| Code fences     | `CodeBlock`                                                                             |
+| Markdown tables | `TableContainer` / `TableHeader` / `TableBody` / `TableRow` / `TableHead` / `TableCell` |
+| `<Alert>`       | `Alert`, as an `aside`                                                                  |
+| Links           | base-aware `a` override                                                                 |
+
+**Authors write Equality's own components, with no imports.** The route-level component map
+supplies named components as well as element overrides, so this works in any page with
+nothing at the top of the file — there is no docs-specific component vocabulary to learn:
+
+```mdx
+---
+title: My page
+---
+
+<Alert variant="warning" title="Heads up">
+  Body content, with real block elements.
+</Alert>
+```
+
+The only thing the framework adds is a default: `as="aside"`. Alert's default `div` carries
+`role="alert"`, an assertive live region — right for a message responding to something the
+user did, wrong for a standing note in a document. Importing `Alert` from
+`@eqtylab/equality` explicitly opts out and gives you the raw component, because a
+file-level import wins over the component map.
+
+One detail worth knowing: **tables need a column count.** `TableContainer` is a CSS grid
+whose parts all use `subgrid`, so it needs an explicit track list or the table collapses
+to one column. Markdown has no syntax for that, so `rehypeTableColumns` derives the count
+from the first row at build time.
+
+This is also why content is MDX-only — these overrides are the mechanism, and Astro's
+plain-Markdown pipeline has no component substitution at all.
+
 ## Versioned deploys
 
 `base` must be literal in Astro's config at build time, so it is threaded by environment variable:
@@ -100,5 +146,26 @@ pnpm test     # nav ordering, prev/next, breadcrumbs, TOC
 as **source** and is compiled by the consumer's Astro — `.astro` files cannot be bundled. The copy is
 verbatim, which is what keeps dev source-linking byte-equivalent to the published package.
 
-`tests/fixtures/basic` is a small consumer used to verify nav ordering, base handling, and the
-injected routes end to end.
+### The playground
+
+`pnpm dev` serves `playground/` on port 4322 — a standalone site with test content, used to
+develop the framework itself. It is **not published** (the `files` field ships only `dist/` and
+`README.md`) and **not deployed**. Its content doubles as a live spec: every page exercises a
+convention, so if something looks wrong on screen the framework is wrong, not the content.
+
+Edits to `src/runtime/**` hot-reload — `scripts/dev.mjs` keeps `dist/runtime` in sync, which is
+what Vite actually serves (Astro resolves injected route entrypoints through the real exports map).
+
+To exercise a versioned sub-path build:
+
+```bash
+DOCS_BASE=/v0.0/ pnpm playground:build
+```
+
+Then confirm nothing 404s when `playground/dist` is served at `/v0.0/`.
+
+### Fixtures
+
+`tests/fixtures/basic` is a separate, deliberately minimal consumer used for assertions — it
+contains a misspelled `_group.yaml` key on purpose, which is why it is kept apart from the
+playground rather than doubling as the dev surface.

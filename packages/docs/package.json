@@ -74,7 +74,8 @@
     "README.md"
   ],
   "sideEffects": [
-    "**/*.css"
+    "**/*.css",
+    "**/runtime/scripts/*"
   ],
   "engines": {
     "node": ">=22.12"
@@ -88,10 +89,12 @@
     "build:node": "tsup",
     "build:runtime": "node scripts/copy-runtime.mjs",
     "build:types": "tsc -p tsconfig.build.json",
-    "dev": "node scripts/copy-runtime.mjs --watch",
+    "dev": "node scripts/dev.mjs",
     "check:no-utilities": "node scripts/check-no-utilities.mjs",
     "test": "node --test tests/*.test.ts",
-    "release": "pnpm run build && pnpm publish --access public --no-git-checks"
+    "release": "pnpm run build && pnpm publish --access public --no-git-checks",
+    "dev:runtime": "node scripts/copy-runtime.mjs --watch",
+    "playground:build": "pnpm run build && cd playground && astro build"
   },
   "dependencies": {
     "@astrojs/mdx": "^5.0.2",

@@ -1,0 +1,7 @@
+@reference '../styles/theme.css';
+
+/* Flow spacing only. Every visual property comes from Alert, so the two cannot
+ * drift. */
+.alert {
+  @apply mb-4;
+}

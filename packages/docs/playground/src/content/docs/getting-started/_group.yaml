@@ -1,0 +1,6 @@
+label: Getting Started
+# `order` lists immediate children. Anything unlisted appends alphabetically by
+# its sidebar label, so adding a page never means editing this file.
+order:
+  - installation
+  - configuration

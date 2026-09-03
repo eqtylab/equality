@@ -7,7 +7,7 @@
  * do not make every page match every query.
  */
 import { rewriteHtmlBase } from '@eqtylab/docs/internal/rehype-base-url';
-import Callout from '../components/Callout.astro';
+import AlertBridge from '../components/AlertBridge.astro';
 import styles from './Prose.module.css';
 
 interface Props {
@@ -35,13 +35,13 @@ const deprecationMessage = deprecation?.message
 
   {
     deprecation && (
-      <Callout type="warning" title="Deprecated">
+      <AlertBridge variant="warning" title="Deprecated">
         {deprecationMessage ? (
           <p set:html={deprecationMessage} />
         ) : (
           <p>This page documents a deprecated feature.</p>
         )}
-      </Callout>
+      </AlertBridge>
     )
   }
 

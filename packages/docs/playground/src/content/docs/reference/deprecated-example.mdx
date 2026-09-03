@@ -1,0 +1,14 @@
+---
+title: Deprecated Example
+description: Shows the deprecation notice and its sidebar badge.
+deprecated:
+  message: This is only here to exercise the notice. See <a href="/guides/navigation/">Navigation</a> instead.
+---
+
+The notice above is rendered from the `deprecated` frontmatter, and the sidebar entry
+for this page carries a warning badge.
+
+Note the message contains a **root-relative link written as raw HTML in frontmatter**.
+That is a real edge case: rehype rewrites links in page bodies for `base`, but never
+sees frontmatter, so the layout base-prefixes those strings separately. Build with
+`DOCS_BASE=/v0.0/` and the link above still resolves.

@@ -1,0 +1,33 @@
+---
+/**
+ * Equality's `Alert`, with the defaults a docs page wants.
+ *
+ * Supplied to MDX as `Alert`, so an author writes `<Alert variant="warning"
+ * title="Heads up">…</Alert>` with no import and no docs-specific component to
+ * learn. This file exists only to carry two defaults; the API is Alert's.
+ *
+ * `as="aside"` is the important one: Alert's default `div` carries
+ * role="alert", an assertive live region that screen readers announce on page
+ * load. Correct for a message responding to a user action, wrong for a standing
+ * note in a document.
+ *
+ * An author who explicitly imports Alert from @eqtylab/equality gets the raw
+ * component instead -- a file-level import wins over the MDX component map.
+ */
+import { Alert } from '@eqtylab/equality';
+
+import styles from './AlertBridge.module.css';
+
+type Props = Record<string, unknown>;
+
+const { class: className, ...rest } = Astro.props as Props & { class?: string };
+---
+
+<Alert
+  as="aside"
+  {...rest}
+  className={[styles.alert, className].filter(Boolean).join(' ')}
+  data-eq-chrome
+>
+  <slot />
+</Alert>

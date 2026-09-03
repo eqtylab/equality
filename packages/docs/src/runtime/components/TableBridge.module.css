@@ -1,0 +1,7 @@
+@reference '../styles/theme.css';
+
+/* Spacing and overflow only. Borders, background, header treatment and cell
+ * padding all come from Equality's Table, so the two cannot drift. */
+.table {
+  @apply mb-4;
+}

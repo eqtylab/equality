@@ -1,0 +1,32 @@
+---
+title: Docs Playground
+description: Standalone test content for developing the docs framework itself.
+---
+
+This site is the development surface for `@eqtylab/docs`. It is **not** published and
+**not** deployed — it exists so the framework can be worked on against realistic
+content. Run it with `pnpm dev` from `packages/docs`.
+
+<Alert variant="primary" title="It doubles as a spec">
+  Every page here exercises a convention the framework provides, so if something looks wrong on
+  screen, the framework is wrong — not the content.
+</Alert>
+
+## What this covers
+
+- Folder-derived navigation with `_group.yaml` ordering
+- Nested groups at arbitrary depth, and folder landing pages
+- Frontmatter: badges, deprecation, hidden pages, the `splash` template
+- Code fences rendered through Equality's `CodeBlock`
+- Alerts and tables rendered by Equality, plus the base-aware link override
+
+## Try the versioned build
+
+The sidebar, table of contents, links and assets all have to survive being served
+from a sub-path. Exercise that locally:
+
+```bash
+DOCS_BASE=/v0.0/ pnpm --filter docs-playground build
+```
+
+Then confirm nothing 404s when `dist/` is served at `/v0.0/`.

@@ -1,0 +1,9 @@
+label: Reference
+order:
+  - frontmatter
+links:
+  - label: Equality components
+    href: https://equality.eqtylab.io/
+    badge:
+      text: ext
+      variant: neutral

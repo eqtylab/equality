@@ -1,0 +1,36 @@
+---
+title: Theming
+description: Tokens, dark mode, and the styling constraint the package works under.
+---
+
+This page sits two levels deep, which is what proves groups nest to arbitrary depth.
+Its parent group sets `collapsed: true` — but a group containing the page you are on
+is always forced open, so a deep link still reveals itself.
+
+## Dark mode
+
+Theming is an attribute on `<html>`, `data-equality-theme`, set by a blocking inline
+script before first paint. The toggle in the header is the only React island the
+chrome ships.
+
+## The styling constraint
+
+<Alert variant="danger" title="No Tailwind utilities in shipped markup">
+  Tailwind v4's source detection skips `node_modules`, so a utility class written literally in this
+  package's markup would silently generate nothing in a consumer's build. All styling goes through
+  `@apply` in a co-located `*.module.css`, which has no such dependency. `pnpm run
+  check:no-utilities` enforces it as part of `build`.
+</Alert>
+
+## Code samples resolve their palette from CSS
+
+```ts
+import { CodeBlock } from '@eqtylab/equality';
+
+// useInlineStyles={false} means Prism emits bare .token.* classes and the
+// palette comes from --syntax-* custom properties, so a server-rendered
+// block gets correct light AND dark colours with no JS.
+export const example = <CodeBlock code="const a = 1;" language="typescript" />;
+```
+
+Toggle the theme and watch the block above change colour with no re-render.

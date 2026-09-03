@@ -1,0 +1,30 @@
+---
+/**
+ * Bridges a markdown table to Equality's `Table`.
+ *
+ * The only translation needed is the column count: `TableContainer` is a CSS
+ * grid and needs an explicit track list, which `rehypeTableColumns` derives from
+ * the markup. Everything else (thead/tbody/tr/th/td) maps straight onto the
+ * Equality parts in the MDX component map.
+ *
+ * `TableContainer` and its parts have no hooks, so this renders to static HTML
+ * with no client directive -- same trick as the code fences.
+ */
+import { TableContainer } from '@eqtylab/equality';
+
+import styles from './TableBridge.module.css';
+
+interface Props {
+  'data-column-count'?: string;
+}
+
+const count = Number(Astro.props['data-column-count'] ?? 0);
+
+// minmax(0, auto) rather than plain auto: without a zero minimum, one long
+// unbroken cell (a type signature, a URL) blows the grid past its container.
+const columns = count > 0 ? `repeat(${count}, minmax(0, auto))` : undefined;
+---
+
+<TableContainer columns={columns} border className={styles.table} data-eq-chrome>
+  <slot />
+</TableContainer>

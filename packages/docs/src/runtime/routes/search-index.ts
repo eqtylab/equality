@@ -4,9 +4,9 @@
  * Pagefind indexes built HTML and so cannot work in `astro dev`; this is the dev
  * fallback, and the whole search provider for small sites.
  *
- * Headings come from render(), not from `entry.rendered.metadata`: the latter is
- * populated for .md but stays empty for .mdx, where headings are only known once
- * the component is compiled. Rendering here is a build-time cost on one route.
+ * Headings come from render(), not from `entry.rendered.metadata`, which stays
+ * empty for MDX -- its headings are only known once the component is compiled.
+ * Rendering here is a build-time cost on one route.
  */
 import { docsHref } from '@eqtylab/docs/paths';
 import type { APIRoute } from 'astro';

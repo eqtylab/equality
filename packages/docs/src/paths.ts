@@ -28,7 +28,7 @@ export function ensureTrailingSlash(href: string): string {
 }
 
 /**
- * A root `index.md(x)` gets the collection id `"index"` rather than `""`,
+ * A root `index.mdx` gets the collection id `"index"` rather than `""`,
  * because Astro's trailing-`/index` strip requires a leading slash. Normalising
  * here keeps default ids everywhere else.
  */

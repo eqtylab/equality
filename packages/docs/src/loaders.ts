@@ -24,14 +24,19 @@ export const ROOT_GROUP_ID = '~root';
 /**
  * Pages. A thin wrapper over Astro's `glob()` that fixes the pattern and base.
  *
- * The negation matters: the glob loader has no built-in underscore skipping, so
- * `_group.yaml` and `_draft.mdx` would otherwise become pages.
+ * MDX only: component overrides (tables, code fences, callouts) apply exclusively
+ * to MDX, so a `.md` page would render differently from every other page. A stray
+ * `.md` file fails the build rather than being silently skipped -- see
+ * `assertMdxOnly`.
+ *
+ * The negation matters separately: the glob loader has no built-in underscore
+ * skipping, so `_group.yaml` and `_draft.mdx` would otherwise become pages.
  */
 export function docsLoader(options: { base?: string } = {}): Loader {
   const base = options.base ?? 'content/docs';
   return glob({
     base: `./src/${base}`,
-    pattern: ['**/*.{md,mdx}', '!**/_*', '!**/_*/**'],
+    pattern: ['**/*.mdx', '!**/_*', '!**/_*/**'],
   });
 }
 

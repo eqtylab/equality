@@ -1,0 +1,58 @@
+---
+title: Navigation
+description: Ordering lives in folders, not in frontmatter.
+badge:
+  text: Core
+  variant: primary
+---
+
+There is deliberately **no `sidebar.order` frontmatter**. Ordering is a property of a
+directory, so it lives in one optional file per directory.
+
+## `_group.yaml`
+
+```yaml
+label: Getting Started
+order: [installation, configuration]
+collapsed: false
+badge:
+  text: New
+  variant: success
+links:
+  - label: Releases
+    href: https://github.com/eqtylab/equality/releases
+```
+
+## The rules
+
+1. Children named in `order` come first, in that order.
+2. Everything unlisted appends alphabetically **by sidebar label** — so adding a page
+   never means editing `_group.yaml`.
+3. `index.md(x)` becomes the folder's own landing page.
+4. `order` matches the **filesystem name**, not the title, because names stay stable
+   when titles get edited.
+
+<Alert variant="warning" title="Typos fail loudly">
+  A name in `order` that matches nothing produces a build warning naming the file, the token and the
+  available children. The schema is `.strict()`, so an unknown key is a build error. Silently
+  ignored ordering config is the thing this design exists to avoid.
+</Alert>
+
+## Changing the fallback
+
+```yaml
+sort: filename   # order by filename, numeric-aware
+sort: manual     # unlisted children are dropped from the nav (pages still build)
+```
+
+## Everything on this page comes from Equality
+
+The table above renders through Equality's `Table`, and this callout through its
+`Alert` — not through docs-specific reimplementations. Both are server-rendered with
+no client React, so they match product surfaces exactly and cannot drift.
+
+<Alert variant="neutral" title="Why MDX only">
+  Component overrides apply only to MDX, so a `.md` page would render its tables and code fences
+  differently from every other page. Rather than ship two rendering paths, content is MDX-only and a
+  stray `.md` file fails the build.
+</Alert>

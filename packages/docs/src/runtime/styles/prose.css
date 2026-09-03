@@ -69,21 +69,8 @@
   @apply dark:bg-background-overlay bg-greyscale-200 text-text-secondary rounded-sm p-1 text-sm;
 }
 
-.eq-prose table:not(:where([data-eq-chrome], [data-eq-chrome] *)) {
-  @apply border-border bg-background-raised mb-2 w-full overflow-hidden rounded-md border;
-}
-.eq-prose table thead:not(:where([data-eq-chrome], [data-eq-chrome] *)) {
-  @apply dark:bg-background-overlay bg-background-sunken;
-}
-.eq-prose table tr:not(:where([data-eq-chrome], [data-eq-chrome] *)) {
-  @apply border-b;
-}
-.eq-prose table th:not(:where([data-eq-chrome], [data-eq-chrome] *)) {
-  @apply p-3 text-left font-semibold;
-}
-.eq-prose table td:not(:where([data-eq-chrome], [data-eq-chrome] *)) {
-  @apply p-3;
-}
+/* Tables are not styled here: markdown tables render through Equality's Table
+ * via the MDX component map, so all table styling lives in the component. */
 
 .eq-prose hr:not(:where([data-eq-chrome], [data-eq-chrome] *)) {
   @apply border-border mb-4;

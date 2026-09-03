@@ -1,0 +1,7 @@
+# The content root's own group file. Ordering here controls the top level of the
+# sidebar. Names are filesystem names: a folder or a file basename without its
+# extension.
+order:
+  - getting-started
+  - guides
+  - reference

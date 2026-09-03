@@ -1,0 +1,35 @@
+---
+title: Frontmatter
+description: Every field a page can declare.
+---
+
+## Fields
+
+| Field             | Type              | Purpose                                       |
+| ----------------- | ----------------- | --------------------------------------------- |
+| `title`           | string            | Required. Heading and sidebar label.          |
+| `description`     | string            | Sub-heading and meta description.             |
+| `navLabel`        | string            | Overrides `title` in the sidebar only.        |
+| `icon`            | string            | Lucide icon name.                             |
+| `badge`           | object            | `{ text, variant }` shown in the sidebar.     |
+| `hidden`          | boolean           | Omit from the sidebar; the page still builds. |
+| `draft`           | boolean           | Visible in `astro dev`, excluded from builds. |
+| `deprecated`      | boolean or object | Renders a notice and a sidebar badge.         |
+| `template`        | `doc` or `splash` | `splash` drops the sidebar and TOC.           |
+| `tableOfContents` | object or `false` | Per-page heading levels.                      |
+| `noIndex`         | boolean           | Skip the `.md` twin and the search index.     |
+
+## Content is MDX-only
+
+Every page is `.mdx`, including this one — which uses no imports at all, because MDX
+is a superset of Markdown and plain Markdown is valid MDX.
+
+There is no `.md` support on purpose: component overrides apply only to MDX, so a `.md`
+page would render its tables, code fences and callouts differently from every other
+page. A stray `.md` file in the content tree fails the build rather than going
+silently missing from the site.
+
+## Link check
+
+A root-relative link: [Guides](/guides/). Build with `DOCS_BASE=/v0.0/` and it still
+resolves — rehype rewrites authored links for `base`, which Astro does not do itself.

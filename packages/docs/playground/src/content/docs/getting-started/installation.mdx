@@ -1,0 +1,43 @@
+---
+title: Installation
+description: Add the framework to a site.
+---
+
+A docs site is a thin Astro project: two config files plus content.
+
+## Install
+
+```bash
+pnpm add @eqtylab/docs @eqtylab/equality astro react react-dom
+```
+
+## Configure
+
+```js
+// astro.config.mjs
+import docs from '@eqtylab/docs';
+import { defineConfig } from 'astro/config';
+
+export default defineConfig({
+  site: 'https://docs.example.com',
+  base: process.env.DOCS_BASE ?? '/',
+  integrations: [docs({ title: 'My Docs' })],
+});
+```
+
+## Declare the collections
+
+```ts
+// src/content.config.ts
+import { docsCollections } from '@eqtylab/docs/loaders';
+
+export const collections = docsCollections();
+```
+
+<Alert variant="primary" title="This file is required">
+  Astro discovers `src/content.config.ts` by filesystem search and an integration cannot inject
+  collections, so this one file cannot be avoided. It is the same constraint Starlight works within.
+</Alert>
+
+That is the whole setup. The integration injects the page routes, a `.md` twin per
+page, `/llms.txt`, a search index and a 404.

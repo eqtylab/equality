@@ -35,4 +35,6 @@ const language = SUPPORTED.has(lang.toLowerCase()) ? lang.toLowerCase() : 'text'
 <div class={styles.fence} data-eq-chrome data-eq-copy={code}>
   <CodeBlock code={code} language={language} title={title} />
 </div>
-<script src="@eqtylab/docs/scripts/eq-copy.ts"></script>
+<script>
+  import "@eqtylab/docs/scripts/eq-copy.ts";
+</script>

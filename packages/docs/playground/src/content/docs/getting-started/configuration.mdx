@@ -1,0 +1,37 @@
+---
+title: Configuration
+description: The options the integration accepts.
+---
+
+Every option is optional except `title`.
+
+## Common options
+
+| Option             | Default        | Purpose                                         |
+| ------------------ | -------------- | ----------------------------------------------- |
+| `title`            | —              | Site name, used in the header and the `<title>` |
+| `contentDir`       | `content/docs` | Content directory, relative to `src/`           |
+| `pathPrefix`       | `''`           | Mount docs under a sub-path, e.g. `docs`        |
+| `sidebar.sort`     | `alpha`        | Default order for children absent from `order`  |
+| `code.highlighter` | `codeblock`    | `codeblock` or `shiki`                          |
+| `search.provider`  | `pagefind`     | `pagefind`, `titles` or `none`                  |
+
+## Code highlighting
+
+Fences render through Equality's `CodeBlock` by default, server-side, so docs match
+product surfaces with no client React. Switch to Astro's Shiki when you need wider
+language coverage or line highlighting:
+
+```js
+docs({ title: 'My Docs', code: { highlighter: 'shiki' } });
+```
+
+## Content is MDX-only
+
+Every page is `.mdx`. [Frontmatter](/reference/frontmatter/) is an example that uses no
+imports at all — MDX is a superset of Markdown, so plain Markdown is valid MDX. A `.md`
+file in the content tree fails the build, because component overrides apply only to
+MDX and a `.md` page would render tables and code fences differently.
+
+Note that **Reference** is a group with no `index.mdx`, so it renders as a plain label
+rather than a link — the contrast with **Guides**, which has one.

@@ -2,7 +2,9 @@ import type { AstroIntegration } from 'astro';
 
 import { resolveConfig, type DocsConfig, type DocsUserConfig } from './config.ts';
 import { resolveDocsEnv, type DocsEnv } from './env.ts';
+import { assertMdxOnly } from './internal/assert-mdx-only.ts';
 import { rehypeBaseUrl } from './internal/rehype-base-url.ts';
+import { rehypeTableColumns } from './internal/rehype-table-columns.ts';
 import { scanConsumerPages } from './internal/scan-consumer-pages.ts';
 import { virtualConfigPlugin } from './internal/virtual-config.ts';
 
@@ -67,6 +69,10 @@ export default function docs(
     hooks: {
       async 'astro:config:setup'(params) {
         const { config, injectRoute, updateConfig, addWatchFile, logger, command } = params;
+
+        // Content is MDX-only; a .md file would be skipped by the loader and
+        // silently missing from the site.
+        assertMdxOnly(new URL(`./${cfg.contentDir}/`, config.srcDir));
 
         const consumer = scanConsumerPages(config.srcDir);
 
@@ -150,7 +156,11 @@ export default function docs(
         // Astro does not rewrite authored markdown links for `base`, so every
         // root-relative link in content would 404 in a sub-path build. MDX
         // inherits markdown.rehypePlugins via extendMarkdownConfig.
-        markdown.rehypePlugins = [[rehypeBaseUrl, { base: config.base }]];
+        markdown.rehypePlugins = [
+          [rehypeBaseUrl, { base: config.base }],
+          // Equality's Table is a CSS grid and needs an explicit track count.
+          rehypeTableColumns,
+        ];
 
         updateConfig({
           integrations: added,
