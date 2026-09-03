@@ -47,6 +47,7 @@ export const DropdownMenuDemo = ({
 }: {
   variant?:
     | "default"
+    | "item-variants"
     | "with-separators"
     | "with-checkboxes"
     | "with-radio"
@@ -86,6 +87,31 @@ export const DropdownMenuDemo = ({
             <DropdownMenuItem>Profile</DropdownMenuItem>
             <DropdownMenuItem>Settings</DropdownMenuItem>
             <DropdownMenuItem variant="danger">Logout</DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
+      </div>
+    );
+  }
+
+  if (variant === "item-variants") {
+    return (
+      <div style={{ margin: "1rem 0" }}>
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button size="sm" variant="tertiary">
+              Manage Deployment
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="start">
+            <DropdownMenuItem>View logs</DropdownMenuItem>
+            <DropdownMenuItem>Duplicate</DropdownMenuItem>
+            <DropdownMenuSeparator />
+            <DropdownMenuItem variant="warning">
+              Roll back to previous release
+            </DropdownMenuItem>
+            <DropdownMenuItem variant="danger">
+              Delete deployment
+            </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       </div>

@@ -106,6 +106,25 @@ Use the `danger` variant For destructive actions like delete or remove.
 </div>
 }
 
+### Warning
+
+Use the `warning` variant for actions the user should pause over but that are not destructive, such as archiving something that can be restored later. Reserve `danger` for actions that cannot be undone.
+
+{
+
+<div className="flex gap-2">
+  <Button variant="warning" size="lg">
+    Warning LG
+  </Button>
+  <Button variant="warning" size="md">
+    Warning MD
+  </Button>
+  <Button variant="warning" size="sm">
+    Warning SM
+  </Button>
+</div>
+}
+
 ### Link
 
 Use the `link` variant for buttons that should be styled as a link but with button semantics.
@@ -243,15 +262,15 @@ Buttons tagged with the `disabled` property are non-interactive and visually mut
 
 ## Props
 
-| Name       | Description                                      | Type                                                               | Default   | Required |
-| ---------- | ------------------------------------------------ | ------------------------------------------------------------------ | --------- | -------- |
-| `variant`  | The visual style of the button                   | `primary`, `secondary`, `tertiary`, `danger`, `link`, `navigation` | `primary` | ❌       |
-| `size`     | The size of the button                           | `sm`, `md`, `lg`                                                   | `md`      | ❌       |
-| `prefix`   | Content to display before the button label       | `ReactNode`                                                        | -         | ❌       |
-| `suffix`   | Content to display after the button label        | `ReactNode`                                                        | -         | ❌       |
-| `href`     | URL for link buttons (renders as anchor element) | `string`                                                           | -         | ❌       |
-| `target`   | Link target (when href is provided)              | `string`                                                           | -         | ❌       |
-| `rel`      | Link rel attribute (when href is provided)       | `string`                                                           | -         | ❌       |
-| `download` | Makes link downloadable (when href is provided)  | `string`, `boolean`                                                | -         | ❌       |
-| `asChild`  | Merge props onto child element                   | `boolean`                                                          | `false`   | ❌       |
-| `disabled` | Disables the button                              | `boolean`                                                          | `false`   | ❌       |
+| Name       | Description                                      | Type                                                                          | Default   | Required |
+| ---------- | ------------------------------------------------ | ----------------------------------------------------------------------------- | --------- | -------- |
+| `variant`  | The visual style of the button                   | `primary`, `secondary`, `tertiary`, `danger`, `warning`, `link`, `navigation` | `primary` | ❌       |
+| `size`     | The size of the button                           | `sm`, `md`, `lg`                                                              | `md`      | ❌       |
+| `prefix`   | Content to display before the button label       | `ReactNode`                                                                   | -         | ❌       |
+| `suffix`   | Content to display after the button label        | `ReactNode`                                                                   | -         | ❌       |
+| `href`     | URL for link buttons (renders as anchor element) | `string`                                                                      | -         | ❌       |
+| `target`   | Link target (when href is provided)              | `string`                                                                      | -         | ❌       |
+| `rel`      | Link rel attribute (when href is provided)       | `string`                                                                      | -         | ❌       |
+| `download` | Makes link downloadable (when href is provided)  | `string`, `boolean`                                                           | -         | ❌       |
+| `asChild`  | Merge props onto child element                   | `boolean`                                                                     | `false`   | ❌       |
+| `disabled` | Disables the button                              | `boolean`                                                                     | `false`   | ❌       |
