@@ -2478,6 +2478,7 @@
         <group>
           <id>792303FE-20DD-4519-88B7-A3D74D43A65A</id>
           <name>Button</name>
+          <expanded>1</expanded>
           <namespace>1</namespace>
           <group>
             <id>AB837834-B6A2-4B55-BB11-D3A5D13EEE41</id>
@@ -2585,6 +2586,7 @@
           <group>
             <id>65EF707B-201E-41DA-9727-B23B74706082</id>
             <name>Danger</name>
+            <expanded>1</expanded>
             <namespace>1</namespace>
             <alias>
               <name>Fill</name>
@@ -2618,6 +2620,7 @@
           <group>
             <id>5A31F3CF-7D77-4209-8306-BE84DCD28B3C</id>
             <name>Warning</name>
+            <expanded>1</expanded>
             <namespace>1</namespace>
             <alias>
               <name>Fill</name>
@@ -2644,7 +2647,7 @@
             <alias>
               <name>Text</name>
               <type>1</type>
-              <referencedItemId>68E685CF-C64F-4A8C-8DE3-886255A54EC0</referencedItemId>
+              <referencedItemId>9FC81FBB-965B-40C5-A7D2-A5F365863FE4</referencedItemId>
               <buildGroupId>86B9D7D8-F74A-4CAE-B006-65451BBEDAB9</buildGroupId>
             </alias>
           </group>
