@@ -38,6 +38,18 @@
   @apply dark:hover:not-disabled:text-red-200! dark:focus:text-red-200!;
 }
 
+/* Text/Warning is Yellow 500, which reads 2.4:1 on the light overlay - under the 4.5:1
+   text threshold - so light steps down to Yellow 700 (7.0:1). Dark keeps the token, which
+   resolves to Yellow 400 and already clears the dark overlay at 8.5:1. */
+.dropdown-menu-item-warning {
+  @apply text-yellow-700!;
+  @apply dark:text-text-warning!;
+  @apply hover:not-disabled:text-yellow-800! focus:text-yellow-800!;
+  @apply hover:not-disabled:bg-yellow-300/50! focus:bg-yellow-300/50!;
+  @apply dark:hover:not-disabled:bg-yellow-600/50! dark:focus:bg-yellow-600/50!;
+  @apply dark:hover:not-disabled:text-yellow-200! dark:focus:text-yellow-200!;
+}
+
 .dropdown-menu-item-indicator-checkbox,
 .dropdown-menu-item-indicator-radio {
   @apply absolute left-2 size-3.5;

@@ -620,7 +620,7 @@ const DropdownMenuItem = React.forwardRef<
   React.ElementRef<typeof DropdownMenuPrimitive.Item>,
   React.ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.Item> & {
     inset?: boolean;
-    variant?: 'neutral' | 'danger';
+    variant?: 'neutral' | 'warning' | 'danger';
   }
 >(({ className, inset, variant = 'neutral', textValue, children, ...props }, ref) => {
   const visible = useFilterableItem(textValue, children);
@@ -633,6 +633,7 @@ const DropdownMenuItem = React.forwardRef<
       className={cn(
         styles['dropdown-menu-item'],
         inset && styles['dropdown-menu-inset'],
+        variant === 'warning' && styles['dropdown-menu-item-warning'],
         variant === 'danger' && styles['dropdown-menu-item-danger'],
         className
       )}

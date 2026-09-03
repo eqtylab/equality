@@ -44,6 +44,26 @@ Basic usage:
 
 ## Variants
 
+### Item Variants
+
+`DropdownMenuItem` takes a `variant` to mark an action's weight. Use `danger` for destructive or irreversible actions, and `warning` for actions that are consequential but recoverable — something the user should pause over rather than avoid. Leave everything else `neutral`.
+
+Colour alone shouldn't carry the meaning, so keep the label explicit about what the action does.
+
+<DropdownMenuDemo client:only="react" variant="item-variants" />
+
+```jsx
+<DropdownMenuContent align="start">
+  <DropdownMenuItem>View logs</DropdownMenuItem>
+  <DropdownMenuItem>Duplicate</DropdownMenuItem>
+  <DropdownMenuSeparator />
+  <DropdownMenuItem variant="warning">
+    Roll back to previous release
+  </DropdownMenuItem>
+  <DropdownMenuItem variant="danger">Delete deployment</DropdownMenuItem>
+</DropdownMenuContent>
+```
+
 ### With Separators and Labels
 
 Use `DropdownMenuLabel` to title a section and `DropdownMenuSeparator` to divide groups of items. Items accept icons as children alongside a `<span>` label.
@@ -321,13 +341,13 @@ Flattening only works when `DropdownMenuSubContent` is placed directly inside `D
 
 ### DropdownMenuItem
 
-| Name        | Description                                                            | Type                | Default   | Required |
-| ----------- | ---------------------------------------------------------------------- | ------------------- | --------- | -------- |
-| `variant`   | Visual style; `danger` marks a destructive action                      | `neutral`, `danger` | `neutral` | ❌       |
-| `inset`     | Adds left padding to align with items that have icons                  | `boolean`           | `false`   | ❌       |
-| `disabled`  | Prevents interaction and dims the item                                 | `boolean`           | `false`   | ❌       |
-| `textValue` | Text used for search filtering; falls back to the item's rendered text | `string`            | -         | ❌       |
-| `onSelect`  | Called when the item is selected                                       | `() => void`        | -         | ❌       |
+| Name        | Description                                                                      | Type                           | Default   | Required |
+| ----------- | -------------------------------------------------------------------------------- | ------------------------------ | --------- | -------- |
+| `variant`   | Visual style; `warning` marks a consequential action, `danger` a destructive one | `neutral`, `warning`, `danger` | `neutral` | ❌       |
+| `inset`     | Adds left padding to align with items that have icons                            | `boolean`                      | `false`   | ❌       |
+| `disabled`  | Prevents interaction and dims the item                                           | `boolean`                      | `false`   | ❌       |
+| `textValue` | Text used for search filtering; falls back to the item's rendered text           | `string`                       | -         | ❌       |
+| `onSelect`  | Called when the item is selected                                                 | `() => void`                   | -         | ❌       |
 
 ### DropdownMenuCheckboxItem
 
