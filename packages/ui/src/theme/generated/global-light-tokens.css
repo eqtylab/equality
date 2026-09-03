@@ -88,7 +88,7 @@ html {
   --color-button-tertiary-text: color(display-p3 0 0 0);
   --color-button-warning-border: color(display-p3 0.6345 0.463 0.1863);
   --color-button-warning-fill: color(display-p3 0.8263 0.6154 0.2247);
-  --color-button-warning-text: color(display-p3 0 0 0);
+  --color-button-warning-text: color(display-p3 1 1 1);
   --color-card-background: color(display-p3 1 1 1);
   --color-card-border: color(display-p3 0.8698 0.8698 0.8698);
   --color-cyan-100: color(display-p3 0.8736 0.9466 0.9942);

@@ -389,8 +389,8 @@
             "$type": "color",
             "$value": {
               "colorSpace": "display-p3",
-              "components": [0.8114, 0.4167, 0.3761],
-              "hex": "#CF6A60"
+              "components": [0.7365, 0.2216, 0.2026],
+              "hex": "#BC3934"
             }
           }
         },
@@ -399,16 +399,16 @@
             "$type": "color",
             "$value": {
               "colorSpace": "display-p3",
-              "components": [0.6266, 0.4562, 0.8302],
-              "hex": "#A074D4"
+              "components": [0.5242, 0.2903, 0.7705],
+              "hex": "#864AC4"
             }
           },
           "fill": {
             "$type": "color",
             "$value": {
               "colorSpace": "display-p3",
-              "components": [0.6266, 0.4562, 0.8302],
-              "hex": "#A074D4"
+              "components": [0.5242, 0.2903, 0.7705],
+              "hex": "#864AC4"
             }
           }
         },
@@ -477,8 +477,8 @@
             "$type": "color",
             "$value": {
               "colorSpace": "display-p3",
-              "components": [0.863, 0.6958, 0.4108],
-              "hex": "#DCB169"
+              "components": [0.8263, 0.6154, 0.2247],
+              "hex": "#D39D39"
             }
           }
         }

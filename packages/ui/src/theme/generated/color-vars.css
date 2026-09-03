@@ -84,7 +84,7 @@
   --color-button-tertiary-text: color(display-p3 0 0 0);
   --color-button-warning-border: color(display-p3 0.6345 0.463 0.1863);
   --color-button-warning-fill: color(display-p3 0.8263 0.6154 0.2247);
-  --color-button-warning-text: color(display-p3 0 0 0);
+  --color-button-warning-text: color(display-p3 1 1 1);
   --color-card-background: color(display-p3 1 1 1);
   --color-card-border: color(display-p3 0.8698 0.8698 0.8698);
   --color-cyan-100: color(display-p3 0.8736 0.9466 0.9942);
@@ -313,9 +313,9 @@
   --dark-color-border-top: color(display-p3 0.3328 0.3328 0.3426);
   --dark-color-border: color(display-p3 0.1792 0.1792 0.1792);
   --dark-color-button-danger-border: color(display-p3 0.7365 0.2216 0.2026);
-  --dark-color-button-danger-fill: color(display-p3 0.8114 0.4167 0.3761);
-  --dark-color-button-primary-border: color(display-p3 0.6266 0.4562 0.8302);
-  --dark-color-button-primary-fill: color(display-p3 0.6266 0.4562 0.8302);
+  --dark-color-button-danger-fill: color(display-p3 0.7365 0.2216 0.2026);
+  --dark-color-button-primary-border: color(display-p3 0.5242 0.2903 0.7705);
+  --dark-color-button-primary-fill: color(display-p3 0.5242 0.2903 0.7705);
   --dark-color-button-secondary-border: color(display-p3 1 1 1);
   --dark-color-button-secondary-fill: color(display-p3 1 1 1);
   --dark-color-button-secondary-text: color(display-p3 0 0 0);
@@ -323,7 +323,7 @@
   --dark-color-button-tertiary-fill: color(display-p3 0 0 0);
   --dark-color-button-tertiary-text: color(display-p3 1 1 1);
   --dark-color-button-warning-border: color(display-p3 0.8263 0.6154 0.2247);
-  --dark-color-button-warning-fill: color(display-p3 0.863 0.6958 0.4108);
+  --dark-color-button-warning-fill: color(display-p3 0.8263 0.6154 0.2247);
   --dark-color-card-background: color(display-p3 0.0861 0.0861 0.0861);
   --dark-color-card-border: color(display-p3 0.1792 0.1792 0.1792);
   --dark-color-focus-ring: color(display-p3 0.7319 0.6108 0.8873);
