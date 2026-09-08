@@ -7,43 +7,40 @@
  * is a custom element rather than an astro:page-load listener because
  * connectedCallback/disconnectedCallback fire automatically across view
  * transitions, so observers cannot accumulate or go stale.
+ *
+ * The nested list lives in TocList so that recursion repeats only the list.
  */
 import type { TocNode } from '@eqtylab/docs/types';
+
 import styles from './TableOfContents.module.css';
+import TocList from './TocList.astro';
 
 interface Props {
   items: TocNode[];
   label?: string;
 }
+
 const { items, label = 'On this page' } = Astro.props;
 
 function flatten(nodes: TocNode[]): TocNode[] {
   return nodes.flatMap((node) => [node, ...flatten(node.children)]);
 }
 const slugs = flatten(items).map((n) => n.slug);
-const TableOfContents = Astro.self;
 ---
 
 {
   items.length > 0 && (
     <eq-toc class={styles.toc} data-slugs={slugs.join(',')} data-eq-chrome data-pagefind-ignore>
       <nav aria-labelledby="eq-toc-heading">
-        <p class={styles.heading} id="eq-toc-heading">{label}</p>
-        <ol class={styles.list}>
-          {items.map((item) => (
-            <li class={styles.item}>
-              <a class={styles.link} href={`#${item.slug}`} data-slug={item.slug}>
-                {item.text}
-              </a>
-              {item.children.length > 0 && <TableOfContents items={item.children} label={label} />}
-            </li>
-          ))}
-        </ol>
+        <p class={styles.heading} id="eq-toc-heading">
+          {label}
+        </p>
+        <TocList items={items} />
       </nav>
     </eq-toc>
   )
 }
 
 <script>
-  import "@eqtylab/docs/scripts/eq-toc.ts";
+  import '@eqtylab/docs/scripts/eq-toc.ts';
 </script>

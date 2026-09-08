@@ -7,22 +7,8 @@
     "paths": {
       "@demo/*": ["src/*"],
       "@demo/components/*": ["src/components/*"],
-      "@demo/lib/*": ["src/lib/*"],
-      "@demo/layouts/*": ["src/layouts/*"],
-      "@demo/pages/*": ["src/pages/*"],
-      "@demo/styles/*": ["src/styles/*"],
       "@eqtylab/equality": ["../ui/src"],
-      "@eqtylab/equality/theme-config.css": [
-        "../ui/src/theme/global-theme-config.css"
-      ],
-      "@eqtylab/equality/preflight.css": [
-        "../ui/src/theme/theme-preflight-global.css"
-      ],
-      "@eqtylab/equality/preflight-scoped.css": [
-        "../ui/src/theme/theme-preflight-scoped.css"
-      ],
       "@eqtylab/equality/*": ["../ui/src/*"],
-      "@/": ["../ui/src"],
       "@/*": ["../ui/src/*"]
     },
     "jsx": "react-jsx",

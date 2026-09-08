@@ -1,0 +1,9 @@
+label: Getting Started
+# Replaces the hardcoded link array that used to live in src/components/sidebar.astro.
+order:
+  - usage
+  - themes
+  - customizing
+  - component-architecture
+  - color-tokens
+  - elevation

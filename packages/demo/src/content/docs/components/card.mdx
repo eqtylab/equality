@@ -1,0 +1,261 @@
+---
+title: "Card"
+description: "Compound card container with elevations and hover states"
+---
+
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+  CardDescription,
+  CardFooter,
+  Button,
+  ELEVATION,
+} from "@eqtylab/equality";
+
+## Overview
+
+Card is a compound component for grouping related content into a surfaced container. It is built from a set of composable parts — `Card` (the wrapper) plus `CardHeader`, `CardTitle`, `CardDescription`, `CardContent`, and `CardFooter` — so you only include the sections you need. A content-only card is the most common usage.
+
+Cards sit on the elevation scale via the `elevation` prop (defaulting to `raised`). Passing an `onClick` handler makes the card clickable and adds a hover gradient.
+
+## Usage
+
+Import the parts you need:
+
+```tsx
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+  CardDescription,
+  CardFooter,
+} from "@eqtylab/equality";
+```
+
+A minimal, content-only card:
+
+```tsx
+<Card>
+  <CardContent>Card content</CardContent>
+</Card>
+```
+
+## Variants
+
+### Content only (most used)
+
+{
+
+<Card>
+  <CardContent>
+    <div className="space-y-2">
+      <h4 className="font-medium">Content-only Card</h4>
+      <p className="text-text-secondary text-sm">
+        This card only uses CardContent without header or footer.
+      </p>
+    </div>
+  </CardContent>
+</Card>
+}
+
+### Header only
+
+{
+
+<Card>
+  <CardHeader>
+    <CardTitle>Basic Card</CardTitle>
+    <CardDescription>A simple card only with header.</CardDescription>
+  </CardHeader>
+</Card>
+}
+
+### Basic card
+
+{
+
+<Card>
+  <CardHeader className="border-border border-b">
+    <CardTitle>Basic Card</CardTitle>
+    <CardDescription>A simple card with header and content</CardDescription>
+  </CardHeader>
+  <CardContent>
+    <p className="text-sm">This is the main content area of the card.</p>
+  </CardContent>
+</Card>
+}
+
+### With footer
+
+{
+
+<Card>
+  <CardHeader className="border-border border-b">
+    <CardTitle>Card with Footer</CardTitle>
+    <CardDescription>Includes footer actions</CardDescription>
+  </CardHeader>
+  <CardContent>
+    <p className="text-sm">This is the main content area of the card.</p>
+  </CardContent>
+  <CardFooter>
+    <div className="flex w-full justify-between gap-2">
+      <Button variant="tertiary" size="sm">
+        Cancel
+      </Button>
+      <Button variant="primary" size="sm">
+        Primary Action
+      </Button>
+    </div>
+  </CardFooter>
+</Card>
+}
+
+### Usage
+
+```tsx
+<Card>
+  <CardHeader className="border-border border-b">
+    <CardTitle>Card with Footer</CardTitle>
+    <CardDescription>Includes footer actions</CardDescription>
+  </CardHeader>
+  <CardContent>
+    <p className="text-sm">This is the main content area of the card.</p>
+  </CardContent>
+  <CardFooter>
+    <Button variant="primary" size="sm">
+      Primary Action
+    </Button>
+  </CardFooter>
+</Card>
+```
+
+### Interactive (hover)
+
+Passing an `onClick` handler makes the card clickable and adds a hover gradient. This works with any composition, including content-only cards.
+
+{
+
+<Card onClick={() => console.log("Card clicked")}>
+  <CardHeader className="border-border border-b">
+    <CardTitle>Interactive Card</CardTitle>
+    <CardDescription>Clickable with hover effects</CardDescription>
+  </CardHeader>
+  <CardContent>
+    <p className="text-sm">This card has hover effects and is clickable.</p>
+  </CardContent>
+</Card>
+}
+
+#### Usage
+
+```tsx
+<Card onClick={() => handleSelect()}>
+  <CardContent>This card is clickable.</CardContent>
+</Card>
+```
+
+The hover gradient can be restyled with the `hoverGradientClassName` prop.
+
+## Elevations
+
+Use the `elevation` prop with the `ELEVATION` constant to place the card on the elevation scale. `raised` is the default.
+
+### Sunken
+
+{
+
+<Card elevation={ELEVATION.SUNKEN}>
+  <CardContent>
+    <div className="space-y-2">
+      <h4 className="font-medium">Card</h4>
+      <p className="text-text-secondary text-sm">
+        This card has an elevation of Sunken.
+      </p>
+    </div>
+  </CardContent>
+</Card>
+}
+
+### Base
+
+{
+
+<Card elevation={ELEVATION.BASE}>
+  <CardContent>
+    <div className="space-y-2">
+      <h4 className="font-medium">Card</h4>
+      <p className="text-text-secondary text-sm">
+        This card has an elevation of Base.
+      </p>
+    </div>
+  </CardContent>
+</Card>
+}
+
+### Raised (default)
+
+{
+
+<Card elevation={ELEVATION.RAISED}>
+  <CardContent>
+    <div className="space-y-2">
+      <h4 className="font-medium">Card</h4>
+      <p className="text-text-secondary text-sm">
+        This card has an elevation of Raised.
+      </p>
+    </div>
+  </CardContent>
+</Card>
+}
+
+### Overlay
+
+{
+
+<Card elevation={ELEVATION.OVERLAY}>
+  <CardContent>
+    <div className="space-y-2">
+      <h4 className="font-medium">Card</h4>
+      <p className="text-text-secondary text-sm">
+        This card has an elevation of Overlay.
+      </p>
+    </div>
+  </CardContent>
+</Card>
+}
+
+### Usage
+
+```tsx
+import { Card, CardContent, ELEVATION } from "@eqtylab/equality";
+
+<Card elevation={ELEVATION.SUNKEN}>
+  <CardContent>Sunken card</CardContent>
+</Card>;
+```
+
+## Slots
+
+Compose a card from the following parts. All are optional except that content generally lives inside `CardContent`.
+
+| Name              | Description                                                        |
+| ----------------- | ------------------------------------------------------------------ |
+| `Card`            | The outer container. Owns elevation, hover, and click behaviour.   |
+| `CardHeader`      | Top section, typically wrapping `CardTitle` and `CardDescription`. |
+| `CardTitle`       | The card's heading text.                                           |
+| `CardDescription` | Secondary, muted supporting text shown beneath the title.          |
+| `CardContent`     | The main body area of the card.                                    |
+| `CardFooter`      | Bottom section, typically for actions such as buttons.             |
+
+## Props
+
+These props apply to the top-level `Card`. The subcomponents accept standard `div` attributes (including `className`).
+
+| Name                     | Description                                                                                            | Type                                  | Default  | Required |
+| ------------------------ | ------------------------------------------------------------------------------------------------------ | ------------------------------------- | -------- | -------- |
+| `elevation`              | Position on the elevation scale. Use the `ELEVATION` constant.                                         | `sunken`, `base`, `raised`, `overlay` | `raised` | ❌       |
+| `onClick`                | Click handler. Providing it makes the card interactive and enables the hover gradient automatically.   | `(e: MouseEvent) => void`             | —        | ❌       |
+| `hoverGradientClassName` | Additional classes applied to the hover gradient element (only rendered when the card is interactive). | `string`                              | —        | ❌       |

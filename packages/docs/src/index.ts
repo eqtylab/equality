@@ -4,6 +4,7 @@ import { resolveConfig, type DocsConfig, type DocsUserConfig } from './config.ts
 import { resolveDocsEnv, type DocsEnv } from './env.ts';
 import { assertMdxOnly } from './internal/assert-mdx-only.ts';
 import { rehypeBaseUrl } from './internal/rehype-base-url.ts';
+import { rehypeCodeFence } from './internal/rehype-code-fence.ts';
 import { rehypeTableColumns } from './internal/rehype-table-columns.ts';
 import { scanConsumerPages } from './internal/scan-consumer-pages.ts';
 import { virtualConfigPlugin } from './internal/virtual-config.ts';
@@ -160,6 +161,8 @@ export default function docs(
           [rehypeBaseUrl, { base: config.base }],
           // Equality's Table is a CSS grid and needs an explicit track count.
           rehypeTableColumns,
+          // Lifts each fence's source/language onto its <pre> for the bridge.
+          ...(cfg.code.highlighter === 'codeblock' ? [rehypeCodeFence] : []),
         ];
 
         updateConfig({

@@ -1,0 +1,103 @@
+---
+title: "Control Status Badge"
+description: "Displays a badge with consistent icons, colors, and labels for control status values."
+---
+
+import { ControlStatusBadge, PanelLabel } from "@eqtylab/equality";
+
+## Overview
+
+`ControlStatusBadge` is a specialized badge wrapper that provides predefined status configurations for controls. It automatically applies appropriate icons, colors, and labels based on the status value.
+
+## Usage
+
+Import the component from the Equality UI library:
+
+```tsx
+import { ControlStatusBadge } from "@eqtylab/equality";
+```
+
+Basic usage requires only a `status` prop:
+
+```tsx
+<ControlStatusBadge status="In Progress" />
+```
+
+## Variants
+
+<div className="grid grid-cols-[auto_auto_auto] gap-6">
+  <div className="flex flex-col items-start space-y-3">
+    <PanelLabel label="With Icons (default)" />
+    <ControlStatusBadge status="not-started" />
+    <ControlStatusBadge status="in-progress" />
+    <ControlStatusBadge status="ready-for-review" />
+    <ControlStatusBadge status="in-review" />
+    <ControlStatusBadge status="compliant" />
+    <ControlStatusBadge status="non-compliant" />
+    <ControlStatusBadge status="not-applicable" />
+    <ControlStatusBadge status="accepted" />
+    <ControlStatusBadge status="questioned" />
+    <ControlStatusBadge status="comment" />
+  </div>
+  <div className="flex flex-col items-start space-y-3">
+    <PanelLabel label="Label Only" />
+    <ControlStatusBadge status="not-started" display="text-only" />
+    <ControlStatusBadge status="in-progress" display="text-only" />
+    <ControlStatusBadge status="ready-for-review" display="text-only" />
+    <ControlStatusBadge status="in-review" display="text-only" />
+    <ControlStatusBadge status="compliant" display="text-only" />
+    <ControlStatusBadge status="non-compliant" display="text-only" />
+    <ControlStatusBadge status="not-applicable" display="text-only" />
+    <ControlStatusBadge status="accepted" display="text-only" />
+    <ControlStatusBadge status="questioned" display="text-only" />
+    <ControlStatusBadge status="comment" display="text-only" />
+  </div>
+  <div className="flex flex-col items-start space-y-3">
+    <PanelLabel label="Icon Only" />
+    <ControlStatusBadge status="not-started" display="icon-only" />
+    <ControlStatusBadge status="in-progress" display="icon-only" />
+    <ControlStatusBadge status="ready-for-review" display="icon-only" />
+    <ControlStatusBadge status="in-review" display="icon-only" />
+    <ControlStatusBadge status="compliant" display="icon-only" />
+    <ControlStatusBadge status="non-compliant" display="icon-only" />
+    <ControlStatusBadge status="not-applicable" display="icon-only" />
+    <ControlStatusBadge status="accepted" display="icon-only" />
+    <ControlStatusBadge status="questioned" display="icon-only" />
+    <ControlStatusBadge status="comment" display="icon-only" />
+  </div>
+</div>
+
+## Display Options
+
+The component supports three display modes:
+
+### With Icon and Label (Default)
+
+The default display shows both icon and label:
+
+```tsx
+<ControlStatusBadge status="in-progress" />
+```
+
+### Icon Only
+
+Show only the icon by setting `display` to `"icon-only"`:
+
+```tsx
+<ControlStatusBadge status="compliant" display="icon-only" />
+```
+
+### Label Only
+
+Show only the text by setting `display` to `"text-only"`:
+
+```tsx
+<ControlStatusBadge status="non-compliant" display="text-only" />
+```
+
+## Props
+
+| Prop      | Type                                       | Default      | Description                                                                                                                       |
+| --------- | ------------------------------------------ | ------------ | --------------------------------------------------------------------------------------------------------------------------------- |
+| `status`  | `string`                                   | **Required** | The status value that determines the badge variant, icon, and label.                                                              |
+| `display` | `"both"` \| `"text-only"` \| `"icon-only"` | `"both"`     | Controls what elements are displayed. `"both"` shows icon and text, `"text-only"` shows only text, `"icon-only"` shows only icon. |

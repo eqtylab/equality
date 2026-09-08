@@ -291,7 +291,7 @@ const DropdownMenuSubTrigger = React.forwardRef<
       {...props}
     >
       {children}
-      <ChevronRightIcon className="ml-auto" />
+      <ChevronRightIcon className={styles['dropdown-menu-subtrigger-chevron']} />
     </DropdownMenuPrimitive.SubTrigger>
   );
 });
@@ -424,7 +424,7 @@ const DropdownMenuContent = React.forwardRef<
             It stays mounted while the menu is open so the update isn't missed; the
             zero-match case is left to DropdownMenuEmpty so the two don't double-speak. */}
         {ctx?.enabled ? (
-          <div className="sr-only" role="status" aria-live="polite">
+          <div className={styles['dropdown-menu-sr-status']} role="status" aria-live="polite">
             {searching && resultCount > 0
               ? `${resultCount} result${resultCount === 1 ? '' : 's'} available`
               : null}
@@ -508,7 +508,7 @@ const DropdownMenuSearch = React.forwardRef<HTMLInputElement, DropdownMenuSearch
 
     return (
       <div className={styles['dropdown-menu-search']}>
-        <span aria-hidden="true" className="flex shrink-0">
+        <span aria-hidden="true" className={styles['dropdown-menu-item-icon']}>
           {icon ?? <SearchIcon className={styles['icon-size']} />}
         </span>
         <input

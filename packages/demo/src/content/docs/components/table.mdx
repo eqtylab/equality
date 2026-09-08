@@ -1,0 +1,328 @@
+---
+title: "Table"
+description: "A data table for displaying structured information in rows and columns."
+---
+
+import { TableDemo } from "@demo/components/demo/table";
+import { ELEVATION } from "@eqtylab/equality";
+
+## Overview
+
+Tables are built from compositional primitives that map directly to [HTML table elements](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/table). Each primitive is a styled wrapper that accepts all native HTML attributes, giving you full control over layout, sizing, and responsiveness.
+
+Rows use CSS Grid with [subgrid](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_grid_layout/Subgrid) for column sizing. Define columns once via the `columns` prop on `<TableContainer>` — all rows share the same column tracks.
+
+- **TableContainer:** Wraps the `<table>` in a scrollable container with elevation styling. Accepts a `columns` prop for CSS Grid column sizing.
+- **TableHeader / TableBody / TableFooter:** Semantic section wrappers (`<thead>`, `<tbody>`, `<tfoot>`).
+- **TableRow:** A table row (`<tr>`) that inherits column tracks via subgrid.
+- **TableHead:** A column header cell (`<th>`).
+- **TableCell:** A data cell (`<td>`).
+
+## Usage
+
+Import the components:
+
+```tsx
+import {
+  TableContainer,
+  TableHeader,
+  TableBody,
+  TableRow,
+  TableHead,
+  TableCell,
+} from "@eqtylab/equality";
+```
+
+Basic usage:
+
+```tsx
+<TableContainer columns="1fr 1fr auto">
+  <TableHeader>
+    <TableRow>
+      <TableHead>Name</TableHead>
+      <TableHead>Email</TableHead>
+      <TableHead>Role</TableHead>
+    </TableRow>
+  </TableHeader>
+  <TableBody>
+    <TableRow>
+      <TableCell>Alice Cooper</TableCell>
+      <TableCell>alice@example.com</TableCell>
+      <TableCell>Admin</TableCell>
+    </TableRow>
+  </TableBody>
+</TableContainer>
+```
+
+## Variants
+
+### Default
+
+<TableDemo client:only="react" />
+
+### Clickable Rows
+
+Rows can be made interactive in two ways:
+
+- **`onClick`** — Pass a click handler for custom behavior (e.g., toggling selection state).
+- **`href`** — Pass a URL to make the row navigable on click. This also adds keyboard accessibility (`Enter`/`Space` to activate) and proper ARIA semantics. Add an `hrefLabel` prop to tell screen reader users where the link will go.
+
+Both props enable hover interactions automatically. Use `data-state="selected"` to mark a row as selected.
+
+Try clicking a row below to toggle its selected state!
+
+<TableDemo client:only="react" variant="clickable" />
+
+### Sortable Columns
+
+Use [`<SortButton>`](/components/sort-button) inside `<TableHead>` cells to add interactive sort controls.
+
+<TableDemo client:only="react" variant="with-sorter" />
+
+#### Usage
+
+```tsx
+import {
+  SortButton,
+  TableContainer,
+  TableHeader,
+  TableRow,
+  TableHead,
+} from "@eqtylab/equality";
+
+<TableContainer columns="1fr 1fr auto auto">
+  <TableHeader>
+    <TableRow>
+      <TableHead>
+        <SortButton
+          field="name"
+          sortField={sortField}
+          sortDirection={sortDirection}
+          onSort={handleSort}
+        >
+          Name
+        </SortButton>
+      </TableHead>
+    </TableRow>
+  </TableHeader>
+</TableContainer>;
+```
+
+### With Border
+
+Use the `border` prop on `TableContainer` to apply an elevation-aware border with rounded corners. This should be added most places the table is used, except when it lives within a container that already has a border.
+
+<TableDemo client:only="react" variant="with-border" />
+
+#### Usage
+
+```tsx
+<TableContainer columns="1fr 1fr auto" border>
+  <TableHeader>
+    <TableRow>
+      <TableHead>Name</TableHead>
+      <TableHead>Email</TableHead>
+    </TableRow>
+  </TableHeader>
+  <TableBody>{/* rows */}</TableBody>
+</TableContainer>
+```
+
+### Empty State
+
+When there are no rows, render empty state content in a `<TableCell>` that spans all columns with `style={{ gridColumn: '1 / -1' }}`.
+
+<TableDemo client:only="react" variant="empty-state" />
+
+### Empty State with Custom Component
+
+The empty state cell accepts any `ReactNode`, so you can use a custom component like `EmptyTableState`.
+
+<TableDemo client:only="react" variant="empty-state-custom" />
+
+### Sticky Header
+
+Use the `sticky` prop on `<TableHeader>` to keep column headers visible while scrolling. It accepts two modes:
+
+- **`container`** — the header sticks within the table's own scroll area. The `<TableContainer>` must have a constrained height (e.g. `max-h-*`), which makes it scroll internally.
+- **`page`** — the header sticks against the document as the whole page scrolls. No height constraint is needed; use this for full-page data tables. Pin offset can be adjusted with the `--table-sticky-top` CSS variable to clear fixed app chrome.
+
+#### On container
+
+<TableDemo client:only="react" variant="sticky-header" />
+
+#### On page
+
+<TableDemo client:only="react" variant="sticky-header-page-offset" />
+
+#### Usage
+
+```tsx
+{
+  /* Sticks within a height-constrained, internally scrolling table */
+}
+<TableContainer columns="1fr 1fr auto" className="max-h-[400px]">
+  <TableHeader sticky="container">
+    <TableRow>
+      <TableHead>Name</TableHead>
+      <TableHead>Email</TableHead>
+    </TableRow>
+  </TableHeader>
+  <TableBody>{/* rows */}</TableBody>
+</TableContainer>;
+
+{
+  /* Sticks against the document as the page scrolls */
+}
+<TableContainer
+  columns="1fr 1fr auto"
+  style={{ "--table-sticky-top": "100px" }}
+>
+  <TableHeader sticky="page">{/* … */}</TableHeader>
+  <TableBody>{/* rows */}</TableBody>
+</TableContainer>;
+```
+
+## Column Sizing
+
+The `columns` prop accepts a CSS [`grid-template-columns`](https://developer.mozilla.org/en-US/docs/Web/CSS/grid-template-columns) value. All rows share the same column tracks via CSS subgrid.
+
+### Fixed and Flexible Columns
+
+Mix `fr` units for flexible columns with fixed pixel values for predictable sizing.
+
+<TableDemo client:only="react" variant="column-sizing" />
+
+#### Usage
+
+```tsx
+<TableContainer columns="3fr 3fr 100px 100px 60px">
+  <TableHeader>
+    <TableRow>
+      <TableHead>Name</TableHead>
+      <TableHead>Email</TableHead>
+      <TableHead>Role</TableHead>
+      <TableHead>Status</TableHead>
+      <TableHead />
+    </TableRow>
+  </TableHeader>
+</TableContainer>
+```
+
+### Content-Sized Columns
+
+Use `auto` for columns that should shrink to fit their content. This is useful for action columns or icon-only columns.
+
+```tsx
+<TableContainer columns="1fr 1fr auto auto auto">
+```
+
+## Truncation
+
+Use Tailwind's `truncate min-w-0` classes directly on `<TableHead>` and `<TableCell>` to clip overflowing text with an ellipsis. For truncation to work, the column must use `minmax(0, *)` in the `columns` definition so cells can shrink below their content size.
+
+<TableDemo client:only="react" variant="truncation" />
+
+#### Usage
+
+```tsx
+<TableContainer columns="minmax(0,5fr) minmax(0,8fr) 100px 100px 60px">
+  <TableHeader>
+    <TableRow>
+      <TableHead>Name</TableHead>
+      <TableHead className="min-w-0 truncate">Email</TableHead>
+      <TableHead>Role</TableHead>
+      <TableHead>Status</TableHead>
+      <TableHead />
+    </TableRow>
+  </TableHeader>
+  <TableBody>
+    <TableRow>
+      <TableCell>Alice Cooper</TableCell>
+      <TableCell className="min-w-0 truncate">
+        alice.cooper.very.long.email@example.com
+      </TableCell>
+      <TableCell>Admin</TableCell>
+      <TableCell>Active</TableCell>
+      <TableCell />
+    </TableRow>
+  </TableBody>
+</TableContainer>
+```
+
+## Responsive Columns
+
+Use [container queries](https://tailwindcss.com/docs/responsive-design#what-are-container-queries) to override the `--table-columns` CSS variable at each breakpoint, matching the number of visible columns. Apply `hidden`/`@md:block` on cells for columns that should collapse. Hidden cells are removed from the grid flow, and the remaining visible cells auto-place into the available tracks. Use `className` instead of the `columns` prop so that responsive overrides aren't blocked by inline style specificity.
+
+<TableDemo client:only="react" variant="responsive" />
+
+#### Usage
+
+```tsx
+<div className="@container">
+  <TableContainer className="@md:[--table-columns:1fr_1fr_auto_auto] @lg:[--table-columns:1fr_1fr_auto_auto_auto] [--table-columns:1fr_auto_auto]">
+    <TableHeader>
+      <TableRow>
+        <TableHead>Name</TableHead>
+        <TableHead className="@md:block hidden">Email</TableHead>
+        <TableHead className="@lg:block hidden">Role</TableHead>
+        <TableHead>Status</TableHead>
+        <TableHead />
+      </TableRow>
+    </TableHeader>
+    <TableBody>
+      <TableRow>
+        <TableCell>Alice Cooper</TableCell>
+        <TableCell className="@md:block hidden">alice@example.com</TableCell>
+        <TableCell className="@lg:block hidden">Admin</TableCell>
+        <TableCell>
+          <Badge variant="success">Active</Badge>
+        </TableCell>
+        <TableCell />
+      </TableRow>
+    </TableBody>
+  </TableContainer>
+</div>
+```
+
+## Elevations
+
+### Sunken
+
+<TableDemo client:only="react" elevation={ELEVATION.SUNKEN} />
+
+### Base (default)
+
+<TableDemo client:only="react" elevation={ELEVATION.BASE} />
+
+### Raised
+
+<TableDemo client:only="react" elevation={ELEVATION.RAISED} />
+
+### Overlay
+
+<TableDemo client:only="react" elevation={ELEVATION.OVERLAY} />
+
+## Props
+
+### TableContainer
+
+| Name        | Description                                            | Type                                  | Default  | Required |
+| ----------- | ------------------------------------------------------ | ------------------------------------- | -------- | -------- |
+| `columns`   | CSS `grid-template-columns` value for column sizing    | `string`                              | —        | ❌       |
+| `elevation` | Controls the shadow and background styling             | `sunken`, `base`, `raised`, `overlay` | `raised` | ❌       |
+| `border`    | Applies an elevation-aware border with rounded corners | `boolean`                             | `false`  | ❌       |
+
+### TableHeader
+
+| Name     | Description                                                                                                                                    | Type                             | Default | Required |
+| -------- | ---------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------- | ------- | -------- |
+| `sticky` | Pins the header while scrolling. `container` sticks within a height-constrained table; `page` sticks against the document as the page scrolls. | `false \| 'container' \| 'page'` | `false` | ❌       |
+
+### TableRow
+
+| Name        | Description                                                 | Type      | Default          | Required |
+| ----------- | ----------------------------------------------------------- | --------- | ---------------- | -------- |
+| `clickable` | Applies hover and cursor interaction styles                 | `boolean` | `false`          | ❌       |
+| `href`      | URL to navigate to on click                                 | `string`  | —                | ❌       |
+| `hrefLabel` | Accessible label for the link (announced by screen readers) | `string`  | `"View details"` | ❌       |

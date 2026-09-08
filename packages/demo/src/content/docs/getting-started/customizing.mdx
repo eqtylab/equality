@@ -1,0 +1,51 @@
+---
+title: "Customizing"
+---
+
+## Custom variables
+
+Perfect for brand-specific adjustments or white-label versions.
+
+### Tailwind v4
+
+You can override specific tokens in your global stylesheet:
+
+```css
+@import "@eqtylab/equality/theme-config.css";
+
+@theme inline {
+  --color-brand-primary: hsl(280 75% 60%);
+  --color-button-primary-fill: hsl(50 100% 70%);
+}
+```
+
+### Other CSS frameworks
+
+You can override specific tokens by applying CSS var overrides to the `ThemeProvider`:
+
+```tsx
+<ThemeProvider
+  style={{
+    "--color-brand-primary": "hsl(280 75% 60%)",
+    "--color-button-primary-fill": "hsl(50 100% 70%)",
+  }}
+>
+  <App />
+</ThemeProvider>
+```
+
+## Extending Tailwind
+
+Because Equality's theme uses Tailwind's native tokens (`bg-primary`, `text-foreground`, etc.), you can safely add custom Tailwind classes in your host app without conflicts:
+
+```tsx
+<div className="bg-primary text-accent hover:bg-primary/80 transition-all">
+  Custom Block
+</div>
+```
+
+## Best practices
+
+- Prefer semantic names tied to purpose (e.g. `--color-brand-primary`) instead of literal color values so the palette stays flexible as colors evolve
+- Use HSL values for easy opacity and dynamic color blending
+- Preview new palettes across themes to confirm accessibility holds up in every variant

@@ -98,6 +98,14 @@
   @apply absolute inset-0 z-10;
 }
 
+/* Screen-reader-only label. Applied via @apply rather than a literal `sr-only`
+ * class in the TSX: Tailwind does not scan node_modules, so a utility written
+ * in markup here is never generated in a consumer's build -- which made this
+ * label render as visible text overlapping the row. */
+.table-row-link-label {
+  @apply sr-only;
+}
+
 .table-row--linked :is(button, a:not(.table-row-link)) {
   @apply relative z-20;
 }

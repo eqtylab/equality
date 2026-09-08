@@ -1,0 +1,33 @@
+---
+/**
+ * The nested list inside the table of contents.
+ *
+ * Split out from TableOfContents so recursion only repeats the list, not the
+ * <eq-toc> element, the <nav>, or the heading. Recursing into the outer
+ * component duplicated all three -- including a duplicate id and a second
+ * scroll-spy observer per nesting level.
+ */
+import type { TocNode } from '@eqtylab/docs/types';
+
+import styles from './TableOfContents.module.css';
+
+interface Props {
+  items: TocNode[];
+}
+
+const { items } = Astro.props;
+const TocList = Astro.self;
+---
+
+<ol class={styles.list}>
+  {
+    items.map((item) => (
+      <li class={styles.item}>
+        <a class={styles.link} href={`#${item.slug}`} data-slug={item.slug}>
+          {item.text}
+        </a>
+        {item.children.length > 0 && <TocList items={item.children} />}
+      </li>
+    ))
+  }
+</ol>

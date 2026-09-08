@@ -1,0 +1,3 @@
+label: Components
+# No `order:` — 60 entries stay alphabetical by title, which is what the old
+# sidebar did with `getCollection(...).sort(by heading)`.

@@ -1,0 +1,140 @@
+---
+title: "Alert"
+description: "Message for communicating status, warnings, or errors"
+---
+
+import { Alert } from "@eqtylab/equality";
+
+## Overview
+
+The Alert component displays important messages to users, usually as a result of an action they took. Use alerts to communicate status, warnings, errors, or success states.
+
+- **Primary:** General information.
+- **Neutral:** Lower-emphasis, information.
+- **Success:** Positive outcomes or confirmations.
+- **Warning:** Cautionary information that needs attention.
+- **Danger:** Critical errors or destructive actions.
+
+## Usage
+
+Import the component:
+
+```tsx
+import { Alert } from "@eqtylab/equality";
+```
+
+Basic usage with title and description:
+
+```tsx
+<Alert title="Heads up!" description="This is an important message." />
+```
+
+## Variants
+
+<div className="mt-4 flex max-w-[50%] flex-col gap-4">
+  <Alert
+    variant="primary"
+    title="Primary"
+    description="This is a general notification for your information."
+  />
+  <Alert
+    variant="neutral"
+    title="Neutral"
+    description="This is a low-emphasis, informational message."
+  />
+  <Alert
+    variant="success"
+    title="Success"
+    description="Your changes have been saved successfully."
+  />
+  <Alert
+    variant="warning"
+    title="Warning"
+    description="Please review your input before continuing."
+  />
+  <Alert
+    variant="danger"
+    title="Danger"
+    description="A serious error occurred."
+  />
+</div>
+
+### Usage
+
+```tsx
+<Alert variant="primary" title="Primary" description="This is a general notification for your information." />
+<Alert variant="neutral" title="Neutral" description="This is a low-emphasis, informational message." />
+<Alert variant="success" title="Success" description="Your changes have been saved successfully." />
+<Alert variant="warning" title="Warning" description="Please review your input before continuing." />
+<Alert variant="danger" title="Danger" description="A serious error occurred." />
+```
+
+### Icons
+
+The `success`, `warning`, and `danger` variants apply a default icon automatically. The `primary` and `neutral` variants have no icon by default. Override it with the `icon` prop by passing a [Lucide](https://lucide.dev/icons/) icon name or a React element. Pass `icon={null}` to remove a variant's default icon, or add an icon to a variant that has none.
+
+<div className="my-4 flex max-w-[50%] flex-col gap-4">
+  <Alert
+    variant="primary"
+    icon="Info"
+    title="Custom icon"
+    description="A primary alert with an explicitly provided icon."
+  />
+  <Alert
+    variant="success"
+    icon="PartyPopper"
+    title="Overridden icon"
+    description="A success alert with a custom icon instead of the default."
+  />
+  <Alert
+    variant="danger"
+    icon={null}
+    title="No icon"
+    description="A danger alert with its default icon removed."
+  />
+</div>
+
+```tsx
+<Alert variant="primary" icon="Info" title="Custom icon" description="A primary alert with an explicitly provided icon." />
+<Alert variant="success" icon="PartyPopper" title="Overridden icon" description="A success alert with a custom icon instead of the default." />
+<Alert variant="danger" icon={null} title="No icon" description="A danger alert with its default icon removed." />
+```
+
+### Longer bodies and standing callouts
+
+`description` renders in a `<p>`, so it suits a sentence. For a body with paragraphs,
+lists or code, use `children` instead — it renders in a `<div>`, where block content is
+valid:
+
+```tsx
+<Alert variant="warning" title="Heads up">
+  <p>This body has real block content.</p>
+  <ul>
+    <li>Including a list</li>
+  </ul>
+</Alert>
+```
+
+By default `Alert` renders a `<div role="alert">`. That is an assertive live region:
+screen readers announce it immediately, which is right for a message that appears in
+response to something the user did, and wrong for content that is simply part of the
+page. For a standing callout, render an `aside` instead — this drops the live region:
+
+```tsx
+<Alert as="aside" variant="neutral" title="Note">
+  <p>Standing page content, not announced on load.</p>
+</Alert>
+```
+
+## Props
+
+### Alert
+
+| Name          | Description                                                                                        | Type                                                 | Default         | Required |
+| ------------- | -------------------------------------------------------------------------------------------------- | ---------------------------------------------------- | --------------- | -------- |
+| `title`       | The alert heading, rendered as an `<h4>`                                                           | `string`                                             | —               | ✅       |
+| `description` | The alert body text, rendered as a `<p>`                                                           | `string`, `ReactNode`                                | —               | ❌       |
+| `variant`     | The visual style of the alert                                                                      | `primary`, `neutral`, `success`, `warning`, `danger` | `primary`       | ❌       |
+| `icon`        | Overrides the variant's default icon. Lucide name, element, or `null` to hide                      | `string`, `ReactElement`, `null`                     | Variant default | ❌       |
+| `children`    | Body content, as an alternative to `description`. Rendered in a `<div>`, so block content is valid | `ReactNode`                                          | —               | ❌       |
+| `as`          | Element to render. `aside` or `section` drop the `role="alert"` live region                        | `div`, `aside`, `section`                            | `div`           | ❌       |

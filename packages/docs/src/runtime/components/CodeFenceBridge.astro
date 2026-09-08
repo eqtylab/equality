@@ -1,32 +1,24 @@
 ---
 /**
- * Bridges an unhighlighted markdown <pre> to CodeFence.
+ * Renders a fenced code block through Equality's `CodeBlock`.
  *
- * With `markdown.syntaxHighlight: false`, a fence compiles to
- * <pre><code class="language-ts">...</code></pre>. We need the raw text and the
- * language, so render the default slot to a string and unwrap it -- this is why
- * Shiki is disabled rather than left on: recovering raw source from Shiki's
- * tokenised hast would be strictly worse than never highlighting twice.
+ * The source, language and optional `title=` come from `rehypeCodeFence`, which
+ * lifts them off the hast onto this `<pre>`. Reading them as props rather than
+ * re-parsing the rendered slot is what keeps `astro dev` and a production build
+ * identical -- slot HTML is escaped in one and raw in the other.
  */
 import CodeFence from './CodeFence.astro';
 
-const html = await Astro.slots.render('default');
-
-const languageMatch = html.match(/class="[^"]*language-([A-Za-z0-9+#-]+)/);
-const lang = languageMatch?.[1] ?? 'text';
-
-function decodeEntities(value: string): string {
-  return value
-    .replace(/<[^>]+>/g, '')
-    .replace(/&lt;/g, '<')
-    .replace(/&gt;/g, '>')
-    .replace(/&quot;/g, '"')
-    .replace(/&#39;/g, "'")
-    .replace(/&#(\d+);/g, (_, code) => String.fromCharCode(Number(code)))
-    .replace(/&amp;/g, '&');
+interface Props {
+  'data-code'?: string;
+  'data-language'?: string;
+  'data-title'?: string;
 }
 
-const code = decodeEntities(html).replace(/\n$/, '');
+const props = Astro.props as Props;
+const code = props['data-code'] ?? '';
+const lang = props['data-language'] ?? 'text';
+const title = props['data-title'];
 ---
 
-<CodeFence code={code} lang={lang} />
+<CodeFence code={code} lang={lang} title={title} />

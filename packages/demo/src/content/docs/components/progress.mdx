@@ -1,0 +1,83 @@
+---
+title: "Progress"
+description: "Horizontal progress bar with color variants"
+---
+
+import { Progress } from "@eqtylab/equality";
+
+## Overview
+
+Progress is a horizontal bar that communicates how far along a determinate task is — an upload, a multi-step flow, or a quota. It is built on [Radix UI Progress](https://www.radix-ui.com/primitives/docs/components/progress), so it exposes the correct progress roles and values to assistive technology.
+
+The fill is driven by the `value` prop (a percentage from 0 to 100), and its color maps to a brand color via the `color` prop. For an indeterminate or spinning state, use a [Spinner](/components/spinner); for circular progress, see [Radial Graph](/components/radial-graph).
+
+## Usage
+
+Import the component:
+
+```tsx
+import { Progress } from "@eqtylab/equality";
+```
+
+Basic usage — pass a `value` between 0 and 100:
+
+```tsx
+<Progress value={75} />
+```
+
+## Percentage Examples
+
+### 0%
+
+<Progress value={0} client:only="react" />
+
+### 75%
+
+<Progress value={75} client:only="react" />
+
+### 100%
+
+<Progress value={100} client:only="react" />
+
+## Color Variants
+
+The `color` prop maps the bar to a brand color — `primary` (default), `secondary`, `green`, `red`, and `yellow` — so you can distinguish progress by context.
+
+### Primary (default)
+
+<Progress value={50} color="primary" client:only="react" />
+
+### Secondary
+
+<Progress value={50} color="secondary" client:only="react" />
+
+### Green
+
+<Progress value={50} color="green" client:only="react" />
+
+### Red
+
+<Progress value={50} color="red" client:only="react" />
+
+### Yellow
+
+<Progress value={50} color="yellow" client:only="react" />
+
+### Usage
+
+```tsx
+<Progress value={50} color="primary" />
+<Progress value={50} color="secondary" />
+<Progress value={50} color="green" />
+<Progress value={50} color="red" />
+<Progress value={50} color="yellow" />
+```
+
+## Props
+
+Progress also accepts the underlying [Radix Progress Root](https://www.radix-ui.com/primitives/docs/components/progress) props (such as `max`) and `className`.
+
+| Name    | Description                               | Type                                             | Default   | Required |
+| ------- | ----------------------------------------- | ------------------------------------------------ | --------- | -------- |
+| `value` | The completion percentage, from 0 to 100. | `number`                                         | —         | ❌       |
+| `color` | Brand color of the progress fill.         | `primary`, `secondary`, `green`, `red`, `yellow` | `primary` | ❌       |

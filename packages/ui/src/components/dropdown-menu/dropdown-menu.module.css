@@ -113,3 +113,18 @@
   @apply px-2 py-1.5;
   @apply text-text-secondary text-center text-xs;
 }
+
+/* These three replace literal Tailwind classes that used to sit in the TSX.
+ * Tailwind does not scan node_modules, so those utilities were never generated
+ * in a consumer's build and silently did nothing. */
+.dropdown-menu-sr-status {
+  @apply sr-only;
+}
+
+.dropdown-menu-subtrigger-chevron {
+  @apply ml-auto;
+}
+
+.dropdown-menu-item-icon {
+  @apply flex shrink-0;
+}
