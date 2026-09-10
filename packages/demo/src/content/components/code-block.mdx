@@ -6,6 +6,12 @@ description: "Syntax-highlighted code display with status variants"
 
 import { CodeBlock } from "@eqtylab/equality";
 
+import {
+  deployScriptSample,
+  packageJsonSample,
+  releaseNotesSample,
+} from "@demo/components/demo/code-block";
+
 ## Overview
 
 The Code Block component comes with syntax highlighting and four color variants to visually communicate different statuses or contexts:
@@ -44,98 +50,79 @@ console.log('Hello, world!');
 
 ## Code Language Support
 
-The Code Block component uses refractor and Prism for syntax highlighting. Most languages are supported - those that aren't will fallback to general `text` syntax highlighting.
+The Code Block component highlights with [MicroLighter](https://github.com/davatron5000/microlighter), which reads TextMate grammars and paints them through the CSS Custom Highlight API. Grammars load on demand, so a page only pays for the languages it actually renders.
 
-See [Refractor's readme](https://github.com/wooorm/refractor/blob/main/readme.md#data) for the full list of languages supported by this package (all languages in the list are supported - this package uses `refractor/all`).
-
-The language **must** be passed to the Code Block component via the `language` prop in order for syntax highlighting to work.
-
-For example:
+The language **must** be passed via the `language` prop for syntax highlighting to work. Anything unrecognised — including the `text` default — renders as unstyled monospace.
 
 ```tsx
 <CodeBlock language="json" code={code} />
 ```
 
+<CodeBlock
+  title="package.json"
+  language="json"
+  code={packageJsonSample}
+  client:only="react"
+/>
+
+The 37 grammars it ships are `assembly`, `bash`, `c`, `cpp`, `csharp`, `css`, `dart`, `dockerfile`, `elixir`, `git-diff`, `go`, `graphql`, `heex`, `html`, `java`, `javascript`, `json`, `kotlin`, `lua`, `markdown`, `objective-c`, `perl`, `php`, `powershell`, `python`, `r`, `ruby`, `rust`, `scss`, `sql`, `svelte`, `swift`, `toml`, `tsx`, `typescript`, `vue` and `yaml`.
+
+Common short forms are aliased: `js`, `jsx`, `ts`, `sh`, `shell`, `zsh`, `py`, `rb`, `md`, `yml`, `gql`, `docker`, `sass`.
+
+A name outside that list fails its grammar load silently and renders unhighlighted, so check spelling against the list above if a block comes out plain.
+
+### Browser Support
+
+The CSS Custom Highlight API reached Baseline in June 2025, when Firefox 140 joined Chrome and Safari. Older browsers register no highlights and the code renders as unstyled monospace text — the block, its header, copy button and layout are unaffected, so the fallback costs colour only.
+
+### Styling Limits
+
+`::highlight()` accepts only `color`, `background-color`, `text-decoration`, `text-shadow` and `-webkit-text-stroke`/`-fill`. Bold and italic tokens are therefore unavailable: Markdown `**bold**` and `_italic_` runs and CSS `!important` take a colour rather than a weight or slant.
+
+### Highlighting Your Own Markup
+
+If you render code outside this component — a diff view or an editor, say — `CODE_BLOCK_ATTRIBUTE` and `scheduleHighlight` opt that markup into the same pass, so it picks up the same palette:
+
+```tsx
+import { CODE_BLOCK_ATTRIBUTE, scheduleHighlight } from "@eqtylab/equality";
+
+useEffect(() => {
+  void scheduleHighlight();
+}, [source]);
+
+<pre {...{ [CODE_BLOCK_ATTRIBUTE]: "" }}>
+  <code className="language-rust">{source}</code>
+</pre>;
+```
+
+Two constraints come with it. The `<code>` element must contain a single text node — ranges are registered against that node, so a block whose `<code>` holds nested markup is skipped. And `scheduleHighlight` rescans the whole document rather than one block, because each pass replaces the ranges the previous one registered; calls made in the same frame are coalesced into a single pass. Blocks inside a shadow root are out of reach.
+
+## Line Numbers
+
+Set `lineNumbers` to number every line in a gutter beside the code. The gutter is sticky, so the numbers stay in place while long lines scroll under them.
+
+Numbering and wrapping are mutually exclusive: a wrapped line occupies more rows than its number does, which would drift the two columns apart. Setting `lineNumbers` therefore switches long lines from wrapping to scrolling horizontally.
+
+<CodeBlock
+  title="deploy.sh"
+  language="bash"
+  lineNumbers
+  code={deployScriptSample}
+  client:only="react"
+/>
+
 ## Color Variants
 
 Code blocks support color variants using either the brand primary color or status options. Available variants are `neutral`, `primary` (brand primary color), `success`, `danger`, and `warning`. Use these to visually distinguish different types of code or contexts according to your design needs.
 
-### Primary (default)
+### Neutral (default)
 
 <CodeBlock
   title="Example"
   language="tsx"
   codeLabel="// This is the code block component!"
-  code={`import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
-import darkStyle from 'react-syntax-highlighter/dist/esm/styles/prism/a11y-dark';
-import lightStyle from 'react-syntax-highlighter/dist/esm/styles/prism/prism';
-
-import { Badge } from "@/components/badge/badge";
-import styles from "@/components/code-block/code-block.module.css";
-import { CopyButton } from "@/components/copy-button/copy-button";
-import { cn } from "@/lib/utils";
-import { useTheme } from "@/theme/hooks/use-theme";
-
-interface CodeBlockProps {
-className?: string;
-title?: string;
-code: string;
-language?: string;
-variant?: 'neutral' | 'primary' | 'success' | 'danger' | 'warning';
-codeLabel?: string;
-copy?: string;
-}
-
-const WRAP = true;
-
-const CodeBlock = ({
-className,
-title,
-code,
-language = 'text',
-variant = 'neutral',
-codeLabel,
-copy,
-}: CodeBlockProps) => {
-const [theme] = useTheme();
-
-return (
-
-<div className={cn(styles["code-block"], className)}>
-  <div className={styles.header}>
-    <div className={styles["header-left"]}>
-      {title && <span className={styles.title}>{title}</span>}
-      <Badge variant="neutral" className={styles["badge"]}>
-        {language}
-      </Badge>
-    </div>
-    <div className={styles["header-right"]}>
-      <CopyButton value={copy || code} size="sm" />
-    </div>
-  </div>
-  <div className={cn(styles.content, styles[variant])}>
-    <div
-      className={cn(styles["scroll-container"], "styled-vertical-scrollbar")}
-    >
-      {codeLabel && <div className={styles["code-label"]}>{codeLabel}</div>}
-      <SyntaxHighlighter
-        language={language}
-        style={theme === "dark" ? darkStyle : lightStyle}
-        wrapLines={WRAP}
-        wrapLongLines={WRAP}
-        className={styles.pre}
-        codeTagProps={{ className: cn(styles.code, { [styles.wrap]: WRAP }) }}
-      >
-        {code}
-      </SyntaxHighlighter>
-    </div>
-  </div>
-</div>
-); };
-
-export { CodeBlock };
-`}
-client:only="react"
+  code={releaseNotesSample}
+  client:only="react"
 />
 
 ### Success
@@ -193,12 +180,13 @@ The Code Block component supports arbitrary code labels:
 
 ## Props
 
-| Prop        | Type                                                                   | Default     | Description                                                                           |
-| ----------- | ---------------------------------------------------------------------- | ----------- | ------------------------------------------------------------------------------------- |
-| `language`  | `string`                                                               | `"text"`    | The language of the code for syntax highlighting.                                     |
-| `variant`   | `"neutral"` \| `"primary"` \| `"warning"` \| `"danger"` \| `"success"` | `"neutral"` | The visual style variant of the code block.                                           |
-| `title`     | `string`                                                               | -           | Text to display as the title.                                                         |
-| `codeLabel` | `string`                                                               | -           | Text to display as the code label.                                                    |
-| `code`      | `string`                                                               | Required    | String of text to display within the code block as code.                              |
-| `copy`      | `string`                                                               | -           | String to copy when the copy button is clicked. Falls back to `code` if not provided. |
-| `className` | `string`                                                               | -           | Additional CSS classes to apply to the badge.                                         |
+| Prop          | Type                                                                   | Default     | Description                                                                           |
+| ------------- | ---------------------------------------------------------------------- | ----------- | ------------------------------------------------------------------------------------- |
+| `language`    | `string`                                                               | `"text"`    | The language of the code for syntax highlighting.                                     |
+| `variant`     | `"neutral"` \| `"primary"` \| `"warning"` \| `"danger"` \| `"success"` | `"neutral"` | The visual style variant of the code block.                                           |
+| `title`       | `string`                                                               | -           | Text to display as the title.                                                         |
+| `codeLabel`   | `string`                                                               | -           | Text to display as the code label.                                                    |
+| `code`        | `string`                                                               | Required    | String of text to display within the code block as code.                              |
+| `copy`        | `string`                                                               | -           | String to copy when the copy button is clicked. Falls back to `code` if not provided. |
+| `lineNumbers` | `boolean`                                                              | `false`     | Number every line in a gutter. Long lines scroll instead of wrapping while set.       |
+| `className`   | `string`                                                               | -           | Additional CSS classes to apply to the badge.                                         |

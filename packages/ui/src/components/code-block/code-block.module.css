@@ -36,143 +36,145 @@
   @apply flex flex-col;
   @apply overflow-auto;
   @apply min-w-0;
+  @apply focus-visible:ring-focus-ring focus-visible:ring-2 focus-visible:ring-inset;
+  font-family: var(--font-mono);
+}
+
+/*
+ Upstream's `vscode-plus` palette, split by hand across the `dark` variant: upstream ships it as
+ `light-dark()` pairs, which resolve against `color-scheme` rather than our theme attribute.
+ `punctuation` and `regexp` are ours; upstream folds them into `operator` and `string`.
+*/
+:global([data-equality-code-block]) {
   font-family: var(--font-mono);
 
-  /*
-   The highlighter usually ships its themes as JS objects that it applies as inline styles on
-   every token span, which forces the component to resolve the theme in JS — the only
-   place in the library that does. That resolution reads a single page-wide value by
-   walking the document, so it picks the wrong palette whenever two themes are on
-   screen, and can't see the theme at all from inside a shadow root.
-
-   Expressed here instead, the cascade answers the question: the `dark:` variant matches
-   against the nearest theme root, so every one of those cases is correct by
-   construction, a live theme flip needs no re-render, and no component has to be told
-   which theme it is on.
-  */
-  --syntax-comment: slategray;
-  --syntax-punctuation: #999;
-  --syntax-tag: #905;
-  --syntax-number: #905;
-  --syntax-string: #690;
-  --syntax-operator: #9a6e3a;
-  --syntax-variable: #e90;
-  --syntax-atrule: #07a;
-  --syntax-keyword: #07a;
-  --syntax-function: #dd4a68;
-  --syntax-class-name: #dd4a68;
-  --syntax-regex: #e90;
+  --syntax-comment: #008000;
+  --syntax-punctuation: #000000;
+  --syntax-tag: #800000;
+  --syntax-property: #001080;
+  --syntax-constant: #098658;
+  --syntax-string: #a31515;
+  --syntax-selector: #800000;
+  --syntax-inserted: #795e26;
+  --syntax-deleted: #af00db;
+  --syntax-operator: #000000;
+  --syntax-variable: #001080;
+  --syntax-regexp: #811f3f;
+  --syntax-keyword: #af00db;
+  --syntax-function: #795e26;
+  --syntax-type: #267f99;
 
   @variant dark {
-    --syntax-comment: #d4d0ab;
-    --syntax-punctuation: #fefefe;
-    --syntax-tag: #ffa07a;
-    --syntax-number: #00e0e0;
-    --syntax-string: #abe338;
-    --syntax-operator: #00e0e0;
-    --syntax-variable: #00e0e0;
-    --syntax-atrule: #ffd700;
-    --syntax-keyword: #00e0e0;
-    --syntax-function: #ffd700;
-    --syntax-class-name: #ffd700;
-    --syntax-regex: #ffd700;
+    --syntax-comment: #6a9955;
+    --syntax-punctuation: #d4d4d4;
+    --syntax-tag: #569cd6;
+    --syntax-property: #9cdcfe;
+    --syntax-constant: #b5cea8;
+    --syntax-string: #ce9178;
+    --syntax-selector: #d7ba7d;
+    --syntax-inserted: #dcdcaa;
+    --syntax-deleted: #c586c0;
+    --syntax-operator: #d4d4d4;
+    --syntax-variable: #9cdcfe;
+    --syntax-regexp: #d16969;
+    --syntax-keyword: #c586c0;
+    --syntax-function: #dcdcaa;
+    --syntax-type: #4ec9b0;
   }
 }
 
 /*
- Prism emits these class names at runtime, so they can't be hashed — hence `:global`.
- Nesting them under `.content` keeps them scoped to a code block all the same.
-
- Deliberately dropped from both source themes: the light theme's `text-shadow: 0 1px
- white` and the matching `background: hsla(0 0% 100% / .5)` on operators. Both are the
- same white-halo trick, and both render as doubled, barely legible glyphs on a dark
- surface — which is what happens today whenever the JS lookup picks the wrong palette.
+ The reset guards against Prism themes, which style `code[class*="language-"]` globally with their
+ own font, background and text-shadow. Categories below are flattened TextMate scopes registered
+ in `CSS.highlights`; `::highlight()` accepts only colour and decoration properties, so the bold
+ `important` and the bold/italic Markdown tokens of the previous theme are gone.
 */
-.content :global(.token.comment),
-.content :global(.token.prolog),
-.content :global(.token.doctype),
-.content :global(.token.cdata) {
-  color: var(--syntax-comment);
-}
+:global(pre[data-equality-code-block] > code) {
+  font: inherit;
+  color: inherit;
+  background: none;
+  text-shadow: none;
 
-.content :global(.token.punctuation) {
-  color: var(--syntax-punctuation);
-}
+  &::highlight(comment),
+  &::highlight(quote) {
+    color: var(--syntax-comment);
+  }
 
-.content :global(.token.property),
-.content :global(.token.tag),
-.content :global(.token.constant),
-.content :global(.token.symbol),
-.content :global(.token.deleted) {
-  color: var(--syntax-tag);
-}
+  &::highlight(punctuation) {
+    color: var(--syntax-punctuation);
+  }
 
-.content :global(.token.boolean),
-.content :global(.token.number) {
-  color: var(--syntax-number);
-}
+  &::highlight(keyword),
+  &::highlight(storage),
+  &::highlight(at-rule),
+  &::highlight(doctype),
+  &::highlight(important),
+  &::highlight(section) {
+    color: var(--syntax-keyword);
+  }
 
-.content :global(.token.selector),
-.content :global(.token.attr-name),
-.content :global(.token.string),
-.content :global(.token.char),
-.content :global(.token.builtin),
-.content :global(.token.inserted) {
-  color: var(--syntax-string);
-}
+  &::highlight(operator) {
+    color: var(--syntax-operator);
+  }
 
-.content :global(.token.operator),
-.content :global(.token.entity),
-.content :global(.token.url),
-.content :global(.language-css .token.string),
-.content :global(.style .token.string) {
-  color: var(--syntax-operator);
-}
+  &::highlight(string),
+  &::highlight(attribute-value),
+  &::highlight(link),
+  &::highlight(raw) {
+    color: var(--syntax-string);
+  }
 
-.content :global(.token.entity) {
-  cursor: help;
-}
+  &::highlight(regexp) {
+    color: var(--syntax-regexp);
+  }
 
-.content :global(.token.variable) {
-  color: var(--syntax-variable);
-}
+  &::highlight(numeric),
+  &::highlight(boolean),
+  &::highlight(constant),
+  &::highlight(symbol),
+  &::highlight(character-entity),
+  &::highlight(anchor),
+  &::highlight(entity) {
+    color: var(--syntax-constant);
+  }
 
-.content :global(.token.atrule),
-.content :global(.token.attr-value) {
-  color: var(--syntax-atrule);
-}
+  &::highlight(function),
+  &::highlight(decorator),
+  &::highlight(animation) {
+    color: var(--syntax-function);
+  }
 
-.content :global(.token.keyword) {
-  color: var(--syntax-keyword);
-}
+  &::highlight(type),
+  &::highlight(support) {
+    color: var(--syntax-type);
+  }
 
-.content :global(.token.function) {
-  color: var(--syntax-function);
-}
+  &::highlight(variable),
+  &::highlight(interpolation) {
+    color: var(--syntax-variable);
+  }
 
-.content :global(.token.class-name) {
-  color: var(--syntax-class-name);
-}
+  &::highlight(property),
+  &::highlight(key),
+  &::highlight(attribute-name) {
+    color: var(--syntax-property);
+  }
 
-.content :global(.token.regex) {
-  color: var(--syntax-regex);
-}
+  &::highlight(tag) {
+    color: var(--syntax-tag);
+  }
 
-.content :global(.token.important) {
-  color: var(--syntax-regex);
-  font-weight: bold;
-}
+  &::highlight(selector) {
+    color: var(--syntax-selector);
+  }
 
-.content :global(.token.bold) {
-  font-weight: bold;
-}
+  &::highlight(inserted) {
+    color: var(--syntax-inserted);
+  }
 
-.content :global(.token.italic) {
-  font-style: italic;
-}
-
-.content :global(.namespace) {
-  opacity: 0.7;
+  &::highlight(deleted) {
+    color: var(--syntax-deleted);
+  }
 }
 
 .neutral {
@@ -206,8 +208,27 @@
   font-family: var(--font-mono);
 }
 
+.body {
+  @apply flex min-w-0;
+}
+
+/* Wide enough for the longest line, so the sticky gutter has something to scroll against */
+.body.numbered {
+  @apply w-max min-w-full;
+}
+
+/* `line-height` has to match `.pre` exactly, or the numbers drift from the lines they count */
+.gutter {
+  @apply border-r-border text-text-tertiary bg-card-background;
+  @apply sticky left-0 my-0 shrink-0 border-r p-3;
+  @apply select-none text-right;
+  font-family: var(--font-mono);
+  line-height: 1.5;
+}
+
 .pre {
   @apply my-0 p-3;
+  @apply min-w-0;
   line-height: 1.5;
   tab-size: 4;
 }
