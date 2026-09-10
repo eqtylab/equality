@@ -79,6 +79,8 @@ The CSS Custom Highlight API reached Baseline in June 2025, when Firefox 140 joi
 If you render code outside this component — a diff view or an editor, say — `CODE_BLOCK_ATTRIBUTE` and `scheduleHighlight` opt that markup into the same pass, so it picks up the same palette:
 
 ```tsx
+import { useEffect } from "react";
+
 import { CODE_BLOCK_ATTRIBUTE, scheduleHighlight } from "@eqtylab/equality";
 
 useEffect(() => {

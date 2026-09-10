@@ -1,8 +1,5 @@
 import { CodeBlock } from "@eqtylab/equality";
 
-// Demos live here rather than inline in the MDX: Prettier reformats template literals
-// embedded in MDX expressions, which flattens the indentation these samples exist to show.
-
 export const CodeBlockLanguageDemo = () => {
   return (
     <CodeBlock
