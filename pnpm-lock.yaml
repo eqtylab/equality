@@ -189,15 +189,15 @@ importers:
       lucide-react:
         specifier: ^1.17.0
         version: 1.17.0(react@19.2.0)
+      microlighter:
+        specifier: ^2.1.0
+        version: 2.1.0
       motion:
         specifier: ^12.23.24
         version: 12.23.24(react-dom@19.2.0(react@19.2.0))(react@19.2.0)
       react-hook-form:
         specifier: ^7.63.0
         version: 7.65.0(react@19.2.0)
-      react-syntax-highlighter:
-        specifier: ^16.1.0
-        version: 16.1.0(react@19.2.0)
       react-truncate-inside:
         specifier: ^1.0.3
         version: 1.0.3(react@19.2.0)
@@ -220,9 +220,6 @@ importers:
       '@types/react-dom':
         specifier: ^19.2.2
         version: 19.2.2(@types/react@19.2.2)
-      '@types/react-syntax-highlighter':
-        specifier: ^15.5.13
-        version: 15.5.13
       autoprefixer:
         specifier: ^10.4.0
         version: 10.4.21(postcss@8.5.6)
@@ -504,13 +501,6 @@ packages:
     engines: { node: '>=6.9.0' }
     peerDependencies:
       '@babel/core': ^7.0.0-0
-
-  '@babel/runtime@7.28.4':
-    resolution:
-      {
-        integrity: sha512-Q/N6JNWvIvPnLDvjlE1OUBLPQHH6l3CltCEsHIujp45zQUSSh8K+gHnaEX45yAT1nyngnINhvWtzN+Nb9D8RAQ==,
-      }
-    engines: { node: '>=6.9.0' }
 
   '@babel/template@7.28.6':
     resolution:
@@ -3065,12 +3055,6 @@ packages:
         integrity: sha512-uWN8YqxXxqFMX2RqGOrumsKeti4LlmIMIyV0lgut4jx7KQBcBiW6vkDtIBvHnHIquwNfJhk8v2OtmO8zXWHfPA==,
       }
 
-  '@types/prismjs@1.26.5':
-    resolution:
-      {
-        integrity: sha512-AUZTa7hQ2KY5L7AmtSiqxlhWxb4ina0yd8hNbl4TWuqnv/pFP0nDMb3YrfSBf4hJVGLh2YEIBfKaBW/9UEl6IQ==,
-      }
-
   '@types/react-dom@19.2.2':
     resolution:
       {
@@ -3078,12 +3062,6 @@ packages:
       }
     peerDependencies:
       '@types/react': ^19.2.2
-
-  '@types/react-syntax-highlighter@15.5.13':
-    resolution:
-      {
-        integrity: sha512-uLGJ87j6Sz8UaBAooU0T6lWJ0dBmjZgN1PZTrj05TNql2/XpC6+4HhMT5syIdFUUt+FASfCeLLv4kBygNU+8qA==,
-      }
 
   '@types/react@19.2.2':
     resolution:
@@ -4357,12 +4335,6 @@ packages:
         integrity: sha512-iPeeDKJSWf4IEOasVVrknXpaBV0IApz/gp7S2bb7Z4Lljbl2MGJRqInZiUrQwV16cpzw/D3S5j5Julj/gT52AA==,
       }
 
-  fault@1.0.4:
-    resolution:
-      {
-        integrity: sha512-CJ0HCB5tL5fYTEA7ToAq5+kTwd++Borf1/bifxd9iT70QcXr4MRrO3Llf8Ifs70q+SJcGHFtnIE/Nw6giCtECA==,
-      }
-
   fdir@6.5.0:
     resolution:
       {
@@ -4455,13 +4427,6 @@ packages:
         integrity: sha512-gIXjKqtFuWEgzFRJA9WCQeSJLZDjgJUOMCMzxtvFq/37KojM1BFGufqsCy0r4qSQmYLsZYMeyRqzIWOMup03sw==,
       }
     engines: { node: '>=14' }
-
-  format@0.2.2:
-    resolution:
-      {
-        integrity: sha512-wzsgA6WOq+09wrU1tsJ09udeR/YZRaeArL9e1wPbFg3GG2yDnC2ldKpxs4xunpFF9DgqCqOIra3bc1HWrJ37Ww==,
-      }
-    engines: { node: '>=0.4.x' }
 
   fraction.js@4.3.7:
     resolution:
@@ -4748,18 +4713,6 @@ packages:
     resolution:
       {
         integrity: sha512-6pEjquH3rqaI6cYAXYPcz9MS4rY6R4ngRgrgfDshRptUZIc3lw0MCIJIGDj9++mfySOuPTHB4nrSW99BCvOPIA==,
-      }
-
-  highlight.js@10.7.3:
-    resolution:
-      {
-        integrity: sha512-tzcUFauisWKNHaRkN4Wjl/ZA07gENAjFl3J/c480dprkGTg5EQstgaNFqBfUqCq54kZRIEcreTsAgF/m2quD7A==,
-      }
-
-  highlightjs-vue@1.0.0:
-    resolution:
-      {
-        integrity: sha512-PDEfEF102G23vHmPhLyPboFCD+BkMGu+GuJe2d9/eH4FsCwvgBpnc9n0pGE+ffKdph38s6foEZiEjdgHdzp+IA==,
       }
 
   html-escaper@3.0.3:
@@ -5382,12 +5335,6 @@ packages:
         integrity: sha512-9Ri+o0JYgehTaVBBDoMqIl8GXtbWg711O3srftcHhZ0dqnETqLaoIK0x17fUw9rFSlK/0NlsKe0Ahhyl5pXE2g==,
       }
 
-  lowlight@1.20.0:
-    resolution:
-      {
-        integrity: sha512-8Ktj+prEb1RoCPkEOrPMYUN/nCggB7qAWe3a7OpMjWQkh3l2RD5wKRQ+o8Q8YuI9RG/xs95waaI/E6ym/7NsTw==,
-      }
-
   lru-cache@10.4.3:
     resolution:
       {
@@ -5580,6 +5527,13 @@ packages:
       {
         integrity: sha512-N0LUYQMUA1yS5tJKmMtU9yprPm6ZIg24yr/OVv/7t6q0kKDIho4cBbXRi1XKttUmNYDYgF/q45qrKE/UhGO0CA==,
       }
+
+  microlighter@2.1.0:
+    resolution:
+      {
+        integrity: sha512-lngSOqDbT7IuNV1OekRp0zRCOlhVEuSdQdbEZbkXfmQPYpeIArk5wyrUQTvBmeCqiy/ZDW/RLmbopI74JBnCIg==,
+      }
+    engines: { node: '>=18' }
 
   micromark-core-commonmark@2.0.3:
     resolution:
@@ -6520,15 +6474,6 @@ packages:
       '@types/react':
         optional: true
 
-  react-syntax-highlighter@16.1.0:
-    resolution:
-      {
-        integrity: sha512-E40/hBiP5rCNwkeBN1vRP+xow1X0pndinO+z3h7HLsHyjztbyjfzNWNKuAsJj+7DLam9iT4AaaOZnueCU+Nplg==,
-      }
-    engines: { node: '>= 16.20.2' }
-    peerDependencies:
-      react: '>= 0.14.0'
-
   react-truncate-inside@1.0.3:
     resolution:
       {
@@ -6595,12 +6540,6 @@ packages:
     resolution:
       {
         integrity: sha512-cjwII1MdIIVloKvC9ErQ+OgAtwHBmcZ0Bg4ciz78FtbT8In39aAYbaA7zvxQ61xVMSPE8WxhLwLbhif4Js2C+g==,
-      }
-
-  refractor@5.0.0:
-    resolution:
-      {
-        integrity: sha512-QXOrHQF5jOpjjLfiNk5GFnWhRXvxjUVnlFxkeDmewR5sXkr3iM46Zo+CnRR8B+MDVqkULW4EcLVcRBNOPXHosw==,
       }
 
   regex-recursion@6.0.2:
@@ -8275,8 +8214,6 @@ snapshots:
       '@babel/core': 7.29.0
       '@babel/helper-plugin-utils': 7.27.1
 
-  '@babel/runtime@7.28.4': {}
-
   '@babel/template@7.28.6':
     dependencies:
       '@babel/code-frame': 7.28.6
@@ -9769,13 +9706,7 @@ snapshots:
       undici-types: 7.16.0
     optional: true
 
-  '@types/prismjs@1.26.5': {}
-
   '@types/react-dom@19.2.2(@types/react@19.2.2)':
-    dependencies:
-      '@types/react': 19.2.2
-
-  '@types/react-syntax-highlighter@15.5.13':
     dependencies:
       '@types/react': 19.2.2
 
@@ -10709,10 +10640,6 @@ snapshots:
 
   fast-uri@3.1.0: {}
 
-  fault@1.0.4:
-    dependencies:
-      format: 0.2.2
-
   fdir@6.5.0(picomatch@4.0.3):
     optionalDependencies:
       picomatch: 4.0.3
@@ -10765,8 +10692,6 @@ snapshots:
     dependencies:
       cross-spawn: 7.0.6
       signal-exit: 4.1.0
-
-  format@0.2.2: {}
 
   fraction.js@4.3.7: {}
 
@@ -11022,10 +10947,6 @@ snapshots:
   hermes-parser@0.25.1:
     dependencies:
       hermes-estree: 0.25.1
-
-  highlight.js@10.7.3: {}
-
-  highlightjs-vue@1.0.0: {}
 
   html-escaper@3.0.3: {}
 
@@ -11302,11 +11223,6 @@ snapshots:
 
   longest-streak@3.1.0: {}
 
-  lowlight@1.20.0:
-    dependencies:
-      fault: 1.0.4
-      highlight.js: 10.7.3
-
   lru-cache@10.4.3: {}
 
   lru-cache@11.2.2: {}
@@ -11524,6 +11440,8 @@ snapshots:
       thingies: 2.5.0(tslib@2.8.1)
       tree-dump: 1.1.0(tslib@2.8.1)
       tslib: 2.8.1
+
+  microlighter@2.1.0: {}
 
   micromark-core-commonmark@2.0.3:
     dependencies:
@@ -12154,16 +12072,6 @@ snapshots:
     optionalDependencies:
       '@types/react': 19.2.2
 
-  react-syntax-highlighter@16.1.0(react@19.2.0):
-    dependencies:
-      '@babel/runtime': 7.28.4
-      highlight.js: 10.7.3
-      highlightjs-vue: 1.0.0
-      lowlight: 1.20.0
-      prismjs: 1.30.0
-      react: 19.2.0
-      refractor: 5.0.0
-
   react-truncate-inside@1.0.3(react@19.2.0):
     dependencies:
       react: 19.2.0
@@ -12210,13 +12118,6 @@ snapshots:
       estree-util-to-js: 2.0.0
       unified: 11.0.5
       vfile: 6.0.3
-
-  refractor@5.0.0:
-    dependencies:
-      '@types/hast': 3.0.4
-      '@types/prismjs': 1.26.5
-      hastscript: 9.0.1
-      parse-entities: 4.0.2
 
   regex-recursion@6.0.2:
     dependencies:

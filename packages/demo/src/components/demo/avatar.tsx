@@ -47,13 +47,7 @@ export const AvatarSizesDemo = ({
   );
 };
 
-export const AvatarShapeDemo = ({
-  variant = "fallback",
-  shape,
-}: {
-  variant?: "default" | "fallback";
-  shape: "circle" | "square";
-}) => {
+export const AvatarShapeDemo = ({ shape }: { shape: "circle" | "square" }) => {
   return (
     <div className="mb-4 flex items-center gap-4">
       <Avatar shape={shape}>
