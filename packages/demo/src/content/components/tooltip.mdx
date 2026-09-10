@@ -56,6 +56,18 @@ Use `side` and `align` on `TooltipContent` to position the tooltip relative to i
 </TooltipContent>
 ```
 
+## Width
+
+`TooltipContent` caps itself at `32rem`, and narrows further to the room Radix measures when the trigger sits near a viewport edge, so long content wraps instead of running off screen. Retheme the `--container-tooltip` token to move the cap everywhere.
+
+For a one-off, mark the override important — the component's own styles sit outside Tailwind's layers, so a plain utility loses to them:
+
+```tsx
+<TooltipContent className="max-w-md!">
+  <p>Narrower than the default</p>
+</TooltipContent>
+```
+
 ## Slots
 
 | Name              | Description                                                                            |
