@@ -210,6 +210,7 @@
 
 .body {
   @apply flex min-w-0;
+  --code-line-height: 1.5;
 }
 
 /* Wide enough for the longest line, so the sticky gutter has something to scroll against */
@@ -217,19 +218,18 @@
   @apply w-max min-w-full;
 }
 
-/* `line-height` has to match `.pre` exactly, or the numbers drift from the lines they count */
 .gutter {
   @apply border-r-border text-text-tertiary bg-card-background;
   @apply sticky left-0 my-0 shrink-0 border-r p-3;
   @apply select-none text-right;
   font-family: var(--font-mono);
-  line-height: 1.5;
+  line-height: var(--code-line-height);
 }
 
 .pre {
   @apply my-0 p-3;
   @apply min-w-0;
-  line-height: 1.5;
+  line-height: var(--code-line-height);
   tab-size: 4;
 }
 

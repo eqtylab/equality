@@ -45,7 +45,7 @@ const CodeBlock = ({
       <div className={styles.header}>
         <div className={styles['header-left']}>
           {title && <span className={styles.title}>{title}</span>}
-          <Badge variant="neutral" className={styles['badge']}>
+          <Badge variant="neutral" className={styles.badge}>
             {language}
           </Badge>
         </div>
@@ -55,9 +55,9 @@ const CodeBlock = ({
       </div>
       {/* Focusable so the overflow it owns is reachable by keyboard, not just by pointer */}
       <div
-        className={cn(styles.content)}
+        className={styles.content}
         tabIndex={0}
-        role="region"
+        role="group"
         aria-label={title ? `${title}, code block` : 'Code block'}
       >
         <div className={cn(styles.body, { [styles.numbered]: lineNumbers })}>

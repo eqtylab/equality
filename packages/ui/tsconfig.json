@@ -19,5 +19,5 @@
       "@/theme/*": ["./src/theme/*"]
     }
   },
-  "include": ["src", "src/types/**/*"]
+  "include": ["src"]
 }
