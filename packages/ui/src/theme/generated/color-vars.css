@@ -87,6 +87,16 @@
   --color-button-warning-text: color(display-p3 1 1 1);
   --color-card-background: color(display-p3 1 1 1);
   --color-card-border: color(display-p3 0.8698 0.8698 0.8698);
+  --color-control-accepted: color(display-p3 0.4378 0.2639 0.9228);
+  --color-control-comment: color(display-p3 0.4378 0.2639 0.9228);
+  --color-control-compliant: color(display-p3 0.2946 0.5328 0.2433);
+  --color-control-in-progress: color(display-p3 0.7481 0.374 0.214);
+  --color-control-in-review: color(display-p3 0.4378 0.2639 0.9228);
+  --color-control-non-compliant: color(display-p3 0.7365 0.2216 0.2026);
+  --color-control-not-applicable: color(display-p3 0.5021 0.5021 0.5021);
+  --color-control-not-started: color(display-p3 0.5021 0.5021 0.5021);
+  --color-control-question: color(display-p3 0.4378 0.2639 0.9228);
+  --color-control-ready-for-review: color(display-p3 0.2366 0.3261 0.7513);
   --color-cyan-100: color(display-p3 0.8736 0.9466 0.9942);
   --color-cyan-200: color(display-p3 0.7072 0.8271 0.9059);
   --color-cyan-300: color(display-p3 0.5438 0.7094 0.8183);
