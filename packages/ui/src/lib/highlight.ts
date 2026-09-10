@@ -9,7 +9,8 @@ export const CODE_BLOCK_ATTRIBUTE = 'data-equality-code-block';
 
 const SELECTOR = `pre[${CODE_BLOCK_ATTRIBUTE}] > code`;
 
-let scheduled: Promise<void> | null = null;
+let tail: Promise<void> = Promise.resolve();
+let queued: Promise<void> | null = null;
 
 const isSupported = () =>
   typeof window !== 'undefined' && typeof CSS !== 'undefined' && Boolean(CSS.highlights);
@@ -20,20 +21,30 @@ const isSupported = () =>
  * Scanning is document-wide by necessity: each `highlightAll` clears the ranges the last one
  * registered, so a per-block call would erase every other block on the page. Blocks inside a
  * shadow root are out of reach.
+ *
+ * Passes are serialized for the same reason. `highlightAll` collects its elements before awaiting
+ * their grammars and clears every registered range once they land, so overlapping passes let the
+ * slower one finish last and wipe the blocks it was too early to see.
  */
 export const scheduleHighlight = (): Promise<void> => {
   if (!isSupported()) return Promise.resolve();
-  if (scheduled) return scheduled;
+  if (queued) return queued;
 
-  scheduled = new Promise<void>((resolve) => {
-    window.requestAnimationFrame(() => {
-      scheduled = null;
-      highlightAll({ selector: SELECTOR }).then(
-        () => resolve(),
-        () => resolve()
-      );
-    });
-  });
+  const pass = tail.then(
+    () =>
+      new Promise<void>((resolve) => {
+        window.requestAnimationFrame(() => {
+          queued = null;
+          highlightAll({ selector: SELECTOR }).then(
+            () => resolve(),
+            () => resolve()
+          );
+        });
+      })
+  );
 
-  return scheduled;
+  queued = pass;
+  tail = pass;
+
+  return pass;
 };

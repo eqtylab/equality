@@ -14,7 +14,7 @@ import {
 
 ## Overview
 
-The Code Block component comes with syntax highlighting and four color variants to visually communicate different statuses or contexts:
+The Code Block component comes with syntax highlighting and five color variants to visually communicate different statuses or contexts:
 
 - **Neutral:** The default style, suitable for general blocks of code.
 - **Primary:** Alternate style, general highlight.
@@ -90,7 +90,7 @@ useEffect(() => {
 </pre>;
 ```
 
-Two constraints come with it. The `<code>` element must contain a single text node — ranges are registered against that node, so a block whose `<code>` holds nested markup is skipped. And `scheduleHighlight` rescans the whole document rather than one block, because each pass replaces the ranges the previous one registered; calls made in the same frame are coalesced into a single pass. Blocks inside a shadow root are out of reach.
+Two constraints come with it. The `<code>` element must contain a single text node — ranges are registered against that node, so a block whose `<code>` holds nested markup is skipped. And `scheduleHighlight` rescans the whole document rather than one block, because each pass replaces the ranges the previous one registered; calls made in the same frame are coalesced into a single pass, and passes never overlap. Blocks inside a shadow root are out of reach.
 
 ## Line Numbers
 
@@ -149,7 +149,7 @@ The Code Block component supports arbitrary titles:
   client:only="react"
 />
 
-## Code label
+## Code Label
 
 The Code Block component supports arbitrary code labels:
 
@@ -163,13 +163,12 @@ The Code Block component supports arbitrary code labels:
 
 ## Props
 
-| Prop          | Type                                                                   | Default     | Description                                                                           |
-| ------------- | ---------------------------------------------------------------------- | ----------- | ------------------------------------------------------------------------------------- |
-| `language`    | `string`                                                               | `"text"`    | The language of the code for syntax highlighting.                                     |
-| `variant`     | `"neutral"` \| `"primary"` \| `"warning"` \| `"danger"` \| `"success"` | `"neutral"` | The visual style variant of the code block.                                           |
-| `title`       | `string`                                                               | -           | Text to display as the title.                                                         |
-| `codeLabel`   | `string`                                                               | -           | Text to display as the code label.                                                    |
-| `code`        | `string`                                                               | Required    | String of text to display within the code block as code.                              |
-| `copy`        | `string`                                                               | -           | String to copy when the copy button is clicked. Falls back to `code` if not provided. |
-| `lineNumbers` | `boolean`                                                              | `false`     | Number every line in a gutter. Long lines scroll instead of wrapping while set.       |
-| `className`   | `string`                                                               | -           | Additional CSS classes to apply to the badge.                                         |
+| Name          | Description                                                                           | Type                                                 | Default   | Required |
+| ------------- | ------------------------------------------------------------------------------------- | ---------------------------------------------------- | --------- | -------- |
+| `code`        | String of text to display within the code block as code.                              | `string`                                             | —         | ✅       |
+| `language`    | The language of the code for syntax highlighting.                                     | `string`                                             | `text`    | ❌       |
+| `variant`     | The visual style variant of the code block.                                           | `neutral`, `primary`, `success`, `warning`, `danger` | `neutral` | ❌       |
+| `title`       | Text to display as the title.                                                         | `string`                                             | —         | ❌       |
+| `codeLabel`   | Text to display as the code label.                                                    | `string`                                             | —         | ❌       |
+| `copy`        | String to copy when the copy button is clicked. Falls back to `code` if not provided. | `string`                                             | —         | ❌       |
+| `lineNumbers` | Number every line in a gutter. Long lines scroll instead of wrapping while set.       | `boolean`                                            | `false`   | ❌       |
