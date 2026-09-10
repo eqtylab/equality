@@ -7,9 +7,9 @@ description: "Syntax-highlighted code display with status variants"
 import { CodeBlock } from "@eqtylab/equality";
 
 import {
-  deployScriptSample,
-  packageJsonSample,
-  releaseNotesSample,
+  CodeBlockLanguageDemo,
+  CodeBlockLineNumbersDemo,
+  CodeBlockNeutralDemo,
 } from "@demo/components/demo/code-block";
 
 ## Overview
@@ -58,12 +58,7 @@ The language **must** be passed via the `language` prop for syntax highlighting 
 <CodeBlock language="json" code={code} />
 ```
 
-<CodeBlock
-  title="package.json"
-  language="json"
-  code={packageJsonSample}
-  client:only="react"
-/>
+<CodeBlockLanguageDemo client:only="react" />
 
 The 37 grammars it ships are `assembly`, `bash`, `c`, `cpp`, `csharp`, `css`, `dart`, `dockerfile`, `elixir`, `git-diff`, `go`, `graphql`, `heex`, `html`, `java`, `javascript`, `json`, `kotlin`, `lua`, `markdown`, `objective-c`, `perl`, `php`, `powershell`, `python`, `r`, `ruby`, `rust`, `scss`, `sql`, `svelte`, `swift`, `toml`, `tsx`, `typescript`, `vue` and `yaml`.
 
@@ -103,13 +98,7 @@ Set `lineNumbers` to number every line in a gutter beside the code. The gutter i
 
 Numbering and wrapping are mutually exclusive: a wrapped line occupies more rows than its number does, which would drift the two columns apart. Setting `lineNumbers` therefore switches long lines from wrapping to scrolling horizontally.
 
-<CodeBlock
-  title="deploy.sh"
-  language="bash"
-  lineNumbers
-  code={deployScriptSample}
-  client:only="react"
-/>
+<CodeBlockLineNumbersDemo client:only="react" />
 
 ## Color Variants
 
@@ -117,13 +106,7 @@ Code blocks support color variants using either the brand primary color or statu
 
 ### Neutral (default)
 
-<CodeBlock
-  title="Example"
-  language="tsx"
-  codeLabel="// This is the code block component!"
-  code={releaseNotesSample}
-  client:only="react"
-/>
+<CodeBlockNeutralDemo client:only="react" />
 
 ### Success
 
