@@ -2,7 +2,7 @@
   "name": "@eqtylab/equality",
   "description": "EQTYLab's component and token-based design system",
   "homepage": "https://equality.eqtylab.io/",
-  "version": "3.6.0",
+  "version": "3.7.0",
   "license": "Apache-2.0",
   "keywords": [
     "component library",
@@ -67,7 +67,7 @@
     "clsx": "^2.1.1",
     "cmdk": "^1.1.1",
     "lucide-react": "^1.17.0",
-    "microlighter": "^2.1.0",
+    "microlighter": "^2.2.0",
     "motion": "^12.23.24",
     "react-hook-form": "^7.63.0",
     "react-truncate-inside": "^1.0.3",

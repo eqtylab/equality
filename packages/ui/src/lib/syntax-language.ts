@@ -9,6 +9,7 @@
 export const GRAMMAR_BY_EXTENSION: Record<string, string> = {
   as: 'assembly',
   asm: 'assembly',
+  astro: 'astro',
   bash: 'bash',
   c: 'c',
   cc: 'cpp',
@@ -27,6 +28,7 @@ export const GRAMMAR_BY_EXTENSION: Record<string, string> = {
   hpp: 'cpp',
   htm: 'html',
   html: 'html',
+  ini: 'ini',
   java: 'java',
   js: 'javascript',
   json: 'json',
@@ -69,6 +71,7 @@ export const GRAMMAR_BY_FILENAME: Record<string, string> = {
   dockerfile: 'dockerfile',
   gemfile: 'ruby',
   makefile: 'bash',
+  'nginx.conf': 'nginx',
   procfile: 'bash',
   rakefile: 'ruby',
 };
