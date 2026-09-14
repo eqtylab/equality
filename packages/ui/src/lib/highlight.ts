@@ -20,15 +20,17 @@ const isSupported = () =>
  *
  * `root` is the tree the block lives in, as `pre.getRootNode()` returns it, and defaults to the
  * document. Blocks are found by querying that tree, and a query never crosses a shadow boundary,
- * so a block inside a shadow root is highlighted by passing its root and the pass stays confined
- * to it. Scanning is tree-wide rather than per block because each pass replaces the ranges the
- * previous one registered inside that tree, so a per-block call would erase the tree's other
- * blocks. The highlighter forgets only the ranges inside the tree it scans, so passes on different
- * trees leave each other's blocks alone.
+ * so a block inside a shadow root is only found by passing its root. Scanning is tree-wide rather
+ * than per block because each pass replaces the ranges the previous one registered, so a per-block
+ * call would erase the other blocks.
+ *
+ * The highlighter forgets every range it registered on each pass, whatever tree it scanned, so a
+ * pass on a shadow root clears the document's blocks and the reverse; the two cannot both stay
+ * highlighted until upstream scopes that to the scanned tree.
  *
  * Passes are serialized. `highlightAll` collects its elements before awaiting their grammars and
- * clears the tree's registered ranges once they land, so overlapping passes on one tree let the
- * slower one finish last and wipe the blocks it was too early to see.
+ * clears the registered ranges once they land, so overlapping passes let the slower one finish
+ * last and wipe the blocks it was too early to see.
  */
 export const scheduleHighlight = (root?: Node): Promise<void> => {
   if (!isSupported()) return Promise.resolve();
