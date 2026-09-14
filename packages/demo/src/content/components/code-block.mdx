@@ -79,20 +79,22 @@ The CSS Custom Highlight API reached Baseline in June 2025, when Firefox 140 joi
 If you render code outside this component — a diff view or an editor, say — `CODE_BLOCK_ATTRIBUTE` and `scheduleHighlight` opt that markup into the same pass, so it picks up the same palette:
 
 ```tsx
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 
 import { CODE_BLOCK_ATTRIBUTE, scheduleHighlight } from "@eqtylab/equality";
 
+const ref = useRef<HTMLPreElement>(null);
+
 useEffect(() => {
-  void scheduleHighlight();
+  void scheduleHighlight(ref.current?.getRootNode());
 }, [source]);
 
-<pre {...{ [CODE_BLOCK_ATTRIBUTE]: "" }}>
+<pre ref={ref} {...{ [CODE_BLOCK_ATTRIBUTE]: "" }}>
   <code className="language-rust">{source}</code>
 </pre>;
 ```
 
-Two constraints come with it. The `<code>` element must contain a single text node — ranges are registered against that node, so a block whose `<code>` holds nested markup is skipped. And `scheduleHighlight` rescans the whole document rather than one block, because each pass replaces the ranges the previous one registered; calls made in the same frame are coalesced into a single pass, and passes never overlap. Blocks inside a shadow root are out of reach.
+Two constraints come with it. The `<code>` element must contain a single text node — ranges are registered against that node, so a block whose `<code>` holds nested markup is skipped. And `scheduleHighlight` rescans the whole tree the block lives in rather than one block, because each pass replaces the ranges the previous one registered there; calls made in the same frame for the same tree are coalesced into a single pass, and passes never overlap. Pass the block's root, `pre.getRootNode()`, so a block inside a shadow root is scanned there and its pass stays confined to that root. Left out, the pass covers the document, which cannot see into a shadow root.
 
 ## Line Numbers
 

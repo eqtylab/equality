@@ -1,4 +1,4 @@
-import { useEffect, useMemo } from 'react';
+import { useEffect, useMemo, useRef } from 'react';
 
 import { Badge } from '@/components/badge/badge';
 import styles from '@/components/code-block/code-block.module.css';
@@ -27,10 +27,14 @@ const CodeBlock = ({
   copy,
   lineNumbers = false,
 }: CodeBlockProps) => {
-  // Unmount rescans too, so ranges pointing at removed nodes leave the registry
+  const preRef = useRef<HTMLPreElement>(null);
+
+  // The block's own tree is rescanned, on unmount too, so ranges pointing at removed nodes leave
+  // the registry. The root is read up front: once the `<pre>` is detached it no longer knows it.
   useEffect(() => {
-    void scheduleHighlight();
-    return () => void scheduleHighlight();
+    const root = preRef.current?.getRootNode();
+    void scheduleHighlight(root);
+    return () => void scheduleHighlight(root);
   }, [code, language]);
 
   const gutter = useMemo(() => {
@@ -67,7 +71,7 @@ const CodeBlock = ({
             </pre>
           )}
           {/* Ranges are registered against the text node, so `code` must hold no markup */}
-          <pre className={styles.pre} {...{ [CODE_BLOCK_ATTRIBUTE]: '' }}>
+          <pre ref={preRef} className={styles.pre} {...{ [CODE_BLOCK_ATTRIBUTE]: '' }}>
             <code
               className={cn(styles.code, `language-${language}`, { [styles.wrap]: !lineNumbers })}
             >
