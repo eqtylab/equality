@@ -2,6 +2,11 @@
   "name": "@eqtylab/equality",
   "description": "EQTYLab's component and token-based design system",
   "homepage": "https://equality.eqtylab.io/",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/eqtylab/equality.git",
+    "directory": "packages/ui"
+  },
   "version": "3.8.0",
   "license": "Apache-2.0",
   "keywords": [
@@ -104,6 +109,6 @@
     "build:lib": "pnpm run build:preflight && pnpm run check:grammars && tsup --config tsup.config.ts && cp src/theme/*.css dist/ && mkdir -p dist/generated && cp src/theme/generated/*.css dist/generated/",
     "watch": "tsup --config tsup.config.ts --watch",
     "watch:tokens": "chokidar '../tokens/equality-tokens.json' --debounce 300 --initial=false -c 'pnpm run build:tokens'",
-    "release": "pnpm run build && pnpm publish --access public --no-git-checks"
+    "release": "pnpm run build && npm publish --access public"
   }
 }
