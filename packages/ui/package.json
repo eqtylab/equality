@@ -2,6 +2,11 @@
   "name": "@eqtylab/equality",
   "description": "EQTYLab's component and token-based design system",
   "homepage": "https://equality.eqtylab.io/",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/eqtylab/equality.git",
+    "directory": "packages/ui"
+  },
   "version": "3.8.0",
   "license": "Apache-2.0",
   "keywords": [
