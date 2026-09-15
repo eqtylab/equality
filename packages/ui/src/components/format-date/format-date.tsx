@@ -9,7 +9,7 @@ import {
 } from '@/components/tooltip/tooltip';
 import { cn } from '@/lib/utils';
 
-export type FormatDateDisplayMode = 'relative' | 'absolute' | 'until' | 'since';
+export type FormatDateDisplayMode = 'relative' | 'absolute' | 'countdown';
 
 export interface FormatDateProps extends Omit<
   React.TimeHTMLAttributes<HTMLTimeElement>,
@@ -21,8 +21,7 @@ export interface FormatDateProps extends Omit<
    * How to render the date:
    * - `absolute` — the full date and time ("Jun 09 2026, 18:42:03 UTC")
    * - `relative` — idiomatic distance from now, in either direction ("2 weeks ago", "next week")
-   * - `until` — exact countdown to a future date ("10 days"), a placeholder once it has passed
-   * - `since` — exact time elapsed since a past date ("10 days ago"), a placeholder until it arrives
+   * - `countdown` — exact time left until a future date ("10 days"), a placeholder once it passes
    */
   displayAs?: FormatDateDisplayMode;
   /** Time zone used for absolute formatting. Defaults to "UTC". */
@@ -144,28 +143,27 @@ function measureSpan(spanMs: number): { value: number; unit: Intl.RelativeTimeFo
   return { value, unit };
 }
 
-// Null for a date on the wrong side of now, leaving the placeholder to the caller
-function formatDirected(
-  date: Date,
-  now: Date,
-  mode: 'until' | 'since',
-  locale: string
-): string | null {
-  const spanMs = mode === 'until' ? date.getTime() - now.getTime() : now.getTime() - date.getTime();
+// Null once the date has passed, leaving the placeholder to the caller
+function formatCountdown(date: Date, now: Date, locale: string): string | null {
+  const spanMs = date.getTime() - now.getTime();
   if (spanMs <= 0) return null;
 
-  // "Just now" suits elapsed time, but reads oddly under a label like "Expires In"
-  if (mode === 'since' && spanMs < JUST_NOW_MS) return 'Just now';
-
   const { value, unit } = measureSpan(spanMs);
+  return new Intl.NumberFormat(locale, { style: 'unit', unit, unitDisplay: 'long' }).format(value);
+}
 
-  if (mode === 'until') {
-    return new Intl.NumberFormat(locale, { style: 'unit', unit, unitDisplay: 'long' }).format(
-      value
-    );
-  }
-
-  return new Intl.RelativeTimeFormat(locale, { numeric: 'always' }).format(-value, unit);
+// aria-label is unreliable on a generic element, so the announced text is a real node
+function DatePlaceholder({
+  label,
+  className,
+  ...props
+}: { label: string } & React.HTMLAttributes<HTMLElement>) {
+  return (
+    <span className={cn(styles['format-date'], className)} {...props}>
+      <span className={styles['visually-hidden']}>{label}</span>
+      <span aria-hidden="true">{NO_DATE_PLACEHOLDER}</span>
+    </span>
+  );
 }
 
 function FormatDate({
@@ -195,11 +193,7 @@ function FormatDate({
   }, [isAbsolute, live]);
 
   if (missing) {
-    return (
-      <span className={cn(styles['format-date'], className)} aria-label="No date" {...props}>
-        {NO_DATE_PLACEHOLDER}
-      </span>
-    );
+    return <DatePlaceholder label="No date" className={className} {...props} />;
   }
 
   if (!parsed) {
@@ -231,19 +225,11 @@ function FormatDate({
     ? absolute
     : displayAs === 'relative'
       ? formatRelative(parsed, now, locale)
-      : formatDirected(parsed, now, displayAs, locale);
+      : formatCountdown(parsed, now, locale);
 
   // Matches the missing-date placeholder rather than leaving a focusable, tooltipped "---"
   if (measured === null) {
-    return (
-      <span
-        className={cn(styles['format-date'], className)}
-        aria-label={displayAs === 'until' ? 'Date has passed' : 'Date not yet reached'}
-        {...props}
-      >
-        {NO_DATE_PLACEHOLDER}
-      </span>
-    );
+    return <DatePlaceholder label="Date has passed" className={className} {...props} />;
   }
 
   if (!tooltip) {
