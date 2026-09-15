@@ -1,7 +1,7 @@
 ---
 layout: "@demo/layouts/mdx-layout.astro"
 heading: "Format Date"
-description: "Render a date as relative or absolute time using a semantic <time> element"
+description: "Render a date as relative, absolute, or exact elapsed time using a semantic <time> element"
 ---
 
 import { FormatDate } from "@eqtylab/equality";
@@ -9,20 +9,32 @@ import {
   FormatDateIsoDemo,
   FormatDateOptionsDemo,
   FormatDateRelativeDemo,
+  FormatDateSinceDemo,
   FormatDateTimeZoneDemo,
+  FormatDateUntilDemo,
 } from "@demo/components/demo/format-date";
 
 ## Overview
 
-The <code>FormatDate</code> component renders a date as either **relative** time (e.g. "2 weeks ago", "Just now") or **absolute** time (e.g. "Jun 09 2026, 18:42:03 UTC"). It always renders as a semantic HTML [`<time>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/time) element with a `dateTime` attribute.
+The <code>FormatDate</code> component renders a date in one of four ways: **absolute** time (e.g. "Jun 09 2026, 18:42:03 UTC"), **relative** time (e.g. "2 weeks ago", "Just now"), an exact countdown to a future date with **until** ("10 days"), or the exact time elapsed since a past one with **since** ("10 days ago"). It always renders as a semantic HTML [`<time>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/time) element with a `dateTime` attribute.
 
-When showing relative time, a tooltip reveals the absolute time on hover or keyboard focus.
+In every mode but absolute, a tooltip reveals the absolute time on hover or keyboard focus, and the value updates on an interval.
 
 If no date is provided (`null`, `undefined`, or an empty string), the component renders a `---` placeholder instead.
 
+### Choosing between relative, until, and since
+
+`relative` reads like prose; `until` and `since` are for values you compare down a column.
+
+`relative` phrases distance idiomatically, which means it deliberately collapses ranges — everything from 7 to 10 days away is "next week", and both 37 and 43 days away are "next month". That reads well in a sentence but hides differences between rows. `until` and `since` keep days exact out to three months, so two dates a week apart never render as the same string.
+
+The two directional modes are also **direction-locked**. `relative` flips automatically, so a date that has already passed renders "2 days ago" even in a column headed "Expires In". `until` renders the `---` placeholder for a date in the past, and `since` does the same for one in the future, so a table cell does not need a guard of its own.
+
+`until` renders a bare magnitude so it reads under a label ("Expires In: 10 days"), while `since` phrases the span as elapsed time so it stands alone ("Last observed: 10 days ago"). Both are localized, so the exact phrasing follows the `locale` rather than being assembled in English.
+
 ## Time zones
 
-Absolute time is formatted in **UTC by default**. To render in a different zone, pass a `timeZone` (e.g. `"America/New_York"`). Relative time reads the same everywhere.
+Absolute time is formatted in **UTC by default**. To render in a different zone, pass a `timeZone` (e.g. `"America/New_York"`). The other three modes measure a distance rather than name an instant, so they read the same in every zone.
 
 ## Usage
 
@@ -70,6 +82,35 @@ Set `displayAs="relative"` to render distance from now. The value updates automa
 ```
 
 Disable the tooltip with `tooltip={false}`, or stop the auto-updating with `live={false}`.
+
+### Until
+
+Set `displayAs="until"` to count down to a future date. The span is reported in the **largest unit it actually fills**, rounded to the nearest whole, and moved up a unit only when that rounding reaches one — so 31 minutes reads "31 minutes" rather than "1 hour", while 59.5 minutes reads "1 hour" rather than "60 minutes". Days stay exact out to three months, after which the value coarsens to months and then years.
+
+A date that has already passed renders the `---` placeholder — the same non-interactive element used for a missing date, carrying its own accessible label rather than leaving a focusable dash.
+
+<FormatDateUntilDemo client:only="react" />
+
+```tsx
+<FormatDate date={credential.expiresAt} displayAs="until" />
+```
+
+### Since
+
+Set `displayAs="since"` for the same measurement in the other direction, phrased as elapsed time. A date that has not yet arrived renders the `---` placeholder. Spans shorter than 45 seconds read as "Just now"; `until` has no equivalent, since "Just now" reads oddly under a label like "Expires In".
+
+<FormatDateSinceDemo client:only="react" />
+
+```tsx
+<FormatDate date={indicator.lastEvaluatedAt} displayAs="since" />
+```
+
+Both modes are localized through `Intl`, so `locale` applies to the unit names and to the "ago" phrasing:
+
+```tsx
+<FormatDate date={expiresAt} displayAs="until" locale="fr-FR" /> // "10 jours"
+<FormatDate date={observedAt} displayAs="since" locale="de-DE" /> // "vor 10 Tagen"
+```
 
 ### Custom formatting
 
@@ -124,12 +165,12 @@ When `date` is missing — `null`, `undefined`, or an empty string — the compo
 
 ## Props
 
-| Name              | Description                                                             | Type                               | Default    | Required |
-| ----------------- | ----------------------------------------------------------------------- | ---------------------------------- | ---------- | -------- |
-| `date`            | The date to display                                                     | `string`, `number`, `Date`, `null` | —          | ✅       |
-| `displayAs`       | Render relative or absolute time                                        | `relative`, `absolute`             | `absolute` | ❌       |
-| `timeZone`        | Time zone used for absolute formatting                                  | `string`                           | `UTC`      | ❌       |
-| `locale`          | BCP 47 locale used for formatting                                       | `string`                           | `en-US`    | ❌       |
-| `tooltip`         | When relative, show a tooltip with the absolute time on hover/focus     | `boolean`                          | `true`     | ❌       |
-| `live`            | When relative, re-render on an interval so the value stays current      | `boolean`                          | `true`     | ❌       |
-| `absoluteOptions` | Override the `Intl.DateTimeFormat` options used for absolute formatting | `Intl.DateTimeFormatOptions`       | —          | ❌       |
+| Name              | Description                                                             | Type                                     | Default    | Required |
+| ----------------- | ----------------------------------------------------------------------- | ---------------------------------------- | ---------- | -------- |
+| `date`            | The date to display                                                     | `string`, `number`, `Date`, `null`       | —          | ✅       |
+| `displayAs`       | How to render the date                                                  | `absolute`, `relative`, `until`, `since` | `absolute` | ❌       |
+| `timeZone`        | Time zone used for absolute formatting                                  | `string`                                 | `UTC`      | ❌       |
+| `locale`          | BCP 47 locale used for formatting                                       | `string`                                 | `en-US`    | ❌       |
+| `tooltip`         | Unless absolute, show a tooltip with the absolute time on hover/focus   | `boolean`                                | `true`     | ❌       |
+| `live`            | Unless absolute, re-render on an interval so the value stays current    | `boolean`                                | `true`     | ❌       |
+| `absoluteOptions` | Override the `Intl.DateTimeFormat` options used for absolute formatting | `Intl.DateTimeFormatOptions`             | —          | ❌       |
