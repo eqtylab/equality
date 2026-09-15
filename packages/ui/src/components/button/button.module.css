@@ -29,6 +29,16 @@
   @apply hover:not-disabled:bg-mixed-dark;
 }
 
+/* Yellow is too light to carry white text, so this is the one filled variant with dark text */
+.button--warning {
+  --mix-color: var(--color-button-warning-fill);
+  @apply bg-(--mix-color);
+  @apply border-button-warning-border border;
+  @apply text-button-warning-text;
+  @apply no-underline;
+  @apply hover:not-disabled:bg-mixed-dark;
+}
+
 .button--secondary {
   --mix-color: var(--color-button-secondary-fill);
   @apply bg-(--mix-color);

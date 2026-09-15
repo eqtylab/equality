@@ -1425,10 +1425,12 @@
         <group>
           <id>3AF4332D-089A-4B0F-B382-199809A5D0F8</id>
           <name>Badge</name>
+          <expanded>1</expanded>
           <namespace>1</namespace>
           <group>
             <id>1B345E6F-7BFA-4A29-A8DE-903B2EB193A0</id>
             <name>Text</name>
+            <expanded>1</expanded>
             <namespace>1</namespace>
             <alias>
               <name>Primary</name>
@@ -1610,6 +1612,7 @@
           <group>
             <id>DA9E770F-29ED-4A78-9EDB-DD9F456BB566</id>
             <name>Background</name>
+            <expanded>1</expanded>
             <namespace>1</namespace>
             <alias>
               <name>Primary</name>
@@ -2492,7 +2495,7 @@
               <referencedItemId>68A1562E-D9B7-40A5-BFB2-31353FD45D3D</referencedItemId>
               <subIndex>4</subIndex>
               <referencedItemIdDark>68A1562E-D9B7-40A5-BFB2-31353FD45D3D</referencedItemIdDark>
-              <subIndexDark>3</subIndexDark>
+              <subIndexDark>4</subIndexDark>
               <buildGroupId>86B9D7D8-F74A-4CAE-B006-65451BBEDAB9</buildGroupId>
             </alias>
             <alias>
@@ -2503,7 +2506,7 @@
               <referencedItemId>68A1562E-D9B7-40A5-BFB2-31353FD45D3D</referencedItemId>
               <subIndex>4</subIndex>
               <referencedItemIdDark>68A1562E-D9B7-40A5-BFB2-31353FD45D3D</referencedItemIdDark>
-              <subIndexDark>3</subIndexDark>
+              <subIndexDark>4</subIndexDark>
               <buildGroupId>86B9D7D8-F74A-4CAE-B006-65451BBEDAB9</buildGroupId>
             </alias>
             <alias>
@@ -2585,6 +2588,7 @@
           <group>
             <id>65EF707B-201E-41DA-9727-B23B74706082</id>
             <name>Danger</name>
+            <expanded>1</expanded>
             <namespace>1</namespace>
             <alias>
               <name>Fill</name>
@@ -2594,7 +2598,7 @@
               <referencedItemId>CCD80E1D-24ED-4193-A845-891C968555AF</referencedItemId>
               <subIndex>4</subIndex>
               <referencedItemIdDark>CCD80E1D-24ED-4193-A845-891C968555AF</referencedItemIdDark>
-              <subIndexDark>3</subIndexDark>
+              <subIndexDark>4</subIndexDark>
               <buildGroupId>86B9D7D8-F74A-4CAE-B006-65451BBEDAB9</buildGroupId>
             </alias>
             <alias>
@@ -2615,11 +2619,44 @@
               <buildGroupId>86B9D7D8-F74A-4CAE-B006-65451BBEDAB9</buildGroupId>
             </alias>
           </group>
+          <group>
+            <id>5A31F3CF-7D77-4209-8306-BE84DCD28B3C</id>
+            <name>Warning</name>
+            <expanded>1</expanded>
+            <namespace>1</namespace>
+            <alias>
+              <name>Fill</name>
+              <type>3</type>
+              <typeDark>3</typeDark>
+              <appearance>lightanddark</appearance>
+              <referencedItemId>BB783E8C-1914-4094-BE1D-37E41EB42641</referencedItemId>
+              <subIndex>4</subIndex>
+              <referencedItemIdDark>BB783E8C-1914-4094-BE1D-37E41EB42641</referencedItemIdDark>
+              <subIndexDark>4</subIndexDark>
+              <buildGroupId>86B9D7D8-F74A-4CAE-B006-65451BBEDAB9</buildGroupId>
+            </alias>
+            <alias>
+              <name>Border</name>
+              <type>3</type>
+              <typeDark>3</typeDark>
+              <appearance>lightanddark</appearance>
+              <referencedItemId>BB783E8C-1914-4094-BE1D-37E41EB42641</referencedItemId>
+              <subIndex>5</subIndex>
+              <referencedItemIdDark>BB783E8C-1914-4094-BE1D-37E41EB42641</referencedItemIdDark>
+              <subIndexDark>4</subIndexDark>
+              <buildGroupId>86B9D7D8-F74A-4CAE-B006-65451BBEDAB9</buildGroupId>
+            </alias>
+            <alias>
+              <name>Text</name>
+              <type>1</type>
+              <referencedItemId>9FC81FBB-965B-40C5-A7D2-A5F365863FE4</referencedItemId>
+              <buildGroupId>86B9D7D8-F74A-4CAE-B006-65451BBEDAB9</buildGroupId>
+            </alias>
+          </group>
         </group>
         <group>
           <id>4EC67953-4547-4883-B947-D73CF2D3DF18</id>
           <name>Text</name>
-          <expanded>1</expanded>
           <namespace>1</namespace>
           <alias>
             <name>Primary</name>
@@ -2674,6 +2711,17 @@
             <subIndexDark>3</subIndexDark>
             <buildGroupId>86B9D7D8-F74A-4CAE-B006-65451BBEDAB9</buildGroupId>
           </alias>
+          <alias>
+            <name>Warning</name>
+            <type>3</type>
+            <typeDark>3</typeDark>
+            <appearance>lightanddark</appearance>
+            <referencedItemId>BB783E8C-1914-4094-BE1D-37E41EB42641</referencedItemId>
+            <subIndex>4</subIndex>
+            <referencedItemIdDark>BB783E8C-1914-4094-BE1D-37E41EB42641</referencedItemIdDark>
+            <subIndexDark>3</subIndexDark>
+            <buildGroupId>86B9D7D8-F74A-4CAE-B006-65451BBEDAB9</buildGroupId>
+          </alias>
         </group>
         <group>
           <id>635BED27-D972-4FC5-BD7E-AE05C08B92FD</id>
@@ -2709,6 +2757,7 @@
           <alias>
             <name>Primary</name>
             <type>3</type>
+            <deprecated>true</deprecated>
             <referencedItemId>68A1562E-D9B7-40A5-BFB2-31353FD45D3D</referencedItemId>
             <subIndex>2</subIndex>
             <buildGroupId>86B9D7D8-F74A-4CAE-B006-65451BBEDAB9</buildGroupId>
@@ -2716,6 +2765,7 @@
           <alias>
             <name>Secondary</name>
             <type>3</type>
+            <deprecated>true</deprecated>
             <referencedItemId>C0C0A4D2-2348-4A7F-A8D3-80FBA6568876</referencedItemId>
             <subIndex>3</subIndex>
             <buildGroupId>86B9D7D8-F74A-4CAE-B006-65451BBEDAB9</buildGroupId>
@@ -2723,6 +2773,7 @@
           <alias>
             <name>Green</name>
             <type>3</type>
+            <deprecated>true</deprecated>
             <referencedItemId>E1948874-0BDB-4E45-A49B-50B04FC79580</referencedItemId>
             <subIndex>3</subIndex>
             <buildGroupId>86B9D7D8-F74A-4CAE-B006-65451BBEDAB9</buildGroupId>
@@ -2730,6 +2781,7 @@
           <alias>
             <name>Red</name>
             <type>3</type>
+            <deprecated>true</deprecated>
             <referencedItemId>CCD80E1D-24ED-4193-A845-891C968555AF</referencedItemId>
             <subIndex>3</subIndex>
             <buildGroupId>86B9D7D8-F74A-4CAE-B006-65451BBEDAB9</buildGroupId>
@@ -2737,6 +2789,7 @@
           <alias>
             <name>Yellow</name>
             <type>3</type>
+            <deprecated>true</deprecated>
             <referencedItemId>BB783E8C-1914-4094-BE1D-37E41EB42641</referencedItemId>
             <subIndex>3</subIndex>
             <buildGroupId>86B9D7D8-F74A-4CAE-B006-65451BBEDAB9</buildGroupId>
@@ -2764,6 +2817,83 @@
             </color>
             <buildGroupId>86B9D7D8-F74A-4CAE-B006-65451BBEDAB9</buildGroupId>
           </colorItem>
+          <buildGroupId>86B9D7D8-F74A-4CAE-B006-65451BBEDAB9</buildGroupId>
+        </group>
+        <group>
+          <id>0E092D10-36E6-47D9-8600-F2F9F304AF8E</id>
+          <name>Control</name>
+          <expanded>1</expanded>
+          <namespace>1</namespace>
+          <alias>
+            <name>Not Started</name>
+            <type>3</type>
+            <referencedItemId>24FB2A07-ED91-45F9-B8E8-356DACAC4731</referencedItemId>
+            <subIndex>4</subIndex>
+            <buildGroupId>86B9D7D8-F74A-4CAE-B006-65451BBEDAB9</buildGroupId>
+          </alias>
+          <alias>
+            <name>In Progress</name>
+            <type>3</type>
+            <referencedItemId>E70AEB3A-46D2-4910-AA0C-8DE1F122368D</referencedItemId>
+            <subIndex>4</subIndex>
+            <buildGroupId>86B9D7D8-F74A-4CAE-B006-65451BBEDAB9</buildGroupId>
+          </alias>
+          <alias>
+            <name>Ready for Review</name>
+            <type>3</type>
+            <referencedItemId>C0C0A4D2-2348-4A7F-A8D3-80FBA6568876</referencedItemId>
+            <subIndex>4</subIndex>
+            <buildGroupId>86B9D7D8-F74A-4CAE-B006-65451BBEDAB9</buildGroupId>
+          </alias>
+          <alias>
+            <name>In Review</name>
+            <type>3</type>
+            <referencedItemId>1E1912EB-A51B-4A9A-8A06-7978755E4858</referencedItemId>
+            <subIndex>4</subIndex>
+            <buildGroupId>86B9D7D8-F74A-4CAE-B006-65451BBEDAB9</buildGroupId>
+          </alias>
+          <alias>
+            <name>Comment</name>
+            <type>3</type>
+            <referencedItemId>1E1912EB-A51B-4A9A-8A06-7978755E4858</referencedItemId>
+            <subIndex>4</subIndex>
+            <buildGroupId>86B9D7D8-F74A-4CAE-B006-65451BBEDAB9</buildGroupId>
+          </alias>
+          <alias>
+            <name>Question</name>
+            <type>3</type>
+            <referencedItemId>1E1912EB-A51B-4A9A-8A06-7978755E4858</referencedItemId>
+            <subIndex>4</subIndex>
+            <buildGroupId>86B9D7D8-F74A-4CAE-B006-65451BBEDAB9</buildGroupId>
+          </alias>
+          <alias>
+            <name>Accepted</name>
+            <type>3</type>
+            <referencedItemId>1E1912EB-A51B-4A9A-8A06-7978755E4858</referencedItemId>
+            <subIndex>4</subIndex>
+            <buildGroupId>86B9D7D8-F74A-4CAE-B006-65451BBEDAB9</buildGroupId>
+          </alias>
+          <alias>
+            <name>Compliant</name>
+            <type>3</type>
+            <referencedItemId>E1948874-0BDB-4E45-A49B-50B04FC79580</referencedItemId>
+            <subIndex>4</subIndex>
+            <buildGroupId>86B9D7D8-F74A-4CAE-B006-65451BBEDAB9</buildGroupId>
+          </alias>
+          <alias>
+            <name>Non-compliant</name>
+            <type>3</type>
+            <referencedItemId>CCD80E1D-24ED-4193-A845-891C968555AF</referencedItemId>
+            <subIndex>4</subIndex>
+            <buildGroupId>86B9D7D8-F74A-4CAE-B006-65451BBEDAB9</buildGroupId>
+          </alias>
+          <alias>
+            <name>Not Applicable</name>
+            <type>3</type>
+            <referencedItemId>24FB2A07-ED91-45F9-B8E8-356DACAC4731</referencedItemId>
+            <subIndex>4</subIndex>
+            <buildGroupId>86B9D7D8-F74A-4CAE-B006-65451BBEDAB9</buildGroupId>
+          </alias>
           <buildGroupId>86B9D7D8-F74A-4CAE-B006-65451BBEDAB9</buildGroupId>
         </group>
       </group>
