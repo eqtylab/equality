@@ -8,3 +8,7 @@
   @apply focus-ring rounded-sm;
   @apply cursor-default;
 }
+
+.visually-hidden {
+  @apply sr-only;
+}
