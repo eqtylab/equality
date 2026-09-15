@@ -3,6 +3,7 @@ import type { AstroIntegration } from 'astro';
 import { resolveConfig, type DocsConfig, type DocsUserConfig } from './config.ts';
 import { resolveDocsEnv, type DocsEnv } from './env.ts';
 import { assertMdxOnly } from './internal/assert-mdx-only.ts';
+import { microlighterGrammarsPlugin } from './internal/microlighter-grammars.ts';
 import { rehypeBaseUrl } from './internal/rehype-base-url.ts';
 import { rehypeCodeFence } from './internal/rehype-code-fence.ts';
 import { rehypeTableColumns } from './internal/rehype-table-columns.ts';
@@ -115,6 +116,12 @@ export default function docs(
         }
 
         const vitePlugins: unknown[] = [virtualConfigPlugin(() => payload)];
+
+        // Only the CodeBlock path reaches for microlighter; Shiki tokenises at
+        // build time and needs nothing emitted.
+        if (cfg.code.highlighter === 'codeblock') {
+          vitePlugins.push(microlighterGrammarsPlugin(config.root, logger));
+        }
 
         if (cfg.autoIntegrations) {
           // Cast before flattening: Vite's PluginOption is recursively nested,
