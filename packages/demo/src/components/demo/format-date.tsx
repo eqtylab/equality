@@ -43,9 +43,10 @@ export function FormatDateUntilDemo() {
     const time = now.getTime();
     return [
       { label: "45 minutes", date: new Date(time + 45 * MINUTE) },
-      { label: "8 hours", date: new Date(time + 8 * HOUR) },
+      { label: "59.5 minutes", date: new Date(time + 59.5 * MINUTE) },
+      { label: "25 hours", date: new Date(time + 25 * HOUR) },
       { label: "10 days", date: new Date(time + 10 * DAY) },
-      { label: "37 days", date: new Date(time + 37 * DAY) },
+      { label: "89 days", date: new Date(time + 89 * DAY) },
       { label: "101 days", date: new Date(time + 101 * DAY) },
       { label: "Already passed", date: new Date(time - 2 * DAY) },
     ];

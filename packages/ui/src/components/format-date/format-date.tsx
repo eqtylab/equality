@@ -76,6 +76,18 @@ const JUST_NOW_MS = 45_000;
 // Beyond a quarter an exact day count reads as noise rather than as a deadline
 const COARSE_AFTER_MS = 90 * DAY_MS;
 
+// Units a span may be reported in, largest first
+const FINE_UNITS = [
+  { ms: DAY_MS, unit: 'day' },
+  { ms: HOUR_MS, unit: 'hour' },
+  { ms: MINUTE_MS, unit: 'minute' },
+] as const satisfies readonly { ms: number; unit: Intl.RelativeTimeFormatUnit }[];
+
+const COARSE_UNITS = [
+  { ms: YEAR_MS, unit: 'year' },
+  { ms: MONTH_MS, unit: 'month' },
+] as const satisfies readonly { ms: number; unit: Intl.RelativeTimeFormatUnit }[];
+
 // Shown when no date is provided, as distinct from a date that fails to parse
 const NO_DATE_PLACEHOLDER = '---';
 
@@ -114,34 +126,46 @@ function formatRelative(date: Date, now: Date, locale: string): string {
   return 'Just now';
 }
 
-function pluralize(count: number, unit: string): string {
-  return `${count} ${unit}${count === 1 ? '' : 's'}`;
+// The largest unit the span actually fills, promoted only once rounding carries it into the next
+function measureSpan(spanMs: number): { value: number; unit: Intl.RelativeTimeFormatUnit } {
+  const units = spanMs < COARSE_AFTER_MS ? FINE_UNITS : COARSE_UNITS;
+
+  const index = units.findIndex(({ ms }) => spanMs >= ms);
+  if (index === -1) return { value: 1, unit: units[units.length - 1].unit };
+
+  const { ms, unit } = units[index];
+  const value = Math.round(spanMs / ms);
+
+  const next = units[index - 1];
+  if (next && value * ms >= next.ms) {
+    return { value: Math.round(spanMs / next.ms), unit: next.unit };
+  }
+
+  return { value, unit };
 }
 
-// The largest whole unit of a span, e.g. "10 days". Intl's relative units collapse everything
-// from 7 to 10 days into "next week", losing the precision a deadline or a staleness check needs
-function formatSpan(spanMs: number, toWhole: (value: number) => number): string {
-  if (spanMs < HOUR_MS) return pluralize(toWhole(spanMs / MINUTE_MS), 'minute');
-  if (spanMs < DAY_MS) return pluralize(toWhole(spanMs / HOUR_MS), 'hour');
-  if (spanMs < COARSE_AFTER_MS) return pluralize(toWhole(spanMs / DAY_MS), 'day');
-
-  const months = Math.round(spanMs / MONTH_MS);
-  if (months < 12) return pluralize(months, 'month');
-
-  return pluralize(Math.round(spanMs / YEAR_MS), 'year');
-}
-
-// A countdown rounds up, so a date keeps its day count for the whole day leading up to it, while
-// elapsed time rounds down, since "10 days ago" should mean at least ten days have gone by
-function formatDirected(date: Date, now: Date, mode: 'until' | 'since'): string {
+// Null for a date on the wrong side of now, leaving the placeholder to the caller
+function formatDirected(
+  date: Date,
+  now: Date,
+  mode: 'until' | 'since',
+  locale: string
+): string | null {
   const spanMs = mode === 'until' ? date.getTime() - now.getTime() : now.getTime() - date.getTime();
+  if (spanMs <= 0) return null;
 
-  // A date on the wrong side of now has nothing to count, so it reads as absent
-  if (spanMs <= 0) return NO_DATE_PLACEHOLDER;
-  if (spanMs < JUST_NOW_MS) return 'Just now';
+  // "Just now" suits elapsed time, but reads oddly under a label like "Expires In"
+  if (mode === 'since' && spanMs < JUST_NOW_MS) return 'Just now';
 
-  const span = formatSpan(spanMs, mode === 'until' ? Math.ceil : Math.floor);
-  return mode === 'until' ? span : `${span} ago`;
+  const { value, unit } = measureSpan(spanMs);
+
+  if (mode === 'until') {
+    return new Intl.NumberFormat(locale, { style: 'unit', unit, unitDisplay: 'long' }).format(
+      value
+    );
+  }
+
+  return new Intl.RelativeTimeFormat(locale, { numeric: 'always' }).format(-value, unit);
 }
 
 function FormatDate({
@@ -160,7 +184,6 @@ function FormatDate({
   const [now, setNow] = React.useState(() => new Date());
   const [mounted, setMounted] = React.useState(false);
 
-  // Every mode but absolute is measured from now, so it goes stale as the clock moves
   const isAbsolute = displayAs === 'absolute';
 
   React.useEffect(() => setMounted(true), []);
@@ -195,7 +218,7 @@ function FormatDate({
     locale
   );
 
-  if (displayAs === 'absolute') {
+  if (isAbsolute) {
     return (
       <time dateTime={machineValue} className={cn(styles['format-date'], className)} {...props}>
         {absolute}
@@ -208,7 +231,20 @@ function FormatDate({
     ? absolute
     : displayAs === 'relative'
       ? formatRelative(parsed, now, locale)
-      : formatDirected(parsed, now, displayAs);
+      : formatDirected(parsed, now, displayAs, locale);
+
+  // Matches the missing-date placeholder rather than leaving a focusable, tooltipped "---"
+  if (measured === null) {
+    return (
+      <span
+        className={cn(styles['format-date'], className)}
+        aria-label={displayAs === 'until' ? 'Date has passed' : 'Date not yet reached'}
+        {...props}
+      >
+        {NO_DATE_PLACEHOLDER}
+      </span>
+    );
+  }
 
   if (!tooltip) {
     return (

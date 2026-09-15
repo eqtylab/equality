@@ -16,7 +16,7 @@ import {
 
 ## Overview
 
-The <code>FormatDate</code> component renders a date in one of four ways: **absolute** time (e.g. "Jun 09 2026, 18:42:03 UTC"), **relative** time (e.g. "2 weeks ago", "Just now"), or an exact countdown with **until** ("10 days") and **since** ("10 days ago"). It always renders as a semantic HTML [`<time>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/time) element with a `dateTime` attribute.
+The <code>FormatDate</code> component renders a date in one of four ways: **absolute** time (e.g. "Jun 09 2026, 18:42:03 UTC"), **relative** time (e.g. "2 weeks ago", "Just now"), an exact countdown to a future date with **until** ("10 days"), or the exact time elapsed since a past one with **since** ("10 days ago"). It always renders as a semantic HTML [`<time>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/time) element with a `dateTime` attribute.
 
 In every mode but absolute, a tooltip reveals the absolute time on hover or keyboard focus, and the value updates on an interval.
 
@@ -30,11 +30,11 @@ If no date is provided (`null`, `undefined`, or an empty string), the component 
 
 The two directional modes are also **direction-locked**. `relative` flips automatically, so a date that has already passed renders "2 days ago" even in a column headed "Expires In". `until` renders the `---` placeholder for a date in the past, and `since` does the same for one in the future, so a table cell does not need a guard of its own.
 
-`until` omits the preposition so it reads under a label ("Expires In: 10 days"), while `since` appends "ago" so it stands alone ("Last observed: 10 days ago").
+`until` renders a bare magnitude so it reads under a label ("Expires In: 10 days"), while `since` phrases the span as elapsed time so it stands alone ("Last observed: 10 days ago"). Both are localized, so the exact phrasing follows the `locale` rather than being assembled in English.
 
 ## Time zones
 
-Absolute time is formatted in **UTC by default**. To render in a different zone, pass a `timeZone` (e.g. `"America/New_York"`). Relative time reads the same everywhere.
+Absolute time is formatted in **UTC by default**. To render in a different zone, pass a `timeZone` (e.g. `"America/New_York"`). The other three modes measure a distance rather than name an instant, so they read the same in every zone.
 
 ## Usage
 
@@ -85,7 +85,9 @@ Disable the tooltip with `tooltip={false}`, or stop the auto-updating with `live
 
 ### Until
 
-Set `displayAs="until"` to count down to a future date in its largest whole unit. Days stay exact out to three months, after which the value coarsens to months and then years. A date that has already passed renders the `---` placeholder.
+Set `displayAs="until"` to count down to a future date. The span is reported in the **largest unit it actually fills**, rounded to the nearest whole, and moved up a unit only when that rounding reaches one — so 31 minutes reads "31 minutes" rather than "1 hour", while 59.5 minutes reads "1 hour" rather than "60 minutes". Days stay exact out to three months, after which the value coarsens to months and then years.
+
+A date that has already passed renders the `---` placeholder — the same non-interactive element used for a missing date, carrying its own accessible label rather than leaving a focusable dash.
 
 <FormatDateUntilDemo client:only="react" />
 
@@ -95,12 +97,19 @@ Set `displayAs="until"` to count down to a future date in its largest whole unit
 
 ### Since
 
-Set `displayAs="since"` for the same exact measurement in the other direction, with "ago" appended. A date that has not yet arrived renders the `---` placeholder.
+Set `displayAs="since"` for the same measurement in the other direction, phrased as elapsed time. A date that has not yet arrived renders the `---` placeholder. Spans shorter than 45 seconds read as "Just now"; `until` has no equivalent, since "Just now" reads oddly under a label like "Expires In".
 
 <FormatDateSinceDemo client:only="react" />
 
 ```tsx
 <FormatDate date={indicator.lastEvaluatedAt} displayAs="since" />
+```
+
+Both modes are localized through `Intl`, so `locale` applies to the unit names and to the "ago" phrasing:
+
+```tsx
+<FormatDate date={expiresAt} displayAs="until" locale="fr-FR" /> // "10 jours"
+<FormatDate date={observedAt} displayAs="since" locale="de-DE" /> // "vor 10 Tagen"
 ```
 
 ### Custom formatting
