@@ -50,9 +50,9 @@ console.log('Hello, world!');
 
 ## Code Language Support
 
-The Code Block component highlights with [MicroLighter](https://github.com/davatron5000/microlighter), which reads TextMate grammars and paints them through the CSS Custom Highlight API. Grammars load on demand, so a page only pays for the languages it actually renders.
+The Code Block component highlights with [MicroLighter](https://github.com/davatron5000/microlighter), which reads TextMate grammars and paints them through the [CSS Custom Highlight API](https://developer.mozilla.org/en-US/docs/Web/API/CSS_Custom_Highlight_API). Grammars load on demand, so a page only pays for the languages it actually renders.
 
-The language **must** be passed via the `language` prop for syntax highlighting to work. Anything unrecognised — including the `text` default — renders as unstyled monospace.
+The language **must** be passed via the `language` prop for syntax highlighting to work. Anything unrecognised — including the `text` default — renders as unstyled monospace text. For a full list of supported languages, see Microliter's readme.
 
 ```tsx
 <CodeBlock language="json" code={code} />
@@ -60,39 +60,29 @@ The language **must** be passed via the `language` prop for syntax highlighting 
 
 <CodeBlockLanguageDemo client:only="react" />
 
-The 40 grammars it ships are `assembly`, `astro`, `bash`, `c`, `cpp`, `csharp`, `css`, `dart`, `dockerfile`, `elixir`, `git-diff`, `go`, `graphql`, `heex`, `html`, `ini`, `java`, `javascript`, `json`, `kotlin`, `lua`, `markdown`, `nginx`, `objective-c`, `perl`, `php`, `powershell`, `python`, `r`, `ruby`, `rust`, `scss`, `sql`, `svelte`, `swift`, `toml`, `tsx`, `typescript`, `vue` and `yaml`.
-
-Common short forms are aliased: `js`, `jsx`, `ts`, `sh`, `shell`, `zsh`, `py`, `rb`, `md`, `yml`, `gql`, `docker`, `sass`.
-
-A name outside that list fails its grammar load silently and renders unhighlighted, so check spelling against the list above if a block comes out plain.
-
-### Browser Support
-
-The CSS Custom Highlight API reached Baseline in June 2025, when Firefox 140 joined Chrome and Safari. Older browsers register no highlights and the code renders as unstyled monospace text — the block, its header, copy button and layout are unaffected, so the fallback costs colour only.
-
-### Styling Limits
-
-`::highlight()` accepts only `color`, `background-color`, `text-decoration`, `text-shadow` and `-webkit-text-stroke`/`-fill`. Bold and italic tokens are therefore unavailable: Markdown `**bold**` and `_italic_` runs and CSS `!important` take a colour rather than a weight or slant.
-
 ### Highlighting Your Own Markup
 
 If you render code outside this component — a diff view or an editor, say — `CODE_BLOCK_ATTRIBUTE` and `scheduleHighlight` opt that markup into the same pass, so it picks up the same palette:
 
 ```tsx
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 
 import { CODE_BLOCK_ATTRIBUTE, scheduleHighlight } from "@eqtylab/equality";
 
+const ref = useRef<HTMLPreElement>(null);
+
 useEffect(() => {
-  void scheduleHighlight();
+  void scheduleHighlight(ref.current?.getRootNode());
 }, [source]);
 
-<pre {...{ [CODE_BLOCK_ATTRIBUTE]: "" }}>
+<pre ref={ref} {...{ [CODE_BLOCK_ATTRIBUTE]: "" }}>
   <code className="language-rust">{source}</code>
 </pre>;
 ```
 
-Two constraints come with it. The `<code>` element must contain a single text node — ranges are registered against that node, so a block whose `<code>` holds nested markup is skipped. And `scheduleHighlight` rescans the whole document rather than one block, because each pass replaces the ranges the previous one registered; calls made in the same frame are coalesced into a single pass, and passes never overlap. Blocks inside a shadow root are out of reach.
+The `<code>` element must only contain text — a block that wraps its lines in markup is skipped. Call `scheduleHighlight` again whenever the code changes or the block is removed; calls made in the same frame are coalesced, so calling it freely is fine.
+
+Pass the block's root, `pre.getRootNode()`. If left out, the pass covers the document, which cannot see into a shadow root. A block inside a shadow root also needs the palette adopted into that root, since the component's stylesheet only reaches the document. Highlighting a shadow root clears the colours on the document's blocks and the reverse, so for now the two cannot both stay highlighted.
 
 ## Line Numbers
 
