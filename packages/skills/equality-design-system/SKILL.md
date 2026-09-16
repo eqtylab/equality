@@ -115,7 +115,6 @@ container of its own.
 classes backed by tokens — `bg-background`, `bg-background-raised`,
 `text-text-primary`, `text-text-secondary`, `border-border`, `text-text-danger`.
 These flip correctly in dark mode; `bg-slate-800` and `#1e293b` do not.
-`references/tokens.md` lists the vocabulary.
 
 **Accessibility is mostly free — don't undo it.** Radix gives you focus
 management, escape handling, and ARIA wiring. You still have to supply the text:
@@ -149,6 +148,3 @@ you had to fake — so the gap reaches the design system team.
   library and can't go stale. Start there!
 - `references/setup.md` — installation, theming, portals, embedding, dark mode,
   and the failure modes for each.
-- `references/tokens.md` — the colour, elevation, and typography vocabulary.
-- `references/recipes.md` — worked compositions for the screens prototypes
-  actually need: list pages, detail panels, dashboards, forms, empty states.
