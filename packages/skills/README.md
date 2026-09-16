@@ -39,13 +39,11 @@ For anyone building a product surface, prototype, or mockup with
 `@eqtylab/equality`.
 
 - A pointer to the live component index, so lookup is never stale
-- A translation table from names used elsewhere (Modal, Chip, Snackbar,
-  Accordion) to ours
 - An list of what Equality lacks, so agents stop searching
 - Setup, theming, portals, and dark mode, with the usual failure modes
 - The token vocabulary
 - Composition recipes for list pages, dashboards, detail panels, and forms
-- An escape ladder for when nothing fits, and instructions to report gaps
+- An escape ladder for when nothing fits
 
 ## Discovery
 
