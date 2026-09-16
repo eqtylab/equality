@@ -1,7 +1,8 @@
 @reference '../styles/theme.css';
 
+/* `block` is load-bearing: the fence is a custom element, which is inline by default. */
 .fence {
-  @apply mb-4;
+  @apply mb-4 block;
 }
 
 /* CodeBlock caps its own height at max-h-64, which is right for a product

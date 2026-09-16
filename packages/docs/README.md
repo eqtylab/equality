@@ -72,9 +72,14 @@ per-page overrides stay possible.
 ## Code blocks
 
 Fenced code renders through Equality's `CodeBlock`, server-side, so docs match product surfaces with
-**no client React**. `CodeBlock` has no state, and its `useInlineStyles={false}` means the palette
-resolves from `--syntax-*` custom properties through the CSS cascade — so a static render gets
-correct light _and_ dark colours for free.
+**no client React**. The highlighter paints through the CSS Custom Highlight API rather than by
+wrapping tokens in markup, so the server-rendered DOM is the final DOM, the palette resolves through
+the normal cascade, and a static render gets correct light _and_ dark colours for free.
+
+Two small scripts do what would otherwise need hydration: `runtime/scripts/eq-copy.ts` for the copy
+button, and `runtime/scripts/eq-highlight.ts` to start the highlight pass. Fence tags are passed
+through as authored — the highlighter owns language resolution, including its alias table (`ts`,
+`jsx`, `sh`, `yml` and the rest), and renders plain rather than guessing at a tag it does not know.
 
 Set `code: { highlighter: 'shiki' }` to use Astro's Shiki instead: wider language coverage, line
 highlighting and `meta` support, at the cost of a different look from the product.
