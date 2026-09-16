@@ -15,10 +15,6 @@
  */
 @reference './theme.css';
 
-.eq-prose {
-  --eq-prose-chrome: : where([data-eq-chrome], [data-eq-chrome] *);
-}
-
 .eq-prose :is(h1, h2, h3, h4, h5, h6):not(:where([data-eq-chrome], [data-eq-chrome] *)) {
   @apply scroll-mt-24;
 }

@@ -12,11 +12,17 @@ import CONFIG from 'virtual:eqty-docs/config';
 
 export { buildTocTree, breadcrumbsFor, prevNextFor };
 
+/**
+ * No `versionPrefix`: the version lives in `base` and nowhere else.
+ *
+ * A pinned build is deployed at `DOCS_BASE=/v3.1/`, so adding the segment here too made nav hrefs
+ * `/v3.1/v3.1/guides/one/`. Nav was the only emitter carrying it -- the search index, llms.txt and
+ * the header never did -- so the two could not both have been right.
+ */
 export function pathContext() {
   return {
     base: import.meta.env.BASE_URL,
     pathPrefix: CONFIG.pathPrefix,
-    versionPrefix: CONFIG.env.version && !CONFIG.env.isLatest ? `v${CONFIG.env.version}` : '',
   };
 }
 
