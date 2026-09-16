@@ -71,11 +71,11 @@ Verified absent — do not go hunting:
 - Resizable panels
 - File upload/dropzone
 - Rich text editor
-- colour picker
+- Colour picker
 - Tree view
 - Charts beyond `BarGraph` and `RadialGraph`
 
-Some of these components _may_ exist within the project you're working within. If you find that they are used frequently tell your user — a repeated gap is a component request!
+Some of these components _may_ exist in the project you're working within. If you find that they are used frequently tell your user — a repeated gap is a component request!
 
 ## Setup
 
@@ -149,3 +149,6 @@ you had to fake — so the gap reaches the design system team.
   library and can't go stale. Start there!
 - `references/setup.md` — installation, theming, portals, embedding, dark mode,
   and the failure modes for each.
+- `references/tokens.md` — the colour, elevation, and typography vocabulary.
+- `references/recipes.md` — worked compositions for the screens prototypes
+  actually need: list pages, detail panels, dashboards, forms, empty states.
