@@ -23,3 +23,10 @@ declare module 'virtual:eqty-docs/config' {
   };
   export default config;
 }
+
+declare global {
+  interface Window {
+    /** Theme preference when `theme.persist` is false: page lifetime, no storage. */
+    __eqtyDocsTheme?: string;
+  }
+}
