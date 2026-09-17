@@ -6,6 +6,7 @@ import { assertMdxOnly } from './internal/assert-mdx-only.ts';
 import { microlighterGrammarsPlugin } from './internal/microlighter-grammars.ts';
 import { rehypeBaseUrl } from './internal/rehype-base-url.ts';
 import { rehypeCodeFence } from './internal/rehype-code-fence.ts';
+import { rehypeProseScope } from './internal/rehype-prose-scope.ts';
 import { rehypeTableColumns } from './internal/rehype-table-columns.ts';
 import { scanConsumerPages } from './internal/scan-consumer-pages.ts';
 import { virtualConfigPlugin } from './internal/virtual-config.ts';
@@ -152,6 +153,7 @@ export default function docs(
         // Astro does not apply `base` to authored markdown links. MDX inherits these via extendMarkdownConfig.
         markdown.rehypePlugins = [
           [rehypeBaseUrl, { base: config.base }],
+          rehypeProseScope,
           rehypeTableColumns,
           ...(cfg.code.highlighter === 'codeblock' ? [rehypeCodeFence] : []),
         ];

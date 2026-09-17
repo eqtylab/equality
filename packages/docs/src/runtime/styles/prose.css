@@ -1,69 +1,106 @@
 /*
- * Docs typography. Components opt out by marking their root `data-eq-chrome`.
- * Keep the exclusion inside :where() so specificity stays at zero and consumer
- * overrides win without !important.
+ * Docs typography.
+ *
+ * Everything nests under `[data-eq-md]` is stamped by `rehypeProseScope`
+ * onto what the page itself wrote (markdown, plain HTML), so the paragraph MDX
+ * parks inside `<Badge>Primary</Badge>` is not typeset as body copy; docs chrome
+ * opts out by marking its root `data-eq-chrome`.
+ *
+ * Both guards sit inside :where() so specificity stays at one class plus one tag
+ * and consumer overrides win without !important.
  */
 @reference './theme.css';
 
-.eq-prose :is(h1, h2, h3, h4, h5, h6):not(:where([data-eq-chrome], [data-eq-chrome] *)) {
-  @apply scroll-mt-24;
-}
+.eq-prose {
+  & > :first-child {
+    @apply mt-0;
+  }
+  & > :last-child {
+    @apply mb-0;
+  }
 
-.eq-prose h1:not(:where([data-eq-chrome], [data-eq-chrome] *)) {
-  @apply mb-4 mt-12 text-4xl font-bold [&>code]:text-3xl;
-}
-.eq-prose h2:not(:where([data-eq-chrome], [data-eq-chrome] *)) {
-  @apply mb-4 mt-12 text-2xl font-semibold [&>code]:text-xl;
-}
-.eq-prose h3:not(:where([data-eq-chrome], [data-eq-chrome] *)) {
-  @apply mb-4 mt-8 text-xl font-medium [&>code]:text-lg;
-}
-.eq-prose h4:not(:where([data-eq-chrome], [data-eq-chrome] *)) {
-  @apply mb-4 mt-6 text-lg font-medium [&>code]:text-base;
-}
-.eq-prose h5:not(:where([data-eq-chrome], [data-eq-chrome] *)) {
-  @apply mb-4 mt-4 text-base font-medium [&>code]:text-sm;
-}
-.eq-prose h6:not(:where([data-eq-chrome], [data-eq-chrome] *)) {
-  @apply mb-4 mt-4 text-sm font-medium [&>code]:text-xs;
-}
+  & :where([data-eq-md]):not(:where([data-eq-chrome], [data-eq-chrome] *)) {
+    &:is(h1, h2, h3, h4, h5, h6) {
+      @apply scroll-mt-24;
+    }
 
-.eq-prose p:not(:where([data-eq-chrome], [data-eq-chrome] *)) {
-  @apply text-text-secondary mb-2 text-base/7 font-normal;
-}
+    &:is(h1) {
+      @apply mb-4 mt-12 text-4xl font-bold;
+      & > code {
+        @apply text-3xl;
+      }
+    }
+    &:is(h2) {
+      @apply mb-4 mt-12 text-2xl font-semibold;
+      & > code {
+        @apply text-xl;
+      }
+    }
+    &:is(h3) {
+      @apply mb-4 mt-8 text-xl font-medium;
+      & > code {
+        @apply text-lg;
+      }
+    }
+    &:is(h4) {
+      @apply mb-4 mt-6 text-lg font-medium;
+      & > code {
+        @apply text-base;
+      }
+    }
+    &:is(h5) {
+      @apply mb-4 mt-4 text-base font-medium;
+      & > code {
+        @apply text-sm;
+      }
+    }
+    &:is(h6) {
+      @apply mb-4 mt-4 text-sm font-medium;
+      & > code {
+        @apply text-xs;
+      }
+    }
 
-.eq-prose :is(p, li) :is(b, strong):not(:where([data-eq-chrome], [data-eq-chrome] *)) {
-  @apply text-text-primary font-medium;
-}
+    &:is(p) {
+      @apply text-text-secondary mb-2 text-base/7 font-normal;
+    }
 
-.eq-prose :is(ul, ol):not(:where([data-eq-chrome], [data-eq-chrome] *)) {
-  @apply text-text-secondary mb-2 space-y-1 pl-4;
-}
-.eq-prose ul:not(:where([data-eq-chrome], [data-eq-chrome] *)) {
-  @apply list-disc;
-}
-.eq-prose ol:not(:where([data-eq-chrome], [data-eq-chrome] *)) {
-  @apply list-decimal;
-}
+    :is(p, li) &:is(b, strong) {
+      @apply text-text-primary font-medium;
+    }
 
-.eq-prose a:not(:where([data-eq-chrome], [data-eq-chrome] *)) {
-  @apply text-text-primary hover:text-lilac-400 font-medium underline underline-offset-4 transition-all;
-}
+    &:is(ul, ol) {
+      @apply text-text-secondary mb-2 pl-4;
 
-/* Inline code, but never the contents of a highlighted block. */
-.eq-prose :not(pre) > code:not(:where([data-eq-chrome], [data-eq-chrome] *)) {
-  @apply dark:bg-background-overlay bg-greyscale-200 text-text-secondary rounded-sm p-1 text-sm;
-}
+      /*
+       * Not `space-y-1`: its `& > :not(:last-child)` nesting unbalances against
+       * a selector ending in `:not(:where(…))` and compiles to a rule the browser
+       * throws away, so list items came out unspaced.
+       */
+      & > li + li {
+        @apply mt-1;
+      }
+    }
+    &:is(ul) {
+      @apply list-disc;
+    }
+    &:is(ol) {
+      @apply list-decimal;
+    }
 
-/* No table rules: markdown tables render through Equality's Table. */
+    &:is(a) {
+      @apply text-text-primary hover:text-lilac-400 font-medium underline underline-offset-4 transition-all;
+    }
 
-.eq-prose hr:not(:where([data-eq-chrome], [data-eq-chrome] *)) {
-  @apply border-border mb-4;
-}
+    /* Inline code, but never the contents of a highlighted block. */
+    :not(pre) > &:is(code) {
+      @apply dark:bg-background-overlay bg-greyscale-200 text-text-secondary rounded-sm p-1 text-sm;
+    }
 
-.eq-prose > :first-child {
-  @apply mt-0;
-}
-.eq-prose > :last-child {
-  @apply mb-0;
+    /* No table rules: markdown tables render through Equality's Table. */
+
+    &:is(hr) {
+      @apply border-border mb-4;
+    }
+  }
 }
