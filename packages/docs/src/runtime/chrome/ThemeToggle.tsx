@@ -39,7 +39,8 @@ export default function ThemeToggle() {
   const [preference, setPreference] = useThemePreference();
 
   return (
-    <DropdownMenu>
+    // Drop this and the menu closes itself mid-tap on iOS.
+    <DropdownMenu modal={false}>
       <DropdownMenuTrigger asChild>
         {/*
          * All three states render; CSS shows the one matching `data-eq-theme-pref`,
