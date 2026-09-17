@@ -12,11 +12,7 @@
   @apply sr-only;
 }
 
-/*
- * All three states render; CSS reveals the one matching the root attribute set
- * before first paint, keeping the control off React's render path. Without JS
- * the attribute is absent and System shows.
- */
+/* The root attribute picks one. With no JS it is absent, so System shows. */
 .state {
   @apply hidden items-center gap-2;
 }

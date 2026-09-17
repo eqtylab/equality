@@ -1,14 +1,11 @@
-/**
- * Theme preference. The blocking bootstrap in DocsShell.astro duplicates the
- * constants below because it runs before any module loads; keep them in step.
- */
 import CONFIG from 'virtual:eqty-docs/config';
 
+/** These four are repeated in DocsShell.astro's inline script. Change both. */
 export const STORAGE_KEY = 'eqty-docs-theme';
 export const UPDATE_EVENT = 'eqty-docs-theme-change';
 /** Equality's palette keys on this. */
 export const THEME_ATTRIBUTE = 'data-equality-theme';
-/** Lets CSS drive the theme control before hydration; see ThemeToggle.module.css. */
+/** ThemeToggle.module.css reads this, so the trigger is correct before React loads. */
 export const PREFERENCE_ATTRIBUTE = 'data-eq-theme-pref';
 
 export type ThemePreference = 'light' | 'dark' | 'system';
@@ -38,7 +35,7 @@ function writeStored(preference: ThemePreference): void {
   try {
     window.localStorage.setItem(STORAGE_KEY, preference);
   } catch {
-    // Storage denied; the attribute still applies for this page.
+    // Ignore a storage failure; the theme still applies for this page.
   }
 }
 
@@ -61,7 +58,7 @@ export function applyTheme(preference: ThemePreference): void {
   const root = document.documentElement;
   root.setAttribute(THEME_ATTRIBUTE, resolved);
   root.setAttribute(PREFERENCE_ATTRIBUTE, preference);
-  // Native UI keys off `color-scheme`, not the attribute; must match the DocsShell.astro bootstrap.
+  // Without this, scrollbars and form controls stay light on a dark page.
   root.style.colorScheme = resolved;
 }
 
