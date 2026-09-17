@@ -15,9 +15,7 @@ export async function getStaticPaths() {
   const owned = new Set((CONFIG.ownedByConsumer ?? []).map(normalizePath));
 
   return entries
-    // Astro does not de-duplicate injected routes against file-based ones, so a
-    // path a consumer page already owns must be dropped here or the static
-    // build emits it twice.
+    // Astro does not de-duplicate injected routes against consumer pages.
     .filter((entry) => !owned.has(normalizePath(docsHref(entry.id, pathContext()))))
     .map((entry) => ({
       // `undefined` (not '') is how a rest param matches the empty path.
@@ -41,13 +39,8 @@ const toc = showToc
 const nav = await docsNav(Astro.url.pathname);
 const splash = entry.data.template === 'splash';
 
-// The markdown twin is a sibling of the page, not a child: the page is
-// directory-shaped (/components/label/) and the twin is file-shaped
-// (/components/label.md), because `ensureTrailingSlash` declines to slash
-// anything ending in an extension. Appending ".md" to the pathname would point
-// at a file that does not exist, so the slug is derived from the entry id with
-// the same fallback `routes/docs-md.ts` uses -- an empty slug there would emit
-// a file called ".md".
+// The twin is file-shaped (/x/label.md) beside the directory-shaped page; the
+// 'index' fallback must match routes/docs-md.ts.
 const markdownHref = CONFIG.routing.markdownTwins
   ? `${joinPath(import.meta.env.BASE_URL, CONFIG.pathPrefix, idToPath(entry.id) || 'index')}.md`
   : undefined;

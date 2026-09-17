@@ -1,10 +1,4 @@
-/**
- * Content loaders.
- *
- * Astro 6 cannot inject collections from an integration -- `content.config.ts`
- * is discovered by filesystem search in the consumer's `src/`. So the package
- * exports ready-made collections and the consumer writes one short file.
- */
+/** Astro cannot inject collections from an integration, so these are imported from the consumer's `content.config.ts`. */
 import { readFile } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -22,15 +16,8 @@ const GROUP_GLOB = '**/_group.{yaml,yml,json}';
 export const ROOT_GROUP_ID = '~root';
 
 /**
- * Pages. A thin wrapper over Astro's `glob()` that fixes the pattern and base.
- *
- * MDX only: component overrides (tables, code fences, callouts) apply exclusively
- * to MDX, so a `.md` page would render differently from every other page. A stray
- * `.md` file fails the build rather than being silently skipped -- see
- * `assertMdxOnly`.
- *
- * The negation matters separately: the glob loader has no built-in underscore
- * skipping, so `_group.yaml` and `_draft.mdx` would otherwise become pages.
+ * MDX only; stray `.md` files fail in `assertMdxOnly`. The `_*` negation is
+ * required: the glob loader has no underscore skipping, so `_group.yaml` would become a page.
  */
 export function docsLoader(options: { base?: string } = {}): Loader {
   const base = options.base ?? 'content/docs';
@@ -40,15 +27,6 @@ export function docsLoader(options: { base?: string } = {}): Loader {
   });
 }
 
-/**
- * `_group.yaml` files.
- *
- * A custom loader rather than an fs walk in the integration, because the Loader
- * API already provides persistence, zod validation with good messages, digest
- * change-detection, and a dev watcher -- all four of which a walk would have to
- * reimplement, and it would only run once so editing a `_group.yaml` in dev
- * would need a server restart.
- */
 export function groupsLoader(options: { base?: string } = {}): Loader {
   const base = options.base ?? 'content/docs';
 
@@ -85,7 +63,6 @@ export function groupsLoader(options: { base?: string } = {}): Loader {
         try {
           raw = rel.endsWith('.json') ? JSON.parse(text) : parseYaml(text);
         } catch (err) {
-          // A malformed ordering file must fail loudly, not silently reorder.
           throw new Error(`[@eqtylab/docs] Could not parse ${rel}: ${(err as Error).message}`);
         }
 
@@ -114,7 +91,7 @@ export function groupsLoader(options: { base?: string } = {}): Loader {
   };
 }
 
-/** Both collections, ready to spread. The common case is a one-line content config. */
+/** Both collections, ready to spread. */
 export function docsCollections(options: { base?: string } = {}) {
   return {
     docs: defineCollection({

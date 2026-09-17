@@ -1,17 +1,7 @@
 /*
- * Docs typography.
- *
- * Two deliberate departures from the hand-rolled `#markdown-content` block this
- * replaces:
- *
- * 1. Keyed on a class, not an ID, so it composes.
- * 2. Descendant selectors with an explicit opt-out, instead of direct-child
- *    selectors. Direct-child rules mean prose inside a callout, tab panel or
- *    step list gets nothing, and any structural wrapping silently kills the
- *    styling. Components mark their own root `data-eq-chrome` to opt out.
- *
- * Wrapping the exclusion in :where() keeps specificity at zero, so a consumer
- * override wins without !important.
+ * Docs typography. Components opt out by marking their root `data-eq-chrome`.
+ * Keep the exclusion inside :where() so specificity stays at zero and consumer
+ * overrides win without !important.
  */
 @reference './theme.css';
 
@@ -65,8 +55,7 @@
   @apply dark:bg-background-overlay bg-greyscale-200 text-text-secondary rounded-sm p-1 text-sm;
 }
 
-/* Tables are not styled here: markdown tables render through Equality's Table
- * via the MDX component map, so all table styling lives in the component. */
+/* No table rules: markdown tables render through Equality's Table. */
 
 .eq-prose hr:not(:where([data-eq-chrome], [data-eq-chrome] *)) {
   @apply border-border mb-4;

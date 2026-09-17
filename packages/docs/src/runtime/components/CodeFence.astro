@@ -1,20 +1,8 @@
 ---
 /**
- * MDX fenced code, rendered through Equality's CodeBlock -- with no client React.
- *
- * CodeBlock has no hooks or state, so Astro renders it to static HTML when given
- * no client: directive. Colour arrives afterwards from a small client script:
- * the highlighter paints through the CSS Custom Highlight API rather than by
- * rewriting the markup, so the server-rendered DOM is the final DOM and a
- * static render gets correct light AND dark colours for free.
- *
- * Two vanilla scripts drive what would otherwise need hydration -- eq-copy for
- * the copy button (a React island inside CodeBlock we suppress), and eq-highlight
- * to start the highlight pass CodeBlock's own useEffect never runs here.
- *
- * The fence tag is passed through as the author wrote it. The highlighter owns
- * language resolution, including its alias table (ts, jsx, sh, yml and the
- * rest), and renders plain rather than guessing at a tag it does not know.
+ * Fenced code through Equality's CodeBlock with no client React. eq-copy drives
+ * the copy button and eq-highlight starts the highlight pass CodeBlock's own
+ * useEffect never runs here. The highlighter owns language aliasing.
  */
 import { CodeBlock } from '@eqtylab/equality';
 import styles from './CodeFence.module.css';

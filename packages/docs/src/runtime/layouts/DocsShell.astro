@@ -3,8 +3,6 @@
 import CONFIG from 'virtual:eqty-docs/config';
 import { withBase } from '@eqtylab/docs/paths';
 
-// The package owns its own baseline: theme tokens, preflight, prose and chrome.
-// A consumer only needs their own stylesheet if they write their own utilities.
 import '../styles/docs.css';
 
 interface Props {
@@ -26,28 +24,15 @@ const paths = {
 const pageTitle = title && title !== CONFIG.title ? `${title} · ${CONFIG.title}` : CONFIG.title;
 const pageDescription = description ?? CONFIG.description;
 
-// Every pinned /vX.Y/ build is noindex: a version that is latest today is not
-// latest tomorrow, and historical artifacts are never rewritten, so deciding at
-// build time is the only choice that stays correct.
+// Pinned version builds are noindex: latest today is not latest tomorrow.
 const robots = noIndex ?? !CONFIG.env.isLatest;
 
 /**
- * Theme bootstrap, blocking and inline so the attribute is set before the first
- * paint. This package owns it rather than calling Equality's `initializeTheme`,
- * because Equality's version knows only 'light' and 'dark': with no concept of
- * System it writes the operating system's answer to storage on a first visit
- * and pins the reader to it for good.
- *
- * Running both is not an option. Equality's stored value wins on the second
- * load and would overwrite the resolution below.
- *
- * Written literally rather than serialised from helpers with `toString()`, so
- * there is no registry of functions to keep in step. It reads storage and never
- * writes it: writing here would turn the preference 'system' into a resolved
- * 'dark' and switch System off permanently.
- *
- * The constants must match `runtime/lib/theme.ts`, which owns everything after
- * first paint. They are repeated because this runs before any module loads.
+ * Blocking inline theme bootstrap, so the attribute is set before first paint.
+ * Do not also call Equality's `initializeTheme`: it knows only light and dark
+ * and its stored value would override this. Never write storage here, or
+ * 'system' becomes a resolved value permanently. Constants must match
+ * `runtime/lib/theme.ts`.
  */
 const themeBootstrap = `
   (() => {
@@ -72,20 +57,15 @@ const themeBootstrap = `
       const resolved = preference === 'system' ? (query.matches ? 'dark' : 'light') : preference;
       const root = document.documentElement;
       root.setAttribute('data-equality-theme', resolved);
-      // The chosen preference, so the theme control can be driven by CSS rather
-      // than by React's server snapshot, which is always System and would show
-      // the wrong word until hydration.
       root.setAttribute('data-eq-theme-pref', preference);
-      // Native scrollbars, form controls and the browser's own UI follow this,
-      // not the attribute above, so without it they stay light on a dark page.
+      // Native UI follows this, not the attribute above.
       root.style.colorScheme = resolved;
     };
 
     apply();
     query.addEventListener('change', apply);
     window.addEventListener(EVENT, apply);
-    // Another tab changing the theme must repaint this one. The React
-    // subscription re-renders the control but never touches the attribute.
+    // The React subscription never touches the attribute, so other tabs repaint here.
     window.addEventListener('storage', (event) => {
       if (event.key === KEY) apply();
     });
@@ -103,7 +83,6 @@ const themeBootstrap = `
     {robots && <meta name="robots" content="noindex, follow" />}
     {canonical && <link rel="canonical" href={canonical} />}
     <link rel="icon" href={withBase(CONFIG.favicon, paths)} />
-    {/* Blocking, inline: sets the theme attribute before first paint. */}
     <script is:inline set:html={themeBootstrap} />
     <slot name="head" />
   </head>

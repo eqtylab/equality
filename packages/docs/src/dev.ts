@@ -1,11 +1,6 @@
 /**
- * Dev-only source linking for in-monorepo docs sites.
- *
- * Redirects a workspace package's specifiers at its own source tree so edits
- * hot-reload without a rebuild. This replaces the hand-rolled resolver in
- * packages/demo/astro.config.mjs -- and, importantly, derives the CSS subpath
- * map from the target package's own `exports` field rather than duplicating it,
- * because that duplicate silently rots whenever the target adds a CSS export.
+ * Dev-only source linking: redirects a workspace package's specifiers to its
+ * source tree so edits hot-reload. Subpaths derive from the package's `exports`.
  */
 import { existsSync, readFileSync } from 'node:fs';
 import path from 'node:path';
@@ -24,11 +19,7 @@ interface LinkedPackage {
   subpaths: Map<string, string>;
 }
 
-/**
- * Invert a package's `exports` map: for each subpath whose target is a file
- * under dist/, find the same basename under src/. The target package's manifest
- * stays the single source of truth.
- */
+/** For each `exports` subpath targeting dist/, find the same basename under src/. */
 function invertExports(pkgRoot: string, pkgName: string): LinkedPackage | null {
   const manifestPath = path.join(pkgRoot, 'package.json');
   if (!existsSync(manifestPath)) return null;
@@ -70,7 +61,6 @@ function invertExports(pkgRoot: string, pkgName: string): LinkedPackage | null {
     const matches = byBasename.get(basename);
     if (!matches || matches.length === 0) continue;
     if (matches.length > 1) {
-      // Ambiguous: prefer the shallowest path, but don't guess silently.
       matches.sort((a, b) => a.split('/').length - b.split('/').length);
     }
     subpaths.set(subpath.replace(/^\.\//, ''), path.join(srcDir, matches[0] as string));
@@ -105,7 +95,7 @@ export function linkWorkspacePackages(options: LinkOptions): Plugin[] {
         }
 
         if (!target) continue;
-        // Delegate so Vite still handles directory and extension resolution.
+        // Vite still handles directory and extension resolution.
         const resolved = await this.resolve(target, importer, { ...opts, skipSelf: true });
         return resolved ?? target;
       }

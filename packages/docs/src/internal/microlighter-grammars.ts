@@ -1,14 +1,7 @@
 /**
  * Emits microlighter's grammar modules beside the chunks that ask for them.
- *
- * Equality's CodeBlock reaches a grammar with `import('./grammars/' + language)`,
- * a dynamic specifier no bundler can expand, so Rollup leaves the import in the
- * chunk with nothing on disk to satisfy it. The build still succeeds; fenced code
- * just renders unhighlighted. Upstream fix eqtylab/equality#134 solved this in the
- * demo's own astro.config, which meant only the demo got highlighting.
- *
- * It lives here because every consumer rendering fences through CodeBlock needs
- * it, and none of them should have to know that microlighter exists.
+ * CodeBlock loads grammars with `import('./grammars/' + language)`, which no
+ * bundler can expand; without this the build succeeds and code renders unhighlighted.
  */
 import { readdirSync, readFileSync } from 'node:fs';
 import { createRequire } from 'node:module';
@@ -16,15 +9,10 @@ import path from 'node:path';
 import type { AstroIntegrationLogger } from 'astro';
 import type { Plugin } from 'vite';
 
-/** The residue of the un-expandable dynamic import, left in the emitted chunk. */
+/** Residue of the dynamic import in the emitted chunk. */
 const GRAMMAR_IMPORT = 'grammars/${';
 
-/**
- * microlighter is a dependency of @eqtylab/equality, which is only a peer of this
- * package, so it is resolved in two hops from the consumer's project: neither has
- * to appear in this package's own node_modules. The demo's version resolved it
- * through a hard-coded '../ui/package.json', which exists in this monorepo alone.
- */
+/** Two hops from the consumer: microlighter is a dependency of @eqtylab/equality, which is only a peer here. */
 function findGrammarDir(projectRoot: URL): string {
   const requireFromProject = createRequire(new URL('package.json', projectRoot));
   const equalityEntry = requireFromProject.resolve('@eqtylab/equality');
@@ -38,7 +26,6 @@ export function microlighterGrammarsPlugin(
 ): Plugin {
   return {
     name: 'eqty-docs:microlighter-grammars',
-    // Dev serves the grammars from source through Vite's own resolution.
     apply: 'build',
     generateBundle(_options, bundle) {
       const directories = new Set(
@@ -54,8 +41,7 @@ export function microlighterGrammarsPlugin(
         grammarDir = findGrammarDir(projectRoot);
         grammars = readdirSync(grammarDir).filter((file) => file.endsWith('.js'));
       } catch (error) {
-        // A throw here would fail a build over a cosmetic feature. A silent
-        // return is what this plugin exists to prevent, so say it loudly.
+        // Warn rather than fail the build over highlighting.
         logger.warn(
           'Code blocks ask for microlighter grammars, but they could not be resolved. ' +
             'Fenced code will render unhighlighted. Check that @eqtylab/equality is ' +

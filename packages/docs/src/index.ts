@@ -12,10 +12,8 @@ import { virtualConfigPlugin } from './internal/virtual-config.ts';
 
 export { resolveConfig, type DocsConfig, type DocsUserConfig } from './config.ts';
 export { resolveDocsEnv, type DocsEnv } from './env.ts';
-// NOTE: loaders are deliberately NOT re-exported here. This entry is loaded by
-// Node when it reads astro.config, whereas the loaders import `astro:content`,
-// which only exists inside the Vite graph. Consumers import them from
-// '@eqtylab/docs/loaders' in src/content.config.ts, which is Vite-loaded.
+// Do not re-export the loaders: this entry runs in Node when astro.config loads,
+// and they import `astro:content`, which only exists in the Vite graph.
 export { docsSchema, groupSchema, badgeSchema } from './schema.ts';
 export * from './types.ts';
 
@@ -72,8 +70,6 @@ export default function docs(
       async 'astro:config:setup'(params) {
         const { config, injectRoute, updateConfig, addWatchFile, logger, command } = params;
 
-        // Content is MDX-only; a .md file would be skipped by the loader and
-        // silently missing from the site.
         assertMdxOnly(new URL(`./${cfg.contentDir}/`, config.srcDir));
 
         const consumer = scanConsumerPages(config.srcDir);
@@ -91,12 +87,11 @@ export default function docs(
         payload = {
           ...cfg,
           env,
-          // Consumed by the catch-all's getStaticPaths so a consumer page and the
-          // docs route never both emit the same path.
+          // Read by the catch-all's getStaticPaths so no path is emitted twice.
           ownedByConsumer: consumer.ownedPaths,
         };
 
-        // Watch _group.yaml files so ordering edits reload in dev.
+        // So `_group.yaml` edits reload in dev.
         if (command === 'dev') {
           addWatchFile(new URL(`./${cfg.contentDir}/`, config.srcDir));
         }
@@ -117,15 +112,13 @@ export default function docs(
 
         const vitePlugins: unknown[] = [virtualConfigPlugin(() => payload)];
 
-        // Only the CodeBlock path reaches for microlighter; Shiki tokenises at
-        // build time and needs nothing emitted.
+        // Shiki tokenises at build time and needs no grammars emitted.
         if (cfg.code.highlighter === 'codeblock') {
           vitePlugins.push(microlighterGrammarsPlugin(config.root, logger));
         }
 
         if (cfg.autoIntegrations) {
-          // Cast before flattening: Vite's PluginOption is recursively nested,
-          // and .flat(Infinity) over that type hits TS2589.
+          // Cast first: `.flat(Infinity)` over Vite's recursive PluginOption hits TS2589.
           const existing = (config.vite?.plugins ?? []) as unknown[];
           const hasTailwind = existing
             .flat(Infinity as 1)
@@ -140,16 +133,11 @@ export default function docs(
           }
         }
 
-        // Built separately and typed loosely on purpose: inlining this object
-        // makes TS chase DeepPartial<AstroConfig> and hit "type instantiation is
-        // excessively deep".
+        // Typed loosely on purpose: inlining this hits "type instantiation is excessively deep".
         const markdown: Record<string, unknown> =
           cfg.code.highlighter === 'codeblock'
             ? {
-                // Fenced code goes through our own `pre` override so it can
-                // render via Equality's CodeBlock. Leaving Shiki on would
-                // tokenise the fence first, and recovering raw source from its
-                // hast is strictly worse than never highlighting twice.
+                // Shiki must be off so the `pre` override receives raw source.
                 syntaxHighlight: false,
               }
             : {
@@ -161,14 +149,10 @@ export default function docs(
                 },
               };
 
-        // Astro does not rewrite authored markdown links for `base`, so every
-        // root-relative link in content would 404 in a sub-path build. MDX
-        // inherits markdown.rehypePlugins via extendMarkdownConfig.
+        // Astro does not apply `base` to authored markdown links. MDX inherits these via extendMarkdownConfig.
         markdown.rehypePlugins = [
           [rehypeBaseUrl, { base: config.base }],
-          // Equality's Table is a CSS grid and needs an explicit track count.
           rehypeTableColumns,
-          // Lifts each fence's source/language onto its <pre> for the bridge.
           ...(cfg.code.highlighter === 'codeblock' ? [rehypeCodeFence] : []),
         ];
 
@@ -196,7 +180,7 @@ export default function docs(
       },
 
       'astro:routes:resolved'({ routes, logger }) {
-        // Safety net for collisions the filesystem scan cannot see.
+        // Catches collisions the filesystem scan cannot see.
         const seen = new Map<string, string>();
         for (const route of routes as Array<{ pattern: string; entrypoint: string }>) {
           const previous = seen.get(route.pattern);

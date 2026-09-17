@@ -1,16 +1,6 @@
-// Guards the package's core styling constraint.
-//
-// Tailwind utility classes written literally in this package's markup only work
-// if the CONSUMER's Tailwind scans the file containing them -- and Tailwind v4
-// source detection skips node_modules. Styling via `@apply` in a co-located
-// *.module.css has no such dependency (proven by packages/ui). So a utility
-// class here would silently produce nothing in a consumer's build, which is the
-// kind of failure review does not catch.
-//
-// Rather than try to recognise Tailwind class names -- a losing game against
-// arbitrary values, variants and new syntax -- this inverts the rule: every
-// class in shipped markup must come from a CSS module. Literal class strings
-// are rejected outright, with a short allowlist for the genuine exceptions.
+// Tailwind does not scan node_modules, so a utility class written literally in
+// this package's markup produces nothing in a consumer build. Every class must
+// come from a CSS module; literal class strings are rejected bar a short allowlist.
 import { readFile } from 'node:fs/promises';
 import { dirname, relative, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -18,17 +8,12 @@ import { glob } from 'tinyglobby';
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 
-/** Semantic hooks that are deliberately global, not CSS-module scoped. */
+/** Deliberately global hooks. */
 const ALLOWED = new Set(['eq-prose']);
 
-/**
- * Only the markup is relevant. In .astro that is everything after the
- * frontmatter fence -- scanning the frontmatter too would flag comments and
- * regex literals that merely contain the word `class`.
- */
+/** Markup only: frontmatter and comments may mention `class` legitimately. */
 function markupOf(file, text) {
   if (!file.endsWith('.astro')) {
-    // .tsx mixes JSX with code, so drop comments instead.
     return text.replace(/\/\*[\s\S]*?\*\//g, '').replace(/^\s*\/\/.*$/gm, '');
   }
   if (!text.startsWith('---')) return text;

@@ -1,4 +1,4 @@
-/** Public type surface. Kept free of `astro:*` imports so it loads in Node and Vite alike. */
+/** Public types. Keep free of `astro:*` imports so this loads in Node. */
 
 export type BadgeVariant = 'primary' | 'secondary' | 'neutral' | 'success' | 'warning' | 'danger';
 
@@ -7,7 +7,7 @@ export interface DocsBadge {
   variant: BadgeVariant;
 }
 
-/** A node in the sidebar tree. Groups and links share one shape so rendering stays uniform. */
+/** A node in the sidebar tree. */
 export interface NavNode {
   kind: 'page' | 'group' | 'link';
   /** Filesystem name (basename without extension, or directory name). The `order` sort key. */
@@ -38,7 +38,7 @@ export interface TocNode {
   children: TocNode[];
 }
 
-/** The minimum a docs entry must expose for the nav builder. Decoupled from astro:content. */
+/** The minimum a docs entry must expose for the nav builder. */
 export interface DocsNavEntry {
   /** Collection id, e.g. "guides/installation" or "index". */
   id: string;

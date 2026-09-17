@@ -1,12 +1,5 @@
 ---
-/**
- * The nested list inside the table of contents.
- *
- * Split out from TableOfContents so recursion only repeats the list, not the
- * <eq-toc> element, the <nav>, or the heading. Recursing into the outer
- * component duplicated all three -- including a duplicate id and a second
- * scroll-spy observer per nesting level.
- */
+/** Split out so recursion repeats only the list, not the <eq-toc>, <nav>, or heading id. */
 import type { TocNode } from '@eqtylab/docs/types';
 
 import styles from './TableOfContents.module.css';

@@ -1,9 +1,5 @@
-// Mirrors src/runtime -> dist/runtime.
-//
-// Verbatim on purpose: it keeps every relative import inside the runtime tree
-// valid unchanged, which is what makes dev source-linking byte-equivalent to the
-// published package. These files are compiled by the CONSUMER's Astro/Vite, so
-// they must never pass through tsup.
+// Mirrors src/runtime -> dist/runtime verbatim. These files are compiled by the
+// consumer's Vite and must never pass through tsup.
 import { watch } from 'node:fs';
 import { cp, rm } from 'node:fs/promises';
 import { dirname, resolve } from 'node:path';

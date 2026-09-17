@@ -1,10 +1,7 @@
 /**
- * Build environment for a versioned deploy.
- *
- * `base` has to be literal in the consumer's Astro config at build time, so it
- * is threaded by environment variable rather than set from the integration.
- * `versionRoot` is tracked separately from `base` on purpose: a build living at
- * /v3.1/ still needs to know the version manifest sits at /docs-versions.json.
+ * Build environment for a versioned deploy. `base` must be literal in the
+ * consumer's Astro config, so it is threaded by env var. `versionRoot` is
+ * separate because a /v3.1/ build still needs the manifest at /docs-versions.json.
  */
 export interface DocsEnv {
   site?: string;

@@ -1,9 +1,4 @@
-/**
- * Content schemas.
- *
- * `z` comes from `astro/zod` deliberately: Astro validates collection entries
- * with its own zod instance, so sharing it avoids cross-instance mismatches.
- */
+/** `z` must come from `astro/zod`: a different zod instance breaks Astro's collection validation. */
 import { z } from 'astro/zod';
 
 export const badgeSchema = () =>
@@ -14,7 +9,6 @@ export const badgeSchema = () =>
       .default('neutral'),
   });
 
-/** Accepts `deprecated: true` as well as the object form, so the shorthand keeps working. */
 const deprecatedSchema = () =>
   z.union([
     z.boolean(),
@@ -30,10 +24,7 @@ const tocSchema = () =>
     maxLevel: z.number().int().min(1).max(6).default(3),
   });
 
-/**
- * Frontmatter for a docs page. Note there is deliberately no `sidebar.order` --
- * ordering lives in `_group.yaml` so it can be reasoned about a folder at a time.
- */
+/** Page frontmatter. Ordering lives in `_group.yaml`, not here. */
 export function docsSchema() {
   return z.object({
     title: z.string(),
@@ -69,29 +60,15 @@ export const groupLinkSchema = () =>
     attrs: z.record(z.string(), z.union([z.string(), z.number(), z.boolean()])).default({}),
   });
 
-/**
- * `_group.yaml` -- the whole ordering surface, one file per directory.
- *
- * `.strict()` is load-bearing: a silently ignored typo in an ordering file is
- * precisely the failure mode this design exists to avoid.
- */
+/** `_group.yaml`. `.strict()` is load-bearing: a typo in an ordering file must fail, not be ignored. */
 export function groupSchema() {
   return z
     .object({
       label: z.string().optional(),
       icon: z.string().optional(),
-      /**
-       * Immediate-child names, in display order. Matches the filesystem name
-       * (basename without extension, or directory name) rather than the title,
-       * because names are stable when titles get edited.
-       */
+      /** Immediate-child filesystem names (not titles), in display order. */
       order: z.array(z.string()).default([]),
-      /**
-       * How children absent from `order` are appended.
-       * - alpha    : by sidebar label, numeric-aware (default)
-       * - filename : by filename, numeric-aware
-       * - manual   : dropped from the sidebar; pages still build
-       */
+      /** Children absent from `order`: alpha by label (default), by filename, or manual (dropped from the sidebar). */
       sort: z.enum(['alpha', 'filename', 'manual']).optional(),
       collapsed: z.boolean().optional(),
       hidden: z.boolean().default(false),

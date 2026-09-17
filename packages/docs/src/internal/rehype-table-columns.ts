@@ -1,14 +1,6 @@
 /**
- * Annotates each markdown table with its column count.
- *
- * Equality's `TableContainer` is `display: grid` with
- * `grid-template-columns: var(--table-columns)`, and every part below it uses
- * `subgrid` -- so it needs an explicit track list or the whole table collapses
- * into one column. Markdown has no syntax for that, so the count is derived
- * here, at build time, from the first row.
- *
- * Runs on `markdown.rehypePlugins`; @astrojs/mdx inherits those by default via
- * `extendMarkdownConfig`, which is how it reaches MDX content.
+ * Annotates each markdown table with its column count. Equality's `TableContainer`
+ * is a CSS grid and collapses to one column without an explicit track list.
  */
 import { visit } from 'unist-util-visit';
 
@@ -37,7 +29,6 @@ function countCells(row: ElementNode): number {
   return (row.children ?? []).reduce((total, child) => {
     if (child.type !== 'element') return total;
     if (child.tagName !== 'th' && child.tagName !== 'td') return total;
-    // Respect colspan so a spanning header still yields the right track count.
     const span = Number(child.properties?.colSpan ?? child.properties?.colspan ?? 1);
     return total + (Number.isFinite(span) && span > 0 ? span : 1);
   }, 0);

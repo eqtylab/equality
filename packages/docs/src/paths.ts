@@ -1,7 +1,4 @@
-/**
- * Every URL the docs framework emits goes through this module. Nothing else
- * concatenates a path, so `base` and the version prefix have exactly one owner.
- */
+/** Every URL the framework emits goes through here; nothing else may concatenate a path. */
 
 /** Join path segments, collapsing duplicate slashes, always leading with one. */
 export function joinPath(...parts: Array<string | undefined | null>): string {
@@ -22,16 +19,12 @@ export function ensureTrailingSlash(href: string): string {
   if (isUnrewritable(href)) return href;
   const [path, rest = ''] = href.split(/(?=[?#])/, 2);
   if (path.endsWith('/')) return href;
-  // Don't add a slash to something that looks like a file (e.g. /llms.txt, /a.md)
+  // Never slash something that looks like a file (/llms.txt, /a.md).
   if (/\.[a-z0-9]+$/i.test(path)) return href;
   return path + '/' + rest;
 }
 
-/**
- * A root `index.mdx` gets the collection id `"index"` rather than `""`,
- * because Astro's trailing-`/index` strip requires a leading slash. Normalising
- * here keeps default ids everywhere else.
- */
+/** Astro gives the root `index.mdx` the id "index", not "". */
 export function idToPath(id: string): string {
   return id === 'index' ? '' : id;
 }
@@ -42,7 +35,7 @@ export function normalizePath(path: string): string {
   try {
     decoded = decodeURI(path);
   } catch {
-    // Malformed percent-encoding: compare the raw value rather than throwing.
+    // Malformed percent-encoding: compare the raw value.
   }
   return decoded.replace(/\/+$/, '') || '/';
 }

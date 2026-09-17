@@ -1,9 +1,4 @@
-/**
- * Bridges the two content collections into the pure nav builder.
- *
- * Runs in the Vite graph (it needs `astro:content`), so it lives in the runtime
- * tree rather than alongside the Node-side modules.
- */
+/** Bridges the content collections into the pure nav builder. Needs `astro:content`, so it lives in the runtime tree. */
 import { breadcrumbsFor, buildNavTree, buildTocTree, prevNextFor } from '@eqtylab/docs/nav';
 import type { GroupConfig } from '@eqtylab/docs/nav';
 import type { DocsNavEntry, NavNode } from '@eqtylab/docs/types';
@@ -12,13 +7,7 @@ import CONFIG from 'virtual:eqty-docs/config';
 
 export { buildTocTree, breadcrumbsFor, prevNextFor };
 
-/**
- * No `versionPrefix`: the version lives in `base` and nowhere else.
- *
- * A pinned build is deployed at `DOCS_BASE=/v3.1/`, so adding the segment here too made nav hrefs
- * `/v3.1/v3.1/guides/one/`. Nav was the only emitter carrying it -- the search index, llms.txt and
- * the header never did -- so the two could not both have been right.
- */
+/** No `versionPrefix`: the version already lives in `base`, and adding it here doubles the segment. */
 export function pathContext() {
   return {
     base: import.meta.env.BASE_URL,
@@ -41,8 +30,7 @@ async function groupMap(): Promise<Map<string, GroupConfig>> {
       map.set(group.id, group.data as GroupConfig);
     }
   } catch {
-    // The docsGroups collection is optional: a site with no _group.yaml anywhere
-    // is a valid site, it just gets fully alphabetical ordering.
+    // docsGroups is optional; no _group.yaml means alphabetical ordering.
   }
   return map;
 }
@@ -72,8 +60,7 @@ export async function docsNav(currentPath: string): Promise<NavNode[]> {
   });
 }
 
-// The nav is rebuilt per page, so an ordering warning would otherwise repeat
-// once per page. Config problems should be reported once per build.
+// The nav is rebuilt per page; report each config problem once per build.
 const warned = new Set<string>();
 function warnOnce(message: string) {
   if (warned.has(message)) return;
@@ -81,7 +68,6 @@ function warnOnce(message: string) {
   console.warn(`[@eqtylab/docs] ${message}`);
 }
 
-/** Generalises the old bespoke `deprecated` sidebar marker into the badge system. */
 function deprecationBadge(deprecated: unknown) {
   if (!deprecated) return undefined;
   return { text: 'Deprecated', variant: 'warning' as const };

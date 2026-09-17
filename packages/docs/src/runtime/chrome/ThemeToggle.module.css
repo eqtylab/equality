@@ -13,14 +13,9 @@
 }
 
 /*
- * The trigger carries all three states and CSS reveals the one matching the
- * root attribute, which the blocking script in DocsShell sets before first
- * paint. That keeps the control off React's render path, so it never shows the
- * server default and then correct itself.
- *
- * With no JavaScript the attribute is absent and System shows, which is both
- * the default and the honest answer: without JS the page follows the operating
- * system and nothing else is on offer.
+ * All three states render; CSS reveals the one matching the root attribute set
+ * before first paint, keeping the control off React's render path. Without JS
+ * the attribute is absent and System shows.
  */
 .state {
   @apply hidden items-center gap-2;

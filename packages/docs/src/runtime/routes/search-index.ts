@@ -1,12 +1,6 @@
 /**
- * Lightweight titles index.
- *
- * Pagefind indexes built HTML and so cannot work in `astro dev`; this is the dev
- * fallback, and the whole search provider for small sites.
- *
- * Headings come from render(), not from `entry.rendered.metadata`, which stays
- * empty for MDX -- its headings are only known once the component is compiled.
- * Rendering here is a build-time cost on one route.
+ * Titles index: the dev fallback for Pagefind and the whole provider for small
+ * sites. Headings come from render() because `entry.rendered.metadata` is empty for MDX.
  */
 import { docsHref } from '@eqtylab/docs/paths';
 import type { APIRoute } from 'astro';
@@ -36,14 +30,12 @@ export const GET: APIRoute = async () => {
           .filter((h) => h.depth >= 2 && h.depth <= 3)
           .map((h) => ({ text: h.text, slug: h.slug }));
       } catch {
-        // A page that cannot render still belongs in the index by title.
+        // Still index the page by title.
       }
       return {
         id: entry.id,
         title: entry.data.title,
         description: entry.data.description ?? '',
-        // This index is per-build, so the prefix is already right for the build
-        // that serves it.
         href: docsHref(entry.id, paths),
         headings,
       };

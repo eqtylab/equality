@@ -1,13 +1,6 @@
 /**
- * Lifts each fenced code block's source and language onto its `<pre>` node.
- *
- * The bridge component needs the raw code as a string, because Equality's
- * `CodeBlock` takes `code` as a prop. Recovering it by rendering the slot to
- * HTML and re-parsing does not work: `Astro.slots.render()` returns
- * already-escaped markup in `astro dev` but raw markup in a production build,
- * so the fence rendered correctly when built and as literal escaped HTML in dev.
- *
- * Reading the hast directly removes the round-trip, so both paths are identical.
+ * Lifts each fence's source, language and title onto its `<pre>`. Do not recover
+ * the source from the rendered slot: `Astro.slots.render()` escapes in dev but not in build.
  */
 import { visit } from 'unist-util-visit';
 
@@ -20,7 +13,6 @@ interface Node {
   data?: { meta?: string };
 }
 
-/** Concatenate the text descendants of a node. */
 function textOf(node: Node): string {
   if (node.type === 'text') return node.value ?? '';
   return (node.children ?? []).map(textOf).join('');

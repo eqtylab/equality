@@ -1,13 +1,4 @@
-/**
- * Scroll-spy for the table of contents.
- *
- * A custom element on purpose: connectedCallback fires on every DOM swap
- * (including view transitions) and disconnectedCallback tears the observer
- * down, so there is no lifecycle wiring to forget and no listener accumulation.
- *
- * Smooth scrolling and anchor navigation are left entirely to CSS and the
- * browser -- these are real <a href="#..."> links, so they work without JS.
- */
+/** Scroll-spy for the table of contents. A custom element so the observer is torn down across view transitions. */
 class EqToc extends HTMLElement {
   #observer?: IntersectionObserver;
 
@@ -29,7 +20,7 @@ class EqToc extends HTMLElement {
     const visible = new Set<string>();
 
     const paint = () => {
-      // The topmost visible heading wins, so the highlight tracks reading position.
+      // Topmost visible heading wins.
       let active: string | undefined;
       for (const slug of slugs) {
         if (visible.has(slug)) {

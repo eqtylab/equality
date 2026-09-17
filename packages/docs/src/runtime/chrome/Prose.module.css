@@ -10,12 +10,6 @@
   @apply text-text-secondary mt-3 text-lg/7;
 }
 
-/*
- * Page actions. The gap below matches the header's `mb-8` rhythm minus the row
- * itself, which is the first thing here asking for a spacing token that
- * `packages/tokens` does not yet have. Noted as the residue this chrome should
- * extract; hard-coded until the tokens pass on Day 5.
- */
 .actions {
   @apply -mt-4 mb-8 flex items-center gap-2;
 }
@@ -23,9 +17,7 @@
   @apply text-text-secondary hover:text-text-primary border-border flex cursor-pointer items-center gap-1.5 rounded-md border px-2 py-1.5 text-sm no-underline transition-colors;
 }
 
-/* The button carries both labels and swaps them on `data-copied`, which
- * `eq-copy.ts` sets for 1.6s. Two spans rather than one with changing text, so
- * the button does not resize as the word changes. */
+/* Both labels render and swap on `data-copied` so the button does not resize. */
 .actionLabel {
   @apply inline-flex;
 }

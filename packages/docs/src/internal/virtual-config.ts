@@ -1,9 +1,4 @@
-/**
- * Serves the resolved config to runtime components as `virtual:eqty-docs/config`.
- *
- * Runtime components ship from node_modules and so cannot reach the consumer's
- * project by relative path. A virtual module is the clean way across that gap.
- */
+/** Serves the resolved config to runtime components, which ship from node_modules and cannot reach the consumer's project by path. */
 import type { Plugin } from 'vite';
 
 const MODULE_ID = 'virtual:eqty-docs/config';
