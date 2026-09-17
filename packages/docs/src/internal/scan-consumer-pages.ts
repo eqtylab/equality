@@ -1,12 +1,7 @@
 /**
- * Works out which routes the consumer's own `src/pages` files already claim.
- *
- * This exists because Astro does NOT de-duplicate injected routes against
- * file-based ones. Route *priority* correctly prefers a consumer's static page
- * over our catch-all when matching, but the static build's route list is
- * `[...fileBasedRoutes, ...injectedRoutes, ...redirects]` with no de-dup -- so
- * a page claimed by both gets emitted twice and the winner is a write-order
- * accident. Yielding therefore has to be explicit on our side.
+ * Routes the consumer's own `src/pages` already claim. Astro does NOT de-duplicate
+ * injected routes against file-based ones: a path claimed by both is emitted
+ * twice and the winner is write order, so yielding has to be explicit here.
  */
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -39,7 +34,7 @@ export function scanConsumerPages(srcDir: URL): ConsumerPages {
       absolute: false,
     });
   } catch {
-    // No src/pages at all is the expected case for a docs-only site.
+    // No src/pages: a docs-only site.
     return { ownedPaths: [], claimedPatterns: new Set() };
   }
 
@@ -53,7 +48,6 @@ export function scanConsumerPages(srcDir: URL): ConsumerPages {
     const routePath = toRoutePath(file);
     claimedPatterns.add(routePath === '' ? '/' : routePath);
 
-    // Only static routes reserve a concrete path; a dynamic one claims a pattern.
     if (!/[[\]]/.test(file)) {
       ownedPaths.push(routePath.replace(/\/+$/, '') || '/');
     }

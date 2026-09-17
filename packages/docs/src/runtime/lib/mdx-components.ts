@@ -1,11 +1,6 @@
 /**
- * The route-level MDX component map.
- *
- * Kept deliberately small. @astrojs/mdx builds the map as
- * `{ Fragment, ...fileComponents, ...props.components }`, so entries here
- * OVERRIDE a page's own `export const components`. Anything richer is provided
- * as an explicit import from '@eqtylab/docs/components' instead, which keeps
- * per-page overrides possible.
+ * Route-level MDX component map. Entries here OVERRIDE a page's own
+ * `export const components`, so keep it small.
  */
 import {
   TableBody,
@@ -26,15 +21,10 @@ import TableBridge from '../components/TableBridge.astro';
 const base: Record<string, unknown> = {
   a: Link,
 
-  // Named components are provided here too, not just element overrides, so an
-  // author writes <Alert> with no import and never meets a docs-specific
-  // wrapper. An explicit import of Alert from @eqtylab/equality still wins, and
-  // yields the raw component.
+  // An explicit import of Alert from @eqtylab/equality still wins.
   Alert: AlertBridge,
 
-  // Markdown tables render through Equality's Table rather than bespoke prose
-  // CSS, so docs tables and product tables cannot drift apart. Every one of
-  // these is hook-free, so they render statically with no client directive.
+  // All hook-free, so they render statically with no client directive.
   table: TableBridge,
   thead: TableHeader,
   tbody: TableBody,
@@ -45,9 +35,7 @@ const base: Record<string, unknown> = {
   caption: TableCaption,
 };
 
-// With highlighter: 'codeblock', markdown.syntaxHighlight is off, so fences
-// arrive as a plain <pre><code> and this override routes them through
-// Equality's CodeBlock. With 'shiki', Astro has already rendered the block.
+// With 'shiki', Astro has already rendered the block.
 if (CONFIG.code?.highlighter === 'codeblock') {
   base.pre = CodeFenceBridge;
 }

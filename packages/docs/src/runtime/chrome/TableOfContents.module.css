@@ -23,7 +23,6 @@
   @apply border-text-primary text-text-primary;
 }
 
-/* Nested lists indent by nesting rather than by depth-specific rules. */
 .toc .list .list {
   @apply ml-3;
 }

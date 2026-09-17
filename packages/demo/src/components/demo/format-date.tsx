@@ -37,6 +37,37 @@ export function FormatDateRelativeDemo() {
   );
 }
 
+export function FormatDateCountdownDemo() {
+  const samples = useMemo(() => {
+    const now = new Date();
+    const time = now.getTime();
+    return [
+      { label: "45 minutes", date: new Date(time + 45 * MINUTE) },
+      { label: "59.5 minutes", date: new Date(time + 59.5 * MINUTE) },
+      { label: "25 hours", date: new Date(time + 25 * HOUR) },
+      { label: "10 days", date: new Date(time + 10 * DAY) },
+      { label: "89 days", date: new Date(time + 89 * DAY) },
+      { label: "101 days", date: new Date(time + 101 * DAY) },
+      { label: "Already passed", date: new Date(time - 2 * DAY) },
+    ];
+  }, []);
+
+  return (
+    <div className="my-4">
+      <Card>
+        <CardContent className="divide-border divide-y divide-solid">
+          {samples.map((sample) => (
+            <div key={sample.label} className="flex items-center gap-3 py-1">
+              <PanelLabel label={sample.label} className="w-32" />
+              <FormatDate date={sample.date} displayAs="countdown" />
+            </div>
+          ))}
+        </CardContent>
+      </Card>
+    </div>
+  );
+}
+
 export function FormatDateTimeZoneDemo() {
   const date = useMemo(() => new Date("2026-06-09T18:42:03Z"), []);
 

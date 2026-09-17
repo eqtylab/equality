@@ -72,9 +72,14 @@ per-page overrides stay possible.
 ## Code blocks
 
 Fenced code renders through Equality's `CodeBlock`, server-side, so docs match product surfaces with
-**no client React**. `CodeBlock` has no state, and its `useInlineStyles={false}` means the palette
-resolves from `--syntax-*` custom properties through the CSS cascade — so a static render gets
-correct light _and_ dark colours for free.
+**no client React**. The highlighter paints through the CSS Custom Highlight API rather than by
+wrapping tokens in markup, so the server-rendered DOM is the final DOM, the palette resolves through
+the normal cascade, and a static render gets correct light _and_ dark colours for free.
+
+Two small scripts do what would otherwise need hydration: `runtime/scripts/eq-copy.ts` for the copy
+button, and `runtime/scripts/eq-highlight.ts` to start the highlight pass. Fence tags are passed
+through as authored — the highlighter owns language resolution, including its alias table (`ts`,
+`jsx`, `sh`, `yml` and the rest), and renders plain rather than guessing at a tag it does not know.
 
 Set `code: { highlighter: 'shiki' }` to use Astro's Shiki instead: wider language coverage, line
 highlighting and `meta` support, at the cost of a different look from the product.
@@ -146,26 +151,27 @@ pnpm test     # nav ordering, prev/next, breadcrumbs, TOC
 as **source** and is compiled by the consumer's Astro — `.astro` files cannot be bundled. The copy is
 verbatim, which is what keeps dev source-linking byte-equivalent to the published package.
 
-### The playground
+### The dev surface
 
-`pnpm dev` serves `playground/` on port 4322 — a standalone site with test content, used to
-develop the framework itself. It is **not published** (the `files` field ships only `dist/` and
-`README.md`) and **not deployed**. Its content doubles as a live spec: every page exercises a
-convention, so if something looks wrong on screen the framework is wrong, not the content.
+`packages/demo` — the Equality docs site — is the first-class consumer, so the framework is
+developed against the same site that ships. Run `pnpm dev` from the repo root: this package's
+`dev` keeps `dist/runtime` in sync while the demo serves on port 4321.
 
-Edits to `src/runtime/**` hot-reload — `scripts/dev.mjs` keeps `dist/runtime` in sync, which is
-what Vite actually serves (Astro resolves injected route entrypoints through the real exports map).
+The sync is what makes edits to `src/runtime/**` hot-reload. Astro resolves injected route
+entrypoints through the real exports map, so `dist/runtime` — not `src/runtime` — is what Vite
+actually serves. Changes to `src/*.ts` are a different matter: they are bundled by tsup and read
+by Astro at config time, so they need `pnpm build:node` and a dev-server restart.
 
 To exercise a versioned sub-path build:
 
 ```bash
-DOCS_BASE=/v0.0/ pnpm playground:build
+DOCS_BASE=/v0.0/ pnpm --filter demo build
 ```
 
-Then confirm nothing 404s when `playground/dist` is served at `/v0.0/`.
+Then confirm nothing 404s when `packages/demo/dist` is served at `/v0.0/`.
 
 ### Fixtures
 
 `tests/fixtures/basic` is a separate, deliberately minimal consumer used for assertions — it
-contains a misspelled `_group.yaml` key on purpose, which is why it is kept apart from the
-playground rather than doubling as the dev surface.
+contains a misspelled `_group.yaml` key on purpose, which is why it is kept apart from the demo
+rather than doubling as the dev surface.

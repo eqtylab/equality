@@ -1,8 +1,4 @@
-/**
- * Ambient declarations for modules supplied by the consumer's Astro/Vite graph.
- * These exist at runtime but are not resolvable when type-checking the package
- * in isolation.
- */
+/** Ambient declarations for modules the consumer's Vite graph supplies at runtime. */
 declare module 'astro:content' {
   export function defineCollection(input: unknown): unknown;
   export function getCollection(
@@ -22,4 +18,11 @@ declare module 'virtual:eqty-docs/config' {
     ownedByConsumer: string[];
   };
   export default config;
+}
+
+declare global {
+  interface Window {
+    /** Theme preference when `theme.persist` is false. */
+    __eqtyDocsTheme?: string;
+  }
 }

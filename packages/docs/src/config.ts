@@ -69,12 +69,7 @@ export const docsConfigSchema = z.object({
 
   code: z
     .object({
-      /**
-       * Fenced code renders through Equality's `CodeBlock`, server-side, so it
-       * matches product surfaces with no client React. Set `highlighter: 'shiki'`
-       * to use Astro's Shiki instead -- wider language coverage, line
-       * highlighting and `meta` support, at the cost of a different look.
-       */
+      /** 'codeblock' renders fences through Equality's CodeBlock; 'shiki' uses Astro's Shiki. */
       highlighter: z.enum(['codeblock', 'shiki']).default('codeblock'),
       /** Shiki themes; only consulted when `highlighter` is 'shiki'. */
       themes: z

@@ -1,0 +1,9 @@
+{
+  "name": "equality",
+  "description": "Build UIs EQTY Lab's design system. Component lookup, tokens, theming, and composition recipes for agents.",
+  "version": "0.1.0",
+  "homepage": "https://equality.eqtylab.io",
+  "repository": "https://github.com/eqtylab/equality",
+  "license": "Apache-2.0",
+  "skills": ["./packages/skills/equality-design-system/SKILL.md"]
+}

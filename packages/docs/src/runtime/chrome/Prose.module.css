@@ -9,3 +9,19 @@
 .description {
   @apply text-text-secondary mt-3 text-lg/7;
 }
+
+.actions {
+  @apply -mt-4 mb-8 flex items-center gap-2;
+}
+.action {
+  @apply text-text-secondary hover:text-text-primary border-border flex cursor-pointer items-center gap-1.5 rounded-md border px-2 py-1.5 text-sm no-underline transition-colors;
+}
+
+/* Both labels render and swap on `data-copied` so the button does not resize. */
+.actionLabel {
+  @apply inline-flex;
+}
+.action[data-copied] [data-eq-copy-idle],
+.action:not([data-copied]) [data-eq-copy-done] {
+  @apply hidden;
+}

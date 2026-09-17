@@ -1,11 +1,7 @@
 ---
 /**
- * Renders a fenced code block through Equality's `CodeBlock`.
- *
- * The source, language and optional `title=` come from `rehypeCodeFence`, which
- * lifts them off the hast onto this `<pre>`. Reading them as props rather than
- * re-parsing the rendered slot is what keeps `astro dev` and a production build
- * identical -- slot HTML is escaped in one and raw in the other.
+ * Renders a fence from the props `rehypeCodeFence` lifted onto the `<pre>`.
+ * Do not re-parse the slot: its HTML is escaped in dev and raw in build.
  */
 import CodeFence from './CodeFence.astro';
 

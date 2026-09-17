@@ -1,14 +1,6 @@
 /**
- * Content is MDX-only.
- *
- * All EQTY docs are authored as MDX, and only MDX supports the component
- * overrides the framework relies on -- Astro's plain-Markdown pipeline has no
- * component substitution, so a `.md` page would quietly render with different
- * tables, callouts and code blocks than every other page.
- *
- * Rather than support two rendering paths that look subtly different, the
- * loader globs `.mdx` only. That would make a stray `.md` file silently absent
- * from the site, which is a worse failure than a loud one -- hence this check.
+ * Only MDX supports the component overrides and the loader globs `.mdx` only,
+ * so a stray `.md` would be silently absent from the site. Fail loudly instead.
  */
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -21,7 +13,6 @@ export function assertMdxOnly(contentDir: URL): void {
   try {
     strays = globSync(['**/*.md'], { cwd: dir, absolute: false });
   } catch {
-    // No content directory yet: nothing to check.
     return;
   }
   if (strays.length === 0) return;

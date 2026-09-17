@@ -1,9 +1,4 @@
-/**
- * Markdown twin of every page, for LLM and agent consumption.
- *
- * Replaces the astro-markdown-export dependency (whose peer range declares
- * astro ^5.14.1 against Astro 6).
- */
+/** Markdown twin of every page, for LLM and agent consumption. */
 import { idToPath } from '@eqtylab/docs/paths';
 import type { APIRoute } from 'astro';
 import { getCollection } from 'astro:content';
@@ -15,8 +10,7 @@ export async function getStaticPaths() {
     ({ data }: { data: { draft?: boolean; noIndex?: boolean } }) => !data.draft && !data.noIndex
   );
   return entries.map((entry) => ({
-    // The root page needs a real name: an empty slug against the "[...slug].md"
-    // pattern would emit a file literally called ".md".
+    // An empty slug would emit a file literally called ".md".
     params: { slug: idToPath(entry.id) || 'index' },
     props: { entry },
   }));

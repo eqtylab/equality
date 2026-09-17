@@ -1,15 +1,5 @@
 ---
-/**
- * On-this-page navigation.
- *
- * SSR'd from render()'s `headings`, so it is present in the HTML source and
- * works without JS. The <eq-toc> custom element only adds scroll-spy -- and it
- * is a custom element rather than an astro:page-load listener because
- * connectedCallback/disconnectedCallback fire automatically across view
- * transitions, so observers cannot accumulate or go stale.
- *
- * The nested list lives in TocList so that recursion repeats only the list.
- */
+/** On-this-page navigation. SSR'd so it works without JS; <eq-toc> only adds scroll-spy. */
 import type { TocNode } from '@eqtylab/docs/types';
 
 import styles from './TableOfContents.module.css';

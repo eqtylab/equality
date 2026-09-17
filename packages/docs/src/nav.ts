@@ -1,9 +1,6 @@
 /**
- * Pure nav-tree construction. No fs, no `astro:*` imports -- so this is callable
- * from .astro files, from Node, and from unit tests without a build.
- *
- * Ordering has exactly one implementation here; prev/next and breadcrumbs are
- * derived from the same tree so they can never disagree with the sidebar.
+ * Pure nav-tree construction. Keep it free of fs and `astro:*` imports so it
+ * runs in Node and unit tests; prev/next and breadcrumbs derive from this tree.
  */
 import { docsHref, isActive, isAncestor, type PathContext } from './paths.ts';
 import type { DocsBadge, DocsNavEntry, NavNode, TocNode } from './types.ts';
@@ -71,11 +68,8 @@ interface Classified {
 }
 
 /**
- * Split an entry id into (directory, name, isIndex).
- *
- * `isIndex` is decided from `filePath`, not the id: Astro strips a trailing
- * `/index` from ids, so `guides/index.mdx` and `guides.mdx` both arrive as
- * "guides" and only the on-disk path can tell them apart.
+ * `isIndex` must come from `filePath`: Astro strips `/index` from ids, so
+ * `guides/index.mdx` and `guides.mdx` both arrive as "guides".
  */
 function classify(entry: DocsNavEntry): Classified {
   const id = entry.id;
@@ -86,7 +80,6 @@ function classify(entry: DocsNavEntry): Classified {
   const isIndex = fileBase === 'index' || id === 'index';
 
   if (isIndex) {
-    // Root index -> the '' group; guides/index.mdx -> the 'guides' group.
     const dir = id === 'index' ? '' : segments.join('/');
     return { entry, dir, name: segments.at(-1) ?? '', isIndex: true };
   }
@@ -118,7 +111,6 @@ export function buildNavTree(options: BuildNavOptions): NavNode[] {
     onWarn,
   } = options;
 
-  // 1. Classify.
   const visible = entries.filter((e) => !e.draft);
   const classified = visible.map(classify);
   const indexOf = new Map<string, Classified>();
@@ -134,13 +126,12 @@ export function buildNavTree(options: BuildNavOptions): NavNode[] {
     }
   }
 
-  // 2. Materialise the directory set, including ancestors and group-file-only dirs.
   const dirs = new Set<string>(['']);
   for (const key of [...filesIn.keys(), ...indexOf.keys(), ...groups.keys()]) {
     dirs.add(key);
     for (const ancestor of ancestorsOf(key)) dirs.add(ancestor);
   }
-  dirs.delete('~root'); // sentinel used by the groups loader, never a real directory
+  dirs.delete('~root'); // groups-loader sentinel, never a real directory
 
   const childDirsOf = new Map<string, string[]>();
   for (const dir of dirs) {
@@ -154,7 +145,6 @@ export function buildNavTree(options: BuildNavOptions): NavNode[] {
   const groupFor = (dir: string): GroupConfig | undefined =>
     groups.get(dir === '' ? '~root' : dir) ?? groups.get(dir);
 
-  // 3-7. Recurse.
   const building = new Set<string>();
 
   function pageNode(c: Classified): NavNode {
@@ -172,7 +162,7 @@ export function buildNavTree(options: BuildNavOptions): NavNode[] {
   }
 
   function groupNode(dir: string): NavNode | null {
-    if (building.has(dir)) return null; // defensive; the dir set is acyclic by construction
+    if (building.has(dir)) return null;
     building.add(dir);
     try {
       const cfg = groupFor(dir);
@@ -199,7 +189,6 @@ export function buildNavTree(options: BuildNavOptions): NavNode[] {
         });
       }
 
-      // 7. Prune: a group with no children and no landing page is not navigable.
       if (children.length === 0 && !index) return null;
       if (cfg?.hidden) return null;
 
@@ -218,8 +207,7 @@ export function buildNavTree(options: BuildNavOptions): NavNode[] {
         badge: cfg?.badge ?? index?.entry.badge,
         current: href ? isActive(currentPath, href) : false,
         inPath,
-        // A deep link must always reveal itself, so containing the current page
-        // wins over a `collapsed: true` preference.
+        // Containing the current page wins over `collapsed: true`.
         open: inPath || !(cfg?.collapsed ?? defaultCollapsed),
         children,
       };
@@ -252,8 +240,6 @@ function orderChildren(
     const key = normalizeOrderToken(token);
     const hit = byName.get(key);
     if (!hit) {
-      // The typo case. Warning names the file and the token, because a silently
-      // ignored ordering key is the exact failure that makes this config hateful.
       onWarn?.(
         `_group.yaml in "${dir || '<root>'}": order lists "${token}", but no child is named "${key}". ` +
           `Available: ${[...byName.keys()].join(', ') || '(none)'}`
@@ -269,12 +255,10 @@ function orderChildren(
   let rest = children.filter((c) => !taken.has(c));
 
   if (sortMode === 'manual') {
-    // Unlisted pages still build and are still reachable; they just aren't in the nav.
     rest = [];
   } else if (sortMode === 'filename') {
     rest.sort((a, b) => byLocale(a.name, b.name));
   } else {
-    // Sort by the visible label, with the filename as a stable tiebreak.
     rest.sort((a, b) => byLocale(a.label, b.label) || byLocale(a.name, b.name));
   }
 

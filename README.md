@@ -1,10 +1,13 @@
 # Equality
 
+[![npm](https://img.shields.io/npm/v/@eqtylab/equality)](https://www.npmjs.com/package/@eqtylab/equality)
 [![Deploy Equality Docs](https://github.com/eqtylab/equality/actions/workflows/docs.yaml/badge.svg)](https://github.com/eqtylab/equality/actions/workflows/docs.yaml)
 [![Publish Equality Package](https://github.com/eqtylab/equality/actions/workflows/publish.yaml/badge.svg)](https://github.com/eqtylab/equality/actions/workflows/publish.yaml)
 [![Code Quality Checks](https://github.com/eqtylab/equality/actions/workflows/code-quality.yaml/badge.svg)](https://github.com/eqtylab/equality/actions/workflows/code-quality.yaml)
 
 EQTY Lab's design system — accessible React components and design tokens, built on Radix UI and Tailwind CSS v4.
+
+The library is published to npm as [`@eqtylab/equality`](https://www.npmjs.com/package/@eqtylab/equality).
 
 ## Prerequisites
 
@@ -49,6 +52,7 @@ This installs all workspace packages under `packages/`.
   ```
 
 - Format code with Prettier:
+
   ```bash
   pnpm format
   pnpm format:check
@@ -146,7 +150,7 @@ pnpm -F demo dev
 
 ## Releasing the library
 
-Releases are automatically published to GitHub Packages when changes to `packages/ui/package.json` are pushed to `main`.
+Releases are automatically published to [npm](https://www.npmjs.com/package/@eqtylab/equality) when changes to `packages/ui/package.json` are pushed to `main`. The workflow skips publishing if that version already exists, so bump the version in `packages/ui/package.json` to release.
 
 To release manually from the command line:
 
@@ -154,10 +158,7 @@ To release manually from the command line:
 pnpm release
 ```
 
-Requirements:
-
-- You must be authenticated with GitHub Packages and have publish rights.
-- Ensure you have updated the version in `packages/ui/package.json` before releasing.
+This requires being logged in to npm (`npm login`) with publish rights on the `@eqtylab` scope.
 
 ## Troubleshooting
 

@@ -5,6 +5,9 @@ coverage
 .next
 *.log
 *.lock
+pnpm-lock.yaml
+package-lock.json
+yarn.lock
 packages/ui/dist
 packages/demo/dist
 *.astro
