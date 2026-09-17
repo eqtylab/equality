@@ -1,0 +1,19 @@
+---
+/** Bridges a markdown table to Equality's `Table`; the column count comes from `rehypeTableColumns`. */
+import { TableContainer } from '@eqtylab/equality';
+
+import styles from './TableBridge.module.css';
+
+interface Props {
+  'data-column-count'?: string;
+}
+
+const count = Number(Astro.props['data-column-count'] ?? 0);
+
+// minmax(0, auto): without a zero minimum, one long unbroken cell blows the grid past its container.
+const columns = count > 0 ? `repeat(${count}, minmax(0, auto))` : undefined;
+---
+
+<TableContainer columns={columns} border className={styles.table} data-eq-chrome>
+  <slot />
+</TableContainer>

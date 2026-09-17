@@ -1,0 +1,129 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "properties": {
+    "label": {
+      "type": "string"
+    },
+    "icon": {
+      "type": "string"
+    },
+    "order": {
+      "default": [],
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "sort": {
+      "type": "string",
+      "enum": [
+        "alpha",
+        "filename",
+        "manual"
+      ]
+    },
+    "collapsed": {
+      "type": "boolean"
+    },
+    "hidden": {
+      "default": false,
+      "type": "boolean"
+    },
+    "badge": {
+      "type": "object",
+      "properties": {
+        "text": {
+          "type": "string"
+        },
+        "variant": {
+          "default": "neutral",
+          "type": "string",
+          "enum": [
+            "primary",
+            "secondary",
+            "neutral",
+            "success",
+            "warning",
+            "danger"
+          ]
+        }
+      },
+      "required": [
+        "text"
+      ]
+    },
+    "links": {
+      "default": [],
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "label": {
+            "type": "string"
+          },
+          "href": {
+            "type": "string"
+          },
+          "external": {
+            "type": "boolean"
+          },
+          "icon": {
+            "type": "string"
+          },
+          "badge": {
+            "type": "object",
+            "properties": {
+              "text": {
+                "type": "string"
+              },
+              "variant": {
+                "default": "neutral",
+                "type": "string",
+                "enum": [
+                  "primary",
+                  "secondary",
+                  "neutral",
+                  "success",
+                  "warning",
+                  "danger"
+                ]
+              }
+            },
+            "required": [
+              "text"
+            ]
+          },
+          "attrs": {
+            "default": {},
+            "type": "object",
+            "propertyNames": {
+              "type": "string"
+            },
+            "additionalProperties": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "number"
+                },
+                {
+                  "type": "boolean"
+                }
+              ]
+            }
+          }
+        },
+        "required": [
+          "label",
+          "href"
+        ]
+      }
+    },
+    "$schema": {
+      "type": "string"
+    }
+  },
+  "additionalProperties": false
+}

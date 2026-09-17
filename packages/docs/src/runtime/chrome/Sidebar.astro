@@ -1,0 +1,16 @@
+---
+import type { NavNode } from '@eqtylab/docs/types';
+import NavTree from './NavTree.astro';
+import styles from './Sidebar.module.css';
+
+interface Props {
+  nodes: NavNode[];
+}
+const { nodes } = Astro.props;
+---
+
+<aside class={styles.sidebar} data-eq-chrome data-pagefind-ignore>
+  <nav class={styles.nav} aria-label="Documentation">
+    <NavTree nodes={nodes} />
+  </nav>
+</aside>

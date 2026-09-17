@@ -1,0 +1,27 @@
+---
+/**
+ * Fenced code through Equality's CodeBlock with no client React. eq-copy drives
+ * the copy button and eq-highlight starts the highlight pass CodeBlock's own
+ * useEffect never runs here. The highlighter owns language aliasing.
+ */
+import { CodeBlock } from '@eqtylab/equality';
+import styles from './CodeFence.module.css';
+
+interface Props {
+  code: string;
+  lang?: string;
+  title?: string;
+}
+
+const { code, lang = 'text', title } = Astro.props;
+
+const language = lang.toLowerCase();
+---
+
+<eq-highlight class={styles.fence} data-eq-chrome data-eq-copy={code}>
+  <CodeBlock code={code} language={language} title={title} />
+</eq-highlight>
+<script>
+  import "@eqtylab/docs/scripts/eq-copy.ts";
+  import "@eqtylab/docs/scripts/eq-highlight.ts";
+</script>

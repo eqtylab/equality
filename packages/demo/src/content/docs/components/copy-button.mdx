@@ -1,0 +1,94 @@
+---
+title: "Copy Button"
+description: "Button that copies a value to the clipboard"
+---
+
+import { CopyButton } from "@eqtylab/equality";
+import { CopyButtonDemo } from "@demo/components/demo/copy-button";
+
+## Overview
+
+Copy Button is an [IconButton](/components/icon-button) that copies a string to the clipboard when clicked. On success it briefly swaps to a check icon for two seconds before reverting, giving users clear confirmation. It uses the modern Clipboard API where available and falls back to a legacy method for non-secure contexts.
+
+Use it wherever a user might want to copy a value — API keys, hashes, IDs, code snippets, or share links.
+
+## Usage
+
+Import the component:
+
+```tsx
+import { CopyButton } from "@eqtylab/equality";
+```
+
+Basic usage with the required `value`:
+
+```tsx
+<CopyButton value="zQ3shrGxRrYyWixJGrr45jJ1MEY76YQZ4KVbt9CYRsTWZ5MWV" />
+```
+
+## Size Variants
+
+The `CopyButton` supports three sizes: `sm` (default), `md`, and `lg`. Adjust the `size` prop to fit a variety of interfaces — `sm` is compact, while `md` and `lg` provide progressively larger clickable areas.
+
+### Small (default)
+
+<CopyButton
+  value="zQ3shrGxRrYyWixJGrr45jJ1MEY76YQZ4KVbt9CYRsTWZ5MWV"
+  client:only="react"
+/>
+
+### Medium
+
+<CopyButton
+  value="zQ3shrGxRrYyWixJGrr45jJ1MEY76YQZ4KVbt9CYRsTWZ5MWV"
+  size="md"
+  client:only="react"
+/>
+
+### Large
+
+<CopyButton
+  value="zQ3shrGxRrYyWixJGrr45jJ1MEY76YQZ4KVbt9CYRsTWZ5MWV"
+  size="lg"
+  client:only="react"
+/>
+
+### Usage
+
+```tsx
+<CopyButton value="sample text" size="sm" />
+<CopyButton value="sample text" size="md" />
+<CopyButton value="sample text" size="lg" />
+```
+
+## Custom Label
+
+By default the button's accessible label (and tooltip) is "Copy to clipboard". Use the `label` prop to describe what is being copied, which is announced to screen readers. On a successful copy the label temporarily becomes "Copied!".
+
+```tsx
+<CopyButton value={apiKey} label="Copy API key" />
+```
+
+## onClick Handler
+
+The `onClick` prop runs a custom function **after** the value has been copied, letting you trigger additional logic such as a toast, analytics event, or state update.
+
+<CopyButtonDemo client:only="react" size="md" />
+
+### Usage
+
+```tsx
+<CopyButton
+  value="sample text"
+  onClick={() => showToast("Copied to clipboard")}
+/>
+```
+
+## Props
+
+| Name      | Description                                                                | Type             | Default               | Required |
+| --------- | -------------------------------------------------------------------------- | ---------------- | --------------------- | -------- |
+| `value`   | The string copied to the clipboard when the button is clicked.             | `string`         | —                     | ✅       |
+| `label`   | Accessible label and tooltip text. Becomes "Copied!" briefly after a copy. | `string`         | `"Copy to clipboard"` | ❌       |
+| `size`    | The size of the button.                                                    | `sm`, `md`, `lg` | `sm`                  | ❌       |
+| `onClick` | Callback invoked after the value has been copied.                          | `() => void`     | —                     | ❌       |

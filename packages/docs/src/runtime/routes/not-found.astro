@@ -1,0 +1,16 @@
+---
+import CONFIG from 'virtual:eqty-docs/config';
+import { withBase } from '@eqtylab/docs/paths';
+import DocsShell from '../layouts/DocsShell.astro';
+import Header from '../chrome/Header.astro';
+import NotFoundBody from '../chrome/NotFoundBody.tsx';
+
+const homeHref = withBase(CONFIG.pathPrefix ? `/${CONFIG.pathPrefix}/` : '/', {
+  base: import.meta.env.BASE_URL,
+});
+---
+
+<DocsShell title="Page not found" noIndex>
+  <Header />
+  <NotFoundBody homeHref={homeHref} client:load />
+</DocsShell>

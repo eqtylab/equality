@@ -1,0 +1,2 @@
+/* @reference target for every *.module.css here, so the bare specifier resolves from this package's node_modules. */
+@import '@eqtylab/equality/theme-config.css';

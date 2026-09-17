@@ -161,13 +161,13 @@ export const TableDemo = ({
       <div className="@container">
         <TableContainer
           elevation={elevation}
-          className="[--table-columns:1fr_auto_auto] @md:[--table-columns:1fr_1fr_auto_auto] @lg:[--table-columns:1fr_1fr_auto_auto_auto]"
+          className="@md:[--table-columns:1fr_1fr_auto_auto] @lg:[--table-columns:1fr_1fr_auto_auto_auto] [--table-columns:1fr_auto_auto]"
         >
           <TableHeader>
             <TableRow>
               <TableHead>Name</TableHead>
-              <TableHead className="hidden @md:block">Email</TableHead>
-              <TableHead className="hidden @lg:block">Role</TableHead>
+              <TableHead className="@md:block hidden">Email</TableHead>
+              <TableHead className="@lg:block hidden">Role</TableHead>
               <TableHead>Status</TableHead>
               <TableHead />
             </TableRow>
@@ -175,10 +175,10 @@ export const TableDemo = ({
           <TableBody>
             <TableRow>
               <TableCell>Alice Cooper</TableCell>
-              <TableCell className="hidden @md:block">
+              <TableCell className="@md:block hidden">
                 alice@example.com
               </TableCell>
-              <TableCell className="hidden @lg:block">Admin</TableCell>
+              <TableCell className="@lg:block hidden">Admin</TableCell>
               <TableCell>
                 <Badge variant="success">Active</Badge>
               </TableCell>
@@ -188,10 +188,10 @@ export const TableDemo = ({
             </TableRow>
             <TableRow>
               <TableCell>Bob Smith</TableCell>
-              <TableCell className="hidden @md:block">
+              <TableCell className="@md:block hidden">
                 bob@example.com
               </TableCell>
-              <TableCell className="hidden @lg:block">User</TableCell>
+              <TableCell className="@lg:block hidden">User</TableCell>
               <TableCell>
                 <Badge variant="success">Active</Badge>
               </TableCell>
@@ -201,10 +201,10 @@ export const TableDemo = ({
             </TableRow>
             <TableRow>
               <TableCell>Charlie Brown</TableCell>
-              <TableCell className="hidden @md:block">
+              <TableCell className="@md:block hidden">
                 charlie@example.com
               </TableCell>
-              <TableCell className="hidden @lg:block">Viewer</TableCell>
+              <TableCell className="@lg:block hidden">Viewer</TableCell>
               <TableCell>
                 <Badge variant="neutral">Inactive</Badge>
               </TableCell>

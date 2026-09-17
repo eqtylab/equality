@@ -1,0 +1,86 @@
+---
+/** Article wrapper. `data-pagefind-body` bounds the search index to content. */
+import { rewriteHtmlBase } from '@eqtylab/docs/internal/rehype-base-url';
+import AlertBridge from '../components/AlertBridge.astro';
+import styles from './Prose.module.css';
+
+interface Props {
+  title: string;
+  description?: string;
+  deprecated?: boolean | { message?: string; replacedBy?: string };
+  /** URL of the page's markdown twin. Absent when `routing.markdownTwins` is off. */
+  markdownHref?: string;
+  /** The page's authored MDX, inlined for the copy action. */
+  source?: string;
+}
+
+const { title, description, deprecated, markdownHref, source } = Astro.props;
+
+const deprecation =
+  deprecated === true ? {} : deprecated && typeof deprecated === 'object' ? deprecated : null;
+
+// Authored frontmatter HTML bypasses rehype entirely, so base-prefix it here.
+const deprecationMessage = deprecation?.message
+  ? rewriteHtmlBase(deprecation.message, import.meta.env.BASE_URL)
+  : undefined;
+---
+
+<article class="eq-prose" data-eq-prose data-pagefind-body>
+  <header class={styles.header} data-eq-chrome>
+    <h1 class={styles.title} data-pagefind-meta="title">{title}</h1>
+    {description && <p class={styles.description}>{description}</p>}
+  </header>
+
+  {
+    /**
+     * `data-pagefind-ignore`: this sits inside `data-pagefind-body`, so without
+     * it every page matches "copy". The source is inlined rather than fetched
+     * so it works offline and on draft pages, which have no twin.
+     */
+    (source || markdownHref) && (
+      <div class={styles.actions} data-eq-chrome data-pagefind-ignore>
+        {source && (
+          <button
+            type="button"
+            class={styles.action}
+            data-eq-copy={source}
+            title="Copies the page source as Markdown"
+          >
+            <span class={styles.actionLabel} data-eq-copy-idle>
+              Copy as Markdown
+            </span>
+            <span class={styles.actionLabel} data-eq-copy-done>
+              Copied
+            </span>
+          </button>
+        )}
+        {markdownHref && (
+          <a class={styles.action} href={markdownHref}>
+            View as Markdown
+          </a>
+        )}
+      </div>
+    )
+  }
+
+  {
+    deprecation && (
+      <AlertBridge variant="warning" title="Deprecated">
+        {deprecationMessage ? (
+          <p set:html={deprecationMessage} />
+        ) : (
+          <p>This page documents a deprecated feature.</p>
+        )}
+      </AlertBridge>
+    )
+  }
+
+  <slot />
+</article>
+
+{
+  /** Imported here too so a page with no fenced code still drives the copy button. */
+}
+<script>
+  import '@eqtylab/docs/scripts/eq-copy.ts';
+</script>

@@ -1,0 +1,10 @@
+/*
+ * The consumer's stylesheet entry. Do not add `@import 'tailwindcss'`:
+ * theme-config.css already imports the Tailwind layers in the order it needs,
+ * and importing again re-registers and can reorder them.
+ */
+@import '@eqtylab/equality/theme-config.css';
+@import '@eqtylab/equality/preflight.css' layer(base);
+
+@import './prose.css';
+@import './chrome.css';

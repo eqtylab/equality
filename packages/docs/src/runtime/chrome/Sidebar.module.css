@@ -1,0 +1,11 @@
+@reference '../styles/theme.css';
+
+.sidebar {
+  @apply bg-background-raised border-border hidden shrink-0 border-r lg:block;
+  width: var(--eq-docs-sidebar-width);
+  @apply lg:sticky lg:h-[calc(100vh-var(--eq-docs-header-height))] lg:overflow-y-auto;
+  top: var(--eq-docs-header-height);
+}
+.nav {
+  @apply px-4 py-6;
+}

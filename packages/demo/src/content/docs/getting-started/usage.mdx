@@ -1,0 +1,125 @@
+---
+title: "Usage"
+---
+
+## Installation
+
+Install the package directly from NPM:
+
+```bash
+pnpm add @eqtylab/equality
+# or
+npm install @eqtylab/equality
+# or
+yarn add @eqtylab/equality
+# or
+bun add @eqtylab/equality
+```
+
+## Setting up the theme
+
+The set up for theming depends on whether your project uses Tailwind v4 or another CSS framework. The recommended approach is to use Tailwind v4 if your project supports it, so that your project has access to all the same theme variables and colors for consistency.
+
+Please follow either of the setup configurations below depending on your project setup.
+
+### Tailwind v4
+
+The package ships three stylesheets:
+
+| Stylesheet                               | Contains                                              |
+| ---------------------------------------- | ----------------------------------------------------- |
+| `@eqtylab/equality/theme-config.css`     | Tokens, theme, utilities and components. No reset.    |
+| `@eqtylab/equality/preflight.css`        | Base styles reset for `html` and everything under it. |
+| `@eqtylab/equality/preflight-scoped.css` | The same reset, only inside `[data-equality-root]`.   |
+
+In an app you own, import the config followed by the global preflight:
+
+```css
+@import "@eqtylab/equality/theme-config.css";
+@import "@eqtylab/equality/preflight.css" layer(base);
+```
+
+`theme-config.css` must come first — it declares the `theme, base, components, utilities` layer order that the preflight relies on.
+
+### Embedding in a host site
+
+The preflight is a document-wide reset, so it will flatten the typography of a site that ships its own base styles, such as a Starlight or Zensical documentation site. Use the scoped preflight there instead:
+
+```css
+@import "@eqtylab/equality/theme-config.css";
+@import "@eqtylab/equality/preflight-scoped.css" layer(base);
+```
+
+`<ThemeProvider />` sets `data-equality-root` for you. You can also mark a plain wrapper, as many times per page as you need:
+
+```html
+<div data-equality-root>...</div>
+```
+
+Neither preflight declares a layer of its own, so `layer()` can place the reset wherever the host's cascade needs it — for example `layer(equality-reset)` ordered against Starlight's own layer.
+
+Note that Equality's dark palette activates on `html[data-equality-theme="dark"]`, which a host's theme toggle won't set. Mirror the host's attribute to follow its switcher:
+
+```js
+const html = document.documentElement;
+new MutationObserver(() => {
+  html.dataset.equalityTheme = html.dataset.theme;
+}).observe(html, { attributes: true, attributeFilter: ["data-theme"] });
+```
+
+### Other CSS frameworks
+
+Add the `<ThemeProvider />` at the root of your app or wherever Equality components are used:
+
+```tsx
+import { ThemeProvider } from "@eqtylab/equality";
+
+<ThemeProvider>
+  <YourApp />
+</ThemeProvider>;
+```
+
+### Portalled surfaces
+
+Tooltips, popovers, selects, dialogs, sheets, drawers, and dropdown menus render into a portal that `<ThemeProvider />` supplies automatically, so they stay inside the themed subtree. Two cases need you to provide that container yourself, via the `portalContainer` prop:
+
+- **Shadow DOM** — the default document lookup can't see into a shadow root, so portalled surfaces escape the boundary and render unstyled.
+- **More than one theme root on a page** — otherwise the second root's portals can land inside the first one's container.
+
+```tsx
+<ThemeProvider portalContainer={myElement}>
+  <YourApp />
+</ThemeProvider>
+```
+
+Pass `portalContainer={null}` to portal to `document.body`. To supply a container without rendering a `<ThemeProvider />` at all, use the exported `<PortalContainerProvider container={myElement} />`.
+
+## Use components
+
+Each component includes its own scoped `.module.css` file — no need to import a global stylesheet.
+
+```tsx
+import { Button } from "@eqtylab/equality";
+
+export function Example() {
+  return (
+    <>
+      <Button>Primary</Button>
+    </>
+  );
+}
+```
+
+Because the styles use Tailwind v4 tokens (`bg-primary`, `text-foreground`, etc.), everything is resolved automatically based on the active theme.
+
+## Overriding styles with `className`
+
+All components accept a `className` prop for fine-grained style adjustments. This lets you extend or override the default styles directly from your app without breaking isolation:
+
+```tsx
+<Button className="bg-accent hover:bg-accent/80 text-white">
+  Custom Button
+</Button>
+```
+
+Since each component's styles are scoped with CSS Modules, your overrides stay local and won't leak into other components.

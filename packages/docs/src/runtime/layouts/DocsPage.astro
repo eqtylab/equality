@@ -1,0 +1,34 @@
+---
+/** Header + sidebar | prose | TOC. The `doc` template. */
+import type { NavNode, TocNode } from '@eqtylab/docs/types';
+import CONFIG from 'virtual:eqty-docs/config';
+import DocsShell from './DocsShell.astro';
+import Header from '../chrome/Header.astro';
+import Sidebar from '../chrome/Sidebar.astro';
+import TableOfContents from '../chrome/TableOfContents.astro';
+import styles from './DocsPage.astro.module.css';
+
+interface Props {
+  title: string;
+  description?: string;
+  nav: NavNode[];
+  toc: TocNode[];
+  showToc?: boolean;
+  splash?: boolean;
+}
+
+const { title, description, nav, toc, showToc = true, splash = false } = Astro.props;
+---
+
+<DocsShell title={title} description={description}>
+  <Header />
+  <div class={styles.layout}>
+    {!splash && <Sidebar nodes={nav} />}
+    <main class={styles.main} data-splash={splash ? '' : undefined}>
+      <div class={styles.content}>
+        <slot />
+      </div>
+      {!splash && showToc && toc.length > 0 && <TableOfContents items={toc} />}
+    </main>
+  </div>
+</DocsShell>

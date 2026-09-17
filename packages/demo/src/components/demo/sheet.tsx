@@ -31,7 +31,7 @@ export const SheetDemo = () => {
             <SheetDescription>Sheet Description</SheetDescription>
           </SheetHeader>
           <SheetContent>
-            <div className="w-full max-w-200">
+            <div className="max-w-200 w-full">
               <p>
                 This container with max-w-200 and w-full applied sets the width
                 of the element up to a certain point!

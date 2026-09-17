@@ -1,0 +1,73 @@
+---
+title: "Spinner"
+description: "Indeterminate loading indicator"
+---
+
+import { Spinner } from "@eqtylab/equality";
+
+## Overview
+
+The Spinner component provides a visual loading indicator to communicate that content or an action is in progress. Use it when fetching data, submitting forms, or during any asynchronous operation where the user should wait. For a full-screen blocking indicator, use [Loading Overlay](/components/loading-overlay).
+
+## Usage
+
+Import the component:
+
+```ts
+import { Spinner } from "@eqtylab/equality";
+```
+
+Basic usage with default properties:
+
+```tsx
+<Spinner />
+```
+
+## Variants
+
+### Size
+
+The Spinner supports five size variants to fit different contexts, from inline indicators to full-page loading states.
+
+<div style={{ display: "flex", alignItems: "center", gap: "1rem" }}>
+  <Spinner client:only="react" size="xs" />
+  <Spinner client:only="react" size="sm" />
+  <Spinner client:only="react" size="md" />
+  <Spinner client:only="react" size="lg" />
+  <Spinner client:only="react" size="xl" />
+</div>
+
+```tsx
+<Spinner size="xs" />
+<Spinner size="sm" />
+<Spinner size="md" />
+<Spinner size="lg" />
+<Spinner size="xl" />
+```
+
+### Color
+
+The Spinner supports color variants using either the brand primary color or status options.
+
+<div style={{ display: "flex", alignItems: "center", gap: "1rem" }}>
+  <Spinner client:only="react" variant="neutral" />
+  <Spinner client:only="react" variant="primary" />
+  <Spinner client:only="react" variant="success" />
+  <Spinner client:only="react" variant="danger" />
+  <Spinner client:only="react" variant="warning" />
+</div>
+
+```tsx
+<Spinner variant="neutral" />
+<Spinner variant="primary" />
+<Spinner variant="success" />
+<Spinner variant="danger" />
+<Spinner variant="warning" />
+```
+
+## Props
+
+| Name      | Description                           | Type                                                 | Default   | Required |
+| --------- | ------------------------------------- | ---------------------------------------------------- | --------- | -------- |
+| `size`    | Controls the size of the spinner      | `xs`, `sm`, `md`, `lg`, `xl`                         | `md`      | ❌       |
+| `variant` | Sets the color variant of the spinner | `neutral`, `primary`, `success`, `danger`, `warning` | `primary` | ❌       |

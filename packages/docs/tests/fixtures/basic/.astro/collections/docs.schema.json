@@ -1,0 +1,131 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "properties": {
+    "title": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    },
+    "navLabel": {
+      "type": "string"
+    },
+    "icon": {
+      "type": "string"
+    },
+    "badge": {
+      "type": "object",
+      "properties": {
+        "text": {
+          "type": "string"
+        },
+        "variant": {
+          "default": "neutral",
+          "type": "string",
+          "enum": [
+            "primary",
+            "secondary",
+            "neutral",
+            "success",
+            "warning",
+            "danger"
+          ]
+        }
+      },
+      "required": [
+        "text"
+      ]
+    },
+    "hidden": {
+      "default": false,
+      "type": "boolean"
+    },
+    "draft": {
+      "default": false,
+      "type": "boolean"
+    },
+    "deprecated": {
+      "default": false,
+      "anyOf": [
+        {
+          "type": "boolean"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "message": {
+              "type": "string"
+            },
+            "replacedBy": {
+              "type": "string"
+            }
+          }
+        }
+      ]
+    },
+    "template": {
+      "default": "doc",
+      "type": "string",
+      "enum": [
+        "doc",
+        "splash"
+      ]
+    },
+    "tableOfContents": {
+      "anyOf": [
+        {
+          "type": "object",
+          "properties": {
+            "minLevel": {
+              "default": 2,
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 6
+            },
+            "maxLevel": {
+              "default": 3,
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 6
+            }
+          }
+        },
+        {
+          "type": "boolean",
+          "const": false
+        }
+      ]
+    },
+    "noIndex": {
+      "default": false,
+      "type": "boolean"
+    },
+    "prev": {
+      "anyOf": [
+        {
+          "type": "boolean"
+        },
+        {
+          "type": "string"
+        }
+      ]
+    },
+    "next": {
+      "anyOf": [
+        {
+          "type": "boolean"
+        },
+        {
+          "type": "string"
+        }
+      ]
+    },
+    "$schema": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "title"
+  ]
+}

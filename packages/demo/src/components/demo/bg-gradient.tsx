@@ -10,7 +10,7 @@ export const BgGradientDemo = ({
   placement?: "full" | "top";
 }) => {
   return (
-    <div className="relative h-150 w-full *:size-full">
+    <div className="h-150 relative w-full *:size-full">
       <BgGradient theme={variant} placement={placement} />
     </div>
   );

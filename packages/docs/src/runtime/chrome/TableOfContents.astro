@@ -1,0 +1,36 @@
+---
+/** On-this-page navigation. SSR'd so it works without JS; <eq-toc> only adds scroll-spy. */
+import type { TocNode } from '@eqtylab/docs/types';
+
+import styles from './TableOfContents.module.css';
+import TocList from './TocList.astro';
+
+interface Props {
+  items: TocNode[];
+  label?: string;
+}
+
+const { items, label = 'On this page' } = Astro.props;
+
+function flatten(nodes: TocNode[]): TocNode[] {
+  return nodes.flatMap((node) => [node, ...flatten(node.children)]);
+}
+const slugs = flatten(items).map((n) => n.slug);
+---
+
+{
+  items.length > 0 && (
+    <eq-toc class={styles.toc} data-slugs={slugs.join(',')} data-eq-chrome data-pagefind-ignore>
+      <nav aria-labelledby="eq-toc-heading">
+        <p class={styles.heading} id="eq-toc-heading">
+          {label}
+        </p>
+        <TocList items={items} />
+      </nav>
+    </eq-toc>
+  )
+}
+
+<script>
+  import '@eqtylab/docs/scripts/eq-toc.ts';
+</script>

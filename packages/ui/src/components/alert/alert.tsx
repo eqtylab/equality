@@ -32,19 +32,39 @@ interface AlertProps
   title: string;
   description?: string | React.ReactNode;
   icon?: React.ReactElement | string | null;
+  /**
+   * Body content, as an alternative to `description`. Rendered in a `div` rather
+   * than a `p`, so block-level content (paragraphs, lists, code blocks) is valid.
+   * Use this instead of `description` when the body is more than a sentence.
+   */
+  children?: React.ReactNode;
+  /**
+   * Element to render. Defaults to `div` with `role="alert"`, which is an
+   * assertive live region -- correct for a message that appears in response to
+   * something the user did, wrong for static page content. Use `aside` for a
+   * standing callout; it drops the live region unless you set `role` yourself.
+   */
+  as?: 'div' | 'aside' | 'section';
 }
 
 const Alert = React.forwardRef<HTMLDivElement, AlertProps>(
-  ({ className, variant, title, description, icon, ...props }, ref) => {
+  (
+    { className, variant, title, description, icon, children, as: Component = 'div', ...props },
+    ref
+  ) => {
     // Use the provided icon, otherwise fall back to the variant's default icon.
     // Passing `icon={null}` explicitly opts out of the default icon.
     const effectiveIcon =
       icon === undefined ? (variant ? defaultVariantIcons[variant] : undefined) : icon;
 
+    // A live region only makes sense for the default `div` alert; a standing
+    // aside/section announces itself on page load otherwise.
+    const role = Component === 'div' ? 'alert' : undefined;
+
     return (
-      <div
+      <Component
         ref={ref}
-        role="alert"
+        role={role}
         className={cn(
           alertVariants({ variant }),
           effectiveIcon ? styles['alert--with-icon'] : '',
@@ -62,7 +82,8 @@ const Alert = React.forwardRef<HTMLDivElement, AlertProps>(
         ) : null}
         <h4 className={styles['alert-title']}>{title}</h4>
         {description ? <p className={styles['alert-description']}>{description}</p> : null}
-      </div>
+        {children ? <div className={styles['alert-body']}>{children}</div> : null}
+      </Component>
     );
   }
 );

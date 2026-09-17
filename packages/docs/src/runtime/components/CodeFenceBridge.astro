@@ -1,0 +1,20 @@
+---
+/**
+ * Renders a fence from the props `rehypeCodeFence` lifted onto the `<pre>`.
+ * Do not re-parse the slot: its HTML is escaped in dev and raw in build.
+ */
+import CodeFence from './CodeFence.astro';
+
+interface Props {
+  'data-code'?: string;
+  'data-language'?: string;
+  'data-title'?: string;
+}
+
+const props = Astro.props as Props;
+const code = props['data-code'] ?? '';
+const lang = props['data-language'] ?? 'text';
+const title = props['data-title'];
+---
+
+<CodeFence code={code} lang={lang} title={title} />

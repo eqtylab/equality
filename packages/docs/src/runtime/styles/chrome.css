@@ -1,0 +1,13 @@
+/* Shared geometry only; component styling lives in co-located *.module.css files. */
+@reference './theme.css';
+
+:root {
+  --eq-docs-header-height: 3.5rem;
+  --eq-docs-sidebar-width: 18rem;
+  --eq-docs-toc-width: 15rem;
+  --eq-docs-content-max: 48rem;
+}
+
+body {
+  @apply bg-background text-text-primary;
+}

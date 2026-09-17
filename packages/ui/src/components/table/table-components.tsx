@@ -101,7 +101,7 @@ const TableRow = React.forwardRef<
       >
         {href && (
           <a href={href} className={styles['table-row-link']} data-table-row-link>
-            <span className="sr-only">{hrefLabel}</span>
+            <span className={styles['table-row-link-label']}>{hrefLabel}</span>
           </a>
         )}
         {children}

@@ -1,0 +1,54 @@
+@reference '../styles/theme.css';
+
+.list {
+  @apply space-y-0.5;
+}
+.list[data-depth='0'] {
+  @apply space-y-1;
+}
+.list:not([data-depth='0']) {
+  @apply border-border ml-3 mt-1 space-y-0.5 border-l pl-3;
+}
+
+.item {
+  @apply list-none;
+}
+
+.link {
+  @apply text-text-secondary hover:text-text-primary hover:bg-background-raised flex items-center gap-2 rounded-md px-2 py-1.5 text-sm no-underline transition-colors;
+}
+.link[data-current] {
+  @apply text-text-primary bg-background-raised font-medium;
+}
+.linkLabel {
+  @apply min-w-0 flex-1 truncate;
+}
+.externalIcon {
+  @apply text-text-secondary shrink-0 opacity-60;
+}
+
+.group {
+  @apply block;
+}
+.summary {
+  @apply text-text-primary hover:bg-background-raised flex cursor-pointer items-center justify-between gap-2 rounded-md px-2 py-1.5 text-sm font-medium;
+}
+.summary::-webkit-details-marker {
+  @apply hidden;
+}
+.summaryLabel {
+  @apply flex min-w-0 flex-1 items-center gap-2 truncate;
+}
+.groupLink {
+  @apply text-inherit no-underline;
+}
+.chevron {
+  @apply text-text-secondary shrink-0 transition-transform duration-200;
+}
+.group[open] > .summary .chevron {
+  @apply rotate-90;
+}
+
+.badge {
+  @apply shrink-0;
+}
