@@ -25,7 +25,7 @@ const OPTIONS: Array<{ value: ThemePreference; label: string; icon: string }> = 
   { value: 'system', label: 'System', icon: 'Monitor' },
 ];
 
-/** Drives the menu only; the trigger is CSS-driven so it never flashes the server snapshot. */
+/** The menu uses this. The trigger is CSS-driven instead, to avoid a flash. */
 function useThemePreference() {
   const preference = useSyncExternalStore(
     subscribeToThemePreference,
@@ -42,10 +42,7 @@ export default function ThemeToggle() {
     // Drop this and the menu closes itself mid-tap on iOS.
     <DropdownMenu modal={false}>
       <DropdownMenuTrigger asChild>
-        {/*
-         * All three states render; CSS shows the one matching `data-eq-theme-pref`,
-         * set before first paint. Rendering it from React would flash System until hydration.
-         */}
+        {/* All three render; CSS shows the current one, so there is no flash on load. */}
         <Button variant="tertiary" className={styles.trigger}>
           <span className={styles.srOnly}>Theme:</span>
           {OPTIONS.map((option) => (
