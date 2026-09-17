@@ -52,6 +52,7 @@ This installs all workspace packages under `packages/`.
   ```
 
 - Format code with Prettier:
+
   ```bash
   pnpm format
   pnpm format:check

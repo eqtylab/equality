@@ -223,7 +223,7 @@ Use Tailwind's `truncate min-w-0` classes directly on `<TableHead>` and `<TableC
 
 <TableDemo client:only="react" variant="truncation" />
 
-#### Usage
+### Usage
 
 ```tsx
 <TableContainer columns="minmax(0,5fr) minmax(0,8fr) 100px 100px 60px">
@@ -256,16 +256,16 @@ Use [container queries](https://tailwindcss.com/docs/responsive-design#what-are-
 
 <TableDemo client:only="react" variant="responsive" />
 
-#### Usage
+### Usage
 
 ```tsx
 <div className="@container">
-  <TableContainer className="@md:[--table-columns:1fr_1fr_auto_auto] @lg:[--table-columns:1fr_1fr_auto_auto_auto] [--table-columns:1fr_auto_auto]">
+  <TableContainer className="[--table-columns:1fr_auto_auto] @md:[--table-columns:1fr_1fr_auto_auto] @lg:[--table-columns:1fr_1fr_auto_auto_auto]">
     <TableHeader>
       <TableRow>
         <TableHead>Name</TableHead>
-        <TableHead className="@md:block hidden">Email</TableHead>
-        <TableHead className="@lg:block hidden">Role</TableHead>
+        <TableHead className="hidden @md:block">Email</TableHead>
+        <TableHead className="hidden @lg:block">Role</TableHead>
         <TableHead>Status</TableHead>
         <TableHead />
       </TableRow>
@@ -273,8 +273,8 @@ Use [container queries](https://tailwindcss.com/docs/responsive-design#what-are-
     <TableBody>
       <TableRow>
         <TableCell>Alice Cooper</TableCell>
-        <TableCell className="@md:block hidden">alice@example.com</TableCell>
-        <TableCell className="@lg:block hidden">Admin</TableCell>
+        <TableCell className="hidden @md:block">alice@example.com</TableCell>
+        <TableCell className="hidden @lg:block">Admin</TableCell>
         <TableCell>
           <Badge variant="success">Active</Badge>
         </TableCell>

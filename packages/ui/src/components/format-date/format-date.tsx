@@ -9,7 +9,7 @@ import {
 } from '@/components/tooltip/tooltip';
 import { cn } from '@/lib/utils';
 
-export type FormatDateDisplayMode = 'relative' | 'absolute';
+export type FormatDateDisplayMode = 'relative' | 'absolute' | 'countdown';
 
 export interface FormatDateProps extends Omit<
   React.TimeHTMLAttributes<HTMLTimeElement>,
@@ -17,15 +17,20 @@ export interface FormatDateProps extends Omit<
 > {
   /** The date to display. Accepts an ISO 8601 string, epoch milliseconds, or a Date. A missing value (null, undefined, or empty string) renders a placeholder. */
   date: string | number | Date | null | undefined;
-  /** Render relative ("2 weeks ago") or absolute ("Jun 09 2026, 18:42:03 UTC") time. */
+  /**
+   * How to render the date:
+   * - `absolute` — the full date and time ("Jun 09 2026, 18:42:03 UTC")
+   * - `relative` — idiomatic distance from now, in either direction ("2 weeks ago", "next week")
+   * - `countdown` — exact time left until a future date ("10 days"), a placeholder once it passes
+   */
   displayAs?: FormatDateDisplayMode;
   /** Time zone used for absolute formatting. Defaults to "UTC". */
   timeZone?: string;
   /** BCP 47 locale used for formatting. Defaults to "en-US". */
   locale?: string;
-  /** When relative, show a tooltip with the absolute time on hover/focus. Defaults to true. */
+  /** Unless absolute, show a tooltip with the absolute time on hover/focus. Defaults to true. */
   tooltip?: boolean;
-  /** When relative, re-render on an interval so the value stays current. Defaults to true. */
+  /** Unless absolute, re-render on an interval so the value stays current. Defaults to true. */
   live?: boolean;
   /** Override the Intl options used for absolute formatting. */
   absoluteOptions?: Intl.DateTimeFormatOptions;
@@ -58,6 +63,30 @@ const RELATIVE_DIVISIONS: { amount: number; unit: Intl.RelativeTimeFormatUnit }[
 // Re-render relative time so values like "Just now" stay accurate without busy-looping
 const LIVE_INTERVAL_MS = 30_000;
 
+const MINUTE_MS = 60_000;
+const HOUR_MS = 60 * MINUTE_MS;
+const DAY_MS = 24 * HOUR_MS;
+const YEAR_MS = 365.25 * DAY_MS;
+const MONTH_MS = YEAR_MS / 12;
+
+// Below this a span is too short to put a number on
+const JUST_NOW_MS = 45_000;
+
+// Beyond a quarter an exact day count reads as noise rather than as a deadline
+const COARSE_AFTER_MS = 90 * DAY_MS;
+
+// Units a span may be reported in, largest first
+const FINE_UNITS = [
+  { ms: DAY_MS, unit: 'day' },
+  { ms: HOUR_MS, unit: 'hour' },
+  { ms: MINUTE_MS, unit: 'minute' },
+] as const satisfies readonly { ms: number; unit: Intl.RelativeTimeFormatUnit }[];
+
+const COARSE_UNITS = [
+  { ms: YEAR_MS, unit: 'year' },
+  { ms: MONTH_MS, unit: 'month' },
+] as const satisfies readonly { ms: number; unit: Intl.RelativeTimeFormatUnit }[];
+
 // Shown when no date is provided, as distinct from a date that fails to parse
 const NO_DATE_PLACEHOLDER = '---';
 
@@ -83,9 +112,9 @@ function formatAbsolute(
 }
 
 function formatRelative(date: Date, now: Date, locale: string): string {
-  let duration = (date.getTime() - now.getTime()) / 1000;
-  if (Math.abs(duration) < 45) return 'Just now';
+  if (Math.abs(date.getTime() - now.getTime()) < JUST_NOW_MS) return 'Just now';
 
+  let duration = (date.getTime() - now.getTime()) / 1000;
   const rtf = new Intl.RelativeTimeFormat(locale, { numeric: 'auto' });
   for (const division of RELATIVE_DIVISIONS) {
     if (Math.abs(duration) < division.amount) {
@@ -94,6 +123,47 @@ function formatRelative(date: Date, now: Date, locale: string): string {
     duration /= division.amount;
   }
   return 'Just now';
+}
+
+// The largest unit the span actually fills, promoted only once rounding carries it into the next
+function measureSpan(spanMs: number): { value: number; unit: Intl.RelativeTimeFormatUnit } {
+  const units = spanMs < COARSE_AFTER_MS ? FINE_UNITS : COARSE_UNITS;
+
+  const index = units.findIndex(({ ms }) => spanMs >= ms);
+  if (index === -1) return { value: 1, unit: units[units.length - 1].unit };
+
+  const { ms, unit } = units[index];
+  const value = Math.round(spanMs / ms);
+
+  const next = units[index - 1];
+  if (next && value * ms >= next.ms) {
+    return { value: Math.round(spanMs / next.ms), unit: next.unit };
+  }
+
+  return { value, unit };
+}
+
+// Null once the date has passed, leaving the placeholder to the caller
+function formatCountdown(date: Date, now: Date, locale: string): string | null {
+  const spanMs = date.getTime() - now.getTime();
+  if (spanMs <= 0) return null;
+
+  const { value, unit } = measureSpan(spanMs);
+  return new Intl.NumberFormat(locale, { style: 'unit', unit, unitDisplay: 'long' }).format(value);
+}
+
+// aria-label is unreliable on a generic element, so the announced text is a real node
+function DatePlaceholder({
+  label,
+  className,
+  ...props
+}: { label: string } & React.HTMLAttributes<HTMLElement>) {
+  return (
+    <span className={cn(styles['format-date'], className)} {...props}>
+      <span className={styles['visually-hidden']}>{label}</span>
+      <span aria-hidden="true">{NO_DATE_PLACEHOLDER}</span>
+    </span>
+  );
 }
 
 function FormatDate({
@@ -112,22 +182,18 @@ function FormatDate({
   const [now, setNow] = React.useState(() => new Date());
   const [mounted, setMounted] = React.useState(false);
 
-  const isRelative = displayAs === 'relative';
+  const isAbsolute = displayAs === 'absolute';
 
   React.useEffect(() => setMounted(true), []);
 
   React.useEffect(() => {
-    if (!isRelative || !live) return;
+    if (isAbsolute || !live) return;
     const id = setInterval(() => setNow(new Date()), LIVE_INTERVAL_MS);
     return () => clearInterval(id);
-  }, [isRelative, live]);
+  }, [isAbsolute, live]);
 
   if (missing) {
-    return (
-      <span className={cn(styles['format-date'], className)} aria-label="No date" {...props}>
-        {NO_DATE_PLACEHOLDER}
-      </span>
-    );
+    return <DatePlaceholder label="No date" className={className} {...props} />;
   }
 
   if (!parsed) {
@@ -146,7 +212,7 @@ function FormatDate({
     locale
   );
 
-  if (!isRelative) {
+  if (isAbsolute) {
     return (
       <time dateTime={machineValue} className={cn(styles['format-date'], className)} {...props}>
         {absolute}
@@ -155,12 +221,21 @@ function FormatDate({
   }
 
   // Until mounted, show the absolute string so SSR and first client render match
-  const relative = mounted ? formatRelative(parsed, now, locale) : absolute;
+  const measured = !mounted
+    ? absolute
+    : displayAs === 'relative'
+      ? formatRelative(parsed, now, locale)
+      : formatCountdown(parsed, now, locale);
+
+  // Matches the missing-date placeholder rather than leaving a focusable, tooltipped "---"
+  if (measured === null) {
+    return <DatePlaceholder label="Date has passed" className={className} {...props} />;
+  }
 
   if (!tooltip) {
     return (
       <time dateTime={machineValue} className={cn(styles['format-date'], className)} {...props}>
-        {relative}
+        {measured}
       </time>
     );
   }
@@ -175,7 +250,7 @@ function FormatDate({
             className={cn(styles['format-date'], styles['format-date--interactive'], className)}
             {...props}
           >
-            {relative}
+            {measured}
           </time>
         </TooltipTrigger>
         <TooltipContent>{absolute}</TooltipContent>

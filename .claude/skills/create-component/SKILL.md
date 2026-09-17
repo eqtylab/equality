@@ -1,6 +1,10 @@
 ---
 name: create-component
 description: Add a new component to the design system
+metadata:
+  # Maintainer-only: hidden from `npx skills add eqtylab/equality`, which
+  # should offer consumers the equality-design-system skill, not this one.
+  internal: true
 ---
 
 # Create Component

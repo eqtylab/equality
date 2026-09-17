@@ -1,10 +1,12 @@
 ---
-title: "Format Date"
-description: "Render a date as relative or absolute time using a semantic <time> element"
+layout: "@demo/layouts/mdx-layout.astro"
+heading: "Format Date"
+description: "Render a date as absolute, relative, or an exact countdown using a semantic <time> element"
 ---
 
 import { FormatDate } from "@eqtylab/equality";
 import {
+  FormatDateCountdownDemo,
   FormatDateIsoDemo,
   FormatDateOptionsDemo,
   FormatDateRelativeDemo,
@@ -13,15 +15,27 @@ import {
 
 ## Overview
 
-The <code>FormatDate</code> component renders a date as either **relative** time (e.g. "2 weeks ago", "Just now") or **absolute** time (e.g. "Jun 09 2026, 18:42:03 UTC"). It always renders as a semantic HTML [`<time>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/time) element with a `dateTime` attribute.
+The <code>FormatDate</code> component renders a date in one of three ways: **absolute** time (e.g. "Jun 09 2026, 18:42:03 UTC"), **relative** time (e.g. "2 weeks ago", "Just now"), or a **countdown** to a future date ("10 days"). It always renders as a semantic HTML [`<time>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/time) element with a `dateTime` attribute.
 
-When showing relative time, a tooltip reveals the absolute time on hover or keyboard focus.
+In every mode but absolute, a tooltip reveals the absolute time on hover or keyboard focus, and the value updates on an interval.
 
 If no date is provided (`null`, `undefined`, or an empty string), the component renders a `---` placeholder instead.
 
+### Choosing between relative and countdown
+
+`relative` reads like prose; `countdown` is for a deadline you compare down a column.
+
+`relative` phrases distance idiomatically, which means it deliberately collapses ranges — everything from 7 to 10 days away is "next week", and both 37 and 43 days away are "next month". That reads well in a sentence but hides differences between rows. `countdown` keeps days exact out to three months, so two dates a week apart never render as the same string.
+
+`countdown` is also **forward-only**. `relative` flips direction automatically, so a date that has already passed renders "2 days ago" even in a column headed "Expires In". `countdown` renders the `---` placeholder instead, so a table cell does not need a guard of its own.
+
+It renders a bare magnitude, so it reads under its own label ("Expires In: 10 days") rather than repeating the preposition. The phrasing is localized, following the `locale` rather than being assembled in English.
+
+For historical timestamps, reach for `relative`. There is deliberately no exact backward equivalent — mixing exact and idiomatic renderings of the same kind of fact reads as inconsistency rather than as precision.
+
 ## Time zones
 
-Absolute time is formatted in **UTC by default**. To render in a different zone, pass a `timeZone` (e.g. `"America/New_York"`). Relative time reads the same everywhere.
+Absolute time is formatted in **UTC by default**. To render in a different zone, pass a `timeZone` (e.g. `"America/New_York"`). The other two modes measure a distance rather than name an instant, so they read the same in every zone.
 
 ## Usage
 
@@ -69,6 +83,25 @@ Set `displayAs="relative"` to render distance from now. The value updates automa
 ```
 
 Disable the tooltip with `tooltip={false}`, or stop the auto-updating with `live={false}`.
+
+### Countdown
+
+Set `displayAs="countdown"` to show the time left until a future date. The span is reported in the **largest unit it actually fills**, rounded to the nearest whole, and moved up a unit only when that rounding reaches one — so 31 minutes reads "31 minutes" rather than "1 hour", while 59.5 minutes reads "1 hour" rather than "60 minutes". Days stay exact out to three months, after which the value coarsens to months and then years.
+
+A date that has already passed renders the `---` placeholder — the same non-interactive element used for a missing date, carrying its own accessible label rather than leaving a focusable dash.
+
+<FormatDateCountdownDemo client:only="react" />
+
+```tsx
+<FormatDate date={credential.expiresAt} displayAs="countdown" />
+```
+
+The unit names are localized through `Intl`, so `locale` applies:
+
+```tsx
+<FormatDate date={expiresAt} displayAs="countdown" locale="fr-FR" /> // "10 jours"
+<FormatDate date={expiresAt} displayAs="countdown" locale="de-DE" /> // "10 Tage"
+```
 
 ### Custom formatting
 
@@ -123,12 +156,12 @@ When `date` is missing — `null`, `undefined`, or an empty string — the compo
 
 ## Props
 
-| Name              | Description                                                             | Type                               | Default    | Required |
-| ----------------- | ----------------------------------------------------------------------- | ---------------------------------- | ---------- | -------- |
-| `date`            | The date to display                                                     | `string`, `number`, `Date`, `null` | —          | ✅       |
-| `displayAs`       | Render relative or absolute time                                        | `relative`, `absolute`             | `absolute` | ❌       |
-| `timeZone`        | Time zone used for absolute formatting                                  | `string`                           | `UTC`      | ❌       |
-| `locale`          | BCP 47 locale used for formatting                                       | `string`                           | `en-US`    | ❌       |
-| `tooltip`         | When relative, show a tooltip with the absolute time on hover/focus     | `boolean`                          | `true`     | ❌       |
-| `live`            | When relative, re-render on an interval so the value stays current      | `boolean`                          | `true`     | ❌       |
-| `absoluteOptions` | Override the `Intl.DateTimeFormat` options used for absolute formatting | `Intl.DateTimeFormatOptions`       | —          | ❌       |
+| Name              | Description                                                             | Type                                | Default    | Required |
+| ----------------- | ----------------------------------------------------------------------- | ----------------------------------- | ---------- | -------- |
+| `date`            | The date to display                                                     | `string`, `number`, `Date`, `null`  | —          | ✅       |
+| `displayAs`       | How to render the date                                                  | `absolute`, `relative`, `countdown` | `absolute` | ❌       |
+| `timeZone`        | Time zone used for absolute formatting                                  | `string`                            | `UTC`      | ❌       |
+| `locale`          | BCP 47 locale used for formatting                                       | `string`                            | `en-US`    | ❌       |
+| `tooltip`         | Unless absolute, show a tooltip with the absolute time on hover/focus   | `boolean`                           | `true`     | ❌       |
+| `live`            | Unless absolute, re-render on an interval so the value stays current    | `boolean`                           | `true`     | ❌       |
+| `absoluteOptions` | Override the `Intl.DateTimeFormat` options used for absolute formatting | `Intl.DateTimeFormatOptions`        | —          | ❌       |
