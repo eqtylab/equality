@@ -260,12 +260,12 @@ Use [container queries](https://tailwindcss.com/docs/responsive-design#what-are-
 
 ```tsx
 <div className="@container">
-  <TableContainer className="[--table-columns:1fr_auto_auto] @md:[--table-columns:1fr_1fr_auto_auto] @lg:[--table-columns:1fr_1fr_auto_auto_auto]">
+  <TableContainer className="@md:[--table-columns:1fr_1fr_auto_auto] @lg:[--table-columns:1fr_1fr_auto_auto_auto] [--table-columns:1fr_auto_auto]">
     <TableHeader>
       <TableRow>
         <TableHead>Name</TableHead>
-        <TableHead className="hidden @md:block">Email</TableHead>
-        <TableHead className="hidden @lg:block">Role</TableHead>
+        <TableHead className="@md:block hidden">Email</TableHead>
+        <TableHead className="@lg:block hidden">Role</TableHead>
         <TableHead>Status</TableHead>
         <TableHead />
       </TableRow>
@@ -273,8 +273,8 @@ Use [container queries](https://tailwindcss.com/docs/responsive-design#what-are-
     <TableBody>
       <TableRow>
         <TableCell>Alice Cooper</TableCell>
-        <TableCell className="hidden @md:block">alice@example.com</TableCell>
-        <TableCell className="hidden @lg:block">Admin</TableCell>
+        <TableCell className="@md:block hidden">alice@example.com</TableCell>
+        <TableCell className="@lg:block hidden">Admin</TableCell>
         <TableCell>
           <Badge variant="success">Active</Badge>
         </TableCell>
