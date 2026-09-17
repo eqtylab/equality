@@ -1,8 +1,6 @@
 dist/
 .astro/
 *.tsbuildinfo
-playground/dist/
-playground/.astro/
 tests/fixtures/*/dist/
 tests/fixtures/*/.astro/
 node_modules/
