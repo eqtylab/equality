@@ -22,3 +22,4 @@ Run `pnpm install` to get dependencies and `pnpm build` in the repo root to rend
 - Always reference the `create-component` skill when creating a new component, or making changes in usability to an existing component.
 - When a new component supersedes a pattern people hand-roll, add it to the name translation table in `packages/skills/equality-design-system/SKILL.md`. That table is what stops agents in other repos rebuilding something we already ship.
 - Strive to create accessible components that will function with keyboard navigation, screen reader usage, and accessible markup in mind. Alert the developer if they are specifically requesting that you implement something that won't be accessible.
+- Do not over-comment the code. Comments should be added to warn others of very negative things that will happen if you change code. Comments should NOT be added for the sake of describing what code does.
