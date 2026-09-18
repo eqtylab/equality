@@ -105,7 +105,7 @@ const DialogDescription = React.forwardRef<
 DialogDescription.displayName = DialogPrimitive.Description.displayName;
 
 const DialogContent = ({ className, ...props }: React.HTMLAttributes<HTMLDivElement>) => (
-  <div className={cn(styles['dialog-body'], 'styled-vertical-scrollbar', className)} {...props} />
+  <div className={cn(styles['dialog-body'], className)} {...props} />
 );
 DialogContent.displayName = 'DialogContent';
 

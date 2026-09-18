@@ -1,15 +1,37 @@
 ---
 title: "Scroll Area"
-description: "Scrollable container with custom scrollbars"
+description: "Deprecated scrollable container with custom scrollbars"
+deprecated:
+  message: "Deprecated in favour of browser-native scroll areas. Set an overflow and a height on your own element instead."
 ---
 
 import { ScrollArea } from "@eqtylab/equality";
 
 ## Overview
 
-Scroll Area is a container that adds a styled, cross-browser scrollbar to overflowing content, replacing the inconsistent native one. It's built on [Radix UI Scroll Area](https://www.radix-ui.com/primitives/docs/components/scroll-area), so the scrollbar is themable and unobtrusive while normal wheel, touch, and keyboard scrolling continue to work.
+Scroll Area wrapped content in [Radix UI Scroll Area](https://www.radix-ui.com/primitives/docs/components/scroll-area) so that overflowing content got a styled, cross-browser scrollbar instead of the native one.
 
-Give the Scroll Area a constrained height (via `className` or `style`); when its content is taller, a vertical scrollbar appears. Use it for long lists, panels, and menus where you want a consistent scrollbar treatment.
+This component is deprecated. Browsers now render restrained, theme-aware scrollbars of their own. New code should use a native scrollable element. Existing usage will be removed in a future release.
+
+## Migrating
+
+Replace the component with an element that scrolls natively. Give it a height and an overflow, and leave the scrollbar alone — the browser draws one that already matches the user's platform and colour scheme:
+
+```tsx
+// Before
+<ScrollArea className="h-48 max-w-lg">
+  <div>{/* long content */}</div>
+</ScrollArea>
+
+// After
+<div className="h-48 max-w-lg overflow-y-auto">
+  <div>{/* long content */}</div>
+</div>
+```
+
+Use `overflow-x-auto` for horizontal scrolling, in place of `<ScrollBar orientation="horizontal" />`.
+
+Do not restyle the scrollbar. The `styled-vertical-scrollbar` and `styled-horizontal-scrollbar` utilities have been removed, and `::-webkit-scrollbar` rules of your own are a WebKit-only fork of a control the browser already themes. Dialog and Sheet now scroll this way too.
 
 ## Usage
 
