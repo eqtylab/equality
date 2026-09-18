@@ -18,10 +18,21 @@ interface Props {
 }
 
 const { title, description, nav, toc, showToc = true, splash = false } = Astro.props;
+
+// A section's own index page if it has one, else its first child. Never the sidebar repeated.
+const suggested = nav
+  .map((node) => ({ label: node.label, href: node.href ?? node.children?.[0]?.href }))
+  .filter((item): item is { label: string; href: string } => !!item.href)
+  .slice(0, 4);
 ---
 
 <DocsShell title={title} description={description}>
-  <Header />
+  {/* A prop, not slot fallback: Astro registers a named slot at compile time, so a forwarded
+      slot always counts as filled and the fallback never runs. */}
+  <Header showSearch={!Astro.slots.has('search')} suggested={suggested}>
+    <slot name="search" slot="search" />
+    <slot name="versions" slot="versions" />
+  </Header>
   <div class={styles.layout}>
     {!splash && <Sidebar nodes={nav} />}
     <main class={styles.main} data-splash={splash ? '' : undefined}>
