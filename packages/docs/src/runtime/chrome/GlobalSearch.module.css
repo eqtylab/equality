@@ -1,0 +1,125 @@
+@reference '../styles/theme.css';
+
+.search {
+  @apply w-full min-w-0;
+}
+
+/* Tokens, not a copy of Input: a theme change carries, an Input restyle does not. */
+.trigger {
+  @apply border-border bg-background flex h-10 w-full min-w-0 items-center gap-2 rounded-md border p-2;
+  @apply text-text-secondary cursor-pointer text-sm;
+  @apply focus-ring;
+}
+
+/* min-w-0 so a long label truncates instead of pushing the shortcut out of the header. */
+.triggerLabel {
+  @apply min-w-0 flex-1 truncate text-left;
+}
+
+/* No room for it on a narrow header, and the shortcut still works. */
+.shortcut {
+  @apply bg-background-raised text-text-secondary pointer-events-none hidden rounded border px-1.5 py-0.5 font-mono text-xs sm:inline-block;
+}
+
+.srOnly {
+  @apply sr-only;
+}
+
+.dialog {
+  @apply p-0;
+}
+
+/* Class doubled to beat Equality's centring, which sits at the same specificity.
+ * Never override `transform` here: the entrance animation uses it. */
+.dialog.dialog {
+  top: 10vh;
+  translate: -50% 0;
+}
+
+/**
+ * FRAGILE. Matches a generated class name by substring, so renaming `.dialog-overlay` in
+ * `packages/ui` or reordering Radix's portal children kills the glass with no error. Only
+ * the `backdrop-filter` browser test catches it. Same hazard as `[class*='code-block']`
+ * in CodeFence.module.css.
+ *
+ * Exists because DialogContainer passes its overlay no className. Delete when it does.
+ * Dropping `:has(+ .dialog)` puts the glass on every dialog on the site.
+ */
+:global([class*='dialog-overlay']):has(+ .dialog) {
+  @apply bg-background/25;
+  -webkit-backdrop-filter: blur(18px);
+  backdrop-filter: blur(6px);
+}
+
+.command {
+  @apply w-full border-none;
+}
+
+.list {
+  @apply overflow-y-auto pb-2;
+  max-height: min(60vh, 28rem);
+}
+
+.group {
+  @apply px-1;
+}
+.group > * + * {
+  @apply mt-1;
+}
+
+.item {
+  @apply cursor-pointer;
+}
+.item[data-selected='true'] {
+  @apply bg-lilac-300/50;
+}
+html[data-equality-theme='dark'] .item[data-selected='true'] {
+  @apply bg-lilac-600/50;
+}
+
+.state {
+  @apply flex flex-col items-center gap-3 px-4 py-10;
+}
+
+.recent {
+  @apply text-text-secondary text-sm;
+}
+
+.hit {
+  @apply flex min-w-0 flex-1 flex-col gap-0.5;
+}
+.hitTitle {
+  @apply text-text-primary truncate text-sm font-medium;
+}
+.hitSummary {
+  @apply text-text-secondary line-clamp-1 text-xs;
+}
+/* Location, not identity: separated from the title/description pair above it. */
+.hitCrumb {
+  @apply text-text-tertiary mt-1 truncate text-xs;
+}
+.more {
+  @apply text-brand-primary cursor-pointer justify-center text-sm;
+}
+
+/**
+ * Equality has no highlight token, so these name steps off the option scale directly. Not
+ * `badge-*`: a badge means "this has this status", a mark means "this matched your query".
+ * Not `brand-primary` either, which is the same value as the selected row, so a mark painted
+ * with it vanishes exactly when a row is selected.
+ *
+ * Each theme names its own step because `lilac-*` carries no dark values. Lift this into
+ * chrome.css as `--eq-docs-highlight-*` when a second consumer appears; prose `<mark>` is the
+ * likely one. See the equality-token-gaps feature.
+ */
+.mark,
+.hitSummary mark {
+  @apply rounded px-0.5;
+  background-color: var(--color-lilac-200);
+  color: var(--color-lilac-800);
+}
+html[data-equality-theme='dark'] .mark,
+html[data-equality-theme='dark'] .hitSummary mark {
+  background-color: var(--color-lilac-700);
+  color: var(--color-lilac-200);
+}
