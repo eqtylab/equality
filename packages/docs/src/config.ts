@@ -82,10 +82,8 @@ export const docsConfigSchema = z.object({
 
   search: z
     .object({
-      /** 'pagefind' indexes built HTML; 'titles' is a lightweight JSON index. */
-      provider: z.enum(['pagefind', 'titles', 'none']).default('pagefind'),
-      /** Pagefind needs a build, so dev falls back to the titles index. */
-      devProvider: z.enum(['titles', 'none']).default('titles'),
+      /** 'pagefind' indexes the built HTML. There is no index in `astro dev`. */
+      provider: z.enum(['pagefind', 'none']).default('pagefind'),
     })
     .prefault({}),
 
