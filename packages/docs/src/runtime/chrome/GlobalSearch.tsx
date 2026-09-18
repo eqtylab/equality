@@ -28,7 +28,7 @@ const MAX_RECENT = 5;
 interface PagefindDoc {
   url: string;
   excerpt: string;
-  /** Stamped by Prose.astro: `title` from the heading, `group` from `_group.yaml`. */
+  /** Stamped by Prose.astro. `crumbs` is the authored `_group.yaml` trail, not the URL. */
   meta?: { title?: string; crumbs?: string; description?: string };
 }
 
@@ -55,7 +55,7 @@ interface Hit {
   id: string;
   url: string;
   title: string;
-  /** The page's own one-liner. Falls back to Pagefind's excerpt where a page has none. */
+  /** Frontmatter description, or Pagefind's excerpt where a page has none. */
   summary: string;
   isExcerpt: boolean;
   crumbs?: string;
@@ -95,10 +95,7 @@ function getRecentPages(): RecentPage[] {
   }
 }
 
-/**
- * Reads the page it is already on, from the same attributes the search index is built from.
- * A visited page is one click; a saved query has to be re-read and re-run first.
- */
+/** Reads the page it is on from the same attributes the search index is built from. */
 function recordCurrentPage(): RecentPage[] {
   const heading = document.querySelector('h1[data-pagefind-meta="title"]');
   const article = document.querySelector('article[data-pagefind-body]');
@@ -236,8 +233,7 @@ export default function GlobalSearch({ suggested = [] }: Props) {
     window.location.assign(hit.url);
   }
 
-  // The page you are on is recorded but never offered back to you, which also means a first
-  // visit has nothing recent and falls through to the nav's top sections.
+  // Excluding the current page is also what makes a first visit fall through to `suggested`.
   const elsewhere = recentPages.filter((page) => page.url !== window.location.pathname);
   const landing = elsewhere.length > 0 ? elsewhere : suggested.map(toRecent);
   const landingHeading = elsewhere.length > 0 ? 'Recently viewed' : 'Start here';

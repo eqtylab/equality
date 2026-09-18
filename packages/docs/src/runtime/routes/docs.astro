@@ -47,8 +47,7 @@ const crumbs = trail.length > 1 ? trail.map((node) => node.label).join(' › ') 
 // Indexed only, never rendered: a page with no `description` still needs a result summary.
 const fallbackSummary = entry.data.description ? undefined : firstParagraph(entry.body);
 
-// The twin is file-shaped (/x/label.md) beside the directory-shaped page; the
-// 'index' fallback must match routes/docs-md.ts.
+// File-shaped (/x/label.md) beside the directory-shaped page; 'index' must match docs-md.ts.
 const markdownHref = CONFIG.routing.markdownTwins
   ? `${joinPath(import.meta.env.BASE_URL, CONFIG.pathPrefix, idToPath(entry.id) || 'index')}.md`
   : undefined;
