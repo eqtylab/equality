@@ -109,7 +109,7 @@ const SheetDescription = React.forwardRef<
 SheetDescription.displayName = SheetPrimitive.Description.displayName;
 
 const SheetContent = ({ className, ...props }: React.HTMLAttributes<HTMLDivElement>) => (
-  <div className={cn(styles['sheet-body'], 'styled-vertical-scrollbar', className)} {...props} />
+  <div className={cn(styles['sheet-body'], className)} {...props} />
 );
 SheetContent.displayName = 'SheetContent';
 

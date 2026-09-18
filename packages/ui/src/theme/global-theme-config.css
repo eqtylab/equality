@@ -10,7 +10,6 @@
 @import './generated/tailwind-tokens.css';
 
 @import './theme-base.css';
-@import './theme-components.css';
 @import './theme-utilities.css';
 
 /* NOTE: preflight is deliberately NOT imported here. It is an opt-in import so
