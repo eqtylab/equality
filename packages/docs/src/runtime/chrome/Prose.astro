@@ -12,9 +12,14 @@ interface Props {
   markdownHref?: string;
   /** The page's authored MDX, inlined for the copy action. */
   source?: string;
+  /** Ancestor trail ending in this page, published to the search index. */
+  crumbs?: string;
+  /** Stands in for `description` in the search index when a page has none. Not rendered. */
+  fallbackSummary?: string;
 }
 
-const { title, description, deprecated, markdownHref, source } = Astro.props;
+const { title, description, deprecated, markdownHref, source, crumbs, fallbackSummary } =
+  Astro.props;
 
 const deprecation =
   deprecated === true ? {} : deprecated && typeof deprecated === 'object' ? deprecated : null;
@@ -25,10 +30,23 @@ const deprecationMessage = deprecation?.message
   : undefined;
 ---
 
-<article class="eq-prose" data-eq-prose data-pagefind-body>
-  <header class={styles.header} data-eq-chrome>
+<article
+  class="eq-prose"
+  data-eq-prose
+  data-pagefind-body
+  data-pagefind-meta={crumbs ? `crumbs:${crumbs}` : undefined}
+>
+  <header
+    class={styles.header}
+    data-eq-chrome
+    data-pagefind-meta={fallbackSummary ? `description:${fallbackSummary}` : undefined}
+  >
     <h1 class={styles.title} data-pagefind-meta="title">{title}</h1>
-    {description && <p class={styles.description}>{description}</p>}
+    {description && (
+      <p class={styles.description} data-pagefind-meta="description">
+        {description}
+      </p>
+    )}
   </header>
 
   {

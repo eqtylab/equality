@@ -3,7 +3,8 @@ import { getCollection, render } from 'astro:content';
 import CONFIG from 'virtual:eqty-docs/config';
 import { docsHref, idToPath, joinPath, normalizePath } from '@eqtylab/docs/paths';
 import DocsPage from '../layouts/DocsPage.astro';
-import { buildTocTree, docsNav, pathContext } from '../lib/nav-data.ts';
+import { breadcrumbsFor, buildTocTree, docsNav, pathContext } from '../lib/nav-data.ts';
+import { firstParagraph } from '../lib/summary.ts';
 import { mdxComponents } from '../lib/mdx-components.ts';
 import Prose from '../chrome/Prose.astro';
 
@@ -39,6 +40,13 @@ const toc = showToc
 const nav = await docsNav(Astro.url.pathname);
 const splash = entry.data.template === 'splash';
 
+// Trail is [group, ..., page]; a length of one means the page has no section above it.
+const trail = breadcrumbsFor(nav, Astro.url.pathname);
+const crumbs = trail.length > 1 ? trail.map((node) => node.label).join(' › ') : undefined;
+
+// Indexed only, never rendered: a page with no `description` still needs a result summary.
+const fallbackSummary = entry.data.description ? undefined : firstParagraph(entry.body);
+
 // The twin is file-shaped (/x/label.md) beside the directory-shaped page; the
 // 'index' fallback must match routes/docs-md.ts.
 const markdownHref = CONFIG.routing.markdownTwins
@@ -60,6 +68,8 @@ const markdownHref = CONFIG.routing.markdownTwins
     deprecated={entry.data.deprecated}
     markdownHref={markdownHref}
     source={entry.body}
+    crumbs={crumbs}
+    fallbackSummary={fallbackSummary}
   >
     <Content components={mdxComponents} />
   </Prose>
