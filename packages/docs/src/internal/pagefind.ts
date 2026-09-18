@@ -1,11 +1,9 @@
 /**
- * Pagefind wired directly rather than through `astro-pagefind`. That wrapper does the same
- * job, but publishes TypeScript source, and Node cannot strip types under node_modules when
- * this integration reaches it from its own bundle. `pagefind` itself ships compiled JS.
+ * Not `astro-pagefind`: it ships TypeScript, and Node will not compile that under
+ * node_modules when this integration reaches it from its own bundle.
  *
- * Indexing only, by choice. There is no dev-server middleware: Pagefind reads built HTML, so
- * an index served in `astro dev` could only ever describe the previous build. The palette
- * says search needs a build rather than answering with stale results.
+ * Indexing only. A dev-server middleware could serve nothing but the previous build, so
+ * `astro dev` has no index and the palette says so.
  */
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -14,10 +12,9 @@ import type { AstroIntegration } from 'astro';
 const INDEX_DIR = 'pagefind';
 
 /**
- * Pagefind also writes four search widgets of its own, about 365 KB we never fetch because the
- * palette drives the headless API. Deleting them after the write was built and reversed: the
- * only thing that could catch an upgrade making one of them a dependency is a browser test,
- * and those do not run in CI. Weight nobody downloads beats search that breaks after deploy.
+ * Pagefind also writes ~365 KB of its own search widgets, which the headless API never fetches.
+ * Deleting them was built and reversed: only a browser test could catch an upgrade making one
+ * a dependency, and those do not run in CI. Weight nobody downloads beats search that breaks.
  */
 
 /** Pagefind collects errors per step and carries on; any of them means no usable index. */

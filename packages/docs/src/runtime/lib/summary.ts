@@ -2,7 +2,6 @@
 
 const MAX_LENGTH = 140;
 
-/** Lines that are never prose, in the order they tend to appear in an MDX file. */
 function isSkippable(line: string): boolean {
   return (
     line === '' ||
@@ -36,10 +35,7 @@ function truncate(text: string): string {
   return `${cut.slice(0, lastSpace > 0 ? lastSpace : MAX_LENGTH).trimEnd()}…`;
 }
 
-/**
- * First paragraph of running prose in an MDX body. Frontmatter is already stripped by the
- * content loader, so this walks from the top past imports, headings, tables, lists and fences.
- */
+/** First paragraph of prose. Frontmatter is already stripped by the content loader. */
 export function firstParagraph(body: string | undefined): string | undefined {
   if (!body) return undefined;
 
