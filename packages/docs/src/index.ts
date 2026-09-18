@@ -4,6 +4,7 @@ import { resolveConfig, type DocsConfig, type DocsUserConfig } from './config.ts
 import { resolveDocsEnv, type DocsEnv } from './env.ts';
 import { assertMdxOnly } from './internal/assert-mdx-only.ts';
 import { microlighterGrammarsPlugin } from './internal/microlighter-grammars.ts';
+import { pagefindIntegration } from './internal/pagefind.ts';
 import { rehypeBaseUrl } from './internal/rehype-base-url.ts';
 import { rehypeCodeFence } from './internal/rehype-code-fence.ts';
 import { rehypeProseScope } from './internal/rehype-prose-scope.ts';
@@ -41,11 +42,6 @@ function plannedRoutes(cfg: DocsConfig) {
       pattern: '/llms.txt',
       entrypoint: '@eqtylab/docs/routes/llms-txt.ts',
       enabled: cfg.routing.markdownTwins,
-    },
-    {
-      pattern: '/_docs/search.json',
-      entrypoint: '@eqtylab/docs/routes/search-index.ts',
-      enabled: cfg.search.provider !== 'none' || cfg.search.devProvider !== 'none',
     },
     {
       pattern: '/404',
@@ -108,6 +104,9 @@ export default function docs(
           if (!integrationNames.has('@astrojs/react')) {
             const { default: react } = await import('@astrojs/react');
             added.push(react());
+          }
+          if (cfg.search.provider === 'pagefind' && !integrationNames.has('pagefind')) {
+            added.push(pagefindIntegration());
           }
         }
 

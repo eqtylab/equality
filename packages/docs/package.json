@@ -1,7 +1,7 @@
 {
   "name": "@eqtylab/docs",
   "description": "Astro documentation framework built on the Equality design system",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "license": "Apache-2.0",
   "homepage": "https://equality.eqtylab.io/",
   "repository": {
@@ -97,6 +97,7 @@
   "dependencies": {
     "@tailwindcss/vite": "^4.1.16",
     "github-slugger": "^2.0.0",
+    "pagefind": "^1.5.2",
     "tailwindcss": "^4.1.16",
     "tinyglobby": "^0.2.15",
     "unist-util-visit": "^5.1.0",

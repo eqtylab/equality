@@ -30,7 +30,8 @@ export const collections = docsCollections();
 ```
 
 Then write MDX under `src/content/docs/`. That's the whole setup: the integration injects the
-page routes, a Markdown twin per page, `/llms.txt`, a search index, and a 404.
+page routes, a Markdown twin per page, `/llms.txt`, and a 404. Search is built separately, at the
+end of `astro build`; see [Search needs a build](#search-needs-a-build).
 
 Content is **MDX-only**. Component overrides apply exclusively to MDX, so a `.md` page would
 render its tables, code fences and callouts differently from every other page. A `.md` file in
@@ -124,6 +125,30 @@ from the first row at build time.
 
 This is also why content is MDX-only — these overrides are the mechanism, and Astro's
 plain-Markdown pipeline has no component substitution at all.
+
+## Search needs a build
+
+Search is full-text, over the built HTML, via [Pagefind](https://pagefind.app). The integration
+runs it in `astro:build:done` and writes the index to `dist/pagefind/`.
+
+**There is no index in `astro dev`, deliberately.** Pagefind reads built HTML, so anything served
+in dev could only ever describe the previous build. Rather than answer with stale results, the
+search control says a build is needed. Run `astro build` to exercise search; a page you just wrote
+appears after the next build.
+
+What gets indexed is set by the markup, not by config:
+
+| Attribute              | Where                            | Effect                                |
+| ---------------------- | -------------------------------- | ------------------------------------- |
+| `data-pagefind-body`   | the `<article>`                  | Bounds the index to page content      |
+| `data-pagefind-ignore` | header, sidebar, TOC, action row | Keeps chrome out of every result      |
+| `data-pagefind-meta`   | the `<h1>` and the `<article>`   | Carries `title` and the `group` label |
+
+The `group` value is the section's `label` from `_group.yaml`, so search headings and the sidebar
+cannot drift apart.
+
+The control itself is a command palette in the header, opened by click, `⌘K` or `/`. Fill the
+header's `search` slot to replace it, or set `search.provider: 'none'` to drop it entirely.
 
 ## Versioned deploys
 

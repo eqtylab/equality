@@ -16,8 +16,13 @@
 .title {
   @apply text-base font-semibold;
 }
+/* min-w-0: without it the search pushes the theme control off a narrow header. */
+.search {
+  @apply flex min-w-0 flex-1 justify-center;
+  max-width: 28rem;
+}
 .actions {
-  @apply flex items-center gap-2;
+  @apply flex shrink-0 items-center gap-2;
 }
 .navLink {
   @apply text-text-secondary hover:text-text-primary flex items-center gap-1.5 rounded-md px-2 py-1.5 text-sm no-underline transition-colors;

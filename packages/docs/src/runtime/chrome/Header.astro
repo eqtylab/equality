@@ -2,8 +2,18 @@
 import CONFIG from 'virtual:eqty-docs/config';
 import { withBase } from '@eqtylab/docs/paths';
 import { Icon } from '@eqtylab/equality';
+import GlobalSearch from './GlobalSearch.tsx';
 import ThemeToggle from './ThemeToggle.tsx';
 import styles from './Header.module.css';
+
+interface Props {
+  /** First page of each top-level section. Shown before a reader has any history. */
+  suggested?: Array<{ label: string; href: string }>;
+  /** False when the page forwards a consumer-provided `search` slot. */
+  showSearch?: boolean;
+}
+
+const { showSearch = true, suggested = [] } = Astro.props;
 
 const paths = { base: import.meta.env.BASE_URL, pathPrefix: CONFIG.pathPrefix };
 const homeHref = withBase(CONFIG.pathPrefix ? `/${CONFIG.pathPrefix}/` : '/', {
@@ -27,8 +37,15 @@ const homeHref = withBase(CONFIG.pathPrefix ? `/${CONFIG.pathPrefix}/` : '/', {
       {!CONFIG.logo?.replacesTitle && <span class={styles.title}>{CONFIG.title}</span>}
     </a>
 
-    <div class={styles.actions}>
+    <div class={styles.search}>
       <slot name="search" />
+      {
+        /* client:only: with no JS there is no search, and client:load would leave a dead control. */
+        showSearch && CONFIG.search.provider !== 'none' && <GlobalSearch suggested={suggested} client:only="react" />
+      }
+    </div>
+
+    <div class={styles.actions}>
       <slot name="versions" />
       {
         CONFIG.header.links.map((link) => (
