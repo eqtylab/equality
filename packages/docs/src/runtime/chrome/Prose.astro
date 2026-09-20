@@ -1,6 +1,8 @@
 ---
 /** Article wrapper. `data-pagefind-body` bounds the search index to content. */
 import { rewriteHtmlBase } from '@eqtylab/docs/internal/rehype-base-url';
+import { Icon } from '@eqtylab/equality';
+
 import AlertBridge from '../components/AlertBridge.astro';
 import styles from './Prose.module.css';
 
@@ -14,11 +16,13 @@ interface Props {
   source?: string;
   /** Ancestor trail ending in this page, published to the search index. */
   crumbs?: string;
+  /** Ancestors only, for the rendered breadcrumb. Deliberately excludes this page. */
+  trail?: Array<{ label: string; href?: string }>;
   /** Stands in for `description` in the search index when a page has none. Not rendered. */
   fallbackSummary?: string;
 }
 
-const { title, description, deprecated, markdownHref, source, crumbs, fallbackSummary } =
+const { title, description, deprecated, markdownHref, source, crumbs, trail, fallbackSummary } =
   Astro.props;
 
 const deprecation =
@@ -36,6 +40,38 @@ const deprecationMessage = deprecation?.message
   data-pagefind-body
   data-pagefind-meta={crumbs ? `crumbs:${crumbs}` : undefined}
 >
+  {
+    /* Ancestors only: ending the trail in a copy of the h1 repeats the page name in
+       two consecutive lines for a screen reader and competes with the only emphasis
+       on the page. */
+    trail && trail.length > 0 && (
+      <nav
+        class={styles.crumbs}
+        data-eq-crumbs
+        data-eq-chrome
+        data-pagefind-ignore
+        aria-label="Breadcrumb"
+      >
+        {trail.map((node, index) => (
+          <Fragment>
+            {index > 0 && (
+              <span class={styles.crumbSep} aria-hidden="true">
+                /
+              </span>
+            )}
+            {node.href ? (
+              <a class={styles.crumbLink} href={node.href}>
+                {node.label}
+              </a>
+            ) : (
+              <span>{node.label}</span>
+            )}
+          </Fragment>
+        ))}
+      </nav>
+    )
+  }
+
   <header
     class={styles.header}
     data-eq-chrome
@@ -56,7 +92,7 @@ const deprecationMessage = deprecation?.message
      * so it works offline and on draft pages, which have no twin.
      */
     (source || markdownHref) && (
-      <div class={styles.actions} data-eq-chrome data-pagefind-ignore>
+      <div class={styles.actions} data-eq-actions data-eq-chrome data-pagefind-ignore>
         {source && (
           <button
             type="button"
@@ -64,6 +100,7 @@ const deprecationMessage = deprecation?.message
             data-eq-copy={source}
             title="Copies the page source as Markdown"
           >
+            <Icon icon="Copy" size="xs" />
             <span class={styles.actionLabel} data-eq-copy-idle>
               Copy as Markdown
             </span>
@@ -72,8 +109,14 @@ const deprecationMessage = deprecation?.message
             </span>
           </button>
         )}
+        {source && markdownHref && (
+          <span class={styles.actionSep} data-eq-action-sep aria-hidden="true">
+            |
+          </span>
+        )}
         {markdownHref && (
           <a class={styles.action} href={markdownHref}>
+            <Icon icon="FileText" size="xs" />
             View as Markdown
           </a>
         )}

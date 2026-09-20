@@ -1,5 +1,17 @@
 @reference '../styles/theme.css';
 
+/* mb-6 = 24px, matching Cloudflare's measured breadcrumb-to-title gap. The 12px
+ * first drafted had no source; it was chosen by eye. */
+.crumbs {
+  @apply text-text-tertiary mb-6 flex items-center text-sm;
+}
+.crumbLink {
+  @apply hover:text-text-secondary text-inherit no-underline hover:underline;
+}
+.crumbSep {
+  @apply px-1.5;
+}
+
 .header {
   @apply mb-8;
 }
@@ -10,11 +22,21 @@
   @apply text-text-secondary mt-3 text-lg/7;
 }
 
+/* The closing rule is Equality's own SectionHeading pattern: border-b border-border
+ * with pb-2. Not a new idea, just the one the design system already uses. */
 .actions {
-  @apply -mt-4 mb-8 flex items-center gap-2;
+  @apply border-border -mt-4 mb-8 flex items-center border-b pb-2;
 }
+
+/* Muted text with separators, not a bordered pill. `Button variant="navigation"` is
+ * structurally this row already but paints text-link, and a page action is not a link
+ * elsewhere; `variant="tertiary"` is the pill and neither of its sizes fits, since sm
+ * drops to text-xs and md jumps to 40px. Logged as a gap on equality-token-gaps. */
 .action {
-  @apply text-text-secondary hover:text-text-primary border-border flex cursor-pointer items-center gap-1.5 rounded-md border px-2 py-1.5 text-sm no-underline transition-colors;
+  @apply text-text-secondary hover:text-text-primary flex cursor-pointer items-center gap-1.5 rounded-md px-2.5 py-1.5 text-sm font-medium no-underline transition-colors;
+}
+.actionSep {
+  @apply text-border-raised select-none;
 }
 
 /* Both labels render and swap on `data-copied` so the button does not resize. */

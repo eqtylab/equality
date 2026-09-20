@@ -1,0 +1,30 @@
+@reference '../styles/theme.css';
+
+/* A popover is `display:none` until opened, so no `hidden` is needed. Resetting the
+ * UA's margin, border and padding is required: a popover is not a plain box. */
+.drawer {
+  @apply bg-background-raised border-border-raised fixed inset-y-0 left-0 m-0 h-full w-[min(20rem,84vw)] overflow-y-auto border-r p-4;
+}
+
+/* The scrim. ::backdrop comes with the popover; no extra element and no scrim
+ * selector reaching into another package. */
+.drawer::backdrop {
+  @apply bg-background/50;
+  backdrop-filter: blur(3px);
+  -webkit-backdrop-filter: blur(3px);
+}
+
+/* Above lg the sidebar is back, so the drawer must never open. */
+@media (min-width: 1024px) {
+  .drawer {
+    @apply hidden;
+  }
+}
+
+.panel {
+  @apply block;
+}
+
+.link {
+  @apply text-text-secondary hover:text-text-primary mb-1 flex max-h-10 items-center gap-2 rounded-md px-2 py-1.5 text-sm font-medium no-underline;
+}

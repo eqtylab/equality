@@ -4,6 +4,7 @@ import type { NavNode, TocNode } from '@eqtylab/docs/types';
 import CONFIG from 'virtual:eqty-docs/config';
 import DocsShell from './DocsShell.astro';
 import Header from '../chrome/Header.astro';
+import NavDrawer from '../chrome/NavDrawer.astro';
 import Sidebar from '../chrome/Sidebar.astro';
 import TableOfContents from '../chrome/TableOfContents.astro';
 import styles from './DocsPage.astro.module.css';
@@ -33,6 +34,7 @@ const suggested = nav
     <slot name="search" slot="search" />
     <slot name="versions" slot="versions" />
   </Header>
+  <NavDrawer nodes={nav} />
   <div class={styles.layout}>
     {!splash && <Sidebar nodes={nav} />}
     <main class={styles.main} data-splash={splash ? '' : undefined}>

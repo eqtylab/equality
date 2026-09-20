@@ -29,6 +29,12 @@ export default defineConfig({
       env,
       title: "Equality",
       description: "A theme-driven component library for EQTY Lab projects",
+      logo: {
+        src: "/eqty-logo.svg",
+        compact: "/eqty-mark.svg",
+        alt: "EQTY Lab",
+        replacesTitle: true,
+      },
       header: {
         links: [
           {

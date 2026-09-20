@@ -23,15 +23,30 @@ const homeHref = withBase(CONFIG.pathPrefix ? `/${CONFIG.pathPrefix}/` : '/', {
 
 <header class={styles.header} data-eq-chrome data-pagefind-ignore>
   <div class={styles.inner}>
-    <a class={styles.brand} href={homeHref}>
+    <a
+      class={styles.brand}
+      href={homeHref}
+      aria-label={CONFIG.logo?.replacesTitle ? CONFIG.logo.alt || CONFIG.title : undefined}
+    >
       {
         CONFIG.logo && (
-          <img
-            class={styles.logo}
-            src={withBase(CONFIG.logo.src, paths)}
-            alt={CONFIG.logo.alt}
-            height="24"
-          />
+          <Fragment>
+            <img
+              class={styles.logo}
+              src={withBase(CONFIG.logo.src, paths)}
+              alt={CONFIG.logo.alt}
+              height="24"
+            />
+            {CONFIG.logo.compact && (
+              <img
+                class={styles.logoCompact}
+                src={withBase(CONFIG.logo.compact, paths)}
+                alt=""
+                aria-hidden="true"
+                height="24"
+              />
+            )}
+          </Fragment>
         )
       }
       {!CONFIG.logo?.replacesTitle && <span class={styles.title}>{CONFIG.title}</span>}
@@ -47,8 +62,8 @@ const homeHref = withBase(CONFIG.pathPrefix ? `/${CONFIG.pathPrefix}/` : '/', {
 
     <div class={styles.actions}>
       <slot name="versions" />
-      {
-        CONFIG.header.links.map((link) => (
+      <div class={styles.navLinks}>
+        {CONFIG.header.links.map((link) => (
           <a
             class={styles.navLink}
             href={link.href}
@@ -58,9 +73,21 @@ const homeHref = withBase(CONFIG.pathPrefix ? `/${CONFIG.pathPrefix}/` : '/', {
             {link.icon && <Icon icon={link.icon} size="sm" />}
             <span class={styles.navLinkLabel}>{link.label}</span>
           </a>
-        ))
-      }
+        ))}
+      </div>
       {CONFIG.header.showThemeToggle && <ThemeToggle client:load />}
+      {
+        /* popovertarget: the platform handles open, close, Escape, light dismiss and
+           focus return. Hidden above lg, where the sidebar is back. */
+      }
+      <button
+        class={styles.navTrigger}
+        type="button"
+        popovertarget="eq-nav-drawer"
+        aria-label="Open navigation"
+      >
+        <Icon icon="Menu" size="sm" />
+      </button>
     </div>
   </div>
 </header>

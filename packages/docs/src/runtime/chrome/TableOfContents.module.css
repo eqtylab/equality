@@ -17,7 +17,7 @@
 }
 
 .link {
-  @apply text-text-secondary hover:border-text-primary hover:text-text-primary border-border block border-l py-1.5 pl-3 text-sm no-underline transition-all duration-300;
+  @apply text-text-secondary hover:border-text-primary hover:text-text-primary border-border-raised block border-l py-1.5 pl-3 text-sm no-underline transition-all duration-300;
 }
 .link[data-active] {
   @apply border-text-primary text-text-primary;

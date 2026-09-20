@@ -2,7 +2,8 @@
 @reference './theme.css';
 
 :root {
-  --eq-docs-header-height: 3.5rem;
+  /* 69px, measured off the Governance Studio board. */
+  --eq-docs-header-height: 4.3125rem;
   --eq-docs-sidebar-width: 18rem;
   --eq-docs-toc-width: 15rem;
   --eq-docs-content-max: 48rem;
