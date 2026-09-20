@@ -6,19 +6,45 @@
 .list[data-depth='0'] {
   @apply space-y-1;
 }
+/* ml-3 pl-3 is 25px per level, the shipped indent. A Tailwind default, not a token:
+ * nothing in Gov Studio, the board or the tokens has a value for nesting. */
 .list:not([data-depth='0']) {
-  @apply border-border ml-3 mt-1 space-y-0.5 border-l pl-3;
+  @apply border-border-raised ml-3 mt-1 space-y-0.5 border-l pl-3;
 }
 
 .item {
   @apply list-none;
 }
 
+/* Row geometry is Equality's house list row (gap-2 px-2 py-1.5 rounded-md) plus
+ * Gov Studio's max-h-10 and font-medium. All three already agreed on it. */
 .link {
-  @apply text-text-secondary hover:text-text-primary hover:bg-background-raised flex items-center gap-2 rounded-md px-2 py-1.5 text-sm no-underline transition-colors;
+  @apply text-text-secondary flex max-h-10 items-center gap-2 rounded-md border border-transparent px-2 py-1.5 text-sm font-medium no-underline transition-all duration-100;
 }
+
+/* Hover is Gov Studio's recipe, composited as alpha over brand-primary
+ * (app-sidebar.tsx:76-82). Resting rows sit on a raised surface, so a light touch
+ * reads at this weight. */
+.link:hover {
+  @apply text-text-primary border-brand-primary/10 to-brand-primary/10 bg-linear-to-br from-white/5;
+}
+
+/* The selected state, from the Playground board node 2014:2145. Opaque lilac steps
+ * rather than alpha over brand-primary: alpha inverts its contrast between themes,
+ * washing out on a light surface. These steps are theme-invariant, so one rule paints
+ * the same object in both. Shadow colour is lilac-400 at 50%, which is the board's
+ * rgba(160,116,212,0.5). */
 .link[data-current] {
-  @apply text-text-primary bg-background-raised font-medium;
+  @apply border-lilac-600 font-semibold text-white;
+  background-image: linear-gradient(
+    169.77deg,
+    var(--color-lilac-700) 0%,
+    var(--color-lilac-900) 100%
+  );
+  box-shadow: 0 1px 4px 0 color-mix(in srgb, var(--color-lilac-400) 50%, transparent);
+}
+.link[data-current]:hover {
+  @apply border-lilac-600;
 }
 .linkLabel {
   @apply min-w-0 flex-1 truncate;
@@ -31,7 +57,10 @@
   @apply block;
 }
 .summary {
-  @apply text-text-primary hover:bg-background-raised flex cursor-pointer items-center justify-between gap-2 rounded-md px-2 py-1.5 text-sm font-medium;
+  @apply text-text-primary flex max-h-10 cursor-pointer items-center justify-between gap-2 rounded-md border border-transparent px-2 py-1.5 text-sm font-medium transition-all duration-100;
+}
+.summary:hover {
+  @apply border-brand-primary/10 to-brand-primary/10 bg-linear-to-br from-white/5;
 }
 .summary::-webkit-details-marker {
   @apply hidden;

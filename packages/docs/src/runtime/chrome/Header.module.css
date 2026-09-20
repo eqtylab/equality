@@ -1,17 +1,48 @@
 @reference '../styles/theme.css';
 
+/* border-raised, not border: Gov Studio pairs `bg-background-raised` with
+ * `border-border-raised` as a set (guardian app-sidebar.tsx:160). Mixing a raised
+ * fill with a flat border is what made every chrome edge read dimmer than the
+ * product. The two tokens differ only in dark; in light they are indistinguishable. */
 .header {
-  @apply bg-background-raised border-border sticky top-0 z-50 border-b;
+  @apply bg-background-raised border-border-raised sticky top-0 z-50 border-b;
   height: var(--eq-docs-header-height);
 }
 .inner {
   @apply flex h-full items-center justify-between gap-4 px-4;
 }
+/* min-h-10: the mark is 22px and the link shrink-wraps it, which left the home link
+ * under the 24px minimum target of WCAG 2.5.8. Matches the other header controls. */
 .brand {
-  @apply text-text-primary flex items-center gap-2 no-underline;
+  @apply text-text-primary flex min-h-10 items-center gap-2 no-underline;
 }
-.logo {
-  @apply h-6 w-auto;
+/* An <img> keeps the file's own aspect ratio, so width follows height with no
+ * hard-coded value and any consumer's logo is sized correctly. */
+.logo,
+.logoCompact {
+  @apply block h-[22px] w-auto shrink-0;
+}
+
+/* The mark ships white, which is right on a dark surface and invisible on a light
+ * one. Inverting a monochrome mark is exactly the black it needs. Swap this for a
+ * second file if the logo ever gains a colour. */
+:global(html[data-equality-theme='light']) .logo,
+:global(html[data-equality-theme='light']) .logoCompact {
+  filter: invert(1);
+}
+
+/* The compact mark is the wordmark cropped to EQTY, for widths where the full mark
+ * leaves no room beside the controls. */
+.logoCompact {
+  @apply hidden;
+}
+@media (max-width: 1023px) {
+  .logo:not(:only-child) {
+    @apply hidden;
+  }
+  .logoCompact {
+    @apply block;
+  }
 }
 .title {
   @apply text-base font-semibold;
@@ -24,9 +55,25 @@
 .actions {
   @apply flex shrink-0 items-center gap-2;
 }
+/* Bare, and the same height as the other controls. It sat beside a bordered pill as
+ * plain text, which read as two different languages in one bar, and it is bare at
+ * mobile already. */
 .navLink {
-  @apply text-text-secondary hover:text-text-primary flex items-center gap-1.5 rounded-md px-2 py-1.5 text-sm no-underline transition-colors;
+  @apply text-text-secondary hover:text-text-primary hover:bg-background flex h-10 items-center gap-1.5 rounded-md px-3 text-sm font-medium no-underline transition-colors;
 }
+/* The label always shows now. Hiding it below `sm` is what produced an empty,
+ * nameless link on the deployed site: `headerLink.icon` is optional and Equality's
+ * Icon is Lucide-backed, which ships no brand marks, so a GitHub link had nothing
+ * left to render. Below `lg` these move into the drawer instead. */
 .navLinkLabel {
-  @apply hidden sm:inline;
+  @apply inline;
+}
+.navLinks {
+  @apply hidden items-center gap-1 lg:flex;
+}
+
+/* Declared after .navLink on purpose: both are single-class, so the later rule wins
+ * and a display rule declared earlier would lose. */
+.navTrigger {
+  @apply text-text-secondary hover:text-text-primary flex size-10 items-center justify-center rounded-md lg:hidden;
 }

@@ -18,6 +18,11 @@ export const docsConfigSchema = z.object({
   logo: z
     .object({
       src: z.string(),
+      /**
+       * Narrow form for the mobile bar, where the full mark has no room beside the
+       * controls. Omit it and the full mark is used at every width.
+       */
+      compact: z.string().optional(),
       alt: z.string().default(''),
       /** Hide the text title when a logo is present. */
       replacesTitle: z.boolean().default(false),

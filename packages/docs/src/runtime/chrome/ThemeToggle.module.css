@@ -12,6 +12,29 @@
   @apply sr-only;
 }
 
+/* Below lg the bar has no room for a labelled control, so it collapses to the icon.
+ * sr-only rather than hidden: the label is this button's accessible name, and
+ * removing it leaves a control that announces as "Theme:" and nothing else. */
+/* Bare at every width, not just mobile: as a bordered pill it was the loudest object
+ * in the bar, next to a GitHub link with no border at all. Class doubled to outrank
+ * Equality's `.button--tertiary`, which sets fill and border at the same (0,1,0). */
+.trigger.trigger {
+  @apply hover:bg-background border-transparent bg-transparent;
+}
+
+@media (max-width: 1023px) {
+  .label {
+    @apply sr-only;
+  }
+  /* Class doubled to outrank Equality's own `.button--tertiary`, which sets the fill
+   * and border at the same (0,1,0) specificity. Same technique and same reason as the
+   * doubled `.dialog` in GlobalSearch.module.css. Height is left alone: Button's
+   * `.size--md:not(.button--link)` is (0,2,0) and 40px square is the better target. */
+  .trigger.trigger {
+    @apply w-10 justify-center border-transparent bg-transparent px-0;
+  }
+}
+
 /* The root attribute picks one. With no JS it is absent, so System shows. */
 .state {
   @apply hidden items-center gap-2;

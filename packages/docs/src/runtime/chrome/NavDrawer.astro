@@ -1,0 +1,49 @@
+---
+/**
+ * Mobile navigation. Below `lg` the sidebar is `display:none` with no replacement,
+ * so a phone reader can only navigate by search or by links in the prose.
+ *
+ * Built on the Popover API rather than a custom element: `popover` plus
+ * `popovertarget` gives open and close, Escape, light dismiss, focus return to the
+ * invoker, and top-layer rendering with no JavaScript at all. That also sidesteps
+ * `DialogContainer`'s focus-restoration bug, logged on equality-dialog-repair.
+ */
+import CONFIG from 'virtual:eqty-docs/config';
+import type { NavNode } from '@eqtylab/docs/types';
+import { Icon } from '@eqtylab/equality';
+
+import NavTree from './NavTree.astro';
+import styles from './NavDrawer.module.css';
+
+interface Props {
+  nodes: NavNode[];
+}
+const { nodes } = Astro.props;
+---
+
+<div id="eq-nav-drawer" popover class={styles.drawer} data-eq-chrome data-pagefind-ignore>
+  <nav class={styles.panel} aria-label="Documentation">
+    {
+      /* Relocated from the header bar. Left there, a link with no icon renders
+         nameless below `sm`, because the label is hidden and Equality's Icon is
+         Lucide-backed, which ships no brand marks. In here the label always shows. */
+      CONFIG.header.links.map((link) => (
+        <a
+          class={styles.link}
+          href={link.href}
+          target={link.external ? '_blank' : undefined}
+          rel={link.external ? 'noopener noreferrer' : undefined}
+        >
+          {link.icon && <Icon icon={link.icon} size="sm" />}
+          <span>{link.label}</span>
+          {link.external && <Icon icon="ArrowUpRight" size="xs" />}
+        </a>
+      ))
+    }
+    <NavTree nodes={nodes} />
+  </nav>
+</div>
+
+<script>
+  import '@eqtylab/docs/scripts/eq-nav-drawer.ts';
+</script>
