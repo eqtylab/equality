@@ -82,7 +82,7 @@ export const docsConfigSchema = z.object({
 
   search: z
     .object({
-      /** 'pagefind' indexes the built HTML. There is no index in `astro dev`. */
+      /** 'pagefind' indexes the built HTML. Dev serves that index, so it needs one build. */
       provider: z.enum(['pagefind', 'none']).default('pagefind'),
     })
     .prefault({}),

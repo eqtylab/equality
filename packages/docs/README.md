@@ -131,10 +131,9 @@ plain-Markdown pipeline has no component substitution at all.
 Search is full-text, over the built HTML, via [Pagefind](https://pagefind.app). The integration
 runs it in `astro:build:done` and writes the index to `dist/pagefind/`.
 
-**There is no index in `astro dev`, deliberately.** Pagefind reads built HTML, so anything served
-in dev could only ever describe the previous build. Rather than answer with stale results, the
-search control says a build is needed. Run `astro build` to exercise search; a page you just wrote
-appears after the next build.
+**One `astro build` makes search work in `astro dev` too.** Dev serves `dist/pagefind/` off disk,
+so results describe the last build; rebuild while dev runs and the next search picks it up. Until
+that first build the palette says search needs one.
 
 What gets indexed is set by the markup, not by config:
 
