@@ -3,6 +3,7 @@ import CONFIG from 'virtual:eqty-docs/config';
 import { withBase } from '@eqtylab/docs/paths';
 import { Icon } from '@eqtylab/equality';
 import GlobalSearch from './GlobalSearch.tsx';
+import LinkIcon from './LinkIcon.astro';
 import ThemeToggle from './ThemeToggle.tsx';
 import styles from './Header.module.css';
 
@@ -58,7 +59,7 @@ const homeHref = withBase(CONFIG.pathPrefix ? `/${CONFIG.pathPrefix}/` : '/', {
             target={link.external ? '_blank' : undefined}
             rel={link.external ? 'noopener noreferrer' : undefined}
           >
-            {link.icon && <Icon icon={link.icon} size="sm" />}
+            {link.icon && <LinkIcon icon={link.icon} />}
             <span class={styles.navLinkLabel}>{link.label}</span>
           </a>
         ))}
