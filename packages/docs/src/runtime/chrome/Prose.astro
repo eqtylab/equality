@@ -92,6 +92,17 @@ const deprecationMessage = deprecation?.message
        */
       (source || markdownHref) && (
         <div class={styles.actions} data-eq-actions data-eq-chrome data-pagefind-ignore>
+          {markdownHref && (
+            <a class={styles.action} href={markdownHref} target="_blank">
+              <Icon icon="FileText" size="xs" />
+              View as Markdown
+            </a>
+          )}
+          {source && markdownHref && (
+            <span class={styles.actionSep} data-eq-action-sep aria-hidden="true">
+              |
+            </span>
+          )}
           {source && (
             <button
               type="button"
@@ -107,17 +118,6 @@ const deprecationMessage = deprecation?.message
                 Copied
               </span>
             </button>
-          )}
-          {source && markdownHref && (
-            <span class={styles.actionSep} data-eq-action-sep aria-hidden="true">
-              |
-            </span>
-          )}
-          {markdownHref && (
-            <a class={styles.action} href={markdownHref}>
-              <Icon icon="FileText" size="xs" />
-              View as Markdown
-            </a>
           )}
         </div>
       )
