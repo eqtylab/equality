@@ -32,6 +32,19 @@
   }
 }
 
+/* Below sm the trigger is a bare icon. The label stays as its accessible name. */
+@media (max-width: 639px) {
+  .search {
+    @apply w-auto;
+  }
+  .trigger {
+    @apply w-10 justify-center border-transparent bg-transparent p-0;
+  }
+  .triggerLabel {
+    @apply sr-only;
+  }
+}
+
 .srOnly {
   @apply sr-only;
 }
@@ -40,6 +53,8 @@
   @apply p-0;
 }
 
+/* Class doubled to beat Equality's own centring at the same specificity.
+ * Never set `transform` here: the entrance animation uses it. */
 /* Class doubled to beat Equality's own centring at the same specificity.
  * Never set `transform` here: the entrance animation uses it. */
 .dialog.dialog {
@@ -79,6 +94,8 @@
 }
 /* Equality styles the hover but not cmdk's selected row. Matches the sidebar's
  * current page on purpose: the two highlights have to agree. */
+/* Equality styles the hover but not cmdk's selected row. Matches the sidebar's
+ * current page on purpose: the two highlights have to agree. */
 .item[data-selected='true'] {
   @apply bg-lilac-300/50 text-lilac-700 dark:bg-lilac-600/50 dark:text-lilac-100 shadow-sm;
 }
@@ -111,16 +128,13 @@
   @apply text-text-secondary border-border border-t px-4 py-2 text-xs;
 }
 
-/**
- * Equality has no highlight token, so these name steps off the option scale directly. Not
- * `badge-*`: a badge means "this has this status", a mark means "this matched your query".
- * Not `brand-primary` either, which is the same value as the selected row, so a mark painted
- * with it vanishes exactly when a row is selected.
- *
- * Each theme names its own step because `lilac-*` carries no dark values. Lift this into
- * chrome.css as `--eq-docs-highlight-*` when a second consumer appears; prose `<mark>` is the
- * likely one. See the equality-token-gaps feature.
- */
+.devNote {
+  @apply text-text-secondary border-border border-t px-4 py-2 text-xs;
+}
+
+/* Equality has no highlight colour, so these name lilac steps directly, one per theme.
+ * Never `brand-primary`: it is the selected row's own colour, so the mark would vanish
+ * exactly when a row is selected. */
 .mark,
 .hitSummary mark {
   @apply rounded px-0.5;
