@@ -1,0 +1,38 @@
+/*
+ * Class recipes shared by more than one piece of chrome. Real utilities, so the markup
+ * stays inline everywhere else and the recipe still has one definition.
+ */
+@reference './theme.css';
+
+/**
+ * The header bar's control geometry, shared so the links and the theme toggle cannot
+ * drift apart. `display` is deliberately absent: the links are flex rows and the theme
+ * toggle is a one-cell grid, and a display utility in here would collide with theirs.
+ */
+@utility eq-nav-control {
+  @apply text-text-secondary hover:text-text-primary hover:bg-background;
+  @apply h-10 items-center gap-1.5 rounded-md px-3;
+  @apply text-sm font-medium no-underline transition-colors;
+}
+
+/**
+ * eqtylab.io's display-text fade, used by the header label and the page title.
+ *
+ * Callers add their own `forced-colors:text-*`: the header label inherits, the page
+ * title names a token, so the solid colour cannot live in here.
+ */
+@utility eq-display-gradient {
+  @apply bg-[image:var(--eq-docs-display-gradient)] bg-clip-text text-transparent;
+  /* Clipping the gradient to the text crops descenders without this. */
+  @apply py-[0.05em];
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+
+  /* Windows High Contrast and similar modes drop the gradient but keep the transparent
+   * fill, so the text would vanish. This puts the paint back; the caller supplies the
+   * colour. */
+  @media (forced-colors: active) {
+    background-image: none;
+    -webkit-text-fill-color: currentColor;
+  }
+}

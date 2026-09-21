@@ -1,13 +1,10 @@
 /*
  * Docs typography.
  *
- * Everything nests under `[data-eq-md]` is stamped by `rehypeProseScope`
- * onto what the page itself wrote (markdown, plain HTML), so the paragraph MDX
- * parks inside `<Badge>Primary</Badge>` is not typeset as body copy; docs chrome
- * opts out by marking its root `data-eq-chrome`.
+ * Only what the page itself wrote is styled, marked `data-eq-md` by `rehypeProseScope`.
+ * Drop that guard and every component's children get typeset as body copy.
  *
- * Both guards sit inside :where() so specificity stays at one class plus one tag
- * and consumer overrides win without !important.
+ * Both guards sit inside :where(), so a consumer can override without !important.
  */
 @reference './theme.css';
 
@@ -25,44 +22,46 @@
     }
 
     &:is(h1) {
-      @apply mb-4 mt-12 text-4xl font-bold;
+      @apply mb-3 mt-12 text-4xl font-bold;
       & > code {
         @apply text-3xl;
       }
     }
     &:is(h2) {
-      @apply mb-4 mt-12 text-2xl font-semibold;
+      @apply mb-3 mt-12 text-2xl font-semibold;
       & > code {
         @apply text-xl;
       }
     }
     &:is(h3) {
-      @apply mb-4 mt-8 text-xl font-medium;
+      @apply mb-3 mt-8 text-xl font-medium;
       & > code {
         @apply text-lg;
       }
     }
     &:is(h4) {
-      @apply mb-4 mt-6 text-lg font-medium;
+      @apply mb-3 mt-6 text-lg font-medium;
       & > code {
         @apply text-base;
       }
     }
     &:is(h5) {
-      @apply mb-4 mt-4 text-base font-medium;
+      @apply mb-3 mt-6 text-base font-medium;
       & > code {
         @apply text-sm;
       }
     }
     &:is(h6) {
-      @apply mb-4 mt-4 text-sm font-medium;
+      @apply mb-3 mt-6 text-sm font-medium;
       & > code {
         @apply text-xs;
       }
     }
 
+    /* 16px, which has to stay wider than the 28px line height inside a paragraph,
+     * or consecutive blocks read as one. */
     &:is(p) {
-      @apply text-text-secondary mb-2 text-base/7 font-normal;
+      @apply text-text-secondary mb-4 text-base/7 font-normal;
     }
 
     :is(p, li) &:is(b, strong) {
@@ -70,15 +69,12 @@
     }
 
     &:is(ul, ol) {
-      @apply text-text-secondary mb-2 pl-4;
+      @apply text-text-secondary mb-4 pl-4;
 
-      /*
-       * Not `space-y-1`: its `& > :not(:last-child)` nesting unbalances against
-       * a selector ending in `:not(:where(…))` and compiles to a rule the browser
-       * throws away, so list items came out unspaced.
-       */
+      /* Never `space-y-*` here: it unbalances against the `:not(:where(...))` above
+       * and compiles to a rule the browser throws away, leaving items unspaced. */
       & > li + li {
-        @apply mt-1;
+        @apply mt-2;
       }
     }
     &:is(ul) {

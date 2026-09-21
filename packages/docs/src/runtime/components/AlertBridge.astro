@@ -5,18 +5,12 @@
  */
 import { Alert } from '@eqtylab/equality';
 
-import styles from './AlertBridge.module.css';
-
 type Props = Record<string, unknown>;
 
 const { class: className, ...rest } = Astro.props as Props & { class?: string };
 ---
 
-<Alert
-  as="aside"
-  {...rest}
-  className={[styles.alert, className].filter(Boolean).join(' ')}
-  data-eq-chrome
->
+{/* Flow spacing only; every visual property comes from Alert. */}
+<Alert as="aside" {...rest} className={['mb-4', className].filter(Boolean).join(' ')} data-eq-chrome>
   <slot />
 </Alert>

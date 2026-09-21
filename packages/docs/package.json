@@ -1,7 +1,7 @@
 {
   "name": "@eqtylab/docs",
   "description": "Astro documentation framework built on the Equality design system",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "license": "Apache-2.0",
   "homepage": "https://equality.eqtylab.io/",
   "repository": {
@@ -85,13 +85,13 @@
     "access": "public"
   },
   "scripts": {
-    "build": "pnpm run check:no-utilities && pnpm run build:node && pnpm run build:runtime && pnpm run build:types",
+    "build": "pnpm run check:source && pnpm run build:node && pnpm run build:runtime && pnpm run build:types",
     "build:node": "tsup",
     "build:dev": "pnpm run build:node && pnpm run build:runtime",
     "build:runtime": "node scripts/copy-runtime.mjs",
     "build:types": "tsc -p tsconfig.build.json",
     "dev": "node scripts/dev.mjs",
-    "check:no-utilities": "node scripts/check-no-utilities.mjs",
+    "check:source": "node scripts/check-tailwind-source.mjs",
     "test": "node --test tests/*.test.ts",
     "release": "pnpm run build && pnpm publish --access public --no-git-checks"
   },

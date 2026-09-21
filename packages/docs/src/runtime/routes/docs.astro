@@ -3,9 +3,10 @@ import { getCollection, render } from 'astro:content';
 import CONFIG from 'virtual:eqty-docs/config';
 import { docsHref, idToPath, joinPath, normalizePath } from '@eqtylab/docs/paths';
 import DocsPage from '../layouts/DocsPage.astro';
-import { breadcrumbsFor, buildTocTree, docsNav, pathContext } from '../lib/nav-data.ts';
+import { breadcrumbsFor, buildTocTree, docsNav, pathContext, prevNextFor } from '../lib/nav-data.ts';
 import { firstParagraph } from '../lib/summary.ts';
 import { mdxComponents } from '../lib/mdx-components.ts';
+import PageFooter from '../chrome/PageFooter.astro';
 import Prose from '../chrome/Prose.astro';
 
 export async function getStaticPaths() {
@@ -44,8 +45,22 @@ const splash = entry.data.template === 'splash';
 const trail = breadcrumbsFor(nav, Astro.url.pathname);
 const crumbs = trail.length > 1 ? trail.map((node) => node.label).join(' › ') : undefined;
 
+// Ancestors only. `crumbs` above keeps the page as well, because a search result row
+// needs the page name to identify itself. The two diverge on purpose.
+const renderedTrail = trail.slice(0, -1).map((node) => ({ label: node.label, href: node.href }));
+
 // Indexed only, never rendered: a page with no `description` still needs a result summary.
 const fallbackSummary = entry.data.description ? undefined : firstParagraph(entry.body);
+
+const { prev, next } = CONFIG.footer.showPrevNext ? prevNextFor(nav, Astro.url.pathname) : {};
+
+// `editUrl` is a base; the content path is appended. The slice is taken at the
+// consumer's own content directory, which is configurable.
+const contentPath = entry.filePath?.split(`${CONFIG.contentDir}/`).pop();
+const editHref =
+  CONFIG.footer.editUrl && contentPath
+    ? `${CONFIG.footer.editUrl.replace(/\/$/, '')}/${contentPath}`
+    : undefined;
 
 // File-shaped (/x/label.md) beside the directory-shaped page; 'index' must match docs-md.ts.
 const markdownHref = CONFIG.routing.markdownTwins
@@ -68,8 +83,10 @@ const markdownHref = CONFIG.routing.markdownTwins
     markdownHref={markdownHref}
     source={entry.body}
     crumbs={crumbs}
+    trail={renderedTrail}
     fallbackSummary={fallbackSummary}
   >
     <Content components={mdxComponents} />
   </Prose>
+  {!splash && <PageFooter prev={prev} next={next} editHref={editHref} text={CONFIG.footer.text} />}
 </DocsPage>

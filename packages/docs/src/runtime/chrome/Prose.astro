@@ -1,8 +1,9 @@
 ---
 /** Article wrapper. `data-pagefind-body` bounds the search index to content. */
 import { rewriteHtmlBase } from '@eqtylab/docs/internal/rehype-base-url';
+import { Icon } from '@eqtylab/equality';
+
 import AlertBridge from '../components/AlertBridge.astro';
-import styles from './Prose.module.css';
 
 interface Props {
   title: string;
@@ -14,11 +15,13 @@ interface Props {
   source?: string;
   /** Ancestor trail ending in this page, published to the search index. */
   crumbs?: string;
+  /** Ancestors only, for the rendered breadcrumb. Deliberately excludes this page. */
+  trail?: Array<{ label: string; href?: string }>;
   /** Stands in for `description` in the search index when a page has none. Not rendered. */
   fallbackSummary?: string;
 }
 
-const { title, description, deprecated, markdownHref, source, crumbs, fallbackSummary } =
+const { title, description, deprecated, markdownHref, source, crumbs, trail, fallbackSummary } =
   Astro.props;
 
 const deprecation =
@@ -28,6 +31,10 @@ const deprecation =
 const deprecationMessage = deprecation?.message
   ? rewriteHtmlBase(deprecation.message, import.meta.env.BASE_URL)
   : undefined;
+
+// Hand-rolled: every Button variant is coloured or filled, and this row is neither.
+const action =
+  'text-text-secondary hover:text-text-primary flex cursor-pointer items-center gap-1.5 rounded-md px-2.5 py-1.5 text-sm font-medium no-underline transition-colors';
 ---
 
 <article
@@ -36,50 +43,108 @@ const deprecationMessage = deprecation?.message
   data-pagefind-body
   data-pagefind-meta={crumbs ? `crumbs:${crumbs}` : undefined}
 >
+  {
+    /* Ancestors only: ending the trail in a copy of the h1 repeats the page name in
+       two consecutive lines for a screen reader and competes with the only emphasis
+       on the page. */
+    trail && trail.length > 0 && (
+      <nav
+        class="text-text-tertiary mb-6 flex items-center text-sm"
+        data-eq-crumbs
+        data-eq-chrome
+        data-pagefind-ignore
+        aria-label="Breadcrumb"
+      >
+        {trail.map((node, index) => (
+          <Fragment>
+            {index > 0 && (
+              <span class="px-1.5" aria-hidden="true">
+                /
+              </span>
+            )}
+            {node.href ? (
+              <a
+                class="hover:text-text-secondary text-inherit no-underline hover:underline"
+                href={node.href}
+              >
+                {node.label}
+              </a>
+            ) : (
+              <span>{node.label}</span>
+            )}
+          </Fragment>
+        ))}
+      </nav>
+    )
+  }
+
+  {/* 64px, a step above the 48px between sections, so the header reads as further out. */}
   <header
-    class={styles.header}
+    class="mb-16"
     data-eq-chrome
     data-pagefind-meta={fallbackSummary ? `description:${fallbackSummary}` : undefined}
   >
-    <h1 class={styles.title} data-pagefind-meta="title">{title}</h1>
+    {
+      /* `w-fit` is load-bearing. The gradient spans the box, so at full width a short
+         title sits entirely in the gradient's flat start. */
+    }
+    <h1
+      class="eq-display-gradient w-fit text-4xl font-bold forced-colors:text-text-primary"
+      data-pagefind-meta="title"
+    >
+      {title}
+    </h1>
     {description && (
-      <p class={styles.description} data-pagefind-meta="description">
+      <p class="text-text-secondary mt-3 text-lg/7" data-pagefind-meta="description">
         {description}
       </p>
     )}
+    {
+      /**
+       * Inside the header, so one margin governs the gap to the content whether or
+       * not this row renders. The closing rule is Equality's own SectionHeading pattern.
+       *
+       * `data-pagefind-ignore` is load-bearing. Without it every page matches "copy".
+       */
+      (source || markdownHref) && (
+        <div
+          class="border-border mt-4 flex items-center border-b pb-2"
+          data-eq-actions
+          data-eq-chrome
+          data-pagefind-ignore
+        >
+          {markdownHref && (
+            <a class={action} href={markdownHref} target="_blank">
+              <Icon icon="FileText" size="xs" />
+              View as Markdown
+            </a>
+          )}
+          {source && markdownHref && (
+            <span class="text-border-raised select-none" data-eq-action-sep aria-hidden="true">
+              |
+            </span>
+          )}
+          {source && (
+            /* Both labels render and swap on `data-copied` so the button does not resize. */
+            <button
+              type="button"
+              class={`group ${action}`}
+              data-eq-copy={source}
+              title="Copies the page source as Markdown"
+            >
+              <Icon icon="Copy" size="xs" />
+              <span class="inline-flex group-data-[copied]:hidden" data-eq-copy-idle>
+                Copy as Markdown
+              </span>
+              <span class="hidden group-data-[copied]:inline-flex" data-eq-copy-done>
+                Copied
+              </span>
+            </button>
+          )}
+        </div>
+      )
+    }
   </header>
-
-  {
-    /**
-     * `data-pagefind-ignore`: this sits inside `data-pagefind-body`, so without
-     * it every page matches "copy". The source is inlined rather than fetched
-     * so it works offline and on draft pages, which have no twin.
-     */
-    (source || markdownHref) && (
-      <div class={styles.actions} data-eq-chrome data-pagefind-ignore>
-        {source && (
-          <button
-            type="button"
-            class={styles.action}
-            data-eq-copy={source}
-            title="Copies the page source as Markdown"
-          >
-            <span class={styles.actionLabel} data-eq-copy-idle>
-              Copy as Markdown
-            </span>
-            <span class={styles.actionLabel} data-eq-copy-done>
-              Copied
-            </span>
-          </button>
-        )}
-        {markdownHref && (
-          <a class={styles.action} href={markdownHref}>
-            View as Markdown
-          </a>
-        )}
-      </div>
-    )
-  }
 
   {
     deprecation && (

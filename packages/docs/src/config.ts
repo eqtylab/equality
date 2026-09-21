@@ -4,6 +4,10 @@ import { z } from 'astro/zod';
 const headerLink = z.object({
   label: z.string(),
   href: z.string(),
+  /**
+   * A Lucide name like `BookOpen`, or a path to an SVG in `public/` like
+   * `/github.svg`. An SVG must be white: light mode inverts it.
+   */
   icon: z.string().optional(),
   external: z.boolean().optional(),
 });
@@ -15,12 +19,15 @@ export const docsConfigSchema = z.object({
   /** Path to a favicon, relative to `public/`. Base is applied automatically. */
   favicon: z.string().default('/favicon.svg'),
 
+  /**
+   * The header mark. Without one the header falls back to `title` as text. Either
+   * way a constant "Docs" label follows it, and `title` heads the sidebar.
+   */
   logo: z
     .object({
       src: z.string(),
+      /** Name the company: the brand link reads as this plus "Docs". */
       alt: z.string().default(''),
-      /** Hide the text title when a logo is present. */
-      replacesTitle: z.boolean().default(false),
     })
     .optional(),
 
