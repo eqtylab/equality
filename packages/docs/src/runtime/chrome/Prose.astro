@@ -83,46 +83,46 @@ const deprecationMessage = deprecation?.message
         {description}
       </p>
     )}
+    {
+      /**
+       * Inside the header, so one margin governs the gap to the content whether or
+       * not this row renders.
+       *
+       * `data-pagefind-ignore` is load-bearing. Without it every page matches "copy".
+       */
+      (source || markdownHref) && (
+        <div class={styles.actions} data-eq-actions data-eq-chrome data-pagefind-ignore>
+          {source && (
+            <button
+              type="button"
+              class={styles.action}
+              data-eq-copy={source}
+              title="Copies the page source as Markdown"
+            >
+              <Icon icon="Copy" size="xs" />
+              <span class={styles.actionLabel} data-eq-copy-idle>
+                Copy as Markdown
+              </span>
+              <span class={styles.actionLabel} data-eq-copy-done>
+                Copied
+              </span>
+            </button>
+          )}
+          {source && markdownHref && (
+            <span class={styles.actionSep} data-eq-action-sep aria-hidden="true">
+              |
+            </span>
+          )}
+          {markdownHref && (
+            <a class={styles.action} href={markdownHref}>
+              <Icon icon="FileText" size="xs" />
+              View as Markdown
+            </a>
+          )}
+        </div>
+      )
+    }
   </header>
-
-  {
-    /**
-     * `data-pagefind-ignore`: this sits inside `data-pagefind-body`, so without
-     * it every page matches "copy". The source is inlined rather than fetched
-     * so it works offline and on draft pages, which have no twin.
-     */
-    (source || markdownHref) && (
-      <div class={styles.actions} data-eq-actions data-eq-chrome data-pagefind-ignore>
-        {source && (
-          <button
-            type="button"
-            class={styles.action}
-            data-eq-copy={source}
-            title="Copies the page source as Markdown"
-          >
-            <Icon icon="Copy" size="xs" />
-            <span class={styles.actionLabel} data-eq-copy-idle>
-              Copy as Markdown
-            </span>
-            <span class={styles.actionLabel} data-eq-copy-done>
-              Copied
-            </span>
-          </button>
-        )}
-        {source && markdownHref && (
-          <span class={styles.actionSep} data-eq-action-sep aria-hidden="true">
-            |
-          </span>
-        )}
-        {markdownHref && (
-          <a class={styles.action} href={markdownHref}>
-            <Icon icon="FileText" size="xs" />
-            View as Markdown
-          </a>
-        )}
-      </div>
-    )
-  }
 
   {
     deprecation && (
