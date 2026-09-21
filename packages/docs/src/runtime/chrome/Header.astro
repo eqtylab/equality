@@ -37,8 +37,7 @@ const homeHref = withBase(CONFIG.pathPrefix ? `/${CONFIG.pathPrefix}/` : '/', {
           <span class={styles.brandText}>{CONFIG.title}</span>
         )
       }
-      {/* Constant across every docsite; the product name heads the sidebar. */}
-      <span class={styles.label}>Docs</span>
+      <span class={styles.label}>{CONFIG.title}</span>
     </a>
 
     <div class={styles.search}>
