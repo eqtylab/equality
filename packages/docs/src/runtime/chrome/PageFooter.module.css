@@ -1,0 +1,43 @@
+@reference '../styles/theme.css';
+
+/* 96px, a step above the 64px under the page header, so the footer sits further out
+ * than anything inside the prose. Capped to the prose width so it does not run under
+ * the table of contents. */
+.footer {
+  @apply mt-24;
+  max-width: var(--eq-docs-content-max);
+}
+
+.pager {
+  @apply grid grid-cols-2 gap-4;
+}
+.nextCell {
+  @apply text-right;
+}
+
+.page {
+  @apply inline-flex flex-col gap-1 no-underline;
+}
+.direction {
+  @apply text-text-tertiary inline-flex items-center gap-1.5 text-sm;
+}
+.next .direction {
+  @apply justify-end;
+}
+.pageLabel {
+  @apply text-text-secondary text-base font-medium;
+}
+.page:hover .pageLabel {
+  @apply text-text-primary;
+}
+
+/* 32px: inside the footer's own group, so tighter than the 96px around it. */
+.meta {
+  @apply text-text-tertiary mt-8 flex flex-wrap items-center justify-center gap-x-4 gap-y-1 text-sm;
+}
+.metaLink {
+  @apply hover:text-text-primary inline-flex items-center gap-1.5 text-inherit no-underline;
+}
+.text {
+  @apply m-0;
+}

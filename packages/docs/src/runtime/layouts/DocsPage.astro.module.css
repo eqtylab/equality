@@ -4,8 +4,9 @@
   @apply flex items-start;
 }
 
+/* 128px of runway, so a page stops deliberately rather than at its last line. */
 .main {
-  @apply mx-auto flex w-full min-w-0 items-start gap-12 px-6 py-10 xl:gap-16;
+  @apply mx-auto flex w-full min-w-0 items-start gap-12 px-6 pb-32 pt-10 xl:gap-16;
   max-width: calc(var(--eq-docs-content-max) + var(--eq-docs-toc-width) + 8rem);
 }
 

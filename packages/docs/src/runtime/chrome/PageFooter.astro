@@ -1,0 +1,63 @@
+---
+/** The end of a page: where to go next, and how to fix what you just read. */
+import type { NavNode } from '@eqtylab/docs/types';
+import { Icon } from '@eqtylab/equality';
+
+import styles from './PageFooter.module.css';
+
+interface Props {
+  prev?: NavNode;
+  next?: NavNode;
+  editHref?: string;
+  text?: string;
+}
+
+const { prev, next, editHref, text } = Astro.props;
+const hasPager = Boolean(prev?.href || next?.href);
+---
+
+{
+  (hasPager || editHref || text) && (
+    <footer class={styles.footer} data-eq-chrome data-pagefind-ignore>
+      {hasPager && (
+        <nav class={styles.pager} aria-label="Previous and next page">
+          {/* Both cells always, so a page with only a next link keeps it on the right. */}
+          <div>
+            {prev?.href && (
+              <a class={styles.page} href={prev.href} rel="prev">
+                <span class={styles.direction}>
+                  <Icon icon="ArrowLeft" size="xs" />
+                  Previous
+                </span>
+                <span class={styles.pageLabel}>{prev.label}</span>
+              </a>
+            )}
+          </div>
+          <div class={styles.nextCell}>
+            {next?.href && (
+              <a class={`${styles.page} ${styles.next}`} href={next.href} rel="next">
+                <span class={styles.direction}>
+                  Next
+                  <Icon icon="ArrowRight" size="xs" />
+                </span>
+                <span class={styles.pageLabel}>{next.label}</span>
+              </a>
+            )}
+          </div>
+        </nav>
+      )}
+
+      {(editHref || text) && (
+        <div class={styles.meta}>
+          {editHref && (
+            <a class={styles.metaLink} href={editHref} target="_blank" rel="noopener noreferrer">
+              <Icon icon="Pencil" size="xs" />
+              Edit this page
+            </a>
+          )}
+          {text && <p class={styles.text}>{text}</p>}
+        </div>
+      )}
+    </footer>
+  )
+}
