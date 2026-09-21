@@ -209,7 +209,7 @@ export default function GlobalSearch({ suggested = [] }: Props) {
       setStatus('ready');
     } catch {
       if (id !== requestId.current) return;
-      // In `astro dev` there is no index at all, by design. Say so rather than showing nothing.
+      // No index before the first build; say so rather than showing nothing.
       setStatus('error');
       setHits([]);
     }
