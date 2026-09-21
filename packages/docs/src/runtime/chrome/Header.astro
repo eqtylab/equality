@@ -23,33 +23,21 @@ const homeHref = withBase(CONFIG.pathPrefix ? `/${CONFIG.pathPrefix}/` : '/', {
 
 <header class={styles.header} data-eq-chrome data-pagefind-ignore>
   <div class={styles.inner}>
-    <a
-      class={styles.brand}
-      href={homeHref}
-      aria-label={CONFIG.logo?.replacesTitle ? CONFIG.logo.alt || CONFIG.title : undefined}
-    >
+    <a class={styles.brand} href={homeHref}>
       {
-        CONFIG.logo && (
-          <Fragment>
-            <img
-              class={styles.logo}
-              src={withBase(CONFIG.logo.src, paths)}
-              alt={CONFIG.logo.alt}
-              height="24"
-            />
-            {CONFIG.logo.compact && (
-              <img
-                class={styles.logoCompact}
-                src={withBase(CONFIG.logo.compact, paths)}
-                alt=""
-                aria-hidden="true"
-                height="24"
-              />
-            )}
-          </Fragment>
+        CONFIG.logo ? (
+          <img
+            class={styles.logo}
+            src={withBase(CONFIG.logo.src, paths)}
+            alt={CONFIG.logo.alt}
+            height="24"
+          />
+        ) : (
+          <span class={styles.brandText}>{CONFIG.title}</span>
         )
       }
-      {!CONFIG.logo?.replacesTitle && <span class={styles.title}>{CONFIG.title}</span>}
+      {/* Constant across every docsite; the product name heads the sidebar. */}
+      <span class={styles.label}>Docs</span>
     </a>
 
     <div class={styles.search}>
@@ -77,8 +65,8 @@ const homeHref = withBase(CONFIG.pathPrefix ? `/${CONFIG.pathPrefix}/` : '/', {
       </div>
       {CONFIG.header.showThemeToggle && <ThemeToggle client:load />}
       {
-        /* popovertarget: the platform handles open, close, Escape, light dismiss and
-           focus return. Hidden above lg, where the sidebar is back. */
+        /* popovertarget: the browser handles opening, closing, Escape, a click
+           outside, and returning focus here. */
       }
       <button
         class={styles.navTrigger}

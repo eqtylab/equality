@@ -4,21 +4,32 @@
   @apply w-full min-w-0;
 }
 
-/* Tokens, not a copy of Input: a theme change carries, an Input restyle does not. */
 .trigger {
   @apply border-border bg-background flex h-10 w-full min-w-0 items-center gap-2 rounded-md border p-2;
   @apply text-text-secondary cursor-pointer text-sm;
   @apply focus-ring;
 }
 
-/* min-w-0 so a long label truncates instead of pushing the shortcut out of the header. */
+/* min-w-0: without it a long label pushes the shortcut out of the header. */
 .triggerLabel {
   @apply min-w-0 flex-1 truncate text-left;
 }
 
-/* No room for it on a narrow header, and the shortcut still works. */
 .shortcut {
   @apply bg-background-raised text-text-secondary pointer-events-none hidden rounded border px-1.5 py-0.5 font-mono text-xs sm:inline-block;
+}
+
+/* Below sm the trigger is a bare icon. The label stays as its accessible name. */
+@media (max-width: 639px) {
+  .search {
+    @apply w-auto;
+  }
+  .trigger {
+    @apply w-10 justify-center border-transparent bg-transparent p-0;
+  }
+  .triggerLabel {
+    @apply sr-only;
+  }
 }
 
 .srOnly {
@@ -29,22 +40,18 @@
   @apply p-0;
 }
 
-/* Class doubled to beat Equality's centring, which sits at the same specificity.
- * Never override `transform` here: the entrance animation uses it. */
+/* Class doubled to beat Equality's own centring at the same specificity.
+ * Never set `transform` here: the entrance animation uses it. */
 .dialog.dialog {
   top: 10vh;
   translate: -50% 0;
 }
 
-/**
- * FRAGILE. Matches a generated class name by substring, so renaming `.dialog-overlay` in
- * `packages/ui` or reordering Radix's portal children kills the glass with no error. Only
- * the `backdrop-filter` browser test catches it. Same hazard as `[class*='code-block']`
- * in CodeFence.module.css.
- *
- * Exists because DialogContainer passes its overlay no className. Delete when it does.
- * Dropping `:has(+ .dialog)` puts the glass on every dialog on the site.
- */
+/* FRAGILE, three ways:
+ *   - Matches a generated class name, so renaming it in `packages/ui` kills this.
+ *   - It fails silently. Only a browser test catches it.
+ *   - Dropping `:has(+ .dialog)` puts the glass on every dialog on the site.
+ * It exists only because DialogContainer passes its overlay no className. */
 :global([class*='dialog-overlay']):has(+ .dialog) {
   @apply bg-background/25;
   -webkit-backdrop-filter: blur(18px);
@@ -103,7 +110,6 @@
 .hitSummary {
   @apply text-text-secondary line-clamp-1 text-xs;
 }
-/* Location, not identity: separated from the title/description pair above it. */
 .hitCrumb {
   @apply text-text-tertiary mt-1 truncate text-xs;
 }
@@ -111,16 +117,9 @@
   @apply text-brand-primary cursor-pointer justify-center text-sm;
 }
 
-/**
- * Equality has no highlight token, so these name steps off the option scale directly. Not
- * `badge-*`: a badge means "this has this status", a mark means "this matched your query".
- * Not `brand-primary` either, which is the same value as the selected row, so a mark painted
- * with it vanishes exactly when a row is selected.
- *
- * Each theme names its own step because `lilac-*` carries no dark values. Lift this into
- * chrome.css as `--eq-docs-highlight-*` when a second consumer appears; prose `<mark>` is the
- * likely one. See the equality-token-gaps feature.
- */
+/* Equality has no highlight colour, so these name lilac steps directly, one per theme.
+ * Never `brand-primary`: it is the selected row's own colour, so the mark would vanish
+ * exactly when a row is selected. */
 .mark,
 .hitSummary mark {
   @apply rounded px-0.5;

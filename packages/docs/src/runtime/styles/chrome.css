@@ -2,11 +2,17 @@
 @reference './theme.css';
 
 :root {
-  /* 69px, measured off the Governance Studio board. */
   --eq-docs-header-height: 4.3125rem;
   --eq-docs-sidebar-width: 18rem;
   --eq-docs-toc-width: 15rem;
   --eq-docs-content-max: 48rem;
+  /* eqtylab.io's display-text fade, on tokens so light gets the inverse for free.
+   * Used by the header label and the page title. */
+  --eq-docs-display-gradient: linear-gradient(
+    135deg,
+    var(--color-text-primary),
+    var(--color-background) 175%
+  );
 }
 
 body {
