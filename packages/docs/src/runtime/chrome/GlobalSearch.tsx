@@ -16,19 +16,18 @@ import {
 
 import styles from './GlobalSearch.module.css';
 
-/** Keep the query in the dialog. Moving it to the header costs a hidden cmdk input and
- * forwarded key events, because the header sits outside `Command`. */
+/** The header sits outside `Command`: moving the query there costs a hidden input and key forwarding. */
 
 const MAX_RESULTS = 20;
 const PAGE_SIZE = 5;
 const RECENT_KEY = 'eq-docs-recent-pages';
 const MAX_RECENT = 5;
 
-/** Hand-written: Pagefind is fetched from the built output, so no package supplies types. */
+/** Hand-written: Pagefind is fetched at runtime, so no package supplies types. */
 interface PagefindDoc {
   url: string;
   excerpt: string;
-  /** Stamped by Prose.astro. `crumbs` is the authored `_group.yaml` trail, not the URL. */
+  /** Stamped by Prose.astro; `crumbs` is the `_group.yaml` trail, not the URL. */
   meta?: { title?: string; crumbs?: string; description?: string };
 }
 
@@ -55,7 +54,6 @@ interface Hit {
   id: string;
   url: string;
   title: string;
-  /** Frontmatter description, or Pagefind's excerpt where a page has none. */
   summary: string;
   isExcerpt: boolean;
   crumbs?: string;
@@ -95,7 +93,7 @@ function getRecentPages(): RecentPage[] {
   }
 }
 
-/** Reads the page it is on from the same attributes the search index is built from. */
+/** Reads the page it is on from the same attributes the index is built from. */
 function recordCurrentPage(): RecentPage[] {
   const heading = document.querySelector('h1[data-pagefind-meta="title"]');
   const article = document.querySelector('article[data-pagefind-body]');
@@ -148,8 +146,7 @@ export default function GlobalSearch({ suggested = [] }: Props) {
   const [hits, setHits] = useState<Hit[]>([]);
   const [status, setStatus] = useState<'idle' | 'loading' | 'ready' | 'error'>('idle');
   const [expanded, setExpanded] = useState(false);
-  // Lazy initializer, safe because this island is client:only and never prerenders.
-  // Recording on mount is why this runs on every page, not only when search opens.
+  // Lazy initializer, safe only because this island is client:only and never prerenders.
   const [recentPages] = useState<RecentPage[]>(recordCurrentPage);
   const triggerRef = useRef<HTMLButtonElement>(null);
   const requestId = useRef(0);
@@ -163,8 +160,7 @@ export default function GlobalSearch({ suggested = [] }: Props) {
     setStatus('idle');
     setExpanded(false);
     requestId.current++;
-    // DialogContainer preventDefaults onCloseAutoFocus, killing Radix's focus restoration.
-    // Drop this and a keyboard user lands on <body>. Next frame: Radix moves focus on close.
+    // DialogContainer preventDefaults onCloseAutoFocus; drop this and a keyboard user lands on <body>.
     requestAnimationFrame(() => triggerRef.current?.focus());
   }, [setExpanded]);
 
@@ -233,7 +229,7 @@ export default function GlobalSearch({ suggested = [] }: Props) {
     window.location.assign(hit.url);
   }
 
-  // Excluding the current page is also what makes a first visit fall through to `suggested`.
+  // Excluding the current page is what makes a first visit fall through to `suggested`.
   const elsewhere = recentPages.filter((page) => page.url !== window.location.pathname);
   const landing = elsewhere.length > 0 ? elsewhere : suggested.map(toRecent);
   const landingHeading = elsewhere.length > 0 ? 'Recently viewed' : 'Start here';
@@ -324,7 +320,7 @@ export default function GlobalSearch({ suggested = [] }: Props) {
                 </CommandGroup>
               )}
 
-              {/* Flat and in Pagefind's order. Grouping by section reordered the ranking. */}
+              {/* Flat and in Pagefind's order: grouping by section reordered the ranking. */}
               {hits.length > 0 && (
                 <CommandGroup className={styles.group} heading="Results">
                   {visible.map((hit) => (

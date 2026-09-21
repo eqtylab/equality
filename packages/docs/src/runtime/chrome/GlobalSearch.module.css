@@ -37,13 +37,9 @@
 }
 
 /**
- * FRAGILE. Matches a generated class name by substring, so renaming `.dialog-overlay` in
- * `packages/ui` or reordering Radix's portal children kills the glass with no error. Only
- * the `backdrop-filter` browser test catches it. Same hazard as `[class*='code-block']`
- * in CodeFence.module.css.
- *
- * Exists because DialogContainer passes its overlay no className. Delete when it does.
- * Dropping `:has(+ .dialog)` puts the glass on every dialog on the site.
+ * Two assumptions nothing enforces: `packages/ui` still generates an overlay class containing
+ * `dialog-overlay`, and Radix still renders that overlay as the dialog's previous sibling. Either
+ * changes and the blur silently disappears. `:has` keeps it off every other dialog on the site.
  */
 :global([class*='dialog-overlay']):has(+ .dialog) {
   @apply bg-background/25;
@@ -104,13 +100,8 @@ html[data-equality-theme='dark'] .item[data-selected='true'] {
 
 /**
  * Equality has no highlight token, so these name steps off the option scale directly. Not
- * `badge-*`: a badge means "this has this status", a mark means "this matched your query".
- * Not `brand-primary` either, which is the same value as the selected row, so a mark painted
- * with it vanishes exactly when a row is selected.
- *
- * Each theme names its own step because `lilac-*` carries no dark values. Lift this into
- * chrome.css as `--eq-docs-highlight-*` when a second consumer appears; prose `<mark>` is the
- * likely one. See the equality-token-gaps feature.
+ * `brand-primary`: it is the selected row's colour, so a mark painted with it vanishes exactly
+ * when a row is selected. Each theme names its own step because `lilac-*` carries no dark values.
  */
 .mark,
 .hitSummary mark {
