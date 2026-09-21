@@ -5,7 +5,6 @@ import { Icon } from '@eqtylab/equality';
 import GlobalSearch from './GlobalSearch.tsx';
 import LinkIcon from './LinkIcon.astro';
 import ThemeToggle from './ThemeToggle.tsx';
-import styles from './Header.module.css';
 
 interface Props {
   /** First page of each top-level section. Shown before a reader has any history. */
@@ -20,27 +19,49 @@ const paths = { base: import.meta.env.BASE_URL, pathPrefix: CONFIG.pathPrefix };
 const homeHref = withBase(CONFIG.pathPrefix ? `/${CONFIG.pathPrefix}/` : '/', {
   base: import.meta.env.BASE_URL,
 });
+
+const navLink = 'eq-nav-control flex';
 ---
 
-<header class={styles.header} data-eq-chrome data-pagefind-ignore>
-  <div class={styles.inner}>
-    <a class={styles.brand} href={homeHref}>
+<header
+  class="bg-background-raised border-border-raised sticky top-0 z-50 h-[var(--eq-docs-header-height)] border-b"
+  data-eq-chrome
+  data-pagefind-ignore
+>
+  {
+    /* Below sm the search becomes an icon in the control cluster. `order` moves it
+       among these three children, so it only works while all three stay siblings. */
+  }
+  <div class="flex h-full items-center justify-between gap-4 px-4 max-sm:gap-2">
+    {/* min-h-10: the mark alone leaves this link under the 24px minimum tap target. */}
+    <a
+      class="text-text-primary flex min-h-10 shrink-0 items-center gap-3 no-underline"
+      href={homeHref}
+    >
+      {
+        /* Only the height is set. An <img> keeps its own aspect ratio, so any logo
+           fits. The mark ships white, so light mode inverts it; invert only works for
+           a one-colour logo, and a coloured one needs a second file. */
+      }
       {
         CONFIG.logo ? (
           <img
-            class={styles.logo}
+            class="light:invert block h-[22px] w-auto shrink-0"
             src={withBase(CONFIG.logo.src, paths)}
             alt={CONFIG.logo.alt}
             height="24"
           />
         ) : (
-          <span class={styles.brandText}>{CONFIG.title}</span>
+          <span class="whitespace-nowrap text-xl font-bold">{CONFIG.title}</span>
         )
       }
-      <span class={styles.label}>{CONFIG.title}</span>
+      <span class="eq-display-gradient whitespace-nowrap text-xl font-bold forced-colors:text-inherit">
+        {CONFIG.title}
+      </span>
     </a>
 
-    <div class={styles.search}>
+    {/* min-w-0: without it the search pushes the theme control off a narrow header. */}
+    <div class="flex min-w-0 max-w-[28rem] flex-1 justify-center max-sm:order-2 max-sm:ml-auto max-sm:max-w-none max-sm:flex-none">
       <slot name="search" />
       {
         /* client:only: with no JS there is no search, and client:load would leave a dead control. */
@@ -48,28 +69,31 @@ const homeHref = withBase(CONFIG.pathPrefix ? `/${CONFIG.pathPrefix}/` : '/', {
       }
     </div>
 
-    <div class={styles.actions}>
+    <div class="flex shrink-0 items-center gap-2 max-sm:order-3">
       <slot name="versions" />
-      <div class={styles.navLinks}>
+      <div class="hidden items-center gap-1 lg:flex">
         {CONFIG.header.links.map((link) => (
           <a
-            class={styles.navLink}
+            class={navLink}
             href={link.href}
             target={link.external ? '_blank' : undefined}
             rel={link.external ? 'noopener noreferrer' : undefined}
           >
             {link.icon && <LinkIcon icon={link.icon} />}
-            <span class={styles.navLinkLabel}>{link.label}</span>
+            {/* Always visible. Hiding it shipped a nameless link, because `icon` is
+                optional and Lucide has no brand marks, so a GitHub link had nothing
+                left to render. */}
+            <span class="inline">{link.label}</span>
           </a>
         ))}
       </div>
-      {CONFIG.header.showThemeToggle && <ThemeToggle client:load className={styles.navLink} />}
+      {CONFIG.header.showThemeToggle && <ThemeToggle client:load className="eq-nav-control" />}
       {
         /* popovertarget: the browser handles opening, closing, Escape, a click
            outside, and returning focus here. */
       }
       <button
-        class={styles.navTrigger}
+        class="text-text-secondary hover:text-text-primary flex size-10 items-center justify-center rounded-md lg:hidden"
         type="button"
         popovertarget="eq-nav-drawer"
         aria-label="Open navigation"

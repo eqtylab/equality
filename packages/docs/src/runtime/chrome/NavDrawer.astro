@@ -12,7 +12,6 @@ import { Icon } from '@eqtylab/equality';
 
 import LinkIcon from './LinkIcon.astro';
 import NavTree from './NavTree.astro';
-import styles from './NavDrawer.module.css';
 
 interface Props {
   nodes: NavNode[];
@@ -20,12 +19,28 @@ interface Props {
 const { nodes } = Astro.props;
 ---
 
-<div id="eq-nav-drawer" popover class={styles.drawer} data-eq-chrome data-pagefind-ignore>
-  <nav class={styles.panel} aria-label="Documentation">
+{
+  /*
+    A popover is `display:none` until opened, so no `hidden` is needed, and above lg
+    the sidebar is back so it must never open. Resetting the UA's margin, border and
+    padding is required: a popover is not a plain box.
+
+    The `::backdrop` pair is the scrim. It comes with the popover, so there is no extra
+    element and no scrim selector reaching into another package.
+  */
+}
+<div
+  id="eq-nav-drawer"
+  popover
+  class="bg-background-raised border-border-raised fixed inset-y-0 left-0 m-0 h-full w-[min(20rem,84vw)] overflow-y-auto border-r p-4 lg:hidden [&::backdrop]:bg-background/50 [&::backdrop]:backdrop-blur-[3px]"
+  data-eq-chrome
+  data-pagefind-ignore
+>
+  <nav class="block" aria-label="Documentation">
     {
       CONFIG.header.links.map((link) => (
         <a
-          class={styles.link}
+          class="text-text-secondary hover:text-text-primary mb-1 flex max-h-10 items-center gap-2 rounded-md px-2 py-1.5 text-sm font-medium no-underline"
           href={link.href}
           target={link.external ? '_blank' : undefined}
           rel={link.external ? 'noopener noreferrer' : undefined}

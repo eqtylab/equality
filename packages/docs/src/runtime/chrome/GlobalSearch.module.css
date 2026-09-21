@@ -1,63 +1,15 @@
 @reference '../styles/theme.css';
 
-.search {
-  @apply w-full min-w-0;
-}
+/*
+ * All that is left here are the two rules that fight another package's styling. Neither
+ * can move inline: one has to outrank Equality's own dialog class at equal specificity,
+ * and the other styles an element this component never renders.
+ */
 
-.trigger {
-  @apply border-border bg-background flex h-10 w-full min-w-0 items-center gap-2 rounded-md border p-2;
-  @apply text-text-secondary cursor-pointer text-sm;
-  @apply focus-ring;
-}
-
-/* min-w-0: without it a long label pushes the shortcut out of the header. */
-.triggerLabel {
-  @apply min-w-0 flex-1 truncate text-left;
-}
-
-.shortcut {
-  @apply bg-background-raised text-text-secondary pointer-events-none hidden rounded border px-1.5 py-0.5 font-mono text-xs sm:inline-block;
-}
-
-/* Below sm the trigger is a bare icon. The label stays as its accessible name. */
-@media (max-width: 639px) {
-  .search {
-    @apply w-auto;
-  }
-  .trigger {
-    @apply w-10 justify-center border-transparent bg-transparent p-0;
-  }
-  .triggerLabel {
-    @apply sr-only;
-  }
-}
-
-/* Below sm the trigger is a bare icon. The label stays as its accessible name. */
-@media (max-width: 639px) {
-  .search {
-    @apply w-auto;
-  }
-  .trigger {
-    @apply w-10 justify-center border-transparent bg-transparent p-0;
-  }
-  .triggerLabel {
-    @apply sr-only;
-  }
-}
-
-.srOnly {
-  @apply sr-only;
-}
-
-.dialog {
-  @apply p-0;
-}
-
-/* Class doubled to beat Equality's own centring at the same specificity.
- * Never set `transform` here: the entrance animation uses it. */
 /* Class doubled to beat Equality's own centring at the same specificity.
  * Never set `transform` here: the entrance animation uses it. */
 .dialog.dialog {
+  @apply p-0;
   top: 10vh;
   translate: -50% 0;
 }
@@ -71,78 +23,4 @@
   @apply bg-background/25;
   -webkit-backdrop-filter: blur(18px);
   backdrop-filter: blur(6px);
-}
-
-.command {
-  @apply w-full border-none;
-}
-
-.list {
-  @apply overflow-y-auto pb-2;
-  max-height: min(60vh, 28rem);
-}
-
-.group {
-  @apply px-1;
-}
-.group > * + * {
-  @apply mt-1;
-}
-
-.item {
-  @apply cursor-pointer;
-}
-/* Equality styles the hover but not cmdk's selected row. Matches the sidebar's
- * current page on purpose: the two highlights have to agree. */
-/* Equality styles the hover but not cmdk's selected row. Matches the sidebar's
- * current page on purpose: the two highlights have to agree. */
-.item[data-selected='true'] {
-  @apply bg-lilac-300/50 text-lilac-700 dark:bg-lilac-600/50 dark:text-lilac-100 shadow-sm;
-}
-
-.state {
-  @apply flex flex-col items-center gap-3 px-4 py-10;
-}
-
-.recent {
-  @apply text-text-secondary text-sm;
-}
-
-.hit {
-  @apply flex min-w-0 flex-1 flex-col gap-0.5;
-}
-.hitTitle {
-  @apply text-text-primary truncate text-sm font-medium;
-}
-.hitSummary {
-  @apply text-text-secondary line-clamp-1 text-xs;
-}
-.hitCrumb {
-  @apply text-text-tertiary mt-1 truncate text-xs;
-}
-.more {
-  @apply text-brand-primary cursor-pointer justify-center text-sm;
-}
-
-.devNote {
-  @apply text-text-secondary border-border border-t px-4 py-2 text-xs;
-}
-
-.devNote {
-  @apply text-text-secondary border-border border-t px-4 py-2 text-xs;
-}
-
-/* Equality has no highlight colour, so these name lilac steps directly, one per theme.
- * Never `brand-primary`: it is the selected row's own colour, so the mark would vanish
- * exactly when a row is selected. */
-.mark,
-.hitSummary mark {
-  @apply rounded px-0.5;
-  background-color: var(--color-lilac-200);
-  color: var(--color-lilac-800);
-}
-html[data-equality-theme='dark'] .mark,
-html[data-equality-theme='dark'] .hitSummary mark {
-  background-color: var(--color-lilac-700);
-  color: var(--color-lilac-200);
 }

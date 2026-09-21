@@ -18,6 +18,28 @@ import styles from './GlobalSearch.module.css';
 
 /** The header sits outside `Command`: moving the query there costs a hidden input and key forwarding. */
 
+/**
+ * Equality ships unlayered CSS, and an unlayered declaration beats anything in
+ * `@layer utilities` whatever its specificity. So any utility here that has to
+ * overrule a value Equality already sets on the same element needs `!` — the list's
+ * own `max-height: 300px` is one, and without the `!` the results pane silently
+ * shrinks. Utilities setting a property Equality leaves alone need nothing.
+ */
+
+/** Equality styles the hover but not cmdk's selected row. Matches the sidebar's current
+ * page on purpose: the two highlights have to agree. */
+const ITEM =
+  'cursor-pointer data-[selected=true]:bg-lilac-300/50 data-[selected=true]:text-lilac-700 data-[selected=true]:shadow-sm dark:data-[selected=true]:bg-lilac-600/50 dark:data-[selected=true]:text-lilac-100';
+
+/** Equality has no highlight colour, so these name lilac steps directly, one per theme.
+ * Never `brand-primary`: it is the selected row's own colour, so the mark would vanish
+ * exactly when a row is selected. */
+const MARK = 'rounded bg-lilac-200 px-0.5 text-lilac-800 dark:bg-lilac-700 dark:text-lilac-200';
+
+/** The same treatment, for the <mark>s inside Pagefind's own excerpt markup. */
+const HIT_SUMMARY =
+  'text-text-secondary line-clamp-1 text-xs [&_mark]:rounded [&_mark]:bg-lilac-200 [&_mark]:px-0.5 [&_mark]:text-lilac-800 dark:[&_mark]:bg-lilac-700 dark:[&_mark]:text-lilac-200';
+
 const MAX_RESULTS = 20;
 const PAGE_SIZE = 5;
 const RECENT_KEY = 'eq-docs-recent-pages';
@@ -129,7 +151,7 @@ function HighlightMatch({ text, query }: { text: string; query: string }) {
     <>
       {parts.map((part, i) =>
         part.toLowerCase() === query.toLowerCase() ? (
-          <mark key={i} className={styles.mark}>
+          <mark key={i} className={MARK}>
             {part}
           </mark>
         ) : (
@@ -239,18 +261,23 @@ export default function GlobalSearch({ suggested = [] }: Props) {
   return (
     <>
       {/* A button, not an Input: Enter, Space and the accessible name come free. */}
-      <div role="search" className={styles.search}>
+      <div role="search" className="w-full min-w-0 max-sm:w-auto">
         <button
           ref={triggerRef}
           type="button"
-          className={styles.trigger}
+          className="border-border bg-background text-text-secondary focus-ring flex h-10 w-full min-w-0 cursor-pointer items-center gap-2 rounded-md border p-2 text-sm max-sm:w-10 max-sm:justify-center max-sm:border-transparent max-sm:bg-transparent max-sm:p-0"
           aria-haspopup="dialog"
           aria-label="Search documentation"
           onClick={open}
         >
           <Icon icon="Search" size="xs" />
-          <span className={styles.triggerLabel}>Search documentation...</span>
-          <kbd aria-hidden="true" className={styles.shortcut}>
+          <span className="min-w-0 flex-1 truncate text-left max-sm:sr-only">
+            Search documentation...
+          </span>
+          <kbd
+            aria-hidden="true"
+            className="bg-background-raised text-text-secondary pointer-events-none hidden rounded border px-1.5 py-0.5 font-mono text-xs sm:inline-block"
+          >
             ⌘K
           </kbd>
         </button>
@@ -258,7 +285,7 @@ export default function GlobalSearch({ suggested = [] }: Props) {
 
       <Dialog open={isOpen} onOpenChange={(next: boolean) => (next ? open() : close())}>
         <DialogContainer className={styles.dialog} aria-describedby={undefined}>
-          <div className={styles.srOnly}>
+          <div className="sr-only">
             <DialogTitle>Search documentation</DialogTitle>
             <DialogDescription>
               Type to search every page. Arrow keys move, Enter opens, Escape closes.
@@ -266,23 +293,23 @@ export default function GlobalSearch({ suggested = [] }: Props) {
           </div>
 
           {/* Pagefind has already ranked these. Let cmdk filter and it discards the good ones. */}
-          <Command shouldFilter={false} className={styles.command}>
+          <Command shouldFilter={false} className="w-full border-none">
             <CommandInput
               value={query}
               onValueChange={onQueryChange}
               placeholder="Search documentation..."
             />
 
-            <CommandList className={styles.list}>
+            <CommandList className="max-h-[min(60vh,28rem)]! overflow-y-auto pb-2">
               {status === 'error' && (
-                <div className={styles.state}>
+                <div className="flex flex-col items-center gap-3 px-4 py-10">
                   <EmptyTableState icon="SearchX" title="Search needs a build to run first" />
                 </div>
               )}
 
               {/* Not CommandEmpty: its filter count never updates while shouldFilter is false. */}
               {showEmpty && (
-                <div className={styles.state}>
+                <div className="flex flex-col items-center gap-3 px-4 py-10">
                   <EmptyTableState
                     icon={query ? 'SearchX' : 'Search'}
                     title={
@@ -302,18 +329,24 @@ export default function GlobalSearch({ suggested = [] }: Props) {
               )}
 
               {showLanding && (
-                <CommandGroup className={styles.group} heading={landingHeading}>
+                <CommandGroup className="px-1 [&>*+*]:mt-1" heading={landingHeading}>
                   {landing.map((page) => (
                     <CommandItem
                       key={page.url}
                       value={page.url}
                       onSelect={() => window.location.assign(page.url)}
-                      className={styles.item}
+                      className={ITEM}
                     >
                       <Icon icon="FileText" size="sm" />
-                      <span className={styles.hit}>
-                        <span className={styles.hitTitle}>{page.title}</span>
-                        {page.crumbs && <span className={styles.hitCrumb}>{page.crumbs}</span>}
+                      <span className="flex min-w-0 flex-1 flex-col gap-0.5">
+                        <span className="text-text-primary truncate text-sm font-medium">
+                          {page.title}
+                        </span>
+                        {page.crumbs && (
+                          <span className="text-text-tertiary mt-1 truncate text-xs">
+                            {page.crumbs}
+                          </span>
+                        )}
                       </span>
                     </CommandItem>
                   ))}
@@ -322,32 +355,36 @@ export default function GlobalSearch({ suggested = [] }: Props) {
 
               {/* Flat and in Pagefind's order: grouping by section reordered the ranking. */}
               {hits.length > 0 && (
-                <CommandGroup className={styles.group} heading="Results">
+                <CommandGroup className="px-1 [&>*+*]:mt-1" heading="Results">
                   {visible.map((hit) => (
                     <CommandItem
                       key={hit.id}
                       value={hit.id}
                       data-search-id={hit.id}
                       onSelect={() => handleSelect(hit)}
-                      className={styles.item}
+                      className={ITEM}
                     >
                       <Icon icon="FileText" size="sm" />
-                      <span className={styles.hit}>
-                        <span className={styles.hitTitle}>
+                      <span className="flex min-w-0 flex-1 flex-col gap-0.5">
+                        <span className="text-text-primary truncate text-sm font-medium">
                           <HighlightMatch text={hit.title} query={query} />
                         </span>
                         {hit.isExcerpt ? (
                           // Pagefind's markup, built from our own content.
                           <span
-                            className={styles.hitSummary}
+                            className={HIT_SUMMARY}
                             dangerouslySetInnerHTML={{ __html: hit.summary }}
                           />
                         ) : (
-                          <span className={styles.hitSummary}>
+                          <span className={HIT_SUMMARY}>
                             <HighlightMatch text={hit.summary} query={query} />
                           </span>
                         )}
-                        {hit.crumbs && <span className={styles.hitCrumb}>{hit.crumbs}</span>}
+                        {hit.crumbs && (
+                          <span className="text-text-tertiary mt-1 truncate text-xs">
+                            {hit.crumbs}
+                          </span>
+                        )}
                       </span>
                     </CommandItem>
                   ))}
@@ -356,7 +393,7 @@ export default function GlobalSearch({ suggested = [] }: Props) {
                     <CommandItem
                       value="view-more"
                       onSelect={() => setExpanded(true)}
-                      className={styles.more}
+                      className="text-brand-primary cursor-pointer justify-center text-sm"
                     >
                       View more results
                     </CommandItem>
@@ -367,7 +404,9 @@ export default function GlobalSearch({ suggested = [] }: Props) {
 
             {/* Outside the list: inside it the note scrolls out of sight. */}
             {import.meta.env.DEV && status !== 'error' && (
-              <p className={styles.devNote}>Dev mode: results come from the last build.</p>
+              <p className="text-text-secondary border-border border-t px-4 py-2 text-xs">
+                Dev mode: results come from the last build.
+              </p>
             )}
           </Command>
         </DialogContainer>

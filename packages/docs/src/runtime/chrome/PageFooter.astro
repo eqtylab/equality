@@ -3,8 +3,6 @@
 import type { NavNode } from '@eqtylab/docs/types';
 import { Icon } from '@eqtylab/equality';
 
-import styles from './PageFooter.module.css';
-
 interface Props {
   prev?: NavNode;
   next?: NavNode;
@@ -14,48 +12,67 @@ interface Props {
 
 const { prev, next, editHref, text } = Astro.props;
 const hasPager = Boolean(prev?.href || next?.href);
+
+const page = 'group inline-flex flex-col gap-1 no-underline';
+const direction = 'text-text-tertiary inline-flex items-center gap-1.5 text-sm';
+const pageLabel = 'text-text-secondary group-hover:text-text-primary text-base font-medium';
 ---
 
 {
+  /* 96px, a step above the 64px under the page header, so the footer sits further out
+     than anything inside the prose. Capped to the prose width so it does not run under
+     the table of contents. */
+}
+{
   (hasPager || editHref || text) && (
-    <footer class={styles.footer} data-eq-chrome data-pagefind-ignore>
+    <footer
+      class="mt-24 max-w-[var(--eq-docs-content-max)]"
+      data-eq-chrome
+      data-pagefind-ignore
+    >
       {hasPager && (
-        <nav class={styles.pager} aria-label="Previous and next page">
+        <nav class="grid grid-cols-2 gap-4" aria-label="Previous and next page">
           {/* Both cells always, so a page with only a next link keeps it on the right. */}
           <div>
             {prev?.href && (
-              <a class={styles.page} href={prev.href} rel="prev">
-                <span class={styles.direction}>
+              <a class={page} href={prev.href} rel="prev">
+                <span class={direction}>
                   <Icon icon="ArrowLeft" size="xs" />
                   Previous
                 </span>
-                <span class={styles.pageLabel}>{prev.label}</span>
+                <span class={pageLabel}>{prev.label}</span>
               </a>
             )}
           </div>
-          <div class={styles.nextCell}>
+          <div class="text-right">
             {next?.href && (
-              <a class={`${styles.page} ${styles.next}`} href={next.href} rel="next">
-                <span class={styles.direction}>
+              <a class={page} href={next.href} rel="next">
+                <span class={`${direction} justify-end`}>
                   Next
                   <Icon icon="ArrowRight" size="xs" />
                 </span>
-                <span class={styles.pageLabel}>{next.label}</span>
+                <span class={pageLabel}>{next.label}</span>
               </a>
             )}
           </div>
         </nav>
       )}
 
+      {/* 32px: inside the footer's own group, so tighter than the 96px around it. */}
       {(editHref || text) && (
-        <div class={styles.meta}>
+        <div class="text-text-tertiary mt-8 flex flex-wrap items-center justify-center gap-x-4 gap-y-1 text-sm">
           {editHref && (
-            <a class={styles.metaLink} href={editHref} target="_blank" rel="noopener noreferrer">
+            <a
+              class="hover:text-text-primary inline-flex items-center gap-1.5 text-inherit no-underline"
+              href={editHref}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
               <Icon icon="Pencil" size="xs" />
               Edit this page
             </a>
           )}
-          {text && <p class={styles.text}>{text}</p>}
+          {text && <p class="m-0">{text}</p>}
         </div>
       )}
     </footer>

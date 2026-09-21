@@ -2,7 +2,6 @@
 import type { NavNode } from '@eqtylab/docs/types';
 
 import NavTree from './NavTree.astro';
-import styles from './Sidebar.module.css';
 
 interface Props {
   nodes: NavNode[];
@@ -10,8 +9,13 @@ interface Props {
 const { nodes } = Astro.props;
 ---
 
-<aside class={styles.sidebar} data-eq-chrome data-pagefind-ignore>
-  <nav class={styles.nav} aria-label="Documentation">
+{/* border-raised pairs with the raised fill, as Gov Studio does. */}
+<aside
+  class="bg-background-raised border-border-raised top-[var(--eq-docs-header-height)] hidden w-[var(--eq-docs-sidebar-width)] shrink-0 border-r lg:sticky lg:block lg:h-[calc(100vh-var(--eq-docs-header-height))] lg:overflow-y-auto"
+  data-eq-chrome
+  data-pagefind-ignore
+>
+  <nav class="px-4 py-6" aria-label="Documentation">
     <NavTree nodes={nodes} />
   </nav>
 </aside>

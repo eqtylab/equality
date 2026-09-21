@@ -1,5 +1,15 @@
-/* Shared geometry only; component styling lives in co-located *.module.css files. */
+/* Shared geometry and the variants the chrome needs; component styling is inline
+ * Tailwind in the markup. */
 @reference './theme.css';
+
+/* The mirror of Equality's own `dark` variant. Needed because the logo and the header
+ * link marks ship white, so light is the theme that has to invert them. */
+@custom-variant light (&:where(html[data-equality-theme=light], html[data-equality-theme=light] *));
+
+/* Equality's hover fires on `:focus` rather than `:focus-visible`, so a mouse click
+ * leaves a control filled as if it were the current page. This undoes it for pointer
+ * focus only, leaving the keyboard ring intact. */
+@custom-variant pointer-focus (&:focus:not(:focus-visible));
 
 :root {
   --eq-docs-header-height: 4.3125rem;

@@ -2,11 +2,12 @@
 /**
  * One corner of the table-of-contents rail. `in` descends a level, `out` returns.
  *
+ * An SVG, not a CSS corner. `border-radius` arrives horizontal; the rail has to arrive
+ * vertical to meet the child's border. The 1px offset centres it on that border.
+ *
  * `vector-effect` is load-bearing: the viewBox is stretched to the indent width, and
- * without it the stroke stretches too. Geometry lives in `.elbow`.
+ * without it the stroke stretches too.
  */
-import styles from './TableOfContents.module.css';
-
 interface Props {
   direction: 'in' | 'out';
 }
@@ -15,7 +16,7 @@ const d = direction === 'in' ? 'M 0 0 C 0 0.5, 1 0.5, 1 1' : 'M 1 0 C 1 0.5, 0 0
 ---
 
 <svg
-  class={styles.elbow}
+  class="text-border-raised ml-px block h-2 w-[var(--eq-toc-indent)]"
   data-eq-elbow={direction}
   aria-hidden="true"
   viewBox="0 0 1 1"

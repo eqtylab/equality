@@ -2,7 +2,6 @@
 /** On-this-page navigation. SSR'd so it works without JS; <eq-toc> only adds scroll-spy. */
 import type { TocNode } from '@eqtylab/docs/types';
 
-import styles from './TableOfContents.module.css';
 import TocList from './TocList.astro';
 
 interface Props {
@@ -19,33 +18,61 @@ const slugs = flatten(items).map((n) => n.slug);
 ---
 
 {
+  /* The elbow reads `--eq-toc-indent` as its width too. Change one and the rail stops
+     meeting the level below. */
+}
+{
   items.length > 0 && (
-    <eq-toc class={styles.toc} data-slugs={slugs.join(',')} data-eq-chrome data-pagefind-ignore>
+    <eq-toc
+      class="[--eq-toc-indent:0.75rem] top-[calc(var(--eq-docs-header-height)+2rem)] hidden w-[var(--eq-docs-toc-width)] shrink-0 xl:sticky xl:block xl:max-h-[calc(100vh-var(--eq-docs-header-height))] xl:overflow-y-auto"
+      data-slugs={slugs.join(',')}
+      data-eq-chrome
+      data-pagefind-ignore
+    >
       <nav aria-labelledby="eq-toc-heading">
-        <p class={styles.heading} id="eq-toc-heading">
+        <p class="text-text-primary mb-3 text-sm font-semibold" id="eq-toc-heading">
           {label}
         </p>
-        <div class={styles.rails} data-eq-toc-rails>
+        <div class="relative" data-eq-toc-rails>
           {
-            /* The lit segment. `eq-toc.ts` measures its path from the rendered rows.
-               With no JavaScript it stays empty and the rail is simply unlit. */
+            /* The lit segment. `eq-toc.ts` measures its path from the rendered rows and
+               raises the opacity once it has. With no JavaScript it stays empty and the
+               rail is simply unlit.
+
+               Absolute with no z-index paints above the rows, so the segment covers the
+               grey border. */
           }
-          <svg class={styles.rail} aria-hidden="true" fill="none">
+          <svg
+            class="pointer-events-none absolute inset-0 h-full w-full overflow-visible [&_path]:opacity-0 [&_path]:[transition:opacity_300ms_ease]"
+            aria-hidden="true"
+            fill="none"
+          >
             {
               /* Keyed to the path's box, so the colour depends on how far down the rail
-                 the segment has reached. Nothing recomputes as it moves. */
+                 the segment has reached. Nothing recomputes as it moves.
+
+                 Each theme needs its own pair: `lilac-*` has no dark values, and one
+                 pair for both fails contrast. A flat lilac-600 measures 2.42:1 on dark,
+                 under the 3:1 minimum. */
             }
             <defs>
               <linearGradient id="eq-toc-rail" x1="0" y1="0" x2="0" y2="1">
-                <stop class={styles.railStart} offset="0%"></stop>
-                <stop class={styles.railEnd} offset="100%"></stop>
+                <stop
+                  class="[stop-color:var(--color-lilac-600)] dark:[stop-color:var(--color-lilac-300)]"
+                  offset="0%"
+                />
+                <stop
+                  class="[stop-color:var(--color-lilac-400)] dark:[stop-color:var(--color-lilac-500)]"
+                  offset="100%"
+                />
               </linearGradient>
             </defs>
             <path
               data-eq-toc-rail
               stroke="url(#eq-toc-rail)"
               stroke-width="2"
-              stroke-linecap="round"></path>
+              stroke-linecap="round"
+            />
           </svg>
           <TocList items={items} />
         </div>

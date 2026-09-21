@@ -8,3 +8,14 @@
 
 @import './prose.css';
 @import './chrome.css';
+@import './utilities.css';
+
+/*
+ * Load-bearing. This package ships its markup inside the consumer's node_modules, and
+ * Tailwind's automatic source detection skips node_modules entirely. Without this an
+ * inline utility in our own chrome compiles to nothing in a consumer build and the
+ * chrome renders unstyled, with no error anywhere. Explicit `@source` overrides that
+ * exclusion. The path is relative to this file, so it resolves the same from `src`
+ * and from the published `dist`.
+ */
+@source '../**/*.{astro,tsx,ts}';

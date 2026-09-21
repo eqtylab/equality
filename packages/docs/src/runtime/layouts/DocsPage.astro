@@ -7,7 +7,6 @@ import Header from '../chrome/Header.astro';
 import NavDrawer from '../chrome/NavDrawer.astro';
 import Sidebar from '../chrome/Sidebar.astro';
 import TableOfContents from '../chrome/TableOfContents.astro';
-import styles from './DocsPage.astro.module.css';
 
 interface Props {
   title: string;
@@ -35,10 +34,14 @@ const suggested = nav
     <slot name="versions" slot="versions" />
   </Header>
   <NavDrawer nodes={nav} />
-  <div class={styles.layout}>
+  <div class="flex items-start">
     {!splash && <Sidebar nodes={nav} />}
-    <main class={styles.main} data-splash={splash ? '' : undefined}>
-      <div class={styles.content}>
+    {/* 128px of runway, so a page stops deliberately rather than at its last line. */}
+    <main
+      class="mx-auto flex w-full min-w-0 max-w-[calc(var(--eq-docs-content-max)+var(--eq-docs-toc-width)+8rem)] items-start gap-12 px-6 pb-32 pt-10 data-[splash]:max-w-none xl:gap-16"
+      data-splash={splash ? '' : undefined}
+    >
+      <div class="min-w-0 flex-1 [&>.eq-prose]:max-w-[var(--eq-docs-content-max)]">
         <slot />
       </div>
       {!splash && showToc && toc.length > 0 && <TableOfContents items={toc} />}
