@@ -31,15 +31,14 @@ export default defineConfig({
       description: "A theme-driven component library for EQTY Lab projects",
       logo: {
         src: "/eqty-logo.svg",
-        compact: "/eqty-mark.svg",
         alt: "EQTY Lab",
-        replacesTitle: true,
       },
       header: {
         links: [
           {
             label: "GitHub",
             href: "https://github.com/eqtylab/equality",
+            icon: "/github.svg",
             external: true,
           },
         ],

@@ -1,9 +1,5 @@
 @reference '../styles/theme.css';
 
-/* border-raised, not border: Gov Studio pairs `bg-background-raised` with
- * `border-border-raised` as a set (guardian app-sidebar.tsx:160). Mixing a raised
- * fill with a flat border is what made every chrome edge read dimmer than the
- * product. The two tokens differ only in dark; in light they are indistinguishable. */
 .header {
   @apply bg-background-raised border-border-raised sticky top-0 z-50 border-b;
   height: var(--eq-docs-header-height);
@@ -11,41 +7,41 @@
 .inner {
   @apply flex h-full items-center justify-between gap-4 px-4;
 }
-/* min-h-10: the mark is 22px and the link shrink-wraps it, which left the home link
- * under the 24px minimum target of WCAG 2.5.8. Matches the other header controls. */
+/* min-h-10: the mark alone leaves this link under the 24px minimum tap target. */
 .brand {
-  @apply text-text-primary flex min-h-10 items-center gap-2 no-underline;
+  @apply text-text-primary flex min-h-10 shrink-0 items-center gap-3 no-underline;
 }
-/* An <img> keeps the file's own aspect ratio, so width follows height with no
- * hard-coded value and any consumer's logo is sized correctly. */
-.logo,
-.logoCompact {
+/* Only the height is set. An <img> keeps its own aspect ratio, so any logo fits. */
+.logo {
   @apply block h-[22px] w-auto shrink-0;
 }
 
-/* The mark ships white, which is right on a dark surface and invisible on a light
- * one. Inverting a monochrome mark is exactly the black it needs. Swap this for a
- * second file if the logo ever gains a colour. */
-:global(html[data-equality-theme='light']) .logo,
-:global(html[data-equality-theme='light']) .logoCompact {
+/* The mark ships white. Invert only works for a one-colour logo; a coloured one
+ * needs a second file. */
+:global(html[data-equality-theme='light']) .logo {
   filter: invert(1);
 }
 
-/* The compact mark is the wordmark cropped to EQTY, for widths where the full mark
- * leaves no room beside the controls. */
-.logoCompact {
-  @apply hidden;
+.label,
+.brandText {
+  @apply whitespace-nowrap text-xl font-bold;
 }
-@media (max-width: 1023px) {
-  .logo:not(:only-child) {
-    @apply hidden;
-  }
-  .logoCompact {
-    @apply block;
-  }
+/* py-[0.05em]: clipping the gradient to the text crops descenders without it. */
+.label {
+  @apply py-[0.05em] text-transparent;
+  background-image: var(--eq-docs-display-gradient);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
-.title {
-  @apply text-base font-semibold;
+/* Windows High Contrast and similar modes drop the gradient but keep the transparent
+ * fill, so the label would vanish. This puts a solid colour back. */
+@media (forced-colors: active) {
+  .label {
+    @apply text-inherit;
+    background-image: none;
+    -webkit-text-fill-color: currentColor;
+  }
 }
 /* min-w-0: without it the search pushes the theme control off a narrow header. */
 .search {
@@ -55,16 +51,24 @@
 .actions {
   @apply flex shrink-0 items-center gap-2;
 }
-/* Bare, and the same height as the other controls. It sat beside a bordered pill as
- * plain text, which read as two different languages in one bar, and it is bare at
- * mobile already. */
+/* Below sm the search becomes an icon in the control cluster. `order` moves it among
+ * `.inner`'s children, so it only works while all three stay siblings. */
+@media (max-width: 639px) {
+  .inner {
+    @apply gap-2;
+  }
+  .search {
+    @apply order-2 ml-auto max-w-none flex-none;
+  }
+  .actions {
+    @apply order-3;
+  }
+}
 .navLink {
   @apply text-text-secondary hover:text-text-primary hover:bg-background flex h-10 items-center gap-1.5 rounded-md px-3 text-sm font-medium no-underline transition-colors;
 }
-/* The label always shows now. Hiding it below `sm` is what produced an empty,
- * nameless link on the deployed site: `headerLink.icon` is optional and Equality's
- * Icon is Lucide-backed, which ships no brand marks, so a GitHub link had nothing
- * left to render. Below `lg` these move into the drawer instead. */
+/* Always visible. Hiding it shipped a nameless link, because `icon` is optional and
+ * Lucide has no brand marks, so a GitHub link had nothing left to render. */
 .navLinkLabel {
   @apply inline;
 }
@@ -72,8 +76,7 @@
   @apply hidden items-center gap-1 lg:flex;
 }
 
-/* Declared after .navLink on purpose: both are single-class, so the later rule wins
- * and a display rule declared earlier would lose. */
+/* Must stay after .navLink: same specificity, so the later rule wins. */
 .navTrigger {
   @apply text-text-secondary hover:text-text-primary flex size-10 items-center justify-center rounded-md lg:hidden;
 }

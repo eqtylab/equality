@@ -15,17 +15,15 @@ export const docsConfigSchema = z.object({
   /** Path to a favicon, relative to `public/`. Base is applied automatically. */
   favicon: z.string().default('/favicon.svg'),
 
+  /**
+   * The header mark. Without one the header falls back to `title` as text. Either
+   * way a constant "Docs" label follows it, and `title` heads the sidebar.
+   */
   logo: z
     .object({
       src: z.string(),
-      /**
-       * Narrow form for the mobile bar, where the full mark has no room beside the
-       * controls. Omit it and the full mark is used at every width.
-       */
-      compact: z.string().optional(),
+      /** Name the company: the brand link reads as this plus "Docs". */
       alt: z.string().default(''),
-      /** Hide the text title when a logo is present. */
-      replacesTitle: z.boolean().default(false),
     })
     .optional(),
 
