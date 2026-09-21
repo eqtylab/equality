@@ -1,0 +1,13 @@
+---
+/**
+ * The product name at the head of the navigation. The header says "Docs"; this says
+ * which product. One component, because the sidebar and the drawer both render it.
+ */
+import CONFIG from 'virtual:eqty-docs/config';
+
+import styles from './NavProduct.module.css';
+---
+
+<p class={styles.product}>
+  <span class={styles.pill} data-eq-product>{CONFIG.title}</span>
+</p>

@@ -74,23 +74,13 @@
   @apply mt-1;
 }
 
-/* border-transparent at rest so the row does not shift by a pixel when selected. */
 .item {
-  @apply cursor-pointer border border-transparent;
+  @apply cursor-pointer;
 }
-/* The selected state, from the Playground board node 2014:2145. Opaque lilac steps
- * rather than alpha over brand-primary: alpha inverts its contrast between themes,
- * washing out on a light surface. These steps are theme-invariant, so one rule paints
- * the same object in both. Shadow colour is lilac-400 at 50%, which is the board's
- * rgba(160,116,212,0.5). */
+/* Equality styles the hover but not cmdk's selected row. Matches the sidebar's
+ * current page on purpose: the two highlights have to agree. */
 .item[data-selected='true'] {
-  @apply border-lilac-600 text-white;
-  background-image: linear-gradient(
-    169.77deg,
-    var(--color-lilac-700) 0%,
-    var(--color-lilac-900) 100%
-  );
-  box-shadow: 0 1px 4px 0 color-mix(in srgb, var(--color-lilac-400) 50%, transparent);
+  @apply bg-lilac-300/50 text-lilac-700 dark:bg-lilac-600/50 dark:text-lilac-100 shadow-sm;
 }
 
 .state {
