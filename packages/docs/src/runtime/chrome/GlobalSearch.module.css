@@ -6,8 +6,8 @@
  * and the other styles an element this component never renders.
  */
 
-/* Class doubled to beat Equality's own centring at the same specificity.
- * Never set `transform` here: the entrance animation uses it. */
+/* Class doubled to beat Equality's centring, which sits at the same specificity.
+ * Never override `transform` here: the entrance animation uses it. */
 .dialog.dialog {
   @apply p-0;
   top: 10vh;

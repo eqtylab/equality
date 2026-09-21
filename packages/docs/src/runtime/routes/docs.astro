@@ -41,6 +41,7 @@ const toc = showToc
 const nav = await docsNav(Astro.url.pathname);
 const splash = entry.data.template === 'splash';
 
+// Trail is [group, ..., page]; a length of one means the page has no section above it.
 const trail = breadcrumbsFor(nav, Astro.url.pathname);
 const crumbs = trail.length > 1 ? trail.map((node) => node.label).join(' › ') : undefined;
 

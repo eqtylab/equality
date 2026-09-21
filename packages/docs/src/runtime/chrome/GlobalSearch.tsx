@@ -26,14 +26,15 @@ import styles from './GlobalSearch.module.css';
  * shrinks. Utilities setting a property Equality leaves alone need nothing.
  */
 
-/** Equality styles the hover but not cmdk's selected row. Matches the sidebar's current
- * page on purpose: the two highlights have to agree. */
+/** Equality styles the hover but not cmdk's selected row. */
 const ITEM =
-  'cursor-pointer data-[selected=true]:bg-lilac-300/50 data-[selected=true]:text-lilac-700 data-[selected=true]:shadow-sm dark:data-[selected=true]:bg-lilac-600/50 dark:data-[selected=true]:text-lilac-100';
+  'cursor-pointer data-[selected=true]:bg-lilac-300/50 dark:data-[selected=true]:bg-lilac-600/50';
 
-/** Equality has no highlight colour, so these name lilac steps directly, one per theme.
- * Never `brand-primary`: it is the selected row's own colour, so the mark would vanish
- * exactly when a row is selected. */
+/**
+ * Equality has no highlight token, so these name steps off the option scale directly. Not
+ * `brand-primary`: it is the selected row's colour, so a mark painted with it vanishes exactly
+ * when a row is selected. Each theme names its own step because `lilac-*` carries no dark values.
+ */
 const MARK = 'rounded bg-lilac-200 px-0.5 text-lilac-800 dark:bg-lilac-700 dark:text-lilac-200';
 
 /** The same treatment, for the <mark>s inside Pagefind's own excerpt markup. */
@@ -262,6 +263,7 @@ export default function GlobalSearch({ suggested = [] }: Props) {
     <>
       {/* A button, not an Input: Enter, Space and the accessible name come free. */}
       <div role="search" className="w-full min-w-0 max-sm:w-auto">
+        {/* Tokens, not a copy of Input: a theme change carries, an Input restyle does not. */}
         <button
           ref={triggerRef}
           type="button"
@@ -271,9 +273,11 @@ export default function GlobalSearch({ suggested = [] }: Props) {
           onClick={open}
         >
           <Icon icon="Search" size="xs" />
+          {/* min-w-0 so a long label truncates instead of pushing the shortcut out. */}
           <span className="min-w-0 flex-1 truncate text-left max-sm:sr-only">
             Search documentation...
           </span>
+          {/* No room for it on a narrow header, and the shortcut still works. */}
           <kbd
             aria-hidden="true"
             className="bg-background-raised text-text-secondary pointer-events-none hidden rounded border px-1.5 py-0.5 font-mono text-xs sm:inline-block"
@@ -343,6 +347,7 @@ export default function GlobalSearch({ suggested = [] }: Props) {
                           {page.title}
                         </span>
                         {page.crumbs && (
+                          // Location, not identity: separated from the pair above it.
                           <span className="text-text-tertiary mt-1 truncate text-xs">
                             {page.crumbs}
                           </span>
@@ -381,6 +386,7 @@ export default function GlobalSearch({ suggested = [] }: Props) {
                           </span>
                         )}
                         {hit.crumbs && (
+                          // Location, not identity: separated from the pair above it.
                           <span className="text-text-tertiary mt-1 truncate text-xs">
                             {hit.crumbs}
                           </span>

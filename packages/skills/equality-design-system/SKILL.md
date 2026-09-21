@@ -23,7 +23,7 @@ If you catch yourself writing raw HTML controls or arbitrary colour classes, sto
 
 ## Before You Write ANY UI
 
-1. **Fetch the index:** <https://equality.eqtylab.io/components.md>. This lists Every
+1. **Fetch the index:** <https://equality.eqtylab.io/llms.txt>. This lists Every
    component on one page — component name, one-line purpose, docs link, plus the
    compound families, anything deprecated, and anything shipping without docs.
    It is generated from the library at build time, so it never lies about what
@@ -143,7 +143,7 @@ you had to fake — so the gap reaches the design system team.
 
 ## Reference files
 
-- <https://equality.eqtylab.io/components.md> — every component, import name,
+- <https://equality.eqtylab.io/llms.txt> — every component, import name,
   and purpose. Not bundled here, because the live copy is generated from the
   library and can't go stale. Start there!
 - `references/setup.md` — installation, theming, portals, embedding, dark mode,
