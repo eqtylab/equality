@@ -1,7 +1,7 @@
 /**
- * The Popover API gives the navigation drawer open, close, Escape, light dismiss and
- * top-layer rendering with no script. Two things it does not give, both verified in
- * the browser suite rather than assumed:
+ * With no script the Popover API opens and closes the drawer, shuts it on Escape or a
+ * click outside, and paints it above everything else. Two things it does not give,
+ * both verified in the browser suite rather than assumed:
  *
  * 1. `aria-expanded` on the invoker. No engine adds it, so a screen reader hears a
  *    button with no disclosure state.

@@ -1,5 +1,8 @@
 ---
-/** Recursive sidebar list. Uses <details> for groups so it works without JS. */
+/**
+ * Recursive sidebar list. Groups are <details>, so they open with no script and
+ * nothing remounts on a page load. `eq-nav-group.ts` adds the animation.
+ */
 import type { NavNode } from '@eqtylab/docs/types';
 import { Badge, Icon } from '@eqtylab/equality';
 import styles from './NavTree.module.css';
@@ -18,7 +21,7 @@ const NavTree = Astro.self;
     nodes.map((node) => (
       <li class={styles.item}>
         {node.kind === 'group' && node.children?.length ? (
-          <details class={styles.group} open={node.open}>
+          <details class={styles.group} data-eq-nav-group open={node.open}>
             <summary class={styles.summary}>
               <span class={styles.summaryLabel}>
                 {node.icon && <Icon icon={node.icon} size="sm" />}
@@ -34,7 +37,7 @@ const NavTree = Astro.self;
                   <span>{node.label}</span>
                 )}
                 {node.badge && (
-                  <Badge variant={node.badge.variant} size="sm" class={styles.badge}>
+                  <Badge variant={node.badge.variant} size="sm" className={styles.badge}>
                     {node.badge.text}
                   </Badge>
                 )}
@@ -58,7 +61,7 @@ const NavTree = Astro.self;
             {node.icon && <Icon icon={node.icon} size="sm" />}
             <span class={styles.linkLabel}>{node.label}</span>
             {node.badge && (
-              <Badge variant={node.badge.variant} size="sm" class={styles.badge}>
+              <Badge variant={node.badge.variant} size="sm" className={styles.badge}>
                 {node.badge.text}
               </Badge>
             )}
@@ -73,3 +76,10 @@ const NavTree = Astro.self;
     ))
   }
 </ul>
+
+{
+  /** Imported here, so one import covers both the sidebar and the drawer. */
+}
+<script>
+  import '@eqtylab/docs/scripts/eq-nav-group.ts';
+</script>

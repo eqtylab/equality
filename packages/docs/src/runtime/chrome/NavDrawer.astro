@@ -11,6 +11,7 @@ import type { NavNode } from '@eqtylab/docs/types';
 import { Icon } from '@eqtylab/equality';
 
 import LinkIcon from './LinkIcon.astro';
+import NavProduct from './NavProduct.astro';
 import NavTree from './NavTree.astro';
 import styles from './NavDrawer.module.css';
 
@@ -22,6 +23,7 @@ const { nodes } = Astro.props;
 
 <div id="eq-nav-drawer" popover class={styles.drawer} data-eq-chrome data-pagefind-ignore>
   <nav class={styles.panel} aria-label="Documentation">
+    <NavProduct />
     {
       /* Relocated from the header bar. Left there, a link with no icon renders
          nameless below `sm`, because the label is hidden and Equality's Icon is
