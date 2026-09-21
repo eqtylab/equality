@@ -64,7 +64,7 @@ const homeHref = withBase(CONFIG.pathPrefix ? `/${CONFIG.pathPrefix}/` : '/', {
           </a>
         ))}
       </div>
-      {CONFIG.header.showThemeToggle && <ThemeToggle client:load />}
+      {CONFIG.header.showThemeToggle && <ThemeToggle client:load className={styles.navLink} />}
       {
         /* popovertarget: the browser handles opening, closing, Escape, a click
            outside, and returning focus here. */
