@@ -1,6 +1,6 @@
 import { defineConfig } from 'tsup';
 
-export default defineConfig({
+export default defineConfig((options) => ({
   // Node-side only. Everything under src/runtime ships as source (see scripts/copy-runtime.mjs).
   entry: [
     'src/index.ts',
@@ -17,17 +17,20 @@ export default defineConfig({
   format: ['esm'], // Astro 6 is ESM-only
   dts: false, // tsconfig.build.json emits declarations instead
   sourcemap: true,
-  clean: true, // must run before copy-runtime
+  // Watch mode must never clean: it wipes dist/ on every rebuild, and a consumer's
+  // Vite that resolves @eqtylab/docs inside that window dies with an
+  // unresolvable-entry error. Do not pass --no-clean instead -- that flag silently
+  // disables tsup 8.5's file watcher entirely.
+  clean: !options.watch, // must run before copy-runtime
   splitting: true,
   treeshake: true,
   external: [
     'astro',
     'astro/zod',
     'astro/loaders',
-    'astro/config',
     'astro:content',
     '@eqtylab/equality',
     'react',
     'react-dom',
   ],
-});
+}));

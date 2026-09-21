@@ -87,9 +87,10 @@
   "scripts": {
     "build": "pnpm run check:no-utilities && pnpm run build:node && pnpm run build:runtime && pnpm run build:types",
     "build:node": "tsup",
+    "build:dev": "pnpm run build:node && pnpm run build:runtime",
     "build:runtime": "node scripts/copy-runtime.mjs",
     "build:types": "tsc -p tsconfig.build.json",
-    "dev": "pnpm run build:node && node scripts/copy-runtime.mjs --watch",
+    "dev": "node scripts/dev.mjs",
     "check:no-utilities": "node scripts/check-no-utilities.mjs",
     "test": "node --test tests/*.test.ts",
     "release": "pnpm run build && pnpm publish --access public --no-git-checks"
