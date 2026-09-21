@@ -98,6 +98,10 @@ html[data-equality-theme='dark'] .item[data-selected='true'] {
   @apply text-brand-primary cursor-pointer justify-center text-sm;
 }
 
+.devNote {
+  @apply text-text-secondary border-border border-t px-4 py-2 text-xs;
+}
+
 /**
  * Equality has no highlight token, so these name steps off the option scale directly. Not
  * `brand-primary`: it is the selected row's colour, so a mark painted with it vanishes exactly

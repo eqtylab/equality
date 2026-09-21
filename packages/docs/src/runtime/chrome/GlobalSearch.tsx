@@ -364,6 +364,11 @@ export default function GlobalSearch({ suggested = [] }: Props) {
                 </CommandGroup>
               )}
             </CommandList>
+
+            {/* Outside the list: inside it the note scrolls out of sight. */}
+            {import.meta.env.DEV && status !== 'error' && (
+              <p className={styles.devNote}>Dev mode: results come from the last build.</p>
+            )}
           </Command>
         </DialogContainer>
       </Dialog>
