@@ -1,0 +1,28 @@
+---
+/**
+ * The icon on a configured header link: a Lucide name, or a path to an SVG.
+ *
+ * The SVG branch exists because Lucide ships no brand marks, so a GitHub link has no
+ * name it could use.
+ */
+import CONFIG from 'virtual:eqty-docs/config';
+import { withBase } from '@eqtylab/docs/paths';
+import { Icon } from '@eqtylab/equality';
+
+import styles from './LinkIcon.module.css';
+
+interface Props {
+  icon: string;
+}
+const { icon } = Astro.props;
+const isFile = icon.endsWith('.svg');
+const paths = { base: import.meta.env.BASE_URL, pathPrefix: CONFIG.pathPrefix };
+---
+
+{
+  isFile ? (
+    <img class={styles.mark} src={withBase(icon, paths)} alt="" aria-hidden="true" />
+  ) : (
+    <Icon icon={icon} size="sm" />
+  )
+}

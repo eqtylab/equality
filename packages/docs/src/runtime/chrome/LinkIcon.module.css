@@ -1,0 +1,11 @@
+@reference '../styles/theme.css';
+
+/* size-4 matches Equality's Icon at `sm`, which the Lucide branch renders. */
+.mark {
+  @apply block size-4 shrink-0;
+}
+
+/* Same contract as the logo: the file ships white, and light mode inverts it. */
+:global(html[data-equality-theme='light']) .mark {
+  filter: invert(1);
+}

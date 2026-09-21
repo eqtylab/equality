@@ -4,6 +4,10 @@ import { z } from 'astro/zod';
 const headerLink = z.object({
   label: z.string(),
   href: z.string(),
+  /**
+   * A Lucide name like `BookOpen`, or a path to an SVG in `public/` like
+   * `/github.svg`. An SVG must be white: light mode inverts it.
+   */
   icon: z.string().optional(),
   external: z.boolean().optional(),
 });
