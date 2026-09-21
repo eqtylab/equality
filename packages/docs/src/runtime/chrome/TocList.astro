@@ -3,6 +3,7 @@
 import type { TocNode } from '@eqtylab/docs/types';
 
 import styles from './TableOfContents.module.css';
+import TocElbow from './TocElbow.astro';
 
 interface Props {
   items: TocNode[];
@@ -14,12 +15,20 @@ const TocList = Astro.self;
 
 <ol class={styles.list}>
   {
-    items.map((item) => (
+    items.map((item, index) => (
       <li class={styles.item}>
         <a class={styles.link} href={`#${item.slug}`} data-slug={item.slug}>
           {item.text}
         </a>
-        {item.children.length > 0 && <TocList items={item.children} />}
+        {item.children.length > 0 && (
+          <Fragment>
+            <TocElbow direction="in" />
+            <TocList items={item.children} />
+            {/* Only when something follows at this level: otherwise the rail would
+                turn back out towards nothing. */}
+            {index < items.length - 1 && <TocElbow direction="out" />}
+          </Fragment>
+        )}
       </li>
     ))
   }
