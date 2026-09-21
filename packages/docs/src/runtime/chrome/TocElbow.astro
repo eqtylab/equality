@@ -1,0 +1,29 @@
+---
+/**
+ * One corner of the table-of-contents rail. `in` descends a level, `out` returns.
+ *
+ * `vector-effect` is load-bearing: the viewBox is stretched to the indent width, and
+ * without it the stroke stretches too. Geometry lives in `.elbow`.
+ */
+import styles from './TableOfContents.module.css';
+
+interface Props {
+  direction: 'in' | 'out';
+}
+const { direction } = Astro.props;
+const d = direction === 'in' ? 'M 0 0 C 0 0.5, 1 0.5, 1 1' : 'M 1 0 C 1 0.5, 0 0.5, 0 1';
+---
+
+<svg
+  class={styles.elbow}
+  data-eq-elbow={direction}
+  aria-hidden="true"
+  viewBox="0 0 1 1"
+  preserveAspectRatio="none"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  overflow="visible"
+>
+  <path d={d} vector-effect="non-scaling-stroke"></path>
+</svg>

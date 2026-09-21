@@ -25,7 +25,30 @@ const slugs = flatten(items).map((n) => n.slug);
         <p class={styles.heading} id="eq-toc-heading">
           {label}
         </p>
-        <TocList items={items} />
+        <div class={styles.rails} data-eq-toc-rails>
+          {
+            /* The lit segment. `eq-toc.ts` measures its path from the rendered rows.
+               With no JavaScript it stays empty and the rail is simply unlit. */
+          }
+          <svg class={styles.rail} aria-hidden="true" fill="none">
+            {
+              /* Keyed to the path's box, so the colour depends on how far down the rail
+                 the segment has reached. Nothing recomputes as it moves. */
+            }
+            <defs>
+              <linearGradient id="eq-toc-rail" x1="0" y1="0" x2="0" y2="1">
+                <stop class={styles.railStart} offset="0%"></stop>
+                <stop class={styles.railEnd} offset="100%"></stop>
+              </linearGradient>
+            </defs>
+            <path
+              data-eq-toc-rail
+              stroke="url(#eq-toc-rail)"
+              stroke-width="2"
+              stroke-linecap="round"></path>
+          </svg>
+          <TocList items={items} />
+        </div>
       </nav>
     </eq-toc>
   )
