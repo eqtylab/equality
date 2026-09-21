@@ -1,15 +1,5 @@
 import { useSyncExternalStore } from 'react';
-import {
-  Button,
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuLabel,
-  DropdownMenuRadioGroup,
-  DropdownMenuRadioItem,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-  Icon,
-} from '@eqtylab/equality';
+import { Icon } from '@eqtylab/equality';
 
 import {
   getThemePreference,
@@ -19,59 +9,55 @@ import {
 } from '../lib/theme.ts';
 import styles from './ThemeToggle.module.css';
 
-const OPTIONS: Array<{ value: ThemePreference; label: string; icon: string }> = [
-  { value: 'dark', label: 'Dark', icon: 'Moon' },
-  { value: 'light', label: 'Light', icon: 'Sun' },
-  { value: 'system', label: 'System', icon: 'Monitor' },
-];
+/**
+ * One button that cycles System, Light, Dark.
+ *
+ * Do not reduce this to the current state, or to an `aria-label`. All three render and
+ * CSS picks one, which is what keeps the button correct before React hydrates.
+ */
+/** System first, so it is never more than one press away. */
+const CYCLE: ThemePreference[] = ['system', 'light', 'dark'];
+const LABEL: Record<ThemePreference, string> = { system: 'System', light: 'Light', dark: 'Dark' };
+const ICON: Record<ThemePreference, string> = { system: 'Monitor', light: 'Sun', dark: 'Moon' };
 
-/** The menu uses this. The trigger is CSS-driven instead, to avoid a flash. */
-function useThemePreference() {
-  const preference = useSyncExternalStore(
+const after = (preference: ThemePreference) =>
+  CYCLE[(CYCLE.indexOf(preference) + 1) % CYCLE.length];
+
+function usePreference() {
+  return useSyncExternalStore(
     subscribeToThemePreference,
     getThemePreference,
     () => 'system' as const
   );
-  return [preference, setThemePreference] as const;
 }
 
-export default function ThemeToggle() {
-  const [preference, setPreference] = useThemePreference();
+interface Props {
+  /** The bar's control recipe, passed by Header so this cannot drift from the links. */
+  className?: string;
+}
+
+export default function ThemeToggle({ className }: Props) {
+  const preference = usePreference();
 
   return (
-    // Drop this and the menu closes itself mid-tap on iOS.
-    <DropdownMenu modal={false}>
-      <DropdownMenuTrigger asChild>
-        {/* All three render; CSS shows the current one, so there is no flash on load. */}
-        <Button variant="tertiary" className={styles.trigger}>
-          <span className={styles.srOnly}>Theme:</span>
-          {OPTIONS.map((option) => (
-            <span key={option.value} className={styles.state} data-eq-pref={option.value}>
-              <span aria-hidden="true" className={styles.icon}>
-                <Icon icon={option.icon} size="xs" />
-              </span>
-              <span className={styles.label}>{option.label}</span>
-            </span>
-          ))}
-        </Button>
-      </DropdownMenuTrigger>
-      <DropdownMenuContent align="end">
-        <DropdownMenuLabel>Theme</DropdownMenuLabel>
-        <DropdownMenuSeparator />
-        <DropdownMenuRadioGroup
-          value={preference}
-          onValueChange={(value: string) => setPreference(value as ThemePreference)}
-        >
-          {OPTIONS.map((option) => (
-            <DropdownMenuRadioItem key={option.value} value={option.value}>
-              <span aria-hidden="true" className={styles.icon}>
-                <Icon icon={option.icon} size="xs" />
-              </span>
-              {option.label}
-            </DropdownMenuRadioItem>
-          ))}
-        </DropdownMenuRadioGroup>
-      </DropdownMenuContent>
-    </DropdownMenu>
+    <button
+      type="button"
+      className={[className, styles.trigger].filter(Boolean).join(' ')}
+      onClick={() => setThemePreference(after(preference))}
+    >
+      {CYCLE.map((value) => (
+        <span key={value} className={styles.state} data-eq-pref={value}>
+          <span aria-hidden="true" className={styles.icon}>
+            <Icon icon={ICON[value]} size="xs" />
+          </span>
+          <span aria-hidden="true" className={styles.label}>
+            {LABEL[value]}
+          </span>
+          <span className={styles.srOnly}>
+            Theme: {LABEL[value]}. Activate to switch to {LABEL[after(value)]}.
+          </span>
+        </span>
+      ))}
+    </button>
   );
 }
