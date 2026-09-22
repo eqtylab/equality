@@ -99,7 +99,7 @@
   "dependencies": {
     "@tailwindcss/vite": "^4.1.16",
     "github-slugger": "^2.0.0",
-    "pagefind": "^1.5.2",
+    "pagefind": "1.5.2",
     "tailwindcss": "^4.1.16",
     "tinyglobby": "^0.2.15",
     "unist-util-visit": "^5.1.0",
