@@ -8,9 +8,36 @@ import NotFoundBody from '../chrome/NotFoundBody.tsx';
 const homeHref = withBase(CONFIG.pathPrefix ? `/${CONFIG.pathPrefix}/` : '/', {
   base: import.meta.env.BASE_URL,
 });
+
+// One static file serves every miss, so the version has to be read from the URL in the browser.
+// The tables ride in a JSON script rather than `define:vars`, which would force `is:inline` and
+// a second copy of the matching logic that nothing tests.
+const fallback = {
+  base: import.meta.env.BASE_URL,
+  pathPrefix: CONFIG.pathPrefix,
+  copyIds: CONFIG.versionManifest.map((v) => v.id),
+  redirects: CONFIG.versionRedirects,
+};
 ---
 
 <DocsShell title="Page not found" noIndex>
   <Header />
+  <script
+    type="application/json"
+    data-eq-docs-fallback
+    is:inline
+    set:html={JSON.stringify(fallback)}
+  />
   <NotFoundBody homeHref={homeHref} client:load />
 </DocsShell>
+
+<script>
+  import { resolveVersionedPath } from '@eqtylab/docs/paths';
+
+  const source = document.querySelector('[data-eq-docs-fallback]')?.textContent;
+  if (source) {
+    const target = resolveVersionedPath(location.pathname, JSON.parse(source));
+    // A reader who typed a real release URL should reach the page, not the 404 body.
+    if (target && target !== location.pathname) location.replace(target);
+  }
+</script>
