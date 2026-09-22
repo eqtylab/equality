@@ -11,6 +11,7 @@ import { rehypeBaseUrl } from './internal/rehype-base-url.ts';
 import { rehypeCodeFence } from './internal/rehype-code-fence.ts';
 import { rehypeProseScope } from './internal/rehype-prose-scope.ts';
 import { rehypeTableColumns } from './internal/rehype-table-columns.ts';
+import { remarkArchiveDocument } from './internal/remark-archive-document.ts';
 import { scanConsumerPages } from './internal/scan-consumer-pages.ts';
 import { virtualConfigPlugin } from './internal/virtual-config.ts';
 
@@ -166,6 +167,11 @@ export default function docs(
                 },
               };
 
+        const versionsDir = fileURLToPath(new URL('./.astro/eqty-docs/versions/', config.root));
+
+        // Archived pages are documents, not apps: their imports bind them to today's library.
+        markdown.remarkPlugins = [[remarkArchiveDocument, { versionsDir }]];
+
         // Astro does not apply `base` to authored markdown links. MDX inherits these via extendMarkdownConfig.
         markdown.rehypePlugins = [
           [
@@ -173,7 +179,7 @@ export default function docs(
             {
               base: config.base,
               pathPrefix: cfg.pathPrefix,
-              versionsDir: fileURLToPath(new URL('./.astro/eqty-docs/versions/', config.root)),
+              versionsDir,
             },
           ],
           rehypeProseScope,
