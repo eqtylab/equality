@@ -1,6 +1,6 @@
 # Changelog
 
-Notable changes to Explorer are recorded here, following [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
+Notable changes to Equality are recorded here, following [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## 4.1.0
 
@@ -17,5 +17,4 @@ Scrollable areas are now browser-native. Equality no longer ships a synthetic sc
 
 ### Changed
 
-- `DialogBody` and `SheetBody` scroll with the native scrollbar rather than the removed utility class.
-- The `equality-design-system` skill tells agents to use native scroll containers and not to restyle scrollbars.
+- Dialogs and Sheets now scroll with native scrollbars.
