@@ -29,7 +29,7 @@ const { nodes, switcher } = Astro.props;
     <NavProduct />
     {
       switcher && (
-        <div class={styles.versions}>
+        <div class={styles.versions} data-eq-versions>
           <p class={styles.versionsLabel}>Version</p>
           <a
             class={styles.versionLink}
