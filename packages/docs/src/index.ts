@@ -168,7 +168,14 @@ export default function docs(
 
         // Astro does not apply `base` to authored markdown links. MDX inherits these via extendMarkdownConfig.
         markdown.rehypePlugins = [
-          [rehypeBaseUrl, { base: config.base }],
+          [
+            rehypeBaseUrl,
+            {
+              base: config.base,
+              pathPrefix: cfg.pathPrefix,
+              versionsDir: fileURLToPath(new URL('./.astro/eqty-docs/versions/', config.root)),
+            },
+          ],
           rehypeProseScope,
           rehypeTableColumns,
           ...(cfg.code.highlighter === 'codeblock' ? [rehypeCodeFence] : []),
