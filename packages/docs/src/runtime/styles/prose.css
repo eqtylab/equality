@@ -88,9 +88,16 @@
       @apply text-text-primary hover:text-lilac-400 font-medium underline underline-offset-4 transition-all;
     }
 
-    /* Inline code, but never the contents of a highlighted block. */
+    /*
+      Inline code, but never the contents of a highlighted block.
+
+      `font-mono` is not decoration: Equality's preflight reaches --font-mono through
+      `var()`, and that variable is declared `@theme inline`, so Tailwind emits it only
+      where a utility references it. The utility inlines the literal stack instead, which
+      is what keeps code monospaced in a consumer that uses it nowhere else.
+    */
     :not(pre) > &:is(code) {
-      @apply dark:bg-background-overlay bg-greyscale-200 text-text-secondary rounded-sm p-1 text-sm;
+      @apply dark:bg-background-overlay bg-greyscale-200 text-text-secondary rounded-sm p-1 font-mono text-sm;
     }
 
     /* No table rules: markdown tables render through Equality's Table. */

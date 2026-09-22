@@ -16,6 +16,15 @@ interface Props {
 
 const { title, description, noIndex, canonical } = Astro.props;
 
+/*
+ * The `font-sans` class on <body> is load-bearing. Equality declares --font-sans in
+ * `@theme inline`, so Tailwind emits it only where something references it, and
+ * Equality's preflight sets `font-family: var(--font-sans)` on html. A consumer that
+ * never happens to use the utility drops the variable, the preflight resolves to
+ * nothing, and every page silently renders in the browser's default serif. Referencing
+ * it here is what keeps the design system's typeface applied for every consumer.
+ */
+
 const paths = {
   base: import.meta.env.BASE_URL,
   pathPrefix: CONFIG.pathPrefix,
@@ -86,7 +95,7 @@ const themeBootstrap = `
     <script is:inline set:html={themeBootstrap} />
     <slot name="head" />
   </head>
-  <body>
+  <body class="font-sans">
     <slot />
   </body>
 </html>

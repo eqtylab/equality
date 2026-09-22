@@ -43,6 +43,46 @@ if (missed.length > 0) {
   process.exit(1);
 }
 
+/*
+ * Equality declares --font-sans and --font-mono in `@theme inline`, so Tailwind emits them
+ * only where a utility references them, while Equality's preflight reaches them through
+ * `var()`. Drop these utilities and the preflight resolves to nothing: every page renders
+ * in the browser's default serif, and code loses its monospace, with no error anywhere.
+ */
+const fontAnchors = [
+  { file: 'src/runtime/layouts/DocsShell.astro', utility: 'font-sans', what: 'body text' },
+  { file: 'src/runtime/components/CodeFence.astro', utility: 'font-mono', what: 'fenced code' },
+  { file: 'src/runtime/styles/prose.css', utility: 'font-mono', what: 'inline code' },
+];
+
+// Comments are stripped first: the hazard notes beside these utilities name them, and a
+// guard that its own explanation satisfies would never fire.
+const withoutComments = (source) =>
+  source
+    .replace(/\{\/\*[\s\S]*?\*\/\}/g, ' ')
+    .replace(/\/\*[\s\S]*?\*\//g, ' ')
+    .replace(/^\s*\/\/.*$/gm, ' ');
+
+const unanchored = [];
+for (const anchor of fontAnchors) {
+  const source = withoutComments(await readFile(resolve(root, anchor.file), 'utf8'));
+  if (!new RegExp(`\\b${anchor.utility}\\b`).test(source)) unanchored.push(anchor);
+}
+
+if (unanchored.length > 0) {
+  console.error(
+    '\nA font utility this package relies on is gone.\n' +
+      "Equality's preflight reaches --font-sans / --font-mono through `var()`, but both are\n" +
+      'declared `@theme inline`, so Tailwind only emits them where a utility names them.\n' +
+      'Without these the type silently falls back to the browser default:\n'
+  );
+  for (const a of unanchored)
+    console.error(`  ${a.file} no longer uses \`${a.utility}\` (${a.what})`);
+  console.error('');
+  process.exit(1);
+}
+
 console.log(
-  `[docs] @source covers all shipped markup (${markup.length} files, ${patterns.length} pattern(s))`
+  `[docs] @source covers all shipped markup (${markup.length} files, ${patterns.length} pattern(s)); ` +
+    `${fontAnchors.length} font anchors present`
 );
