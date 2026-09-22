@@ -62,7 +62,10 @@ interface PagefindRawResult {
 interface PagefindApi {
   options: (opts: Record<string, unknown>) => Promise<void>;
   init: () => Promise<void>;
-  debouncedSearch: (query: string) => Promise<{ results: PagefindRawResult[] } | null>;
+  debouncedSearch: (
+    query: string,
+    options?: { filters?: Record<string, string> }
+  ) => Promise<{ results: PagefindRawResult[] } | null>;
 }
 
 interface Props {
@@ -214,7 +217,9 @@ export default function GlobalSearch({ suggested = [] }: Props) {
     setStatus('loading');
     try {
       const api = await loadPagefind();
-      const search = await api.debouncedSearch(value);
+      // The shell stamps the page's version on <html>; results stay inside it.
+      const version = document.documentElement.dataset.eqDocsVersion ?? 'latest';
+      const search = await api.debouncedSearch(value, { filters: { version } });
       // Null means a newer keystroke superseded this call.
       if (search === null || id !== requestId.current) return;
       const docs = await Promise.all(search.results.slice(0, MAX_RESULTS).map((r) => r.data()));
