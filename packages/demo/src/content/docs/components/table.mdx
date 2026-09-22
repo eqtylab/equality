@@ -1,0 +1,95 @@
+---
+title: "Table"
+description: "Table with sizes and variants"
+---
+
+import { TableDemo } from "@demo/components/demo/table";
+import { ELEVATION } from "@eqtylab/equality";
+
+## Content Options
+
+### Unclickable
+
+<TableDemo client:only="react" />
+
+### Clickable
+
+<TableDemo client:only="react" variant="clickable" />
+
+### With Actions
+
+<TableDemo client:only="react" variant="with-actions" />
+
+### Column items with custom component
+
+<TableDemo client:only="react" variant="with-sorter" />
+
+## Style Options
+
+### With Border
+
+<TableDemo client:only="react" variant="with-border" />
+
+## Elevations
+
+### Sunken
+
+<TableDemo client:only="react" elevation={ELEVATION.SUNKEN} />
+
+### Base (default)
+
+<TableDemo client:only="react" elevation={ELEVATION.BASE} />
+
+### Raised
+
+<TableDemo client:only="react" elevation={ELEVATION.RAISED} />
+
+### Overlay
+
+<TableDemo client:only="react" elevation={ELEVATION.OVERLAY} />
+
+### Floating
+
+<TableDemo client:only="react" elevation={ELEVATION.FLOATING} />
+
+## Elevations With Border
+
+### Sunken
+
+<TableDemo
+  client:only="react"
+  variant="with-border"
+  elevation={ELEVATION.SUNKEN}
+/>
+
+### Base (default)
+
+<TableDemo
+  client:only="react"
+  variant="with-border"
+  elevation={ELEVATION.BASE}
+/>
+
+### Raised
+
+<TableDemo
+  client:only="react"
+  variant="with-border"
+  elevation={ELEVATION.RAISED}
+/>
+
+### Overlay
+
+<TableDemo
+  client:only="react"
+  variant="with-border"
+  elevation={ELEVATION.OVERLAY}
+/>
+
+### Floating
+
+<TableDemo
+  client:only="react"
+  variant="with-border"
+  elevation={ELEVATION.FLOATING}
+/>
