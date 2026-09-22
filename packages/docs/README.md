@@ -149,20 +149,42 @@ cannot drift apart.
 The control itself is a command palette in the header, opened by click, `⌘K` or `/`. Fill the
 header's `search` slot to replace it, or set `search.provider: 'none'` to drop it entirely.
 
-## Versioned deploys
+## Versions
 
-`base` must be literal in Astro's config at build time, so it is threaded by environment variable:
+On by default. With release tags in the repository (`v1.2.3`, one per release), the build makes
+one frozen copy of the docs per older group and serves it under `/v<group>/`, adds a switcher to
+the header, a banner and `noindex` to every old page, and scopes search to the page's version.
+Every release tag that is not a copy of its own redirects to its group's copy. Without tags it
+is dormant and the build is unchanged.
 
-| Variable            | Meaning                                                                    |
-| ------------------- | -------------------------------------------------------------------------- |
-| `DOCS_BASE`         | Astro's `base` — `/`, `/v3.1/`, `/repo/v3.1/`                              |
-| `DOCS_VERSION_ROOT` | Directory holding all version directories (tracked separately from `base`) |
-| `DOCS_VERSION`      | This build's version id, e.g. `3.1`                                        |
-| `DOCS_IS_LATEST`    | `true` for the canonical build served at root                              |
+```js
+docs({
+  versions: {
+    current: '4.0.0', // defaults to the highest matching tag
+    tags: 'v*', // git tag glob; tags that are not MAJOR.MINOR.PATCH are skipped
+    granularity: 'minor', // 'major' (default) | 'minor' | 'patch'
+  },
+});
+// or
+docs({ versions: false });
+```
 
-Every internal URL flows through `@eqtylab/docs/paths`, and authored markdown links are rewritten by
-a rehype plugin — Astro does not do this itself, so without it every root-relative link in content
-would 404 in a sub-path build.
+What to know:
+
+- `current` is never read from your `package.json`. Set it from the product you document, or
+  leave it to the highest tag.
+- Only `MAJOR.MINOR.PATCH` tags count. Prereleases and other shapes are skipped with a warning.
+- CI needs the tags: check out with `fetch-depth: 0`.
+- If a tag lands one deploy after its bump and `current` is inferred, the `/` label is one
+  release behind for that deploy. The content is current; the label heals on the next tag.
+- Live component examples inside old pages render with the library your site has installed.
+  Text and code samples are frozen; rendered examples are not. The banner says so.
+- Old versions are read-only. A wrong page is fixed by a new tag.
+- Changing `granularity` does not break published URLs: every grouping coarser than the one you
+  set also resolves, so `/v3/` and `/v3.9/` both work whichever you choose.
+
+The `DOCS_BASE` family of environment variables still exists for consumers who deploy each
+version as a separate build under its own `base`; this feature does not use them.
 
 ## Development
 
