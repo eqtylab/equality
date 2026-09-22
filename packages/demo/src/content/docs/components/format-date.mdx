@@ -1,0 +1,175 @@
+---
+title: "Format Date"
+description: "Render a date as relative, absolute, or exact elapsed time using a semantic <time> element"
+---
+
+import { FormatDate } from "@eqtylab/equality";
+import {
+  FormatDateIsoDemo,
+  FormatDateOptionsDemo,
+  FormatDateRelativeDemo,
+  FormatDateSinceDemo,
+  FormatDateTimeZoneDemo,
+  FormatDateUntilDemo,
+} from "@demo/components/demo/format-date";
+
+## Overview
+
+The <code>FormatDate</code> component renders a date in one of four ways: **absolute** time (e.g. "Jun 09 2026, 18:42:03 UTC"), **relative** time (e.g. "2 weeks ago", "Just now"), an exact countdown to a future date with **until** ("10 days"), or the exact time elapsed since a past one with **since** ("10 days ago"). It always renders as a semantic HTML [`<time>`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/time) element with a `dateTime` attribute.
+
+In every mode but absolute, a tooltip reveals the absolute time on hover or keyboard focus, and the value updates on an interval.
+
+If no date is provided (`null`, `undefined`, or an empty string), the component renders a `---` placeholder instead.
+
+### Choosing between relative, until, and since
+
+`relative` reads like prose; `until` and `since` are for values you compare down a column.
+
+`relative` phrases distance idiomatically, which means it deliberately collapses ranges — everything from 7 to 10 days away is "next week", and both 37 and 43 days away are "next month". That reads well in a sentence but hides differences between rows. `until` and `since` keep days exact out to three months, so two dates a week apart never render as the same string.
+
+The two directional modes are also **direction-locked**. `relative` flips automatically, so a date that has already passed renders "2 days ago" even in a column headed "Expires In". `until` renders the `---` placeholder for a date in the past, and `since` does the same for one in the future, so a table cell does not need a guard of its own.
+
+`until` renders a bare magnitude so it reads under a label ("Expires In: 10 days"), while `since` phrases the span as elapsed time so it stands alone ("Last observed: 10 days ago"). Both are localized, so the exact phrasing follows the `locale` rather than being assembled in English.
+
+## Time zones
+
+Absolute time is formatted in **UTC by default**. To render in a different zone, pass a `timeZone` (e.g. `"America/New_York"`). The other three modes measure a distance rather than name an instant, so they read the same in every zone.
+
+## Usage
+
+Import the component:
+
+```tsx
+import { FormatDate } from "@eqtylab/equality";
+```
+
+Basic usage with the required `date` property, which accepts an ISO 8601 string, epoch milliseconds, or a `Date`. Each of these renders the same instant:
+
+```tsx
+<FormatDate date="2026-06-09T18:42:03Z" />
+<FormatDate date={1781030523000} />
+<FormatDate date={new Date("2026-06-09T18:42:03Z")} />
+```
+
+## Variants
+
+### Absolute
+
+The default. Renders the full date and time in the configured `timeZone` (UTC unless overridden). The day, hour, minute, and second are all zero-padded to two digits, so dates stacked in a column or table line up on every character.
+
+<FormatDateTimeZoneDemo client:only="react" />
+
+```tsx
+<FormatDate date="2026-06-09T18:42:03Z" />
+<FormatDate date="2026-06-09T18:42:03Z" timeZone="America/New_York" />
+<FormatDate date="2026-06-09T18:42:03Z" timeZone="Asia/Tokyo" />
+<FormatDate date="2026-06-09T18:42:03Z" timeZone="Pacific/Auckland" />
+<FormatDate date="2026-06-09T18:42:03Z" timeZone="America/Toronto" />
+<FormatDate date="2026-06-09T18:42:03Z" timeZone="America/Los_Angeles" />
+<FormatDate date="2026-06-09T18:42:03Z" timeZone="America/Buenos_Aires" />
+<FormatDate date="2026-06-09T18:42:03Z" timeZone="Europe/London" />
+```
+
+### Relative
+
+Set `displayAs="relative"` to render distance from now. The value updates automatically on an interval, and hovering or focusing the date reveals the absolute time in a tooltip.
+
+<FormatDateRelativeDemo client:only="react" />
+
+```tsx
+<FormatDate date={data.updatedAt} displayAs="relative" />
+```
+
+Disable the tooltip with `tooltip={false}`, or stop the auto-updating with `live={false}`.
+
+### Until
+
+Set `displayAs="until"` to count down to a future date. The span is reported in the **largest unit it actually fills**, rounded to the nearest whole, and moved up a unit only when that rounding reaches one — so 31 minutes reads "31 minutes" rather than "1 hour", while 59.5 minutes reads "1 hour" rather than "60 minutes". Days stay exact out to three months, after which the value coarsens to months and then years.
+
+A date that has already passed renders the `---` placeholder — the same non-interactive element used for a missing date, carrying its own accessible label rather than leaving a focusable dash.
+
+<FormatDateUntilDemo client:only="react" />
+
+```tsx
+<FormatDate date={credential.expiresAt} displayAs="until" />
+```
+
+### Since
+
+Set `displayAs="since"` for the same measurement in the other direction, phrased as elapsed time. A date that has not yet arrived renders the `---` placeholder. Spans shorter than 45 seconds read as "Just now"; `until` has no equivalent, since "Just now" reads oddly under a label like "Expires In".
+
+<FormatDateSinceDemo client:only="react" />
+
+```tsx
+<FormatDate date={indicator.lastEvaluatedAt} displayAs="since" />
+```
+
+Both modes are localized through `Intl`, so `locale` applies to the unit names and to the "ago" phrasing:
+
+```tsx
+<FormatDate date={expiresAt} displayAs="until" locale="fr-FR" /> // "10 jours"
+<FormatDate date={observedAt} displayAs="since" locale="de-DE" /> // "vor 10 Tagen"
+```
+
+### Custom formatting
+
+Pass `absoluteOptions` to override the [`Intl.DateTimeFormat`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/DateTimeFormat/DateTimeFormat#options) options used for absolute time. For example to show a date without a time, a time without a date, or a weekday.
+
+<FormatDateOptionsDemo client:only="react" />
+
+```tsx
+<FormatDate
+  date="2026-06-09T18:42:03Z"
+  absoluteOptions={{ year: "numeric", month: "long", day: "numeric" }}
+/>
+<FormatDate
+  date="2026-06-09T18:42:03Z"
+  absoluteOptions={{ hour: "2-digit", minute: "2-digit" }}
+/>
+<FormatDate
+  date="2026-06-09T18:42:03Z"
+  absoluteOptions={{ weekday: "long", year: "numeric", month: "long", day: "numeric" }}
+/>
+<FormatDate
+  date="2026-06-09T18:42:03Z"
+  absoluteOptions={{ dateStyle: "short", timeStyle: "short" }}
+/>
+```
+
+#### ISO 8601 short date
+
+For a short numeric date like `2026-06-09`, use numeric options. Digit _order_ is decided by the `locale`, not the options, so the default `en-US` renders this as `06/09/2026`. Pair the preset with `locale="en-CA"` (which orders numerically as `yyyy-mm-dd`) to get true ISO 8601:
+
+<FormatDateIsoDemo client:only="react" />
+
+```tsx
+<FormatDate
+  date="2026-06-09T18:42:03Z"
+  locale="en-CA"
+  absoluteOptions={{ year: "numeric", month: "2-digit", day: "2-digit" }}
+/>
+```
+
+## Empty state
+
+When `date` is missing — `null`, `undefined`, or an empty string — the component renders a `---` placeholder with an accessible "No date" label. This is distinct from passing a present-but-unparseable value (e.g. `"not-a-date"`), which renders `Invalid date`.
+
+<FormatDate date={null} />
+
+```tsx
+<FormatDate date={null} />
+<FormatDate date={undefined} />
+<FormatDate date="" />
+```
+
+## Props
+
+| Name              | Description                                                             | Type                                     | Default    | Required |
+| ----------------- | ----------------------------------------------------------------------- | ---------------------------------------- | ---------- | -------- |
+| `date`            | The date to display                                                     | `string`, `number`, `Date`, `null`       | —          | ✅       |
+| `displayAs`       | How to render the date                                                  | `absolute`, `relative`, `until`, `since` | `absolute` | ❌       |
+| `timeZone`        | Time zone used for absolute formatting                                  | `string`                                 | `UTC`      | ❌       |
+| `locale`          | BCP 47 locale used for formatting                                       | `string`                                 | `en-US`    | ❌       |
+| `tooltip`         | Unless absolute, show a tooltip with the absolute time on hover/focus   | `boolean`                                | `true`     | ❌       |
+| `live`            | Unless absolute, re-render on an interval so the value stays current    | `boolean`                                | `true`     | ❌       |
+| `absoluteOptions` | Override the `Intl.DateTimeFormat` options used for absolute formatting | `Intl.DateTimeFormatOptions`             | —          | ❌       |
