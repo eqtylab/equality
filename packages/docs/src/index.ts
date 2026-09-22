@@ -1,8 +1,10 @@
+import { fileURLToPath } from 'node:url';
 import type { AstroIntegration } from 'astro';
 
 import { resolveConfig, type DocsConfig, type DocsUserConfig } from './config.ts';
 import { resolveDocsEnv, type DocsEnv } from './env.ts';
 import { assertMdxOnly } from './internal/assert-mdx-only.ts';
+import { EMPTY_VERSIONS, extractVersions } from './internal/extract-versions.ts';
 import { microlighterGrammarsPlugin } from './internal/microlighter-grammars.ts';
 import { pagefindIntegration } from './internal/pagefind.ts';
 import { rehypeBaseUrl } from './internal/rehype-base-url.ts';
@@ -69,6 +71,20 @@ export default function docs(
 
         assertMdxOnly(new URL(`./${cfg.contentDir}/`, config.srcDir));
 
+        // Runs before the content layer syncs, so the version collections find their files.
+        const versionData =
+          cfg.versions === false
+            ? EMPTY_VERSIONS
+            : extractVersions({
+                root: fileURLToPath(config.root),
+                contentDirAbs: fileURLToPath(new URL(`./${cfg.contentDir}/`, config.srcDir)),
+                cacheDir: fileURLToPath(new URL('./.astro/eqty-docs/', config.root)),
+                current: cfg.versions.current,
+                tags: cfg.versions.tags,
+                granularity: cfg.versions.granularity,
+                logger,
+              });
+
         const consumer = scanConsumerPages(config.srcDir);
 
         for (const route of plannedRoutes(cfg)) {
@@ -86,6 +102,7 @@ export default function docs(
           env,
           // Read by the catch-all's getStaticPaths so no path is emitted twice.
           ownedByConsumer: consumer.ownedPaths,
+          ...versionData,
         };
 
         // So `_group.yaml` edits reload in dev.
@@ -172,6 +189,9 @@ export default function docs(
             `  const config: import('@eqtylab/docs').DocsConfig & {`,
             `    env: import('@eqtylab/docs').DocsEnv;`,
             `    ownedByConsumer: string[];`,
+            `    currentVersion: { id: string; group: string; version: string } | null;`,
+            `    versionManifest: Array<{ id: string; suffix: string; group: string; tag: string; dir: string }>;`,
+            `    versionRedirects: Array<{ id: string; to: string | null }>;`,
             `  };`,
             `  export default config;`,
             `}`,
