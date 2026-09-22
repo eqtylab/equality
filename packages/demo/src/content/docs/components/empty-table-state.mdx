@@ -1,0 +1,31 @@
+---
+title: "Empty Table State"
+description: "Empty Table State with sizes and variants"
+---
+
+import { EmptyTableState } from "@eqtylab/equality";
+import React from "react";
+
+## Variants
+
+### Default
+
+<EmptyTableState
+  icon="SearchX"
+  title="No Members Available"
+  description="Members will appear here once they are available to be added."
+/>
+
+### Without description
+
+<EmptyTableState icon="SearchX" title="No Members Available" />
+
+### With Clear Button
+
+<EmptyTableState
+  icon="SearchX"
+  title="No External Users Found"
+  description="Try refining your search terms or clearing filters."
+  showClearButton
+  onClear={() => {}}
+/>
