@@ -26,6 +26,7 @@ export default defineConfig({
     'astro/loaders',
     'astro/config',
     'astro:content',
+    'virtual:eqty-docs/config',
     '@eqtylab/equality',
     'react',
     'react-dom',

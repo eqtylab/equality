@@ -1,7 +1,12 @@
 // @ts-check
+import { createRequire } from "node:module";
+
 import { defineConfig } from "astro/config";
 import docs, { resolveDocsEnv } from "@eqtylab/docs";
 import { linkWorkspacePackages } from "@eqtylab/docs/dev";
+
+// The version the site documents is the library's, not this package's 0.0.1.
+const ui = createRequire(import.meta.url)("../ui/package.json");
 
 // `base` has to be literal in Astro's config at build time, so a versioned build
 // threads it through the environment. See @eqtylab/docs' README.
@@ -29,6 +34,7 @@ export default defineConfig({
       env,
       title: "Equality",
       description: "A theme-driven component library for EQTY Lab projects",
+      versions: { current: ui.version, granularity: "minor" },
       logo: {
         src: "/eqty-logo.svg",
         alt: "EQTY Lab",

@@ -10,6 +10,7 @@ import CONFIG from 'virtual:eqty-docs/config';
 import type { NavNode } from '@eqtylab/docs/types';
 import { Icon } from '@eqtylab/equality';
 
+import type { SwitcherData } from '../lib/versions-ui.ts';
 import LinkIcon from './LinkIcon.astro';
 import NavProduct from './NavProduct.astro';
 import NavTree from './NavTree.astro';
@@ -17,13 +18,40 @@ import styles from './NavDrawer.module.css';
 
 interface Props {
   nodes: NavNode[];
+  /** Absent when versioning is dormant or off. */
+  switcher?: SwitcherData;
 }
-const { nodes } = Astro.props;
+const { nodes, switcher } = Astro.props;
 ---
 
 <div id="eq-nav-drawer" popover class={styles.drawer} data-eq-chrome data-pagefind-ignore>
   <nav class={styles.panel} aria-label="Documentation">
     <NavProduct />
+    {
+      switcher && (
+        <div class={styles.versions} data-eq-versions>
+          <p class={styles.versionsLabel}>Version</p>
+          <a
+            class={styles.versionLink}
+            href={switcher.latest.href}
+            data-current={switcher.latest.current ? '' : undefined}
+          >
+            {switcher.latest.label}
+          </a>
+          {switcher.groups.map((group) =>
+            group.items.map((item) => (
+              <a
+                class={styles.versionLink}
+                href={item.href}
+                data-current={item.current ? '' : undefined}
+              >
+                {item.label}
+              </a>
+            ))
+          )}
+        </div>
+      )
+    }
     {
       /* Relocated from the header bar. Left there, a link with no icon renders
          nameless below `sm`, because the label is hidden and Equality's Icon is

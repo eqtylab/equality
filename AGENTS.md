@@ -20,6 +20,7 @@ Run `pnpm install` to get dependencies and `pnpm build` in the repo root to rend
 
 - Always reference the `create-documentation` skill when interacting with component documentation MDX files.
 - Always reference the `create-component` skill when creating a new component, or making changes in usability to an existing component.
+- Do not delete or rename a file in `packages/demo/src/components/demo/`. The versioned docs build renders every tagged version's pages against this directory, so removing a widget removes that page from every version that imports it. Run `git grep -l <widget> $(git tag -l 'v*')` first. If a widget genuinely has to go, the alternative is stripping demo imports from old snapshots at build time; see the docs-versioning feature document.
 - When a new component supersedes a pattern people hand-roll, add it to the name translation table in `packages/skills/equality-design-system/SKILL.md`. That table is what stops agents in other repos rebuilding something we already ship.
 - Strive to create accessible components that will function with keyboard navigation, screen reader usage, and accessible markup in mind. Alert the developer if they are specifically requesting that you implement something that won't be accessible.
 - Do not over-comment the code. Comments should be added to warn others of very negative things that will happen if you change code. Comments should NOT be added for the sake of describing what code does.

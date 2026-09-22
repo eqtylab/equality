@@ -5,6 +5,8 @@ import { Icon } from '@eqtylab/equality';
 import GlobalSearch from './GlobalSearch.tsx';
 import LinkIcon from './LinkIcon.astro';
 import ThemeToggle from './ThemeToggle.tsx';
+import VersionSwitcher from './VersionSwitcher.tsx';
+import type { SwitcherData } from '../lib/versions-ui.ts';
 import styles from './Header.module.css';
 
 interface Props {
@@ -12,9 +14,11 @@ interface Props {
   suggested?: Array<{ label: string; href: string }>;
   /** False when the page forwards a consumer-provided `search` slot. */
   showSearch?: boolean;
+  /** Absent when versioning is dormant or off. */
+  switcher?: SwitcherData;
 }
 
-const { showSearch = true, suggested = [] } = Astro.props;
+const { showSearch = true, suggested = [], switcher } = Astro.props;
 
 const paths = { base: import.meta.env.BASE_URL, pathPrefix: CONFIG.pathPrefix };
 const homeHref = withBase(CONFIG.pathPrefix ? `/${CONFIG.pathPrefix}/` : '/', {
@@ -50,7 +54,7 @@ const homeHref = withBase(CONFIG.pathPrefix ? `/${CONFIG.pathPrefix}/` : '/', {
     </div>
 
     <div class={styles.actions}>
-      <slot name="versions" />
+      {switcher && <VersionSwitcher client:load data={switcher} className={styles.navLink} />}
       <div class={styles.navLinks}>
         {CONFIG.header.links.map((link) => (
           <a

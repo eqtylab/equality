@@ -16,6 +16,9 @@ declare module 'virtual:eqty-docs/config' {
   const config: import('./config.ts').DocsConfig & {
     env: import('./env.ts').DocsEnv;
     ownedByConsumer: string[];
+    currentVersion: import('./internal/extract-versions.ts').CurrentVersion | null;
+    versionManifest: import('./internal/extract-versions.ts').ManifestEntry[];
+    versionRedirects: import('./versions.ts').VersionRedirect[];
   };
   export default config;
 }

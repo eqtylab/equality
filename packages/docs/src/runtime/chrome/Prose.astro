@@ -2,6 +2,7 @@
 /** Article wrapper. `data-pagefind-body` bounds the search index to content. */
 import { rewriteHtmlBase } from '@eqtylab/docs/internal/rehype-base-url';
 import { Icon } from '@eqtylab/equality';
+import CONFIG from 'virtual:eqty-docs/config';
 
 import AlertBridge from '../components/AlertBridge.astro';
 import styles from './Prose.module.css';
@@ -20,17 +21,28 @@ interface Props {
   trail?: Array<{ label: string; href?: string }>;
   /** Stands in for `description` in the search index when a page has none. Not rendered. */
   fallbackSummary?: string;
+  /** Version id of an older copy; latest passes nothing. */
+  version?: string;
 }
 
-const { title, description, deprecated, markdownHref, source, crumbs, trail, fallbackSummary } =
-  Astro.props;
+const {
+  title,
+  description,
+  deprecated,
+  markdownHref,
+  source,
+  crumbs,
+  trail,
+  fallbackSummary,
+  version,
+} = Astro.props;
 
 const deprecation =
   deprecated === true ? {} : deprecated && typeof deprecated === 'object' ? deprecated : null;
 
 // Authored frontmatter HTML bypasses rehype entirely, so base-prefix it here.
 const deprecationMessage = deprecation?.message
-  ? rewriteHtmlBase(deprecation.message, import.meta.env.BASE_URL)
+  ? rewriteHtmlBase(deprecation.message, import.meta.env.BASE_URL, CONFIG.pathPrefix, version)
   : undefined;
 ---
 
@@ -38,6 +50,7 @@ const deprecationMessage = deprecation?.message
   class="eq-prose"
   data-eq-prose
   data-pagefind-body
+  data-pagefind-filter={`version:${version ?? 'latest'}`}
   data-pagefind-meta={crumbs ? `crumbs:${crumbs}` : undefined}
 >
   {
