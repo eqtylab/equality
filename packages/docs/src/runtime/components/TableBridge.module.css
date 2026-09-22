@@ -1,6 +1,0 @@
-@reference '../styles/theme.css';
-
-/* Flow spacing only; every visual property comes from Equality's Table. */
-.table {
-  @apply mb-4;
-}

@@ -1,12 +1,16 @@
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
 import type { AstroIntegration } from 'astro';
 
 import { resolveConfig, type DocsConfig, type DocsUserConfig } from './config.ts';
 import { resolveDocsEnv, type DocsEnv } from './env.ts';
 import { assertMdxOnly } from './internal/assert-mdx-only.ts';
 import { microlighterGrammarsPlugin } from './internal/microlighter-grammars.ts';
+import { pagefindIntegration } from './internal/pagefind.ts';
 import { rehypeBaseUrl } from './internal/rehype-base-url.ts';
 import { rehypeCodeFence } from './internal/rehype-code-fence.ts';
 import { rehypeProseScope } from './internal/rehype-prose-scope.ts';
+import { rehypeRelativeLinks } from './internal/rehype-relative-links.ts';
 import { rehypeTableColumns } from './internal/rehype-table-columns.ts';
 import { scanConsumerPages } from './internal/scan-consumer-pages.ts';
 import { virtualConfigPlugin } from './internal/virtual-config.ts';
@@ -43,11 +47,6 @@ function plannedRoutes(cfg: DocsConfig) {
       enabled: cfg.routing.markdownTwins,
     },
     {
-      pattern: '/_docs/search.json',
-      entrypoint: '@eqtylab/docs/routes/search-index.ts',
-      enabled: cfg.search.provider !== 'none' || cfg.search.devProvider !== 'none',
-    },
-    {
       pattern: '/404',
       entrypoint: '@eqtylab/docs/routes/not-found.astro',
       enabled: cfg.routing.notFound,
@@ -69,7 +68,8 @@ export default function docs(
     name: '@eqtylab/docs',
     hooks: {
       async 'astro:config:setup'(params) {
-        const { config, injectRoute, updateConfig, addWatchFile, logger, command } = params;
+        const { config, injectRoute, injectScript, updateConfig, addWatchFile, logger, command } =
+          params;
 
         assertMdxOnly(new URL(`./${cfg.contentDir}/`, config.srcDir));
 
@@ -108,6 +108,9 @@ export default function docs(
           if (!integrationNames.has('@astrojs/react')) {
             const { default: react } = await import('@astrojs/react');
             added.push(react());
+          }
+          if (cfg.search.provider === 'pagefind' && !integrationNames.has('pagefind')) {
+            added.push(pagefindIntegration());
           }
         }
 
@@ -150,13 +153,46 @@ export default function docs(
                 },
               };
 
+        /*
+          Pin the markdown flavour rather than inheriting Astro's defaults. Astro 6.4 stopped defaulting `gfm` and `smartypants` onto `config.markdown`.
+        */
+        markdown.gfm = true;
+        markdown.smartypants = true;
+
         // Astro does not apply `base` to authored markdown links. MDX inherits these via extendMarkdownConfig.
         markdown.rehypePlugins = [
           [rehypeBaseUrl, { base: config.base }],
+          // Must follow rehypeBaseUrl: the hrefs this emits already carry `base`, and
+          // rehypeBaseUrl would prefix them a second time.
+          [
+            rehypeRelativeLinks,
+            {
+              contentRoot: fileURLToPath(new URL(`./${cfg.contentDir}/`, config.srcDir)),
+              base: config.base,
+              pathPrefix: cfg.pathPrefix,
+              onMissing: (href: string, filePath: string) =>
+                logger.warn(
+                  `${path.relative(fileURLToPath(config.root), filePath)} links to ${href}, ` +
+                    `which is not a page in ${cfg.contentDir}`
+                ),
+            },
+          ],
           rehypeProseScope,
           rehypeTableColumns,
           ...(cfg.code.highlighter === 'codeblock' ? [rehypeCodeFence] : []),
         ];
+
+        // Resolve against the project root first, or a './...' path means different things
+        // in dev and in a build.
+        const resolveAsset = (spec: string) =>
+          spec.startsWith('.') ? fileURLToPath(new URL(spec, config.root)) : spec;
+
+        for (const href of cfg.customCss) {
+          injectScript('page-ssr', `import ${JSON.stringify(resolveAsset(href))};`);
+        }
+        for (const src of cfg.clientScripts) {
+          injectScript('page', `import ${JSON.stringify(resolveAsset(src))};`);
+        }
 
         updateConfig({
           integrations: added,

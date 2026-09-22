@@ -1,0 +1,16 @@
+---
+/**
+ * One panel of a `<Tabs>` set. Emits nothing but a marked section: `Tabs.astro` recovers the
+ * label from it and re-emits the body, because Astro hands a framework component its children
+ * as opaque pre-rendered HTML and nothing inside React could read this `label`.
+ */
+interface Props {
+  label: string;
+  /** Lucide icon name. */
+  icon?: string;
+}
+
+const { label, icon } = Astro.props;
+---
+
+<section data-eq-tab-panel data-label={label} data-icon={icon}><slot /></section>

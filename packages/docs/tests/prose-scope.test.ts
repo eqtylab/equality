@@ -96,3 +96,24 @@ test('marking twice does not duplicate the attribute', () => {
   run(tree);
   assert.equal(div.attributes?.filter((a) => a.name === 'data-eq-md').length, 1);
 });
+
+test('markdown inside a Tabs container is the page talking', () => {
+  const heading = element('h3');
+  const tabs = jsx('Tabs', [jsx('TabItem', [heading])]);
+  run(tabs);
+  assert.equal(marked(heading), true);
+});
+
+test('a Tabs container tag never takes the marker itself', () => {
+  const tabs = jsx('Tabs', [jsx('TabItem')]);
+  run(tabs);
+  assert.equal(marked(tabs), false);
+  assert.equal(marked(tabs.children?.[0] as TestNode), false);
+});
+
+test('a component inside a TabItem is still a boundary', () => {
+  const inner = element('span');
+  const tabs = jsx('Tabs', [jsx('TabItem', [jsx('Badge', [inner])])]);
+  run(tabs);
+  assert.equal(marked(inner), false);
+});

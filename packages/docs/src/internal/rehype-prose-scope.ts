@@ -31,10 +31,22 @@ function isComponent(node: Node): boolean {
   return typeof name === 'string' && (/^[A-Z]/.test(name) || name.includes('.'));
 }
 
+/**
+ * Structural components that hold the page's own prose rather than content of their own.
+ * Without this a heading or list inside a `<TabItem>` would render untypeset.
+ */
+const CONTAINERS = new Set(['Tabs', 'TabItem']);
+
+function isContainer(node: Node): boolean {
+  return typeof node.name === 'string' && CONTAINERS.has(node.name);
+}
+
 export function rehypeProseScope() {
   return function transformer(tree: unknown) {
     visit(tree as never, (node: Node) => {
-      if (isComponent(node)) return SKIP;
+      // A container's children are the page's own markup, so traversal continues into them.
+      // The component tag itself is never page markup and never takes the marker.
+      if (isComponent(node)) return isContainer(node) ? undefined : SKIP;
 
       if (node.type === 'element') {
         node.properties = { ...node.properties, dataEqMd: '' };

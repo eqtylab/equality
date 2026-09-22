@@ -1,8 +1,13 @@
 ---
-/** Recursive sidebar list. Uses <details> for groups so it works without JS. */
+/**
+ * Recursive sidebar list. Groups are <details>, so they open with no script and
+ * nothing remounts on a page load. `eq-nav-group.ts` adds the animation.
+ *
+ * Every value here comes from Equality: the dropdown item's geometry and hover, and
+ * the Separator's colour for the rails.
+ */
 import type { NavNode } from '@eqtylab/docs/types';
 import { Badge, Icon } from '@eqtylab/equality';
-import styles from './NavTree.module.css';
 
 interface Props {
   nodes: NavNode[];
@@ -11,20 +16,40 @@ interface Props {
 
 const { nodes, depth = 0 } = Astro.props;
 const NavTree = Astro.self;
+
+// 25px per level. A Tailwind default, not a token: Equality has no nesting value.
+const list =
+  depth === 0 ? 'space-y-1' : 'border-border ml-3 mt-1 space-y-0.5 border-l pl-3';
+
+// Equality's dropdown item, minus its `outline-hidden`: a link list needs keyboard
+// focus visible, so `focus-ring` stands in.
+const row =
+  'dropdown-item-hover focus-ring flex cursor-pointer select-none items-center gap-2 rounded-sm px-2 py-1.5 text-sm no-underline transition-colors';
+
+// Equality has no selected-row colour, so the current page borrows the hover one.
+// Search's selected row must keep matching it. The idle colour is left off a current
+// row rather than overridden: two unvariated colour utilities on one element resolve
+// by Tailwind's own order, not by the order they are written.
+const current =
+  'bg-lilac-300/50 text-lilac-700 dark:bg-lilac-600/50 dark:text-lilac-100 font-medium shadow-sm';
 ---
 
-<ul class={styles.list} data-depth={depth}>
+<ul class={list} data-depth={depth}>
   {
     nodes.map((node) => (
-      <li class={styles.item}>
+      <li class="list-none">
         {node.kind === 'group' && node.children?.length ? (
-          <details class={styles.group} open={node.open}>
-            <summary class={styles.summary}>
-              <span class={styles.summaryLabel}>
+          <details class="block" data-eq-nav-group open={node.open}>
+            {/* pointer-focus undoes Equality's hover firing on plain `:focus`, which
+                left a clicked header filled as if it were the current page. */}
+            <summary
+              class={`${row} text-text-primary justify-between [&::-webkit-details-marker]:hidden pointer-focus:bg-transparent! pointer-focus:text-text-primary! pointer-focus:shadow-none!`}
+            >
+              <span class="flex min-w-0 flex-1 items-center gap-2 truncate">
                 {node.icon && <Icon icon={node.icon} size="sm" />}
                 {node.href ? (
                   <a
-                    class={styles.groupLink}
+                    class="text-inherit no-underline"
                     href={node.href}
                     aria-current={node.current ? 'page' : undefined}
                   >
@@ -34,12 +59,17 @@ const NavTree = Astro.self;
                   <span>{node.label}</span>
                 )}
                 {node.badge && (
-                  <Badge variant={node.badge.variant} size="sm" class={styles.badge}>
+                  <Badge variant={node.badge.variant} size="sm" className="shrink-0">
                     {node.badge.text}
                   </Badge>
                 )}
               </span>
-              <span class={styles.chevron} aria-hidden="true">
+              {/* The direct-child selector is load-bearing: a plain `group-open`
+                  would also rotate a closed child's chevron inside an open parent. */}
+              <span
+                class="text-text-secondary shrink-0 transition-transform duration-200 [details[open]>summary_&]:rotate-90"
+                aria-hidden="true"
+              >
                 <Icon icon="ChevronRight" size="xs" />
               </span>
             </summary>
@@ -47,7 +77,7 @@ const NavTree = Astro.self;
           </details>
         ) : (
           <a
-            class={styles.link}
+            class={`${row} ${node.current ? current : 'text-text-secondary'}`}
             href={node.href}
             aria-current={node.current ? 'page' : undefined}
             data-current={node.current ? '' : undefined}
@@ -56,14 +86,14 @@ const NavTree = Astro.self;
             {...(node.attrs ?? {})}
           >
             {node.icon && <Icon icon={node.icon} size="sm" />}
-            <span class={styles.linkLabel}>{node.label}</span>
+            <span class="min-w-0 flex-1 truncate">{node.label}</span>
             {node.badge && (
-              <Badge variant={node.badge.variant} size="sm" class={styles.badge}>
+              <Badge variant={node.badge.variant} size="sm" className="shrink-0">
                 {node.badge.text}
               </Badge>
             )}
             {node.external && (
-              <span class={styles.externalIcon} aria-hidden="true">
+              <span class="text-text-secondary shrink-0 opacity-60" aria-hidden="true">
                 <Icon icon="ArrowUpRight" size="xs" />
               </span>
             )}
@@ -73,3 +103,10 @@ const NavTree = Astro.self;
     ))
   }
 </ul>
+
+{
+  /** Imported here, so one import covers both the sidebar and the drawer. */
+}
+<script>
+  import '@eqtylab/docs/scripts/eq-nav-group.ts';
+</script>

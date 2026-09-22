@@ -30,7 +30,8 @@ export const collections = docsCollections();
 ```
 
 Then write MDX under `src/content/docs/`. That's the whole setup: the integration injects the
-page routes, a Markdown twin per page, `/llms.txt`, a search index, and a 404.
+page routes, a Markdown twin per page, `/llms.txt`, and a 404. Search is built separately, at the
+end of `astro build`; see [Search needs a build](#search-needs-a-build).
 
 Content is **MDX-only**. Component overrides apply exclusively to MDX, so a `.md` page would
 render its tables, code fences and callouts differently from every other page. A `.md` file in
@@ -55,13 +56,43 @@ collapsed: false
 - A typo in `order` produces a build **warning naming the file and the token** rather than silently
   reordering, and the schema is `.strict()` so an unknown key fails the build.
 
-## Two conventions worth knowing
+## Linking between pages
 
-**No Tailwind utility classes in this package's markup.** All styling goes through `@apply` in a
-co-located `*.module.css` with a `@reference` header, mirroring `packages/ui`. This is not a style
-preference: Tailwind v4's source detection skips `node_modules`, so utilities written literally in
-shipped markup would silently produce nothing in a consumer's build. `@apply` has no such
-dependency. `pnpm run check:no-utilities` enforces it and runs as part of `build`.
+Write the link the way the file sits on disk and it resolves to that page's URL:
+
+```mdx
+See [usage](./usage.mdx) and [the guides index](../guides/index.mdx#ordering).
+```
+
+`./usage.mdx` becomes `/getting-started/usage/`, with `base`, `pathPrefix` and the trailing slash
+applied exactly as the sidebar applies them. A `.md` target finds the `.mdx` file of the same name,
+so markdown synced in from a product repo needs no rewriting, and a folder's `index.mdx` resolves to
+the folder. A target that names no page in the content directory is a build **warning naming the
+file and the href** — it still rewrites, so the typo shows up in the log rather than only as a 404.
+
+Only content files are rewritten, and only targets that land inside the content directory: a
+relative link out of the collection is someone else's URL to own. Root-relative links are
+base-prefixed instead — Astro does not do that for authored markdown — and extensionless relative
+links are left to the browser.
+
+## Three conventions worth knowing
+
+**Styling is inline Tailwind, and one `@source` line is what makes it work.** The chrome is styled
+with utility classes written in the markup. That only compiles because `runtime/styles/docs.css`
+names this package's own files in an explicit `@source`: Tailwind v4's automatic source detection
+skips `node_modules`, which is exactly where this markup sits in a consumer's build. Drop that line
+and every utility here produces nothing, with no error anywhere. `pnpm run check:source` enforces
+that the glob still covers all shipped markup, and runs as part of `build`. Recipes used by more
+than one component are `@utility` definitions in `runtime/styles/utilities.css`; a co-located
+`*.module.css` is the escape hatch for rules that cannot live on an element, which today means
+only `GlobalSearch.module.css`.
+
+**Overruling an Equality component takes `!`.** `packages/ui` ships unlayered CSS, Tailwind
+utilities live in `@layer utilities`, and an unlayered declaration beats a layered one whatever its
+specificity. So where this markup has to overrule a value an Equality class already sets on the
+same element — `CodeBlock`'s `max-height`, `CommandList`'s — the utility carries `!`. Properties
+Equality leaves alone need nothing. Getting this wrong fails silently: the class is in the HTML and
+the rule is in the bundle, it just loses.
 
 **Route-level MDX components override page-level ones.** `@astrojs/mdx` builds the map as
 `{ Fragment, ...fileComponents, ...props.components }`, so the route's `<Content components={…} />`
@@ -95,6 +126,7 @@ product surfaces cannot drift:
 | Code fences     | `CodeBlock`                                                                             |
 | Markdown tables | `TableContainer` / `TableHeader` / `TableBody` / `TableRow` / `TableHead` / `TableCell` |
 | `<Alert>`       | `Alert`, as an `aside`                                                                  |
+| `<Tabs>`        | `Tabs`, server-rendered                                                                 |
 | Links           | base-aware `a` override                                                                 |
 
 **Authors write Equality's own components, with no imports.** The route-level component map
@@ -122,8 +154,87 @@ whose parts all use `subgrid`, so it needs an explicit track list or the table c
 to one column. Markdown has no syntax for that, so `rehypeTableColumns` derives the count
 from the first row at build time.
 
+Tabs are authored the same way, with no imports:
+
+```mdx
+<Tabs syncKey="platform">
+  <TabItem label="Linux">Anything, including fences and tables.</TabItem>
+  <TabItem label="macOS">
+    Sets sharing a `syncKey` switch together, and the choice is remembered.
+  </TabItem>
+</Tabs>
+```
+
 This is also why content is MDX-only — these overrides are the mechanism, and Astro's
 plain-Markdown pipeline has no component substitution at all.
+
+## Bringing your own CSS and scripts
+
+`customCss` and `clientScripts` attach a consumer's own assets to every docs page:
+
+```js
+docs({
+  title: 'My Docs',
+  customCss: ['./src/styles/site.css'],
+  clientScripts: ['./src/scripts/glossary.ts'],
+});
+```
+
+Both resolve project-relative paths against the project root, so they mean the same thing in
+dev and in a build. `clientScripts` entries are **bundled** rather than served as-is, which is
+what a script that rewrites rendered text needs: it has to import `scheduleHighlight` from
+`@eqtylab/equality` and call it afterwards, or the code blocks it touched lose their
+highlighting. (`CodeBlock` paints through the CSS Custom Highlight API over `Range`s into those
+very text nodes.) A plain `<script src>` in `public/` cannot import anything.
+
+## Owning a page yourself
+
+A file in your own `src/pages` wins. The integration sees the route is already claimed, logs that
+it is yielding, and injects nothing there — so a landing page is yours to write, with the same
+chrome every other page gets:
+
+```astro
+---
+import Prose from '@eqtylab/docs/chrome/Prose.astro';
+import DocsPage from '@eqtylab/docs/layouts/DocsPage.astro';
+import { docsNav } from '@eqtylab/docs/lib/nav-data.ts';
+
+// `nav` is required: the sidebar, the drawer and the 404's suggestions all read it.
+const nav = await docsNav(Astro.url.pathname);
+---
+
+<DocsPage title="Home" nav={nav} toc={[]} showToc={false} splash>
+  <Prose title="Home">Anything at all.</Prose>
+</DocsPage>
+```
+
+`@eqtylab/docs/lib/*` ships the rest of what the injected route uses, with the collection already
+wired in: `docsEntries` and `pathContext` alongside `docsNav` in `nav-data.ts`, `breadcrumbsFor` /
+`prevNextFor` / `buildTocTree` re-exported from there, and `mdxComponents` in `mdx-components.ts`
+for rendering a collection entry through the same component map.
+
+## Building the Search Index
+
+Full-text search uses the built HTML, via [Pagefind](https://pagefind.app). The integration
+runs it in `astro:build:done` and writes the index to `dist/pagefind/`.
+
+RUn `pnpm run build` to make search work in `pnpm run dev`. Dev serves `dist/pagefind/` off disk,
+so results describe the last build; rebuild while dev runs and the next search picks it up. Until
+that first build the palette says search needs one.
+
+What gets indexed is set by the markup, not by config:
+
+| Attribute              | Where                            | Effect                                |
+| ---------------------- | -------------------------------- | ------------------------------------- |
+| `data-pagefind-body`   | the `<article>`                  | Bounds the index to page content      |
+| `data-pagefind-ignore` | header, sidebar, TOC, action row | Keeps chrome out of every result      |
+| `data-pagefind-meta`   | the `<h1>` and the `<article>`   | Carries `title` and the `group` label |
+
+The `group` value is the section's `label` from `_group.yaml`, so search headings and the sidebar
+cannot drift apart.
+
+The control itself is a command palette in the header, opened by click, `⌘K` or `/`. Fill the
+header's `search` slot to replace it, or set `search.provider: 'none'` to drop it entirely.
 
 ## Versioned deploys
 
@@ -144,7 +255,7 @@ would 404 in a sub-path build.
 
 ```bash
 pnpm build    # guard + node bundle + runtime copy + declarations
-pnpm test     # nav ordering, prev/next, breadcrumbs, TOC
+pnpm test     # nav ordering, prev/next, breadcrumbs, TOC, prose scope, link resolution
 ```
 
 `src/*.ts` is bundled for Node (it is loaded when Astro reads your config). `src/runtime/**` ships

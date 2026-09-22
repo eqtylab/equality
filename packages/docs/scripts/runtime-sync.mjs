@@ -11,9 +11,14 @@ const from = resolve(root, 'src/runtime');
 const to = resolve(root, 'dist/runtime');
 const skip = /(\.test\.|\.spec\.|__fixtures__)/;
 
-export async function sync() {
-  await rm(to, { recursive: true, force: true });
-  await cp(from, to, { recursive: true, filter: (src) => !skip.test(src) });
+/**
+ * `clean` drops stale output first, which is what a build wants. Watch mode must
+ * pass false: removing dist/runtime while a consumer's dev server is resolving
+ * @eqtylab/docs/components/* breaks it mid-session.
+ */
+export async function sync({ clean = true } = {}) {
+  if (clean) await rm(to, { recursive: true, force: true });
+  await cp(from, to, { recursive: true, force: true, filter: (src) => !skip.test(src) });
 }
 
 /** Re-sync on change, debounced. Returns the watcher. */
@@ -22,7 +27,7 @@ export function watchRuntime(onSync = () => {}) {
   return watch(from, { recursive: true }, (_event, filename) => {
     clearTimeout(queued);
     queued = setTimeout(() => {
-      sync().then(
+      sync({ clean: false }).then(
         () => onSync(filename),
         (err) => console.error('[docs] runtime sync failed', err)
       );

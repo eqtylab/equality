@@ -29,11 +29,16 @@ export default defineConfig({
       env,
       title: "Equality",
       description: "A theme-driven component library for EQTY Lab projects",
+      logo: {
+        src: "/eqty-logo.svg",
+        alt: "EQTY Lab",
+      },
       header: {
         links: [
           {
             label: "GitHub",
             href: "https://github.com/eqtylab/equality",
+            icon: "/github.svg",
             external: true,
           },
         ],

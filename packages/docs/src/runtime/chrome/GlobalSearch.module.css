@@ -1,0 +1,26 @@
+@reference '../styles/theme.css';
+
+/*
+ * All that is left here are the two rules that fight another package's styling. Neither
+ * can move inline: one has to outrank Equality's own dialog class at equal specificity,
+ * and the other styles an element this component never renders.
+ */
+
+/* Class doubled to beat Equality's centring, which sits at the same specificity.
+ * Never override `transform` here: the entrance animation uses it. */
+.dialog.dialog {
+  @apply p-0;
+  top: 10vh;
+  translate: -50% 0;
+}
+
+/**
+ * Two assumptions nothing enforces: `packages/ui` still generates an overlay class containing
+ * `dialog-overlay`, and Radix still renders that overlay as the dialog's previous sibling. Either
+ * changes and the blur silently disappears. `:has` keeps it off every other dialog on the site.
+ */
+:global([class*='dialog-overlay']):has(+ .dialog) {
+  @apply bg-background/25;
+  -webkit-backdrop-filter: blur(18px);
+  backdrop-filter: blur(6px);
+}

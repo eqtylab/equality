@@ -4,9 +4,9 @@ import type { NavNode, TocNode } from '@eqtylab/docs/types';
 import CONFIG from 'virtual:eqty-docs/config';
 import DocsShell from './DocsShell.astro';
 import Header from '../chrome/Header.astro';
+import NavDrawer from '../chrome/NavDrawer.astro';
 import Sidebar from '../chrome/Sidebar.astro';
 import TableOfContents from '../chrome/TableOfContents.astro';
-import styles from './DocsPage.astro.module.css';
 
 interface Props {
   title: string;
@@ -18,14 +18,30 @@ interface Props {
 }
 
 const { title, description, nav, toc, showToc = true, splash = false } = Astro.props;
+
+// A section's own index page if it has one, else its first child. Never the sidebar repeated.
+const suggested = nav
+  .map((node) => ({ label: node.label, href: node.href ?? node.children?.[0]?.href }))
+  .filter((item): item is { label: string; href: string } => !!item.href)
+  .slice(0, 4);
 ---
 
 <DocsShell title={title} description={description}>
-  <Header />
-  <div class={styles.layout}>
+  {/* A prop, not slot fallback: Astro registers a named slot at compile time, so a forwarded
+      slot always counts as filled and the fallback never runs. */}
+  <Header showSearch={!Astro.slots.has('search')} suggested={suggested}>
+    <slot name="search" slot="search" />
+    <slot name="versions" slot="versions" />
+  </Header>
+  <NavDrawer nodes={nav} />
+  <div class="flex items-start">
     {!splash && <Sidebar nodes={nav} />}
-    <main class={styles.main} data-splash={splash ? '' : undefined}>
-      <div class={styles.content}>
+    {/* 128px of runway, so a page stops deliberately rather than at its last line. */}
+    <main
+      class="mx-auto flex w-full min-w-0 max-w-[calc(var(--eq-docs-content-max)+var(--eq-docs-toc-width)+8rem)] items-start gap-12 px-6 pb-32 pt-10 data-[splash]:max-w-none xl:gap-16"
+      data-splash={splash ? '' : undefined}
+    >
+      <div class="min-w-0 flex-1 [&>.eq-prose]:max-w-[var(--eq-docs-content-max)]">
         <slot />
       </div>
       {!splash && showToc && toc.length > 0 && <TableOfContents items={toc} />}

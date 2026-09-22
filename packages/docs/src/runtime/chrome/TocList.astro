@@ -2,7 +2,7 @@
 /** Split out so recursion repeats only the list, not the <eq-toc>, <nav>, or heading id. */
 import type { TocNode } from '@eqtylab/docs/types';
 
-import styles from './TableOfContents.module.css';
+import TocElbow from './TocElbow.astro';
 
 interface Props {
   items: TocNode[];
@@ -12,14 +12,31 @@ const { items } = Astro.props;
 const TocList = Astro.self;
 ---
 
-<ol class={styles.list}>
+{
+  /* No gap: each link's left border forms the rail, and a gap breaks it into dashes.
+     The nested-list indent is a descendant rule, so one class covers every level.
+     The border stays grey on the active row: the lit rail above is what marks it. */
+}
+<ol class="list-none p-0 [&_ol]:ml-[var(--eq-toc-indent)]">
   {
-    items.map((item) => (
-      <li class={styles.item}>
-        <a class={styles.link} href={`#${item.slug}`} data-slug={item.slug}>
+    items.map((item, index) => (
+      <li class="list-none">
+        <a
+          class="text-text-secondary hover:border-text-primary hover:text-text-primary border-border-raised data-[active]:text-text-primary block border-l-2 py-1.5 pl-3 text-sm no-underline transition-all duration-300"
+          href={`#${item.slug}`}
+          data-slug={item.slug}
+        >
           {item.text}
         </a>
-        {item.children.length > 0 && <TocList items={item.children} />}
+        {item.children.length > 0 && (
+          <Fragment>
+            <TocElbow direction="in" />
+            <TocList items={item.children} />
+            {/* Only when something follows at this level: otherwise the rail would
+                turn back out towards nothing. */}
+            {index < items.length - 1 && <TocElbow direction="out" />}
+          </Fragment>
+        )}
       </li>
     ))
   }
