@@ -24,6 +24,9 @@ const { nodes, switcher } = Astro.props;
 // data-current carries the selected state, so the rule cannot be a plain utility.
 const versionLink =
   'text-text-secondary hover:text-text-primary mb-0.5 flex items-center rounded-md px-2 py-1 text-sm no-underline data-[current]:text-text-primary data-[current]:font-medium';
+
+const versions = switcher ? [switcher.latest, ...switcher.groups.flatMap((g) => g.items)] : [];
+const currentVersion = versions.find((v) => v.current) ?? switcher?.latest;
 ---
 
 {
@@ -48,24 +51,33 @@ const versionLink =
       /* Below lg the header bar has no room for the switcher, so the versions live here. */
     }
     {
-      switcher && (
-        <div class="border-border-raised mb-2 border-b pb-2" data-eq-versions>
-          <p class="text-text-secondary px-2 pb-1 text-xs font-medium uppercase">Version</p>
-          <a
-            class={versionLink}
-            href={switcher.latest.href}
-            data-current={switcher.latest.current ? '' : undefined}
-          >
-            {switcher.latest.label}
-          </a>
-          {switcher.groups.map((group) =>
-            group.items.map((item) => (
+      /* Closed by default. Twenty-six of these at `minor`, and more at `patch`: left open they
+         push the navigation the reader actually came for off the screen. `<details>` because
+         the sidebar's groups already are, so this is the same gesture twice rather than a
+         third one, and it needs no script inside a popover that deliberately has none. */
+    }
+    {
+      switcher && currentVersion && (
+        <details class="border-border-raised mb-2 block border-b pb-2" data-eq-versions>
+          <summary class="text-text-secondary hover:text-text-primary focus-ring flex cursor-pointer select-none items-center justify-between rounded-md px-2 py-1.5 text-sm no-underline [&::-webkit-details-marker]:hidden">
+            <span class="flex items-center gap-2">
+              <span class="text-xs font-medium uppercase">Version</span>
+              <span class="text-text-primary font-medium">{currentVersion.label}</span>
+            </span>
+            <span class="shrink-0 transition-transform duration-200 [details[open]>summary_&]:rotate-90">
+              <Icon icon="ChevronRight" size="xs" />
+            </span>
+          </summary>
+          {/* Capped rather than unbounded: the drawer scrolls too, and two nested scrolls
+              with no limit means the list can still swallow the whole panel. */}
+          <div class="mt-1 max-h-[40vh] overflow-y-auto">
+            {versions.map((item) => (
               <a class={versionLink} href={item.href} data-current={item.current ? '' : undefined}>
                 {item.label}
               </a>
-            ))
-          )}
-        </div>
+            ))}
+          </div>
+        </details>
       )
     }
     {
