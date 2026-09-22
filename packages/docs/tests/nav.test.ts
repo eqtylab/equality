@@ -203,7 +203,7 @@ test('base is applied to every href', () => {
   assert.equal(one.current, true);
 });
 
-test('a version prefix is applied between base and path', () => {
+test('a version prefix is applied after base', () => {
   const tree = buildNavTree({
     entries: [entry('guides/one', 'One')],
     groups: new Map(),
@@ -213,6 +213,18 @@ test('a version prefix is applied between base and path', () => {
     defaultSort: 'alpha',
   });
   assert.equal(find(find(tree, 'Guides').children!, 'One').href, '/v3.1/guides/one/');
+});
+
+test('a version segment sits after the path prefix, matching the injected route', () => {
+  const tree = buildNavTree({
+    entries: [entry('guides/one', 'One')],
+    groups: new Map(),
+    currentPath: '/',
+    paths: { base: '/', pathPrefix: 'docs', versionPrefix: 'v3.9' },
+    defaultCollapsed: false,
+    defaultSort: 'alpha',
+  });
+  assert.equal(find(find(tree, 'Guides').children!, 'One').href, '/docs/v3.9/guides/one/');
 });
 
 test('the root group config is read from the ~root sentinel', () => {
