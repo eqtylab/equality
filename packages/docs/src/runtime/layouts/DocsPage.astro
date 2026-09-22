@@ -7,6 +7,8 @@ import Header from '../chrome/Header.astro';
 import NavDrawer from '../chrome/NavDrawer.astro';
 import Sidebar from '../chrome/Sidebar.astro';
 import TableOfContents from '../chrome/TableOfContents.astro';
+import VersionBanner from '../chrome/VersionBanner.astro';
+import type { SwitcherData } from '../lib/versions-ui.ts';
 import styles from './DocsPage.astro.module.css';
 
 interface Props {
@@ -16,9 +18,28 @@ interface Props {
   toc: TocNode[];
   showToc?: boolean;
   splash?: boolean;
+  version?: string;
+  switcher?: SwitcherData;
+  noIndex?: boolean;
+  canonical?: string;
+  latestHref?: string;
+  latestLabel?: string;
 }
 
-const { title, description, nav, toc, showToc = true, splash = false } = Astro.props;
+const {
+  title,
+  description,
+  nav,
+  toc,
+  showToc = true,
+  splash = false,
+  version,
+  switcher,
+  noIndex,
+  canonical,
+  latestHref,
+  latestLabel,
+} = Astro.props;
 
 // A section's own index page if it has one, else its first child. Never the sidebar repeated.
 const suggested = nav
@@ -27,18 +48,28 @@ const suggested = nav
   .slice(0, 4);
 ---
 
-<DocsShell title={title} description={description}>
+<DocsShell
+  title={title}
+  description={description}
+  noIndex={noIndex}
+  canonical={canonical}
+  version={version}
+>
   {/* A prop, not slot fallback: Astro registers a named slot at compile time, so a forwarded
       slot always counts as filled and the fallback never runs. */}
-  <Header showSearch={!Astro.slots.has('search')} suggested={suggested}>
+  <Header showSearch={!Astro.slots.has('search')} suggested={suggested} switcher={switcher}>
     <slot name="search" slot="search" />
-    <slot name="versions" slot="versions" />
   </Header>
   <NavDrawer nodes={nav} />
   <div class={styles.layout}>
     {!splash && <Sidebar nodes={nav} />}
     <main class={styles.main} data-splash={splash ? '' : undefined}>
       <div class={styles.content}>
+        {
+          version && latestHref && latestLabel && (
+            <VersionBanner version={version} latestLabel={latestLabel} latestHref={latestHref} />
+          )
+        }
         <slot />
       </div>
       {!splash && showToc && toc.length > 0 && <TableOfContents items={toc} />}

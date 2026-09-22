@@ -1,0 +1,9 @@
+@reference '../styles/theme.css';
+
+.banner {
+  @apply mb-8;
+}
+
+.link {
+  @apply text-text-primary underline;
+}
