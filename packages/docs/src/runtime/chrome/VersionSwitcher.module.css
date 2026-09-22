@@ -1,7 +1,10 @@
 @reference '../styles/theme.css';
 
+/* The trigger owns its own layout. It also carries a chrome class from the header, and when that
+   class stopped supplying `flex` the icon, label and chevron stacked into a column and overflowed
+   the button. A control should not depend on its caller to sit on one line. */
 .trigger {
-  @apply gap-1.5;
+  @apply inline-flex items-center gap-1.5 whitespace-nowrap;
 }
 
 .label {

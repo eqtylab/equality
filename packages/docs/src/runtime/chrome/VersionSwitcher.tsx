@@ -49,6 +49,9 @@ export default function VersionSwitcher({ data, className }: Props) {
               if (href !== current.href) window.location.assign(href);
             }}
           >
+            {/* A heading, not a suffix on the name: the trigger shows the version alone, and
+                "v4.1 (latest)" would then disagree with it and read twice in the banner. */}
+            <DropdownMenuLabel>Latest</DropdownMenuLabel>
             <DropdownMenuRadioItem value={data.latest.href}>
               {data.latest.label}
             </DropdownMenuRadioItem>

@@ -43,7 +43,7 @@ export async function getStaticPaths() {
   const roots = new Map<string | undefined, string>();
   for (const v of CONFIG.versionManifest) roots.set(v.id, await firstNavHref(v.id));
 
-  const latestLabel = CONFIG.currentVersion ? `${CONFIG.currentVersion.id} (latest)` : 'latest';
+  const latestLabel = CONFIG.currentVersion ? CONFIG.currentVersion.id : 'latest';
   const hrefFor = (versionId: string | undefined, id: string) =>
     idsOf.get(versionId)?.has(id)
       ? docsHref(id, pathContext(versionId))
