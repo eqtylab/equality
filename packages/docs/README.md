@@ -248,7 +248,7 @@ is dormant and the build is unchanged.
 docs({
   versions: {
     current: '4.0.0', // defaults to the highest matching tag
-    tags: 'v*', // git tag glob; tags that are not MAJOR.MINOR.PATCH are skipped
+    tags: 'v*', // git tag glob; tags not ending in MAJOR.MINOR.PATCH are skipped
     granularity: 'minor', // 'major' (default) | 'minor' | 'patch'
   },
 });
@@ -260,7 +260,9 @@ What to know:
 
 - `current` is never read from your `package.json`. Set it from the product you document, or
   leave it to the highest tag.
-- Only `MAJOR.MINOR.PATCH` tags count. Prereleases and other shapes are skipped with a warning.
+- A tag counts when it **ends** in `MAJOR.MINOR.PATCH`. Any prefix is allowed, so `v1.2.3`,
+  `1.2.3`, `sdk-v1.2.3` and `@scope/pkg@1.2.3` all work. Prereleases and anything else are
+  skipped with a warning naming the tag.
 - CI needs the tags: check out with `fetch-depth: 0`.
 - If a tag lands one deploy after its bump and `current` is inferred, the `/` label is one
   release behind for that deploy. The content is current; the label heals on the next tag.
