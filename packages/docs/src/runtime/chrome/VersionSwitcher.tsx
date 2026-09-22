@@ -1,11 +1,15 @@
-import { Fragment } from 'react';
 import {
   DropdownMenu,
   DropdownMenuContent,
+  DropdownMenuEmpty,
   DropdownMenuLabel,
   DropdownMenuRadioGroup,
   DropdownMenuRadioItem,
+  DropdownMenuSearch,
   DropdownMenuSeparator,
+  DropdownMenuSub,
+  DropdownMenuSubContent,
+  DropdownMenuSubTrigger,
   DropdownMenuTrigger,
   Icon,
 } from '@eqtylab/equality';
@@ -23,10 +27,17 @@ interface Props {
  * Picks a version. `modal={false}`: a modal Radix menu closes in the same tap that opens it on
  * iOS Safari, the bug the theme menu had. A radio item does not follow an href on its own,
  * hence the navigation in `onValueChange`.
+ *
+ * A radio group cannot cross a portal, so each menu surface carries its own: the top level for
+ * latest, and one inside every major's submenu. Only the group holding the current version shows
+ * a checked item, which is what the reader wants.
  */
 export default function VersionSwitcher({ data, className }: Props) {
   const items = [data.latest, ...data.groups.flatMap((g) => g.items)];
   const current = items.find((i) => i.current) ?? data.latest;
+  const go = (href: string) => {
+    if (href !== current.href) window.location.assign(href);
+  };
 
   return (
     <div className={styles.wrap}>
@@ -43,30 +54,36 @@ export default function VersionSwitcher({ data, className }: Props) {
           </button>
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end" className={styles.menu}>
-          <DropdownMenuRadioGroup
-            value={current.href}
-            onValueChange={(href) => {
-              if (href !== current.href) window.location.assign(href);
-            }}
-          >
+          {/* Nesting holds the browse case to four rows; this holds the jump case, which nesting
+              makes worse by burying a version one hover deep. Typing lifts every match out of its
+              submenu into this list, each carrying its major as a breadcrumb. */}
+          <DropdownMenuSearch alwaysVisible placeholder="Search versions..." />
+          <DropdownMenuRadioGroup value={current.href} onValueChange={go}>
             {/* A heading, not a suffix on the name: the trigger shows the version alone, and
                 "v4.1 (latest)" would then disagree with it and read twice in the banner. */}
             <DropdownMenuLabel>Latest</DropdownMenuLabel>
             <DropdownMenuRadioItem value={data.latest.href}>
               {data.latest.label}
             </DropdownMenuRadioItem>
-            {data.groups.map((group) => (
-              <Fragment key={group.label}>
-                <DropdownMenuSeparator />
-                <DropdownMenuLabel>{group.label}</DropdownMenuLabel>
-                {group.items.map((item) => (
-                  <DropdownMenuRadioItem key={item.href} value={item.href}>
-                    {item.label}
-                  </DropdownMenuRadioItem>
-                ))}
-              </Fragment>
-            ))}
           </DropdownMenuRadioGroup>
+          <DropdownMenuSeparator />
+          {data.groups.map((group) => (
+            <DropdownMenuSub key={group.label}>
+              <DropdownMenuSubTrigger>
+                <span>{group.label}</span>
+              </DropdownMenuSubTrigger>
+              <DropdownMenuSubContent className={styles.submenu}>
+                <DropdownMenuRadioGroup value={current.href} onValueChange={go}>
+                  {group.items.map((item) => (
+                    <DropdownMenuRadioItem key={item.href} value={item.href}>
+                      {item.label}
+                    </DropdownMenuRadioItem>
+                  ))}
+                </DropdownMenuRadioGroup>
+              </DropdownMenuSubContent>
+            </DropdownMenuSub>
+          ))}
+          <DropdownMenuEmpty>No matching version</DropdownMenuEmpty>
         </DropdownMenuContent>
       </DropdownMenu>
     </div>

@@ -11,8 +11,11 @@
   @apply text-sm;
 }
 
-/* Twenty-seven items on this site. Scroll inside the menu rather than off the viewport. */
-.menu {
+/* Both surfaces are capped, for different reasons. Browsing, the root is four rows and a
+   major's minors are at most ten. Searching, every match is lifted out of its submenu into the
+   root, so the root goes back to holding all twenty-seven. */
+.menu,
+.submenu {
   @apply max-h-[70vh] overflow-y-auto;
 }
 
