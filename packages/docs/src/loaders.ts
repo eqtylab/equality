@@ -6,6 +6,7 @@ import { defineCollection } from 'astro:content';
 import { glob } from 'astro/loaders';
 import type { Loader, LoaderContext } from 'astro/loaders';
 import { globSync } from 'tinyglobby';
+import CONFIG from 'virtual:eqty-docs/config';
 import { parse as parseYaml } from 'yaml';
 
 import { docsSchema, groupSchema } from './schema.ts';
@@ -18,24 +19,26 @@ export const ROOT_GROUP_ID = '~root';
 /**
  * MDX only; stray `.md` files fail in `assertMdxOnly`. The `_*` negation is
  * required: the glob loader has no underscore skipping, so `_group.yaml` would become a page.
+ * `dir` is an absolute path for an extracted version; `base` is relative to `src/` for latest.
  */
-export function docsLoader(options: { base?: string } = {}): Loader {
-  const base = options.base ?? 'content/docs';
+export function docsLoader(options: { base?: string; dir?: string } = {}): Loader {
+  const base = options.dir ?? `./src/${options.base ?? 'content/docs'}`;
   return glob({
-    base: `./src/${base}`,
+    base,
     pattern: ['**/*.mdx', '!**/_*', '!**/_*/**'],
   });
 }
 
-export function groupsLoader(options: { base?: string } = {}): Loader {
+export function groupsLoader(options: { base?: string; dir?: string } = {}): Loader {
   const base = options.base ?? 'content/docs';
 
   return {
-    name: '@eqtylab/docs:groups',
+    name: options.dir
+      ? `@eqtylab/docs:groups:${path.basename(options.dir)}`
+      : '@eqtylab/docs:groups',
 
     async load({ store, parseData, generateDigest, watcher, logger, config }: LoaderContext) {
-      const rootUrl = new URL(`./${base}/`, config.srcDir);
-      const rootDir = fileURLToPath(rootUrl);
+      const rootDir = options.dir ?? fileURLToPath(new URL(`./${base}/`, config.srcDir));
 
       const files = globSync([GROUP_GLOB], { cwd: rootDir, absolute: false });
       const untouched = new Set(store.keys());
@@ -91,9 +94,9 @@ export function groupsLoader(options: { base?: string } = {}): Loader {
   };
 }
 
-/** Both collections, ready to spread. */
+/** Latest plus one pair per extracted version, ready to spread into `collections`. */
 export function docsCollections(options: { base?: string } = {}) {
-  return {
+  const collections: Record<string, ReturnType<typeof defineCollection>> = {
     docs: defineCollection({
       loader: docsLoader(options),
       schema: docsSchema(),
@@ -103,4 +106,15 @@ export function docsCollections(options: { base?: string } = {}) {
       schema: groupSchema(),
     }),
   };
+  for (const version of CONFIG.versionManifest ?? []) {
+    collections[`docs_${version.suffix}`] = defineCollection({
+      loader: docsLoader({ dir: version.dir }),
+      schema: docsSchema(),
+    });
+    collections[`docsGroups_${version.suffix}`] = defineCollection({
+      loader: groupsLoader({ dir: version.dir }),
+      schema: groupSchema(),
+    });
+  }
+  return collections;
 }
