@@ -153,6 +153,12 @@ export default function docs(
                 },
               };
 
+        /*
+          Pin the markdown flavour rather than inheriting Astro's defaults. Astro 6.4 stopped defaulting `gfm` and `smartypants` onto `config.markdown`.
+        */
+        markdown.gfm = true;
+        markdown.smartypants = true;
+
         // Astro does not apply `base` to authored markdown links. MDX inherits these via extendMarkdownConfig.
         markdown.rehypePlugins = [
           [rehypeBaseUrl, { base: config.base }],
