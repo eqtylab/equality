@@ -19,7 +19,11 @@ interface TabsProps {
     icon?: React.ReactElement | string;
     suffix?: React.ReactNode;
     content: React.ReactNode;
-    triggerProps?: Omit<ComponentPropsWithoutRef<typeof TabsTrigger>, 'value'>;
+    /* The `data-` signature is required: React allows data attributes in JSX but not in a
+       standalone typed object, forwarding without one is a type error. */
+    triggerProps?: Omit<ComponentPropsWithoutRef<typeof TabsTrigger>, 'value'> & {
+      [key: `data-${string}`]: string | number | boolean | undefined;
+    };
   }[];
   className?: string;
   tabsListBackground?: 'transparent' | 'filled';
