@@ -157,3 +157,20 @@ test('no tags means no copies and no redirects', () => {
 test('a non-semver current is an error', () => {
   assert.throws(() => selectVersions(['v1.0.0'], 'latest', 'major'), /versions\.current/);
 });
+
+test('the current version gets its stubs without being tagged, but never when dormant', () => {
+  // Equality's state on the day this shipped: 3.9.1 tagged, 4.0.0 only in config.
+  const sel = selectVersions(['v3.9.1'], '4.0.0', 'minor');
+  assert.deepEqual(
+    sel.copies.map((c) => c.id),
+    ['v3.9']
+  );
+  assert.deepEqual(sel.redirects, [
+    { id: 'v3.9.1', to: 'v3.9' },
+    { id: 'v4.0', to: null },
+    { id: 'v4', to: null },
+    { id: 'v3', to: 'v3.9' },
+  ]);
+  // No copies means dormant, and a seeded current must not switch the feature on.
+  assert.deepEqual(selectVersions([], '4.0.0', 'minor').redirects, []);
+});

@@ -13,8 +13,11 @@
   @apply max-h-[70vh] overflow-y-auto;
 }
 
+/* The bar has no room below lg: logo, search, theme and the drawer invoker already fill 390px.
+   Hidden on a wrapper, not on the trigger: the trigger also carries Header's `.navLink`, and at
+   equal specificity the bundle order decides, so `hidden` there is a coin toss. */
 @media (max-width: 1023px) {
-  .label {
-    @apply sr-only;
+  .wrap {
+    @apply hidden;
   }
 }

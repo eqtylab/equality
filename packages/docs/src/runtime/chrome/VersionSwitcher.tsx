@@ -29,41 +29,43 @@ export default function VersionSwitcher({ data, className }: Props) {
   const current = items.find((i) => i.current) ?? data.latest;
 
   return (
-    <DropdownMenu modal={false}>
-      <DropdownMenuTrigger asChild>
-        <button
-          type="button"
-          className={[className, styles.trigger].filter(Boolean).join(' ')}
-          aria-label={`Version: ${current.label}. Choose a version`}
-        >
-          <Icon icon="Tag" size="sm" />
-          <span className={styles.label}>{current.label}</span>
-          <Icon icon="ChevronDown" size="sm" />
-        </button>
-      </DropdownMenuTrigger>
-      <DropdownMenuContent align="end" className={styles.menu}>
-        <DropdownMenuRadioGroup
-          value={current.href}
-          onValueChange={(href) => {
-            if (href !== current.href) window.location.assign(href);
-          }}
-        >
-          <DropdownMenuRadioItem value={data.latest.href}>
-            {data.latest.label}
-          </DropdownMenuRadioItem>
-          {data.groups.map((group) => (
-            <Fragment key={group.label}>
-              <DropdownMenuSeparator />
-              <DropdownMenuLabel>{group.label}</DropdownMenuLabel>
-              {group.items.map((item) => (
-                <DropdownMenuRadioItem key={item.href} value={item.href}>
-                  {item.label}
-                </DropdownMenuRadioItem>
-              ))}
-            </Fragment>
-          ))}
-        </DropdownMenuRadioGroup>
-      </DropdownMenuContent>
-    </DropdownMenu>
+    <div className={styles.wrap}>
+      <DropdownMenu modal={false}>
+        <DropdownMenuTrigger asChild>
+          <button
+            type="button"
+            className={[className, styles.trigger].filter(Boolean).join(' ')}
+            aria-label={`Version: ${current.label}. Choose a version`}
+          >
+            <Icon icon="Tag" size="sm" />
+            <span className={styles.label}>{current.label}</span>
+            <Icon icon="ChevronDown" size="sm" />
+          </button>
+        </DropdownMenuTrigger>
+        <DropdownMenuContent align="end" className={styles.menu}>
+          <DropdownMenuRadioGroup
+            value={current.href}
+            onValueChange={(href) => {
+              if (href !== current.href) window.location.assign(href);
+            }}
+          >
+            <DropdownMenuRadioItem value={data.latest.href}>
+              {data.latest.label}
+            </DropdownMenuRadioItem>
+            {data.groups.map((group) => (
+              <Fragment key={group.label}>
+                <DropdownMenuSeparator />
+                <DropdownMenuLabel>{group.label}</DropdownMenuLabel>
+                {group.items.map((item) => (
+                  <DropdownMenuRadioItem key={item.href} value={item.href}>
+                    {item.label}
+                  </DropdownMenuRadioItem>
+                ))}
+              </Fragment>
+            ))}
+          </DropdownMenuRadioGroup>
+        </DropdownMenuContent>
+      </DropdownMenu>
+    </div>
   );
 }

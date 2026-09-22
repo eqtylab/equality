@@ -155,10 +155,19 @@ export function selectVersions(
   // copy is its own tag, so nothing above emits `v3.9`, which is not a tag and never was.
   const emittedIds = new Set(redirects.map((r) => r.id));
   const copyIds = new Set(copies.map((c) => c.id));
+  // The current version is known from config and need not be tagged yet, so it is seeded here:
+  // `/v4.0/` and `/v4/` should resolve to latest on the strength of the config alone. Only when
+  // a copy exists, though, or a repository with no tags would stop being dormant.
+  const stubSources = copies.length
+    ? covered.some((p) => p.version === cur.version)
+      ? covered
+      : [...covered, cur]
+    : [];
+
   for (const level of LEVELS.slice(LEVELS.indexOf(granularity))) {
     const seenGroups = new Set<string>();
-    for (let i = covered.length - 1; i >= 0; i--) {
-      const group = groupOf(covered[i]!, level);
+    for (let i = stubSources.length - 1; i >= 0; i--) {
+      const group = groupOf(stubSources[i]!, level);
       if (seenGroups.has(group)) continue;
       seenGroups.add(group);
 
