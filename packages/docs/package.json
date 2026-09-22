@@ -1,7 +1,7 @@
 {
   "name": "@eqtylab/docs",
   "description": "Astro documentation framework built on the Equality design system",
-  "version": "0.3.1",
+  "version": "0.3.3",
   "license": "Apache-2.0",
   "homepage": "https://equality.eqtylab.io/",
   "repository": {
@@ -107,7 +107,7 @@
   "peerDependencies": {
     "@astrojs/mdx": "^5.0.2",
     "@astrojs/react": "^5.0.1 || ^6.0.0",
-    "@eqtylab/equality": ">=3.2.6 <5",
+    "@eqtylab/equality": "^4.1.0",
     "astro": "^6.0.0",
     "react": "^18.2.0 || ^19.0.0",
     "react-dom": "^18.2.0 || ^19.0.0"
