@@ -1,91 +1,199 @@
 ---
-import { getCollection, render } from 'astro:content';
+import { render } from 'astro:content';
 import CONFIG from 'virtual:eqty-docs/config';
 import { docsHref, idToPath, joinPath, normalizePath } from '@eqtylab/docs/paths';
 import DocsPage from '../layouts/DocsPage.astro';
-import { breadcrumbsFor, buildTocTree, docsNav, pathContext, prevNextFor } from '../lib/nav-data.ts';
+import RedirectPage from '../layouts/RedirectPage.astro';
+import {
+  breadcrumbsFor,
+  buildTocTree,
+  docsEntries,
+  docsNav,
+  firstNavHref,
+  pathContext,
+  prevNextFor,
+} from '../lib/nav-data.ts';
 import { firstParagraph } from '../lib/summary.ts';
 import { mdxComponents } from '../lib/mdx-components.ts';
+import type { SwitcherData } from '../lib/versions-ui.ts';
 import PageFooter from '../chrome/PageFooter.astro';
 import Prose from '../chrome/Prose.astro';
 
+type Entry = Awaited<ReturnType<typeof docsEntries>>[number] & {
+  id: string;
+  body?: string;
+  filePath?: string;
+  data: Record<string, any>;
+};
+
 export async function getStaticPaths() {
-  const entries = await getCollection('docs', ({ data }: { data: { draft?: boolean } }) =>
-    import.meta.env.DEV ? true : !data.draft
+  const owned = new Set((CONFIG.ownedByConsumer ?? []).map(normalizePath));
+  // Astro does not de-duplicate injected routes against consumer pages. Latest only: a consumer cannot own a versioned path.
+  const latest = ((await docsEntries()) as Entry[]).filter(
+    (entry) => !owned.has(normalizePath(docsHref(entry.id, pathContext())))
+  );
+  const copies = await Promise.all(
+    CONFIG.versionManifest.map(async (v) => ({ v, entries: (await docsEntries(v.id)) as Entry[] }))
   );
 
-  const owned = new Set((CONFIG.ownedByConsumer ?? []).map(normalizePath));
+  const idsOf = new Map<string | undefined, Set<string>>([
+    [undefined, new Set(latest.map((e) => e.id))],
+  ]);
+  for (const { v, entries } of copies) idsOf.set(v.id, new Set(entries.map((e) => e.id)));
+  const roots = new Map<string | undefined, string>();
+  for (const v of CONFIG.versionManifest) roots.set(v.id, await firstNavHref(v.id));
 
-  return entries
-    // Astro does not de-duplicate injected routes against consumer pages.
-    .filter((entry) => !owned.has(normalizePath(docsHref(entry.id, pathContext()))))
-    .map((entry) => ({
+  const latestLabel = CONFIG.currentVersion ? `${CONFIG.currentVersion.id} (latest)` : 'latest';
+  const hrefFor = (versionId: string | undefined, id: string) =>
+    idsOf.get(versionId)?.has(id)
+      ? docsHref(id, pathContext(versionId))
+      : versionId
+        ? docsHref('', pathContext(versionId))
+        : docsHref('', pathContext());
+
+  const switcherFor = (versionId: string | undefined, id: string): SwitcherData | undefined => {
+    if (!CONFIG.currentVersion) return undefined;
+    const byMajor = new Map<string, SwitcherData['groups'][number]>();
+    for (const v of CONFIG.versionManifest) {
+      const major = `v${v.group.split('.')[0]}`;
+      if (!byMajor.has(major)) byMajor.set(major, { label: major, items: [] });
+      byMajor
+        .get(major)!
+        .items.push({ label: v.id, href: hrefFor(v.id, id), current: v.id === versionId });
+    }
+    return {
+      latest: { label: latestLabel, href: hrefFor(undefined, id), current: versionId === undefined },
+      groups: [...byMajor.values()],
+    };
+  };
+
+  return [
+    ...latest.map((entry) => ({
       // `undefined` (not '') is how a rest param matches the empty path.
       params: { slug: idToPath(entry.id) || undefined },
-      props: { entry },
-    }));
+      props: { entry, switcher: switcherFor(undefined, entry.id) },
+    })),
+    ...copies.flatMap(({ v, entries }) => [
+      ...entries.map((entry) => ({
+        params: { slug: `${v.id}/${idToPath(entry.id)}`.replace(/\/$/, '') },
+        props: {
+          entry,
+          version: v.id,
+          switcher: switcherFor(v.id, entry.id),
+          canonical: idsOf.get(undefined)!.has(entry.id)
+            ? docsHref(entry.id, pathContext())
+            : undefined,
+          latestHref: hrefFor(undefined, entry.id),
+          latestLabel,
+        },
+      })),
+      // 3.9.1 had no index.mdx, so without this the version root and every stub pointing at it would 404.
+      ...(idsOf.get(v.id)!.has('index')
+        ? []
+        : [{ params: { slug: v.id }, props: { redirectTo: roots.get(v.id)!, version: v.id } }]),
+    ]),
+    // Every target goes through docsHref so base and pathPrefix apply.
+    ...CONFIG.versionRedirects.map((r) => ({
+      params: { slug: r.id },
+      props: {
+        redirectTo: r.to
+          ? (roots.get(r.to) ?? docsHref('', pathContext(r.to)))
+          : docsHref('', pathContext()),
+        version: r.to,
+      },
+    })),
+  ];
 }
 
-const { entry } = Astro.props;
-const { Content, headings } = await render(entry);
+interface Props {
+  entry?: Entry;
+  version?: string | null;
+  switcher?: SwitcherData;
+  canonical?: string;
+  latestHref?: string;
+  latestLabel?: string;
+  redirectTo?: string;
+}
 
-const tocConfig = entry.data.tableOfContents ?? CONFIG.tableOfContents;
-const showToc = tocConfig !== false;
-const toc = showToc
-  ? buildTocTree(headings, {
-      minLevel: (tocConfig as { minLevel?: number })?.minLevel ?? 2,
-      maxLevel: (tocConfig as { maxLevel?: number })?.maxLevel ?? 3,
-    })
-  : [];
-
-const nav = await docsNav(Astro.url.pathname);
-const splash = entry.data.template === 'splash';
-
-const trail = breadcrumbsFor(nav, Astro.url.pathname);
-const crumbs = trail.length > 1 ? trail.map((node) => node.label).join(' › ') : undefined;
-
-// Ancestors only. `crumbs` above keeps the page as well, because a search result row
-// needs the page name to identify itself. The two diverge on purpose.
-const renderedTrail = trail.slice(0, -1).map((node) => ({ label: node.label, href: node.href }));
-
-// Indexed only, never rendered: a page with no `description` still needs a result summary.
-const fallbackSummary = entry.data.description ? undefined : firstParagraph(entry.body);
-
-const { prev, next } = CONFIG.footer.showPrevNext ? prevNextFor(nav, Astro.url.pathname) : {};
-
-// `editUrl` is a base; the content path is appended. The slice is taken at the
-// consumer's own content directory, which is configurable.
-const contentPath = entry.filePath?.split(`${CONFIG.contentDir}/`).pop();
-const editHref =
-  CONFIG.footer.editUrl && contentPath
-    ? `${CONFIG.footer.editUrl.replace(/\/$/, '')}/${contentPath}`
-    : undefined;
-
-// File-shaped (/x/label.md) beside the directory-shaped page; 'index' must match docs-md.ts.
-const markdownHref = CONFIG.routing.markdownTwins
-  ? `${joinPath(import.meta.env.BASE_URL, CONFIG.pathPrefix, idToPath(entry.id) || 'index')}.md`
-  : undefined;
+const { entry, version, switcher, canonical, latestHref, latestLabel, redirectTo } = Astro.props;
 ---
 
-<DocsPage
-  title={entry.data.title}
-  description={entry.data.description}
-  nav={nav}
-  toc={toc}
-  showToc={showToc}
-  splash={splash}
->
-  <Prose
-    title={entry.data.title}
-    description={entry.data.description}
-    deprecated={entry.data.deprecated}
-    markdownHref={markdownHref}
-    source={entry.body}
-    crumbs={crumbs}
-    trail={renderedTrail}
-    fallbackSummary={fallbackSummary}
-  >
-    <Content components={mdxComponents} />
-  </Prose>
-  {!splash && <PageFooter prev={prev} next={next} editHref={editHref} text={CONFIG.footer.text} />}
-</DocsPage>
+{redirectTo && <RedirectPage to={redirectTo} version={version ?? null} />}
+{
+  !redirectTo &&
+    entry &&
+    (async () => {
+      const { Content, headings } = await render(entry as never);
+
+      const tocConfig = entry.data.tableOfContents ?? CONFIG.tableOfContents;
+      const showToc = tocConfig !== false;
+      const toc = showToc
+        ? buildTocTree(headings, {
+            minLevel: (tocConfig as { minLevel?: number })?.minLevel ?? 2,
+            maxLevel: (tocConfig as { maxLevel?: number })?.maxLevel ?? 3,
+          })
+        : [];
+
+      const nav = await docsNav(Astro.url.pathname, version ?? undefined);
+      const splash = entry.data.template === 'splash';
+
+      const trail = breadcrumbsFor(nav, Astro.url.pathname);
+      const crumbs = trail.length > 1 ? trail.map((node) => node.label).join(' › ') : undefined;
+
+      // Ancestors only. `crumbs` above keeps the page as well, because a search result row
+      // needs the page name to identify itself. The two diverge on purpose.
+      const renderedTrail = trail.slice(0, -1).map((node) => ({ label: node.label, href: node.href }));
+
+      // Indexed only, never rendered: a page with no `description` still needs a result summary.
+      const fallbackSummary = entry.data.description ? undefined : firstParagraph(entry.body);
+
+      const { prev, next } = CONFIG.footer.showPrevNext ? prevNextFor(nav, Astro.url.pathname) : {};
+
+      // Old versions are read-only and their files live in the cache, so the split below would
+      // return the whole cache path and produce a bogus link. Latest only.
+      const contentPath = version ? undefined : entry.filePath?.split(`${CONFIG.contentDir}/`).pop();
+      const editHref =
+        CONFIG.footer.editUrl && contentPath
+          ? `${CONFIG.footer.editUrl.replace(/\/$/, '')}/${contentPath}`
+          : undefined;
+
+      // File-shaped (/v3.9/x/label.md) beside the directory-shaped page; 'index' must match docs-md.ts.
+      const markdownHref = CONFIG.routing.markdownTwins
+        ? `${joinPath(import.meta.env.BASE_URL, CONFIG.pathPrefix, version ?? undefined, idToPath(entry.id) || 'index')}.md`
+        : undefined;
+
+      return (
+        <DocsPage
+          title={entry.data.title}
+          description={entry.data.description}
+          nav={nav}
+          toc={toc}
+          showToc={showToc}
+          splash={splash}
+          version={version ?? undefined}
+          switcher={switcher}
+          noIndex={Boolean(version)}
+          canonical={canonical}
+          latestHref={latestHref}
+          latestLabel={latestLabel}
+        >
+          <Prose
+            title={entry.data.title}
+            description={entry.data.description}
+            deprecated={entry.data.deprecated}
+            markdownHref={markdownHref}
+            source={entry.body}
+            crumbs={crumbs}
+            trail={renderedTrail}
+            fallbackSummary={fallbackSummary}
+            version={version ?? undefined}
+          >
+            <Content components={mdxComponents} />
+          </Prose>
+          {!splash && (
+            <PageFooter prev={prev} next={next} editHref={editHref} text={CONFIG.footer.text} />
+          )}
+        </DocsPage>
+      );
+    })()
+}
