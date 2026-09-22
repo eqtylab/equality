@@ -146,11 +146,29 @@ export function extractVersions(o: ExtractOptions): ExtractResult {
   const versionManifest: ManifestEntry[] = selection.copies.map((c) => {
     const dir = path.join(versionsDir, c.id);
     fs.mkdirSync(dir, { recursive: true });
-    // `<tag>:<path>` makes the path the archive root, so there is nothing to strip.
-    execFileSync('sh', ['-c', 'git archive "$0:$1" | tar -x -C "$2"', c.tag, contentRel, dir], {
-      cwd: repoRoot,
-      stdio: ['ignore', 'ignore', 'inherit'],
-    });
+    // Two processes rather than a shell pipeline: a pipeline reports only tar's status, so a
+    // failed `git archive` left an empty directory, a manifest entry pointing at it, and a build
+    // that succeeded with a version serving zero pages. `set -o pipefail` would fix that on
+    // macOS and break it on CI, where /bin/sh is dash and rejects the option outright.
+    try {
+      // `<tag>:<path>` makes the path the archive root, so there is nothing to strip.
+      const archive = execFileSync('git', ['archive', `${c.tag}:${contentRel}`], {
+        cwd: repoRoot,
+        maxBuffer: 512 * 1024 * 1024,
+        stdio: ['ignore', 'pipe', 'inherit'],
+      });
+      execFileSync('tar', ['-x', '-C', dir], {
+        input: archive,
+        stdio: ['pipe', 'ignore', 'inherit'],
+      });
+    } catch (cause) {
+      throw new Error(`${TAG} ${c.tag} failed to extract ${contentRel} into ${dir}`, { cause });
+    }
+    // A content path that is a file rather than a directory passes `cat-file -e` and yields an
+    // archive of nothing, so the exit status alone is not enough.
+    if (!fs.readdirSync(dir).length) {
+      throw new Error(`${TAG} ${c.tag} extracted no files into ${dir}`);
+    }
     return { ...c, dir };
   });
 

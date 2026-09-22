@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import { execFileSync } from 'node:child_process';
-import { mkdirSync, mkdtempSync, readFileSync, writeFileSync } from 'node:fs';
+import { mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import path from 'node:path';
 import { test } from 'node:test';
@@ -145,4 +145,49 @@ test('writes versions.json beside the cache for inspection', () => {
     readFileSync(path.join(f.root, '.astro/eqty-docs/versions.json'), 'utf8')
   );
   assert.equal(json.versionManifest[0].tag, 'v3.0.0');
+});
+
+/**
+ * A repo whose content path is a file at v1.0.0 and a directory afterwards. `cat-file -e` passes on
+ * a blob, so the tag is selected; `git archive` refuses it. That is the silent-empty shape.
+ */
+function blobFixture() {
+  const repo = mkdtempSync(path.join(tmpdir(), 'eqty-docs-blob-'));
+  sh(repo, 'init', '-q');
+  sh(repo, 'config', 'user.email', 't@t');
+  sh(repo, 'config', 'user.name', 't');
+
+  const asFile = path.join(repo, CONTENT);
+  mkdirSync(path.dirname(asFile), { recursive: true });
+  writeFileSync(asFile, 'docs was a file here');
+  sh(repo, 'add', '-A');
+  sh(repo, 'commit', '-qm', 'v1');
+  sh(repo, 'tag', 'v1.0.0');
+
+  rmSync(asFile);
+  const doc = path.join(repo, CONTENT, 'a.mdx');
+  mkdirSync(path.dirname(doc), { recursive: true });
+  writeFileSync(doc, '---\ntitle: A\n---\ntwo');
+  sh(repo, 'add', '-A');
+  sh(repo, 'commit', '-qm', 'v2');
+  sh(repo, 'tag', 'v2.0.0');
+
+  const root = path.join(repo, 'packages/demo');
+  return {
+    root,
+    opts: {
+      root,
+      contentDirAbs: path.join(repo, CONTENT),
+      cacheDir: path.join(root, '.astro/eqty-docs'),
+      tags: 'v*',
+      granularity: 'major' as const,
+      current: '2.0.0',
+      logger: logger(),
+    },
+  };
+}
+
+test('a version that extracts no files fails the build, naming the tag', () => {
+  const f = blobFixture();
+  assert.throws(() => extractVersions(f.opts), /v1\.0\.0/);
 });
