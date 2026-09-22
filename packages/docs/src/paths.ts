@@ -45,7 +45,7 @@ export interface PathContext {
   base: string;
   /** Mounted-at prefix for docs pages, e.g. "docs". Usually empty. */
   pathPrefix?: string;
-  /** Version segment for a pinned build, e.g. "v3.1". Empty for latest-at-root. */
+  /** Version segment for an older copy, e.g. "v3.9". Empty for latest. */
   versionPrefix?: string;
 }
 
@@ -55,15 +55,15 @@ export function withBase(path: string, ctx: PathContext): string {
   return joinPath(ctx.base, path);
 }
 
-/** The public URL for a docs collection entry id. */
+/** The public URL for a docs collection entry id. The version rides in the route's slug, so it follows the prefix. */
 export function docsHref(id: string, ctx: PathContext): string {
-  return ensureTrailingSlash(joinPath(ctx.base, ctx.versionPrefix, ctx.pathPrefix, idToPath(id)));
+  return ensureTrailingSlash(joinPath(ctx.base, ctx.pathPrefix, ctx.versionPrefix, idToPath(id)));
 }
 
-/** Remove `base` (and version/path prefixes) from a pathname, yielding a docs-relative path. */
+/** Remove `base` (and path/version prefixes) from a pathname, yielding a docs-relative path. */
 export function stripBase(pathname: string, ctx: PathContext): string {
   let rest = normalizePath(pathname);
-  for (const prefix of [ctx.base, ctx.versionPrefix, ctx.pathPrefix]) {
+  for (const prefix of [ctx.base, ctx.pathPrefix, ctx.versionPrefix]) {
     if (!prefix) continue;
     const norm = normalizePath(joinPath(prefix));
     if (norm === '/') continue;
