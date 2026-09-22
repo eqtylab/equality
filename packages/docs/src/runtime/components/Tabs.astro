@@ -1,0 +1,121 @@
+---
+/**
+ * `<Tabs><TabItem label="…">` for MDX, on top of Equality's `Tabs`.
+ *
+ * Labels are recovered from the rendered slot because Astro hands a framework component its
+ * children as opaque pre-rendered HTML - nothing inside React can read a `<TabItem>`'s
+ * `label`. Matching is on `data-eq-tab-panel`, this package's own marker, never on
+ * `data-label` alone, so authored content cannot be mistaken for a panel.
+ */
+import GithubSlugger from 'github-slugger';
+
+import TabsBridge from './TabsBridge.tsx';
+
+interface Props {
+  /** Tab sets sharing a key switch together, and the reader's choice is remembered. */
+  syncKey?: string;
+}
+
+const { syncKey } = Astro.props;
+
+const slotHtml = await Astro.slots.render('default');
+
+if (/\bdata-eq-tabs\b/.test(slotHtml)) {
+  throw new Error('[@eqtylab/docs] Nested <Tabs> are not supported.');
+}
+
+interface Panel {
+  label: string;
+  icon?: string;
+  html: string;
+}
+
+const OPEN = /<section\b([^>]*)>/gi;
+const SECTION = /<(\/?)section\b[^>]*>/gi;
+
+const NAMED: Record<string, string> = {
+  amp: '&',
+  lt: '<',
+  gt: '>',
+  quot: '"',
+  apos: "'",
+};
+
+/**
+ * Attribute values arrive escaped, and a label like "BIOS & Host Config" is ordinary. One
+ * pass, not chained replaces: decoding named then numeric would turn a literal `&amp;#38;`
+ * into a bare `&`.
+ */
+function decode(value: string): string {
+  return value.replace(
+    /&(?:#(\d+)|#x([0-9a-f]+)|(amp|lt|gt|quot|apos));/gi,
+    (match: string, dec?: string, hex?: string, name?: string) => {
+      if (dec) return String.fromCodePoint(Number(dec));
+      if (hex) return String.fromCodePoint(parseInt(hex, 16));
+      return (name && NAMED[name.toLowerCase()]) || match;
+    }
+  );
+}
+
+function attribute(attrs: string, name: string): string | undefined {
+  const match = new RegExp(`\\b${name}="([^"]*)"`, 'i').exec(attrs);
+  return match ? decode(match[1] as string) : undefined;
+}
+
+/** Depth-counted, so a panel may contain sections of its own. */
+function closeAt(source: string, from: number): number {
+  SECTION.lastIndex = from;
+  let depth = 1;
+  let match: RegExpExecArray | null;
+  while ((match = SECTION.exec(source))) {
+    depth += match[1] ? -1 : 1;
+    if (depth === 0) return match.index;
+  }
+  return -1;
+}
+
+function readPanels(source: string): Panel[] {
+  const found: Panel[] = [];
+  OPEN.lastIndex = 0;
+  let match: RegExpExecArray | null;
+  while ((match = OPEN.exec(source))) {
+    const attrs = match[1] ?? '';
+    if (!/\bdata-eq-tab-panel\b/.test(attrs)) continue;
+    const bodyStart = OPEN.lastIndex;
+    const bodyEnd = closeAt(source, bodyStart);
+    if (bodyEnd < 0) break;
+    found.push({
+      label: attribute(attrs, 'data-label') ?? '',
+      icon: attribute(attrs, 'data-icon'),
+      html: source.slice(bodyStart, bodyEnd),
+    });
+    OPEN.lastIndex = bodyEnd;
+  }
+  return found;
+}
+
+const panels = readPanels(slotHtml);
+
+if (panels.length === 0) {
+  throw new Error('[@eqtylab/docs] <Tabs> needs at least one <TabItem label="…"> child.');
+}
+
+const slugger = new GithubSlugger();
+const items = panels.map((panel) => ({
+  label: panel.label,
+  value: slugger.slug(panel.label || 'tab'),
+  icon: panel.icon,
+  html: panel.html,
+}));
+
+// Equality requires an id, but `staticRender` never renders the motion layoutId that uses it.
+const id = `eq-tabs-${items[0]?.value}`;
+---
+
+<div class="mb-4" data-eq-tabs data-sync-key={syncKey}>
+  <TabsBridge id={id} items={items} />
+</div>
+
+<script>
+  import '@eqtylab/docs/scripts/eq-tabs.ts';
+</script>

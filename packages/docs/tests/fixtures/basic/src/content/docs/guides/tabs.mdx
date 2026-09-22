@@ -1,0 +1,44 @@
+---
+title: Tabs
+description: Server-rendered tab sets.
+---
+
+Two sets sharing a `syncKey`, so switching one switches the other.
+
+<Tabs syncKey="platform">
+  <TabItem label="Linux">
+    ### Linux
+
+    Prose inside a panel must still be typeset.
+
+    ```bash
+    sudo apt install ripgrep
+    ```
+
+  </TabItem>
+  <TabItem label="macOS">
+    ### macOS
+
+    - A list item
+    - And another
+
+    ```bash
+    brew install ripgrep
+    ```
+
+  </TabItem>
+</Tabs>
+
+A second set, same key.
+
+<Tabs syncKey="platform">
+  <TabItem label="Linux">Linux again.</TabItem>
+  <TabItem label="macOS">macOS again.</TabItem>
+</Tabs>
+
+An unsynced set with a label needing escaping.
+
+<Tabs>
+  <TabItem label="BIOS & Host Config">Ampersand in the label.</TabItem>
+  <TabItem label="Plain">Second panel.</TabItem>
+</Tabs>

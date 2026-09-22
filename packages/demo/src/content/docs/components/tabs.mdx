@@ -241,6 +241,11 @@ Any props are spread onto the trigger before the component's own `value` and sty
 | `defaultValue`       | The value of the tab that should be active by default                    | `string`                  | First item    | ❌       |
 | `tabsListBackground` | Background style for the tabs list                                       | `transparent`, `filled`   | `transparent` | ❌       |
 | `onValueChange`      | Callback fired when the active tab changes                               | `(value: string) => void` | -             | ❌       |
+| `staticRender`       | Render for a page where React never runs on the client                   | `boolean`                 | `false`       | ❌       |
+
+### Statically Rendered Tabs
+
+`staticRender` is for when the component must work statically without client-side rendering, such as in `@eqtylab/docs`. Leave the prop off for ordinary interactive use.
 
 ### TabItem Structure
 

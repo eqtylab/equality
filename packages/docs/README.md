@@ -96,6 +96,7 @@ product surfaces cannot drift:
 | Code fences     | `CodeBlock`                                                                             |
 | Markdown tables | `TableContainer` / `TableHeader` / `TableBody` / `TableRow` / `TableHead` / `TableCell` |
 | `<Alert>`       | `Alert`, as an `aside`                                                                  |
+| `<Tabs>`        | `Tabs`, server-rendered                                                                 |
 | Links           | base-aware `a` override                                                                 |
 
 **Authors write Equality's own components, with no imports.** The route-level component map
@@ -123,15 +124,45 @@ whose parts all use `subgrid`, so it needs an explicit track list or the table c
 to one column. Markdown has no syntax for that, so `rehypeTableColumns` derives the count
 from the first row at build time.
 
+Tabs are authored the same way, with no imports:
+
+```mdx
+<Tabs syncKey="platform">
+  <TabItem label="Linux">Anything, including fences and tables.</TabItem>
+  <TabItem label="macOS">
+    Sets sharing a `syncKey` switch together, and the choice is remembered.
+  </TabItem>
+</Tabs>
+```
+
 This is also why content is MDX-only — these overrides are the mechanism, and Astro's
 plain-Markdown pipeline has no component substitution at all.
 
-## Search needs a build
+## Bringing your own CSS and scripts
 
-Search is full-text, over the built HTML, via [Pagefind](https://pagefind.app). The integration
+`customCss` and `clientScripts` attach a consumer's own assets to every docs page:
+
+```js
+docs({
+  title: 'My Docs',
+  customCss: ['./src/styles/site.css'],
+  clientScripts: ['./src/scripts/glossary.ts'],
+});
+```
+
+Both resolve project-relative paths against the project root, so they mean the same thing in
+dev and in a build. `clientScripts` entries are **bundled** rather than served as-is, which is
+what a script that rewrites rendered text needs: it has to import `scheduleHighlight` from
+`@eqtylab/equality` and call it afterwards, or the code blocks it touched lose their
+highlighting. (`CodeBlock` paints through the CSS Custom Highlight API over `Range`s into those
+very text nodes.) A plain `<script src>` in `public/` cannot import anything.
+
+## Building the Search Index
+
+Full-text search uses the built HTML, via [Pagefind](https://pagefind.app). The integration
 runs it in `astro:build:done` and writes the index to `dist/pagefind/`.
 
-**One `astro build` makes search work in `astro dev` too.** Dev serves `dist/pagefind/` off disk,
+RUn `pnpm run build` to make search work in `pnpm run dev`. Dev serves `dist/pagefind/` off disk,
 so results describe the last build; rebuild while dev runs and the next search picks it up. Until
 that first build the palette says search needs one.
 

@@ -3,6 +3,10 @@
   "include": ["src/**/*.ts"],
   "exclude": ["src/runtime", "scripts", "tests"],
   "compilerOptions": {
+    // Load-bearing: astro/tsconfigs/base sets noEmit, so without this tsc writes no
+    // declarations at all and still exits 0, and every `types` condition in the exports
+    // map resolves to nothing.
+    "noEmit": false,
     "declaration": true,
     "emitDeclarationOnly": true,
     "outDir": "dist",
