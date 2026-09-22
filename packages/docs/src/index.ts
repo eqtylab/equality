@@ -1,3 +1,4 @@
+import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import type { AstroIntegration } from 'astro';
 
@@ -9,6 +10,7 @@ import { pagefindIntegration } from './internal/pagefind.ts';
 import { rehypeBaseUrl } from './internal/rehype-base-url.ts';
 import { rehypeCodeFence } from './internal/rehype-code-fence.ts';
 import { rehypeProseScope } from './internal/rehype-prose-scope.ts';
+import { rehypeRelativeLinks } from './internal/rehype-relative-links.ts';
 import { rehypeTableColumns } from './internal/rehype-table-columns.ts';
 import { scanConsumerPages } from './internal/scan-consumer-pages.ts';
 import { virtualConfigPlugin } from './internal/virtual-config.ts';
@@ -154,6 +156,21 @@ export default function docs(
         // Astro does not apply `base` to authored markdown links. MDX inherits these via extendMarkdownConfig.
         markdown.rehypePlugins = [
           [rehypeBaseUrl, { base: config.base }],
+          // Must follow rehypeBaseUrl: the hrefs this emits already carry `base`, and
+          // rehypeBaseUrl would prefix them a second time.
+          [
+            rehypeRelativeLinks,
+            {
+              contentRoot: fileURLToPath(new URL(`./${cfg.contentDir}/`, config.srcDir)),
+              base: config.base,
+              pathPrefix: cfg.pathPrefix,
+              onMissing: (href: string, filePath: string) =>
+                logger.warn(
+                  `${path.relative(fileURLToPath(config.root), filePath)} links to ${href}, ` +
+                    `which is not a page in ${cfg.contentDir}`
+                ),
+            },
+          ],
           rehypeProseScope,
           rehypeTableColumns,
           ...(cfg.code.highlighter === 'codeblock' ? [rehypeCodeFence] : []),

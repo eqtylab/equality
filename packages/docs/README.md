@@ -56,6 +56,25 @@ collapsed: false
 - A typo in `order` produces a build **warning naming the file and the token** rather than silently
   reordering, and the schema is `.strict()` so an unknown key fails the build.
 
+## Linking between pages
+
+Write the link the way the file sits on disk and it resolves to that page's URL:
+
+```mdx
+See [usage](./usage.mdx) and [the guides index](../guides/index.mdx#ordering).
+```
+
+`./usage.mdx` becomes `/getting-started/usage/`, with `base`, `pathPrefix` and the trailing slash
+applied exactly as the sidebar applies them. A `.md` target finds the `.mdx` file of the same name,
+so markdown synced in from a product repo needs no rewriting, and a folder's `index.mdx` resolves to
+the folder. A target that names no page in the content directory is a build **warning naming the
+file and the href** — it still rewrites, so the typo shows up in the log rather than only as a 404.
+
+Only content files are rewritten, and only targets that land inside the content directory: a
+relative link out of the collection is someone else's URL to own. Root-relative links are
+base-prefixed instead — Astro does not do that for authored markdown — and extensionless relative
+links are left to the browser.
+
 ## Three conventions worth knowing
 
 **Styling is inline Tailwind, and one `@source` line is what makes it work.** The chrome is styled
@@ -168,6 +187,32 @@ what a script that rewrites rendered text needs: it has to import `scheduleHighl
 highlighting. (`CodeBlock` paints through the CSS Custom Highlight API over `Range`s into those
 very text nodes.) A plain `<script src>` in `public/` cannot import anything.
 
+## Owning a page yourself
+
+A file in your own `src/pages` wins. The integration sees the route is already claimed, logs that
+it is yielding, and injects nothing there — so a landing page is yours to write, with the same
+chrome every other page gets:
+
+```astro
+---
+import Prose from '@eqtylab/docs/chrome/Prose.astro';
+import DocsPage from '@eqtylab/docs/layouts/DocsPage.astro';
+import { docsNav } from '@eqtylab/docs/lib/nav-data.ts';
+
+// `nav` is required: the sidebar, the drawer and the 404's suggestions all read it.
+const nav = await docsNav(Astro.url.pathname);
+---
+
+<DocsPage title="Home" nav={nav} toc={[]} showToc={false} splash>
+  <Prose title="Home">Anything at all.</Prose>
+</DocsPage>
+```
+
+`@eqtylab/docs/lib/*` ships the rest of what the injected route uses, with the collection already
+wired in: `docsEntries` and `pathContext` alongside `docsNav` in `nav-data.ts`, `breadcrumbsFor` /
+`prevNextFor` / `buildTocTree` re-exported from there, and `mdxComponents` in `mdx-components.ts`
+for rendering a collection entry through the same component map.
+
 ## Building the Search Index
 
 Full-text search uses the built HTML, via [Pagefind](https://pagefind.app). The integration
@@ -210,7 +255,7 @@ would 404 in a sub-path build.
 
 ```bash
 pnpm build    # guard + node bundle + runtime copy + declarations
-pnpm test     # nav ordering, prev/next, breadcrumbs, TOC
+pnpm test     # nav ordering, prev/next, breadcrumbs, TOC, prose scope, link resolution
 ```
 
 `src/*.ts` is bundled for Node (it is loaded when Astro reads your config). `src/runtime/**` ships

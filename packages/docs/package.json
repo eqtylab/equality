@@ -1,7 +1,7 @@
 {
   "name": "@eqtylab/docs",
   "description": "Astro documentation framework built on the Equality design system",
-  "version": "0.3.3",
+  "version": "0.3.4",
   "license": "Apache-2.0",
   "homepage": "https://equality.eqtylab.io/",
   "repository": {
@@ -62,6 +62,7 @@
     "./components/*": "./dist/runtime/components/*",
     "./chrome/*": "./dist/runtime/chrome/*",
     "./layouts/*": "./dist/runtime/layouts/*",
+    "./lib/*": "./dist/runtime/lib/*",
     "./routes/*": "./dist/runtime/routes/*",
     "./scripts/*": "./dist/runtime/scripts/*",
     "./styles.css": "./dist/runtime/styles/docs.css",
