@@ -1,7 +1,6 @@
 ---
 /** A one-line page for a release URL that has no copy of its own. Static hosting has no server redirects. */
 import DocsShell from './DocsShell.astro';
-import styles from './RedirectPage.module.css';
 
 interface Props {
   to: string;
@@ -14,7 +13,7 @@ const label = version ?? 'the latest docs';
 
 <DocsShell title="Redirecting" noIndex canonical={to} version={version ?? undefined}>
   <meta slot="head" http-equiv="refresh" content={`0; url=${to}`} />
-  <main class={styles.main}>
+  <main class="text-text-secondary mx-auto max-w-prose px-6 py-24 text-sm">
     <p>This release's docs live at <a href={to}>{label}</a>.</p>
   </main>
 </DocsShell>

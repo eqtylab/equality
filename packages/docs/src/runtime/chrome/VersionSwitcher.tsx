@@ -15,7 +15,18 @@ import {
 } from '@eqtylab/equality';
 
 import type { SwitcherData } from '../lib/versions-ui.ts';
-import styles from './VersionSwitcher.module.css';
+
+/* The trigger lays itself out. It also carries a chrome class from the header, and when that
+   class stopped supplying `flex` the icon, label and chevron stacked into a column and overflowed
+   the button. A control should not depend on its caller to sit on one line. */
+const TRIGGER = 'inline-flex items-center gap-1.5 whitespace-nowrap';
+
+/* Radix caps both surfaces at the height available below the trigger and Equality sets no
+   overflow, so a list taller than that cap spills instead of scrolling. Searching is when that
+   bites: every match is lifted out of its submenu into the root, which then holds all
+   twenty-seven. A `max-h` of our own is not the fix and does not even apply, measured: Equality's
+   own cap is unlayered CSS and beats a utility whatever the value. */
+const SURFACE = 'overflow-y-auto';
 
 interface Props {
   data: SwitcherData;
@@ -40,20 +51,23 @@ export default function VersionSwitcher({ data, className }: Props) {
   };
 
   return (
-    <div className={styles.wrap}>
+    /* The bar has no room below lg: logo, search, theme and the drawer invoker already fill
+       390px. Hidden on a wrapper, not on the trigger: the trigger also carries Header's chrome
+       class, and at equal specificity the bundle order decides, so `hidden` there is a coin flip. */
+    <div className="max-lg:hidden">
       <DropdownMenu modal={false}>
         <DropdownMenuTrigger asChild>
           <button
             type="button"
-            className={[className, styles.trigger].filter(Boolean).join(' ')}
+            className={[className, TRIGGER].filter(Boolean).join(' ')}
             aria-label={`Version: ${current.label}. Choose a version`}
           >
             <Icon icon="Tag" size="sm" />
-            <span className={styles.label}>{current.label}</span>
+            <span className="text-sm">{current.label}</span>
             <Icon icon="ChevronDown" size="sm" />
           </button>
         </DropdownMenuTrigger>
-        <DropdownMenuContent align="end" className={styles.menu}>
+        <DropdownMenuContent align="end" className={SURFACE}>
           {/* Nesting holds the browse case to four rows; this holds the jump case, which nesting
               makes worse by burying a version one hover deep. Typing lifts every match out of its
               submenu into this list, each carrying its major as a breadcrumb. */}
@@ -72,7 +86,7 @@ export default function VersionSwitcher({ data, className }: Props) {
               <DropdownMenuSubTrigger>
                 <span>{group.label}</span>
               </DropdownMenuSubTrigger>
-              <DropdownMenuSubContent className={styles.submenu}>
+              <DropdownMenuSubContent className={SURFACE}>
                 <DropdownMenuRadioGroup value={current.href} onValueChange={go}>
                   {group.items.map((item) => (
                     <DropdownMenuRadioItem key={item.href} value={item.href}>
