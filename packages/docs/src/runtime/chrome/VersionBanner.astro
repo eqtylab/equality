@@ -2,8 +2,6 @@
 /** Every page of an older copy opens with this. `data-pagefind-ignore`: the words "latest" and the version must not match every old page in search. */
 import { Alert } from '@eqtylab/equality';
 
-import styles from './VersionBanner.module.css';
-
 interface Props {
   version: string;
   latestLabel: string;
@@ -13,9 +11,9 @@ interface Props {
 const { version, latestLabel, latestHref } = Astro.props;
 ---
 
-<div class={styles.banner} data-eq-chrome data-pagefind-ignore role="status">
+<div class="mb-8" data-eq-chrome data-pagefind-ignore role="status">
   <Alert variant="warning" title={`You are reading the ${version} docs.`}>
-    The latest is <a class={styles.link} href={latestHref}>{latestLabel}</a>. Interactive
-    examples are not shown in archived pages.
+    The latest is <a class="text-text-primary underline" href={latestHref}>{latestLabel}</a>.
+    Interactive examples are not shown in archived pages.
   </Alert>
 </div>
