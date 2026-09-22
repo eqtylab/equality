@@ -3,9 +3,13 @@
 // A release commit is the LAST commit that set that version in packages/ui/package.json.
 import { execFileSync } from "node:child_process";
 
+// The marker must not collide with `git log -p`'s own diff hunk headers, which also begin `@@`.
+// A bare `@@%H` prefix matches those, and every release then carries a hunk header where its
+// sha should be, which git rejects as an invalid reference.
+const MARKER = /^@@@([0-9a-f]{40})@@@$/;
 const log = execFileSync(
   "git",
-  ["log", "--format=@@%H", "-p", "--", "packages/ui/package.json"],
+  ["log", "--format=@@@%H@@@", "-p", "--", "packages/ui/package.json"],
   {
     encoding: "utf8",
   },
@@ -13,7 +17,11 @@ const log = execFileSync(
 const seen = new Map(); // version -> sha (first seen in log order = newest commit)
 let sha = "";
 for (const line of log.split("\n")) {
-  if (line.startsWith("@@")) sha = line.slice(2);
+  const marker = MARKER.exec(line);
+  if (marker) {
+    sha = marker[1];
+    continue;
+  }
   const m = /^\+\s*"version":\s*"(\d+)\.(\d+)\.(\d+)"/.exec(line);
   if (m && !seen.has(`${m[1]}.${m[2]}.${m[3]}`))
     seen.set(`${m[1]}.${m[2]}.${m[3]}`, sha);
