@@ -26,8 +26,9 @@ export const GET: APIRoute = async (ctx) => {
     '',
     ...sorted.map((entry) => {
       const href = docsHref(entry.id, paths).replace(/\/$/, '');
+      const prefix = entry.data.deprecated ? ' (deprecated)' : '';
       const suffix = entry.data.description ? `: ${entry.data.description}` : '';
-      return `- [${entry.data.title}](${origin}${href}.md)${suffix}`;
+      return `- [${entry.data.title}](${origin}${href}.md)${prefix}${suffix}`;
     }),
     '',
   ];

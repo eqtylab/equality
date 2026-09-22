@@ -4,6 +4,10 @@ import * as ScrollAreaPrimitive from '@radix-ui/react-scroll-area';
 import styles from '@/components/scroll-area/scroll-area.module.css';
 import { cn } from '@/lib/utils';
 
+/**
+ * @deprecated Use a native scrollable element instead — set an overflow and a height on your own
+ * container and leave the browser's scrollbar unstyled.
+ */
 const ScrollArea = React.forwardRef<
   React.ElementRef<typeof ScrollAreaPrimitive.Root>,
   React.ComponentPropsWithoutRef<typeof ScrollAreaPrimitive.Root>
@@ -18,6 +22,9 @@ const ScrollArea = React.forwardRef<
 ));
 ScrollArea.displayName = ScrollAreaPrimitive.Root.displayName;
 
+/**
+ * @deprecated Part of the deprecated `ScrollArea`. Use a native scrollable element instead.
+ */
 const ScrollBar = React.forwardRef<
   React.ElementRef<typeof ScrollAreaPrimitive.ScrollAreaScrollbar>,
   React.ComponentPropsWithoutRef<typeof ScrollAreaPrimitive.ScrollAreaScrollbar>
