@@ -25,6 +25,8 @@ interface TabsProps {
   tabsListBackground?: 'transparent' | 'filled';
   defaultValue?: string;
   onValueChange?: (value: string) => void;
+  // Render for an environment where React never runs on the client (statically rendered sites).
+  staticRender?: boolean;
 }
 
 const Tabs = ({
@@ -34,6 +36,7 @@ const Tabs = ({
   tabsListBackground = 'transparent',
   defaultValue,
   onValueChange,
+  staticRender = false,
 }: TabsProps) => {
   const [activeTab, setActiveTab] = useState(defaultValue ?? items[0].value);
 
@@ -51,16 +54,24 @@ const Tabs = ({
     return null;
   };
 
+  const indicatorClass = cn(
+    styles['active-tab-indicator'],
+    isFilled ? styles['active-tab-indicator--filled'] : styles['active-tab-indicator--transparent']
+  );
+
   const renderActiveStyle = (isActive: boolean) => {
+    /*
+      Static mode has no React on the page, so switching tabs is an attribute flip: the
+      indicator has to ship in every trigger and be revealed by `data-state`. No `layoutId`
+      here either - motion treats duplicate ids as one shared element.
+    */
+    if (staticRender) {
+      return <span className={cn(indicatorClass, styles['active-tab-indicator--static'])} />;
+    }
     if (isActive) {
       return (
         <motion.span
-          className={cn(
-            styles['active-tab-indicator'],
-            isFilled
-              ? styles['active-tab-indicator--filled']
-              : styles['active-tab-indicator--transparent']
-          )}
+          className={indicatorClass}
           initial={false}
           layoutId={`${id}-active-tab-indicator`}
         />
@@ -105,7 +116,14 @@ const Tabs = ({
       </TabsList>
 
       {items.map(({ value, content }) => (
-        <TabsContent value={value} key={value} className={styles['content']}>
+        <TabsContent
+          value={value}
+          key={value}
+          className={styles['content']}
+          /* Radix is `present={forceMount || isSelected}`, so without this an inactive panel
+             is absent from the HTML entirely. CSS hides it instead; see tabs.module.css. */
+          forceMount={staticRender || undefined}
+        >
           {content}
         </TabsContent>
       ))}

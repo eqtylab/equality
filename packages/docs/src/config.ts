@@ -113,6 +113,19 @@ export const docsConfigSchema = z.object({
     })
     .prefault({}),
 
+  /**
+   * Stylesheets loaded on every docs page. A project-relative path ('./src/styles/site.css')
+   * or a package specifier. Resolved against the project root, so dev and build agree.
+   */
+  customCss: z.array(z.string()).default([]),
+
+  /**
+   * Client modules loaded on every docs page. Bundled rather than served as-is, so they may
+   * import from node_modules - which is what a script mutating rendered text needs, since it
+   * has to call Equality's `scheduleHighlight` afterwards to repaint code blocks.
+   */
+  clientScripts: z.array(z.string()).default([]),
+
   /** Install @astrojs/mdx, @astrojs/react and Tailwind when absent. */
   autoIntegrations: z.boolean().default(true),
 

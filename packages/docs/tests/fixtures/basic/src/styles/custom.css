@@ -1,0 +1,4 @@
+/* Exercises `customCss`. */
+:root {
+  --fixture-custom-css: 1;
+}
