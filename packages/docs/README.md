@@ -56,13 +56,24 @@ collapsed: false
 - A typo in `order` produces a build **warning naming the file and the token** rather than silently
   reordering, and the schema is `.strict()` so an unknown key fails the build.
 
-## Two conventions worth knowing
+## Three conventions worth knowing
 
-**No Tailwind utility classes in this package's markup.** All styling goes through `@apply` in a
-co-located `*.module.css` with a `@reference` header, mirroring `packages/ui`. This is not a style
-preference: Tailwind v4's source detection skips `node_modules`, so utilities written literally in
-shipped markup would silently produce nothing in a consumer's build. `@apply` has no such
-dependency. `pnpm run check:no-utilities` enforces it and runs as part of `build`.
+**Styling is inline Tailwind, and one `@source` line is what makes it work.** The chrome is styled
+with utility classes written in the markup. That only compiles because `runtime/styles/docs.css`
+names this package's own files in an explicit `@source`: Tailwind v4's automatic source detection
+skips `node_modules`, which is exactly where this markup sits in a consumer's build. Drop that line
+and every utility here produces nothing, with no error anywhere. `pnpm run check:source` enforces
+that the glob still covers all shipped markup, and runs as part of `build`. Recipes used by more
+than one component are `@utility` definitions in `runtime/styles/utilities.css`; a co-located
+`*.module.css` is the escape hatch for rules that cannot live on an element, which today means
+only `GlobalSearch.module.css`.
+
+**Overruling an Equality component takes `!`.** `packages/ui` ships unlayered CSS, Tailwind
+utilities live in `@layer utilities`, and an unlayered declaration beats a layered one whatever its
+specificity. So where this markup has to overrule a value an Equality class already sets on the
+same element — `CodeBlock`'s `max-height`, `CommandList`'s — the utility carries `!`. Properties
+Equality leaves alone need nothing. Getting this wrong fails silently: the class is in the HTML and
+the rule is in the bundle, it just loses.
 
 **Route-level MDX components override page-level ones.** `@astrojs/mdx` builds the map as
 `{ Fragment, ...fileComponents, ...props.components }`, so the route's `<Content components={…} />`
