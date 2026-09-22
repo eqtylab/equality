@@ -180,8 +180,10 @@ What to know:
 - Live component examples inside old pages render with the library your site has installed.
   Text and code samples are frozen; rendered examples are not. The banner says so.
 - Old versions are read-only. A wrong page is fixed by a new tag.
-- Changing `granularity` does not break published URLs: every grouping coarser than the one you
-  set also resolves, so `/v3/` and `/v3.9/` both work whichever you choose.
+- Moving `granularity` between `minor` and `patch` does not break published URLs: every grouping
+  coarser than the one you set also resolves, so `/v3/` and `/v3.9/` both work at either setting.
+  Moving **to `major` does** break them. Only groupings at or coarser than the setting are emitted,
+  so at `major` nothing emits `v3.9` and every published `/v3.9/` URL retires.
 
 The `DOCS_BASE` family of environment variables still exists for consumers who deploy each
 version as a separate build under its own `base`; this feature does not use them.

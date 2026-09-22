@@ -101,7 +101,7 @@ test('every tag in a covered group redirects, the pick included; self-redirects 
   ]);
 });
 
-test('granularity is reversible: every URL shape resolves at both settings', () => {
+test('moving between minor and patch keeps every URL shape', () => {
   const tags = ['v3.9.0', 'v3.9.1', 'v4.0.0'];
   const at = (g: Granularity) => {
     const sel = selectVersions(tags, '4.0.0', g);
