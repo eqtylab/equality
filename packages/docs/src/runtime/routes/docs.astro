@@ -52,7 +52,9 @@ export async function getStaticPaths() {
         : docsHref('', pathContext());
 
   const switcherFor = (versionId: string | undefined, id: string): SwitcherData | undefined => {
-    if (!CONFIG.currentVersion) return undefined;
+    // Nothing to switch to until a release is tagged: a picker offering only the page you are
+    // already on is noise, and it displaces the header's control cluster.
+    if (!CONFIG.currentVersion || !CONFIG.versionManifest.length) return undefined;
     const byMajor = new Map<string, SwitcherData['groups'][number]>();
     for (const v of CONFIG.versionManifest) {
       const major = `v${v.group.split('.')[0]}`;
