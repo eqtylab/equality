@@ -19,8 +19,10 @@ export function ensureTrailingSlash(href: string): string {
   if (isUnrewritable(href)) return href;
   const [path, rest = ''] = href.split(/(?=[?#])/, 2);
   if (path.endsWith('/')) return href;
-  // Never slash something that looks like a file (/llms.txt, /a.md).
-  if (/\.[a-z0-9]+$/i.test(path)) return href;
+  // Never slash something that looks like a file (/llms.txt, /a.md). The extension must carry a
+  // letter: a version id ends `.9`, and treating `/v3.9` as a file drops the slash from every
+  // version root, costing a host redirect and breaking exact-match comparisons against it.
+  if (/\.[a-z0-9]*[a-z][a-z0-9]*$/i.test(path)) return href;
   return path + '/' + rest;
 }
 
@@ -83,4 +85,41 @@ export function isAncestor(currentPathname: string, target: string): boolean {
   const current = normalizePath(currentPathname);
   const t = normalizePath(target);
   return t === '/' ? current === '/' : current === t || current.startsWith(t + '/');
+}
+
+interface VersionFallback {
+  base: string;
+  pathPrefix?: string;
+  /** Ids of versions that have a real copy built. */
+  copyIds: string[];
+  redirects: Array<{ id: string; to: string | null }>;
+}
+
+/**
+ * Where to send a reader whose URL named a release with no page of its own.
+ *
+ * Static hosting emits a file per URL, and stubs are emitted for bare release URLs only, so
+ * `/v3.2.4/` resolves while `/v3.2.4/components/button/` reaches the not-found page. Per-page
+ * stubs would be roughly 3,000 files that grow with every release; this recovers the same
+ * destination from one page, and unlike the bare stub it keeps the page the reader asked for.
+ *
+ * Returns null when the path names no version, which is an ordinary 404.
+ */
+export function resolveVersionedPath(pathname: string, opts: VersionFallback): string | null {
+  const rest = stripBase(pathname, { base: opts.base, pathPrefix: opts.pathPrefix });
+  const segments = rest.replace(/^\/+|\/+$/g, '').split('/');
+  const first = segments[0];
+  if (!first || !/^v\d/.test(first)) return null;
+
+  const tail = segments.slice(1).join('/');
+  const reapply = (version: string, page: string) =>
+    ensureTrailingSlash(joinPath(opts.base, opts.pathPrefix, version, page));
+
+  // The version exists but this page does not: its root forwards to that version's first page.
+  // Sending the reader to latest instead would silently show them a different release.
+  if (opts.copyIds.includes(first)) return reapply(first, '');
+
+  const redirect = opts.redirects.find((r) => r.id === first);
+  if (!redirect) return null;
+  return reapply(redirect.to ?? '', tail);
 }
