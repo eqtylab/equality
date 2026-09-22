@@ -24,6 +24,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # tags and their trees, for the versioned build
 
       - name: Setup pnpm
         uses: eqtylab-actions/setup-pnpm@master

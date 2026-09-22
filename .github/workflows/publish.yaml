@@ -10,7 +10,7 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: read
+  contents: write # was read; needed to push the release tag. Nothing commits to main.
   id-token: write
 
 jobs:
@@ -48,6 +48,16 @@ jobs:
           else
             echo "exists=false" >> "$GITHUB_OUTPUT"
           fi
+
+      - name: Tag release
+        run: |
+          TAG="v$(node -p "require('./packages/ui/package.json').version")"
+          # A depth-1 checkout has no tags, so ask the remote, not the local repo.
+          if git ls-remote --exit-code --tags origin "refs/tags/$TAG" >/dev/null 2>&1; then
+            echo "$TAG already exists on origin"; exit 0
+          fi
+          git tag "$TAG"
+          git push origin "$TAG"
 
       - name: Build and publish
         if: steps.version_check.outputs.exists != 'true'
