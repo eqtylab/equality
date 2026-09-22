@@ -27,7 +27,9 @@ for f in "$DST"/components/*.mdx; do
     rel="$ROOT/packages/demo/src/components/${w#@demo/components/}"
     if [ ! -e "$rel" ] && [ ! -e "$rel.tsx" ] && [ ! -e "$rel.ts" ]; then
       echo "$VERSION: dropping $(basename "$f"): $w is gone from main" >&2
-      git rm -q "$f"; break
+      # -f is required: git mv staged the rename, then the frontmatter pass rewrote the file,
+      # so it differs from both HEAD and the index and a plain `git rm` refuses it.
+      git rm -qf "$f"; break
     fi
   done
 done
