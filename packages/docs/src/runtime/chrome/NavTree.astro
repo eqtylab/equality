@@ -47,17 +47,7 @@ const current =
             >
               <span class="flex min-w-0 flex-1 items-center gap-2 truncate">
                 {node.icon && <Icon icon={node.icon} size="sm" />}
-                {node.href ? (
-                  <a
-                    class="text-inherit no-underline"
-                    href={node.href}
-                    aria-current={node.current ? 'page' : undefined}
-                  >
-                    {node.label}
-                  </a>
-                ) : (
-                  <span>{node.label}</span>
-                )}
+                <span>{node.label}</span>
                 {node.badge && (
                   <Badge variant={node.badge.variant} size="sm" className="shrink-0">
                     {node.badge.text}

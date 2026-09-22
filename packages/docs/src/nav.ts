@@ -10,6 +10,8 @@ export type SortMode = 'alpha' | 'filename' | 'manual';
 export interface GroupConfig {
   label?: string;
   icon?: string;
+  /** Label for the row linking to this folder's own index page. */
+  indexLabel?: string;
   order: string[];
   sort?: SortMode;
   collapsed?: boolean;
@@ -34,6 +36,8 @@ export interface BuildNavOptions {
   paths: PathContext;
   defaultCollapsed: boolean;
   defaultSort: SortMode;
+  /** Label for the row linking to a section's own index page. Defaults to 'Overview'. */
+  defaultIndexLabel?: string;
   /** Appended after folder-derived nodes. Plugin-contributed sections land here. */
   extra?: NavNode[];
   onWarn?: (message: string) => void;
@@ -99,6 +103,17 @@ function ancestorsOf(dir: string): string[] {
   return out;
 }
 
+/** A section's own page leads it, whether that is an `index.mdx` or a page named `overview`. */
+const INDEX_LABEL = 'Overview';
+
+function isOverview(node: NavNode): boolean {
+  return (
+    node.kind === 'page' &&
+    (node.name.toLowerCase() === INDEX_LABEL.toLowerCase() ||
+      node.label.trim().toLowerCase() === INDEX_LABEL.toLowerCase())
+  );
+}
+
 export function buildNavTree(options: BuildNavOptions): NavNode[] {
   const {
     entries,
@@ -107,6 +122,9 @@ export function buildNavTree(options: BuildNavOptions): NavNode[] {
     paths,
     defaultCollapsed,
     defaultSort,
+    // Never let this be blank: an older consumer's stored config predates the option, and
+    // a nameless row is worse than a wrong one.
+    defaultIndexLabel = INDEX_LABEL,
     extra = [],
     onWarn,
   } = options;
@@ -189,23 +207,38 @@ export function buildNavTree(options: BuildNavOptions): NavNode[] {
         });
       }
 
-      if (children.length === 0 && !index) return null;
+      /*
+        The folder's own index page gets a row of its own, first in the group.
+
+        A group header only expands - it is never a link. Making it one where an index
+        happens to exist teaches readers that headers are clickable, which is wrong for
+        every section that has no index, and the page is easy to miss either way.
+      */
+      // `dir` is empty for the content root, whose index is the site's landing page - it
+      // belongs in the header, not as a sidebar row.
+      if (index && dir) {
+        children.unshift({
+          ...pageNode(index),
+          name: cfg?.indexLabel ?? defaultIndexLabel,
+          label: cfg?.indexLabel ?? defaultIndexLabel,
+        });
+      }
+
+      if (children.length === 0) return null;
       if (cfg?.hidden) return null;
 
-      const href = index ? docsHref(index.entry.id, paths) : undefined;
+      const indexHref = index ? docsHref(index.entry.id, paths) : undefined;
       const label = cfg?.label ?? index?.entry.label ?? titleCase(dir.split('/').pop() ?? '');
 
       const inPath =
-        (href ? isAncestor(currentPath, href) : false) || children.some((c) => c.inPath);
+        (indexHref ? isAncestor(currentPath, indexHref) : false) || children.some((c) => c.inPath);
 
       return {
         kind: 'group',
         name: dir.split('/').pop() ?? '',
         label,
-        href,
         icon: cfg?.icon ?? index?.entry.icon,
         badge: cfg?.badge ?? index?.entry.badge,
-        current: href ? isActive(currentPath, href) : false,
         inPath,
         // Containing the current page wins over `collapsed: true`.
         open: inPath || !(cfg?.collapsed ?? defaultCollapsed),
@@ -262,7 +295,12 @@ function orderChildren(
     rest.sort((a, b) => byLocale(a.label, b.label) || byLocale(a.name, b.name));
   }
 
-  return [...ordered, ...rest];
+  const all = [...ordered, ...rest];
+
+  // A section's overview leads it, however the author got it there - an `index.mdx`, a page
+  // named `overview`, or one titled "Overview". Alphabetical order would bury it mid-list.
+  const overview = all.filter(isOverview);
+  return overview.length ? [...overview, ...all.filter((c) => !isOverview(c))] : all;
 }
 
 /** Depth-first list of internal, linkable nodes. Drives prev/next. */

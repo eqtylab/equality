@@ -43,6 +43,11 @@ export const docsConfigSchema = z.object({
       collapsed: z.boolean().default(false),
       /** Default append order for children absent from a group's `order`. */
       sort: z.enum(['alpha', 'filename', 'manual']).default('alpha'),
+      /**
+       * Label for the row that links to a section's own `index.mdx`. A section header is
+       * never a link - it only expands - so the index page needs a row of its own.
+       */
+      indexLabel: z.string().default('Overview'),
       /** Extra top-level nodes, appended after folder-derived ones. */
       extra: z.array(z.any()).default([]),
     })

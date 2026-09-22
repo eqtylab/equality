@@ -52,7 +52,13 @@ collapsed: false
 
 - Children listed in `order` come first, in that order.
 - Everything unlisted appends alphabetically by sidebar label (`sort: filename` or `manual` to change that).
-- `index.mdx` in a folder becomes that folder's own landing page.
+- A section's overview always leads it, whether that is the folder's `index.mdx`, a page named
+  `overview`, or one titled "Overview" - alphabetical order would otherwise bury it mid-list.
+- `index.mdx` in a folder becomes that folder's own page, listed first in the group as
+  **Overview**. A section header only expands - it is never a link - because not every
+  section has an index, and a header that navigates only sometimes teaches the wrong habit.
+  Rename that row with `indexLabel` on the group, or globally with `sidebar.indexLabel`.
+  The content root's `index.mdx` is the site landing page and stays out of the sidebar.
 - A typo in `order` produces a build **warning naming the file and the token** rather than silently
   reordering, and the schema is `.strict()` so an unknown key fails the build.
 

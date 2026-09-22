@@ -68,6 +68,8 @@ export function groupSchema() {
       icon: z.string().optional(),
       /** Immediate-child filesystem names (not titles), in display order. */
       order: z.array(z.string()).default([]),
+      /** Label for the row linking to this folder's own `index.mdx`. Defaults to `sidebar.indexLabel`. */
+      indexLabel: z.string().optional(),
       /** Children absent from `order`: alpha by label (default), by filename, or manual (dropped from the sidebar). */
       sort: z.enum(['alpha', 'filename', 'manual']).optional(),
       collapsed: z.boolean().optional(),

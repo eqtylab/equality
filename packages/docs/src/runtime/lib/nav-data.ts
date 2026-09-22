@@ -77,6 +77,7 @@ export async function docsNav(currentPath: string, versionId?: string): Promise<
     paths: pathContext(versionId),
     defaultCollapsed: CONFIG.sidebar.collapsed,
     defaultSort: CONFIG.sidebar.sort,
+    defaultIndexLabel: CONFIG.sidebar.indexLabel,
     extra: (CONFIG.sidebar.extra ?? []) as NavNode[],
     onWarn: warnOnce,
   });

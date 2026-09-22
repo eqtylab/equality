@@ -28,6 +28,7 @@ function build(
     paths,
     defaultCollapsed: false,
     defaultSort: opts.defaultSort ?? 'alpha',
+    defaultIndexLabel: 'Overview',
     onWarn: opts.warn ? (m) => opts.warn!.push(m) : undefined,
   });
 }
@@ -71,7 +72,7 @@ test('a misspelled order token warns, naming the token and the available childre
   assert.deepEqual(labels(find(tree, 'G').children!), ['Usage']);
 });
 
-test('index.mdx becomes the folder’s own landing page, not a child', () => {
+test('index.mdx gets its own row, first, and the group header is not a link', () => {
   const tree = build(
     [
       entry('guides', 'Guides Home', { filePath: 'src/content/docs/guides/index.mdx' }),
@@ -81,8 +82,30 @@ test('index.mdx becomes the folder’s own landing page, not a child', () => {
   );
   const guides = find(tree, 'Guides Home');
   assert.equal(guides.kind, 'group');
-  assert.equal(guides.href, '/guides/');
-  assert.deepEqual(labels(guides.children!), ['One']);
+  // A header only expands; the section's page is reachable as a row of its own.
+  assert.equal(guides.href, undefined);
+  assert.deepEqual(labels(guides.children!), ['Overview', 'One']);
+  assert.equal(guides.children![0]!.href, '/guides/');
+});
+
+test('a group can rename its index row', () => {
+  const tree = build(
+    [
+      entry('guides', 'Guides Home', { filePath: 'src/content/docs/guides/index.mdx' }),
+      entry('guides/one', 'One'),
+    ],
+    { guides: { indexLabel: 'About these guides' } }
+  );
+  const guides = find(tree, 'Guides Home');
+  assert.deepEqual(labels(guides.children!), ['About these guides', 'One']);
+});
+
+test('the content root index stays out of the sidebar', () => {
+  const tree = build(
+    [entry('index', 'Home', { filePath: 'src/content/docs/index.mdx' }), entry('one', 'One')],
+    {}
+  );
+  assert.deepEqual(labels(tree), ['One']);
 });
 
 test('root index.mdx maps to "/" and is not itself a group', () => {
@@ -197,6 +220,7 @@ test('base is applied to every href', () => {
     paths: { base: '/sub/' },
     defaultCollapsed: false,
     defaultSort: 'alpha',
+    defaultIndexLabel: 'Overview',
   });
   const one = find(find(tree, 'Guides').children!, 'One');
   assert.equal(one.href, '/sub/guides/one/');
@@ -292,4 +316,36 @@ test('buildTocTree tolerates an h3 with no preceding h2', () => {
 test('titleCase handles hyphens and underscores', () => {
   assert.equal(titleCase('getting-started'), 'Getting Started');
   assert.equal(titleCase('api_reference'), 'Api Reference');
+});
+
+test('a page named overview leads its section, without an index.mdx', () => {
+  const tree = build(
+    [
+      entry('guides/zebra', 'Zebra'),
+      entry('guides/overview', 'Overview'),
+      entry('guides/apple', 'Apple'),
+    ],
+    {}
+  );
+  assert.deepEqual(labels(find(tree, 'Guides').children!), ['Overview', 'Apple', 'Zebra']);
+});
+
+test('a page merely titled Overview leads its section too', () => {
+  const tree = build([entry('guides/intro', 'Overview'), entry('guides/apple', 'Apple')], {});
+  assert.deepEqual(labels(find(tree, 'Guides').children!), ['Overview', 'Apple']);
+});
+
+test('the index row is never blank when the consumer config predates indexLabel', () => {
+  const tree = buildNavTree({
+    entries: [
+      entry('guides', 'Guides Home', { filePath: 'src/content/docs/guides/index.mdx' }),
+      entry('guides/one', 'One'),
+    ],
+    groups: new Map(),
+    currentPath: '/',
+    paths: { base: '/' },
+    defaultCollapsed: false,
+    defaultSort: 'alpha',
+  });
+  assert.equal(find(tree, 'Guides Home').children![0]!.label, 'Overview');
 });
