@@ -50,6 +50,7 @@ const deprecationMessage = deprecation?.message
   class="eq-prose"
   data-eq-prose
   data-pagefind-body
+  data-pagefind-filter={`version:${version ?? 'latest'}`}
   data-pagefind-meta={crumbs ? `crumbs:${crumbs}` : undefined}
 >
   {
