@@ -116,8 +116,35 @@ export const docsConfigSchema = z.object({
   /** Install @astrojs/mdx, @astrojs/react and Tailwind when absent. */
   autoIntegrations: z.boolean().default(true),
 
-  /** Versioning. Left permissive here; the versioning workstream owns the shape. */
-  versions: z.any().optional(),
+  /**
+   * On by default; `false` turns it off. Must be `.prefault`, never `.default`: Zod 4 short-circuits
+   * `.default` without parsing, so a consumer who writes nothing would receive a bare `{}` carrying
+   * neither `tags` nor `granularity`, and the build would select nothing with no error.
+   */
+  versions: z
+    .union(
+      [
+        z.literal(false),
+        z
+          .object({
+            /** The documented product's version, e.g. '4.0.0'. Defaults to the highest tag matching `tags`. */
+            current: z.string().optional(),
+            /** Git tag glob for releases. Tags that are not MAJOR.MINOR.PATCH are skipped with a warning. */
+            tags: z.string().default('v*'),
+            /** One frozen copy per major, per minor, or per release. Releases without a copy redirect to theirs. */
+            granularity: z.enum(['major', 'minor', 'patch']).default('major'),
+          })
+          .prefault({}),
+      ],
+      {
+        // A union reports its own failure and drops the inner path, so a typo in `granularity`
+        // would surface as "versions: Invalid input". Spelling the contract out here is what keeps
+        // a misconfigured docsite failing loudly rather than silently versioning nothing.
+        error:
+          'expected false, or an object with optional current, tags and granularity (major | minor | patch)',
+      }
+    )
+    .prefault({}),
 
   /** Generated-section plugins (OpenAPI reference, changelogs, ...). */
   plugins: z.array(z.any()).default([]),
