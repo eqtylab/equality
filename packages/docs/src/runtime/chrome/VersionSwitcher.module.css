@@ -1,0 +1,20 @@
+@reference '../styles/theme.css';
+
+.trigger {
+  @apply gap-1.5;
+}
+
+.label {
+  @apply text-sm;
+}
+
+/* Twenty-seven items on this site. Scroll inside the menu rather than off the viewport. */
+.menu {
+  @apply max-h-[70vh] overflow-y-auto;
+}
+
+@media (max-width: 1023px) {
+  .label {
+    @apply sr-only;
+  }
+}
