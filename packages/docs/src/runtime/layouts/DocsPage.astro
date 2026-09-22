@@ -60,7 +60,7 @@ const suggested = nav
   <Header showSearch={!Astro.slots.has('search')} suggested={suggested} switcher={switcher}>
     <slot name="search" slot="search" />
   </Header>
-  <NavDrawer nodes={nav} />
+  <NavDrawer nodes={nav} switcher={switcher} />
   <div class={styles.layout}>
     {!splash && <Sidebar nodes={nav} />}
     <main class={styles.main} data-splash={splash ? '' : undefined}>

@@ -28,3 +28,22 @@
 .link {
   @apply text-text-secondary hover:text-text-primary mb-1 flex max-h-10 items-center gap-2 rounded-md px-2 py-1.5 text-sm font-medium no-underline;
 }
+
+/* Versions, relocated from the header bar below lg where the bar has no room for a fifth
+   control. Rendered as links, not the dropdown: a menu portalled out of an open popover
+   fights the drawer for focus, and every other relocated control in here is a plain link. */
+.versions {
+  @apply border-border-raised mb-2 border-b pb-2;
+}
+
+.versionsLabel {
+  @apply text-text-secondary px-2 pb-1 text-xs font-medium uppercase;
+}
+
+.versionLink {
+  @apply text-text-secondary hover:text-text-primary mb-0.5 flex items-center rounded-md px-2 py-1 text-sm no-underline;
+}
+
+.versionLink[data-current] {
+  @apply text-text-primary font-medium;
+}
