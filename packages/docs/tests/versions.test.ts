@@ -24,6 +24,29 @@ test('parseTag accepts v-prefixed and bare MAJOR.MINOR.PATCH, rejects the rest',
   assert.equal(parseTag('v3.9'), null);
 });
 
+test('parseTag reads the version out of a prefixed tag, and keeps the tag whole', () => {
+  // A consumer whose releases are not tagged the way ours are still has to work: the glob
+  // finds their tags and this is what turns each one into a version. The raw tag is carried
+  // through untouched, because extraction addresses git by the tag, not by the version.
+  for (const [tag, version] of [
+    ['@eqtylab/equality@1.2.3', '1.2.3'],
+    ['sdk-v1.2.3', '1.2.3'],
+    ['integrity-sdk/2.0.1', '2.0.1'],
+    ['release-2.3.4', '2.3.4'],
+  ] as const) {
+    const parsed = parseTag(tag);
+    assert.equal(parsed?.version, version, tag);
+    assert.equal(parsed?.tag, tag, `${tag} keeps its own name`);
+  }
+});
+
+test('parseTag still rejects what is not a release', () => {
+  // The prefix is free, the version is not: these would each produce a wrong copy.
+  for (const tag of ['v1.2.3.4', 'v1.2', '2024.01', 'sdk-v1.2.3-rc.1', 'latest']) {
+    assert.equal(parseTag(tag), null, tag);
+  }
+});
+
 test('groupOf, idOf, suffixOf follow the one naming rule', () => {
   const v = parseTag('v3.9.1')!;
   assert.equal(groupOf(v, 'major'), '3');

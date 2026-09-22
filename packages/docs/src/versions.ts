@@ -33,8 +33,13 @@ export interface VersionSelection {
   above: string[];
 }
 
-// Strict on purpose: `v1.2.3-beta.1` and `v1.2` both fall out as skipped.
-const SEMVER = /^v?(\d+)\.(\d+)\.(\d+)$/;
+/*
+ * The prefix is free, the version is not. `tags` decides which tags are considered; this decides
+ * what counts as a release among them, and a consumer tagging `@scope/pkg@1.2.3` or `sdk-v1.2.3`
+ * has no glob that could rescue them from a `^v?` anchor. Strict after the prefix, so
+ * `v1.2.3-beta.1`, `v1.2` and `v1.2.3.4` all still fall out as skipped.
+ */
+const SEMVER = /(?:^|[^0-9.])(\d+)\.(\d+)\.(\d+)$/;
 
 /** Finest to coarsest. A granularity's own level is included, so the current group gets a stub. */
 const LEVELS: Granularity[] = ['patch', 'minor', 'major'];
