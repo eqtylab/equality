@@ -52,3 +52,16 @@
 .content {
   @apply mt-5 space-y-6;
 }
+
+/*
+  `staticRender` mounts every panel and puts an indicator in every trigger, so these two rules
+  are the only thing hiding the inactive ones. Drop them and a static tab set renders every
+  panel at once.
+*/
+.content[data-state='inactive'] {
+  @apply hidden;
+}
+
+[data-state='inactive'] > .active-tab-indicator--static {
+  @apply hidden;
+}

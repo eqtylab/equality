@@ -1,3 +1,4 @@
+import { fileURLToPath } from 'node:url';
 import type { AstroIntegration } from 'astro';
 
 import { resolveConfig, type DocsConfig, type DocsUserConfig } from './config.ts';
@@ -65,7 +66,8 @@ export default function docs(
     name: '@eqtylab/docs',
     hooks: {
       async 'astro:config:setup'(params) {
-        const { config, injectRoute, updateConfig, addWatchFile, logger, command } = params;
+        const { config, injectRoute, injectScript, updateConfig, addWatchFile, logger, command } =
+          params;
 
         assertMdxOnly(new URL(`./${cfg.contentDir}/`, config.srcDir));
 
@@ -156,6 +158,18 @@ export default function docs(
           rehypeTableColumns,
           ...(cfg.code.highlighter === 'codeblock' ? [rehypeCodeFence] : []),
         ];
+
+        // Resolve against the project root first, or a './...' path means different things
+        // in dev and in a build.
+        const resolveAsset = (spec: string) =>
+          spec.startsWith('.') ? fileURLToPath(new URL(spec, config.root)) : spec;
+
+        for (const href of cfg.customCss) {
+          injectScript('page-ssr', `import ${JSON.stringify(resolveAsset(href))};`);
+        }
+        for (const src of cfg.clientScripts) {
+          injectScript('page', `import ${JSON.stringify(resolveAsset(src))};`);
+        }
 
         updateConfig({
           integrations: added,
