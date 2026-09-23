@@ -49,6 +49,7 @@ If you have no network access or web fetching fails, tell your user that you cou
   - Avoid using badge `size="sm"` except for specific scenarios where space is at a premium like within tables. Most badges should be the default `size="md"`
 - Icons should be used sparingly. Ensure consistency when using them, try not to conflate multiple concepts with the same icon
 - No custom hex codes, no `bg-{color}-{number}` palette classes.
+- A combobox, searchable select or autocomplete is `Select` with `SelectSearch`. Don't hand-roll one from `Popover` + `Command`.
 
 ## Non-negotiables
 
