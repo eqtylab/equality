@@ -103,6 +103,19 @@ document.addEventListener('keydown', (event) => {
   activate(set, triggers[to] as HTMLElement, true);
 });
 
+/**
+ * Radix renders every trigger at tabindex -1 when statically rendered, so without this every
+ * strip is unreachable by Tab until a trigger is clicked.
+ */
+function initTabIndex(): void {
+  for (const set of document.querySelectorAll<HTMLElement>('[data-eq-tabs]')) {
+    const triggers = triggersIn(set);
+    const selected = triggers.find((trigger) => trigger.getAttribute('aria-selected') === 'true');
+    const chosen = selected ?? triggers[0];
+    if (chosen) select(set, chosen);
+  }
+}
+
 // Restore remembered choices. Runs after first paint, so a non-default choice visibly settles.
 for (const set of document.querySelectorAll<HTMLElement>('[data-eq-tabs][data-sync-key]')) {
   const key = set.dataset.syncKey;
@@ -112,3 +125,5 @@ for (const set of document.querySelectorAll<HTMLElement>('[data-eq-tabs][data-sy
   const match = triggersIn(set).find((trigger) => labelOf(trigger) === stored);
   if (match) select(set, match);
 }
+
+initTabIndex();
