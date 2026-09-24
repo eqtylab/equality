@@ -15,6 +15,8 @@ import {
   type SecurityScheme,
 } from './types.ts';
 
+// Dereferenced OpenAPI input is untyped by nature; the model's own types start at buildModel's return.
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 type Raw = Record<string, any>;
 
 const DEFAULT_TAG = 'Operations';
