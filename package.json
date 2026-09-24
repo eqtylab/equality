@@ -8,6 +8,7 @@
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "release": "pnpm --filter @eqtylab/equality run release",
+    "test": "pnpm -r run test",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "prepare": "husky"
