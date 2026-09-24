@@ -1,0 +1,4352 @@
+basePath: /
+definitions:
+  core.APIError:
+    description: Error body for the policy conversion, policy export, and event ingestion
+      endpoints, carrying a machine-readable code
+    properties:
+      code:
+        example: INVALID_REQUEST
+        type: string
+      details:
+        example: unexpected end of JSON input
+        type: string
+      message:
+        example: Invalid request body
+        type: string
+    type: object
+  core.ActivityLog:
+    description: An audit entry recording who acted on which resource and when
+    properties:
+      action:
+        type: string
+      createdAt:
+        format: date-time
+        readOnly: true
+        type: string
+      id:
+        readOnly: true
+        type: integer
+      logs:
+        type: object
+      organizationId:
+        description: Resolved from the active org
+        readOnly: true
+        type: integer
+      organizationName:
+        description: Resolved from organizationId
+        readOnly: true
+        type: string
+      projectId:
+        description: Must be in the active org
+        type: integer
+      projectName:
+        readOnly: true
+        type: string
+      resource:
+        type: string
+      userEmail:
+        type: string
+      userId:
+        type: string
+      userName:
+        type: string
+      uuid:
+        description: urn:uuid form
+        readOnly: true
+        type: string
+    type: object
+  core.ApplicationStatus:
+    enum:
+    - active
+    - disabled
+    - archived
+    type: string
+    x-enum-varnames:
+    - ApplicationStatusActive
+    - ApplicationStatusDisabled
+    - ApplicationStatusArchived
+  core.AppliedPolicy:
+    description: A policy applied to a project, tracked independently of the library
+      template it came from
+    properties:
+      appliedAt:
+        format: date-time
+        readOnly: true
+        type: string
+      appliedBy:
+        readOnly: true
+        type: string
+      appliedByDid:
+        description: Verifiable actor; appliedBy is the label
+        readOnly: true
+        type: string
+      archivedAt:
+        description: Set via the archive endpoint
+        format: date-time
+        readOnly: true
+        type: string
+      archivedBy:
+        description: Set via the archive endpoint
+        readOnly: true
+        type: string
+      archivedByDid:
+        description: Verifiable actor; archivedBy is the label
+        readOnly: true
+        type: string
+      cid:
+        description: Assigned by the integrity service
+        readOnly: true
+        type: string
+      createdAt:
+        format: date-time
+        readOnly: true
+        type: string
+      id:
+        readOnly: true
+        type: integer
+      isArchived:
+        description: Set via the archive endpoint
+        readOnly: true
+        type: boolean
+      isReapplied:
+        readOnly: true
+        type: boolean
+      name:
+        type: string
+      policyId:
+        description: Taken from the path on create
+        readOnly: true
+        type: integer
+      projectId:
+        description: Taken from the path on create
+        readOnly: true
+        type: integer
+      slug:
+        description: Derived from name
+        readOnly: true
+        type: string
+      status:
+        readOnly: true
+        type: string
+      subjectCid:
+        description: Assigned by the integrity service
+        readOnly: true
+        type: string
+      updatedAt:
+        format: date-time
+        readOnly: true
+        type: string
+    type: object
+  core.AppliedPolicyControlDetailsResponse:
+    description: A control within an applied policy, expanded with its full declaration
+      and review history
+    properties:
+      appliedPolicyControlId:
+        type: integer
+      cid:
+        type: string
+      citations:
+        items:
+          $ref: '#/definitions/core.Citation'
+        type: array
+      controlCode:
+        type: string
+      controlId:
+        type: integer
+      declarations:
+        items:
+          $ref: '#/definitions/core.DeclarationDetails'
+        type: array
+      description:
+        type: string
+      indicators:
+        items:
+          $ref: '#/definitions/core.IndicatorApplication'
+        type: array
+      reviews:
+        items:
+          $ref: '#/definitions/core.ReviewDetails'
+        type: array
+      status:
+        type: string
+      title:
+        type: string
+    type: object
+  core.AppliedPolicyControlResponse:
+    description: A control within an applied policy, with its latest declaration and
+      review state
+    properties:
+      appliedPolicyId:
+        type: integer
+      cid:
+        type: string
+      controlId:
+        type: integer
+      createdAt:
+        format: date-time
+        type: string
+      id:
+        type: integer
+      indicators:
+        items:
+          $ref: '#/definitions/core.IndicatorApplication'
+        type: array
+      status:
+        type: string
+      updatedAt:
+        format: date-time
+        type: string
+    type: object
+  core.AppliedPolicyCredential:
+    description: A verifiable credential issued over an applied policy, revocable
+      but never deleted
+    properties:
+      appliedPolicyId:
+        description: Taken from the path on create
+        readOnly: true
+        type: integer
+      credential:
+        readOnly: true
+        type: object
+      credentialId:
+        description: urn:uuid minted per issuance; identifies the row
+        readOnly: true
+        type: string
+      expiresAt:
+        format: date-time
+        type: string
+      id:
+        readOnly: true
+        type: integer
+      issuedAt:
+        format: date-time
+        readOnly: true
+        type: string
+      issuedBy:
+        readOnly: true
+        type: string
+      issuedByDid:
+        description: Verifiable actor; issuedBy is the label
+        readOnly: true
+        type: string
+      revoked:
+        description: Set via the revoke endpoint
+        readOnly: true
+        type: boolean
+      revokedAt:
+        description: Set via the revoke endpoint
+        format: date-time
+        readOnly: true
+        type: string
+      revokedBy:
+        description: Set via the revoke endpoint
+        readOnly: true
+        type: string
+      revokedByDid:
+        description: Verifiable actor; revokedBy is the label
+        readOnly: true
+        type: string
+      revokedReason:
+        description: Set via the revoke endpoint
+        readOnly: true
+        type: string
+      sourceCid:
+        description: Assigned by the integrity service
+        readOnly: true
+        type: string
+    type: object
+  core.AppliedPolicyDetailsResponse:
+    description: An applied policy with its controls, credential, and aggregate compliance
+      state
+    properties:
+      appliedPolicy:
+        $ref: '#/definitions/core.AppliedPolicy'
+      controls:
+        items:
+          $ref: '#/definitions/core.AppliedPolicyControlDetailsResponse'
+        type: array
+      credential:
+        $ref: '#/definitions/core.AppliedPolicyCredential'
+    type: object
+  core.ArrayMatchMode:
+    enum:
+    - all
+    - any
+    type: string
+    x-enum-varnames:
+    - ArrayMatchAll
+    - ArrayMatchAny
+  core.Citation:
+    properties:
+      title:
+        type: string
+      url:
+        type: string
+    type: object
+  core.CommentType:
+    enum:
+    - GENERAL
+    - ACCEPTED
+    - QUESTIONED
+    type: string
+    x-enum-varnames:
+    - CommentTypeGeneral
+    - CommentTypeAccepted
+    - CommentTypeQuestioned
+  core.Control:
+    description: A single requirement within a policy template, identified by its
+      control code
+    properties:
+      cid:
+        description: Assigned by the integrity service at creation
+        readOnly: true
+        type: string
+      citations:
+        items:
+          $ref: '#/definitions/core.Citation'
+        type: array
+      controlCode:
+        description: Alphanumeric, . and -; upper-cased
+        type: string
+      createdAt:
+        format: date-time
+        readOnly: true
+        type: string
+      description:
+        type: string
+      id:
+        readOnly: true
+        type: integer
+      policyId:
+        description: Assigned from the parent policy
+        readOnly: true
+        type: integer
+      title:
+        type: string
+      updatedAt:
+        format: date-time
+        readOnly: true
+        type: string
+    type: object
+  core.CreateAppliedPolicyCredentialRequest:
+    properties:
+      expiresAt:
+        description: Must be in the future
+        example: "2030-01-01T00:00:00Z"
+        format: date-time
+        type: string
+    required:
+    - expiresAt
+    type: object
+  core.CriteriaType:
+    enum:
+    - string
+    - number
+    - boolean
+    - date
+    - list[string]
+    - list[number]
+    type: string
+    x-enum-varnames:
+    - TypeString
+    - TypeNumber
+    - TypeBoolean
+    - TypeDate
+    - TypeListStr
+    - TypeListNum
+  core.CriterionResult:
+    description: One criterion's outcome within an evaluation; the evaluation passes
+      only when every criterion does
+    properties:
+      criteriaIndex:
+        type: integer
+      field:
+        type: string
+      reason:
+        type: string
+      status:
+        $ref: '#/definitions/core.CriterionResultStatus'
+    type: object
+  core.CriterionResultStatus:
+    enum:
+    - pass
+    - fail
+    - skipped
+    type: string
+    x-enum-varnames:
+    - CriterionResultPass
+    - CriterionResultFail
+    - CriterionResultSkipped
+  core.Declaration:
+    description: A submitted claim that a control has been implemented, optionally
+      attested by a CID
+    properties:
+      appliedPolicyControlId:
+        description: Taken from the path on create
+        readOnly: true
+        type: integer
+      attachmentCid:
+        description: Derived from the uploaded bytes; not stored
+        items:
+          type: string
+        readOnly: true
+        type: array
+      cid:
+        description: Assigned by the integrity service
+        readOnly: true
+        type: string
+      createdAt:
+        format: date-time
+        readOnly: true
+        type: string
+      extra:
+        additionalProperties:
+          type: string
+        description: Hashed into the CID; not stored
+        type: object
+      fileAttachments:
+        description: Upload via the with-file endpoint
+        items:
+          $ref: '#/definitions/core.FileAttachment'
+        readOnly: true
+        type: array
+      id:
+        readOnly: true
+        type: integer
+      isAutomated:
+        description: True for indicator-generated only
+        readOnly: true
+        type: boolean
+      isReadyForReview:
+        description: Needs submit_controls_for_review
+        type: boolean
+      statement:
+        type: string
+      subjectLine:
+        type: string
+      submittedAt:
+        format: date-time
+        readOnly: true
+        type: string
+      submittedBy:
+        description: Defaults to the caller identity
+        type: string
+      submittedByDid:
+        description: Verifiable actor; submittedBy is the label
+        readOnly: true
+        type: string
+      updatedAt:
+        format: date-time
+        readOnly: true
+        type: string
+    type: object
+  core.DeclarationDetails:
+    description: A declaration as returned inside control details, without the CID
+      inputs the create call accepts
+    properties:
+      appliedPolicyControlId:
+        type: integer
+      cid:
+        type: string
+      createdAt:
+        format: date-time
+        type: string
+      fileAttachments:
+        items:
+          $ref: '#/definitions/core.FileAttachment'
+        type: array
+      id:
+        type: integer
+      isAutomated:
+        type: boolean
+      isReadyForReview:
+        type: boolean
+      statement:
+        type: string
+      subjectLine:
+        type: string
+      submittedAt:
+        format: date-time
+        type: string
+      submittedBy:
+        type: string
+      submittedByDid:
+        description: Verifiable actor; submittedBy is the label
+        readOnly: true
+        type: string
+      updatedAt:
+        format: date-time
+        type: string
+    type: object
+  core.DeclarationEmitMode:
+    enum:
+    - pass
+    - fail
+    - both
+    - none
+    type: string
+    x-enum-varnames:
+    - DeclarationEmitOnPass
+    - DeclarationEmitOnFail
+    - DeclarationEmitOnBoth
+    - DeclarationEmitOnNone
+  core.DeclarationProfile:
+    properties:
+      emitOn:
+        allOf:
+        - $ref: '#/definitions/core.DeclarationEmitMode'
+        description: When to emit a declaration
+      statementTemplate:
+        type: string
+      titleTemplate:
+        type: string
+    required:
+    - emitOn
+    type: object
+  core.ErrorResponse:
+    description: Error body returned by the governance endpoints; the message is human-readable
+      and not a stable identifier
+    properties:
+      error:
+        example: Invalid request body
+        type: string
+    type: object
+  core.EvaluationFailureDetail:
+    description: The machine-readable reason a criterion failed, including the values
+      compared
+    properties:
+      actualValue: {}
+      arrayMatchMode:
+        $ref: '#/definitions/core.ArrayMatchMode'
+      criteriaIndex:
+        type: integer
+      criteriaType:
+        $ref: '#/definitions/core.CriteriaType'
+      elementPath:
+        type: string
+      expectedValue: {}
+      extractionPath:
+        type: string
+      field:
+        type: string
+      indexPath:
+        items:
+          type: integer
+        type: array
+      missing:
+        type: boolean
+      operator:
+        $ref: '#/definitions/core.OperatorType'
+      reason:
+        type: string
+    type: object
+  core.EvaluationResultStatus:
+    enum:
+    - pass
+    - fail
+    - error
+    - awaiting_evaluation
+    type: string
+    x-enum-varnames:
+    - EvaluationResultPass
+    - EvaluationResultFail
+    - EvaluationResultError
+    - EvaluationResultAwaitingEvaluation
+  core.EventResponse:
+    description: 'The outcome of ingesting an event: what it routed to, and what it
+      created'
+    properties:
+      declarationsCreated:
+        items:
+          type: integer
+        type: array
+      errors:
+        items:
+          type: string
+        type: array
+      evaluationsCreated:
+        type: integer
+      eventId:
+        type: string
+      status:
+        description: '"processed" | "no_route"'
+        type: string
+    type: object
+  core.FileAttachment:
+    description: A file stored against a declaration or review, with its CID and retention
+      window
+    properties:
+      cid:
+        type: string
+      contentType:
+        type: string
+      declarationId:
+        type: integer
+      description:
+        type: string
+      fileName:
+        type: string
+      id:
+        type: integer
+      isPublic:
+        type: boolean
+      retentionExpires:
+        format: date-time
+        type: string
+      reviewId:
+        type: integer
+      sizeBytes:
+        type: integer
+      storagePath:
+        type: string
+      uploadedAt:
+        format: date-time
+        type: string
+      uploadedBy:
+        type: string
+      uploadedByDid:
+        description: Verifiable actor; uploadedBy is the label
+        readOnly: true
+        type: string
+    type: object
+  core.IndicatorApplication:
+    description: An indicator bound to an applied policy control, defining how and
+      when it is evaluated
+    properties:
+      applicationUuid:
+        description: urn:uuid form
+        type: string
+      appliedPolicyControlId:
+        type: integer
+      createdAt:
+        format: date-time
+        type: string
+      criteria:
+        description: Custom indicators only
+        type: object
+      declarationProfile:
+        $ref: '#/definitions/core.DeclarationProfile'
+      extractionRules:
+        description: Custom indicators only
+        type: object
+      id:
+        type: integer
+      indicatorId:
+        description: urn:uuid form
+        type: string
+      lastEvaluatedAt:
+        format: date-time
+        type: string
+      parameters:
+        type: object
+      status:
+        $ref: '#/definitions/core.ApplicationStatus'
+      triggerType:
+        $ref: '#/definitions/core.TriggerType'
+      updatedAt:
+        format: date-time
+        type: string
+    type: object
+  core.IndicatorType:
+    enum:
+    - custom
+    type: string
+    x-enum-varnames:
+    - IndicatorTypeCustom
+  core.OperatorType:
+    enum:
+    - eq
+    - neq
+    - gt
+    - lt
+    - gte
+    - lte
+    - in
+    - notIn
+    - contains
+    - notContains
+    type: string
+    x-enum-varnames:
+    - OpEqual
+    - OpNotEqual
+    - OpGreaterThan
+    - OpLessThan
+    - OpGreaterThanOrEqual
+    - OpLessThanOrEqual
+    - OpIn
+    - OpNotIn
+    - OpContains
+    - OpNotContains
+  core.Organization:
+    description: A company or top-level entity that owns projects and the policy library
+    properties:
+      auth0Id:
+        description: 'Deprecated: use idpOrgId'
+        type: string
+      createdAt:
+        format: date-time
+        readOnly: true
+        type: string
+      description:
+        type: string
+      displayName:
+        type: string
+      id:
+        readOnly: true
+        type: integer
+      idpOrgId:
+        description: Generic IDP organization ID
+        type: string
+      idpProvider:
+        description: IDP provider name (auth0, keycloak, etc)
+        type: string
+      name:
+        type: string
+      updatedAt:
+        format: date-time
+        readOnly: true
+        type: string
+      uuid:
+        description: urn:uuid form
+        readOnly: true
+        type: string
+    type: object
+  core.Policy:
+    description: A reusable template of controls in the organization's library, applied
+      to projects rather than used directly
+    properties:
+      cid:
+        description: Assigned by the integrity service at creation
+        readOnly: true
+        type: string
+      controls:
+        description: Present on read, ignored on update
+        items:
+          $ref: '#/definitions/core.Control'
+        type: array
+      createdAt:
+        format: date-time
+        readOnly: true
+        type: string
+      description:
+        type: string
+      iconUrl:
+        type: string
+      id:
+        readOnly: true
+        type: integer
+      name:
+        type: string
+      organizationId:
+        description: Taken from the path on create
+        readOnly: true
+        type: integer
+      slug:
+        description: Derived from name
+        readOnly: true
+        type: string
+      type:
+        allOf:
+        - $ref: '#/definitions/core.PolicyType'
+        description: See PolicyType for values
+      updatedAt:
+        format: date-time
+        readOnly: true
+        type: string
+      version:
+        type: string
+    type: object
+  core.PolicyType:
+    enum:
+    - Risk Management
+    - Internal
+    - Regulatory
+    - Custom
+    type: string
+    x-enum-varnames:
+    - PolicyTypeRisk
+    - PolicyTypeInternal
+    - PolicyTypeRegulatory
+    - PolicyTypeCustom
+  core.Project:
+    description: An AI initiative within an organization, and the scope most access
+      is granted against
+    properties:
+      archivedAt:
+        description: Set via the archive endpoint
+        format: date-time
+        readOnly: true
+        type: string
+      createdAt:
+        format: date-time
+        readOnly: true
+        type: string
+      description:
+        type: string
+      id:
+        readOnly: true
+        type: integer
+      isArchived:
+        description: Set via the archive endpoint
+        readOnly: true
+        type: boolean
+      name:
+        type: string
+      organizationId:
+        description: Taken from the path on create
+        readOnly: true
+        type: integer
+      slug:
+        description: Derived from name
+        readOnly: true
+        type: string
+      updatedAt:
+        format: date-time
+        readOnly: true
+        type: string
+      uuid:
+        description: urn:uuid form
+        readOnly: true
+        type: string
+    type: object
+  core.Review:
+    description: A reviewer's verdict on a control, recording the outcome and any
+      supporting evidence
+    properties:
+      appliedPolicyControlId:
+        description: Taken from the path on create
+        readOnly: true
+        type: integer
+      attachmentCid:
+        description: Derived from the uploaded bytes; not stored
+        items:
+          type: string
+        readOnly: true
+        type: array
+      cid:
+        description: Assigned by the integrity service
+        readOnly: true
+        type: string
+      commentType:
+        allOf:
+        - $ref: '#/definitions/core.CommentType'
+        description: Only used when outcome is COMMENT
+      createdAt:
+        format: date-time
+        readOnly: true
+        type: string
+      extra:
+        additionalProperties:
+          type: string
+        description: Hashed into the CID; not stored
+        type: object
+      fileAttachments:
+        description: Upload via the with-file endpoint
+        items:
+          $ref: '#/definitions/core.FileAttachment'
+        readOnly: true
+        type: array
+      id:
+        readOnly: true
+        type: integer
+      outcome:
+        $ref: '#/definitions/core.ReviewOutcome'
+      statement:
+        type: string
+      subjectLine:
+        type: string
+      submittedAt:
+        format: date-time
+        readOnly: true
+        type: string
+      submittedBy:
+        description: Defaults to the caller identity
+        type: string
+      submittedByDid:
+        description: Verifiable actor; submittedBy is the label
+        readOnly: true
+        type: string
+      updatedAt:
+        format: date-time
+        readOnly: true
+        type: string
+    type: object
+  core.ReviewDetails:
+    description: A review as returned inside control details, without the CID inputs
+      the create call accepts
+    properties:
+      appliedPolicyControlId:
+        type: integer
+      cid:
+        type: string
+      commentType:
+        type: string
+      createdAt:
+        format: date-time
+        type: string
+      fileAttachments:
+        items:
+          $ref: '#/definitions/core.FileAttachment'
+        type: array
+      id:
+        type: integer
+      outcome:
+        type: string
+      statement:
+        type: string
+      subjectLine:
+        type: string
+      submittedAt:
+        format: date-time
+        type: string
+      submittedBy:
+        type: string
+      submittedByDid:
+        description: Verifiable actor; submittedBy is the label
+        readOnly: true
+        type: string
+      updatedAt:
+        format: date-time
+        type: string
+    type: object
+  core.ReviewOutcome:
+    enum:
+    - NON_COMPLIANT
+    - NOT_APPLICABLE
+    - COMPLIANT
+    - COMMENT
+    type: string
+    x-enum-varnames:
+    - ReviewOutcomeNonCompliant
+    - ReviewOutcomeNotApplicable
+    - ReviewOutcomeCompliant
+    - ReviewOutcomeComment
+  core.TriggerType:
+    enum:
+    - event
+    type: string
+    x-enum-varnames:
+    - TriggerTypeEvent
+  core.UnifiedEventRequest:
+    properties:
+      correlationId:
+        description: Accepted but unused
+        type: string
+      eventSubtype:
+        description: Accepted but unused
+        type: string
+      eventType:
+        description: Only "indicator" is accepted
+        enum:
+        - indicator
+        type: string
+      indicatorId:
+        description: Routing key; required
+        type: string
+      metadata:
+        description: Accepted but unused
+        type: object
+      payload:
+        description: Read by the extraction rules
+        type: object
+      projectId:
+        description: Routing key; required
+        type: string
+      provider:
+        description: Accepted but unused
+        type: string
+      service:
+        description: Accepted but unused
+        type: string
+      source:
+        description: Originating system, e.g. aws
+        type: string
+      timestamp:
+        description: Event time, RFC 3339
+        example: "2026-01-15T09:30:00Z"
+        format: date-time
+        type: string
+    required:
+    - eventType
+    - indicatorId
+    - payload
+    - projectId
+    - source
+    - timestamp
+    type: object
+  handlers.AppliedPolicyWithControlsResponse:
+    description: An applied policy with its controls, each carrying the status derived
+      from its declarations and reviews
+    properties:
+      controls:
+        items:
+          $ref: '#/definitions/core.AppliedPolicyControlResponse'
+        type: array
+      policy:
+        $ref: '#/definitions/core.AppliedPolicy'
+    type: object
+  handlers.ApplyPolicyRequest:
+    properties:
+      name:
+        type: string
+    required:
+    - name
+    type: object
+  handlers.ApplyProjectIndicatorRequest:
+    properties:
+      appliedPolicyControlId:
+        description: Merged with the plural field
+        type: integer
+      appliedPolicyControlIds:
+        description: Controls to apply to
+        items:
+          type: integer
+        type: array
+      status:
+        allOf:
+        - $ref: '#/definitions/core.ApplicationStatus'
+        description: Defaults to active
+    type: object
+  handlers.AttachmentURLResponse:
+    description: A time-limited signed URL for an attachment, and how long it stays
+      valid
+    properties:
+      expiresIn:
+        description: Rendered as "<n> minutes", not a number
+        example: 60 minutes
+        type: string
+      url:
+        type: string
+    type: object
+  handlers.ConvertedPolicyControl:
+    properties:
+      citations:
+        description: Empty unless the workbook has a Citations sheet
+        items:
+          $ref: '#/definitions/core.Citation'
+        type: array
+      controlCode:
+        type: string
+      description:
+        type: string
+      title:
+        type: string
+    type: object
+  handlers.ConvertedPolicyResponse:
+    description: A policy parsed from an uploaded workbook, shaped to post to the
+      create-policy endpoint
+    properties:
+      controls:
+        items:
+          $ref: '#/definitions/handlers.ConvertedPolicyControl'
+        type: array
+      description:
+        type: string
+      iconUrl:
+        type: string
+      name:
+        type: string
+      type:
+        type: string
+      version:
+        type: string
+    type: object
+  handlers.CreateActivityLogRequest:
+    properties:
+      action:
+        type: string
+      logs:
+        type: object
+      projectId:
+        description: Must be in the active org; optional
+        type: integer
+      resource:
+        type: string
+    required:
+    - action
+    - logs
+    - resource
+    type: object
+  handlers.CreateControlRequest:
+    properties:
+      citations:
+        items:
+          $ref: '#/definitions/core.Citation'
+        type: array
+      controlCode:
+        description: Alphanumeric, . and -; upper-cased
+        type: string
+      description:
+        type: string
+      title:
+        type: string
+    required:
+    - controlCode
+    - description
+    - title
+    type: object
+  handlers.CreateDeclarationRequest:
+    properties:
+      extra:
+        additionalProperties:
+          type: string
+        description: Hashed into the CID; not stored
+        type: object
+      isReadyForReview:
+        description: Needs submit_controls_for_review
+        type: boolean
+      statement:
+        type: string
+      subjectLine:
+        type: string
+      submittedBy:
+        description: Defaults to the caller identity
+        type: string
+    required:
+    - statement
+    - subjectLine
+    type: object
+  handlers.CreateOrganizationRequest:
+    properties:
+      auth0Id:
+        description: 'Deprecated: use idpOrgId'
+        type: string
+      description:
+        type: string
+      displayName:
+        type: string
+      idpOrgId:
+        description: Generic IDP organization ID
+        type: string
+      idpProvider:
+        description: IDP provider name (auth0, keycloak, etc)
+        type: string
+      name:
+        type: string
+    required:
+    - name
+    type: object
+  handlers.CreatePolicyRequest:
+    properties:
+      controls:
+        description: At least one control is required
+        items:
+          $ref: '#/definitions/handlers.CreateControlRequest'
+        minItems: 1
+        type: array
+      description:
+        type: string
+      iconUrl:
+        type: string
+      name:
+        type: string
+      type:
+        $ref: '#/definitions/core.PolicyType'
+      version:
+        description: SemVer with no leading "v", e.g. 1.2.3
+        type: string
+    required:
+    - controls
+    - description
+    - name
+    - type
+    - version
+    type: object
+  handlers.CreateProjectIndicatorRequest:
+    properties:
+      criteria:
+        items:
+          type: object
+        type: array
+      declarationProfile:
+        $ref: '#/definitions/core.DeclarationProfile'
+      description:
+        type: string
+      extractionRules:
+        type: object
+      name:
+        type: string
+      parameters:
+        type: object
+      provider:
+        type: string
+      slug:
+        description: Slugified; derived from name
+        type: string
+      tags:
+        items:
+          type: string
+        type: array
+      triggerType:
+        allOf:
+        - $ref: '#/definitions/core.TriggerType'
+        description: Defaults to event
+      type:
+        allOf:
+        - $ref: '#/definitions/core.IndicatorType'
+        description: Defaults to custom, the only accepted value
+    required:
+    - declarationProfile
+    - name
+    type: object
+  handlers.CreateProjectRequest:
+    properties:
+      description:
+        type: string
+      name:
+        type: string
+    required:
+    - description
+    - name
+    type: object
+  handlers.CreateReviewRequest:
+    properties:
+      commentType:
+        allOf:
+        - $ref: '#/definitions/core.CommentType'
+        description: Only used when outcome is COMMENT
+      extra:
+        additionalProperties:
+          type: string
+        description: Hashed into the CID; not stored
+        type: object
+      outcome:
+        $ref: '#/definitions/core.ReviewOutcome'
+      statement:
+        type: string
+      subjectLine:
+        type: string
+      submittedBy:
+        description: Defaults to the caller identity
+        type: string
+    required:
+    - outcome
+    type: object
+  handlers.DeclarationWithAttachmentsResponse:
+    description: A newly created declaration together with the attachments uploaded
+      alongside it
+    properties:
+      attachments:
+        items:
+          $ref: '#/definitions/core.FileAttachment'
+        type: array
+      declaration:
+        $ref: '#/definitions/core.Declaration'
+    type: object
+  handlers.EvaluationResultResponse:
+    description: One indicator evaluation, including its criteria outcomes and any
+      declaration it produced
+    properties:
+      applicationId:
+        type: integer
+      createdAt:
+        format: date-time
+        type: string
+      criterionResults:
+        items:
+          $ref: '#/definitions/core.CriterionResult'
+        type: array
+      declarationIds:
+        items:
+          type: integer
+        type: array
+      durationMs:
+        description: Evaluation wall time in milliseconds
+        type: integer
+      evaluatedAt:
+        format: date-time
+        type: string
+      extractedFields:
+        type: object
+      failureDetails:
+        items:
+          $ref: '#/definitions/core.EvaluationFailureDetail'
+        type: array
+      failureReasons:
+        items:
+          type: string
+        type: array
+      id:
+        description: urn:uuid form
+        type: string
+      indicatorId:
+        description: urn:uuid form
+        type: string
+      result:
+        $ref: '#/definitions/core.EvaluationResultStatus'
+      triggerSource:
+        type: string
+    type: object
+  handlers.EvaluationResultsListResponse:
+    description: A page of evaluation results, with the total available for pagination
+    properties:
+      limit:
+        type: integer
+      offset:
+        type: integer
+      results:
+        items:
+          $ref: '#/definitions/handlers.EvaluationResultResponse'
+        type: array
+      total:
+        type: integer
+    type: object
+  handlers.ExportPolicyControlRequest:
+    properties:
+      citations:
+        description: Title/URL pairs in the sheet
+        items:
+          $ref: '#/definitions/core.Citation'
+        type: array
+      controlCode:
+        type: string
+      description:
+        type: string
+      title:
+        type: string
+    type: object
+  handlers.ExportPolicyRequest:
+    properties:
+      controls:
+        description: Rendered into the Controls sheet
+        items:
+          $ref: '#/definitions/handlers.ExportPolicyControlRequest'
+        type: array
+      description:
+        type: string
+      iconUrl:
+        type: string
+      name:
+        type: string
+      type:
+        type: string
+      version:
+        type: string
+    type: object
+  handlers.HealthCheckAuthResponse:
+    description: Status of the governance service's connection to the auth service
+    properties:
+      auth:
+        example: verified
+        type: string
+      service:
+        example: governance-service
+        type: string
+      status:
+        example: healthy
+        type: string
+      timestamp:
+        format: date-time
+        type: string
+      version:
+        example: 1.0.0
+        type: string
+    type: object
+  handlers.HealthReadyResponse:
+    description: Readiness status; reports whether the service can serve traffic,
+      including its database
+    properties:
+      database:
+        example: ok
+        type: string
+      service:
+        example: governance-service
+        type: string
+      status:
+        example: ready
+        type: string
+      timestamp:
+        format: date-time
+        type: string
+      version:
+        example: 1.0.0
+        type: string
+    type: object
+  handlers.HealthResponse:
+    description: Liveness status; reports that the service process is running, not
+      that its dependencies are
+    properties:
+      service:
+        example: governance-service
+        type: string
+      status:
+        example: healthy
+        type: string
+      timestamp:
+        format: date-time
+        type: string
+      version:
+        example: 1.0.0
+        type: string
+    type: object
+  handlers.IndicatorApplicationListResponse:
+    description: The indicator applications matching the request, unpaginated
+    properties:
+      applications:
+        items:
+          $ref: '#/definitions/handlers.IndicatorApplicationResponse'
+        type: array
+      limit:
+        type: integer
+      offset:
+        type: integer
+      total:
+        type: integer
+    type: object
+  handlers.IndicatorApplicationResponse:
+    description: An indicator application reduced to its identity and status
+    properties:
+      applicationUuid:
+        description: urn:uuid form
+        type: string
+      appliedPolicyControlId:
+        type: integer
+      createdAt:
+        format: date-time
+        type: string
+      id:
+        type: integer
+      indicatorId:
+        description: urn:uuid form
+        type: string
+      lastEvaluatedAt:
+        format: date-time
+        type: string
+      status:
+        $ref: '#/definitions/core.ApplicationStatus'
+      updatedAt:
+        format: date-time
+        type: string
+    type: object
+  handlers.IndicatorApplicationsResponse:
+    description: The indicator applications created by applying an indicator to one
+      or more controls
+    properties:
+      applications:
+        items:
+          $ref: '#/definitions/handlers.IndicatorApplicationResponse'
+        type: array
+    type: object
+  handlers.PolicyManifestRequest:
+    properties:
+      includeBlobs:
+        type: boolean
+      includeContext:
+        type: boolean
+      policyCids:
+        description: At least one CID is required
+        items:
+          type: string
+        minItems: 1
+        type: array
+    required:
+    - policyCids
+    type: object
+  handlers.PolicyReportRequest:
+    properties:
+      format:
+        description: pdf returns a PDF, else a zip
+        example: pdf
+        type: string
+      paper:
+        description: pdfgen default when omitted
+        example: a4
+        type: string
+      policyCids:
+        description: At least one CID is required
+        items:
+          type: string
+        minItems: 1
+        type: array
+    required:
+    - policyCids
+    type: object
+  handlers.ProjectIndicatorApplicationDetailsListResponse:
+    description: The expanded indicator applications matching the request, unpaginated
+    properties:
+      applications:
+        items:
+          $ref: '#/definitions/handlers.ProjectIndicatorApplicationDetailsResponse'
+        type: array
+      limit:
+        type: integer
+      offset:
+        type: integer
+      total:
+        type: integer
+    type: object
+  handlers.ProjectIndicatorApplicationDetailsResponse:
+    description: An indicator application expanded with its template and the control
+      it is applied to
+    properties:
+      applicationUuid:
+        description: urn:uuid form
+        type: string
+      appliedPolicyControlId:
+        type: integer
+      appliedPolicyId:
+        type: integer
+      appliedPolicyName:
+        type: string
+      appliedPolicySlug:
+        type: string
+      controlCode:
+        type: string
+      controlId:
+        type: integer
+      controlTitle:
+        type: string
+      createdAt:
+        format: date-time
+        type: string
+      id:
+        type: integer
+      indicator:
+        $ref: '#/definitions/handlers.ProjectIndicatorResponse'
+      indicatorId:
+        description: urn:uuid form
+        type: string
+      lastEvaluatedAt:
+        format: date-time
+        type: string
+      latestEvaluation:
+        $ref: '#/definitions/handlers.EvaluationResultResponse'
+      projectId:
+        type: integer
+      status:
+        $ref: '#/definitions/core.ApplicationStatus'
+      updatedAt:
+        format: date-time
+        type: string
+    type: object
+  handlers.ProjectIndicatorListResponse:
+    description: A page of project indicator templates, with the total available for
+      pagination
+    properties:
+      indicators:
+        items:
+          $ref: '#/definitions/handlers.ProjectIndicatorResponse'
+        type: array
+      limit:
+        type: integer
+      offset:
+        type: integer
+      total:
+        type: integer
+    type: object
+  handlers.ProjectIndicatorResponse:
+    description: A project-scoped indicator template, with a count of the controls
+      it is applied to
+    properties:
+      createdAt:
+        format: date-time
+        type: string
+      criteria:
+        items:
+          type: object
+        type: array
+      declarationProfile:
+        $ref: '#/definitions/core.DeclarationProfile'
+      description:
+        type: string
+      extractionRules:
+        type: object
+      id:
+        description: urn:uuid form
+        type: string
+      name:
+        type: string
+      parameters:
+        type: object
+      projectId:
+        type: integer
+      provider:
+        type: string
+      slug:
+        type: string
+      tags:
+        items:
+          type: string
+        type: array
+      triggerType:
+        $ref: '#/definitions/core.TriggerType'
+      type:
+        $ref: '#/definitions/core.IndicatorType'
+      updatedAt:
+        format: date-time
+        type: string
+      usageCount:
+        type: integer
+    type: object
+  handlers.ReviewWithAttachmentsResponse:
+    description: A newly created review together with the attachments uploaded alongside
+      it
+    properties:
+      attachments:
+        items:
+          $ref: '#/definitions/core.FileAttachment'
+        type: array
+      review:
+        $ref: '#/definitions/core.Review'
+    type: object
+  handlers.RevokeCredentialRequest:
+    properties:
+      reason:
+        type: string
+    required:
+    - reason
+    type: object
+  handlers.SetArchivedRequest:
+    properties:
+      archived:
+        type: boolean
+    required:
+    - archived
+    type: object
+host: localhost:10001
+info:
+  contact: {}
+  description: REST API for managing organizations, projects, policies, controls,
+    indicators, evidence attachments, and compliance workflows within Governance Studio.
+  title: Governance Studio API
+  version: 1.0.0
+paths:
+  /api/v1/activity-logs:
+    post:
+      consumes:
+      - application/json
+      description: Record a new activity log for the active organization or a project
+        and return the persisted record
+      parameters:
+      - description: Activity log payload
+        in: body
+        name: payload
+        required: true
+        schema:
+          $ref: '#/definitions/handlers.CreateActivityLogRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created activity log
+          schema:
+            $ref: '#/definitions/core.ActivityLog'
+        "400":
+          description: Bad request - Invalid request body or project not in active
+            organization
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "401":
+          description: Unauthorized - Authentication required
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "403":
+          description: Forbidden - No access to the organization or project
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "404":
+          description: Organization or project not found
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: Create activity log
+      tags:
+      - Activity Logs
+  /api/v1/attachments/{attachmentId}:
+    get:
+      description: Retrieve and stream the stored file for the given attachment
+      parameters:
+      - description: Attachment ID
+        in: path
+        name: attachmentId
+        required: true
+        type: integer
+      produces:
+      - application/octet-stream
+      responses:
+        "200":
+          description: Attachment file stream
+          schema:
+            type: file
+        "400":
+          description: Bad request - Invalid attachment ID
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "401":
+          description: Unauthorized - Missing or invalid token
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "403":
+          description: Forbidden - Insufficient permissions
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "404":
+          description: Attachment not found
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: Download attachment
+      tags:
+      - Attachments
+  /api/v1/attachments/{attachmentId}/download:
+    get:
+      description: Permanent endpoint that redirects to a freshly generated short-lived
+        signed URL
+      parameters:
+      - description: Attachment ID
+        in: path
+        name: attachmentId
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "307":
+          description: Redirect to short-lived signed URL
+        "400":
+          description: Bad request - Invalid attachment ID
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "401":
+          description: Unauthorized - Missing or invalid token
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "404":
+          description: Attachment not found
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: Download attachment public URL
+      tags:
+      - Attachments
+  /api/v1/attachments/{attachmentId}/url:
+    get:
+      description: Generate a time-limited public URL for the attachment file
+      parameters:
+      - description: Attachment ID
+        in: path
+        name: attachmentId
+        required: true
+        type: integer
+      - description: 'Expiration in minutes (default: 60)'
+        in: query
+        name: expiration
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Signed URL and its expiration window
+          schema:
+            $ref: '#/definitions/handlers.AttachmentURLResponse'
+        "400":
+          description: Bad request - Invalid attachment ID or expiration time
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "401":
+          description: Unauthorized - Missing or invalid token
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "404":
+          description: Attachment not found
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: Get attachment public URL
+      tags:
+      - Attachments
+  /api/v1/organizations:
+    get:
+      description: Retrieve a list of all organizations
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Organizations
+          schema:
+            items:
+              $ref: '#/definitions/core.Organization'
+            type: array
+        "401":
+          description: Unauthorized - Authentication required
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: List all organizations
+      tags:
+      - Organizations
+    post:
+      consumes:
+      - application/json
+      description: Create a new organization and add the creating user as organization
+        owner
+      parameters:
+      - description: Organization payload
+        in: body
+        name: organization
+        required: true
+        schema:
+          $ref: '#/definitions/handlers.CreateOrganizationRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created organization
+          schema:
+            $ref: '#/definitions/core.Organization'
+        "400":
+          description: Bad request - Invalid request body
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "401":
+          description: Unauthorized - Authentication required
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "403":
+          description: Forbidden - Insufficient permissions
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: Create organization
+      tags:
+      - Organizations
+  /api/v1/organizations/{orgId}:
+    get:
+      description: Retrieve a specific organization by its ID
+      parameters:
+      - description: Organization ID or UUID (urn:uuid optional)
+        in: path
+        name: orgId
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Organization
+          schema:
+            $ref: '#/definitions/core.Organization'
+        "400":
+          description: Bad request - Invalid organization ID
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "401":
+          description: Unauthorized - Authentication required
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "403":
+          description: Forbidden - No organization access
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "404":
+          description: Organization not found
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: Get organization by ID
+      tags:
+      - Organizations
+  /api/v1/organizations/{orgId}/activity-logs:
+    get:
+      description: Retrieve activity logs for a specific organization, scoped to the
+        caller's accessible projects when not an organization owner
+      parameters:
+      - description: Organization ID or UUID (urn:uuid optional)
+        in: path
+        name: orgId
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Activity logs
+          schema:
+            items:
+              $ref: '#/definitions/core.ActivityLog'
+            type: array
+        "400":
+          description: Bad request - Invalid organization ID
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "401":
+          description: Unauthorized - Authentication required
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "403":
+          description: Forbidden - Insufficient permissions
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "404":
+          description: Organization not found
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: List activity logs by organization
+      tags:
+      - Activity Logs
+  /api/v1/organizations/{orgId}/members/{userId}/activity-logs:
+    get:
+      description: Retrieve one member's activity logs in an organization, scoped
+        to the caller's accessible projects when not an organization owner. A did:key
+        must name a current member of the organization; a UUID matches any recorded
+        actor, including a former member
+      parameters:
+      - description: Organization ID or UUID (urn:uuid optional)
+        in: path
+        name: orgId
+        required: true
+        type: string
+      - description: Member user ID (urn:uuid optional) or did:key
+        in: path
+        name: userId
+        required: true
+        type: string
+      - description: Filter logs created at or after this timestamp, RFC 3339
+        example: "2026-01-15T09:30:00Z"
+        in: query
+        name: since
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Activity logs
+          schema:
+            items:
+              $ref: '#/definitions/core.ActivityLog'
+            type: array
+        "400":
+          description: Bad request - Invalid organization ID, user ID, or since timestamp
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "401":
+          description: Unauthorized - Authentication required
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "403":
+          description: Forbidden - Insufficient permissions
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "404":
+          description: Organization not found, or a did:key naming no current member
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: List activity logs by organization member
+      tags:
+      - Activity Logs
+  /api/v1/organizations/{orgId}/policies:
+    get:
+      description: List all policies for an organization, including their controls
+      parameters:
+      - description: Organization ID or UUID (urn:uuid optional)
+        in: path
+        name: orgId
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Policies with controls
+          schema:
+            items:
+              $ref: '#/definitions/core.Policy'
+            type: array
+        "400":
+          description: Bad request - Invalid organization ID
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "401":
+          description: Unauthorized - Authentication required
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "403":
+          description: Forbidden - No organization access
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: List all policies
+      tags:
+      - Policies
+    post:
+      consumes:
+      - application/json
+      description: Create a new policy within an organization and return the persisted
+        record
+      parameters:
+      - description: Organization ID or UUID (urn:uuid optional)
+        in: path
+        name: orgId
+        required: true
+        type: string
+      - description: Policy object
+        in: body
+        name: policy
+        required: true
+        schema:
+          $ref: '#/definitions/handlers.CreatePolicyRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created policy
+          schema:
+            $ref: '#/definitions/core.Policy'
+        "400":
+          description: Bad request - Invalid organization ID or request body
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "401":
+          description: Unauthorized - Authentication required
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "403":
+          description: Forbidden - No organization access or insufficient permissions
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "404":
+          description: Organization not found
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "409":
+          description: Name, version, URL, or content already taken in this organization
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: Create policy
+      tags:
+      - Policies
+  /api/v1/organizations/{orgId}/policies/{policyId}:
+    get:
+      description: Retrieve a specific policy by ID, including its controls
+      parameters:
+      - description: Organization ID or UUID (urn:uuid optional)
+        in: path
+        name: orgId
+        required: true
+        type: string
+      - description: Policy ID, slug:my-policy@1.2.0, or urn:cid:bafy...
+        in: path
+        name: policyId
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Policy with controls
+          schema:
+            $ref: '#/definitions/core.Policy'
+        "400":
+          description: Bad request - Invalid organization ID or policy ID
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "401":
+          description: Unauthorized - Authentication required
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "403":
+          description: Forbidden - No organization access
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "404":
+          description: Policy not found
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: Get policy
+      tags:
+      - Policies
+  /api/v1/organizations/{orgId}/policies/{policyId}/controls:
+    get:
+      description: List all controls under a specific policy
+      parameters:
+      - description: Organization ID or UUID (urn:uuid optional)
+        in: path
+        name: orgId
+        required: true
+        type: string
+      - description: Policy ID, slug:my-policy@1.2.0, or urn:cid:bafy...
+        in: path
+        name: policyId
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Controls
+          schema:
+            items:
+              $ref: '#/definitions/core.Control'
+            type: array
+        "400":
+          description: Bad request - Invalid organization ID or policy ID
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "401":
+          description: Unauthorized - Authentication required
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "403":
+          description: Forbidden - No organization access
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "404":
+          description: Policy not found
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: List controls for a policy
+      tags:
+      - Controls
+  /api/v1/organizations/{orgId}/policies/{policyId}/controls/{controlId}:
+    get:
+      description: Retrieve a specific control by ID
+      parameters:
+      - description: Organization ID or UUID (urn:uuid optional)
+        in: path
+        name: orgId
+        required: true
+        type: string
+      - description: Policy ID, slug:my-policy@1.2.0, or urn:cid:bafy...
+        in: path
+        name: policyId
+        required: true
+        type: string
+      - description: Control ID, code:AC-1, or urn:cid:bafy...
+        in: path
+        name: controlId
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Control
+          schema:
+            $ref: '#/definitions/core.Control'
+        "400":
+          description: Bad request - Invalid control ID
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "401":
+          description: Unauthorized - Authentication required
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "403":
+          description: Forbidden - No organization access
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "404":
+          description: Control not found
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: Get control
+      tags:
+      - Controls
+  /api/v1/organizations/{orgId}/projects:
+    get:
+      description: Retrieve projects for a specific organization, scoped to the caller's
+        assigned projects when not an organization owner
+      parameters:
+      - description: Organization ID or UUID (urn:uuid optional)
+        in: path
+        name: orgId
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Projects
+          schema:
+            items:
+              $ref: '#/definitions/core.Project'
+            type: array
+        "400":
+          description: Bad request - Invalid organization ID
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "401":
+          description: Unauthorized - Authentication required
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "403":
+          description: Forbidden - No organization access
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "404":
+          description: Organization not found
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: List projects under an organization
+      tags:
+      - Projects
+    post:
+      consumes:
+      - application/json
+      description: Create a new project under an organization
+      parameters:
+      - description: Organization ID or UUID (urn:uuid optional)
+        in: path
+        name: orgId
+        required: true
+        type: string
+      - description: Project data
+        in: body
+        name: project
+        required: true
+        schema:
+          $ref: '#/definitions/handlers.CreateProjectRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created project
+          schema:
+            $ref: '#/definitions/core.Project'
+        "400":
+          description: Bad request - Invalid organization ID or request body
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "401":
+          description: Unauthorized - Authentication required
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "403":
+          description: Forbidden - No organization access or insufficient permissions
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "404":
+          description: Organization not found
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "409":
+          description: Name or URL already taken in this organization
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: Create project
+      tags:
+      - Projects
+  /api/v1/organizations/{orgId}/projects/{projectId}:
+    get:
+      description: Retrieve a specific project by its ID
+      parameters:
+      - description: Organization ID or UUID (urn:uuid optional)
+        in: path
+        name: orgId
+        required: true
+        type: string
+      - description: Project ID, UUID (urn:uuid optional), or slug:my-project
+        in: path
+        name: projectId
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Project
+          schema:
+            $ref: '#/definitions/core.Project'
+        "400":
+          description: Bad request - Invalid project ID
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "401":
+          description: Unauthorized - Authentication required
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "403":
+          description: Forbidden - No project access
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "404":
+          description: Project not found
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: Get project
+      tags:
+      - Projects
+  /api/v1/organizations/{orgId}/projects/{projectId}/archived:
+    put:
+      consumes:
+      - application/json
+      description: Archive or unarchive a specific project; archiving requires all
+        applied policies to be archived first
+      parameters:
+      - description: Organization ID or UUID (urn:uuid optional)
+        in: path
+        name: orgId
+        required: true
+        type: string
+      - description: Project ID, UUID (urn:uuid optional), or slug:my-project
+        in: path
+        name: projectId
+        required: true
+        type: string
+      - description: Archived state
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/handlers.SetArchivedRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Updated project
+          schema:
+            $ref: '#/definitions/core.Project'
+        "400":
+          description: Bad request - Invalid project ID, missing archived flag, or
+            active policies remain
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "401":
+          description: Unauthorized - Authentication required
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "403":
+          description: Forbidden - No project access or insufficient permissions
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "404":
+          description: Project not found
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: Set project archived state
+      tags:
+      - Projects
+  /api/v1/organizations/active/{authId}:
+    get:
+      description: Retrieve a specific organization using an auth identifier
+      parameters:
+      - description: Auth ID
+        in: path
+        name: authId
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Organization
+          schema:
+            $ref: '#/definitions/core.Organization'
+        "400":
+          description: Bad request - Invalid auth ID
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "401":
+          description: Unauthorized - Authentication required
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "404":
+          description: Organization not found
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: Get organization by Auth ID
+      tags:
+      - Organizations
+  /api/v1/policies/convert:
+    post:
+      consumes:
+      - multipart/form-data
+      description: Parses an uploaded Excel workbook and returns structured JSON policy
+        data
+      parameters:
+      - description: Excel file (.xlsx or .xls)
+        in: formData
+        name: file
+        required: true
+        type: file
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Converted policy data
+          schema:
+            $ref: '#/definitions/handlers.ConvertedPolicyResponse'
+        "400":
+          description: Bad request - Invalid or malformed Excel file
+          schema:
+            $ref: '#/definitions/core.APIError'
+        "401":
+          description: Unauthorized - Authentication required
+          schema:
+            $ref: '#/definitions/core.APIError'
+        "403":
+          description: Forbidden - Insufficient permissions
+          schema:
+            $ref: '#/definitions/core.APIError'
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/core.APIError'
+      security:
+      - BearerAuth: []
+      summary: Convert policy Excel to JSON
+      tags:
+      - Policies
+  /api/v1/policies/export:
+    post:
+      consumes:
+      - application/json
+      description: Accepts structured policy JSON and returns a downloadable Excel
+        (.xlsx) workbook
+      parameters:
+      - description: Policy data
+        in: body
+        name: policy
+        required: true
+        schema:
+          $ref: '#/definitions/handlers.ExportPolicyRequest'
+      produces:
+      - application/vnd.openxmlformats-officedocument.spreadsheetml.sheet
+      responses:
+        "200":
+          description: Excel file
+          schema:
+            type: file
+        "400":
+          description: Bad request - Invalid policy JSON
+          schema:
+            $ref: '#/definitions/core.APIError'
+        "401":
+          description: Unauthorized - Authentication required
+          schema:
+            $ref: '#/definitions/core.APIError'
+        "403":
+          description: Forbidden - Insufficient permissions
+          schema:
+            $ref: '#/definitions/core.APIError'
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/core.APIError'
+      security:
+      - BearerAuth: []
+      summary: Export policy JSON to Excel
+      tags:
+      - Policies
+  /api/v1/projects/{projectId}/activity-logs:
+    get:
+      description: Retrieve activity logs for a specific project
+      parameters:
+      - description: Project ID, UUID (urn:uuid optional), or slug:my-project
+        in: path
+        name: projectId
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Activity logs
+          schema:
+            items:
+              $ref: '#/definitions/core.ActivityLog'
+            type: array
+        "400":
+          description: Bad request - Invalid project ID
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "401":
+          description: Unauthorized - Authentication required
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "403":
+          description: Forbidden - No project access or insufficient permissions
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "404":
+          description: Project not found
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: List activity logs by project
+      tags:
+      - Activity Logs
+  /api/v1/projects/{projectId}/policies:
+    get:
+      description: List all policies applied to a specific project
+      parameters:
+      - description: Project ID, UUID (urn:uuid optional), or slug:my-project
+        in: path
+        name: projectId
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Applied policies
+          schema:
+            items:
+              $ref: '#/definitions/core.AppliedPolicy'
+            type: array
+        "400":
+          description: Bad request - Invalid project ID
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "401":
+          description: Unauthorized - Authentication required
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "403":
+          description: Forbidden - No project access
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "404":
+          description: Project not found
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: List applied policies
+      tags:
+      - Applied Policies
+  /api/v1/projects/{projectId}/policies/{appliedPolicyId}:
+    get:
+      description: Retrieve an applied policy and its controls with computed status
+        by project and policy IDs
+      parameters:
+      - description: Project ID, UUID (urn:uuid optional), or slug:my-project
+        in: path
+        name: projectId
+        required: true
+        type: string
+      - description: Applied policy ID, slug:my-policy, or urn:cid:bafy...
+        in: path
+        name: appliedPolicyId
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Applied policy with controls
+          schema:
+            $ref: '#/definitions/handlers.AppliedPolicyWithControlsResponse'
+        "400":
+          description: Bad request - Invalid project ID or applied policy ID
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "401":
+          description: Unauthorized - Authentication required
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "403":
+          description: Forbidden - No project access
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "404":
+          description: Applied policy not found
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: Get applied policy by IDs
+      tags:
+      - Applied Policies
+    put:
+      description: Touch the updated_at timestamp on an applied policy for UI sorting
+      parameters:
+      - description: Project ID, UUID (urn:uuid optional), or slug:my-project
+        in: path
+        name: projectId
+        required: true
+        type: string
+      - description: Applied policy ID, slug:my-policy, or urn:cid:bafy...
+        in: path
+        name: appliedPolicyId
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Updated applied policy
+          schema:
+            $ref: '#/definitions/core.AppliedPolicy'
+        "400":
+          description: Bad request - Invalid project ID or applied policy ID
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "401":
+          description: Unauthorized - Authentication required
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "403":
+          description: Forbidden - No project access
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "404":
+          description: Applied policy not found
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: Update applied policy timestamp
+      tags:
+      - Applied Policies
+  /api/v1/projects/{projectId}/policies/{appliedPolicyId}/archived:
+    put:
+      consumes:
+      - application/json
+      description: Archive or unarchive a specific policy applied to a project
+      parameters:
+      - description: Project ID, UUID (urn:uuid optional), or slug:my-project
+        in: path
+        name: projectId
+        required: true
+        type: string
+      - description: Applied policy ID, slug:my-policy, or urn:cid:bafy...
+        in: path
+        name: appliedPolicyId
+        required: true
+        type: string
+      - description: Archived state
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/handlers.SetArchivedRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Updated applied policy
+          schema:
+            $ref: '#/definitions/core.AppliedPolicy'
+        "400":
+          description: Bad request - Invalid IDs or missing archived flag
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "401":
+          description: Unauthorized - Authentication required
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "403":
+          description: Forbidden - No project access or insufficient permissions
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "404":
+          description: Applied policy not found
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: Set applied policy archived state
+      tags:
+      - Applied Policies
+  /api/v1/projects/{projectId}/policies/{appliedPolicyId}/controls/{appliedPolicyControlId}:
+    get:
+      description: Retrieve a control from an applied policy by applied policy control
+        ID
+      parameters:
+      - description: Project ID, UUID (urn:uuid optional), or slug:my-project
+        in: path
+        name: projectId
+        required: true
+        type: string
+      - description: Applied policy ID, slug:my-policy, or urn:cid:bafy...
+        in: path
+        name: appliedPolicyId
+        required: true
+        type: string
+      - description: Applied policy control ID, code:AC-1, or urn:cid:bafy...
+        in: path
+        name: appliedPolicyControlId
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Applied policy control
+          schema:
+            $ref: '#/definitions/core.AppliedPolicyControlResponse'
+        "400":
+          description: Bad request - Invalid project ID, applied policy ID, or control
+            ID
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "401":
+          description: Unauthorized - Authentication required
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "403":
+          description: Forbidden - No project access or insufficient permissions
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "404":
+          description: Applied policy control not found
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: Get applied policy control
+      tags:
+      - Applied Policies
+  /api/v1/projects/{projectId}/policies/{appliedPolicyId}/controls/{appliedPolicyControlId}/declarations:
+    post:
+      consumes:
+      - application/json
+      description: Create a declaration for a specific control and return the persisted
+        record
+      parameters:
+      - description: Project ID, UUID (urn:uuid optional), or slug:my-project
+        in: path
+        name: projectId
+        required: true
+        type: string
+      - description: Applied policy ID, slug:my-policy, or urn:cid:bafy...
+        in: path
+        name: appliedPolicyId
+        required: true
+        type: string
+      - description: Applied policy control ID, code:AC-1, or urn:cid:bafy...
+        in: path
+        name: appliedPolicyControlId
+        required: true
+        type: string
+      - description: Declaration data
+        in: body
+        name: declaration
+        required: true
+        schema:
+          $ref: '#/definitions/handlers.CreateDeclarationRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created declaration
+          schema:
+            $ref: '#/definitions/core.Declaration'
+        "400":
+          description: Bad request - Invalid IDs or request body
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "401":
+          description: Unauthorized - Authentication required
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "403":
+          description: Forbidden - Insufficient permissions to create declarations
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "404":
+          description: Not found - Unknown or mismatched identifier
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: Create declaration on a control
+      tags:
+      - Declarations
+  /api/v1/projects/{projectId}/policies/{appliedPolicyId}/controls/{appliedPolicyControlId}/declarations/with-file:
+    post:
+      consumes:
+      - multipart/form-data
+      description: Create a declaration on a control with file attachment(s) and return
+        the declaration with stored attachments
+      parameters:
+      - description: Project ID, UUID (urn:uuid optional), or slug:my-project
+        in: path
+        name: projectId
+        required: true
+        type: string
+      - description: Applied policy ID, slug:my-policy, or urn:cid:bafy...
+        in: path
+        name: appliedPolicyId
+        required: true
+        type: string
+      - description: Applied policy control ID, code:AC-1, or urn:cid:bafy...
+        in: path
+        name: appliedPolicyControlId
+        required: true
+        type: string
+      - description: Declaration JSON string
+        in: formData
+        name: declaration
+        required: true
+        type: string
+      - description: Attachment files
+        in: formData
+        name: files
+        type: file
+      - description: Attachment description
+        in: formData
+        name: description
+        type: string
+      - description: Whether the file is public
+        in: formData
+        name: isPublic
+        type: string
+      - description: Retention policy
+        in: formData
+        name: retentionPeriod
+        type: string
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created declaration with attachments
+          schema:
+            $ref: '#/definitions/handlers.DeclarationWithAttachmentsResponse'
+        "400":
+          description: Bad request - Invalid IDs or declaration data
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "401":
+          description: Unauthorized - Authentication required
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "403":
+          description: Forbidden - Insufficient permissions to create declarations
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "404":
+          description: Not found - Unknown or mismatched identifier
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: Create declaration with attachment
+      tags:
+      - Declarations
+  /api/v1/projects/{projectId}/policies/{appliedPolicyId}/controls/{appliedPolicyControlId}/reviews:
+    post:
+      consumes:
+      - application/json
+      description: Submit a review for a specific control and return the persisted
+        record
+      parameters:
+      - description: Project ID, UUID (urn:uuid optional), or slug:my-project
+        in: path
+        name: projectId
+        required: true
+        type: string
+      - description: Applied policy ID, slug:my-policy, or urn:cid:bafy...
+        in: path
+        name: appliedPolicyId
+        required: true
+        type: string
+      - description: Applied policy control ID, code:AC-1, or urn:cid:bafy...
+        in: path
+        name: appliedPolicyControlId
+        required: true
+        type: string
+      - description: Review data
+        in: body
+        name: review
+        required: true
+        schema:
+          $ref: '#/definitions/handlers.CreateReviewRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created review
+          schema:
+            $ref: '#/definitions/core.Review'
+        "400":
+          description: Bad request - Invalid IDs or request body
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "401":
+          description: Unauthorized - Authentication required
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "403":
+          description: Forbidden - Insufficient permissions for this review outcome
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "404":
+          description: No matching control found in applied policy
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: Create review
+      tags:
+      - Reviews
+  /api/v1/projects/{projectId}/policies/{appliedPolicyId}/controls/{appliedPolicyControlId}/reviews/with-file:
+    post:
+      consumes:
+      - multipart/form-data
+      description: Submit a review for a specific control with file attachment(s)
+        and return the review with stored attachments
+      parameters:
+      - description: Project ID, UUID (urn:uuid optional), or slug:my-project
+        in: path
+        name: projectId
+        required: true
+        type: string
+      - description: Applied policy ID, slug:my-policy, or urn:cid:bafy...
+        in: path
+        name: appliedPolicyId
+        required: true
+        type: string
+      - description: Applied policy control ID, code:AC-1, or urn:cid:bafy...
+        in: path
+        name: appliedPolicyControlId
+        required: true
+        type: string
+      - description: Review JSON string
+        in: formData
+        name: review
+        required: true
+        type: string
+      - description: Attachment files
+        in: formData
+        name: files
+        type: file
+      - description: Attachment description
+        in: formData
+        name: description
+        type: string
+      - description: Whether the file is public
+        in: formData
+        name: isPublic
+        type: string
+      - description: Retention policy
+        in: formData
+        name: retentionPeriod
+        type: string
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created review with attachments
+          schema:
+            $ref: '#/definitions/handlers.ReviewWithAttachmentsResponse'
+        "400":
+          description: Bad request - Invalid IDs or review data
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "401":
+          description: Unauthorized - Authentication required
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "403":
+          description: Forbidden - Insufficient permissions for this review outcome
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "404":
+          description: No matching control found in applied policy
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: Create review with attachment
+      tags:
+      - Reviews
+  /api/v1/projects/{projectId}/policies/{appliedPolicyId}/credentials:
+    get:
+      description: Retrieve issued credentials associated with an applied policy
+      parameters:
+      - description: Project ID, UUID (urn:uuid optional), or slug:my-project
+        in: path
+        name: projectId
+        required: true
+        type: string
+      - description: Applied policy ID, slug:my-policy, or urn:cid:bafy...
+        in: path
+        name: appliedPolicyId
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Applied policy credentials
+          schema:
+            items:
+              $ref: '#/definitions/core.AppliedPolicyCredential'
+            type: array
+        "400":
+          description: Bad request - Invalid project ID or applied policy ID
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "401":
+          description: Unauthorized - Authentication required
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "403":
+          description: Forbidden - No project access or insufficient permissions
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "404":
+          description: Applied policy not found
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: Get applied policy credentials
+      tags:
+      - Applied Policies
+    post:
+      consumes:
+      - application/json
+      description: Issue a new credential for an applied policy and return the persisted
+        record
+      parameters:
+      - description: Project ID, UUID (urn:uuid optional), or slug:my-project
+        in: path
+        name: projectId
+        required: true
+        type: string
+      - description: Applied policy ID, slug:my-policy, or urn:cid:bafy...
+        in: path
+        name: appliedPolicyId
+        required: true
+        type: string
+      - description: Applied policy credential issuance request
+        in: body
+        name: payload
+        required: true
+        schema:
+          $ref: '#/definitions/core.CreateAppliedPolicyCredentialRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created credential
+          schema:
+            $ref: '#/definitions/core.AppliedPolicyCredential'
+        "400":
+          description: Bad request - Invalid IDs or request body
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "401":
+          description: Unauthorized - Authentication required
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "403":
+          description: Forbidden - No project access or insufficient permissions
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "409":
+          description: Credential already issued
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: Create applied policy credential
+      tags:
+      - Applied Policies
+  /api/v1/projects/{projectId}/policies/{appliedPolicyId}/credentials/{credentialId}/revoke:
+    put:
+      consumes:
+      - application/json
+      description: Revoke a specific issued credential associated with an applied
+        policy
+      parameters:
+      - description: Project ID, UUID (urn:uuid optional), or slug:my-project
+        in: path
+        name: projectId
+        required: true
+        type: string
+      - description: Applied policy ID, slug:my-policy, or urn:cid:bafy...
+        in: path
+        name: appliedPolicyId
+        required: true
+        type: string
+      - description: Credential ID or UUID (urn:uuid optional)
+        in: path
+        name: credentialId
+        required: true
+        type: string
+      - description: Revocation reason
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/handlers.RevokeCredentialRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Revoked credential
+          schema:
+            $ref: '#/definitions/core.AppliedPolicyCredential'
+        "400":
+          description: Bad request - Invalid IDs, missing reason, or credential already
+            revoked
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "401":
+          description: Unauthorized - Authentication required
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "403":
+          description: Forbidden - No project access or insufficient permissions
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "404":
+          description: Credential not found
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: Revoke applied policy credential
+      tags:
+      - Applied Policies
+  /api/v1/projects/{projectId}/policies/{appliedPolicyId}/details:
+    get:
+      description: Retrieve detailed information about an applied policy, its controls,
+        and its credential
+      parameters:
+      - description: Project ID, UUID (urn:uuid optional), or slug:my-project
+        in: path
+        name: projectId
+        required: true
+        type: string
+      - description: Applied policy ID, slug:my-policy, or urn:cid:bafy...
+        in: path
+        name: appliedPolicyId
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Applied policy details with controls and credential
+          schema:
+            $ref: '#/definitions/core.AppliedPolicyDetailsResponse'
+        "400":
+          description: Bad request - Invalid project ID or applied policy ID
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "401":
+          description: Unauthorized - Authentication required
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "403":
+          description: Forbidden - No project access or insufficient permissions
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "404":
+          description: Applied policy not found
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: Get applied policy details
+      tags:
+      - Applied Policies
+  /api/v1/projects/{projectId}/policies/{policyId}:
+    post:
+      consumes:
+      - application/json
+      description: Link a policy to a specific project instance and return the created
+        applied policy
+      parameters:
+      - description: Project ID, UUID (urn:uuid optional), or slug:my-project
+        in: path
+        name: projectId
+        required: true
+        type: string
+      - description: Policy ID, slug:my-policy@1.2.0, or urn:cid:bafy...
+        in: path
+        name: policyId
+        required: true
+        type: string
+      - description: Request body with policy name
+        in: body
+        name: payload
+        required: true
+        schema:
+          $ref: '#/definitions/handlers.ApplyPolicyRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created applied policy
+          schema:
+            $ref: '#/definitions/core.AppliedPolicy'
+        "400":
+          description: Bad request - Invalid project ID, policy ID, or request body
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "401":
+          description: Unauthorized - Authentication required
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "403":
+          description: Forbidden - No project access or insufficient permissions
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "404":
+          description: Project or policy not found
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "409":
+          description: Policy already applied to project
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: Apply policy to a project
+      tags:
+      - Applied Policies
+  /api/v1/projects/{projectId}/policies/baseline:
+    get:
+      description: List all baseline policies applied to a specific project
+      parameters:
+      - description: Project ID, UUID (urn:uuid optional), or slug:my-project
+        in: path
+        name: projectId
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Baseline applied policies
+          schema:
+            items:
+              $ref: '#/definitions/core.AppliedPolicyDetailsResponse'
+            type: array
+        "400":
+          description: Bad request - Invalid project ID
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "401":
+          description: Unauthorized - Authentication required
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "403":
+          description: Forbidden - No project access
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "404":
+          description: Project not found
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: List baseline applied policies
+      tags:
+      - Applied Policies
+  /api/v1/projects/{projectId}/policies/manifest:
+    post:
+      consumes:
+      - application/json
+      description: Proxy the policy manifest request to the integrity service for
+        the specified project
+      parameters:
+      - description: Project ID, UUID (urn:uuid optional), or slug:my-project
+        in: path
+        name: projectId
+        required: true
+        type: string
+      - description: Policy manifest request
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/handlers.PolicyManifestRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Policy manifest, proxied verbatim from the integrity service
+            (see its Manifest schema)
+          schema:
+            additionalProperties: true
+            type: object
+        "400":
+          description: Bad request - Invalid project ID, request body, or missing
+            policy CIDs
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "401":
+          description: Unauthorized - Authentication required
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "403":
+          description: Forbidden - No project access or insufficient permissions
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "404":
+          description: Project not found
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: Get applied policy manifest
+      tags:
+      - Applied Policies
+  /api/v1/projects/{projectId}/policies/report:
+    post:
+      consumes:
+      - application/json
+      description: Fetches the policy manifest for the project and renders it to a
+        report document via the pdfgen service
+      parameters:
+      - description: Project ID, UUID (urn:uuid optional), or slug:my-project
+        in: path
+        name: projectId
+        required: true
+        type: string
+      - description: Policy report request
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/handlers.PolicyReportRequest'
+      produces:
+      - application/pdf
+      - application/zip
+      responses:
+        "200":
+          description: Rendered policy report document
+          schema:
+            type: file
+        "400":
+          description: Bad request - Invalid project ID, request body, or missing
+            policy CIDs
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "401":
+          description: Unauthorized - Authentication required
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "403":
+          description: Forbidden - No project access or insufficient permissions
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "404":
+          description: Project not found
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "502":
+          description: Bad gateway - pdfgen report generation failed
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: Generate applied policy report
+      tags:
+      - Applied Policies
+  /api/v1/projects/by-uuid/{projectUUID}:
+    get:
+      description: Retrieve a specific project by its immutable UUID
+      parameters:
+      - description: Project UUID (urn:uuid optional)
+        in: path
+        name: projectUUID
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Project
+          schema:
+            $ref: '#/definitions/core.Project'
+        "400":
+          description: Bad request - Invalid project UUID
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "401":
+          description: Unauthorized - Authentication required
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "403":
+          description: Forbidden - No project access
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "404":
+          description: Project not found
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: Get project by UUID
+      tags:
+      - Projects
+  /api/v2/evaluations:
+    get:
+      description: Retrieve a paginated list of evaluation results with optional filters
+      parameters:
+      - description: Filter by application ID
+        in: query
+        name: applicationId
+        type: integer
+      - description: Filter by indicator UUID
+        in: query
+        name: indicatorId
+        type: string
+      - description: Filter by project ID
+        in: query
+        name: projectId
+        type: integer
+      - description: Filter by applied policy ID, slug:my-policy, or urn:cid:bafy...
+        in: query
+        name: appliedPolicyId
+        type: string
+      - description: Filter by applied policy control ID
+        in: query
+        name: appliedPolicyControlId
+        type: integer
+      - description: Filter by result status (pass, fail, error, awaiting_evaluation)
+        in: query
+        name: result
+        type: string
+      - description: Filter evaluations after this timestamp, RFC 3339
+        example: "2026-01-15T09:30:00Z"
+        in: query
+        name: since
+        type: string
+      - description: Filter evaluations before this timestamp, RFC 3339
+        example: "2026-01-15T09:30:00Z"
+        in: query
+        name: until
+        type: string
+      - description: 'Number of results to return (default: 50, max: 200)'
+        in: query
+        name: limit
+        type: integer
+      - description: 'Number of results to skip (default: 0)'
+        in: query
+        name: offset
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Paginated evaluation results
+          schema:
+            $ref: '#/definitions/handlers.EvaluationResultsListResponse'
+        "400":
+          description: Bad request - Invalid filter parameter
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "401":
+          description: Unauthorized - Authentication required
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "403":
+          description: Forbidden - Insufficient permissions
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: List evaluation results
+      tags:
+      - Evaluations v2
+  /api/v2/evaluations/{id}:
+    get:
+      description: Retrieve a single evaluation result by its UUID
+      parameters:
+      - description: Evaluation result UUID (urn:uuid optional)
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Evaluation result
+          schema:
+            $ref: '#/definitions/handlers.EvaluationResultResponse'
+        "400":
+          description: Bad request - Invalid evaluation result ID format
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "401":
+          description: Unauthorized - Authentication required
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "403":
+          description: Forbidden - Insufficient permissions
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "404":
+          description: Evaluation result not found
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: Get evaluation result
+      tags:
+      - Evaluations v2
+  /api/v2/events/ingest:
+    post:
+      consumes:
+      - application/json
+      description: Accepts an indicator event and queues it for asynchronous indicator
+        evaluation
+      parameters:
+      - description: Event to ingest
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/core.UnifiedEventRequest'
+      produces:
+      - application/json
+      responses:
+        "202":
+          description: Event accepted for processing
+          schema:
+            $ref: '#/definitions/core.EventResponse'
+        "400":
+          description: Bad request - Invalid event payload
+          schema:
+            $ref: '#/definitions/core.APIError'
+        "401":
+          description: Unauthorized - Authentication required
+          schema:
+            $ref: '#/definitions/core.APIError'
+        "403":
+          description: Forbidden - No access or insufficient permission
+          schema:
+            $ref: '#/definitions/core.APIError'
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/core.APIError'
+      security:
+      - BearerAuth: []
+      summary: Ingest event for indicator evaluation
+      tags:
+      - Events v2
+  /api/v2/projects/{projectId}/indicator-applications:
+    get:
+      description: Lists project indicator applications with template, policy/control
+        context, and latest evaluation, filtered and paginated
+      parameters:
+      - description: Project ID, UUID (urn:uuid optional), or slug:my-project
+        in: path
+        name: projectId
+        required: true
+        type: string
+      - description: Indicator UUID
+        in: query
+        name: indicatorId
+        type: string
+      - description: Applied policy ID, slug:my-policy, or urn:cid:bafy...
+        in: query
+        name: appliedPolicyId
+        type: string
+      - description: Applied policy control ID
+        in: query
+        name: appliedPolicyControlId
+        type: integer
+      - description: Application UUID
+        in: query
+        name: applicationUuid
+        type: string
+      - description: Application status
+        in: query
+        name: status
+        type: string
+      - description: Include archived applications
+        in: query
+        name: includeArchived
+        type: boolean
+      - description: Page size
+        in: query
+        name: limit
+        type: integer
+      - description: Page offset
+        in: query
+        name: offset
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Page of enriched indicator applications
+          schema:
+            $ref: '#/definitions/handlers.ProjectIndicatorApplicationDetailsListResponse'
+        "400":
+          description: Bad request - Invalid query filter parameter
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "401":
+          description: Unauthorized - Authentication required
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "403":
+          description: Forbidden - No project access or insufficient permissions
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: List enriched project indicator applications
+      tags:
+      - Project Indicators v2
+  /api/v2/projects/{projectId}/indicator-applications/{applicationId}:
+    delete:
+      description: Archives a project indicator application, removing it from its
+        control
+      parameters:
+      - description: Project ID, UUID (urn:uuid optional), or slug:my-project
+        in: path
+        name: projectId
+        required: true
+        type: string
+      - description: Application ID or UUID (urn:uuid optional)
+        in: path
+        name: applicationId
+        required: true
+        type: string
+      responses:
+        "204":
+          description: Indicator application removed
+        "400":
+          description: Bad request - Invalid application ID or application outside
+            project
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "401":
+          description: Unauthorized - Authentication required
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "403":
+          description: Forbidden - No project access or insufficient permissions
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "404":
+          description: Indicator application not found
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: Remove project indicator application
+      tags:
+      - Project Indicators v2
+    get:
+      description: Retrieves one project indicator application by numeric ID or application
+        UUID with full context
+      parameters:
+      - description: Project ID, UUID (urn:uuid optional), or slug:my-project
+        in: path
+        name: projectId
+        required: true
+        type: string
+      - description: Application ID or UUID (urn:uuid optional)
+        in: path
+        name: applicationId
+        required: true
+        type: string
+      - description: Include archived applications
+        in: query
+        name: includeArchived
+        type: boolean
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Enriched indicator application
+          schema:
+            $ref: '#/definitions/handlers.ProjectIndicatorApplicationDetailsResponse'
+        "400":
+          description: Bad request - Invalid application identifier
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "401":
+          description: Unauthorized - Authentication required
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "403":
+          description: Forbidden - No project access or insufficient permissions
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "404":
+          description: Indicator application not found
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: Get enriched project indicator application
+      tags:
+      - Project Indicators v2
+  /api/v2/projects/{projectId}/indicator-applications/{applicationId}/disable:
+    post:
+      description: Sets a project indicator application to disabled so it does not
+        log executions and returns the updated row
+      parameters:
+      - description: Project ID, UUID (urn:uuid optional), or slug:my-project
+        in: path
+        name: projectId
+        required: true
+        type: string
+      - description: Application ID or UUID (urn:uuid optional)
+        in: path
+        name: applicationId
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Disabled indicator application
+          schema:
+            $ref: '#/definitions/handlers.IndicatorApplicationResponse'
+        "400":
+          description: Bad request - Invalid application ID or application outside
+            project
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "401":
+          description: Unauthorized - Authentication required
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "403":
+          description: Forbidden - No project access or insufficient permissions
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "404":
+          description: Indicator application not found
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: Disable project indicator application
+      tags:
+      - Project Indicators v2
+  /api/v2/projects/{projectId}/indicator-applications/{applicationId}/enable:
+    post:
+      description: Sets a project indicator application to active so it logs executions
+        and returns the updated row
+      parameters:
+      - description: Project ID, UUID (urn:uuid optional), or slug:my-project
+        in: path
+        name: projectId
+        required: true
+        type: string
+      - description: Application ID or UUID (urn:uuid optional)
+        in: path
+        name: applicationId
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Activated indicator application
+          schema:
+            $ref: '#/definitions/handlers.IndicatorApplicationResponse'
+        "400":
+          description: Bad request - Invalid application ID or application outside
+            project
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "401":
+          description: Unauthorized - Authentication required
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "403":
+          description: Forbidden - No project access or insufficient permissions
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "404":
+          description: Indicator application not found
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: Activate project indicator application
+      tags:
+      - Project Indicators v2
+  /api/v2/projects/{projectId}/indicators:
+    get:
+      description: Lists active indicator templates owned by a project, filtered by
+        search and tag, with pagination
+      parameters:
+      - description: Project ID, UUID (urn:uuid optional), or slug:my-project
+        in: path
+        name: projectId
+        required: true
+        type: string
+      - description: Search by name or description
+        in: query
+        name: search
+        type: string
+      - description: Filter by tag
+        in: query
+        name: tag
+        type: string
+      - description: Page size
+        in: query
+        name: limit
+        type: integer
+      - description: Page offset
+        in: query
+        name: offset
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Page of project indicator templates
+          schema:
+            $ref: '#/definitions/handlers.ProjectIndicatorListResponse'
+        "400":
+          description: Bad request - Invalid limit or offset parameter
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "401":
+          description: Unauthorized - Authentication required
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "403":
+          description: Forbidden - No project access or insufficient permissions
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: List project-scoped indicators
+      tags:
+      - Project Indicators v2
+    post:
+      consumes:
+      - application/json
+      description: Creates an immutable indicator template owned by a project and
+        returns the created template
+      parameters:
+      - description: Project ID, UUID (urn:uuid optional), or slug:my-project
+        in: path
+        name: projectId
+        required: true
+        type: string
+      - description: Project indicator creation request
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/handlers.CreateProjectIndicatorRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created project indicator template
+          schema:
+            $ref: '#/definitions/handlers.ProjectIndicatorResponse'
+        "400":
+          description: Bad request - Invalid request body or indicator fields
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "401":
+          description: Unauthorized - Authentication required
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "403":
+          description: Forbidden - No project access or insufficient permissions
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "404":
+          description: Project not found
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "409":
+          description: Indicator with the same slug already exists
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: Create project-scoped indicator
+      tags:
+      - Project Indicators v2
+  /api/v2/projects/{projectId}/indicators/{indicatorId}:
+    delete:
+      description: Archives a project indicator template when it has no non-archived
+        applications
+      parameters:
+      - description: Project ID, UUID (urn:uuid optional), or slug:my-project
+        in: path
+        name: projectId
+        required: true
+        type: string
+      - description: Indicator UUID (urn:uuid optional) or slug:my-indicator
+        in: path
+        name: indicatorId
+        required: true
+        type: string
+      responses:
+        "204":
+          description: Indicator archived
+        "400":
+          description: Bad request - Invalid indicator ID format
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "401":
+          description: Unauthorized - Authentication required
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "403":
+          description: Forbidden - No project access or insufficient permissions
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "404":
+          description: Indicator not found
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "409":
+          description: Indicator still has active applications
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: Archive project-scoped indicator
+      tags:
+      - Project Indicators v2
+    get:
+      description: Retrieves one project-owned indicator template by UUID along with
+        its usage count
+      parameters:
+      - description: Project ID, UUID (urn:uuid optional), or slug:my-project
+        in: path
+        name: projectId
+        required: true
+        type: string
+      - description: Indicator UUID (urn:uuid optional) or slug:my-indicator
+        in: path
+        name: indicatorId
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Project indicator template
+          schema:
+            $ref: '#/definitions/handlers.ProjectIndicatorResponse'
+        "400":
+          description: Bad request - Invalid indicator ID format
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "401":
+          description: Unauthorized - Authentication required
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "403":
+          description: Forbidden - No project access or insufficient permissions
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "404":
+          description: Indicator not found
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: Get project-scoped indicator
+      tags:
+      - Project Indicators v2
+  /api/v2/projects/{projectId}/indicators/{indicatorId}/applications:
+    get:
+      description: Lists non-archived applications for a project indicator with pagination
+      parameters:
+      - description: Project ID, UUID (urn:uuid optional), or slug:my-project
+        in: path
+        name: projectId
+        required: true
+        type: string
+      - description: Indicator UUID (urn:uuid optional) or slug:my-indicator
+        in: path
+        name: indicatorId
+        required: true
+        type: string
+      - description: Page size
+        in: query
+        name: limit
+        type: integer
+      - description: Page offset
+        in: query
+        name: offset
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Page of indicator applications
+          schema:
+            $ref: '#/definitions/handlers.IndicatorApplicationListResponse'
+        "400":
+          description: Bad request - Invalid indicator ID format
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "401":
+          description: Unauthorized - Authentication required
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "403":
+          description: Forbidden - No project access or insufficient permissions
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: List project indicator applications
+      tags:
+      - Project Indicators v2
+    post:
+      consumes:
+      - application/json
+      description: Creates active or disabled applications for a project indicator
+        on one or more applied policy controls
+      parameters:
+      - description: Project ID, UUID (urn:uuid optional), or slug:my-project
+        in: path
+        name: projectId
+        required: true
+        type: string
+      - description: Indicator UUID (urn:uuid optional) or slug:my-indicator
+        in: path
+        name: indicatorId
+        required: true
+        type: string
+      - description: Indicator application request
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/handlers.ApplyProjectIndicatorRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created indicator applications
+          schema:
+            $ref: '#/definitions/handlers.IndicatorApplicationsResponse'
+        "400":
+          description: Bad request - Invalid request body or control reference
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "401":
+          description: Unauthorized - Authentication required
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "403":
+          description: Forbidden - No project access or insufficient permissions
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "404":
+          description: Indicator or control not found
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "409":
+          description: Indicator already applied to the control
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: Apply project indicator to controls
+      tags:
+      - Project Indicators v2
+  /health:
+    get:
+      consumes:
+      - application/json
+      description: Returns a static healthy response without checking dependencies,
+        intended for orchestrator liveness probes
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Health status
+          schema:
+            $ref: '#/definitions/handlers.HealthResponse'
+      summary: Liveness probe
+      tags:
+      - Health
+  /health/auth:
+    get:
+      consumes:
+      - application/json
+      description: Health check requiring a valid bearer token that confirms the end-to-end
+        auth path by validating the token through the auth service and resolving the
+        caller's user context
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Auth integration verified
+          schema:
+            $ref: '#/definitions/handlers.HealthCheckAuthResponse'
+        "401":
+          description: Unauthorized - Invalid or expired token
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "503":
+          description: Auth integration unavailable
+          schema:
+            $ref: '#/definitions/handlers.HealthCheckAuthResponse'
+      security:
+      - BearerAuth: []
+      summary: Authenticated health check for the auth integration
+      tags:
+      - Health
+  /health/ready:
+    get:
+      consumes:
+      - application/json
+      description: Reports whether the service can serve traffic by pinging the database,
+        used by orchestrators to gate traffic
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Service is ready
+          schema:
+            $ref: '#/definitions/handlers.HealthReadyResponse'
+        "503":
+          description: Service is not ready
+          schema:
+            $ref: '#/definitions/handlers.HealthReadyResponse'
+      summary: Readiness probe
+      tags:
+      - Health
+securityDefinitions:
+  ApiKeyAuth:
+    description: Type "Bearer" followed by a space and API key.
+    in: header
+    name: Authorization
+    type: apiKey
+  BearerAuth:
+    description: Type "Bearer" followed by a space and JWT token.
+    in: header
+    name: Authorization
+    type: apiKey
+swagger: "2.0"

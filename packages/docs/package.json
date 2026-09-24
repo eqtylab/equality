@@ -97,6 +97,8 @@
     "release": "pnpm run build && pnpm publish --access public --no-git-checks"
   },
   "dependencies": {
+    "@scalar/openapi-parser": "0.29.5",
+    "@scalar/snippetz": "0.10.0",
     "@tailwindcss/vite": "^4.1.16",
     "github-slugger": "^2.0.0",
     "pagefind": "1.5.2",

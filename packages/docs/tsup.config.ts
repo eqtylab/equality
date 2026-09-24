@@ -33,5 +33,8 @@ export default defineConfig((options) => ({
     '@eqtylab/equality',
     'react',
     'react-dom',
+    'yaml',
+    '@scalar/openapi-parser',
+    '@scalar/snippetz',
   ],
 }));

@@ -1,0 +1,1 @@
+{ "openapi": "3.0.3", "info": { "title": "x", "version": "1" }, "paths": { "/a": { "get": { "tags": ["API Keys"], "responses": { "200": { "description": "ok" } } } }, "/b": { "get": { "tags": ["api-keys"], "responses": { "200": { "description": "ok" } } } } } }
