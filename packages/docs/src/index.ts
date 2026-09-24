@@ -44,6 +44,11 @@ function plannedRoutes(cfg: DocsConfig) {
       enabled: cfg.routing.markdownTwins,
     },
     {
+      pattern: `${prefix}/[...slug]/openapi.[ext]`,
+      entrypoint: '@eqtylab/docs/routes/openapi-file.ts',
+      enabled: true,
+    },
+    {
       pattern: '/llms.txt',
       entrypoint: '@eqtylab/docs/routes/llms-txt.ts',
       enabled: cfg.routing.markdownTwins,

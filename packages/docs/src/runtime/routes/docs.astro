@@ -13,11 +13,15 @@ import {
   pathContext,
   prevNextFor,
 } from '../lib/nav-data.ts';
+import { isModelEntry, modelFor, sourceExtFor, tagRedirects } from '../lib/openapi.ts';
 import { firstParagraph } from '../lib/summary.ts';
 import { mdxComponents } from '../lib/mdx-components.ts';
 import type { SwitcherData } from '../lib/versions-ui.ts';
 import PageFooter from '../chrome/PageFooter.astro';
 import Prose from '../chrome/Prose.astro';
+import { operationHeadings } from '../openapi/headings.ts';
+import OperationPage from '../openapi/OperationPage.astro';
+import OverviewPage from '../openapi/OverviewPage.astro';
 
 type Entry = Awaited<ReturnType<typeof docsEntries>>[number] & {
   id: string;
@@ -29,11 +33,16 @@ type Entry = Awaited<ReturnType<typeof docsEntries>>[number] & {
 export async function getStaticPaths() {
   const owned = new Set((CONFIG.ownedByConsumer ?? []).map(normalizePath));
   // Astro does not de-duplicate injected routes against consumer pages. Latest only: a consumer cannot own a versioned path.
-  const latest = ((await docsEntries()) as Entry[]).filter(
-    (entry) => !owned.has(normalizePath(docsHref(entry.id, pathContext())))
+  const allLatest = (await docsEntries()) as Entry[];
+  const latest = allLatest.filter(
+    (entry) =>
+      !isModelEntry(entry) && !owned.has(normalizePath(docsHref(entry.id, pathContext())))
   );
   const copies = await Promise.all(
-    CONFIG.versionManifest.map(async (v) => ({ v, entries: (await docsEntries(v.id)) as Entry[] }))
+    CONFIG.versionManifest.map(async (v) => {
+      const all = (await docsEntries(v.id)) as Entry[];
+      return { v, all, entries: all.filter((e) => !isModelEntry(e)) };
+    })
   );
 
   const idsOf = new Map<string | undefined, Set<string>>([
@@ -73,13 +82,14 @@ export async function getStaticPaths() {
     ...latest.map((entry) => ({
       // `undefined` (not '') is how a rest param matches the empty path.
       params: { slug: idToPath(entry.id) || undefined },
-      props: { entry, switcher: switcherFor(undefined, entry.id) },
+      props: { entry, all: allLatest, switcher: switcherFor(undefined, entry.id) },
     })),
-    ...copies.flatMap(({ v, entries }) => [
+    ...copies.flatMap(({ v, all, entries }) => [
       ...entries.map((entry) => ({
         params: { slug: `${v.id}/${idToPath(entry.id)}`.replace(/\/$/, '') },
         props: {
           entry,
+          all,
           version: v.id,
           switcher: switcherFor(v.id, entry.id),
           canonical: idsOf.get(undefined)!.has(entry.id)
@@ -94,6 +104,16 @@ export async function getStaticPaths() {
         ? []
         : [{ params: { slug: v.id }, props: { redirectTo: roots.get(v.id)!, version: v.id } }]),
     ]),
+    // Model entries carry the tags, so each list must be unfiltered or no tag redirect is emitted.
+    ...[
+      { v: undefined as { id: string } | undefined, all: allLatest },
+      ...copies.map(({ v, all }) => ({ v, all })),
+    ].flatMap(({ v, all }) =>
+      tagRedirects(all).map((r) => ({
+        params: { slug: v ? `${v.id}/${r.slug}` : r.slug },
+        props: { redirectTo: docsHref(r.ownerId, pathContext(v?.id)), version: v?.id ?? null },
+      }))
+    ),
     // Every target goes through docsHref so base and pathPrefix apply.
     ...CONFIG.versionRedirects.map((r) => ({
       params: { slug: r.id },
@@ -109,6 +129,7 @@ export async function getStaticPaths() {
 
 interface Props {
   entry?: Entry;
+  all?: Entry[];
   version?: string | null;
   switcher?: SwitcherData;
   canonical?: string;
@@ -117,7 +138,16 @@ interface Props {
   redirectTo?: string;
 }
 
-const { entry, version, switcher, canonical, latestHref, latestLabel, redirectTo } = Astro.props;
+const {
+  entry,
+  all = [],
+  version,
+  switcher,
+  canonical,
+  latestHref,
+  latestLabel,
+  redirectTo,
+} = Astro.props;
 ---
 
 {redirectTo && <RedirectPage to={redirectTo} version={version ?? null} />}
@@ -125,7 +155,15 @@ const { entry, version, switcher, canonical, latestHref, latestLabel, redirectTo
   !redirectTo &&
     entry &&
     (async () => {
-      const { Content, headings } = await render(entry as never);
+      const generated = entry.data.generated === 'operation';
+      const { Content, headings } = generated
+        ? { Content: null, headings: operationHeadings(entry.data.operation) }
+        : await render(entry as never);
+      const model = entry.data.openapi
+        ? modelFor(all, entry.id)
+        : entry.data.owner
+          ? modelFor(all, entry.data.owner)
+          : undefined;
 
       const tocConfig = entry.data.tableOfContents ?? CONFIG.tableOfContents;
       const showToc = tocConfig !== false;
@@ -190,7 +228,18 @@ const { entry, version, switcher, canonical, latestHref, latestLabel, redirectTo
             fallbackSummary={fallbackSummary}
             version={version ?? undefined}
           >
-            <Content components={mdxComponents} />
+            {Content && <Content components={mdxComponents} />}
+            {entry.data.openapi && model && (
+              <OverviewPage
+                model={model}
+                ownerId={entry.id}
+                sourceExt={sourceExtFor(all, entry.id)}
+                version={version ?? undefined}
+              />
+            )}
+            {generated && model && (
+              <OperationPage operation={entry.data.operation} model={model} />
+            )}
           </Prose>
           {!splash && (
             <PageFooter prev={prev} next={next} editHref={editHref} text={CONFIG.footer.text} />
