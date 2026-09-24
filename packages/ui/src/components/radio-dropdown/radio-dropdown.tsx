@@ -68,12 +68,16 @@ const RadioDropdown = ({
       <DropdownMenuContent align="end" className={styles['dropdown-menu-content']}>
         {searchable && (
           <>
-            <DropdownMenuSearch placeholder={searchPlaceholder} />
+            <DropdownMenuSearch alwaysVisible placeholder={searchPlaceholder} aria-label={label} />
             <DropdownMenuEmpty>{emptyPlaceholder}</DropdownMenuEmpty>
           </>
         )}
-        <DropdownMenuLabel>{label}</DropdownMenuLabel>
-        <DropdownMenuSeparator />
+        {!searchable && (
+          <>
+            <DropdownMenuLabel>{label}</DropdownMenuLabel>
+            <DropdownMenuSeparator />
+          </>
+        )}
         <DropdownMenuRadioGroup value={selectedValue} onValueChange={onSelect}>
           {filteredOptions.map((option) => {
             const hasCount = option.count !== undefined;

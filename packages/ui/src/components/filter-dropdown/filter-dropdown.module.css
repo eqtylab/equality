@@ -13,6 +13,19 @@
   @apply text-text-secondary;
 }
 
+.clear-all-footer {
+  @apply sticky -bottom-1 pb-1;
+  @apply bg-background-overlay;
+}
+
+.clear-all {
+  @apply justify-center;
+}
+
+.filters-header .clear-all-inline {
+  @apply px-1 py-0;
+}
+
 .dropdown-menu-content {
   @apply max-h-80 w-56 overflow-auto;
 }

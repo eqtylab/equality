@@ -9,6 +9,8 @@ import { CommandDemo } from "@demo/components/demo/command";
 
 Command is a searchable, keyboard-navigable list for filtering and running commands or selecting from a set of options. It is built on [cmdk](https://cmdk.paco.me/), so typing in the input filters the list in real time, and the arrow keys plus <kbd>Enter</kbd> move through and select items.
 
+To pick a value in a form, use a [Select with search](/components/select#search--filtering) instead of wrapping Command in a Popover.
+
 It is a compound component: compose a `Command` from an input, a list, groups, and items. Use it inline (as an embedded searchable list) or wrap it in `CommandDialog` to present it as a modal command palette.
 
 ## Usage

@@ -2,12 +2,13 @@ import * as React from 'react';
 import { ChevronDown } from 'lucide-react';
 
 import { Badge } from '@/components/badge/badge';
-import { Button } from '@/components/button/button';
+import { Button, buttonVariants } from '@/components/button/button';
 import {
   DropdownMenu,
   DropdownMenuCheckboxItem,
   DropdownMenuContent,
   DropdownMenuEmpty,
+  DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuSearch,
   DropdownMenuSeparator,
@@ -57,6 +58,13 @@ const FilterDropdown = ({
       option.value && option.value.trim() !== '' && option.label && option.label.trim() !== ''
   );
 
+  const clearAll = (className: string) => (
+    // An empty textValue keeps this out of search results, so Enter can't clear every filter
+    <DropdownMenuItem textValue="" onSelect={onClearAll} className={className}>
+      <span className={buttonVariants({ variant: 'link', size: 'sm' })}>Clear all</span>
+    </DropdownMenuItem>
+  );
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild disabled={disabled}>
@@ -78,19 +86,19 @@ const FilterDropdown = ({
       >
         {searchable && (
           <>
-            <DropdownMenuSearch placeholder={searchPlaceholder} />
+            <DropdownMenuSearch alwaysVisible placeholder={searchPlaceholder} aria-label={label} />
             <DropdownMenuEmpty>{emptyPlaceholder}</DropdownMenuEmpty>
           </>
         )}
-        <DropdownMenuLabel>
-          Filters
-          {hasSelectedFilters && (
-            <Button variant="link" size="sm" onClick={onClearAll}>
-              Clear all
-            </Button>
-          )}
-        </DropdownMenuLabel>
-        <DropdownMenuSeparator />
+        {!searchable && (
+          <>
+            <DropdownMenuLabel className={styles['filters-header']}>
+              Filters
+              {hasSelectedFilters && clearAll(styles['clear-all-inline'])}
+            </DropdownMenuLabel>
+            <DropdownMenuSeparator />
+          </>
+        )}
         {filteredOptions.map((option) => {
           const isSelected = selectedFilters.includes(option.value);
 
@@ -105,6 +113,12 @@ const FilterDropdown = ({
             </DropdownMenuCheckboxItem>
           );
         })}
+        {searchable && hasSelectedFilters && (
+          <div className={styles['clear-all-footer']}>
+            <DropdownMenuSeparator />
+            {clearAll(styles['clear-all'])}
+          </div>
+        )}
       </DropdownMenuContent>
     </DropdownMenu>
   );

@@ -1,6 +1,20 @@
+/**
+ * In-place search shared by `SelectSearch` and `DropdownMenuSearch`: query state, item matching,
+ * the match count behind the empty state and live region, and the search input's focus handling.
+ *
+ * Internal and not exported from the package, but every change here reaches `Select`,
+ * `DropdownMenu`, and through it `FilterDropdown` and `RadioDropdown`. Their tests in
+ * `packages/ui/tests` cover the shared behavior, so run all of them, not just this module's.
+ */
 import * as React from 'react';
 
-export type ListSearchState = {
+export type MatchRegistry = {
+  registerItem: (id: string, matches: boolean) => void;
+  unregisterItem: (id: string) => void;
+  matchCount: number;
+};
+
+export type ListSearchState = MatchRegistry & {
   enabled: boolean;
   setEnabled: (value: boolean) => void;
   visible: boolean;
@@ -9,43 +23,42 @@ export type ListSearchState = {
   setQuery: (value: string) => void;
   focusSignal: number;
   requestFocus: () => void;
-  registerItem: (id: string, matches: boolean) => void;
-  unregisterItem: (id: string) => void;
-  matchCount: number;
   resetForOpen: () => void;
+  listId: string | undefined;
+  setListId: (id: string | undefined) => void;
 };
 
-export function useListSearchState(): ListSearchState {
+export function useMatchRegistry(): MatchRegistry {
+  const itemsRef = React.useRef<Map<string, boolean>>(new Map());
+  const [matchCount, setMatchCount] = React.useState(0);
+
+  const registerItem = React.useCallback((id: string, matches: boolean) => {
+    const delta = Number(matches) - Number(itemsRef.current.get(id) ?? false);
+    itemsRef.current.set(id, matches);
+    if (delta) setMatchCount((count) => count + delta);
+  }, []);
+
+  const unregisterItem = React.useCallback((id: string) => {
+    if (itemsRef.current.get(id)) setMatchCount((count) => count - 1);
+    itemsRef.current.delete(id);
+  }, []);
+
+  return React.useMemo(
+    () => ({ registerItem, unregisterItem, matchCount }),
+    [registerItem, unregisterItem, matchCount]
+  );
+}
+
+export function useListSearchState(open?: boolean): ListSearchState {
   const [enabled, setEnabled] = React.useState(false);
   const [visible, setVisible] = React.useState(false);
   const [query, setQuery] = React.useState('');
+  const [listId, setListId] = React.useState<string | undefined>(undefined);
 
   const [focusSignal, setFocusSignal] = React.useState(0);
   const requestFocus = React.useCallback(() => setFocusSignal((n) => n + 1), []);
 
-  const itemsRef = React.useRef<Map<string, boolean>>(new Map());
-  const [matchCount, setMatchCount] = React.useState(0);
-  const recount = React.useCallback(() => {
-    let count = 0;
-    itemsRef.current.forEach((matches) => {
-      if (matches) count += 1;
-    });
-    setMatchCount(count);
-  }, []);
-  const registerItem = React.useCallback(
-    (id: string, matches: boolean) => {
-      itemsRef.current.set(id, matches);
-      recount();
-    },
-    [recount]
-  );
-  const unregisterItem = React.useCallback(
-    (id: string) => {
-      itemsRef.current.delete(id);
-      recount();
-    },
-    [recount]
-  );
+  const { registerItem, unregisterItem, matchCount } = useMatchRegistry();
 
   const reveal = React.useCallback((seed: string) => {
     setVisible(true);
@@ -57,6 +70,13 @@ export function useListSearchState(): ListSearchState {
     setVisible(false);
     setQuery('');
   }, []);
+
+  // A controlled `open` can flip without onOpenChange(true), which would keep the last query
+  const [previousOpen, setPreviousOpen] = React.useState(open);
+  if (open !== previousOpen) {
+    setPreviousOpen(open);
+    if (open) resetForOpen();
+  }
 
   return React.useMemo(
     () => ({
@@ -72,6 +92,8 @@ export function useListSearchState(): ListSearchState {
       unregisterItem,
       matchCount,
       resetForOpen,
+      listId,
+      setListId,
     }),
     [
       enabled,
@@ -84,6 +106,7 @@ export function useListSearchState(): ListSearchState {
       unregisterItem,
       matchCount,
       resetForOpen,
+      listId,
     ]
   );
 }
@@ -107,32 +130,61 @@ export function getNodeText(node: React.ReactNode): string {
   return '';
 }
 
-export function useFilterableItem(
-  state: ListSearchState | null,
+export const matchesQuery = (
+  query: string,
   textValue: string | undefined,
   children: React.ReactNode
-): boolean {
-  const id = React.useId();
-  const query = state?.query.trim().toLowerCase() ?? '';
-  const matches = !query || (textValue ?? getNodeText(children)).toLowerCase().includes(query);
+) => {
+  const normalized = query.trim().toLowerCase();
+  // `??`, not `||`: an empty textValue must match nothing (FilterDropdown's Clear all relies on it)
+  return !normalized || (textValue ?? getNodeText(children)).toLowerCase().includes(normalized);
+};
 
-  const enabled = state?.enabled ?? false;
-  const registerItem = state?.registerItem;
-  const unregisterItem = state?.unregisterItem;
+function useRegisterMatch(
+  registry: MatchRegistry | null | undefined,
+  enabled: boolean,
+  id: string,
+  matches: boolean
+) {
+  const registerItem = registry?.registerItem;
+  const unregisterItem = registry?.unregisterItem;
 
-  // Depends on the stable callbacks only, so it re-runs just when the match flips
   React.useEffect(() => {
     if (!enabled || !registerItem || !unregisterItem) return;
     registerItem(id, matches);
     return () => unregisterItem(id);
   }, [enabled, registerItem, unregisterItem, id, matches]);
+}
+
+export function useFilterableItem(
+  state: ListSearchState | null,
+  textValue: string | undefined,
+  children: React.ReactNode,
+  group?: MatchRegistry | null
+): boolean {
+  const id = React.useId();
+  const matches = matchesQuery(state?.query ?? '', textValue, children);
+  const enabled = state?.enabled ?? false;
+
+  useRegisterMatch(state, enabled, id, matches);
+  useRegisterMatch(group, enabled, id, matches);
 
   return matches;
 }
 
-export function useSearchInput(state: ListSearchState, alwaysVisible: boolean) {
+export function useSearchInput(
+  state: ListSearchState,
+  alwaysVisible: boolean,
+  forwardedRef: React.Ref<HTMLInputElement>
+) {
   const { setEnabled, reveal, visible, focusSignal } = state;
   const inputRef = React.useRef<HTMLInputElement>(null);
+
+  // Stable, or React detaches and reattaches the consumer's ref on every keystroke
+  const ref = React.useCallback(
+    (node: HTMLInputElement | null) => assignRefs(node, inputRef, forwardedRef),
+    [forwardedRef]
+  );
 
   React.useEffect(() => {
     setEnabled(true);
@@ -151,10 +203,12 @@ export function useSearchInput(state: ListSearchState, alwaysVisible: boolean) {
     if (alwaysVisible && !visible) reveal('');
   }, [alwaysVisible, visible, reveal]);
 
-  return { inputRef, isRendered: alwaysVisible || visible };
+  return { ref, isRendered: alwaysVisible || visible };
 }
 
-export const isPrintableKey = (event: React.KeyboardEvent) =>
+export const isPrintableKey = (
+  event: Pick<KeyboardEvent, 'key' | 'metaKey' | 'ctrlKey' | 'altKey'>
+) =>
   event.key.length === 1 &&
   !event.metaKey &&
   !event.ctrlKey &&
@@ -165,6 +219,6 @@ export const isPrintableKey = (event: React.KeyboardEvent) =>
 export function assignRefs<T>(node: T | null, ...refs: (React.Ref<T> | undefined)[]) {
   refs.forEach((ref) => {
     if (typeof ref === 'function') ref(node);
-    else if (ref) (ref as React.MutableRefObject<T | null>).current = node;
+    else if (ref) (ref as React.RefObject<T | null>).current = node;
   });
 }

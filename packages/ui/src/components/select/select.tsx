@@ -13,8 +13,10 @@ import {
   isSearchEmpty,
   useFilterableItem,
   useListSearchState,
+  useMatchRegistry,
   useSearchInput,
   type ListSearchState,
+  type MatchRegistry,
 } from '@/lib/list-search';
 import { cn } from '@/lib/utils';
 import { usePortalContainer } from '@/theme/portal-container';
@@ -26,14 +28,11 @@ const SearchIcon = Search as React.ComponentType<{ className?: string }>;
 
 const SEARCH_INPUT_SELECTOR = '[data-select-search]';
 const NAVIGABLE_OPTION_SELECTOR = '[role="option"]:not([data-disabled]):not([hidden])';
-// Radix owns these: arrows move into the options, Escape closes, Tab is trapped
 const RADIX_HANDLED_SEARCH_KEYS = ['ArrowDown', 'ArrowUp', 'Escape', 'Tab'];
 
 type SelectSearchContextValue = ListSearchState & {
-  listId: string | undefined;
-  setListId: (id: string | undefined) => void;
   markInteracted: () => void;
-  hasInteracted: () => boolean;
+  interactedSinceOpen: () => boolean;
 };
 
 const SelectSearchContext = React.createContext<SelectSearchContextValue | null>(null);
@@ -42,43 +41,69 @@ const useSelectSearch = () => React.useContext(SelectSearchContext);
 
 const useIsSearching = () => isSearchActive(useSelectSearch());
 
+const SelectGroupMatchContext = React.createContext<MatchRegistry | null>(null);
+
 const Select = ({
+  open,
   onOpenChange,
   ...props
 }: React.ComponentPropsWithoutRef<typeof SelectPrimitive.Root>) => {
-  const search = useListSearchState();
+  const search = useListSearchState(open);
   const { resetForOpen } = search;
-  const [listId, setListId] = React.useState<string | undefined>(undefined);
-  const hasInteractedRef = React.useRef(false);
+
+  // A ref, not state: the option's pointermove focus lands before a re-render would
+  const interactedRef = React.useRef(false);
   const markInteracted = React.useCallback(() => {
-    hasInteractedRef.current = true;
+    interactedRef.current = true;
   }, []);
-  const hasInteracted = React.useCallback(() => hasInteractedRef.current, []);
+  const interactedSinceOpen = React.useCallback(() => interactedRef.current, []);
+
+  React.useEffect(() => {
+    if (open) interactedRef.current = false;
+  }, [open]);
 
   const handleOpenChange = React.useCallback(
-    (open: boolean) => {
-      if (open) {
+    (nextOpen: boolean) => {
+      if (nextOpen) {
         resetForOpen();
-        hasInteractedRef.current = false;
+        interactedRef.current = false;
       }
-      onOpenChange?.(open);
+      onOpenChange?.(nextOpen);
     },
     [onOpenChange, resetForOpen]
   );
 
   const value = React.useMemo<SelectSearchContextValue>(
-    () => ({ ...search, listId, setListId, markInteracted, hasInteracted }),
-    [search, listId, markInteracted, hasInteracted]
+    () => ({ ...search, markInteracted, interactedSinceOpen }),
+    [search, markInteracted, interactedSinceOpen]
   );
 
   return (
     <SelectSearchContext.Provider value={value}>
-      <SelectPrimitive.Root onOpenChange={handleOpenChange} {...props} />
+      <SelectPrimitive.Root open={open} onOpenChange={handleOpenChange} {...props} />
     </SelectSearchContext.Provider>
   );
 };
+Select.displayName = 'Select';
 
-const SelectGroup = SelectPrimitive.Group;
+const SelectGroup = React.forwardRef<
+  React.ElementRef<typeof SelectPrimitive.Group>,
+  React.ComponentPropsWithoutRef<typeof SelectPrimitive.Group>
+>(({ hidden, ...props }, ref) => {
+  const searching = useIsSearching();
+  const registry = useMatchRegistry();
+
+  return (
+    <SelectGroupMatchContext.Provider value={registry}>
+      <SelectPrimitive.Group
+        ref={ref}
+        {...props}
+        hidden={hidden || (searching && registry.matchCount === 0) || undefined}
+      />
+    </SelectGroupMatchContext.Provider>
+  );
+});
+SelectGroup.displayName = SelectPrimitive.Group.displayName;
 
 const SelectValue = SelectPrimitive.Value;
 
@@ -168,7 +193,7 @@ const SelectContent = React.forwardRef<
 
     const handleFocus = (event: React.FocusEvent<HTMLDivElement>) => {
       onFocus?.(event);
-      if (!ctx?.enabled || !ctx.visible || ctx.hasInteracted()) return;
+      if (!ctx?.enabled || !ctx.visible || ctx.interactedSinceOpen()) return;
       if ((event.target as HTMLElement).closest(SEARCH_INPUT_SELECTOR)) return;
       // Radix focuses the selected option once positioned, which would strand the search input
       ctx.requestFocus();
@@ -176,24 +201,20 @@ const SelectContent = React.forwardRef<
 
     const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
       onKeyDown?.(event);
-      if (!ctx?.enabled) return;
+      if (!ctx?.enabled || event.defaultPrevented) return;
 
       const target = event.target as HTMLElement | null;
       if (target?.closest(SEARCH_INPUT_SELECTOR)) return;
 
       // Radix stops at the first option on ArrowUp, so hand focus back to the search input
       if (event.key === 'ArrowUp' && ctx.visible) {
-        const [firstOption] = Array.from(
-          event.currentTarget.querySelectorAll<HTMLElement>(NAVIGABLE_OPTION_SELECTOR)
-        );
+        const firstOption = event.currentTarget.querySelector(NAVIGABLE_OPTION_SELECTOR);
         if (firstOption && firstOption === target?.closest(NAVIGABLE_OPTION_SELECTOR)) {
           event.preventDefault();
           ctx.requestFocus();
           return;
         }
       }
-
-      if (event.defaultPrevented) return;
 
       if (event.key === 'Backspace' && ctx.visible && ctx.query) {
         event.preventDefault();
@@ -204,7 +225,6 @@ const SelectContent = React.forwardRef<
 
       if (!isPrintableKey(event)) return;
 
-      // preventDefault stops Radix's typeahead from also consuming the key
       event.preventDefault();
       if (!ctx.visible) {
         ctx.reveal(event.key);
@@ -238,7 +258,8 @@ const SelectContent = React.forwardRef<
           }}
           {...props}
         >
-          {/* Stays mounted while open so count updates are announced; zero is SelectEmpty's */}
+          {/* Must stay inside the listbox: Radix aria-hides everything outside it while open.
+              Stays mounted while open so count updates are announced; zero is SelectEmpty's */}
           {ctx?.enabled ? (
             <div className={styles['select-sr-status']} role="status" aria-live="polite">
               {searching && resultCount > 0 ? formatResultCount(resultCount) : null}
@@ -272,7 +293,7 @@ const SelectSearch = React.forwardRef<HTMLInputElement, SelectSearchProps>(
       className,
       placeholder = 'Search...',
       icon,
-      alwaysVisible = false,
+      alwaysVisible = true,
       onKeyDown,
       'aria-label': ariaLabel,
       ...props
@@ -283,35 +304,49 @@ const SelectSearch = React.forwardRef<HTMLInputElement, SelectSearchProps>(
     if (!ctx) {
       throw new Error('SelectSearch must be used within a Select');
     }
-    const { inputRef, isRendered } = useSearchInput(ctx, alwaysVisible);
+    const { ref, isRendered } = useSearchInput(ctx, alwaysVisible, forwardedRef);
 
     if (!isRendered) return null;
 
     return (
       <div className={styles['select-search']}>
         <span aria-hidden="true" className={styles['select-search-icon']}>
-          {icon ?? <SearchIcon className={styles['select-search-icon-size']} />}
+          {icon ?? <SearchIcon className={cn(styles['select-icon'], styles['select-icon--sm'])} />}
         </span>
         <input
-          ref={(node) => {
-            assignRefs(node, inputRef, forwardedRef);
-          }}
+          {...props}
+          ref={ref}
           data-select-search=""
           className={cn(styles['select-search-input'], className)}
           value={ctx.query}
           placeholder={placeholder}
           aria-label={ariaLabel ?? placeholder}
-          // Focus moves onto the options themselves, so this is a searchbox, not a combobox
+          // Focus moves onto the options themselves, so a combobox role would misreport it
           role="searchbox"
           aria-controls={ctx.listId}
           aria-autocomplete="list"
           onChange={(event) => ctx.setQuery(event.target.value)}
           onKeyDown={(event) => {
             onKeyDown?.(event);
+
+            // Without a query, the first option is just whatever is listed first
+            if (event.key === 'Enter' && !event.defaultPrevented && isSearchActive(ctx)) {
+              event.preventDefault();
+              event.stopPropagation();
+              const firstOption = event.currentTarget
+                .closest('[role="listbox"]')
+                ?.querySelector(NAVIGABLE_OPTION_SELECTOR);
+              // Radix selects only from the option's own key handler; click() is ignored once
+              // the pointer has hovered an option
+              firstOption?.dispatchEvent(
+                new KeyboardEvent('keydown', { key: 'Enter', bubbles: true })
+              );
+              return;
+            }
+
             // Anything else reaching Radix would trigger typeahead or select an option
             if (!RADIX_HANDLED_SEARCH_KEYS.includes(event.key)) event.stopPropagation();
           }}
-          {...props}
         />
       </div>
     );
@@ -328,10 +363,10 @@ const SelectEmpty = ({ className, children, ...props }: React.HTMLAttributes<HTM
 
   return (
     <div
+      {...props}
       role="status"
       aria-live="polite"
       className={isEmpty ? cn(styles['select-empty'], className) : undefined}
-      {...props}
     >
       {isEmpty ? children : null}
     </div>
@@ -342,12 +377,17 @@ SelectEmpty.displayName = 'SelectEmpty';
 const SelectLabel = React.forwardRef<
   React.ElementRef<typeof SelectPrimitive.Label>,
   React.ComponentPropsWithoutRef<typeof SelectPrimitive.Label>
->(({ className, ...props }, ref) => {
+>(({ className, hidden, ...props }, ref) => {
   const searching = useIsSearching();
-  if (searching) return null;
 
+  // Hidden, never unmounted: SelectGroup's aria-labelledby points at this element
   return (
-    <SelectPrimitive.Label ref={ref} className={cn(styles['select-label'], className)} {...props} />
+    <SelectPrimitive.Label
+      ref={ref}
+      className={cn(styles['select-label'], className)}
+      {...props}
+      hidden={hidden || searching || undefined}
+    />
   );
 });
 SelectLabel.displayName = SelectPrimitive.Label.displayName;
@@ -355,17 +395,19 @@ SelectLabel.displayName = SelectPrimitive.Label.displayName;
 const SelectItem = React.forwardRef<
   React.ElementRef<typeof SelectPrimitive.Item>,
   React.ComponentPropsWithoutRef<typeof SelectPrimitive.Item>
->(({ className, children, textValue, ...props }, ref) => {
-  const matches = useFilterableItem(useSelectSearch(), textValue, children);
+>(({ className, children, textValue, hidden, ...props }, ref) => {
+  const search = useSelectSearch();
+  const group = React.useContext(SelectGroupMatchContext);
+  const matches = useFilterableItem(search, textValue, children, group);
 
   return (
     <SelectPrimitive.Item
       ref={ref}
-      textValue={textValue}
-      // Hidden, never unmounted: Radix renders the trigger's value from the selected item
-      hidden={!matches || undefined}
       className={cn(styles['select-item'], className)}
       {...props}
+      textValue={textValue}
+      // Hidden, never unmounted: Radix renders the trigger's value from the selected item
+      hidden={hidden || !matches || undefined}
     >
       <span className={styles['select-item-indicator']}>
         <SelectPrimitive.ItemIndicator>
