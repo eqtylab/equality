@@ -1,3 +1,4 @@
+import * as React from 'react';
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { describe, expect, it, vi } from 'vitest';
@@ -27,6 +28,24 @@ function renderFilterDropdown({
     />
   );
   return { onToggleFilter, onClearAll };
+}
+
+function StatefulFilterDropdown({ searchable }: { searchable: boolean }) {
+  const [selected, setSelected] = React.useState(['open']);
+  return (
+    <FilterDropdown
+      label="Status"
+      options={OPTIONS}
+      selectedFilters={selected}
+      onToggleFilter={(value) =>
+        setSelected((prev) =>
+          prev.includes(value) ? prev.filter((v) => v !== value) : [...prev, value]
+        )
+      }
+      onClearAll={() => setSelected([])}
+      searchable={searchable}
+    />
+  );
 }
 
 const openMenu = async (user: ReturnType<typeof userEvent.setup>) => {
@@ -88,6 +107,29 @@ describe('FilterDropdown', () => {
 
       await user.keyboard('{Enter}');
       expect(onClearAll).toHaveBeenCalledOnce();
+    });
+
+    it('keeps the menu open and hands focus to the search box once it clears', async () => {
+      const user = userEvent.setup();
+      render(<StatefulFilterDropdown searchable />);
+      await openMenu(user);
+
+      await user.click(screen.getByRole('menuitem', { name: 'Clear all' }));
+
+      expect(screen.queryByRole('menuitem', { name: 'Clear all' })).toBeNull();
+      expect(screen.getByRole('menu')).toBeTruthy();
+      expect(document.activeElement).toBe(screen.getByRole('searchbox', { name: 'Status' }));
+    });
+
+    it('keeps the menu open and focuses the menu once it clears when not searchable', async () => {
+      const user = userEvent.setup();
+      render(<StatefulFilterDropdown searchable={false} />);
+      await openMenu(user);
+
+      await user.click(screen.getByRole('menuitem', { name: 'Clear all' }));
+
+      expect(screen.queryByRole('menuitem', { name: 'Clear all' })).toBeNull();
+      expect(document.activeElement).toBe(screen.getByRole('menu'));
     });
 
     it('stays out of search results, so Enter toggles the match instead', async () => {

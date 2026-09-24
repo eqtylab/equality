@@ -58,9 +58,17 @@ const FilterDropdown = ({
       option.value && option.value.trim() !== '' && option.label && option.label.trim() !== ''
   );
 
+  // Clearing unmounts this item, so focus moves first; left to fall, it lands on an enclosing dialog
+  const handleClearAll = (event: Event) => {
+    event.preventDefault();
+    const menu = (event.currentTarget as HTMLElement).closest<HTMLElement>('[role="menu"]');
+    (menu?.querySelector<HTMLElement>('[data-dropdown-search]') ?? menu)?.focus();
+    onClearAll();
+  };
+
   const clearAll = (className: string) => (
     // An empty textValue keeps this out of search results, so Enter can't clear every filter
-    <DropdownMenuItem textValue="" onSelect={onClearAll} className={className}>
+    <DropdownMenuItem textValue="" onSelect={handleClearAll} className={className}>
       <span className={buttonVariants({ variant: 'link', size: 'sm' })}>Clear all</span>
     </DropdownMenuItem>
   );
