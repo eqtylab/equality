@@ -9,6 +9,7 @@ export default defineConfig((options) => ({
     'src/schema.ts',
     'src/loaders.ts',
     'src/nav.ts',
+    'src/openapi/index.ts',
     'src/paths.ts',
     'src/types.ts',
     'src/dev.ts',

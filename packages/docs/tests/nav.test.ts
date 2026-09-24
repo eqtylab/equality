@@ -349,3 +349,74 @@ test('the index row is never blank when the consumer config predates indexLabel'
   });
   assert.equal(find(tree, 'Guides Home').children![0]!.label, 'Overview');
 });
+
+test('an openapi page becomes a group led by Overview, with operations under their tags', () => {
+  const tree = build(
+    [
+      entry('reference/auth/overview', 'Overview'),
+      entry('reference/auth/api-reference', 'Auth Service API', { navIndex: true }),
+      entry('reference/auth/api-reference/operations/apiv1api-keys/get', 'List keys', {
+        filePath: undefined,
+        navPlacement: { dir: 'reference/auth/api-reference/api-keys', name: 'apiv1api-keys/get' },
+      }),
+      entry('reference/auth/api-reference/operations/apiv1api-keys/post', 'Create key', {
+        filePath: undefined,
+        navPlacement: { dir: 'reference/auth/api-reference/api-keys', name: 'apiv1api-keys/post' },
+      }),
+    ],
+    {
+      'reference/auth/api-reference': group({ order: ['api-keys'] }),
+      'reference/auth/api-reference/api-keys': group({
+        label: 'API Keys',
+        order: ['apiv1api-keys/get', 'apiv1api-keys/post'],
+      }),
+    }
+  );
+  const auth = find(find(tree, 'Reference').children!, 'Auth');
+  const api = find(auth.children!, 'Auth Service API');
+  assert.equal(api.kind, 'group');
+  assert.deepEqual(labels(api.children!), ['Overview', 'API Keys']);
+  assert.deepEqual(labels(find(api.children!, 'API Keys').children!), ['List keys', 'Create key']);
+});
+
+test('two operations sharing a last URL segment both appear', () => {
+  const tree = build([
+    entry('api', 'API', { navIndex: true }),
+    entry('api/operations/a/get', 'A', {
+      filePath: undefined,
+      navPlacement: { dir: 'api/t', name: 'a/get' },
+    }),
+    entry('api/operations/b/get', 'B', {
+      filePath: undefined,
+      navPlacement: { dir: 'api/t', name: 'b/get' },
+    }),
+  ]);
+  assert.deepEqual(labels(find(find(tree, 'API').children!, 'T').children!), ['A', 'B']);
+});
+
+test('a hidden openapi owner produces no group or row, even though navIndex is set', () => {
+  const tree = build(
+    [
+      entry('api', 'API', { navIndex: true, hidden: true }),
+      entry('api/operations/a/get', 'A', {
+        filePath: undefined,
+        hidden: true,
+        navPlacement: { dir: 'api/t', name: 'a/get' },
+      }),
+      entry('api/operations/b/get', 'B', {
+        filePath: undefined,
+        hidden: true,
+        navPlacement: { dir: 'api/t', name: 'b/get' },
+      }),
+    ],
+    {
+      api: group({ order: ['t'] }),
+      'api/t': group({ label: 'T', order: ['a/get', 'b/get'] }),
+    }
+  );
+  assert.equal(
+    tree.find((n) => n.label === 'API'),
+    undefined
+  );
+  assert.deepEqual(labels(tree), []);
+});

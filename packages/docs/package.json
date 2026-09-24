@@ -42,6 +42,10 @@
       "types": "./dist/nav.d.ts",
       "default": "./dist/nav.js"
     },
+    "./openapi": {
+      "types": "./dist/openapi/index.d.ts",
+      "default": "./dist/openapi/index.js"
+    },
     "./paths": {
       "types": "./dist/paths.d.ts",
       "default": "./dist/paths.js"

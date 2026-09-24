@@ -5,6 +5,8 @@ export type BadgeVariant = 'primary' | 'secondary' | 'neutral' | 'success' | 'wa
 export interface DocsBadge {
   text: string;
   variant: BadgeVariant;
+  /** 'text-only' suppresses the variant's default icon, e.g. for a method badge like GET or DELETE. */
+  display?: 'text-only';
 }
 
 /** A node in the sidebar tree. */
@@ -49,6 +51,10 @@ export interface DocsNavEntry {
   badge?: DocsBadge;
   hidden?: boolean;
   draft?: boolean;
+  /** The entry is its own folder's index, so its row becomes a group. Set for pages with `openapi:`. */
+  navIndex?: boolean;
+  /** Sidebar position for a generated entry whose id does not describe its place. */
+  navPlacement?: { dir: string; name: string };
 }
 
 /** Extension point for generated sections (OpenAPI reference, changelogs, ...). */

@@ -7,6 +7,7 @@ import {
   prevNextFor,
 } from '@eqtylab/docs/nav';
 import type { GroupConfig } from '@eqtylab/docs/nav';
+import { METHOD_VARIANT, openApiGroups, type HttpMethod } from '@eqtylab/docs/openapi';
 import { docsHref } from '@eqtylab/docs/paths';
 import type { DocsNavEntry, NavNode } from '@eqtylab/docs/types';
 import { getCollection } from 'astro:content';
@@ -60,15 +61,30 @@ async function groupMap(versionId?: string): Promise<Map<string, GroupConfig>> {
 export async function docsNav(currentPath: string, versionId?: string): Promise<NavNode[]> {
   const [entries, groups] = await Promise.all([docsEntries(versionId), groupMap(versionId)]);
 
-  const navEntries: DocsNavEntry[] = entries.map((entry) => ({
-    id: entry.id,
-    filePath: entry.filePath,
-    label: entry.data.navLabel ?? entry.data.title,
-    icon: entry.data.icon,
-    badge: entry.data.badge ?? deprecationBadge(entry.data.deprecated),
-    hidden: entry.data.hidden,
-    draft: entry.data.draft,
-  }));
+  const navEntries: DocsNavEntry[] = entries.map((entry) => {
+    const op = entry.data.operation as
+      | { slug: string; tagSlug: string; method: HttpMethod }
+      | undefined;
+    return {
+      id: entry.id,
+      filePath: entry.filePath,
+      label: entry.data.navLabel ?? entry.data.title,
+      icon: entry.data.icon,
+      badge: op
+        ? {
+            text: op.method.toUpperCase(),
+            variant: METHOD_VARIANT[op.method],
+            display: 'text-only',
+          }
+        : (entry.data.badge ?? deprecationBadge(entry.data.deprecated)),
+      hidden: entry.data.hidden,
+      draft: entry.data.draft,
+      navIndex: Boolean(entry.data.openapi) || undefined,
+      navPlacement: op ? { dir: `${entry.data.owner}/${op.tagSlug}`, name: op.slug } : undefined,
+    };
+  });
+
+  for (const [k, v] of openApiGroups(entries)) if (!groups.has(k)) groups.set(k, v);
 
   return buildNavTree({
     entries: navEntries,
