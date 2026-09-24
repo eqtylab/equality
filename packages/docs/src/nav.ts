@@ -76,12 +76,17 @@ interface Classified {
  * `guides/index.mdx` and `guides.mdx` both arrive as "guides".
  */
 function classify(entry: DocsNavEntry): Classified {
+  if (entry.navPlacement) {
+    return { entry, dir: entry.navPlacement.dir, name: entry.navPlacement.name, isIndex: false };
+  }
+
   const id = entry.id;
   const segments = id.split('/').filter(Boolean);
   const fileBase = entry.filePath
     ? (entry.filePath.split('/').pop() ?? '').replace(/\.(md|mdx)$/i, '')
     : undefined;
-  const isIndex = fileBase === 'index' || id === 'index';
+  const isIndex =
+    fileBase === 'index' || id === 'index' || (entry.navIndex === true && !entry.hidden);
 
   if (isIndex) {
     const dir = id === 'index' ? '' : segments.join('/');

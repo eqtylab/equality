@@ -49,7 +49,12 @@ const current =
                 {node.icon && <Icon icon={node.icon} size="sm" />}
                 <span>{node.label}</span>
                 {node.badge && (
-                  <Badge variant={node.badge.variant} size="sm" className="shrink-0">
+                  <Badge
+                    variant={node.badge.variant}
+                    size="sm"
+                    className="shrink-0"
+                    display={node.badge.display}
+                  >
                     {node.badge.text}
                   </Badge>
                 )}
@@ -78,7 +83,12 @@ const current =
             {node.icon && <Icon icon={node.icon} size="sm" />}
             <span class="min-w-0 flex-1 truncate">{node.label}</span>
             {node.badge && (
-              <Badge variant={node.badge.variant} size="sm" className="shrink-0">
+              <Badge
+                variant={node.badge.variant}
+                size="sm"
+                className="shrink-0"
+                display={node.badge.display}
+              >
                 {node.badge.text}
               </Badge>
             )}

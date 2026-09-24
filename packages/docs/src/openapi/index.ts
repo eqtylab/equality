@@ -3,8 +3,10 @@ import { buildModel } from './model.ts';
 import { samplesFor } from './samples.ts';
 import type { ApiModel } from './types.ts';
 
+export { modelId, operationEntryId } from './fan-out.ts';
 export { OpenApiError } from './ingest.ts';
 export { markdownFor } from './markdown.ts';
+export { openApiGroups } from './nav-groups.ts';
 export { METHOD_VARIANT } from './types.ts';
 export type * from './types.ts';
 
