@@ -1,0 +1,3469 @@
+basePath: /
+definitions:
+  core.APIKey:
+    description: An API key for service-to-service authentication; the secret itself
+      is never returned here
+    properties:
+      allowedIps:
+        items:
+          type: string
+        type: array
+      createdAt:
+        format: date-time
+        readOnly: true
+        type: string
+      createdBy:
+        readOnly: true
+        type: string
+      description:
+        type: string
+      expiresAt:
+        format: date-time
+        type: string
+      id:
+        readOnly: true
+        type: string
+      keyId:
+        readOnly: true
+        type: string
+      lastUsedAt:
+        format: date-time
+        readOnly: true
+        type: string
+      name:
+        type: string
+      organizationId:
+        type: integer
+      projectId:
+        type: integer
+      revocationReason:
+        description: Set via the revoke endpoint
+        readOnly: true
+        type: string
+      revokedAt:
+        format: date-time
+        readOnly: true
+        type: string
+      revokedBy:
+        readOnly: true
+        type: string
+      scopes:
+        items:
+          type: string
+        type: array
+      status:
+        enum:
+        - active
+        - expired
+        - revoked
+        readOnly: true
+        type: string
+      usageCount:
+        readOnly: true
+        type: integer
+      userId:
+        description: Resolved from the caller
+        readOnly: true
+        type: string
+    type: object
+  core.APIKeyListResponse:
+    description: The caller's API keys, with the total available
+    properties:
+      apiKeys:
+        items:
+          $ref: '#/definitions/core.APIKey'
+        type: array
+      total:
+        type: integer
+    type: object
+  core.APIKeyUsageLog:
+    properties:
+      apiKeyId:
+        type: string
+      endpoint:
+        type: string
+      id:
+        type: string
+      ipAddress:
+        type: string
+      method:
+        type: string
+      responseStatus:
+        type: integer
+      usedAt:
+        type: string
+      userAgent:
+        type: string
+    type: object
+  core.APIKeyUsageResponse:
+    description: Requests made with one API key, newest first. The key's own usageCount
+      carries the lifetime total
+    properties:
+      usage:
+        items:
+          $ref: '#/definitions/core.APIKeyUsageLog'
+        type: array
+    type: object
+  core.CreatableAPIKeyScope:
+    description: A create-time API key scope, whether the caller may grant it, and
+      copy for the picker
+    properties:
+      category:
+        type: string
+      description:
+        type: string
+      grantable:
+        type: boolean
+      ignoresProjectBinding:
+        type: boolean
+      kind:
+        enum:
+        - full_access
+        - service
+        - rbac
+        type: string
+      label:
+        type: string
+      name:
+        type: string
+    type: object
+  core.CreatableAPIKeyScopesResponse:
+    description: Creatable API key scopes for the authenticated caller, including
+      non-grantable rows
+    properties:
+      scopes:
+        items:
+          $ref: '#/definitions/core.CreatableAPIKeyScope'
+        type: array
+    type: object
+  core.CreateAPIKeyRequest:
+    properties:
+      allowedIps:
+        description: Enforced on every request when set
+        items:
+          type: string
+        type: array
+      description:
+        type: string
+      expiresAt:
+        description: Future, within MaxAPIKeyLifetime
+        example: "2026-12-31T23:59:59Z"
+        format: date-time
+        type: string
+      name:
+        maxLength: 255
+        minLength: 1
+        type: string
+      organizationId:
+        description: Scopes the key to an organization
+        type: integer
+      projectId:
+        description: Scopes the key to a project
+        type: integer
+      scopes:
+        description: '"*" (full access) must be alone'
+        items:
+          type: string
+        type: array
+    required:
+    - description
+    - expiresAt
+    - name
+    type: object
+  core.CreateAPIKeyResponse:
+    description: A newly created API key together with its plaintext secret, which
+      is shown only in this response
+    properties:
+      apiKey:
+        $ref: '#/definitions/core.APIKey'
+      plainKey:
+        description: Only returned once during creation
+        type: string
+    type: object
+  core.DIDDocument:
+    description: The W3C DID document for a key, in did:key form
+    properties:
+      '@context':
+        example: https://www.w3.org/ns/did/v1
+        type: string
+      assertionMethod:
+        items:
+          type: string
+        type: array
+      authentication:
+        description: DID URLs into verificationMethod
+        items:
+          type: string
+        type: array
+      id:
+        example: did:key:zQ3shokFTS3brHcDQrn82RUDfCZESWL1ZdCEJwekUDPQiYBme
+        type: string
+      verificationMethod:
+        items:
+          $ref: '#/definitions/core.DIDVerificationMethod'
+        type: array
+    type: object
+  core.DIDKeyAlgorithm:
+    enum:
+    - secp256k1
+    - p256
+    type: string
+    x-enum-varnames:
+    - DIDKeyAlgorithmSecp256k1
+    - DIDKeyAlgorithmP256
+  core.DIDKeyInfo:
+    description: A DID key held for a user, described independently of the KMS backing
+      it
+    properties:
+      createdAt:
+        format: date-time
+        type: string
+      didDocument:
+        $ref: '#/definitions/core.DIDDocument'
+      keyId:
+        type: string
+      keyReference:
+        type: string
+      keyVaultUrl:
+        description: 'Deprecated: use keyReference'
+        type: string
+      provider:
+        type: string
+      publicKey:
+        type: string
+    type: object
+  core.DIDVerificationMethod:
+    description: A public key in a DID document, published as a JWK
+    properties:
+      controller:
+        example: did:key:zQ3shokFTS3brHcDQrn82RUDfCZESWL1ZdCEJwekUDPQiYBme
+        type: string
+      id:
+        example: did:key:zQ3shokFTS3brHcDQrn82RUDfCZESWL1ZdCEJwekUDPQiYBme#zQ3shokFTS3brHcDQrn82RUDfCZESWL1ZdCEJwekUDPQiYBme
+        type: string
+      publicKeyJwk:
+        type: object
+      type:
+        example: JsonWebSignature2020
+        type: string
+    type: object
+  core.ErrorResponse:
+    description: Error body returned across the auth endpoints; the message is human-readable
+      and not a stable identifier
+    properties:
+      error:
+        example: Unauthorized
+        type: string
+      error_description:
+        example: Invalid token
+        type: string
+    type: object
+  core.PaginationInfo:
+    description: The limit and offset slice a list response was built from, with the
+      total available
+    properties:
+      limit:
+        type: integer
+      offset:
+        type: integer
+    type: object
+  core.ProjectMembershipInfo:
+    description: A user's assignment to a single project, and the roles it grants
+    properties:
+      assignedAt:
+        format: date-time
+        type: string
+      organizationId:
+        type: integer
+      projectId:
+        type: integer
+      roles:
+        items:
+          type: string
+        type: array
+      status:
+        type: string
+      userId:
+        type: string
+    type: object
+  core.ProjectRef:
+    description: A project's integer id and public UUID
+    properties:
+      id:
+        example: 15
+        type: integer
+      uuid:
+        example: fd47f68b-8760-4d0d-94fa-7658924acb25
+        type: string
+    type: object
+  core.SigningKeyInfo:
+    properties:
+      algorithm:
+        $ref: '#/definitions/core.DIDKeyAlgorithm'
+      didDocument:
+        $ref: '#/definitions/core.DIDDocument'
+      hashAlgorithm:
+        type: string
+      joseAlgorithm:
+        type: string
+      purpose:
+        type: string
+      signatureEncoding:
+        type: string
+      signingKeyReference:
+        type: string
+    type: object
+  core.SuccessResponse:
+    description: Confirmation body for endpoints that return no resource
+    properties:
+      message:
+        example: Operation completed successfully
+        type: string
+    type: object
+  handlers.AddOrganizationMemberRequest:
+    properties:
+      roles:
+        description: At least one known role
+        example:
+        - agent_operator
+        - project_owner
+        items:
+          type: string
+        minItems: 1
+        type: array
+      userId:
+        type: string
+    required:
+    - roles
+    - userId
+    type: object
+  handlers.CreateDIDKeyRequest:
+    properties:
+      email:
+        description: Required but only logged
+        example: user@example.com
+        type: string
+      userId:
+        example: auth0|user-123
+        type: string
+    required:
+    - email
+    - userId
+    type: object
+  handlers.CreateDIDKeyResponse:
+    description: Confirmation that a DID key was created, with the key ID it was filed
+      under
+    properties:
+      keyId:
+        example: auth0-user-123
+        type: string
+      message:
+        example: DID key created successfully
+        type: string
+      success:
+        example: true
+        type: boolean
+    type: object
+  handlers.EnrichClaimsRequest:
+    properties:
+      attributes:
+        additionalProperties:
+          type: string
+        description: Keycloak only; diagnostics only
+        type: object
+      email:
+        type: string
+      groups:
+        description: Keycloak only; adds the groups claim
+        items:
+          type: string
+        type: array
+      name:
+        type: string
+      picture:
+        type: string
+      provider:
+        allOf:
+        - $ref: '#/definitions/idp.ProviderType'
+        description: Defaults to auth0
+      user_id:
+        type: string
+    required:
+    - email
+    - user_id
+    type: object
+  handlers.EnrichClaimsResponse:
+    description: The custom claims the IDP should add to the token it is minting
+    properties:
+      custom_claims:
+        additionalProperties: {}
+        type: object
+    type: object
+  handlers.ExternalUserResponse:
+    description: A user as the IDP reports them, flagged with whether they already
+      exist on the platform
+    properties:
+      active:
+        type: boolean
+      createdAt:
+        format: date-time
+        type: string
+      displayName:
+        type: string
+      email:
+        type: string
+      emailVerified:
+        type: boolean
+      existsInPlatform:
+        type: boolean
+      firstName:
+        type: string
+      groups:
+        items:
+          type: string
+        type: array
+      id:
+        type: string
+      isServiceAccount:
+        type: boolean
+      lastLoginAt:
+        format: date-time
+        type: string
+      lastName:
+        type: string
+      metadata:
+        additionalProperties: {}
+        type: object
+      pictureUrl:
+        type: string
+      platformUserId:
+        type: string
+      roles:
+        items:
+          type: string
+        type: array
+      updatedAt:
+        format: date-time
+        type: string
+      username:
+        type: string
+    type: object
+  handlers.GovernanceOrganizationMembership:
+    description: An organization membership, in the shape the governance service consumes
+    properties:
+      organizationId:
+        type: integer
+      roles:
+        items:
+          $ref: '#/definitions/rbac.Role'
+        type: array
+    type: object
+  handlers.GovernanceProjectAssignment:
+    description: A project assignment, in the shape the governance service consumes
+    properties:
+      organizationId:
+        type: integer
+      projectId:
+        type: integer
+      roles:
+        items:
+          $ref: '#/definitions/rbac.Role'
+        type: array
+    type: object
+  handlers.GovernanceUserContext:
+    description: A caller's full authorization context, in the shape the governance
+      service consumes
+    properties:
+      email:
+        type: string
+      isSystemAdmin:
+        type: boolean
+      joinedAt:
+        format: date-time
+        type: string
+      lastLoginAt:
+        format: date-time
+        type: string
+      name:
+        type: string
+      organizationPermissions:
+        additionalProperties:
+          items:
+            $ref: '#/definitions/rbac.Permission'
+          type: array
+        type: object
+      organizations:
+        items:
+          $ref: '#/definitions/handlers.GovernanceOrganizationMembership'
+        type: array
+      permissions:
+        additionalProperties:
+          items:
+            $ref: '#/definitions/rbac.Permission'
+          type: array
+        type: object
+      pictureUrl:
+        type: string
+      projectPermissions:
+        additionalProperties:
+          items:
+            $ref: '#/definitions/rbac.Permission'
+          type: array
+        type: object
+      projects:
+        items:
+          $ref: '#/definitions/handlers.GovernanceProjectAssignment'
+        type: array
+      status:
+        type: boolean
+      userId:
+        type: string
+    type: object
+  handlers.HealthCheckIDPResponse:
+    description: Status of the auth service's connection to the configured identity
+      provider
+    properties:
+      auth:
+        example: verified
+        type: string
+      service:
+        example: auth-service
+        type: string
+      status:
+        example: healthy
+        type: string
+      timestamp:
+        format: date-time
+        type: string
+      version:
+        example: 1.0.0
+        type: string
+    type: object
+  handlers.HealthReadyResponse:
+    description: Readiness status; reports whether the service can serve traffic,
+      including its database
+    properties:
+      database:
+        example: ok
+        type: string
+      service:
+        example: auth-service
+        type: string
+      status:
+        example: ready
+        type: string
+      timestamp:
+        format: date-time
+        type: string
+      version:
+        example: 1.0.0
+        type: string
+    type: object
+  handlers.HealthResponse:
+    description: Liveness status; reports that the service process is running, not
+      that its dependencies are
+    properties:
+      service:
+        example: auth-service
+        type: string
+      status:
+        example: healthy
+        type: string
+      timestamp:
+        format: date-time
+        type: string
+      version:
+        example: 1.0.0
+        type: string
+    type: object
+  handlers.ImportExternalUserRequest:
+    properties:
+      externalUserId:
+        type: string
+      organizationId:
+        description: Omit to import without membership
+        type: integer
+      role:
+        description: Only applies with organizationId
+        type: string
+    required:
+    - externalUserId
+    type: object
+  handlers.ImportExternalUserResponse:
+    description: The platform user created from an IDP user, and whether the import
+      created or matched it
+    properties:
+      addedToOrganization:
+        type: integer
+      displayName:
+        type: string
+      email:
+        type: string
+      importedAt:
+        format: date-time
+        type: string
+      importedFrom:
+        type: string
+      organizationRole:
+        type: string
+      userId:
+        type: string
+    type: object
+  handlers.JWKSResponse:
+    description: The JSON Web Key Set for verifying tokens this service issues
+    properties:
+      keys:
+        items: {}
+        type: array
+    type: object
+  handlers.ListExternalUsersResponse:
+    description: A page of IDP users, with the provider they came from
+    properties:
+      pagination:
+        $ref: '#/definitions/core.PaginationInfo'
+      provider:
+        $ref: '#/definitions/handlers.ProviderInfo'
+      total:
+        type: integer
+      users:
+        items:
+          $ref: '#/definitions/handlers.ExternalUserResponse'
+        type: array
+    type: object
+  handlers.ListUserDIDKeysResponse:
+    description: The DID keys held for the authenticated caller
+    properties:
+      keys:
+        items:
+          $ref: '#/definitions/core.DIDKeyInfo'
+        type: array
+    type: object
+  handlers.ListUsersResponse:
+    description: A page of platform users, with the pagination window it was built
+      from
+    properties:
+      pagination:
+        $ref: '#/definitions/core.PaginationInfo'
+      total:
+        type: integer
+      users:
+        items:
+          $ref: '#/definitions/handlers.UserResponse'
+        type: array
+    type: object
+  handlers.OrganizationInfo:
+    description: The organization a validated token is scoped to, and the roles it
+      carries there
+    properties:
+      id:
+        type: integer
+      name:
+        type: string
+      roles:
+        items:
+          type: string
+        type: array
+    type: object
+  handlers.OrganizationMembershipInfo:
+    description: A user's membership in a single organization, and the roles it grants
+    properties:
+      joinedAt:
+        format: date-time
+        type: string
+      organizationId:
+        type: integer
+      roles:
+        items:
+          type: string
+        type: array
+      status:
+        type: string
+    type: object
+  handlers.PDFSigningCertificateResponse:
+    description: The PEM certificate for the platform key's current version, its algorithm
+      and the reference to echo on sign-pdf
+    properties:
+      algorithm:
+        $ref: '#/definitions/core.DIDKeyAlgorithm'
+      certificate:
+        example: |
+          -----BEGIN CERTIFICATE-----
+          MIIB...
+          -----END CERTIFICATE-----
+        type: string
+      signingKeyReference:
+        type: string
+    type: object
+  handlers.PermissionCheckResponse:
+    description: Whether the caller holds the requested permission, echoing what was
+      checked
+    properties:
+      context:
+        example: organization
+        type: string
+      hasPermission:
+        example: true
+        type: boolean
+      permission:
+        example: manage_org_settings
+        type: string
+      projectId:
+        description: The project reference as sent, or the project whose role granted
+          the check
+        example: "1"
+        type: string
+      userId:
+        example: 550e8400-e29b-41d4-a716-446655440001
+        type: string
+    type: object
+  handlers.PermissionMetadataResponse:
+    additionalProperties:
+      $ref: '#/definitions/rbac.PermissionMetadata'
+    description: Every permission the platform defines, keyed by permission name
+    type: object
+  handlers.PermissionProjectsResponse:
+    description: Projects in the caller's organization where the permission holds;
+      empty when it holds nowhere
+    properties:
+      permission:
+        example: view_project_data
+        type: string
+      projects:
+        items:
+          $ref: '#/definitions/core.ProjectRef'
+        type: array
+    type: object
+  handlers.ProfileResponse:
+    description: The authenticated caller's profile, as stored by the platform
+    properties:
+      message:
+        example: Profile retrieved
+        type: string
+      user: {}
+      userId:
+        example: 550e8400-e29b-41d4-a716-446655440000
+        type: string
+    type: object
+  handlers.ProjectMemberRolesRequest:
+    properties:
+      roles:
+        description: At least one project-level role
+        example:
+        - project_owner
+        - implementer
+        items:
+          type: string
+        minItems: 1
+        type: array
+    required:
+    - roles
+    type: object
+  handlers.ProviderInfo:
+    description: The identity provider that produced the surrounding response
+    properties:
+      name:
+        type: string
+      type:
+        type: string
+    type: object
+  handlers.RemoveOrganizationMemberResponse:
+    description: Confirmation that a user was removed from an organization, naming
+      who was removed
+    properties:
+      message:
+        example: User removed from organization successfully
+        type: string
+      organizationId:
+        example: 123
+        type: integer
+      userId:
+        example: 550e8400-e29b-41d4-a716-446655440000
+        type: string
+    type: object
+  handlers.RemoveProjectMemberResponse:
+    description: Confirmation that a user was removed from a project, naming who was
+      removed
+    properties:
+      message:
+        example: User removed from project successfully
+        type: string
+      projectId:
+        example: 456
+        type: integer
+      userId:
+        example: 550e8400-e29b-41d4-a716-446655440000
+        type: string
+    type: object
+  handlers.RevokeAPIKeyRequest:
+    properties:
+      reason:
+        description: Defaults to "Revoked by user"
+        example: Key compromised
+        type: string
+    type: object
+  handlers.ServiceAccountTokenResponse:
+    description: An access token minted for a service account, valid for machine-to-machine
+      calls only
+    properties:
+      access_token:
+        type: string
+      token_type:
+        example: Bearer
+        type: string
+    type: object
+  handlers.SignPDFRequest:
+    properties:
+      dataHash:
+        description: Hex-encoded 32-byte SHA-256 digest of the PDF
+        example: b94d27b9934d3e08a52e52d7da7dabfac484efe37a5380ee9088f7ace2efcde9
+        type: string
+      signingKeyReference:
+        description: Opt-in reference from /api/v1/protected/sign-pdf/certificate.
+        type: string
+    type: object
+  handlers.SignPDFResponse:
+    description: The signature over a PDF digest, with the PEM certificate needed
+      to verify it; bound requests echo their reference
+    properties:
+      certificate:
+        example: |
+          -----BEGIN CERTIFICATE-----
+          MIIB...
+          -----END CERTIFICATE-----
+        type: string
+      signature:
+        example: 3045022100a1b2c3d4e5f6...
+        type: string
+      signingKeyReference:
+        type: string
+    type: object
+  handlers.SignRequest:
+    properties:
+      dataHash:
+        description: Hex-encoded SHA-256 digest
+        example: b94d27b9934d3e08a52e52d7da7dabfac484efe37a5380ee9088f7ace2efcde9
+        type: string
+      signingKeyReference:
+        description: Opt-in reference from the matching signing-key endpoint.
+        type: string
+    required:
+    - dataHash
+    type: object
+  handlers.SignResponse:
+    description: The signature over the submitted digest, hex-encoded
+    properties:
+      signature:
+        example: 3045022100a1b2c3d4e5f6...
+        type: string
+      signingKeyReference:
+        type: string
+    type: object
+  handlers.SigningHealthResponse:
+    description: Signing backend state (ready, not_supported, uninitialized, sealed,
+      denied, unreachable, timeout, canceled, association_mismatch, unavailable) with
+      process-lifetime Transit signing telemetry. Only ready and not_supported return
+      HTTP 200.
+    properties:
+      status:
+        allOf:
+        - $ref: '#/definitions/services.SigningState'
+        example: ready
+      telemetry:
+        $ref: '#/definitions/services.SigningTelemetry'
+      timestamp:
+        type: string
+    type: object
+  handlers.TokenRequest:
+    properties:
+      grant_type:
+        enum:
+        - urn:ietf:params:oauth:grant-type:token-exchange
+        - refresh_token
+        type: string
+      refresh_token:
+        description: Required for the refresh_token grant
+        type: string
+      subject_token:
+        description: Required for the token-exchange grant
+        type: string
+      subject_token_type:
+        description: token-exchange grant; access_token only
+        enum:
+        - urn:ietf:params:oauth:token-type:access_token
+        type: string
+    required:
+    - grant_type
+    type: object
+  handlers.TokenResponse:
+    description: An OAuth token response, returned by both the exchange and refresh
+      grants
+    properties:
+      access_token:
+        type: string
+      expires_in:
+        description: Access token lifetime in seconds
+        type: integer
+      issued_token_type:
+        type: string
+      refresh_expires_in:
+        description: Refresh token lifetime in seconds
+        type: integer
+      refresh_token:
+        type: string
+      scope:
+        type: string
+      token_type:
+        type: string
+    type: object
+  handlers.UpdateMemberRolesRequest:
+    properties:
+      roles:
+        description: Replaces the member's roles
+        example:
+        - organization_owner
+        items:
+          type: string
+        minItems: 1
+        type: array
+    required:
+    - roles
+    type: object
+  handlers.UpdateMemberRolesResponse:
+    description: The roles a member holds after the update, replacing whatever they
+      held before
+    properties:
+      organizationId:
+        type: integer
+      roles:
+        items:
+          type: string
+        type: array
+      userId:
+        type: string
+    type: object
+  handlers.UserDIDKeyListResponse:
+    description: The DID keys held for the requested user
+    properties:
+      keys:
+        items:
+          $ref: '#/definitions/core.DIDKeyInfo'
+        type: array
+      userId:
+        description: The owner the keys are held under, normalized for legacy providers
+        example: auth0|user-123
+        type: string
+    type: object
+  handlers.UserMembershipsResponse:
+    description: One user's organization membership together with their project assignments
+    properties:
+      did:
+        type: string
+      email:
+        type: string
+      invitedAt:
+        format: date-time
+        type: string
+      invitedBy:
+        type: string
+      joinedAt:
+        format: date-time
+        type: string
+      lastLoginAt:
+        format: date-time
+        type: string
+      name:
+        type: string
+      pictureUrl:
+        type: string
+      projects:
+        items:
+          $ref: '#/definitions/core.ProjectMembershipInfo'
+        type: array
+      roles:
+        items:
+          type: string
+        type: array
+      status:
+        type: string
+      userId:
+        type: string
+    type: object
+  handlers.UserResponse:
+    description: A platform user as returned by the listing endpoints
+    properties:
+      active:
+        type: boolean
+      createdAt:
+        format: date-time
+        type: string
+      displayName:
+        type: string
+      email:
+        type: string
+      emailVerified:
+        type: boolean
+      familyName:
+        type: string
+      givenName:
+        type: string
+      id:
+        type: string
+      isServiceAccount:
+        type: boolean
+      pictureUrl:
+        type: string
+      username:
+        type: string
+    type: object
+  handlers.UserRoleEntry:
+    description: One role assignment, with the organization or project it applies
+      to
+    properties:
+      organizationId:
+        example: org-7
+        type: string
+      projectId:
+        example: ""
+        type: string
+      role:
+        example: organization_owner
+        type: string
+      scope:
+        example: organization
+        type: string
+    type: object
+  handlers.UserRolesResponse:
+    description: Every role the authenticated caller holds in the active organization
+    properties:
+      organizationId:
+        type: string
+      roles:
+        items:
+          $ref: '#/definitions/handlers.UserRoleEntry'
+        type: array
+      userId:
+        type: string
+    type: object
+  handlers.UsersMembershipsResponse:
+    description: Every member of an organization, each with their project assignments
+    properties:
+      organizationId:
+        type: integer
+      users:
+        items:
+          $ref: '#/definitions/handlers.UserMembershipsResponse'
+        type: array
+    type: object
+  handlers.ValidateTokenResponse:
+    description: The result of validating a token, describing the principal it authenticates
+    properties:
+      authType:
+        description: API-key principals only
+        type: string
+      claims:
+        additionalProperties: {}
+        type: object
+      email:
+        type: string
+      keyId:
+        description: API-key principals only
+        type: string
+      keyScopes:
+        description: API-key principals only
+        items:
+          type: string
+        type: array
+      name:
+        type: string
+      organization:
+        $ref: '#/definitions/handlers.OrganizationInfo'
+      permissions:
+        items:
+          type: string
+        type: array
+      userId:
+        type: string
+      valid:
+        type: boolean
+    type: object
+  idp.ProviderType:
+    enum:
+    - keycloak
+    - auth0
+    - entra
+    - okta
+    - generic
+    type: string
+    x-enum-varnames:
+    - ProviderTypeKeycloak
+    - ProviderTypeAuth0
+    - ProviderTypeEntra
+    - ProviderTypeOkta
+    - ProviderTypeGeneric
+  rbac.Permission:
+    enum:
+    - manage_org_settings
+    - manage_org_users
+    - create_projects
+    - edit_project_settings
+    - archive_projects
+    - manage_project_members
+    - create_policies
+    - apply_policies
+    - archive_applied_policies
+    - create_credentials
+    - revoke_credentials
+    - register_agents
+    - revoke_agents
+    - restore_agents
+    - create_agent_memberships
+    - create_indicators
+    - archive_indicators
+    - apply_indicators
+    - activate_indicators
+    - disable_indicators
+    - run_indicators
+    - create_declarations
+    - submit_controls_for_review
+    - determine_control_outcomes
+    - create_comments
+    - view_project_data
+    type: string
+    x-enum-varnames:
+    - ManageOrgSettings
+    - ManageOrgUsers
+    - CreateProjects
+    - EditProjectSettings
+    - ArchiveProjects
+    - ManageProjectMembers
+    - CreatePolicies
+    - ApplyPolicies
+    - ArchiveAppliedPolicies
+    - CreateCredentials
+    - RevokeCredentials
+    - RegisterAgents
+    - RevokeAgents
+    - RestoreAgents
+    - CreateAgentMemberships
+    - CreateIndicators
+    - ArchiveIndicators
+    - ApplyIndicators
+    - ActivateIndicators
+    - DisableIndicators
+    - RunIndicators
+    - CreateDeclarations
+    - SubmitControlsForReview
+    - DetermineControlOutcomes
+    - CreateComments
+    - ViewProjectData
+  rbac.PermissionMetadata:
+    description: The human-readable name, description, and category of one permission
+    properties:
+      category:
+        type: string
+      description:
+        type: string
+      name:
+        type: string
+    type: object
+  rbac.Role:
+    enum:
+    - organization_owner
+    - agent_operator
+    - project_owner
+    - implementation_owner
+    - implementation_contributor
+    - audit_owner
+    - audit_contributor
+    - project_viewer
+    type: string
+    x-enum-varnames:
+    - OrganizationOwner
+    - AgentOperator
+    - ProjectOwner
+    - ImplementationOwner
+    - ImplementationContributor
+    - AuditOwner
+    - AuditContributor
+    - ProjectViewer
+  rbac.RoleMetadata:
+    description: The human-readable name, description, and scope of one role
+    properties:
+      description:
+        type: string
+      name:
+        type: string
+      personas:
+        items:
+          type: string
+        type: array
+      scope:
+        description: '"organization" or "project"'
+        type: string
+    type: object
+  services.SigningLatencyBucket:
+    properties:
+      count:
+        description: Count is the number of attempts that completed within UpperSeconds.
+        type: integer
+      upper_seconds:
+        description: UpperSeconds is the inclusive upper bound of this bucket.
+        type: number
+    type: object
+  services.SigningState:
+    enum:
+    - ready
+    - not_supported
+    - uninitialized
+    - sealed
+    - denied
+    - unreachable
+    - timeout
+    - canceled
+    - association_mismatch
+    - unavailable
+    type: string
+    x-enum-varnames:
+    - SigningReady
+    - SigningNotSupported
+    - SigningUninitialized
+    - SigningSealed
+    - SigningDenied
+    - SigningUnreachable
+    - SigningTimeout
+    - SigningCanceled
+    - SigningMismatch
+    - SigningUnavailable
+  services.SigningTelemetry:
+    properties:
+      duration_seconds:
+        description: DurationSeconds is the total time spent in signing attempts.
+        type: number
+      failures:
+        description: Failures counts every attempt whose outcome is not success.
+        type: integer
+      latency_buckets:
+        description: |-
+          LatencyBuckets are cumulative: each entry counts attempts that completed within
+          upper_seconds, so counts never decrease along the list and there is no +Inf entry
+          (use requests for the total).
+        items:
+          $ref: '#/definitions/services.SigningLatencyBucket'
+        type: array
+      outcomes:
+        additionalProperties:
+          format: int64
+          type: integer
+        description: Outcomes counts attempts by outcome; the key set is fixed and
+          always complete.
+        type: object
+      requests:
+        description: Requests counts every signing attempt, including those slower
+          than the largest latency bucket.
+        type: integer
+    type: object
+host: localhost:8080
+info:
+  contact: {}
+  description: Authentication, authorization, token exchange, and DID key management
+    for the EQTYLab Governance platform. Supports Auth0, Keycloak, Microsoft Entra
+    ID, and generic OIDC providers with multi-tenant RBAC, API keys, and service-account
+    tokens.
+  title: Governance Auth Service API
+  version: 1.0.0
+paths:
+  /api/v1/api-keys:
+    get:
+      consumes:
+      - application/json
+      description: List API keys owned by the authenticated user, optionally filtered
+        by organization. JWT/session only — API keys cannot manage API keys
+      parameters:
+      - description: Filter by organization ID
+        in: query
+        name: organization_id
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: List of API keys
+          schema:
+            $ref: '#/definitions/core.APIKeyListResponse'
+        "400":
+          description: Bad request - Invalid organization ID
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "401":
+          description: Unauthorized - Authentication required
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "403":
+          description: Forbidden - API keys cannot manage API keys
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: List API keys
+      tags:
+      - API Keys
+    post:
+      consumes:
+      - application/json
+      description: Create a new API key for service-to-service authentication. JWT/session
+        only — API keys cannot manage API keys. Scopes must be grantable by the creator;
+        "*" is organization-owner only, and "*" or empty is rejected when projectId
+        binds the key. expiresAt is required, in the future, within 365 days
+      parameters:
+      - description: API key configuration
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/core.CreateAPIKeyRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Created API key (key shown only once)
+          schema:
+            $ref: '#/definitions/core.CreateAPIKeyResponse'
+        "400":
+          description: Bad request - Invalid body, name, description, expiry, or scopes
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "401":
+          description: Unauthorized - Authentication required
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "403":
+          description: Forbidden - API keys cannot manage API keys
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: Create API key
+      tags:
+      - API Keys
+  /api/v1/api-keys/{keyId}:
+    delete:
+      consumes:
+      - application/json
+      description: Revoke one of the authenticated user's API keys, optionally recording
+        a revocation reason. JWT/session only — API keys cannot manage API keys
+      parameters:
+      - description: API Key ID
+        in: path
+        name: keyId
+        required: true
+        type: string
+      - description: Optional revocation reason
+        in: body
+        name: request
+        schema:
+          $ref: '#/definitions/handlers.RevokeAPIKeyRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: API key revoked successfully
+          schema:
+            $ref: '#/definitions/core.SuccessResponse'
+        "400":
+          description: Bad request - Invalid key ID
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "401":
+          description: Unauthorized - Authentication required
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "403":
+          description: Forbidden - API keys cannot manage API keys, or can only revoke
+            own API keys
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "404":
+          description: API key not found
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "409":
+          description: API key already revoked
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: Revoke API key
+      tags:
+      - API Keys
+    get:
+      consumes:
+      - application/json
+      description: Get details of one of the authenticated user's API keys. JWT/session
+        only — API keys cannot manage API keys
+      parameters:
+      - description: API Key ID
+        in: path
+        name: keyId
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: API key details
+          schema:
+            $ref: '#/definitions/core.APIKey'
+        "400":
+          description: Bad request - Key ID required
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "401":
+          description: Unauthorized - Authentication required
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "403":
+          description: Forbidden - API keys cannot manage API keys, or can only view
+            own API keys
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "404":
+          description: API key not found
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: Get API key details
+      tags:
+      - API Keys
+  /api/v1/api-keys/{keyId}/usage:
+    get:
+      consumes:
+      - application/json
+      description: List the requests recorded for one of the authenticated user's
+        API keys, newest first. JWT/session only — API keys cannot manage API keys
+      parameters:
+      - description: API Key ID
+        in: path
+        name: keyId
+        required: true
+        type: string
+      - description: 'Number of entries to return (default: 50, max: 200)'
+        in: query
+        name: limit
+        type: integer
+      - description: Number of entries to skip
+        in: query
+        name: offset
+        type: integer
+      - description: Only entries at or after this ISO 8601 timestamp
+        in: query
+        name: since
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Recorded requests for the key
+          schema:
+            $ref: '#/definitions/core.APIKeyUsageResponse'
+        "400":
+          description: Bad request - Key ID required, or invalid since timestamp
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "401":
+          description: Unauthorized - Authentication required
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "403":
+          description: Forbidden - API keys cannot manage API keys, or can only view
+            own API keys
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "404":
+          description: API key not found
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: Get API key usage
+      tags:
+      - API Keys
+  /api/v1/api-keys/creatable-scopes:
+    get:
+      consumes:
+      - application/json
+      description: Return the ordered catalog of create-time API key scopes and whether
+        the caller may grant each one. Optional organization_id and project_id overlay
+        the same bindings as create. JWT/session only — API keys cannot manage API
+        keys
+      parameters:
+      - description: Override organization used for grant checks
+        in: query
+        name: organization_id
+        type: string
+      - description: Override project used for grant checks
+        in: query
+        name: project_id
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Creatable scopes for the caller
+          schema:
+            $ref: '#/definitions/core.CreatableAPIKeyScopesResponse'
+        "400":
+          description: Bad request - Invalid organization or project ID
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "401":
+          description: Unauthorized - Authentication required
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "403":
+          description: Forbidden - API keys cannot manage API keys
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+      security:
+      - BearerAuth: []
+      summary: List creatable API key scopes
+      tags:
+      - API Keys
+  /api/v1/auth/.well-known/jwks.json:
+    get:
+      description: Return the public JWKS used by relying services to validate enriched
+        tokens issued by the auth service
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: JWKS response
+          schema:
+            $ref: '#/definitions/handlers.JWKSResponse'
+      summary: Get JSON Web Key Set for token validation
+      tags:
+      - Authentication
+  /api/v1/auth/claims-enrichment:
+    post:
+      consumes:
+      - application/json
+      description: Called by IDP Actions/Hooks to provision the user, return organization/project/role
+        custom claims for the JWT, and create a DID key when one is missing
+      parameters:
+      - description: Bearer {api_secret}
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: User information
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/handlers.EnrichClaimsRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Custom claims to add to JWT (includes did_key_id if available)
+          schema:
+            $ref: '#/definitions/handlers.EnrichClaimsResponse'
+        "400":
+          description: Bad request - Invalid request body
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "401":
+          description: Unauthorized - Invalid API secret
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+      summary: Enrich JWT claims with user context and ensure DID key
+      tags:
+      - Authentication
+  /api/v1/auth/did-key:
+    post:
+      consumes:
+      - application/json
+      description: Create a DID key for the given IDP user in the configured key provider
+      parameters:
+      - description: Bearer {api_secret}
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: User information
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/handlers.CreateDIDKeyRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: DID key created successfully
+          schema:
+            $ref: '#/definitions/handlers.CreateDIDKeyResponse'
+        "400":
+          description: Bad request - Invalid request body
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "401":
+          description: Unauthorized - Invalid API secret
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+      summary: Create a DID key for a user
+      tags:
+      - DID Keys
+  /api/v1/auth/did-key/{keyId}:
+    delete:
+      consumes:
+      - application/json
+      description: Delete one of the authenticated user's DID keys from the configured
+        key provider. The development OpenBao profile rejects deletion; operators
+        disable signing through policy.
+      parameters:
+      - description: Provider key ID (e.g., auth0-abc123) or the key's did:key
+        in: path
+        name: keyId
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Key deleted successfully
+          schema:
+            $ref: '#/definitions/core.SuccessResponse'
+        "400":
+          description: Bad request - Key ID required
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "403":
+          description: Forbidden - May only access your own DID keys
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "404":
+          description: DID key not found
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "501":
+          description: Provider does not support key deletion
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+      security:
+      - BearerAuth: []
+      - ApiKeyAuth: []
+      summary: Delete a DID key
+      tags:
+      - DID Keys
+    get:
+      consumes:
+      - application/json
+      description: Retrieve information for one of the authenticated user's DID keys
+        from the configured key provider
+      parameters:
+      - description: Provider key ID (e.g., auth0-abc123) or the key's did:key
+        in: path
+        name: keyId
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: DID key information
+          schema:
+            $ref: '#/definitions/core.DIDKeyInfo'
+        "400":
+          description: Bad request - Key ID required
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "403":
+          description: Forbidden - May only access your own DID keys
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "404":
+          description: DID key not found
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+      security:
+      - BearerAuth: []
+      - ApiKeyAuth: []
+      summary: Get DID key information
+      tags:
+      - DID Keys
+  /api/v1/auth/token:
+    post:
+      consumes:
+      - application/json
+      description: Issue an enriched access token (and rotated refresh token) via
+        OAuth 2.0 Token Exchange (RFC 8693) or refresh-token grant; also mounted at
+        /api/v1/auth/token-exchange for backward compatibility
+      parameters:
+      - description: Token request
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/handlers.TokenRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Token response
+          schema:
+            $ref: '#/definitions/handlers.TokenResponse'
+        "400":
+          description: Invalid request
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "401":
+          description: Invalid or expired token
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+      summary: Exchange or refresh an access token
+      tags:
+      - Authentication
+  /api/v1/auth/token-exchange:
+    post:
+      consumes:
+      - application/json
+      description: Issue an enriched access token (and rotated refresh token) via
+        OAuth 2.0 Token Exchange (RFC 8693) or refresh-token grant; also mounted at
+        /api/v1/auth/token-exchange for backward compatibility
+      parameters:
+      - description: Token request
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/handlers.TokenRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Token response
+          schema:
+            $ref: '#/definitions/handlers.TokenResponse'
+        "400":
+          description: Invalid request
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "401":
+          description: Invalid or expired token
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+      summary: Exchange or refresh an access token
+      tags:
+      - Authentication
+  /api/v1/auth/users/{userId}/did-keys:
+    get:
+      consumes:
+      - application/json
+      description: List all DID keys associated with a user; callers may only list
+        their own keys
+      parameters:
+      - description: User UUID (bare or urn:uuid) or did:key
+        in: path
+        name: userId
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: List of DID keys
+          schema:
+            $ref: '#/definitions/handlers.ListUserDIDKeysResponse'
+        "400":
+          description: Bad request - User ID required
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "403":
+          description: Forbidden - May only access your own DID keys
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "404":
+          description: User not found
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+      security:
+      - BearerAuth: []
+      - ApiKeyAuth: []
+      summary: List user's DID keys
+      tags:
+      - DID Keys
+  /api/v1/auth/validate:
+    post:
+      consumes:
+      - application/json
+      description: 'Validate an IDP JWT, an enriched JWT issued by this service, or
+        an API key supplied via Authorization: Bearer <jwt_or_api_key>, sync user
+        data when applicable, and return the resolved user, organization, and permissions'
+      parameters:
+      - description: Bearer {jwt_or_api_key}
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Token is valid
+          schema:
+            $ref: '#/definitions/handlers.ValidateTokenResponse'
+        "401":
+          description: Token is invalid or expired
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+      summary: Validate a credential and resolve the caller
+      tags:
+      - Authentication
+  /api/v1/external-users:
+    get:
+      consumes:
+      - application/json
+      description: Get a list of users from the configured identity provider (e.g.,
+        Keycloak, Auth0), showing which users exist in the IDP but may not yet exist
+        in the platform
+      parameters:
+      - description: 'Number of users to return (default: 100, max: 100)'
+        in: query
+        name: limit
+        type: integer
+      - description: Number of users to skip
+        in: query
+        name: offset
+        type: integer
+      - description: Filter by email address
+        in: query
+        name: email
+        type: string
+      - description: Filter by username
+        in: query
+        name: username
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: List of external users
+          schema:
+            $ref: '#/definitions/handlers.ListExternalUsersResponse'
+        "400":
+          description: Bad request - Invalid user listing parameters
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "403":
+          description: Forbidden - requires Organization Owner role
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "501":
+          description: Not Implemented - IDP does not support user listing
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+      security:
+      - BearerAuth: []
+      - ApiKeyAuth: []
+      summary: List external users from IDP
+      tags:
+      - External Users
+  /api/v1/external-users/import:
+    post:
+      consumes:
+      - application/json
+      description: Import an IDP user into the platform database and optionally add
+        them to an organization with a specified role
+      parameters:
+      - description: Import user request
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/handlers.ImportExternalUserRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: User imported successfully
+          schema:
+            $ref: '#/definitions/handlers.ImportExternalUserResponse'
+        "400":
+          description: Bad Request - Invalid input, or the IDP user is a service account
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "403":
+          description: Forbidden - requires Organization Owner role
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "404":
+          description: User not found in IDP
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "409":
+          description: Conflict - User already exists in platform
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+      security:
+      - BearerAuth: []
+      - ApiKeyAuth: []
+      summary: Import an external IDP user into the platform
+      tags:
+      - External Users
+  /api/v1/organizations/{organizationId}/members:
+    post:
+      consumes:
+      - application/json
+      description: Add a user to an organization with the specified roles and best-effort
+        sync the membership to the bound IDP organization
+      parameters:
+      - description: Organization ID or UUID (bare or urn:uuid)
+        in: path
+        name: organizationId
+        required: true
+        type: string
+      - description: Roles to assign
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/handlers.AddOrganizationMemberRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: User added successfully
+          schema:
+            $ref: '#/definitions/handlers.OrganizationMembershipInfo'
+        "400":
+          description: Invalid request
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "403":
+          description: Forbidden - requires Organization Owner role
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "404":
+          description: Organization not found
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "409":
+          description: User is already a member of this organization
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+      security:
+      - BearerAuth: []
+      - ApiKeyAuth: []
+      summary: Add user to organization
+      tags:
+      - Organizations
+  /api/v1/organizations/{organizationId}/members/{userId}:
+    delete:
+      consumes:
+      - application/json
+      description: Remove a user from an organization and best-effort remove them
+        from the bound IDP organization
+      parameters:
+      - description: Organization ID or UUID (bare or urn:uuid)
+        in: path
+        name: organizationId
+        required: true
+        type: string
+      - description: User UUID (bare or urn:uuid) or did:key
+        in: path
+        name: userId
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: User removed successfully
+          schema:
+            $ref: '#/definitions/handlers.RemoveOrganizationMemberResponse'
+        "400":
+          description: Invalid request
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "403":
+          description: Forbidden - requires Organization Owner role
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "404":
+          description: Organization, user, or membership not found
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+      security:
+      - BearerAuth: []
+      - ApiKeyAuth: []
+      summary: Remove user from organization
+      tags:
+      - Organizations
+    patch:
+      consumes:
+      - application/json
+      description: Replace the roles assigned to an existing organization member
+      parameters:
+      - description: Organization ID or UUID (bare or urn:uuid)
+        in: path
+        name: organizationId
+        required: true
+        type: string
+      - description: User UUID (bare or urn:uuid) or did:key
+        in: path
+        name: userId
+        required: true
+        type: string
+      - description: Updated roles
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/handlers.UpdateMemberRolesRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Member roles updated successfully
+          schema:
+            $ref: '#/definitions/handlers.UpdateMemberRolesResponse'
+        "400":
+          description: Invalid request
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "403":
+          description: Forbidden - requires Organization Owner role
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "404":
+          description: Organization, user, or membership not found
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+      security:
+      - BearerAuth: []
+      - ApiKeyAuth: []
+      summary: Update organization member roles
+      tags:
+      - Organizations
+  /api/v1/organizations/{organizationId}/members/{userId}/did-doc:
+    get:
+      consumes:
+      - application/json
+      description: Return the public DID document for a user when both the caller
+        and target user are active members of the organization
+      parameters:
+      - description: Organization ID or UUID (bare or urn:uuid)
+        in: path
+        name: organizationId
+        required: true
+        type: string
+      - description: Member user UUID (bare or urn:uuid) or did:key
+        in: path
+        name: userId
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: DID Document
+          schema:
+            $ref: '#/definitions/core.DIDDocument'
+        "400":
+          description: Invalid organization or user ID
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "403":
+          description: Caller is not an active organization member
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "404":
+          description: Organization, member, or DID document not found
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+      security:
+      - BearerAuth: []
+      - ApiKeyAuth: []
+      summary: Get an organization member's DID document
+      tags:
+      - DID Keys
+  /api/v1/organizations/{organizationId}/members/{userId}/memberships:
+    get:
+      consumes:
+      - application/json
+      description: Return a user's organization membership and their project assignments
+        scoped to the organization
+      parameters:
+      - description: Organization ID or UUID (bare or urn:uuid)
+        in: path
+        name: organizationId
+        required: true
+        type: string
+      - description: User UUID (bare or urn:uuid) or did:key
+        in: path
+        name: userId
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: User memberships
+          schema:
+            $ref: '#/definitions/handlers.UserMembershipsResponse'
+        "400":
+          description: Invalid user ID
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "403":
+          description: Forbidden - requires access to this organization
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "404":
+          description: Organization or user not found, or user is not a member of
+            it
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+      security:
+      - BearerAuth: []
+      - ApiKeyAuth: []
+      summary: Get user memberships within an organization
+      tags:
+      - Memberships
+  /api/v1/organizations/{organizationId}/memberships:
+    get:
+      consumes:
+      - application/json
+      description: Return every member's organization role and their project assignments
+        within the organization, ordered by most recent join
+      parameters:
+      - description: Organization ID or UUID (bare or urn:uuid)
+        in: path
+        name: organizationId
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Users' memberships
+          schema:
+            $ref: '#/definitions/handlers.UsersMembershipsResponse'
+        "400":
+          description: Invalid params
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "403":
+          description: Forbidden - requires access to this organization
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "404":
+          description: Organization not found
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+      security:
+      - BearerAuth: []
+      - ApiKeyAuth: []
+      summary: List memberships for all users in an organization
+      tags:
+      - Memberships
+  /api/v1/organizations/{organizationId}/projects/{projectId}/members/{userId}:
+    delete:
+      consumes:
+      - application/json
+      description: Remove a user's project assignment within an organization
+      parameters:
+      - description: Organization ID or UUID (bare or urn:uuid)
+        in: path
+        name: organizationId
+        required: true
+        type: string
+      - description: Project ID, UUID (bare or urn:uuid), or slug:my-project
+        in: path
+        name: projectId
+        required: true
+        type: string
+      - description: User UUID (bare or urn:uuid) or did:key
+        in: path
+        name: userId
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: User removed successfully
+          schema:
+            $ref: '#/definitions/handlers.RemoveProjectMemberResponse'
+        "400":
+          description: Invalid request
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "403":
+          description: Forbidden - requires Organization Owner or Project Owner role
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "404":
+          description: Organization, project, user, or assignment not found
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+      security:
+      - BearerAuth: []
+      - ApiKeyAuth: []
+      summary: Remove user from project
+      tags:
+      - Memberships
+    post:
+      consumes:
+      - application/json
+      description: Assign a user to a project within an organization with the specified
+        project roles
+      parameters:
+      - description: Organization ID or UUID (bare or urn:uuid)
+        in: path
+        name: organizationId
+        required: true
+        type: string
+      - description: Project ID, UUID (bare or urn:uuid), or slug:my-project
+        in: path
+        name: projectId
+        required: true
+        type: string
+      - description: User UUID (bare or urn:uuid) or did:key
+        in: path
+        name: userId
+        required: true
+        type: string
+      - description: Roles to assign
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/handlers.ProjectMemberRolesRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: User added successfully
+          schema:
+            $ref: '#/definitions/core.ProjectMembershipInfo'
+        "400":
+          description: Invalid request
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "403":
+          description: Forbidden - requires Organization Owner or Project Owner role
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "404":
+          description: Organization, project, or user not found
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "409":
+          description: User is an organization owner, who cannot hold project roles
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+      security:
+      - BearerAuth: []
+      - ApiKeyAuth: []
+      summary: Assign user to project
+      tags:
+      - Memberships
+    put:
+      consumes:
+      - application/json
+      description: Replace the project roles assigned to a user, upserting the assignment
+        when needed
+      parameters:
+      - description: Organization ID or UUID (bare or urn:uuid)
+        in: path
+        name: organizationId
+        required: true
+        type: string
+      - description: Project ID, UUID (bare or urn:uuid), or slug:my-project
+        in: path
+        name: projectId
+        required: true
+        type: string
+      - description: User UUID (bare or urn:uuid) or did:key
+        in: path
+        name: userId
+        required: true
+        type: string
+      - description: Updated roles
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/handlers.ProjectMemberRolesRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: User roles updated successfully
+          schema:
+            $ref: '#/definitions/core.ProjectMembershipInfo'
+        "400":
+          description: Invalid request
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "403":
+          description: Forbidden - requires Organization Owner or Project Owner role
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "404":
+          description: Organization, project, or user not found
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "409":
+          description: User is an organization owner, who cannot hold project roles
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+      security:
+      - BearerAuth: []
+      - ApiKeyAuth: []
+      summary: Update user roles in a project
+      tags:
+      - Memberships
+  /api/v1/protected/did-doc:
+    get:
+      consumes:
+      - application/json
+      description: Return the DID document for the authenticated user, resolved from
+        their IDP user ID
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: DID Document
+          schema:
+            $ref: '#/definitions/core.DIDDocument'
+        "401":
+          description: Unauthorized - Invalid or missing credential
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "404":
+          description: Not found - User has no DID key
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+      security:
+      - BearerAuth: []
+      - ApiKeyAuth: []
+      summary: Get current user's DID document
+      tags:
+      - DID Keys
+  /api/v1/protected/platform/did-doc:
+    get:
+      consumes:
+      - application/json
+      description: Return the DID document for the shared organization-key DID key;
+        also mounted at /platform/api/v1/protected/did-doc for SDK AuthServiceSigner
+        compatibility
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: DID Document
+          schema:
+            $ref: '#/definitions/core.DIDDocument'
+        "401":
+          description: Unauthorized - Invalid or missing credential
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+      security:
+      - BearerAuth: []
+      - ApiKeyAuth: []
+      summary: Get platform DID document
+      tags:
+      - DID Keys
+  /api/v1/protected/platform/sign:
+    post:
+      consumes:
+      - application/json
+      description: Sign a 32-byte SHA-256 digest (hex-encoded) using the shared organization-key
+        DID key; also mounted at /platform/api/v1/protected/sign for SDK AuthServiceSigner
+        compatibility
+      parameters:
+      - description: Hex encoded data hash to sign
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/handlers.SignRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Signature created successfully
+          schema:
+            $ref: '#/definitions/handlers.SignResponse'
+        "400":
+          description: Bad request - Invalid data
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "403":
+          description: Forbidden - requires Audit Owner, Organization Owner, or Project
+            Owner role
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "404":
+          description: Bound platform key missing or disabled
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "409":
+          description: Bound reference mismatch
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "503":
+          description: Version-bound signing unavailable
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+      security:
+      - BearerAuth: []
+      - ApiKeyAuth: []
+      summary: Sign a digest with the platform DID key
+      tags:
+      - DID Keys
+  /api/v1/protected/platform/signing-key:
+    get:
+      description: Echo the reference on the matching platform sign route; authorization
+        matches platform signing.
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/core.SigningKeyInfo'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "503":
+          description: Service Unavailable
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+      security:
+      - BearerAuth: []
+      - ApiKeyAuth: []
+      summary: Get version-bound signing metadata for the shared platform key
+      tags:
+      - DID Keys
+  /api/v1/protected/profile:
+    get:
+      consumes:
+      - application/json
+      description: Return the authenticated user's profile and resolved IDP user ID
+        from their JWT
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: User profile information
+          schema:
+            $ref: '#/definitions/handlers.ProfileResponse'
+        "401":
+          description: Unauthorized - Invalid or missing credential
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+      security:
+      - BearerAuth: []
+      - ApiKeyAuth: []
+      summary: Get user profile
+      tags:
+      - Users
+  /api/v1/protected/sign:
+    post:
+      consumes:
+      - application/json
+      description: Sign a 32-byte SHA-256 digest (hex-encoded) using the authenticated
+        user's DID key in the configured key provider
+      parameters:
+      - description: Hex encoded data hash to sign
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/handlers.SignRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Signature created successfully
+          schema:
+            $ref: '#/definitions/handlers.SignResponse'
+        "400":
+          description: Bad request - Invalid data
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "403":
+          description: Bound request selects reserved platform key material
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "404":
+          description: No DID key found for user, or bound key missing/disabled
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "409":
+          description: Bound reference mismatch
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "503":
+          description: Version-bound signing unavailable
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+      security:
+      - BearerAuth: []
+      - ApiKeyAuth: []
+      summary: Sign a digest with the authenticated user's DID key
+      tags:
+      - DID Keys
+  /api/v1/protected/sign-pdf:
+    post:
+      consumes:
+      - application/json
+      description: Sign a 32-byte SHA-256 digest (hex-encoded) using the shared organization-key
+        DID key. Echo the signingKeyReference from /api/v1/protected/sign-pdf/certificate
+        to bind the signature to the certificate's key version; without it the legacy
+        path signs with the current key.
+      parameters:
+      - description: Hex encoded PDF SHA-256 hash to sign, with an optional signingKeyReference
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/handlers.SignPDFRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Signature created successfully
+          schema:
+            $ref: '#/definitions/handlers.SignPDFResponse'
+        "400":
+          description: Bad request - Invalid data or a malformed signingKeyReference
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "403":
+          description: Forbidden - requires Organization Owner or Project Owner role
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "404":
+          description: Bound platform key missing or disabled
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "409":
+          description: Bound reference does not match the current platform key version
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "501":
+          description: Not implemented - the platform key algorithm has no PDF certificate
+            profile
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "503":
+          description: Version-bound signing unavailable
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+      security:
+      - BearerAuth: []
+      - ApiKeyAuth: []
+      summary: Sign a PDF digest with the platform DID key
+      tags:
+      - DID Keys
+  /api/v1/protected/sign-pdf/certificate:
+    get:
+      description: Returns the PEM certificate for the platform key's current concrete
+        version and the opaque reference to echo on /api/v1/protected/sign-pdf. No
+        PDF digest is signed; authorization matches sign-pdf.
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/handlers.PDFSigningCertificateResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "403":
+          description: Forbidden - requires Organization Owner or Project Owner role
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "404":
+          description: Bound platform key missing or disabled
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "501":
+          description: Not implemented - the platform key algorithm has no PDF certificate
+            profile
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "503":
+          description: Version-bound signing unavailable
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+      security:
+      - BearerAuth: []
+      - ApiKeyAuth: []
+      summary: Get the version-bound PDF signing certificate for the platform key
+      tags:
+      - DID Keys
+  /api/v1/protected/signing-key:
+    get:
+      description: Returns a public DID and opaque reference to echo on /api/v1/protected/sign.
+        Also supports service-account users authenticated by existing middleware.
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/core.SigningKeyInfo'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "403":
+          description: The user's key ID selects reserved platform key material
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "503":
+          description: Service Unavailable
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+      security:
+      - BearerAuth: []
+      - ApiKeyAuth: []
+      summary: Get version-bound signing metadata for the current user
+      tags:
+      - DID Keys
+  /api/v1/rbac/check/permission/{permission}:
+    get:
+      consumes:
+      - application/json
+      description: Report whether the authenticated user holds the given permission
+        and which role scope satisfied it
+      parameters:
+      - description: Permission name
+        in: path
+        name: permission
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Permission check result
+          schema:
+            $ref: '#/definitions/handlers.PermissionCheckResponse'
+        "401":
+          description: Unauthorized - Authentication required
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "500":
+          description: Role lookup failed
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+      security:
+      - BearerAuth: []
+      - ApiKeyAuth: []
+      summary: Check user permission
+      tags:
+      - RBAC
+  /api/v1/rbac/check/permission/{permission}/project/{projectId}:
+    get:
+      consumes:
+      - application/json
+      description: Report whether the authenticated user holds the given permission
+        within the specified project
+      parameters:
+      - description: Permission name
+        in: path
+        name: permission
+        required: true
+        type: string
+      - description: Project ID, UUID (bare or urn:uuid), or slug:my-project within
+          the caller's organization
+        in: path
+        name: projectId
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Permission check result; an unknown UUID or slug reports hasPermission
+            false
+          schema:
+            $ref: '#/definitions/handlers.PermissionCheckResponse'
+        "400":
+          description: Project ID is not an integer, a UUID, or a slug
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "401":
+          description: Unauthorized - Authentication required
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "500":
+          description: Project or role lookup failed
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+      security:
+      - BearerAuth: []
+      - ApiKeyAuth: []
+      summary: Check user permission in project
+      tags:
+      - RBAC
+  /api/v1/rbac/metadata/permissions:
+    get:
+      consumes:
+      - application/json
+      description: Return metadata for every permission defined in the system, keyed
+        by permission name
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Permission metadata
+          schema:
+            $ref: '#/definitions/handlers.PermissionMetadataResponse'
+        "401":
+          description: Unauthorized - Authentication required
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+      security:
+      - BearerAuth: []
+      - ApiKeyAuth: []
+      summary: Get permission metadata
+      tags:
+      - RBAC
+  /api/v1/rbac/metadata/roles:
+    get:
+      consumes:
+      - application/json
+      description: Return metadata for every role defined in the system, keyed by
+        role name
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Role metadata keyed by role name
+          schema:
+            additionalProperties:
+              $ref: '#/definitions/rbac.RoleMetadata'
+            type: object
+        "401":
+          description: Unauthorized - Authentication required
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+      security:
+      - BearerAuth: []
+      - ApiKeyAuth: []
+      summary: Get role metadata
+      tags:
+      - RBAC
+  /api/v1/rbac/permission/{permission}/projects:
+    get:
+      consumes:
+      - application/json
+      description: Return every project in the caller's organization, or in every
+        organization for a platform service account, where the authenticated principal
+        holds the given permission, honoring API-key scopes and project binding. An
+        empty list is a valid answer; like the check endpoints, an unknown permission
+        is one nobody holds
+      parameters:
+      - description: Permission name
+        in: path
+        name: permission
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Projects where the permission holds
+          schema:
+            $ref: '#/definitions/handlers.PermissionProjectsResponse'
+        "401":
+          description: Unauthorized - Authentication required
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "500":
+          description: Project or role lookup failed
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+      security:
+      - BearerAuth: []
+      - ApiKeyAuth: []
+      summary: List projects where the user holds a permission
+      tags:
+      - RBAC
+  /api/v1/rbac/user/permissions:
+    get:
+      consumes:
+      - application/json
+      description: Return the authenticated user's organization memberships, project
+        assignments, and effective permissions in the governance-service contract
+        format
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: User permissions and context
+          schema:
+            $ref: '#/definitions/handlers.GovernanceUserContext'
+        "400":
+          description: Could not determine a unique organization for this request
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+      security:
+      - BearerAuth: []
+      - ApiKeyAuth: []
+      summary: Get user permissions for governance
+      tags:
+      - RBAC
+  /api/v1/rbac/user/roles:
+    get:
+      consumes:
+      - application/json
+      description: Return the authenticated user's organization and project role assignments
+        with derived scope
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: User roles with context
+          schema:
+            $ref: '#/definitions/handlers.UserRolesResponse'
+        "401":
+          description: Unauthorized - Authentication required
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+      security:
+      - BearerAuth: []
+      - ApiKeyAuth: []
+      summary: Get current user's roles
+      tags:
+      - RBAC
+  /api/v1/service-accounts/{serviceName}/token:
+    get:
+      consumes:
+      - application/json
+      description: Issue an access token for the named service account, authenticated
+        via the shared API secret
+      parameters:
+      - description: Bearer {api_secret}
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: Service account name
+        in: path
+        name: serviceName
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Token response
+          schema:
+            $ref: '#/definitions/handlers.ServiceAccountTokenResponse'
+        "400":
+          description: Service name is required
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "401":
+          description: Unauthorized - Missing, malformed, or invalid API secret
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "403":
+          description: Service account is not active
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "404":
+          description: Service account not found
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "500":
+          description: Internal server error or API secret middleware misconfiguration
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+      summary: Get service account access token
+      tags:
+      - Service Accounts
+  /api/v1/service/did-keys/{keyId}:
+    get:
+      consumes:
+      - application/json
+      description: Retrieve DID key information for service-to-service calls (requires
+        did:read scope)
+      parameters:
+      - description: Provider key ID (e.g., auth0-abc123) or the key's did:key
+        in: path
+        name: keyId
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: DID key information
+          schema:
+            $ref: '#/definitions/core.DIDKeyInfo'
+        "400":
+          description: Bad request - Key ID required
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "401":
+          description: Unauthorized - API key authentication required
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "403":
+          description: Forbidden - Insufficient scope
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "404":
+          description: DID key not found
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: Get DID key for service
+      tags:
+      - Service API
+  /api/v1/service/users/{userId}/did-keys:
+    get:
+      consumes:
+      - application/json
+      description: List all DID keys for a specific user (service endpoint, requires
+        did:read scope)
+      parameters:
+      - description: Original IdP user ID exactly as issued (for example auth0|abc),
+          or did:key. Normalized forms such as auth0-abc match nothing under OpenBao.
+        in: path
+        name: userId
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: List of DID keys
+          schema:
+            $ref: '#/definitions/handlers.UserDIDKeyListResponse'
+        "400":
+          description: Bad request - User ID required
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "401":
+          description: Unauthorized - API key authentication required
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "403":
+          description: Forbidden - Insufficient scope
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "404":
+          description: User not found
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: List user's DID keys for service
+      tags:
+      - Service API
+  /api/v1/users:
+    get:
+      consumes:
+      - application/json
+      description: Return a paginated list of platform users, optionally filtered
+        by active status; restricted to organization owners
+      parameters:
+      - description: 'Number of users to return (default: 100, max: 500)'
+        in: query
+        name: limit
+        type: integer
+      - description: Number of users to skip
+        in: query
+        name: offset
+        type: integer
+      - description: Filter by active status
+        in: query
+        name: active
+        type: boolean
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: List of users
+          schema:
+            $ref: '#/definitions/handlers.ListUsersResponse'
+        "400":
+          description: Bad request - Invalid active filter
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "403":
+          description: Forbidden - requires Organization Owner role
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+      security:
+      - BearerAuth: []
+      - ApiKeyAuth: []
+      summary: List platform users
+      tags:
+      - Users
+  /health:
+    get:
+      consumes:
+      - application/json
+      description: Returns a static healthy response without checking dependencies,
+        intended for orchestrator liveness probes
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Health status
+          schema:
+            $ref: '#/definitions/handlers.HealthResponse'
+      summary: Liveness probe
+      tags:
+      - Health
+  /health/auth:
+    get:
+      consumes:
+      - application/json
+      description: Health check requiring an API secret that confirms IDP reachability
+        by fetching JWKS, so callers (IDP actions/webhooks) know the upstream provider
+        is responsive before invoking other endpoints
+      parameters:
+      - description: Bearer {api_secret}
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Health status with IDP verified
+          schema:
+            $ref: '#/definitions/handlers.HealthCheckIDPResponse'
+        "401":
+          description: Unauthorized - Invalid API secret
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "503":
+          description: IDP provider unreachable
+          schema:
+            $ref: '#/definitions/handlers.HealthCheckIDPResponse'
+      summary: Authenticated health check for IDP actions
+      tags:
+      - Health
+  /health/ready:
+    get:
+      consumes:
+      - application/json
+      description: Reports whether the service can serve traffic by pinging the database,
+        used by orchestrators and the E2E preflight check
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Service is ready
+          schema:
+            $ref: '#/definitions/handlers.HealthReadyResponse'
+        "503":
+          description: Service is not ready
+          schema:
+            $ref: '#/definitions/handlers.HealthReadyResponse'
+      summary: Readiness check endpoint
+      tags:
+      - Health
+  /health/signing:
+    get:
+      description: Checks OpenBao seal state, self capabilities, platform metadata
+        and its committed association without signing. Independent of liveness and
+        database readiness. Other providers report not_supported. Telemetry covers
+        process-lifetime Transit sign attempts, excluding metadata resolution; latency_buckets
+        are cumulative upper bounds.
+      parameters:
+      - description: Bearer {api_secret}
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/handlers.SigningHealthResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "503":
+          description: Service Unavailable
+          schema:
+            $ref: '#/definitions/handlers.SigningHealthResponse'
+      summary: Signing backend health and telemetry
+      tags:
+      - Health
+  /platform/api/v1/protected/did-doc:
+    get:
+      consumes:
+      - application/json
+      description: Return the DID document for the shared organization-key DID key;
+        also mounted at /platform/api/v1/protected/did-doc for SDK AuthServiceSigner
+        compatibility
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: DID Document
+          schema:
+            $ref: '#/definitions/core.DIDDocument'
+        "401":
+          description: Unauthorized - Invalid or missing credential
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+      security:
+      - BearerAuth: []
+      - ApiKeyAuth: []
+      summary: Get platform DID document
+      tags:
+      - DID Keys
+  /platform/api/v1/protected/sign:
+    post:
+      consumes:
+      - application/json
+      description: Sign a 32-byte SHA-256 digest (hex-encoded) using the shared organization-key
+        DID key; also mounted at /platform/api/v1/protected/sign for SDK AuthServiceSigner
+        compatibility
+      parameters:
+      - description: Hex encoded data hash to sign
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/handlers.SignRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Signature created successfully
+          schema:
+            $ref: '#/definitions/handlers.SignResponse'
+        "400":
+          description: Bad request - Invalid data
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "403":
+          description: Forbidden - requires Audit Owner, Organization Owner, or Project
+            Owner role
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "404":
+          description: Bound platform key missing or disabled
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "409":
+          description: Bound reference mismatch
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "500":
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "503":
+          description: Version-bound signing unavailable
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+      security:
+      - BearerAuth: []
+      - ApiKeyAuth: []
+      summary: Sign a digest with the platform DID key
+      tags:
+      - DID Keys
+  /platform/api/v1/protected/signing-key:
+    get:
+      description: Echo the reference on the matching platform sign route; authorization
+        matches platform signing.
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/core.SigningKeyInfo'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+        "503":
+          description: Service Unavailable
+          schema:
+            $ref: '#/definitions/core.ErrorResponse'
+      security:
+      - BearerAuth: []
+      - ApiKeyAuth: []
+      summary: Get version-bound signing metadata for the shared platform key
+      tags:
+      - DID Keys
+securityDefinitions:
+  ApiKeyAuth:
+    description: Type "Bearer" followed by a space and API key
+    in: header
+    name: Authorization
+    type: apiKey
+  BearerAuth:
+    description: Type "Bearer" followed by a space and JWT token
+    in: header
+    name: Authorization
+    type: apiKey
+swagger: "2.0"
