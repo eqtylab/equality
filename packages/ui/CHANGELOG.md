@@ -2,6 +2,14 @@
 
 Notable changes to Equality are recorded here, following [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## 4.3.1 - 2026-09-24
+
+### Fixed
+
+- A searchable `DropdownMenu`, `FilterDropdown` or `RadioDropdown` inside a `Dialog` or
+  `Sheet` now focuses its search box when opened. The dialog's focus trap pulled focus
+  back out, leaving it on the menu.
+
 ## 4.3.0 - 2026-09-24
 
 ### Added

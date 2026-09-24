@@ -2,6 +2,7 @@ import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { describe, expect, it, vi } from 'vitest';
 
+import { Dialog, DialogContainer, DialogTitle } from '@/components/dialog/dialog';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -67,6 +68,23 @@ describe('DropdownMenu', () => {
 
       expect(((await screen.findByRole('searchbox')) as HTMLInputElement).value).toBe('');
       expect(screen.getByRole('menuitem', { name: 'Copy' })).toBeTruthy();
+    });
+
+    it('focuses the search when opened inside a dialog', async () => {
+      const user = userEvent.setup();
+      render(
+        <Dialog open>
+          <DialogContainer aria-describedby={undefined}>
+            <DialogTitle>Edit</DialogTitle>
+            <Menu />
+          </DialogContainer>
+        </Dialog>
+      );
+
+      await user.click(screen.getByRole('button', { name: 'Actions' }));
+
+      const searchbox = await screen.findByRole('searchbox');
+      await waitFor(() => expect(document.activeElement).toBe(searchbox));
     });
   });
 });

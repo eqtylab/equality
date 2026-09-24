@@ -200,11 +200,18 @@ const MENU_ITEM_SELECTOR =
 const DropdownMenuContent = React.forwardRef<
   React.ElementRef<typeof DropdownMenuPrimitive.Content>,
   React.ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.Content>
->(({ className, sideOffset = 4, onKeyDown, children, ...props }, ref) => {
+>(({ className, sideOffset = 4, onKeyDown, onFocus, children, ...props }, ref) => {
   const ctx = useDropdownMenuSearch();
   const setListId = ctx?.setListId;
   const searching = isSearchActive(ctx);
   const resultCount = ctx?.matchCount ?? 0;
+  const openFocusHandledRef = React.useRef(false);
+  const searchVisible = ctx?.visible ?? false;
+
+  // Opening hides the search again, even on a reopen mid exit animation, when content stays mounted
+  React.useEffect(() => {
+    if (!searchVisible) openFocusHandledRef.current = false;
+  }, [searchVisible]);
 
   // Stable ref so React attaches once (mount) / detaches once (unmount) rather than
   // flip-flopping setListId every render, which a fresh inline callback would trigger
@@ -224,6 +231,15 @@ const DropdownMenuContent = React.forwardRef<
         ref={composedContentRef}
         sideOffset={sideOffset}
         className={cn(styles['dropdown-menu-content'], className)}
+        onFocus={(event) => {
+          onFocus?.(event);
+          if (openFocusHandledRef.current) return;
+          openFocusHandledRef.current = true;
+          if (event.target !== event.currentTarget || !ctx?.enabled || !ctx.visible) return;
+          // Inside a Dialog, the input's mount focus lands before this menu pauses the Dialog's
+          // focus trap, which pulls it back out, so Radix then focuses the menu itself
+          ctx.requestFocus();
+        }}
         onKeyDown={(event) => {
           onKeyDown?.(event);
           if (!ctx?.enabled) return;
