@@ -2,6 +2,8 @@ import type { ApiModel } from '@eqtylab/docs/openapi';
 import { modelId } from '@eqtylab/docs/openapi';
 import { idToPath } from '@eqtylab/docs/paths';
 
+// Content entries from every collection share no data type; each lookup below narrows the field it reads.
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 type AnyEntry = { id: string; data: Record<string, any> };
 
 export const isModelEntry = (e: AnyEntry) => e.data.generated === 'model';
