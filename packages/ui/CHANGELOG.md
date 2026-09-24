@@ -2,6 +2,15 @@
 
 Notable changes to Equality are recorded here, following [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## 4.3.2 - 2026-09-24
+
+### Fixed
+
+- `FilterDropdown`'s "Clear all" no longer closes the menu. Focus moves to the search box,
+  or to the menu without search, instead of falling out to an enclosing dialog.
+- A searchable `Select` keeps the side it opened on while searching. A query that shrank
+  the list flipped it to the other side, where it stayed, capped to that side's space.
+
 ## 4.3.1 - 2026-09-24
 
 ### Fixed

@@ -30,9 +30,13 @@ const SEARCH_INPUT_SELECTOR = '[data-select-search]';
 const NAVIGABLE_OPTION_SELECTOR = '[role="option"]:not([data-disabled]):not([hidden])';
 const RADIX_HANDLED_SEARCH_KEYS = ['ArrowDown', 'ArrowUp', 'Escape', 'Tab'];
 
+type Side = NonNullable<SelectPrimitive.SelectContentProps['side']>;
+
 type SelectSearchContextValue = ListSearchState & {
   markInteracted: () => void;
   interactedSinceOpen: () => boolean;
+  lockedSide: Side | undefined;
+  lockSide: (side: Side) => void;
 };
 
 const SelectSearchContext = React.createContext<SelectSearchContextValue | null>(null);
@@ -57,9 +61,12 @@ const Select = ({
     interactedRef.current = true;
   }, []);
   const interactedSinceOpen = React.useCallback(() => interactedRef.current, []);
+  const [lockedSide, setLockedSide] = React.useState<Side>();
 
   React.useEffect(() => {
-    if (open) interactedRef.current = false;
+    if (!open) return;
+    interactedRef.current = false;
+    setLockedSide(undefined);
   }, [open]);
 
   const handleOpenChange = React.useCallback(
@@ -67,6 +74,7 @@ const Select = ({
       if (nextOpen) {
         resetForOpen();
         interactedRef.current = false;
+        setLockedSide(undefined);
       }
       onOpenChange?.(nextOpen);
     },
@@ -74,8 +82,8 @@ const Select = ({
   );
 
   const value = React.useMemo<SelectSearchContextValue>(
-    () => ({ ...search, markInteracted, interactedSinceOpen }),
-    [search, markInteracted, interactedSinceOpen]
+    () => ({ ...search, markInteracted, interactedSinceOpen, lockedSide, lockSide: setLockedSide }),
+    [search, markInteracted, interactedSinceOpen, lockedSide]
   );
 
   return (
@@ -173,6 +181,8 @@ const SelectContent = React.forwardRef<
       onKeyDownCapture,
       onPointerMoveCapture,
       onFocus,
+      side,
+      avoidCollisions,
       ...props
     },
     ref
@@ -181,15 +191,26 @@ const SelectContent = React.forwardRef<
     const setListId = ctx?.setListId;
     const searching = isSearchActive(ctx);
     const resultCount = ctx?.matchCount ?? 0;
+    const contentRef = React.useRef<HTMLDivElement | null>(null);
+    const lockedSide = ctx?.lockedSide;
+    const lockSide = ctx?.lockSide;
 
     // Stable so React attaches once rather than re-running setListId every render
     const composedContentRef = React.useCallback(
       (node: HTMLDivElement | null) => {
         assignRefs(node, ref);
+        contentRef.current = node;
         setListId?.(node?.id || undefined);
       },
       [ref, setListId]
     );
+
+    // Filtering resizes the list, and a flip then sticks because the size cap follows the new side
+    React.useEffect(() => {
+      if (position !== 'popper' || !searching || lockedSide) return;
+      const placed = contentRef.current?.dataset.side as Side | undefined;
+      if (placed) lockSide?.(placed);
+    }, [position, searching, lockedSide, lockSide]);
 
     const handleFocus = (event: React.FocusEvent<HTMLDivElement>) => {
       onFocus?.(event);
@@ -245,6 +266,8 @@ const SelectContent = React.forwardRef<
             className
           )}
           position={position}
+          side={lockedSide ?? side}
+          avoidCollisions={lockedSide ? false : avoidCollisions}
           onFocus={handleFocus}
           onKeyDown={handleKeyDown}
           onKeyDownCapture={(event) => {
