@@ -36,6 +36,12 @@ test('an OpenAPI 3 file keeps its version', async () => {
   assert.equal(doc.openapi, '3.0.3');
 });
 
+test('an unquoted swagger: 2.0 is upgraded to OpenAPI 3', async () => {
+  const doc = await ingest(read('unquoted-swagger.yaml'), 'unquoted-swagger.yaml');
+  assert.match(doc.openapi, /^3\./);
+  assert.ok(doc.paths['/a'].get);
+});
+
 async function rejects(name: string, pattern: RegExp) {
   await assert.rejects(ingest(read(`bad/${name}`), `bad/${name}`), (err: unknown) => {
     assert.ok(err instanceof OpenApiError, 'is an OpenApiError');

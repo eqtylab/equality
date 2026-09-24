@@ -62,7 +62,9 @@ function jsonPosition(text: string, err: Error): string {
 export async function ingest(text: string, file: string): Promise<OpenApiDocument> {
   let raw = parseText(text, file);
 
-  if (raw.swagger === '2.0') {
+  // YAML parses unquoted "swagger: 2.0" as the number 2
+  if (raw.swagger === '2.0' || raw.swagger === 2) {
+    if (typeof raw.swagger === 'number') raw.swagger = '2.0';
     raw = upgradeFromTwoToThree(structuredClone(raw)) as Record<string, unknown>;
   } else if (typeof raw.openapi !== 'string' || !/^3\.[01]\./.test(raw.openapi)) {
     const found = JSON.stringify(raw.openapi ?? raw.swagger ?? null);
