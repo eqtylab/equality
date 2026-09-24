@@ -51,17 +51,26 @@ export interface DocsNavEntry {
   draft?: boolean;
 }
 
-/** Extension point for generated sections (OpenAPI reference, changelogs, ...). */
+/**
+ * Extension point for generated sections (OpenAPI reference, changelogs, ...). Passed to
+ * `docs({ plugins })`; `setup` runs inside `astro:config:setup`, after the framework has planned
+ * its own routes.
+ */
 export interface DocsPlugin {
   name: string;
   setup(ctx: DocsPluginContext): void | Promise<void>;
 }
 
 export interface DocsPluginContext {
-  /** Push a top-level group into the sidebar. Appended after folder-derived nodes. */
+  /** Push a top-level group into the sidebar. Appended after folder-derived nodes and `sidebar.extra`. */
   addNavGroup(group: NavNode): void;
-  /** Merge entries into the route-level MDX component map. */
-  addMdxComponents(map: Record<string, unknown>): void;
-  /** Raw `astro:config:setup` params: injectRoute, updateConfig, addWatchFile, logger. */
+  /**
+   * Add components to the route-level MDX component map, by name. Each value is a module
+   * specifier (a package export or an absolute path) whose default export is the component;
+   * the runtime imports it, so a component object cannot be passed here. A plugin's entry
+   * replaces a default of the same name.
+   */
+  addMdxComponents(map: Record<string, string>): void;
+  /** Raw `astro:config:setup` params: config, injectRoute, updateConfig, addWatchFile, logger. */
   astro: unknown;
 }

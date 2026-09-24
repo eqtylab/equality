@@ -14,8 +14,9 @@ import { rehypeProseScope } from './internal/rehype-prose-scope.ts';
 import { rehypeRelativeLinks } from './internal/rehype-relative-links.ts';
 import { rehypeTableColumns } from './internal/rehype-table-columns.ts';
 import { remarkArchiveDocument } from './internal/remark-archive-document.ts';
+import { assertPlugins, pluginComponentsSource, runPlugins } from './internal/run-plugins.ts';
 import { scanConsumerPages } from './internal/scan-consumer-pages.ts';
-import { virtualConfigPlugin } from './internal/virtual-config.ts';
+import { virtualConfigPlugin, virtualPluginComponentsPlugin } from './internal/virtual-config.ts';
 
 export { resolveConfig, type DocsConfig, type DocsUserConfig } from './config.ts';
 export { resolveDocsEnv, type DocsEnv } from './env.ts';
@@ -101,8 +102,13 @@ export default function docs(
           injectRoute({ pattern: route.pattern, entrypoint: route.entrypoint, prerender: true });
         }
 
+        // After the framework's own routes are planned, so a plugin can inject beside them, and
+        // before the payload is sealed, so its sidebar groups ride into the runtime config.
+        const contributions = await runPlugins(assertPlugins(cfg.plugins), params, logger);
+
         payload = {
           ...cfg,
+          sidebar: { ...cfg.sidebar, extra: [...cfg.sidebar.extra, ...contributions.navGroups] },
           env,
           // Read by the catch-all's getStaticPaths so no path is emitted twice.
           ownedByConsumer: consumer.ownedPaths,
@@ -131,7 +137,12 @@ export default function docs(
           }
         }
 
-        const vitePlugins: unknown[] = [virtualConfigPlugin(() => payload)];
+        const vitePlugins: unknown[] = [
+          virtualConfigPlugin(() => payload),
+          virtualPluginComponentsPlugin(() =>
+            pluginComponentsSource(contributions.componentModules)
+          ),
+        ];
 
         // Shiki tokenises at build time and needs no grammars emitted.
         if (cfg.code.highlighter === 'codeblock') {
@@ -236,6 +247,10 @@ export default function docs(
             `    versionRedirects: Array<{ id: string; to: string | null }>;`,
             `  };`,
             `  export default config;`,
+            `}`,
+            `declare module 'virtual:eqty-docs/plugin-components' {`,
+            `  const components: Record<string, unknown>;`,
+            `  export default components;`,
             `}`,
             '',
           ].join('\n'),
