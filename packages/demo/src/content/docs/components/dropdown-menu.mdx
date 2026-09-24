@@ -293,6 +293,18 @@ Items nested in a `DropdownMenuSub` are flattened into the main list while searc
 
 Flattening only works when `DropdownMenuSubContent` is placed directly inside `DropdownMenuSub` — wrapping it in another element prevents its items from being searched.
 
+### Keyboard
+
+<kbd>Enter</kbd> in the search box activates the first matching item.
+<kbd>↓</kbd> moves from the search box to the first item and <kbd>↑</kbd> to the
+last; <kbd>↑</kbd> on the first item returns to the search box.
+
+### Accessibility
+
+The search box and its live regions sit inside the menu, which Radix gives the `menu` role. ARIA only allows menu items, groups and separators there, so automated checkers such as axe report `aria-required-children`, and some screen readers skip the search box in browse mode. They can't move outside the menu: while it is open, Radix hides everything outside it from assistive technology.
+
+To pick a value in a form rather than run an action, use a [Select with search](/components/select#search--filtering).
+
 ## Slots
 
 | Name                       | Description                                       |

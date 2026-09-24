@@ -1,18 +1,67 @@
-import { useState } from "react";
-import {
-  SelectContent,
-  SelectValue,
-  Select,
-  SelectTrigger,
-  SelectItem,
-} from "@eqtylab/equality";
 import type { Elevation } from "@eqtylab/equality";
+import {
+  Label,
+  Select,
+  SelectContent,
+  SelectEmpty,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectSearch,
+  SelectSeparator,
+  SelectTrigger,
+  SelectValue,
+} from "@eqtylab/equality";
+import { Fragment, useState } from "react";
+
+const REGIONS = [
+  {
+    label: "Americas",
+    countries: [
+      "Argentina",
+      "Brazil",
+      "Canada",
+      "Chile",
+      "Mexico",
+      "United States",
+    ],
+  },
+  {
+    label: "Europe",
+    countries: [
+      "France",
+      "Germany",
+      "Ireland",
+      "Netherlands",
+      "Spain",
+      "United Kingdom",
+    ],
+  },
+  {
+    label: "Asia Pacific",
+    countries: [
+      "Australia",
+      "India",
+      "Japan",
+      "New Zealand",
+      "Singapore",
+      "South Korea",
+    ],
+  },
+];
+
+const toValue = (country: string) => country.toLowerCase().replace(/\s+/g, "-");
 
 export function SelectDemo({
   variant = "default",
   elevation,
 }: {
-  variant?: "default" | "disabled" | "pre-selected";
+  variant?:
+    | "default"
+    | "disabled"
+    | "pre-selected"
+    | "with-search"
+    | "with-search-reveal";
   elevation?: Elevation;
 }) {
   const [selectValue, setSelectValue] = useState<string>("");
@@ -85,6 +134,41 @@ export function SelectDemo({
           <SelectItem value="option30">Option 30</SelectItem>
         </SelectContent>
       </Select>
+    );
+  }
+
+  if (variant === "with-search" || variant === "with-search-reveal") {
+    const id = `select-${variant}`;
+
+    return (
+      <div className="flex flex-col gap-2">
+        <Label htmlFor={id}>Country</Label>
+        <Select value={selectValue} onValueChange={setSelectValue}>
+          <SelectTrigger id={id}>
+            <SelectValue placeholder="Select a country" />
+          </SelectTrigger>
+          <SelectContent elevation={elevation}>
+            <SelectSearch
+              alwaysVisible={variant === "with-search"}
+              placeholder="Search countries..."
+            />
+            {REGIONS.map((region, index) => (
+              <Fragment key={region.label}>
+                {index > 0 && <SelectSeparator />}
+                <SelectGroup>
+                  <SelectLabel>{region.label}</SelectLabel>
+                  {region.countries.map((country) => (
+                    <SelectItem key={country} value={toValue(country)}>
+                      {country}
+                    </SelectItem>
+                  ))}
+                </SelectGroup>
+              </Fragment>
+            ))}
+            <SelectEmpty>No countries found</SelectEmpty>
+          </SelectContent>
+        </Select>
+      </div>
     );
   }
 

@@ -35,7 +35,7 @@ const [status, setStatus] = useState("active");
 />;
 ```
 
-The `label` is shown on the trigger before anything is selected, and as the heading inside the menu. Once an option is selected, its label replaces the trigger text.
+The `label` is shown on the trigger before anything is selected, and as the heading inside the menu. Once an option is selected, its label replaces the trigger text. With `searchable`, the search box replaces the heading and takes `label` as its accessible name.
 
 ## Default
 
@@ -45,7 +45,7 @@ The `label` is shown on the trigger before anything is selected, and as the head
 
 Pass `searchable` to add the [Dropdown Menu](/components/dropdown-menu)'s in-place search. It is off by default. Reach for it once the list is long enough.
 
-The search box is hidden until the user starts typing with the menu open — the first keystroke reveals it and seeds the query. Options that don't match hide themselves, matching against each option's `label`.
+The search box sits at the top of the menu and is focused as soon as it opens. Options that don't match hide themselves, matching against each option's `label`. <kbd>Enter</kbd> chooses the first match.
 
 <RadioDropdownDemo client:only="react" variant="searchable" />
 
@@ -69,11 +69,11 @@ The empty message only appears while a query is active — an empty `options` ar
 
 | Name                | Description                                                                  | Type                                                 | Default             | Required |
 | ------------------- | ---------------------------------------------------------------------------- | ---------------------------------------------------- | ------------------- | -------- |
-| `label`             | Trigger text before selection, and the menu heading.                         | `string`                                             | —                   | ✅       |
+| `label`             | Trigger text before selection; the menu heading, or the search box's name.   | `string`                                             | —                   | ✅       |
 | `options`           | The selectable options. Each is `{ value, label, count? }`.                  | `{ value: string; label: string; count?: number }[]` | —                   | ✅       |
 | `selectedValue`     | The `value` of the currently selected option.                                | `string`                                             | —                   | ✅       |
 | `onSelect`          | Called with the chosen option's `value` when the selection changes.          | `(value: string) => void`                            | —                   | ✅       |
 | `className`         | Additional CSS classes applied to the trigger button.                        | `string`                                             | —                   | ❌       |
-| `searchable`        | Adds in-menu search, revealed on the first keystroke.                        | `boolean`                                            | `false`             | ❌       |
+| `searchable`        | Adds in-menu search, focused when the menu opens.                            | `boolean`                                            | `false`             | ❌       |
 | `searchPlaceholder` | Placeholder text for the in-menu search input. Requires `searchable`.        | `string`                                             | `Search options...` | ❌       |
 | `emptyPlaceholder`  | Message shown when a search query matches no options. Requires `searchable`. | `string`                                             | `No options found`  | ❌       |

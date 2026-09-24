@@ -1,6 +1,6 @@
 ---
 title: "Select"
-description: "Dropdown for choosing one option from a list"
+description: "Dropdown for choosing one option from a list, with optional search"
 ---
 
 import { SelectDemo } from "@demo/components/demo/select";
@@ -8,7 +8,7 @@ import { ELEVATION } from "@eqtylab/equality";
 
 ## Overview
 
-Select lets users choose a single option from a dropdown list. It's built on [Radix UI Select](https://www.radix-ui.com/primitives/docs/components/select), so it's fully keyboard accessible (type-ahead, arrow keys, <kbd>Esc</kbd>), manages focus, and exposes the right roles to assistive technology. Long lists scroll within the popover.
+Select lets users choose a single option from a dropdown list. It's built on [Radix UI Select](https://www.radix-ui.com/primitives/docs/components/select), so it's fully keyboard accessible (type-ahead, arrow keys, <kbd>Esc</kbd>), manages focus, and exposes the right roles to assistive technology. Long lists scroll within the popover, and can opt in to [in-place search](#search--filtering).
 
 It is a compound component: a `Select` root wraps a `SelectTrigger` (showing the current `SelectValue`) and a `SelectContent` holding the `SelectItem`s. Use it for choosing from a moderate set of options; for free-text entry use an [Input](/components/input), and for a lightweight filter with counts use a [Radio Dropdown](/components/radio-dropdown).
 
@@ -63,6 +63,79 @@ Use `defaultValue` on the root to start with an option chosen. Long lists scroll
 
 <SelectDemo client:only="react" variant="pre-selected" />
 
+## Search & filtering
+
+Add a `SelectSearch` inside `SelectContent` to filter options in place. It is opt-in per select — without it, the select behaves exactly as before and the built-in type-ahead still works. It works like [Dropdown Menu search](/components/dropdown-menu#search--filtering), except that the search box is visible by default: options that don't match are hidden, and matching is a case-insensitive substring of each item's `textValue`, falling back to its rendered text.
+
+Reach for search whenever the list can grow long enough to scroll — picking from dozens of options by scrolling or type-ahead alone is slow. Search only filters the options you provide; it doesn't accept free-text values.
+
+Import the additional parts:
+
+```ts
+import {
+  SelectSearch,
+  SelectEmpty,
+  SelectGroup,
+  SelectLabel,
+  SelectSeparator,
+} from "@eqtylab/equality";
+```
+
+### Default
+
+The search box is shown, focused, the moment the select opens, so mouse and screen reader users can see that search exists. Labels, separators and groups with no matches hide while a search is active so results stay compact, and the chosen value stays in the trigger even when a query hides its option. Add a `SelectEmpty` to show a "no results" row when nothing matches.
+
+<SelectDemo client:only="react" variant="with-search" />
+
+```tsx
+<SelectContent>
+  <SelectSearch placeholder="Search countries..." />
+  <SelectGroup>
+    <SelectLabel>Americas</SelectLabel>
+    <SelectItem value="argentina">Argentina</SelectItem>
+    {/* ...more countries... */}
+  </SelectGroup>
+  <SelectSeparator />
+  <SelectGroup>{/* ...another region... */}</SelectGroup>
+  <SelectEmpty>No countries found</SelectEmpty>
+</SelectContent>
+```
+
+### Reveal on typing
+
+Pass `alwaysVisible={false}` to keep the search box hidden until someone types into the open list — the first keystroke reveals it and seeds the query. Nothing on screen says search exists, so keep this for compact, keyboard-heavy UIs. Typing on the closed trigger still uses Radix type-ahead and changes the value directly; search only starts once the list is open.
+
+<SelectDemo client:only="react" variant="with-search-reveal" />
+
+```tsx
+<SelectContent>
+  <SelectSearch alwaysVisible={false} placeholder="Search countries..." />
+  {/* ...items... */}
+  <SelectEmpty>No countries found</SelectEmpty>
+</SelectContent>
+```
+
+### Items with rich content
+
+Give items that lead with an icon, flag or avatar a `textValue`, so they match on the label rather than on everything they render.
+
+```tsx
+<SelectItem value="japan" textValue="Japan">
+  <Icon icon="Flag" /> Japan
+</SelectItem>
+```
+
+### Keyboard
+
+<kbd>Enter</kbd> in the search box selects the first matching option.
+<kbd>↓</kbd> moves from the search box to the first option and <kbd>↑</kbd> to
+the last; <kbd>↑</kbd> on the first option returns to the search box. Typing or
+<kbd>Backspace</kbd> while an option is focused keeps editing the query.
+
+### Accessibility
+
+The search box and its live regions sit inside the list, which Radix gives the `listbox` role. ARIA only allows options and groups there, so automated checkers such as axe report `aria-required-children`, and some screen readers skip the search box in browse mode. They can't move outside the list: while the select is open, Radix hides everything outside it from assistive technology. Keyboard use and announcements work as described above.
+
 ## Elevations
 
 Set the `elevation` prop on `SelectContent` to place the dropdown on the elevation scale. `overlay` is the default.
@@ -103,18 +176,55 @@ import { ELEVATION } from "@eqtylab/equality";
 | `SelectGroup`     | Groups related items.                                                  |
 | `SelectLabel`     | A heading for a group of items.                                        |
 | `SelectSeparator` | A divider between items or groups.                                     |
+| `SelectSearch`    | Optional search input that filters items in place.                     |
+| `SelectEmpty`     | "No results" row shown only when a search matches nothing.             |
 
 ## Props
 
 The parts forward their [Radix Select](https://www.radix-ui.com/primitives/docs/components/select) props (and `className`). The most commonly used are below.
 
-| Name            | Applies to      | Description                                           | Type                                  | Default   |
-| --------------- | --------------- | ----------------------------------------------------- | ------------------------------------- | --------- |
-| `value`         | `Select`        | The selected value (controlled).                      | `string`                              | —         |
-| `defaultValue`  | `Select`        | The initial selected value (uncontrolled).            | `string`                              | —         |
-| `onValueChange` | `Select`        | Called with the new value when the selection changes. | `(value: string) => void`             | —         |
-| `disabled`      | `Select`        | Disables the entire control.                          | `boolean`                             | `false`   |
-| `placeholder`   | `SelectValue`   | Text shown before a value is selected.                | `string`                              | —         |
-| `value`         | `SelectItem`    | The value this item represents. Required per item.    | `string`                              | —         |
-| `disabled`      | `SelectItem`    | Disables just this option.                            | `boolean`                             | `false`   |
-| `elevation`     | `SelectContent` | Position of the dropdown on the elevation scale.      | `sunken`, `base`, `raised`, `overlay` | `overlay` |
+### Select
+
+| Name            | Description                                                     | Type                      | Default | Required |
+| --------------- | --------------------------------------------------------------- | ------------------------- | ------- | -------- |
+| `value`         | The selected value (controlled)                                 | `string`                  | —       | ❌       |
+| `defaultValue`  | The initial selected value (uncontrolled)                       | `string`                  | —       | ❌       |
+| `onValueChange` | Called with the new value when the selection changes            | `(value: string) => void` | —       | ❌       |
+| `open`          | Whether the list is open (controlled); opening clears any query | `boolean`                 | —       | ❌       |
+| `disabled`      | Disables the entire control                                     | `boolean`                 | `false` | ❌       |
+
+### SelectValue
+
+| Name          | Description                           | Type     | Default | Required |
+| ------------- | ------------------------------------- | -------- | ------- | -------- |
+| `placeholder` | Text shown before a value is selected | `string` | —       | ❌       |
+
+### SelectContent
+
+| Name        | Description                                     | Type                                  | Default   | Required |
+| ----------- | ----------------------------------------------- | ------------------------------------- | --------- | -------- |
+| `elevation` | Position of the dropdown on the elevation scale | `sunken`, `base`, `raised`, `overlay` | `overlay` | ❌       |
+
+### SelectItem
+
+| Name        | Description                                                                 | Type      | Default | Required |
+| ----------- | --------------------------------------------------------------------------- | --------- | ------- | -------- |
+| `value`     | The value this item represents                                              | `string`  | —       | ✅       |
+| `disabled`  | Disables just this option                                                   | `boolean` | `false` | ❌       |
+| `textValue` | Text used for type-ahead and search matching; defaults to the rendered text | `string`  | —       | ❌       |
+
+### SelectSearch
+
+Also accepts standard `input` attributes, except `value` and `onChange`, which are managed internally, and `role`, which stays `searchbox`.
+
+| Name            | Description                                                                   | Type                    | Default       | Required |
+| --------------- | ----------------------------------------------------------------------------- | ----------------------- | ------------- | -------- |
+| `alwaysVisible` | Show the input on open; `false` reveals it on the first keystroke instead     | `boolean`               | `true`        | ❌       |
+| `placeholder`   | Placeholder text for the input                                                | `string`                | `Search...`   | ❌       |
+| `icon`          | Custom leading icon; defaults to a search icon                                | `ReactNode`             | —             | ❌       |
+| `aria-label`    | Accessible name for the input; defaults to the `placeholder` text             | `string`                | `placeholder` | ❌       |
+| `ref`           | Forwarded to the underlying `<input>`; `null` while the input is not rendered | `Ref<HTMLInputElement>` | —             | ❌       |
+
+### SelectEmpty
+
+Renders its `children` as a "no results" message, shown only while a search query matches no items. It is a live region (`role="status"`), so the message is announced when filtering empties the list. Also accepts standard `div` attributes.

@@ -21,6 +21,10 @@
   @apply size-4;
 }
 
+.select-icon--sm {
+  @apply size-3;
+}
+
 .select-icon--low-opacity {
   @apply opacity-50;
 }
@@ -56,7 +60,6 @@
 }
 
 .select-item-indicator {
-  @aaply absolute left-2;
   @apply flex-center;
   @apply size-3.5;
 }
@@ -64,6 +67,33 @@
 .select-separator {
   @apply bg-border;
   @apply -mx-1 my-1 h-px;
+}
+
+/* .select-item's display rule would otherwise override the hidden attribute */
+.select-item[hidden] {
+  @apply hidden;
+}
+
+/* Sticky inside the scrolling viewport, so it needs the elevation's opaque background below */
+.select-search {
+  @apply dropdown-search;
+  @apply sticky top-0 z-10;
+}
+
+.select-search-icon {
+  @apply flex shrink-0;
+}
+
+.select-search-input {
+  @apply dropdown-search-input;
+}
+
+.select-empty {
+  @apply dropdown-empty;
+}
+
+.select-sr-status {
+  @apply sr-only;
 }
 
 /* ELEVATIONS */
@@ -74,12 +104,18 @@
 .select-content--sunken .select-item {
   --mix-color: var(--color-background-sunken);
 }
+.select-content--sunken .select-search {
+  @apply bg-background-sunken border-border-sunken;
+}
 
 .select-content--base {
   @apply bg-background shadow-shadow-base border-border-base;
 }
 .select-content--base .select-item {
   --mix-color: var(--color-background);
+}
+.select-content--base .select-search {
+  @apply bg-background border-border-base;
 }
 
 .select-content--raised {
@@ -88,10 +124,16 @@
 .select-content--raised .select-item {
   --mix-color: var(--color-background-raised);
 }
+.select-content--raised .select-search {
+  @apply bg-background-raised border-border-raised;
+}
 
 .select-content--overlay {
   @apply bg-background-overlay shadow-shadow-overlay border-border-overlay;
 }
 .select-content--overlay .select-item {
   --mix-color: var(--color-background-overlay);
+}
+.select-content--overlay .select-search {
+  @apply bg-background-overlay border-border-overlay;
 }

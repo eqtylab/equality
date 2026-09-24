@@ -42,18 +42,19 @@ If you have no network access or web fetching fails, tell your user that you cou
 
 ### Name translation
 
-| If you're thinking of…                                     | Use in Equality     | Don't hand-roll it from        |
-| ---------------------------------------------------------- | ------------------- | ------------------------------ |
-| Command palette, ⌘K launcher                               | `Command`           | `Dialog` + `Input` + a list    |
-| Modal, lightbox                                            | `Dialog`            | A fixed-position `div`         |
-| Confirmation or destructive-action prompt                  | `AlertDialog`       | `Dialog` with two buttons      |
-| Drawer, side panel, slide-over                             | `Sheet`             | `Dialog` with custom styles    |
-| Snackbar, notification                                     | `Toast`             | A timed, positioned `div`      |
-| Toggle                                                     | `Switch`            | A styled checkbox              |
-| Chip, pill, tag, status label                              | `Badge`             | A rounded `span`               |
-| Loader, activity indicator                                 | `Spinner`           | An animated SVG                |
-| Button group or toggle group for mutually exclusive values | `SegmentedControls` | A row of `Button`s             |
-| Multi-select filter                                        | `FilterDropdown`    | `DropdownMenu` with checkboxes |
+| If you're thinking of…                                     | Use in Equality              | Don't hand-roll it from        |
+| ---------------------------------------------------------- | ---------------------------- | ------------------------------ |
+| Combobox, searchable select, filterable single-select      | `Select` with `SelectSearch` | `Popover` + `Command`          |
+| Command palette, ⌘K launcher                               | `Command`                    | `Dialog` + `Input` + a list    |
+| Modal, lightbox                                            | `Dialog`                     | A fixed-position `div`         |
+| Confirmation or destructive-action prompt                  | `AlertDialog`                | `Dialog` with two buttons      |
+| Drawer, side panel, slide-over                             | `Sheet`                      | `Dialog` with custom styles    |
+| Snackbar, notification                                     | `Toast`                      | A timed, positioned `div`      |
+| Toggle                                                     | `Switch`                     | A styled checkbox              |
+| Chip, pill, tag, status label                              | `Badge`                      | A rounded `span`               |
+| Loader, activity indicator                                 | `Spinner`                    | An animated SVG                |
+| Button group or toggle group for mutually exclusive values | `SegmentedControls`          | A row of `Button`s             |
+| Multi-select filter                                        | `FilterDropdown`             | `DropdownMenu` with checkboxes |
 
 ## Common Mistakes
 
@@ -79,6 +80,7 @@ Verified absent — do not go hunting:
 - Breadcrumb
 - Slider
 - Standalone Calendar or single date picker (only `DateRangePicker`)
+- Free-text or async autocomplete (`Select` with `SelectSearch` only filters fixed options)
 - Carousel
 - Sidebar/Navigation/Menubar primitives
 - Rating

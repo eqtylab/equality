@@ -2,6 +2,39 @@
 
 Notable changes to Equality are recorded here, following [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## 4.3.0 - 2026-09-24
+
+### Added
+
+- `SelectSearch` and `SelectEmpty`, bringing `DropdownMenu`'s opt-in, in-place search to
+  `Select`. `SelectItem` matches on its `textValue`, falling back to its rendered text.
+  The search box is shown and focused when the select opens; `alwaysVisible={false}`
+  reveals it on the first keystroke instead.
+- `dropdown-search`, `dropdown-search-input` and `dropdown-empty` utility classes, alongside
+  `dropdown-content` and `dropdown-item`.
+
+### Changed
+
+- A searchable `FilterDropdown` or `RadioDropdown` now shows its search box, focused, as
+  soon as the menu opens, instead of waiting for the first keystroke. The search box
+  replaces the menu heading and takes `label` as its accessible name.
+- In a searchable `FilterDropdown`, "Clear all" moves to a footer pinned to the bottom of
+  the menu. Without search, it stays in the "Filters" heading.
+- Enter in `DropdownMenuSearch` now activates the first matching item while a query is
+  active, and so does a searchable `FilterDropdown` or `RadioDropdown`.
+- `DropdownMenuSearch` keeps `role="searchbox"`, its `aria-controls` and its internal
+  data attribute, and `DropdownMenuEmpty` keeps its live-region role, even when the same
+  props are passed in.
+
+### Fixed
+
+- `FilterDropdown`'s "Clear all" is now a menu item, so keyboard and screen reader users
+  can reach it. It was a plain button, which a menu's arrow-key navigation skips.
+- Reopening a `DropdownMenu` through a controlled `open` prop, without `onOpenChange`, now
+  clears the previous search.
+- A ref passed to `DropdownMenuSearch` is no longer detached and reattached on every
+  keystroke.
+
 ## 4.2.0 - 2026-09-22
 
 Scrollable areas are now browser-native. Equality no longer ships a synthetic scrollbar or a scrollbar-restyling utility.
