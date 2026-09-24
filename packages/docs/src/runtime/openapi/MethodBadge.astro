@@ -1,0 +1,12 @@
+---
+import { METHOD_VARIANT, type HttpMethod } from '@eqtylab/docs/openapi';
+import { Badge } from '@eqtylab/equality';
+
+interface Props {
+  method: HttpMethod;
+}
+
+const { method } = Astro.props;
+---
+
+<Badge variant={METHOD_VARIANT[method]} size="sm" display="text-only">{method.toUpperCase()}</Badge>
