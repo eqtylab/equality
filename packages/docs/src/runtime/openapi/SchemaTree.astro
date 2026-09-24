@@ -1,0 +1,46 @@
+---
+import type { SchemaNode } from '@eqtylab/docs/openapi';
+
+interface Props {
+  schema: SchemaNode;
+  name?: string;
+}
+
+const { schema, name } = Astro.props;
+const type =
+  schema.type === 'array' ? `${schema.items?.type ?? 'object'}[]` : (schema.type ?? 'object');
+const children = schema.properties ?? schema.items?.properties ?? [];
+const variants = schema.oneOf ?? schema.anyOf ?? schema.allOf ?? [];
+---
+
+<div class="eq-schema">
+  {
+    children.length || variants.length ? (
+      <details open={!name}>
+        <summary>
+          {name && <code>{name}</code>} <span class="text-text-secondary">{type}</span>
+          {schema.required && <strong class="text-text-primary">required</strong>}
+        </summary>
+        {schema.description && <p>{schema.description}</p>}
+        <div class="border-border-raised ms-4 border-s ps-3">
+          {children.map((p) => (
+            <Astro.self schema={p.schema} name={p.name} />
+          ))}
+          {variants.map((v) => (
+            <Astro.self schema={v} />
+          ))}
+        </div>
+      </details>
+    ) : (
+      <div>
+        {name && <code>{name}</code>} <span class="text-text-secondary">{type}</span>
+        {schema.required && <strong class="text-text-primary">required</strong>}
+        {schema.recursive && <span class="text-text-secondary">(recursive, see above)</span>}
+        {schema.enum && (
+          <span class="text-text-secondary">one of {schema.enum.map(String).join(', ')}</span>
+        )}
+        {schema.description && <p>{schema.description}</p>}
+      </div>
+    )
+  }
+</div>

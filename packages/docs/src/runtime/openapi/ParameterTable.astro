@@ -1,0 +1,47 @@
+---
+import type { Parameter } from '@eqtylab/docs/openapi';
+import {
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from '@eqtylab/equality';
+
+interface Props {
+  title: string;
+  parameters: Parameter[];
+}
+
+const { title, parameters } = Astro.props;
+---
+
+<h3>{title}</h3>
+<TableContainer columns="repeat(4, minmax(0, auto))" border className="mb-4" data-eq-chrome>
+  <TableHeader>
+    <TableRow>
+      <TableHead>Name</TableHead>
+      <TableHead>Type</TableHead>
+      <TableHead>Required</TableHead>
+      <TableHead>Description</TableHead>
+    </TableRow>
+  </TableHeader>
+  <TableBody>
+    {
+      parameters.map((p) => (
+        <TableRow>
+          <TableCell>
+            <code>{p.name}</code>
+          </TableCell>
+          <TableCell>
+            {p.schema?.type ?? ''}
+            {p.schema?.format ? ` (${p.schema.format})` : ''}
+          </TableCell>
+          <TableCell>{p.required ? 'Yes' : 'No'}</TableCell>
+          <TableCell>{p.description}</TableCell>
+        </TableRow>
+      ))
+    }
+  </TableBody>
+</TableContainer>

@@ -1,0 +1,72 @@
+---
+import type { ApiModel, Operation } from '@eqtylab/docs/openapi';
+
+import CodeFence from '../components/CodeFence.astro';
+import CodeSamples from './CodeSamples.astro';
+import MethodBadge from './MethodBadge.astro';
+import ParameterTable from './ParameterTable.astro';
+import ResponseList from './ResponseList.astro';
+import SchemaTree from './SchemaTree.astro';
+
+interface Props {
+  operation: Operation;
+  model: ApiModel;
+}
+
+const { operation: op, model } = Astro.props;
+const IN = [
+  ['path', 'Path parameters'],
+  ['query', 'Query parameters'],
+  ['header', 'Headers'],
+  ['cookie', 'Cookies'],
+] as const;
+---
+
+{/* Heading ids must match operationHeadings, or the table of contents links nowhere. */}
+<div class="flex items-center gap-2">
+  <MethodBadge method={op.method} />
+  <CodeFence code={op.path} lang="text" />
+</div>
+<CodeSamples samples={op.samples} />
+
+{
+  op.security.length > 0 && (
+    <section>
+      <h2 id="authorization">Authorization</h2>
+      <ul>
+        {op.security.map((alt) => (
+          <li>
+            {alt
+              .map(({ scheme }) => model.securitySchemes[scheme]?.description ?? scheme)
+              .join(' and ')}
+          </li>
+        ))}
+      </ul>
+    </section>
+  )
+}
+
+{
+  (op.parameters.length > 0 || op.requestBody) && (
+    <section>
+      <h2 id="parameters">Parameters</h2>
+      {IN.map(([where, title]) => {
+        const list = op.parameters.filter((p) => p.in === where);
+        return list.length ? <ParameterTable title={title} parameters={list} /> : null;
+      })}
+      {op.requestBody?.content.map((c) => (
+        <div>
+          <h3>
+            Request body <code>{c.mediaType}</code>
+          </h3>
+          {c.schema && <SchemaTree schema={c.schema} />}
+        </div>
+      ))}
+    </section>
+  )
+}
+
+<section>
+  <h2 id="responses">Responses</h2>
+  <ResponseList responses={op.responses} />
+</section>

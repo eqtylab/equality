@@ -1,0 +1,71 @@
+---
+import { operationEntryId, type ApiModel } from '@eqtylab/docs/openapi';
+import { docsHref } from '@eqtylab/docs/paths';
+
+import { pathContext } from '../lib/nav-data.ts';
+import MethodBadge from './MethodBadge.astro';
+
+interface Props {
+  model: ApiModel;
+  ownerId: string;
+  sourceExt: 'json' | 'yaml';
+  version?: string;
+}
+
+const { model, ownerId, sourceExt, version } = Astro.props;
+const ctx = pathContext(version);
+const schemes = Object.values(model.securitySchemes);
+---
+
+<section>
+  <h2 id="api">
+    {model.info.title} <span class="text-text-secondary">{model.info.version}</span>
+  </h2>
+  {model.info.description && <p>{model.info.description}</p>}
+  <p>
+    <a href={`${docsHref(ownerId, ctx)}openapi.${sourceExt}`} download>Download the OpenAPI file</a>
+  </p>
+  {
+    model.servers.length > 0 && (
+      <p>
+        Base URL:{' '}
+        {model.servers.map((s) => (
+          <code>{s}</code>
+        ))}
+      </p>
+    )
+  }
+  {
+    schemes.length > 0 && (
+      <ul>
+        {schemes.map((s) => (
+          <li>
+            <code>{s.name}</code>: {s.type}
+            {s.scheme ? ` (${s.scheme})` : ''}
+            {s.description ? `. ${s.description}` : ''}
+          </li>
+        ))}
+      </ul>
+    )
+  }
+  {
+    model.tags.map((tag) => (
+      <section>
+        <h3 id={tag.slug}>{tag.name}</h3>
+        <ul>
+          {model.operations
+            .filter((o) => o.tagSlug === tag.slug)
+            .map((o) => (
+              <li>
+                <MethodBadge method={o.method} />{' '}
+                <a href={docsHref(operationEntryId(ownerId, o.slug), ctx)}>
+                  <code>{o.path}</code>
+                </a>{' '}
+                {o.title}
+              </li>
+            ))}
+        </ul>
+      </section>
+    ))
+  }
+</section>

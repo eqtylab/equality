@@ -1,0 +1,23 @@
+---
+import type { CodeSample } from '@eqtylab/docs/openapi';
+
+import CodeFence from '../components/CodeFence.astro';
+import TabItem from '../components/TabItem.astro';
+import Tabs from '../components/Tabs.astro';
+
+interface Props {
+  samples: CodeSample[];
+}
+
+const { samples } = Astro.props;
+---
+
+<Tabs>
+  {
+    samples.map((s) => (
+      <TabItem label={s.label}>
+        <CodeFence code={s.code} lang={s.lang} />
+      </TabItem>
+    ))
+  }
+</Tabs>

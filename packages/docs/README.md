@@ -219,6 +219,38 @@ wired in: `docsEntries` and `pathContext` alongside `docsNav` in `nav-data.ts`, 
 `prevNextFor` / `buildTocTree` re-exported from there, and `mdxComponents` in `mdx-components.ts`
 for rendering a collection entry through the same component map.
 
+## API reference
+
+A service is an ordinary MDX page with one extra frontmatter key. Its OpenAPI file sits beside
+it, underscore-prefixed so the collection glob skips it.
+
+```
+src/content/docs/reference/integrity-service/
+  _group.yaml                          order: [overview, …, api-reference]
+  overview.mdx
+  api-reference.mdx
+  _integrity-service.openapi.json
+```
+
+```mdx
+---
+title: Integrity Service API
+description: Evidence records, lineage graphs, policy manifests.
+openapi: ./_integrity-service.openapi.json
+---
+
+Authenticate with a service-account token. See [API keys](/auth-service/api-keys/).
+```
+
+- `openapi` is a path relative to the MDX file. JSON or YAML. Swagger 2.0 or OpenAPI 3.x.
+- The page's own prose renders first, then the generated overview.
+- Sidebar position comes from the folder and `_group.yaml`, as for every page. No config array of
+  services.
+- Several services in one site is several such pages. Nothing else is needed.
+
+The original file is served byte for byte at `<page>/openapi.json`, or `<page>/openapi.yaml` for a
+YAML source.
+
 ## Building the Search Index
 
 Full-text search uses the built HTML, via [Pagefind](https://pagefind.app). The integration

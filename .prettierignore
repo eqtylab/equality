@@ -12,3 +12,4 @@ packages/ui/dist
 packages/demo/dist
 *.astro
 packages/docs/tests/fixtures
+packages/demo/src/content/docs/reference/example-api/_petstore.openapi.yaml
