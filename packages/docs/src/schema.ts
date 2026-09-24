@@ -46,6 +46,13 @@ export function docsSchema() {
     noIndex: z.boolean().default(false),
     prev: z.union([z.boolean(), z.string()]).optional(),
     next: z.union([z.boolean(), z.string()]).optional(),
+    /** Path to an OpenAPI or Swagger file, relative to this page. The page gains an API overview and one page per operation. */
+    openapi: z.string().optional(),
+    generated: z.enum(['operation', 'model']).optional(),
+    owner: z.string().optional(),
+    operation: z.any().optional(),
+    api: z.any().optional(),
+    source: z.object({ path: z.string(), ext: z.enum(['json', 'yaml']) }).optional(),
   });
 }
 
