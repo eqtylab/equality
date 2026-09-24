@@ -29,6 +29,6 @@ Components like "Button" and "Input" have `prefix` and `suffix` slots to place i
 
 ## Documentation
 
-After creating the component in the "ui" package, always create a corresponding docs MDX under `packages/demo/src/content/components`.
+After creating the component in the "ui" package, always create a corresponding docs MDX under `packages/demo/src/content/docs/components`.
 
 Review the `create-documentation` skill for instructions on how to format the docs.

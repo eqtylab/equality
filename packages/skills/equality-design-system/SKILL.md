@@ -29,7 +29,7 @@ If you catch yourself writing raw HTML controls or arbitrary colour classes, sto
    It is generated from the library at build time, so it never lies about what
    exists. Fetch it once per session and work from it.
 2. **Translate the name.** If you are thinking of a component it may be under a
-   different name than Equality uses. Fetch docs pages for ALL similar sounding components, and check if it already exists.
+   different name than Equality uses. Check the table below, then fetch docs pages for ALL similar sounding components, and check if it already exists.
 3. **Read the component's docs.** Follow the link from the index —
    `https://equality.eqtylab.io/components/<slug>.md` — for full props,
    variants, and copyable examples. Those `.md` URLs serve plain Markdown
@@ -39,6 +39,21 @@ If you catch yourself writing raw HTML controls or arbitrary colour classes, sto
 Do not skip step 3 for anything with variants or compound parts. Guessing prop names produces code that type-checks in your head and fails in the editor.
 
 If you have no network access or web fetching fails, tell your user that you couldn't reach the index.
+
+### Name translation
+
+| If you're thinking of…                                     | Use in Equality     | Don't hand-roll it from        |
+| ---------------------------------------------------------- | ------------------- | ------------------------------ |
+| Command palette, ⌘K launcher                               | `Command`           | `Dialog` + `Input` + a list    |
+| Modal, lightbox                                            | `Dialog`            | A fixed-position `div`         |
+| Confirmation or destructive-action prompt                  | `AlertDialog`       | `Dialog` with two buttons      |
+| Drawer, side panel, slide-over                             | `Sheet`             | `Dialog` with custom styles    |
+| Snackbar, notification                                     | `Toast`             | A timed, positioned `div`      |
+| Toggle                                                     | `Switch`            | A styled checkbox              |
+| Chip, pill, tag, status label                              | `Badge`             | A rounded `span`               |
+| Loader, activity indicator                                 | `Spinner`           | An animated SVG                |
+| Button group or toggle group for mutually exclusive values | `SegmentedControls` | A row of `Button`s             |
+| Multi-select filter                                        | `FilterDropdown`    | `DropdownMenu` with checkboxes |
 
 ## Common Mistakes
 
@@ -64,7 +79,7 @@ Verified absent — do not go hunting:
 - Accordion (use `MotionCollapsibleContent`)
 - Breadcrumb
 - Slider
-- Standalone Calendar or single date picker (only DateRangePicker`)
+- Standalone Calendar or single date picker (only `DateRangePicker`)
 - Carousel
 - Sidebar/Navigation/Menubar primitives
 - Rating

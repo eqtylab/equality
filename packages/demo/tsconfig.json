@@ -3,10 +3,9 @@
   "include": [".astro/types.d.ts", "**/*"],
   "exclude": ["dist"],
   "compilerOptions": {
-    "baseUrl": ".",
     "paths": {
-      "@demo/*": ["src/*"],
-      "@demo/components/*": ["src/components/*"],
+      "@demo/*": ["./src/*"],
+      "@demo/components/*": ["./src/components/*"],
       "@eqtylab/equality": ["../ui/src"],
       "@eqtylab/equality/*": ["../ui/src/*"],
       "@/*": ["../ui/src/*"]
