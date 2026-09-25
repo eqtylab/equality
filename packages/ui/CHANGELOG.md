@@ -2,6 +2,12 @@
 
 Notable changes to Equality are recorded here, following [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## 4.5.0 - 2026-09-25
+
+### Added
+
+- Segmented controls now have `sm`, `md`, and `lg` `size` variants
+
 ## 4.4.2 - 2026-09-25
 
 ### Fixed
