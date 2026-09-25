@@ -219,6 +219,38 @@ wired in: `docsEntries` and `pathContext` alongside `docsNav` in `nav-data.ts`, 
 `prevNextFor` / `buildTocTree` re-exported from there, and `mdxComponents` in `mdx-components.ts`
 for rendering a collection entry through the same component map.
 
+## Plugins
+
+A plugin is code that runs while Astro reads your config, so it can generate a whole section of
+the site: an API reference from an OpenAPI document, a changelog from git, anything that is
+pages plus a place in the sidebar. Pass instances to `docs({ plugins })`:
+
+```js
+docs({
+  title: 'My Docs',
+  plugins: [openApiReference({ spec: './public/openapi.yaml' })],
+});
+```
+
+A plugin is `{ name, setup(ctx) }`. `setup` runs inside `astro:config:setup`, after the framework
+has planned its own routes, and receives:
+
+- `ctx.astro` — the raw hook params: `config`, `injectRoute`, `updateConfig`, `addWatchFile`,
+  `logger`. Inject a route per generated page; its entrypoint can import
+  `@eqtylab/docs/layouts/DocsPage.astro`, `@eqtylab/docs/chrome/Prose.astro` and the helpers in
+  `@eqtylab/docs/lib/*`, so a generated page gets the same chrome as an authored one.
+- `ctx.addNavGroup(group)` — a `NavNode` appended to the top of the sidebar, after the
+  folder-derived groups and `sidebar.extra`. It is static: for current-page state, or to nest
+  the group inside an authored section, build the tree in your route instead and pass it to
+  `DocsPage`.
+- `ctx.addMdxComponents({ Name: specifier })` — components every MDX page can use without an
+  import, by module specifier (a package export or an absolute path) whose default export is the
+  component. The runtime imports them through a virtual module, which is why a component object
+  cannot be passed. A plugin's entry replaces a default of the same name.
+
+A malformed entry, or a component passed as an object, fails the build with a message naming
+the plugin rather than registering nothing.
+
 ## Building the Search Index
 
 Full-text search uses the built HTML, via [Pagefind](https://pagefind.app). The integration
