@@ -67,8 +67,8 @@ const FilterDropdown = ({
   };
 
   const clearAll = (className: string) => (
-    // An empty textValue keeps this out of search results, so Enter can't clear every filter
-    <DropdownMenuItem textValue="" onSelect={handleClearAll} className={className}>
+    // Keep textValue empty: without search, typeahead would otherwise land a typed "c" on Clear all
+    <DropdownMenuItem persistent textValue="" onSelect={handleClearAll} className={className}>
       <span className={buttonVariants({ variant: 'link', size: 'sm' })}>Clear all</span>
     </DropdownMenuItem>
   );
@@ -94,7 +94,7 @@ const FilterDropdown = ({
       >
         {searchable && (
           <>
-            <DropdownMenuSearch alwaysVisible placeholder={searchPlaceholder} aria-label={label} />
+            <DropdownMenuSearch placeholder={searchPlaceholder} aria-label={label} />
             <DropdownMenuEmpty>{emptyPlaceholder}</DropdownMenuEmpty>
           </>
         )}
@@ -123,7 +123,7 @@ const FilterDropdown = ({
         })}
         {searchable && hasSelectedFilters && (
           <div className={styles['clear-all-footer']}>
-            <DropdownMenuSeparator />
+            <DropdownMenuSeparator persistent />
             {clearAll(styles['clear-all'])}
           </div>
         )}

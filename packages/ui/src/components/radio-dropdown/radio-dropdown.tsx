@@ -68,7 +68,7 @@ const RadioDropdown = ({
       <DropdownMenuContent align="end" className={styles['dropdown-menu-content']}>
         {searchable && (
           <>
-            <DropdownMenuSearch alwaysVisible placeholder={searchPlaceholder} aria-label={label} />
+            <DropdownMenuSearch placeholder={searchPlaceholder} aria-label={label} />
             <DropdownMenuEmpty>{emptyPlaceholder}</DropdownMenuEmpty>
           </>
         )}

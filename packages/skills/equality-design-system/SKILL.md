@@ -55,6 +55,7 @@ If you have no network access or web fetching fails, tell your user that you cou
 | Loader, activity indicator                                 | `Spinner`                    | An animated SVG                |
 | Button group or toggle group for mutually exclusive values | `SegmentedControls`          | A row of `Button`s             |
 | Multi-select filter                                        | `FilterDropdown`             | `DropdownMenu` with checkboxes |
+| Footer action, "Select all" or "Other" while searching     | `persistent` items           | Buttons outside the list items |
 
 ## Common Mistakes
 
