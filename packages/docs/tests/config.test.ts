@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import { test } from 'node:test';
 
-import { resolveConfig } from '../src/config.ts';
+import { brandAssets, resolveConfig } from '../src/config.ts';
 
 test('versions is on by default with tags and granularity filled in', () => {
   const cfg = resolveConfig({ title: 'x' });
@@ -22,4 +22,16 @@ test('an unknown granularity fails loudly', () => {
     () => resolveConfig({ title: 'x', versions: { granularity: 'weekly' } as never }),
     /granularity/
   );
+});
+
+test('the favicon defaults to the shipped EQTY Lab mark', () => {
+  assert.equal(resolveConfig({ title: 'x' }).favicon, brandAssets.favicon);
+});
+
+test("a site's own favicon wins over the shipped one", () => {
+  assert.equal(resolveConfig({ title: 'x', favicon: '/mine.svg' }).favicon, '/mine.svg');
+});
+
+test('no logo by default, so the header shows the title as text', () => {
+  assert.equal(resolveConfig({ title: 'x' }).logo, undefined);
 });

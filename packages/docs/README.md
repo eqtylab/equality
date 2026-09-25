@@ -38,6 +38,31 @@ render its tables, code fences and callouts differently from every other page. A
 the content tree fails the build rather than going silently missing — renaming it is usually the
 only change needed, since MDX is a superset of Markdown.
 
+## EQTY Lab brand files
+
+The integration serves the EQTY Lab mark, favicon and GitHub icon at `/_equality/*.svg`, so a site
+copies nothing into `public/`. The favicon is the default; the logo and the GitHub link are opt-in,
+and without a logo the header shows `title` as text.
+
+```js
+import docs, { brandAssets } from '@eqtylab/docs';
+
+docs({
+  title: 'My Docs',
+  logo: { src: brandAssets.logo, alt: 'EQTY Lab' },
+  header: {
+    links: [
+      {
+        label: 'GitHub',
+        href: 'https://github.com/eqtylab/my-repo',
+        icon: brandAssets.github,
+        external: true,
+      },
+    ],
+  },
+});
+```
+
 ## Navigation comes from folders
 
 Ordering lives in one optional `_group.yaml` per directory — there is deliberately **no

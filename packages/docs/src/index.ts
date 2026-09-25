@@ -2,7 +2,12 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import type { AstroIntegration } from 'astro';
 
-import { resolveConfig, type DocsConfig, type DocsUserConfig } from './config.ts';
+import {
+  BRAND_ASSET_PREFIX,
+  resolveConfig,
+  type DocsConfig,
+  type DocsUserConfig,
+} from './config.ts';
 import { resolveDocsEnv, type DocsEnv } from './env.ts';
 import { assertMdxOnly } from './internal/assert-mdx-only.ts';
 import { EMPTY_VERSIONS, extractVersions } from './internal/extract-versions.ts';
@@ -18,7 +23,7 @@ import { assertPlugins, pluginComponentsSource, runPlugins } from './internal/ru
 import { scanConsumerPages } from './internal/scan-consumer-pages.ts';
 import { virtualConfigPlugin, virtualPluginComponentsPlugin } from './internal/virtual-config.ts';
 
-export { resolveConfig, type DocsConfig, type DocsUserConfig } from './config.ts';
+export { brandAssets, resolveConfig, type DocsConfig, type DocsUserConfig } from './config.ts';
 export { resolveDocsEnv, type DocsEnv } from './env.ts';
 // Do not re-export the loaders: this entry runs in Node when astro.config loads,
 // and they import `astro:content`, which only exists in the Vite graph.
@@ -48,6 +53,11 @@ function plannedRoutes(cfg: DocsConfig) {
       pattern: '/llms.txt',
       entrypoint: '@eqtylab/docs/routes/llms-txt.ts',
       enabled: cfg.routing.markdownTwins,
+    },
+    {
+      pattern: `${BRAND_ASSET_PREFIX}/[name].svg`,
+      entrypoint: '@eqtylab/docs/routes/brand-asset.ts',
+      enabled: true,
     },
     {
       pattern: '/404',
