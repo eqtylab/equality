@@ -39,11 +39,13 @@ const toastVariants = cva(styles['toast'], {
 const ToastContainer = React.forwardRef<
   React.ElementRef<typeof ToastPrimitives.Root>,
   React.ComponentPropsWithoutRef<typeof ToastPrimitives.Root> & VariantProps<typeof toastVariants>
->(({ className, variant, ...props }, ref) => {
+>(({ className, variant, style, ...props }, ref) => {
   return (
     <ToastPrimitives.Root
       ref={ref}
       className={cn(toastVariants({ variant }), className)}
+      // Radix disables toasts mounted before a modal Dialog or Sheet opened.
+      style={{ pointerEvents: 'auto', ...style }}
       {...props}
     />
   );
@@ -62,7 +64,12 @@ const ToastClose = React.forwardRef<
   React.ElementRef<typeof ToastPrimitives.Close>,
   React.ComponentPropsWithoutRef<typeof ToastPrimitives.Close>
 >(({ className, ...props }, ref) => (
-  <ToastPrimitives.Close ref={ref} className={cn(styles['toast-close'], className)} {...props}>
+  <ToastPrimitives.Close
+    ref={ref}
+    aria-label="Close"
+    className={cn(styles['toast-close'], className)}
+    {...props}
+  >
     <XIcon className={styles['toast-close-icon']} />
   </ToastPrimitives.Close>
 ));

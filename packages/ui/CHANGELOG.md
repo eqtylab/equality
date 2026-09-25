@@ -2,6 +2,15 @@
 
 Notable changes to Equality are recorded here, following [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## 4.3.3 - 2026-09-24
+
+### Fixed
+
+- Toasts dismiss on their own again after a toast is closed while hovered. The hover pause
+  stuck on, so every later toast stayed until closed by hand.
+- A toast shown before a `Sheet` or `Dialog` opened can now be closed while it is open.
+- The toast close button has an accessible name.
+
 ## 4.3.2 - 2026-09-24
 
 ### Fixed
