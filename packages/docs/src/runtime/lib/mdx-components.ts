@@ -12,6 +12,7 @@ import {
   TableRow,
 } from '@eqtylab/equality';
 import CONFIG from 'virtual:eqty-docs/config';
+import pluginComponents from 'virtual:eqty-docs/plugin-components';
 
 import AlertBridge from '../components/AlertBridge.astro';
 import CodeFenceBridge from '../components/CodeFenceBridge.astro';
@@ -46,4 +47,6 @@ if (CONFIG.code?.highlighter === 'codeblock') {
   base.pre = CodeFenceBridge;
 }
 
-export const mdxComponents = base;
+// Plugin-contributed components (`docs({ plugins })`) land last, so a plugin can add a name or
+// replace one of the defaults.
+export const mdxComponents: Record<string, unknown> = { ...base, ...pluginComponents };
