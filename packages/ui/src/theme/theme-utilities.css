@@ -51,6 +51,7 @@
 }
 
 @utility dropdown-search {
+  @apply sticky top-0 z-10;
   @apply flex-center gap-2;
   @apply px-2 py-1.5;
   @apply mb-1;
