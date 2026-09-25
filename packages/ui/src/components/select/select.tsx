@@ -1,7 +1,7 @@
 import * as React from 'react';
 import * as SelectPrimitive from '@radix-ui/react-select';
 import { VariantProps } from 'class-variance-authority';
-import { Check, ChevronDown, ChevronUp, Search } from 'lucide-react';
+import { Check, ChevronDown, Search } from 'lucide-react';
 
 import styles from '@/components/select/select.module.css';
 import { ELEVATION, generateElevationVariants } from '@/lib/elevations';
@@ -25,7 +25,6 @@ import { usePortalContainer } from '@/theme/portal-container';
 
 const CheckIcon = Check as React.ComponentType<{ className?: string }>;
 const ChevronDownIcon = ChevronDown as React.ComponentType<{ className?: string }>;
-const ChevronUpIcon = ChevronUp as React.ComponentType<{ className?: string }>;
 const SearchIcon = Search as React.ComponentType<{ className?: string }>;
 
 const SEARCH_INPUT_SELECTOR = '[data-select-search]';
@@ -106,34 +105,6 @@ const SelectTrigger = React.forwardRef<
   </SelectPrimitive.Trigger>
 ));
 SelectTrigger.displayName = SelectPrimitive.Trigger.displayName;
-
-const SelectScrollUpButton = React.forwardRef<
-  React.ElementRef<typeof SelectPrimitive.ScrollUpButton>,
-  React.ComponentPropsWithoutRef<typeof SelectPrimitive.ScrollUpButton>
->(({ className, ...props }, ref) => (
-  <SelectPrimitive.ScrollUpButton
-    ref={ref}
-    className={cn(styles['select-scroll-button'], className)}
-    {...props}
-  >
-    <ChevronUpIcon className={styles['select-icon']} />
-  </SelectPrimitive.ScrollUpButton>
-));
-SelectScrollUpButton.displayName = SelectPrimitive.ScrollUpButton.displayName;
-
-const SelectScrollDownButton = React.forwardRef<
-  React.ElementRef<typeof SelectPrimitive.ScrollDownButton>,
-  React.ComponentPropsWithoutRef<typeof SelectPrimitive.ScrollDownButton>
->(({ className, ...props }, ref) => (
-  <SelectPrimitive.ScrollDownButton
-    ref={ref}
-    className={cn(styles['select-scroll-button'], className)}
-    {...props}
-  >
-    <ChevronDownIcon className={styles['select-icon']} />
-  </SelectPrimitive.ScrollDownButton>
-));
-SelectScrollDownButton.displayName = SelectPrimitive.ScrollDownButton.displayName;
 
 const SelectPortal = ({ children }: { children: React.ReactNode }) => (
   <SelectPrimitive.Portal container={usePortalContainer()}>{children}</SelectPrimitive.Portal>
@@ -234,7 +205,6 @@ const SelectContent = React.forwardRef<
               {searching && resultCount > 0 ? formatResultCount(resultCount) : null}
             </div>
           ) : null}
-          <SelectScrollUpButton />
           <SelectPrimitive.Viewport
             className={cn(
               styles['select-viewport'],
@@ -243,7 +213,6 @@ const SelectContent = React.forwardRef<
           >
             {children}
           </SelectPrimitive.Viewport>
-          <SelectScrollDownButton />
         </SelectPrimitive.Content>
       </SelectPortal>
     );
@@ -415,8 +384,6 @@ export {
   SelectGroup,
   SelectItem,
   SelectLabel,
-  SelectScrollDownButton,
-  SelectScrollUpButton,
   SelectSearch,
   SelectSeparator,
   SelectTrigger,

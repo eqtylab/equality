@@ -191,6 +191,22 @@ describe('Select', () => {
       await waitFor(() => expect(document.activeElement).toBe(screen.getByRole('searchbox')));
     });
 
+    it('returns focus to the search input from the last visible option, then wraps to the first', async () => {
+      const user = userEvent.setup();
+      render(<CountrySelect />);
+      await open(user);
+
+      await user.type(screen.getByRole('searchbox'), 'a');
+      await user.keyboard('{ArrowDown}{ArrowDown}{ArrowDown}{ArrowDown}');
+      await waitFor(() => expect(document.activeElement).toBe(option('New Zealand')));
+
+      await user.keyboard('{ArrowDown}');
+      await waitFor(() => expect(document.activeElement).toBe(screen.getByRole('searchbox')));
+
+      await user.keyboard('{ArrowDown}');
+      await waitFor(() => expect(document.activeElement).toBe(option('Brazil')));
+    });
+
     it('keeps editing the query with Backspace while an option is focused', async () => {
       const user = userEvent.setup();
       render(<CountrySelect />);

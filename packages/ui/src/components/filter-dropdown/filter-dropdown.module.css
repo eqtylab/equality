@@ -27,5 +27,9 @@
 }
 
 .dropdown-menu-content {
-  @apply max-h-80 w-56 overflow-auto;
+  @apply max-h-80 min-w-56 max-w-80 overflow-auto;
+}
+
+.option-label {
+  @apply min-w-0 truncate;
 }

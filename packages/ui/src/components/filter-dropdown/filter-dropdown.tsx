@@ -117,7 +117,9 @@ const FilterDropdown = ({
               onCheckedChange={() => onToggleFilter(option.value)}
               onSelect={(e) => e.preventDefault()}
             >
-              {option.label}
+              <span className={styles['option-label']} title={option.label}>
+                {option.label}
+              </span>
             </DropdownMenuCheckboxItem>
           );
         })}

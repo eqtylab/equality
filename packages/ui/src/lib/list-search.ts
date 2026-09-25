@@ -145,7 +145,8 @@ export function useListSearchState(open?: boolean): ListSearchState {
 
 /*
  * Filtering resizes the list, and a flip then sticks because the popper's size cap follows the
- * new side, so the side it was placed on holds from the first query until the list reopens
+ * new side, so the side it was placed on holds from the first query until the list reopens.
+ * Collisions stay on: turning them off also drops the shift that keeps the list on screen
  */
 export function useSearchSideLock(
   state: ListSearchState | null | undefined,
@@ -166,9 +167,7 @@ export function useSearchSideLock(
     if (placed) lockSide?.(placed);
   }, [enabled, searching, lockedSide, lockSide, contentRef]);
 
-  return lockedSide && enabled
-    ? { side: lockedSide, avoidCollisions: false }
-    : { side, avoidCollisions };
+  return { side: lockedSide && enabled ? lockedSide : side, avoidCollisions };
 }
 
 export const isSearchActive = (state: ListSearchState | null | undefined) =>
@@ -280,8 +279,8 @@ export function useSearchQuery(state: ListSearchState) {
 }
 
 /*
- * ArrowUp must be checked ahead of the defaultPrevented bail-out: DropdownMenu's roving focus
- * group has already prevented it by the time the event bubbles up here
+ * The arrows must be checked ahead of the defaultPrevented bail-out: DropdownMenu's roving focus
+ * group has already prevented them by the time the event bubbles up here
  */
 export function handleListKeyDown(
   state: ListSearchState | null,
@@ -293,9 +292,10 @@ export function handleListKeyDown(
   const target = event.target as HTMLElement | null;
   if (target?.closest(searchSelector)) return;
 
-  if (event.key === 'ArrowUp' && state.visible) {
-    const firstItem = event.currentTarget.querySelector(itemSelector);
-    if (firstItem && firstItem === target?.closest(itemSelector)) {
+  if ((event.key === 'ArrowUp' || event.key === 'ArrowDown') && state.visible) {
+    const items = event.currentTarget.querySelectorAll(itemSelector);
+    const edgeItem = event.key === 'ArrowUp' ? items[0] : items[items.length - 1];
+    if (edgeItem && edgeItem === target?.closest(itemSelector)) {
       event.preventDefault();
       state.requestFocus();
       return;
