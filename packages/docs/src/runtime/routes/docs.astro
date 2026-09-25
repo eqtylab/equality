@@ -1,7 +1,7 @@
 ---
 import { render } from 'astro:content';
 import CONFIG from 'virtual:eqty-docs/config';
-import { docsHref, idToPath, joinPath, normalizePath } from '@eqtylab/docs/paths';
+import { docsHref, idToPath, markdownTwinHref, normalizePath } from '@eqtylab/docs/paths';
 import DocsPage from '../layouts/DocsPage.astro';
 import RedirectPage from '../layouts/RedirectPage.astro';
 import {
@@ -13,6 +13,7 @@ import {
   pathContext,
   prevNextFor,
 } from '../lib/nav-data.ts';
+import { entryMarkdown } from '../lib/markdown-twin.ts';
 import { firstParagraph } from '../lib/summary.ts';
 import { mdxComponents } from '../lib/mdx-components.ts';
 import type { SwitcherData } from '../lib/versions-ui.ts';
@@ -159,9 +160,13 @@ const { entry, version, switcher, canonical, latestHref, latestLabel, redirectTo
           ? `${CONFIG.footer.editUrl.replace(/\/$/, '')}/${contentPath}`
           : undefined;
 
-      // File-shaped (/v3.9/x/label.md) beside the directory-shaped page; 'index' must match docs-md.ts.
+      // File-shaped (/v3.9/x/label.md) beside the directory-shaped page.
       const markdownHref = CONFIG.routing.markdownTwins
-        ? `${joinPath(import.meta.env.BASE_URL, CONFIG.pathPrefix, version ?? undefined, idToPath(entry.id) || 'index')}.md`
+        ? markdownTwinHref(entry.id, {
+            base: import.meta.env.BASE_URL,
+            pathPrefix: CONFIG.pathPrefix,
+            versionPrefix: version ?? undefined,
+          })
         : undefined;
 
       return (
@@ -184,7 +189,7 @@ const { entry, version, switcher, canonical, latestHref, latestLabel, redirectTo
             description={entry.data.description}
             deprecated={entry.data.deprecated}
             markdownHref={markdownHref}
-            source={entry.body}
+            source={entryMarkdown(entry, CONFIG.projectRoot, version).markdown}
             crumbs={crumbs}
             trail={renderedTrail}
             fallbackSummary={fallbackSummary}
