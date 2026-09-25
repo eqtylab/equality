@@ -66,7 +66,8 @@
 }
 
 .active-segment-indicator {
-  @apply absolute bottom-0 left-0 top-0;
+  @apply absolute bottom-[2px] left-[2px] top-[2px];
+  @apply w-[calc(var(--indicator-width)-4px)] rounded-[3px];
   @apply bg-button-primary-fill;
   @apply transition-[transform,width];
 }

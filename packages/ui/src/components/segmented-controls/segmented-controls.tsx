@@ -111,7 +111,12 @@ const SegmentedControls = ({
       })}
       <div
         className={styles['active-segment-indicator']}
-        style={{ transform: `translateX(${indicator.left}px)`, width: `${indicator.width}px` }}
+        style={
+          {
+            transform: `translateX(${indicator.left}px)`,
+            '--indicator-width': `${indicator.width}px`,
+          } as React.CSSProperties
+        }
       />
     </div>
   );
