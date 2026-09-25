@@ -41,7 +41,7 @@
 }
 
 .select-viewport--popper {
-  @apply h-(--radix-select-trigger-height) w-full;
+  @apply flex-none! w-full;
   @apply overflow-visible!;
 }
 
@@ -71,10 +71,8 @@
   @apply hidden;
 }
 
-/* Sticky inside the scroller, so it needs the elevation's opaque background below */
 .select-search {
   @apply dropdown-search;
-  @apply sticky top-0 z-10;
 }
 
 /* The popper content scrolls, so without covering its padding, options show above the search */

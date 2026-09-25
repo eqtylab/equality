@@ -297,6 +297,13 @@ export function handleListKeyDown(
     const edgeItem = event.key === 'ArrowUp' ? items[0] : items[items.length - 1];
     if (edgeItem && edgeItem === target?.closest(itemSelector)) {
       event.preventDefault();
+      // The sticky search is always in view, so focusing it never scrolls the list back up
+      if (event.key === 'ArrowDown') {
+        for (let el: HTMLElement | null = target; el; el = el.parentElement) {
+          el.scrollTop = 0;
+          if (el === event.currentTarget) break;
+        }
+      }
       state.requestFocus();
       return;
     }
