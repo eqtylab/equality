@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useCallback, useLayoutEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
 
 import { Icon } from '@/components/icon/icon';
 import styles from '@/components/segmented-controls/segmented-controls.module.css';
@@ -52,6 +52,7 @@ const SegmentedControls = ({
     left: 0,
     width: 0,
   });
+  const [animateIndicator, setAnimateIndicator] = useState(false);
 
   const updateIndicator = useCallback(() => {
     const activeSegment = segmentRefs.current[value];
@@ -64,6 +65,12 @@ const SegmentedControls = ({
   useLayoutEffect(() => {
     updateIndicator();
   }, [updateIndicator, options, effectiveDisplay, size]);
+
+  // Enabling the transition in the same frame as the first measurement makes the indicator slide in from the left edge on mount.
+  useEffect(() => {
+    const frame = requestAnimationFrame(() => setAnimateIndicator(true));
+    return () => cancelAnimationFrame(frame);
+  }, []);
 
   // Keep the indicator aligned when the control is resized.
   useLayoutEffect(() => {
@@ -110,7 +117,10 @@ const SegmentedControls = ({
         );
       })}
       <div
-        className={styles['active-segment-indicator']}
+        className={cn(
+          styles['active-segment-indicator'],
+          animateIndicator && styles['active-segment-indicator--animated']
+        )}
         style={
           {
             transform: `translateX(${indicator.left}px)`,
