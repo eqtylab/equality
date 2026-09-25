@@ -59,8 +59,12 @@ const Toaster = () => {
 };
 
 const ToastRoot = () => {
+  const { toasts } = useToast();
+  const newestToastId = toasts[0]?.id;
+
   return (
-    <ToastProvider>
+    // Radix's shared pause flag can stick on, freezing every later toast's timer.
+    <ToastProvider key={newestToastId}>
       <Toaster />
       <ToastViewport />
     </ToastProvider>
