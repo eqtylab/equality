@@ -2,7 +2,6 @@
 
 Notable changes to Equality are recorded here, following [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
-
 ## 4.6.0 - 2026-09-25
 
 ### Added
@@ -18,7 +17,6 @@ Notable changes to Equality are recorded here, following [Keep a Changelog](http
   never pinned.
 - <kbd>↓</kbd> on the last option of a searchable `Select` or `DropdownMenu` scrolls the list back
   to the top as it returns to the search box. The list stayed scrolled to the bottom.
-
 
 ## 4.5.0 - 2026-09-25
 
