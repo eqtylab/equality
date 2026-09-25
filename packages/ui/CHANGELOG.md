@@ -2,6 +2,12 @@
 
 Notable changes to Equality are recorded here, following [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## 4.6.0 - 2026-09-25
+
+### Added
+
+- Segmented control options can now display `primary` (default), `neutral`, `success`, `warning`, and `danger` variants that change the selection color based on the state.
+
 ## 4.5.0 - 2026-09-25
 
 ### Added

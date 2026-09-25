@@ -9,6 +9,7 @@ import {
   SegmentedControlsSuffixDemo,
   SegmentedControlsIconOnlyDemo,
   SegmentedControlsSizesDemo,
+  SegmentedControlsVariantsDemo,
 } from "@demo/components/demo/segmented-controls";
 
 ## Overview
@@ -60,10 +61,41 @@ prefix before the label.
 
 ### With a suffix slot
 
-Use the `suffix` slot to render supplementary content, such as a count `Badge`, after the
-label.
+Use the `suffix` slot to render supplementary content, such as a count `Badge`, after the label.
 
 <SegmentedControlsSuffixDemo client:only="react" />
+
+## Variants
+
+Give an option a `variant` to change the indicator's colour while that option is selected: `primary` (the default), `neutral`, `success`, `warning`, or `danger`. Use this when the options represent states, such as filtering results by status, so the selection carries the same meaning as the rest of the UI.
+
+<SegmentedControlsVariantsDemo client:only="react" />
+
+### Usage
+
+```tsx
+<SegmentedControls
+  value={status}
+  onValueChange={setStatus}
+  options={[
+    { value: "primary", label: "Primary" },
+    { value: "success", label: "Success", icon: "Check", variant: "success" },
+    {
+      value: "warning",
+      label: "Warning",
+      icon: "OctagonAlert",
+      variant: "warning",
+    },
+    {
+      value: "danger",
+      label: "Danger",
+      icon: "TriangleAlert",
+      variant: "danger",
+    },
+    { value: "neutral", label: "Neutral", variant: "neutral" },
+  ]}
+/>
+```
 
 ## Display modes
 
@@ -116,9 +148,10 @@ The `size` prop accepts `sm`, `md` (the default), or `lg`. Use the size that mak
 
 ### `SegmentedControlOption`
 
-| Name     | Description                                                     | Type                           | Default | Required |
-| -------- | --------------------------------------------------------------- | ------------------------------ | ------- | -------- |
-| `value`  | Unique value used to identify the option.                       | `string`                       | -       | ✅       |
-| `label`  | Text label. Also used as the accessible label when `icon-only`. | `string`                       | -       | ✅       |
-| `icon`   | Prefix icon: a Lucide icon name or a React element.             | `string`, `React.ReactElement` | -       | ❌       |
-| `suffix` | Content rendered after the label.                               | `React.ReactNode`              | -       | ❌       |
+| Name      | Description                                                     | Type                                                 | Default   | Required |
+| --------- | --------------------------------------------------------------- | ---------------------------------------------------- | --------- | -------- |
+| `value`   | Unique value used to identify the option.                       | `string`                                             | -         | ✅       |
+| `label`   | Text label. Also used as the accessible label when `icon-only`. | `string`                                             | -         | ✅       |
+| `icon`    | Prefix icon: a Lucide icon name or a React element.             | `string`, `React.ReactElement`                       | -         | ❌       |
+| `suffix`  | Content rendered after the label.                               | `React.ReactNode`                                    | -         | ❌       |
+| `variant` | Colour of the indicator while this option is selected.          | `primary`, `neutral`, `success`, `warning`, `danger` | `primary` | ❌       |

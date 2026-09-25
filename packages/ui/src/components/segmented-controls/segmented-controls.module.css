@@ -75,9 +75,34 @@
   @apply px-4;
 }
 
+.variant--primary {
+  --segment-active-fill: var(--color-button-primary-fill);
+  --segment-active-text: var(--color-button-primary-text);
+}
+
+.variant--danger {
+  --segment-active-fill: var(--color-button-danger-fill);
+  --segment-active-text: var(--color-button-danger-text);
+}
+
+.variant--warning {
+  --segment-active-fill: var(--color-button-warning-fill);
+  --segment-active-text: var(--color-button-warning-text);
+}
+
+.variant--success {
+  --segment-active-fill: var(--color-button-success-fill);
+  --segment-active-text: var(--color-button-success-text);
+}
+
+.variant--neutral {
+  --segment-active-fill: var(--color-button-neutral-fill);
+  --segment-active-text: var(--color-button-neutral-text);
+}
+
 .segment--active,
 .segment--active .segment-icon {
-  @apply text-button-primary-text;
+  @apply text-(--segment-active-text);
 }
 
 .segment--inactive,
@@ -103,13 +128,13 @@
 .active-segment-indicator {
   @apply absolute bottom-[2px] left-[2px] top-[2px];
   @apply w-[calc(var(--indicator-width)-4px)] rounded-[3px];
-  @apply bg-button-primary-fill;
+  @apply bg-(--segment-active-fill);
   box-shadow:
     0 1px 2px rgb(0 0 0 / 0.2),
     inset 0 1px 0px rgb(255 255 255 / 0.25);
 }
 
 .active-segment-indicator--animated {
-  @apply duration-(--segment-transition-duration) ease-(--segment-transition-easing) transition-[transform,width];
+  @apply duration-(--segment-transition-duration) ease-(--segment-transition-easing) transition-[transform,width,background-color];
   @apply motion-reduce:transition-none;
 }
