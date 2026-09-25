@@ -35,6 +35,7 @@ export default defineConfig({
       title: "Equality",
       description: "A theme-driven component library for EQTY Lab projects",
       versions: { current: ui.version, granularity: "minor" },
+      github: "eqtylab/equality",
       footer: {
         editUrl:
           "https://github.com/eqtylab/equality/edit/main/packages/demo/src/content/docs/",

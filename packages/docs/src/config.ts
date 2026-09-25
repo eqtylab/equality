@@ -1,7 +1,7 @@
 /** Integration options: the whole consumer-facing configuration surface. */
 import { z } from 'astro/zod';
 
-import { GITHUB_HOST, githubUrl } from './internal/github-url.ts';
+import { githubUrl } from './internal/github-url.ts';
 
 export const BRAND_ASSET_PREFIX = '/_equality';
 
@@ -54,14 +54,14 @@ export const docsConfigSchema = z.object({
     .default({ src: brandAssets.logo, alt: 'EQTY Lab' }),
 
   /**
-   * The header's GitHub link. Unset, it points at the site's `package.json` `repository`,
-   * else the EQTY Lab organisation. A GitHub URL or `owner/repo` overrides both; `false` removes it.
+   * The header's GitHub link: `owner/repo` or a github.com URL. Unset, it points at the EQTY Lab
+   * organisation; `false` removes it. A GitHub link in `header.links` replaces it.
    */
   github: z
     .union([z.literal(false), z.string()])
     .transform((value, ctx) => {
       if (value === false) return value;
-      const url = /^https?:\/\//i.test(value) && GITHUB_HOST.test(value) ? value : githubUrl(value);
+      const url = githubUrl(value);
       if (url) return url;
       ctx.addIssue({
         code: 'custom',

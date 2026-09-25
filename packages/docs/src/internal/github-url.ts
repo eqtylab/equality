@@ -1,16 +1,8 @@
-export const GITHUB_HOST = /^(?:https?:\/\/)?(?:www\.)?github\.com\//i;
+export const GITHUB_HOST = /^https?:\/\/(?:www\.)?github\.com\//i;
 
-/** A GitHub URL from a `package.json` `repository` field, in any form npm accepts. */
-export function githubUrl(repository: unknown): string | undefined {
-  const raw =
-    typeof repository === 'string'
-      ? repository
-      : (repository as { url?: unknown } | undefined)?.url;
-  if (typeof raw !== 'string') return undefined;
-
-  const shorthand = raw.match(/^(?:github:)?([\w.-]+)\/([\w.-]+?)(?:\.git)?$/);
-  if (shorthand) return `https://github.com/${shorthand[1]}/${shorthand[2]}`;
-
-  const full = raw.match(/github\.com[:/]([\w.-]+)\/([\w.-]+?)(?:\.git)?\/?(?:[#?].*)?$/i);
-  return full ? `https://github.com/${full[1]}/${full[2]}` : undefined;
+/** `owner/repo` or a github.com URL, as a URL. Anything else names no repo. */
+export function githubUrl(value: string): string | undefined {
+  if (GITHUB_HOST.test(value)) return value;
+  const repo = value.match(/^([\w.-]+)\/([\w.-]+)$/);
+  return repo ? `https://github.com/${repo[1]}/${repo[2]}` : undefined;
 }

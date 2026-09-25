@@ -41,17 +41,16 @@ only change needed, since MDX is a superset of Markdown.
 ## EQTY Lab brand files
 
 Every site gets the EQTY Lab favicon, the header logo, a GitHub link and a share image without configuring
-anything. The files are served from the package at `/_equality/*.svg`, so a site copies nothing
+anything. The files are served from the package under `/_equality/`, so a site copies nothing
 into `public/`.
 
-The GitHub link points at the `repository` field of the site's `package.json`. With no such field
-it points at the EQTY Lab organisation, `https://github.com/eqtylab`, rather than the project's
-code — so set one of these:
+Point the GitHub link at the project's repo in the Astro config. Unset, it points at the EQTY Lab
+organisation, `https://github.com/eqtylab`, rather than the project's code:
 
 ```js
 docs({
   title: 'My Docs',
-  github: 'https://github.com/eqtylab/my-repo', // or add "repository" to package.json
+  github: 'eqtylab/my-repo', // or 'https://github.com/eqtylab/my-repo'
 });
 ```
 
@@ -67,8 +66,8 @@ Each one can be replaced or turned off:
 `ogImage` is the picture in a shared link's preview card, in Slack, LinkedIn and the like. Those
 apps only accept a full URL, so set Astro's `site`; without it a path is left out.
 
-A header link you write yourself to `github.com` replaces the automatic one. `brandAssets` exports
-the served paths, e.g. `brandAssets.github` for a link icon.
+A header link you write yourself to `github.com` replaces the automatic one, and gets the GitHub
+icon if it has none. `brandAssets` exports the served paths, e.g. `brandAssets.github` for a link icon.
 
 ## Navigation comes from folders
 

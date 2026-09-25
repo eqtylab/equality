@@ -2,6 +2,20 @@
 
 Notable changes to Equality's Docsite Generator are recorded here, following [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## 0.7.0 - 2026-09-25
+
+### Changed
+
+- The GitHub link's address comes only from the `github` option in the Astro config
+  - The site's `package.json` `repository` field is no longer read; a site that relied on it links
+    to `https://github.com/eqtylab` until it sets `github: 'owner/repo'`
+  - `github` takes `owner/repo` or a github.com URL; the `github:owner/repo` and git URL forms are gone
+
+### Fixed
+
+- A GitHub link a site writes in `header.links` without an icon gets the GitHub icon
+  - A site's own icon on that link is kept
+
 ## 0.6.0 - 2026-09-25
 
 ### Changed
