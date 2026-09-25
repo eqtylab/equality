@@ -147,6 +147,26 @@ describe('DropdownMenu', () => {
       await waitFor(() => expect(document.activeElement).toBe(screen.getByRole('searchbox')));
     });
 
+    it('returns focus to the search input from the last visible item, then wraps to the first', async () => {
+      const user = userEvent.setup();
+      render(<Menu />);
+      await open(user);
+
+      await user.type(screen.getByRole('searchbox'), 'c');
+      await user.keyboard('{ArrowDown}{ArrowDown}');
+      await waitFor(() =>
+        expect(document.activeElement).toBe(screen.getByRole('menuitem', { name: 'Cut' }))
+      );
+
+      await user.keyboard('{ArrowDown}');
+      await waitFor(() => expect(document.activeElement).toBe(screen.getByRole('searchbox')));
+
+      await user.keyboard('{ArrowDown}');
+      await waitFor(() =>
+        expect(document.activeElement).toBe(screen.getByRole('menuitem', { name: 'Copy' }))
+      );
+    });
+
     it('keeps editing the query with Backspace while an item is focused', async () => {
       const user = userEvent.setup();
       render(<Menu />);

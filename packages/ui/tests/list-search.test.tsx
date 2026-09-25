@@ -146,7 +146,7 @@ describe('useListSearchState', () => {
 });
 
 describe('useSearchSideLock', () => {
-  it('locks the placed side once a query starts, and turns collisions off', () => {
+  it('locks the placed side once a query starts, and keeps collision handling', () => {
     const contentRef = { current: document.createElement('div') };
     contentRef.current.dataset.side = 'top';
     const { result } = renderHook(() => {
@@ -157,7 +157,7 @@ describe('useSearchSideLock', () => {
 
     act(() => result.current.state.setQuery('a'));
 
-    expect(result.current.sideProps).toEqual({ side: 'top', avoidCollisions: false });
+    expect(result.current.sideProps).toEqual({ side: 'top', avoidCollisions: undefined });
   });
 
   it('holds the lock after the query clears, until the list reopens', () => {

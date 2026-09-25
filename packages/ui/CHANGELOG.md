@@ -2,6 +2,28 @@
 
 Notable changes to Equality are recorded here, following [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## 4.4.2 - 2026-09-25
+
+### Fixed
+
+- A `Select` list is now exactly as wide as its trigger, not 10px wider. Options wider than the
+  trigger still widen it.
+- A `Select` list scrolls with a native scrollbar. The scroll arrows are gone: the down arrow
+  stayed up after a search emptied the list, and the up arrow sat above the search box.
+- In a searchable `Select` or `DropdownMenu`, <kbd>↓</kbd> on the last option returns to the
+  search box, as <kbd>↑</kbd> on the first already did.
+- A searchable `Select` or `DropdownMenu` near the edge of the screen stays on screen while
+  searching. Locking its side also turned off collision handling, so the list shifted back to
+  its unadjusted position, partly off screen, until it reopened.
+- `FilterDropdown` options no longer wrap onto a second line. The menu widens from `w-56` up to
+  `max-w-80` to fit them, and a longer label ends in an ellipsis, with the full label in its
+  tooltip.
+
+### Removed
+
+- `SelectScrollUpButton` and `SelectScrollDownButton`. `SelectContent` owns the element they
+  must sit in, so they could only ever be rendered by `SelectContent` itself.
+
 ## 4.4.1 - 2026-09-25
 
 ### Fixed
