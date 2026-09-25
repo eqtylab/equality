@@ -40,28 +40,35 @@ only change needed, since MDX is a superset of Markdown.
 
 ## EQTY Lab brand files
 
-The integration serves the EQTY Lab mark, favicon and GitHub icon at `/_equality/*.svg`, so a site
-copies nothing into `public/`. The favicon is the default; the logo and the GitHub link are opt-in,
-and without a logo the header shows `title` as text.
+Every site gets the EQTY Lab favicon, the header logo, a GitHub link and a share image without configuring
+anything. The files are served from the package at `/_equality/*.svg`, so a site copies nothing
+into `public/`.
+
+The GitHub link points at the `repository` field of the site's `package.json`. With no such field
+it points at the EQTY Lab organisation, `https://github.com/eqtylab`, rather than the project's
+code — so set one of these:
 
 ```js
-import docs, { brandAssets } from '@eqtylab/docs';
-
 docs({
   title: 'My Docs',
-  logo: { src: brandAssets.logo, alt: 'EQTY Lab' },
-  header: {
-    links: [
-      {
-        label: 'GitHub',
-        href: 'https://github.com/eqtylab/my-repo',
-        icon: brandAssets.github,
-        external: true,
-      },
-    ],
-  },
+  github: 'https://github.com/eqtylab/my-repo', // or add "repository" to package.json
 });
 ```
+
+Each one can be replaced or turned off:
+
+| Option    | Replace                                   | Turn off                                         |
+| --------- | ----------------------------------------- | ------------------------------------------------ |
+| `favicon` | `favicon: '/mine.svg'`                    | —                                                |
+| `logo`    | `logo: { src: '/mine.svg', alt: 'Acme' }` | `logo: false` (the header shows `title` as text) |
+| `github`  | `github: 'eqtylab/my-repo'` or a URL      | `github: false`                                  |
+| `ogImage` | `ogImage: '/share.png'` or a URL          | `ogImage: false`                                 |
+
+`ogImage` is the picture in a shared link's preview card, in Slack, LinkedIn and the like. Those
+apps only accept a full URL, so set Astro's `site`; without it a path is left out.
+
+A header link you write yourself to `github.com` replaces the automatic one. `brandAssets` exports
+the served paths, e.g. `brandAssets.github` for a link icon.
 
 ## Navigation comes from folders
 

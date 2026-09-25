@@ -35,6 +35,11 @@ const paths = {
 const pageTitle = title && title !== CONFIG.title ? `${title} · ${CONFIG.title}` : CONFIG.title;
 const pageDescription = description ?? CONFIG.description;
 
+const absolute = (href: string) =>
+  /^https?:\/\//i.test(href) ? href : Astro.site && new URL(href, Astro.site).href;
+const pageUrl = canonical ?? absolute(Astro.url.pathname);
+const shareImage = CONFIG.ogImage && absolute(withBase(CONFIG.ogImage, paths));
+
 // Pinned version builds are noindex: latest today is not latest tomorrow.
 const robots = noIndex ?? !CONFIG.env.isLatest;
 
@@ -94,6 +99,13 @@ const themeBootstrap = `
     {robots && <meta name="robots" content="noindex, follow" />}
     {canonical && <link rel="canonical" href={canonical} />}
     <link rel="icon" href={withBase(CONFIG.favicon, paths)} />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content={CONFIG.title} />
+    <meta property="og:title" content={pageTitle} />
+    {pageDescription && <meta property="og:description" content={pageDescription} />}
+    {pageUrl && <meta property="og:url" content={pageUrl} />}
+    {shareImage && <meta property="og:image" content={shareImage} />}
+    <meta name="twitter:card" content={shareImage ? 'summary_large_image' : 'summary'} />
     <script is:inline set:html={themeBootstrap} />
     <slot name="head" />
   </head>

@@ -1,13 +1,16 @@
 /** Integration options: the whole consumer-facing configuration surface. */
 import { z } from 'astro/zod';
 
+import { GITHUB_HOST, githubUrl } from './internal/github-url.ts';
+
 export const BRAND_ASSET_PREFIX = '/_equality';
 
 /** EQTY Lab files the integration serves. Pass one wherever a `public/` path is accepted. */
 export const brandAssets = {
   logo: `${BRAND_ASSET_PREFIX}/eqty-logo.svg`,
-  favicon: `${BRAND_ASSET_PREFIX}/favicon.svg`,
+  favicon: `${BRAND_ASSET_PREFIX}/favicon.png`,
   github: `${BRAND_ASSET_PREFIX}/github.svg`,
+  ogImage: `${BRAND_ASSET_PREFIX}/og-image.jpg`,
 } as const;
 
 const headerLink = z.object({
@@ -29,14 +32,42 @@ export const docsConfigSchema = z.object({
   favicon: z.string().default(brandAssets.favicon),
 
   /**
-   * The header mark. Without one the header falls back to `title` as text. Either
-   * way a constant "Docs" label follows it, and `title` heads the sidebar.
+   * The picture in a shared link's preview card, a 1200×630 EQTY Lab card by default. A path
+   * in `public/` or a full URL; `false` removes it. Needs Astro's `site`: previews only
+   * accept a full URL, so without `site` a path is left out.
+   */
+  ogImage: z.union([z.string(), z.literal(false)]).default(brandAssets.ogImage),
+
+  /**
+   * The header mark, the EQTY Lab one by default. `false` leaves `title` as text alone.
+   * Either way a constant "Docs" label follows it, and `title` heads the sidebar.
    */
   logo: z
-    .object({
-      src: z.string(),
-      /** Name the company: the brand link reads as this plus "Docs". */
-      alt: z.string().default(''),
+    .union([
+      z.literal(false),
+      z.object({
+        src: z.string(),
+        /** Name the company: the brand link reads as this plus "Docs". */
+        alt: z.string().default(''),
+      }),
+    ])
+    .default({ src: brandAssets.logo, alt: 'EQTY Lab' }),
+
+  /**
+   * The header's GitHub link. Unset, it points at the site's `package.json` `repository`,
+   * else the EQTY Lab organisation. A GitHub URL or `owner/repo` overrides both; `false` removes it.
+   */
+  github: z
+    .union([z.literal(false), z.string()])
+    .transform((value, ctx) => {
+      if (value === false) return value;
+      const url = /^https?:\/\//i.test(value) && GITHUB_HOST.test(value) ? value : githubUrl(value);
+      if (url) return url;
+      ctx.addIssue({
+        code: 'custom',
+        message: `expected a GitHub URL or owner/repo, got ${JSON.stringify(value)}`,
+      });
+      return z.NEVER;
     })
     .optional(),
 
