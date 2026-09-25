@@ -3,6 +3,7 @@ import {
   SegmentedControls,
   type SegmentedControlOption,
   type SegmentedControlsDisplay,
+  type SegmentedControlsSize,
 } from "@eqtylab/equality";
 import { useState } from "react";
 
@@ -10,10 +11,12 @@ export const SegmentedControlsDemo = ({
   options,
   defaultValue,
   display,
+  size,
 }: {
   options: SegmentedControlOption[];
   defaultValue: string;
   display?: SegmentedControlsDisplay;
+  size?: SegmentedControlsSize;
 }) => {
   const [value, setValue] = useState(defaultValue);
 
@@ -23,6 +26,7 @@ export const SegmentedControlsDemo = ({
       value={value}
       onValueChange={setValue}
       display={display}
+      size={size}
     />
   );
 };
@@ -81,5 +85,27 @@ export const SegmentedControlsIconOnlyDemo = () => (
       defaultValue="table"
       options={iconOnlyOptions}
     />
+  </div>
+);
+
+const sizes: SegmentedControlsSize[] = ["sm", "md", "lg"];
+
+export const SegmentedControlsSizesDemo = () => (
+  <div
+    style={{
+      display: "flex",
+      flexDirection: "column",
+      alignItems: "flex-start",
+      gap: "1rem",
+    }}
+  >
+    {sizes.map((size) => (
+      <SegmentedControlsDemo
+        key={size}
+        size={size}
+        defaultValue="list"
+        options={iconOptions}
+      />
+    ))}
   </div>
 );

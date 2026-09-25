@@ -6,6 +6,7 @@ import styles from '@/components/segmented-controls/segmented-controls.module.cs
 import { cn } from '@/lib/utils';
 
 export type SegmentedControlsDisplay = 'both' | 'text-only' | 'icon-only';
+export type SegmentedControlsSize = 'sm' | 'md' | 'lg';
 
 export interface SegmentedControlOption {
   /** Unique value used to identify the option. */
@@ -27,6 +28,8 @@ export interface SegmentedControlsProps {
    * `icon-only` requires every option to define an `icon` and falls back to `both` otherwise.
    */
   display?: SegmentedControlsDisplay;
+  /** Matches the height of a `Button` of the same size. */
+  size?: SegmentedControlsSize;
   className?: string;
 }
 
@@ -35,6 +38,7 @@ const SegmentedControls = ({
   value,
   onValueChange,
   display = 'both',
+  size = 'md',
   className,
 }: SegmentedControlsProps) => {
   const allHaveIcons = options.every((option) => option.icon != null);
@@ -59,7 +63,7 @@ const SegmentedControls = ({
   // Reposition the indicator whenever the active value, options, or display mode change.
   useLayoutEffect(() => {
     updateIndicator();
-  }, [updateIndicator, options, effectiveDisplay]);
+  }, [updateIndicator, options, effectiveDisplay, size]);
 
   // Keep the indicator aligned when the control is resized.
   useLayoutEffect(() => {
@@ -71,7 +75,10 @@ const SegmentedControls = ({
   }, [updateIndicator]);
 
   return (
-    <div ref={containerRef} className={cn(styles['segmented-controls'], className)}>
+    <div
+      ref={containerRef}
+      className={cn(styles['segmented-controls'], styles[`size--${size}`], className)}
+    >
       {options.map((option) => {
         const currentlyActive = option.value === value;
         const showIcon = option.icon != null && effectiveDisplay !== 'text-only';

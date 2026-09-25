@@ -8,6 +8,7 @@ import {
   SegmentedControlsIconDemo,
   SegmentedControlsSuffixDemo,
   SegmentedControlsIconOnlyDemo,
+  SegmentedControlsSizesDemo,
 } from "@demo/components/demo/segmented-controls";
 
 ## Overview
@@ -89,6 +90,20 @@ option is missing one. Because `label` is mandatory, it is used as the accessibl
 />
 ```
 
+## Sizes
+
+The `size` prop accepts `sm`, `md` (the default), or `lg`. Use the size that makes sense for your UI's density and is in-line with neighboring components.
+
+<SegmentedControlsSizesDemo client:only="react" />
+
+### Usage
+
+```tsx
+<SegmentedControls size="sm" value={view} onValueChange={setView} options={options} />
+<SegmentedControls size="md" value={view} onValueChange={setView} options={options} />
+<SegmentedControls size="lg" value={view} onValueChange={setView} options={options} />
+```
+
 ## Props
 
 | Name            | Description                                           | Type                             | Default | Required |
@@ -97,7 +112,7 @@ option is missing one. Because `label` is mandatory, it is used as the accessibl
 | `value`         | The value of the currently selected option.           | `string`                         | -       | ✅       |
 | `onValueChange` | Called with the new value when a segment is selected. | `(value: string) => void`        | -       | ✅       |
 | `display`       | Controls what is rendered inside each segment.        | `both`, `text-only`, `icon-only` | `both`  | ❌       |
-| `className`     | Additional CSS classes to apply to the control.       | `string`                         | -       | ❌       |
+| `size`          | Height of the control, matching `Button` sizes.       | `sm`, `md`, `lg`                 | `md`    | ❌       |
 
 ### `SegmentedControlOption`
 
