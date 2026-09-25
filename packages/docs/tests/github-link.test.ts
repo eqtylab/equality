@@ -4,27 +4,26 @@ import { test } from 'node:test';
 import { brandAssets } from '../src/config.ts';
 import { EQTY_GITHUB, githubUrl, withGithubLink } from '../src/internal/github-link.ts';
 
-test('reads every repository form npm accepts', () => {
-  const want = 'https://github.com/eqtylab/equality';
-  assert.equal(githubUrl('github:eqtylab/equality'), want);
-  assert.equal(githubUrl('eqtylab/equality'), want);
-  assert.equal(githubUrl('https://github.com/eqtylab/equality'), want);
+test('owner/repo expands, and a github.com URL is kept as written', () => {
+  assert.equal(githubUrl('eqtylab/equality'), 'https://github.com/eqtylab/equality');
   assert.equal(
-    githubUrl({ type: 'git', url: 'git+https://github.com/eqtylab/equality.git' }),
-    want
+    githubUrl('https://github.com/eqtylab/equality'),
+    'https://github.com/eqtylab/equality'
   );
-  assert.equal(githubUrl({ url: 'git@github.com:eqtylab/equality.git' }), want);
-  assert.equal(githubUrl({ url: 'git+ssh://git@github.com/eqtylab/equality.git' }), want);
+  assert.equal(
+    githubUrl('https://github.com/eqtylab/mono/tree/main/docs'),
+    'https://github.com/eqtylab/mono/tree/main/docs'
+  );
 });
 
-test('a missing or non-GitHub repository reads as none', () => {
-  assert.equal(githubUrl(undefined), undefined);
-  assert.equal(githubUrl('gitlab:eqtylab/equality'), undefined);
-  assert.equal(githubUrl({ url: 'https://gitlab.com/eqtylab/equality.git' }), undefined);
+test('a value that names no GitHub repo reads as none', () => {
+  for (const value of ['', 'equality', 'https://gitlab.com/a/b', 'github:a/b', 'a/b/c']) {
+    assert.equal(githubUrl(value), undefined, value);
+  }
 });
 
-test("the site's repository becomes a GitHub header link with the shipped icon", () => {
-  assert.deepEqual(withGithubLink([], undefined, 'github:eqtylab/equality'), [
+test('the github option becomes a header link with the shipped icon', () => {
+  assert.deepEqual(withGithubLink([], 'https://github.com/eqtylab/equality'), [
     {
       label: 'GitHub',
       href: 'https://github.com/eqtylab/equality',
@@ -34,29 +33,36 @@ test("the site's repository becomes a GitHub header link with the shipped icon",
   ]);
 });
 
-test('with no repository the link falls back to the EQTY Lab organisation', () => {
-  assert.equal(withGithubLink([], undefined, undefined)[0].href, EQTY_GITHUB);
-});
-
-test('an explicit github URL wins over the repository field', () => {
-  const links = withGithubLink([], 'https://github.com/eqtylab/other', 'eqtylab/equality');
-  assert.equal(links[0].href, 'https://github.com/eqtylab/other');
+test('unset, the link points at the EQTY Lab organisation', () => {
+  assert.equal(withGithubLink([], undefined)[0].href, EQTY_GITHUB);
 });
 
 test('github: false adds nothing', () => {
-  assert.deepEqual(withGithubLink([], false, 'eqtylab/equality'), []);
+  assert.deepEqual(withGithubLink([], false), []);
 });
 
-test('a hand-written GitHub link is not doubled', () => {
-  const own = [{ label: 'Source', href: 'https://github.com/eqtylab/equality' }];
-  assert.deepEqual(withGithubLink(own, undefined, 'eqtylab/equality'), own);
+test("a site's own GitHub link is not doubled, and gains the icon it lacks", () => {
+  const own = [{ label: 'GitHub', href: 'https://github.com/eqtylab/vcomp-docs', external: true }];
+  assert.deepEqual(withGithubLink(own, undefined), [{ ...own[0], icon: brandAssets.github }]);
 });
 
-test('the GitHub link follows the site’s own links', () => {
+test("a site's own icon on its GitHub link is kept", () => {
+  const own = [{ label: 'Source', href: 'https://github.com/a/b', icon: 'Code' }];
+  assert.deepEqual(withGithubLink(own, undefined), own);
+});
+
+test('github: false still gives a hand-written GitHub link its icon', () => {
+  const own = [{ label: 'GitHub', href: 'https://github.com/a/b' }];
+  assert.equal(withGithubLink(own, false)[0].icon, brandAssets.github);
+});
+
+test('non-GitHub links are left alone, and the GitHub link follows them', () => {
   const own = [{ label: 'Blog', href: 'https://eqtylab.io/blog' }];
-  const links = withGithubLink(own, undefined, undefined);
   assert.deepEqual(
-    links.map((l) => l.label),
-    ['Blog', 'GitHub']
+    withGithubLink(own, undefined).map((l) => [l.label, l.icon]),
+    [
+      ['Blog', undefined],
+      ['GitHub', brandAssets.github],
+    ]
   );
 });

@@ -1,4 +1,3 @@
-import { readFileSync } from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import type { AstroIntegration } from 'astro';
@@ -70,14 +69,6 @@ function plannedRoutes(cfg: DocsConfig) {
   return routes.filter((r) => r.enabled);
 }
 
-function readRepository(root: URL): unknown {
-  try {
-    return JSON.parse(readFileSync(new URL('./package.json', root), 'utf8')).repository;
-  } catch {
-    return undefined;
-  }
-}
-
 export default function docs(
   options: DocsIntegrationOptions = {} as DocsIntegrationOptions
 ): AstroIntegration {
@@ -130,7 +121,7 @@ export default function docs(
           ...cfg,
           header: {
             ...cfg.header,
-            links: withGithubLink(cfg.header.links, cfg.github, readRepository(config.root)),
+            links: withGithubLink(cfg.header.links, cfg.github),
           },
           sidebar: { ...cfg.sidebar, extra: [...cfg.sidebar.extra, ...contributions.navGroups] },
           env,
