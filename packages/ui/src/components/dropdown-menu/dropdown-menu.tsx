@@ -7,12 +7,14 @@ import {
   assignRefs,
   formatResultCount,
   getNodeText,
-  isPrintableKey,
+  handleListKeyDown,
   isSearchActive,
   isSearchEmpty,
   useFilterableItem,
   useListSearchState,
   useSearchInput,
+  useSearchQuery,
+  useSearchSideLock,
   type ListSearchState,
 } from '@/lib/list-search';
 import { cn } from '@/lib/utils';
@@ -28,6 +30,14 @@ const DropdownMenuSearchContext = React.createContext<ListSearchState | null>(nu
 const useDropdownMenuSearch = () => React.useContext(DropdownMenuSearchContext);
 
 const useIsSearching = () => isSearchActive(useDropdownMenuSearch());
+
+const useDropdownMenuSearchQuery = () => {
+  const ctx = useDropdownMenuSearch();
+  if (!ctx) {
+    throw new Error('useDropdownMenuSearchQuery must be used within a DropdownMenu');
+  }
+  return useSearchQuery(ctx);
+};
 
 /*
  * Ancestry of SubTrigger contents for the current branch, used to render the "Parent >"
@@ -192,107 +202,100 @@ const DropdownMenuSub = ({
   return <DropdownMenuPrimitive.Sub {...props}>{children}</DropdownMenuPrimitive.Sub>;
 };
 
+const SEARCH_INPUT_SELECTOR = '[data-dropdown-search]';
 const MENU_ITEM_SELECTOR =
-  '[role="menuitem"]:not([data-disabled]),' +
-  '[role="menuitemcheckbox"]:not([data-disabled]),' +
-  '[role="menuitemradio"]:not([data-disabled])';
+  ':is([role="menuitem"], [role="menuitemcheckbox"], [role="menuitemradio"]):not([data-disabled])';
+const MATCHING_ITEM_SELECTOR = `${MENU_ITEM_SELECTOR}:not([data-persistent])`;
 
 const DropdownMenuContent = React.forwardRef<
   React.ElementRef<typeof DropdownMenuPrimitive.Content>,
   React.ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.Content>
->(({ className, sideOffset = 4, onKeyDown, onFocus, children, ...props }, ref) => {
-  const ctx = useDropdownMenuSearch();
-  const setListId = ctx?.setListId;
-  const searching = isSearchActive(ctx);
-  const resultCount = ctx?.matchCount ?? 0;
-  const openFocusHandledRef = React.useRef(false);
-  const searchVisible = ctx?.visible ?? false;
-
-  // Opening hides the search again, even on a reopen mid exit animation, when content stays mounted
-  React.useEffect(() => {
-    if (!searchVisible) openFocusHandledRef.current = false;
-  }, [searchVisible]);
-
-  // Stable ref so React attaches once (mount) / detaches once (unmount) rather than
-  // flip-flopping setListId every render, which a fresh inline callback would trigger
-  const composedContentRef = React.useCallback(
-    (node: HTMLDivElement | null) => {
-      assignRefs(node, ref);
-      // Read Radix's generated id rather than override it (the trigger's aria-controls
-      // depends on it); the search input then points aria-controls at the same list
-      setListId?.(node?.id || undefined);
+>(
+  (
+    {
+      className,
+      children,
+      sideOffset = 4,
+      onKeyDown,
+      onKeyDownCapture,
+      onPointerMoveCapture,
+      onFocus,
+      side,
+      avoidCollisions,
+      ...props
     },
-    [ref, setListId]
-  );
+    ref
+  ) => {
+    const ctx = useDropdownMenuSearch();
+    const setListId = ctx?.setListId;
+    const searching = isSearchActive(ctx);
+    const resultCount = ctx?.matchCount ?? 0;
+    const contentRef = React.useRef<HTMLDivElement | null>(null);
+    const sideProps = useSearchSideLock(ctx, contentRef, { side, avoidCollisions });
 
-  return (
-    <DropdownMenuPortal>
-      <DropdownMenuPrimitive.Content
-        ref={composedContentRef}
-        sideOffset={sideOffset}
-        className={cn(styles['dropdown-menu-content'], className)}
-        onFocus={(event) => {
-          onFocus?.(event);
-          if (openFocusHandledRef.current) return;
-          openFocusHandledRef.current = true;
-          if (event.target !== event.currentTarget || !ctx?.enabled || !ctx.visible) return;
-          // Inside a Dialog, the input's mount focus lands before this menu pauses the Dialog's
-          // focus trap, which pulls it back out, so Radix then focuses the menu itself
-          ctx.requestFocus();
-        }}
-        onKeyDown={(event) => {
-          onKeyDown?.(event);
-          if (!ctx?.enabled) return;
+    // Stable ref so React attaches once (mount) / detaches once (unmount) rather than
+    // flip-flopping setListId every render, which a fresh inline callback would trigger
+    const composedContentRef = React.useCallback(
+      (node: HTMLDivElement | null) => {
+        assignRefs(node, ref, contentRef);
+        // Read Radix's generated id rather than override it (the trigger's aria-controls
+        // depends on it); the search input then points aria-controls at the same list
+        setListId?.(node?.id || undefined);
+      },
+      [ref, setListId]
+    );
 
-          // ArrowUp on the first item sends focus back to the search input instead of doing
-          // nothing (the roving focus group doesn't loop). Handled ahead of the
-          // defaultPrevented bail-out below because that group already calls preventDefault()
-          // on ArrowUp - for its own empty, non-looping candidate search - before the event
-          // bubbles up to us. Tab is deliberately left to Radix's standard menu handling.
-          if (event.key === 'ArrowUp' && ctx.visible) {
-            const itemTarget = (event.target as HTMLElement | null)?.closest<HTMLElement>(
-              MENU_ITEM_SELECTOR
-            );
-            const items = Array.from(
-              event.currentTarget.querySelectorAll<HTMLElement>(MENU_ITEM_SELECTOR)
-            );
-            if (itemTarget && items[0] === itemTarget) {
-              event.preventDefault();
-              ctx.requestFocus();
-              return;
-            }
-          }
+    const handleFocus = (event: React.FocusEvent<HTMLDivElement>) => {
+      onFocus?.(event);
+      if (!ctx?.enabled || !ctx.visible || ctx.interactedSinceOpen()) return;
+      if (event.target !== event.currentTarget) return;
+      // Inside a Dialog, the input's mount focus lands before this menu pauses the Dialog's
+      // focus trap, which pulls it back out, so Radix then focuses the menu itself
+      ctx.requestFocus();
+    };
 
-          if (event.defaultPrevented) return;
+    const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
+      onKeyDown?.(event);
+      handleListKeyDown(ctx, event, {
+        searchSelector: SEARCH_INPUT_SELECTOR,
+        itemSelector: MENU_ITEM_SELECTOR,
+      });
+    };
 
-          if (!isPrintableKey(event)) return;
-
-          const target = event.target as HTMLElement | null;
-          if (target?.closest?.('[data-dropdown-search]')) return;
-
-          event.preventDefault();
-          if (!ctx.visible) {
-            ctx.reveal(event.key);
-          } else {
-            ctx.setQuery(ctx.query + event.key);
-            ctx.requestFocus();
-          }
-        }}
-        {...props}
-      >
-        {/* Must stay inside the menu: Radix aria-hides everything outside it while open.
-            Stays mounted while open so count updates are announced; zero is
-            DropdownMenuEmpty's, so the two don't double-speak. */}
-        {ctx?.enabled ? (
-          <div className={styles['dropdown-menu-sr-status']} role="status" aria-live="polite">
-            {searching && resultCount > 0 ? formatResultCount(resultCount) : null}
-          </div>
-        ) : null}
-        {children}
-      </DropdownMenuPrimitive.Content>
-    </DropdownMenuPortal>
-  );
-});
+    return (
+      <DropdownMenuPortal>
+        <DropdownMenuPrimitive.Content
+          ref={composedContentRef}
+          className={cn(styles['dropdown-menu-content'], className)}
+          sideOffset={sideOffset}
+          {...sideProps}
+          onFocus={handleFocus}
+          onKeyDown={handleKeyDown}
+          onKeyDownCapture={(event) => {
+            onKeyDownCapture?.(event);
+            ctx?.markInteracted();
+          }}
+          // Capture phase: an item focuses itself on pointermove before the event bubbles
+          onPointerMoveCapture={(event) => {
+            onPointerMoveCapture?.(event);
+            ctx?.markInteracted();
+          }}
+          {...props}
+        >
+          {/* Must stay inside the menu: Radix aria-hides everything outside it while open.
+              Stays mounted while open so count updates are announced; zero is
+              DropdownMenuEmpty's, so the two don't double-speak. */}
+          {ctx?.enabled ? (
+            <div className={styles['dropdown-menu-sr-status']} role="status" aria-live="polite">
+              {searching && resultCount > 0 ? formatResultCount(resultCount) : null}
+            </div>
+          ) : null}
+          {children}
+        </DropdownMenuPrimitive.Content>
+      </DropdownMenuPortal>
+    );
+  }
+);
 DropdownMenuContent.displayName = DropdownMenuPrimitive.Content.displayName;
 
 type DropdownMenuSearchProps = Omit<
@@ -309,7 +312,7 @@ const DropdownMenuSearch = React.forwardRef<HTMLInputElement, DropdownMenuSearch
       className,
       placeholder = 'Search...',
       icon,
-      alwaysVisible = false,
+      alwaysVisible = true,
       onKeyDown,
       'aria-label': ariaLabel,
       ...props
@@ -358,8 +361,13 @@ const DropdownMenuSearch = React.forwardRef<HTMLInputElement, DropdownMenuSearch
                 : [];
               if (!items.length || event.defaultPrevented) return;
               event.preventDefault();
-              if (event.key === 'Enter') items[0].click();
-              else (event.key === 'ArrowUp' ? items[items.length - 1] : items[0]).focus();
+              if (event.key === 'Enter') {
+                // Never MENU_ITEM_SELECTOR: Enter would then reach a persistent item, such as
+                // FilterDropdown's Clear all, and wipe every filter
+                menu?.querySelector<HTMLElement>(MATCHING_ITEM_SELECTOR)?.click();
+              } else {
+                (event.key === 'ArrowUp' ? items[items.length - 1] : items[0]).focus();
+              }
               return;
             }
 
@@ -421,9 +429,10 @@ const DropdownMenuItem = React.forwardRef<
   React.ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.Item> & {
     inset?: boolean;
     variant?: 'neutral' | 'warning' | 'danger';
+    persistent?: boolean;
   }
->(({ className, inset, variant = 'neutral', textValue, children, ...props }, ref) => {
-  const visible = useFilterableItem(useDropdownMenuSearch(), textValue, children);
+>(({ className, inset, variant = 'neutral', textValue, persistent, children, ...props }, ref) => {
+  const visible = useFilterableItem(useDropdownMenuSearch(), textValue, children, { persistent });
   if (!visible) return null;
 
   return (
@@ -438,6 +447,7 @@ const DropdownMenuItem = React.forwardRef<
         className
       )}
       {...props}
+      data-persistent={persistent ? '' : undefined}
     >
       <ItemBreadcrumb />
       {children}
@@ -448,9 +458,11 @@ DropdownMenuItem.displayName = DropdownMenuPrimitive.Item.displayName;
 
 const DropdownMenuCheckboxItem = React.forwardRef<
   React.ElementRef<typeof DropdownMenuPrimitive.CheckboxItem>,
-  React.ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.CheckboxItem>
->(({ className, children, checked, textValue, ...props }, ref) => {
-  const visible = useFilterableItem(useDropdownMenuSearch(), textValue, children);
+  React.ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.CheckboxItem> & {
+    persistent?: boolean;
+  }
+>(({ className, children, checked, textValue, persistent, ...props }, ref) => {
+  const visible = useFilterableItem(useDropdownMenuSearch(), textValue, children, { persistent });
   if (!visible) return null;
 
   return (
@@ -460,6 +472,7 @@ const DropdownMenuCheckboxItem = React.forwardRef<
       className={cn(styles['dropdown-menu-checkbox-item'], className)}
       checked={checked}
       {...props}
+      data-persistent={persistent ? '' : undefined}
     >
       <span className={styles['dropdown-menu-item-indicator-checkbox']}>
         <DropdownMenuPrimitive.ItemIndicator>
@@ -475,9 +488,11 @@ DropdownMenuCheckboxItem.displayName = DropdownMenuPrimitive.CheckboxItem.displa
 
 const DropdownMenuRadioItem = React.forwardRef<
   React.ElementRef<typeof DropdownMenuPrimitive.RadioItem>,
-  React.ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.RadioItem>
->(({ className, children, textValue, ...props }, ref) => {
-  const visible = useFilterableItem(useDropdownMenuSearch(), textValue, children);
+  React.ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.RadioItem> & {
+    persistent?: boolean;
+  }
+>(({ className, children, textValue, persistent, ...props }, ref) => {
+  const visible = useFilterableItem(useDropdownMenuSearch(), textValue, children, { persistent });
   if (!visible) return null;
 
   return (
@@ -486,6 +501,7 @@ const DropdownMenuRadioItem = React.forwardRef<
       textValue={textValue}
       className={cn(styles['dropdown-menu-radio-item'], className)}
       {...props}
+      data-persistent={persistent ? '' : undefined}
     >
       <span className={styles['dropdown-menu-item-indicator-radio']}>
         <DropdownMenuPrimitive.ItemIndicator>
@@ -524,10 +540,12 @@ DropdownMenuLabel.displayName = DropdownMenuPrimitive.Label.displayName;
 
 const DropdownMenuSeparator = React.forwardRef<
   React.ElementRef<typeof DropdownMenuPrimitive.Separator>,
-  React.ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.Separator>
->(({ className, ...props }, ref) => {
+  React.ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.Separator> & {
+    persistent?: boolean;
+  }
+>(({ className, persistent, ...props }, ref) => {
   const searching = useIsSearching();
-  if (searching) return null;
+  if (searching && !persistent) return null;
 
   return (
     <DropdownMenuPrimitive.Separator
@@ -563,3 +581,6 @@ export {
   DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 };
+
+// eslint-disable-next-line react-refresh/only-export-components
+export { useDropdownMenuSearchQuery };

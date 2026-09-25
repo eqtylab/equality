@@ -36,7 +36,9 @@ Basic usage:
 
 <FilterDropdownDemo client:only="react" />
 
-Once something is selected, "Clear all" appears in the "Filters" heading. It is a menu item, so opening the menu from the keyboard lands on it first; choosing it clears every filter and closes the menu.
+Once something is selected, "Clear all" appears in the "Filters" heading. It is a menu item, so opening the menu from the keyboard lands on it first; choosing it clears every filter and keeps the menu open.
+
+The menu widens to fit its longest option, up to `max-w-80`. Each option stays on one line, so a label longer than that ends in an ellipsis, with the full label in its tooltip.
 
 ## Search
 
@@ -63,7 +65,7 @@ Use `searchPlaceholder` to describe what is being searched, and `emptyPlaceholde
 
 The empty message only appears while a query is active — an empty `options` array renders an empty menu rather than this message.
 
-The "Clear all" footer hides while a query is typed, so it never appears as a search result and <kbd>Enter</kbd> can't clear every filter by accident. Clearing the query brings it back; selections made during a search are unaffected.
+The "Clear all" footer stays visible while a query is typed, but it is never a search result, so <kbd>Enter</kbd> toggles the first match and can't clear every filter by accident. Choosing it keeps the menu open and returns focus to the search box.
 
 ## Props
 

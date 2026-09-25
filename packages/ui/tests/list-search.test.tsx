@@ -7,6 +7,7 @@ import {
   matchesQuery,
   useListSearchState,
   useMatchRegistry,
+  useSearchSideLock,
 } from '@/lib/list-search';
 
 const key = (
@@ -117,5 +118,79 @@ describe('useListSearchState', () => {
     act(() => result.current.reveal('jap'));
     rerender();
     expect(result.current.query).toBe('jap');
+  });
+
+  it('tracks interaction until the list reopens', () => {
+    const { result } = renderHook(() => useListSearchState());
+    expect(result.current.interactedSinceOpen()).toBe(false);
+
+    act(() => result.current.markInteracted());
+    expect(result.current.interactedSinceOpen()).toBe(true);
+
+    act(() => result.current.resetForOpen());
+    expect(result.current.interactedSinceOpen()).toBe(false);
+  });
+
+  it('clears interaction when a controlled open flips to true', () => {
+    const { result, rerender } = renderHook(({ open }) => useListSearchState(open), {
+      initialProps: { open: true },
+    });
+
+    act(() => result.current.markInteracted());
+    rerender({ open: false });
+    expect(result.current.interactedSinceOpen()).toBe(true);
+
+    rerender({ open: true });
+    expect(result.current.interactedSinceOpen()).toBe(false);
+  });
+});
+
+describe('useSearchSideLock', () => {
+  it('locks the placed side once a query starts, and keeps collision handling', () => {
+    const contentRef = { current: document.createElement('div') };
+    contentRef.current.dataset.side = 'top';
+    const { result } = renderHook(() => {
+      const state = useListSearchState();
+      return { state, sideProps: useSearchSideLock(state, contentRef, { side: 'bottom' }) };
+    });
+    expect(result.current.sideProps).toEqual({ side: 'bottom', avoidCollisions: undefined });
+
+    act(() => result.current.state.setQuery('a'));
+
+    expect(result.current.sideProps).toEqual({ side: 'top', avoidCollisions: undefined });
+  });
+
+  it('holds the lock after the query clears, until the list reopens', () => {
+    const contentRef = { current: document.createElement('div') };
+    contentRef.current.dataset.side = 'top';
+    const { result } = renderHook(() => {
+      const state = useListSearchState();
+      return { state, sideProps: useSearchSideLock(state, contentRef, {}) };
+    });
+
+    act(() => result.current.state.setQuery('a'));
+    contentRef.current.dataset.side = 'bottom';
+    act(() => result.current.state.setQuery(''));
+    expect(result.current.sideProps.side).toBe('top');
+
+    act(() => result.current.state.resetForOpen());
+    expect(result.current.state.lockedSide).toBeUndefined();
+    expect(result.current.sideProps).toEqual({ side: undefined, avoidCollisions: undefined });
+  });
+
+  it('leaves the side alone when disabled', () => {
+    const contentRef = { current: document.createElement('div') };
+    contentRef.current.dataset.side = 'top';
+    const { result } = renderHook(() => {
+      const state = useListSearchState();
+      return {
+        state,
+        sideProps: useSearchSideLock(state, contentRef, { side: 'left', enabled: false }),
+      };
+    });
+
+    act(() => result.current.state.setQuery('a'));
+
+    expect(result.current.sideProps).toEqual({ side: 'left', avoidCollisions: undefined });
   });
 });

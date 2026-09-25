@@ -29,11 +29,6 @@
   @apply opacity-50;
 }
 
-.select-scroll-button {
-  @apply cursor-default py-1;
-  @apply flex-center;
-}
-
 .select-content {
   @apply dropdown-content;
   @apply max-h-(--radix-select-content-available-height);
@@ -41,11 +36,13 @@
 }
 
 .select-content--popper {
+  @apply min-w-(--radix-select-trigger-width);
   @apply data-[side=bottom]:translate-y-1 data-[side=left]:-translate-x-1 data-[side=right]:translate-x-1 data-[side=top]:-translate-y-1;
 }
 
 .select-viewport--popper {
-  @apply h-(--radix-select-trigger-height) min-w-(--radix-select-trigger-width) w-full;
+  @apply h-(--radix-select-trigger-height) w-full;
+  @apply overflow-visible!;
 }
 
 .select-label {
@@ -74,10 +71,15 @@
   @apply hidden;
 }
 
-/* Sticky inside the scrolling viewport, so it needs the elevation's opaque background below */
+/* Sticky inside the scroller, so it needs the elevation's opaque background below */
 .select-search {
   @apply dropdown-search;
   @apply sticky top-0 z-10;
+}
+
+/* The popper content scrolls, so without covering its padding, options show above the search */
+.select-content--popper .select-search {
+  @apply -top-1;
 }
 
 .select-search-icon {
