@@ -1,12 +1,21 @@
 /** Integration options: the whole consumer-facing configuration surface. */
 import { z } from 'astro/zod';
 
+export const BRAND_ASSET_PREFIX = '/_equality';
+
+/** EQTY Lab files the integration serves. Pass one wherever a `public/` path is accepted. */
+export const brandAssets = {
+  logo: `${BRAND_ASSET_PREFIX}/eqty-logo.svg`,
+  favicon: `${BRAND_ASSET_PREFIX}/favicon.svg`,
+  github: `${BRAND_ASSET_PREFIX}/github.svg`,
+} as const;
+
 const headerLink = z.object({
   label: z.string(),
   href: z.string(),
   /**
    * A Lucide name like `BookOpen`, or a path to an SVG in `public/` like
-   * `/github.svg`. An SVG must be white: light mode inverts it.
+   * `/github.svg`, or `brandAssets.github`. An SVG must be white: light mode inverts it.
    */
   icon: z.string().optional(),
   external: z.boolean().optional(),
@@ -17,7 +26,7 @@ export const docsConfigSchema = z.object({
   title: z.string(),
   description: z.string().optional(),
   /** Path to a favicon, relative to `public/`. Base is applied automatically. */
-  favicon: z.string().default('/favicon.svg'),
+  favicon: z.string().default(brandAssets.favicon),
 
   /**
    * The header mark. Without one the header falls back to `title` as text. Either
