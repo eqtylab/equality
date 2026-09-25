@@ -105,8 +105,8 @@
 }
 
 .dropdown-menu-search {
-  @apply dropdown-search;
-  @apply border-border-overlay;
+  @apply dropdown-search -top-1;
+  @apply bg-background-overlay border-border-overlay;
 }
 
 .dropdown-menu-search-input {
