@@ -1,5 +1,5 @@
 /** An index of every page, in the llms.txt convention. */
-import { docsHref } from '@eqtylab/docs/paths';
+import { markdownTwinHref } from '@eqtylab/docs/paths';
 import type { APIRoute } from 'astro';
 import { getCollection } from 'astro:content';
 import CONFIG from 'virtual:eqty-docs/config';
@@ -25,10 +25,10 @@ export const GET: APIRoute = async (ctx) => {
     '## Pages',
     '',
     ...sorted.map((entry) => {
-      const href = docsHref(entry.id, paths).replace(/\/$/, '');
+      const href = markdownTwinHref(entry.id, paths);
       const prefix = entry.data.deprecated ? ' (deprecated)' : '';
       const suffix = entry.data.description ? `: ${entry.data.description}` : '';
-      return `- [${entry.data.title}](${origin}${href}.md)${prefix}${suffix}`;
+      return `- [${entry.data.title}](${origin}${href})${prefix}${suffix}`;
     }),
     '',
   ];
