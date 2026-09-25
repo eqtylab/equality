@@ -65,7 +65,7 @@ Use `defaultValue` on the root to start with an option chosen. Long lists scroll
 
 ## Search & filtering
 
-Add a `SelectSearch` inside `SelectContent` to filter options in place. It is opt-in per select — without it, the select behaves exactly as before and the built-in type-ahead still works. It works like [Dropdown Menu search](/components/dropdown-menu#search--filtering), except that the search box is visible by default: options that don't match are hidden, and matching is a case-insensitive substring of each item's `textValue`, falling back to its rendered text.
+Add a `SelectSearch` inside `SelectContent` to filter options in place. It is opt-in per select — without it, the select behaves exactly as before and the built-in type-ahead still works. It works like [Dropdown Menu search](/components/dropdown-menu#search--filtering): options that don't match are hidden, and matching is a case-insensitive substring of each item's `textValue`, falling back to its rendered text.
 
 Reach for search whenever the list can grow long enough to scroll — picking from dozens of options by scrolling or type-ahead alone is slow. Search only filters the options you provide; it doesn't accept free-text values.
 
@@ -90,6 +90,7 @@ The search box is shown, focused, the moment the select opens, so mouse and scre
 ```tsx
 <SelectContent>
   <SelectSearch placeholder="Search countries..." />
+  <SelectEmpty>No countries found</SelectEmpty>
   <SelectGroup>
     <SelectLabel>Americas</SelectLabel>
     <SelectItem value="argentina">Argentina</SelectItem>
@@ -97,7 +98,6 @@ The search box is shown, focused, the moment the select opens, so mouse and scre
   </SelectGroup>
   <SelectSeparator />
   <SelectGroup>{/* ...another region... */}</SelectGroup>
-  <SelectEmpty>No countries found</SelectEmpty>
 </SelectContent>
 ```
 
@@ -110,8 +110,8 @@ Pass `alwaysVisible={false}` to keep the search box hidden until someone types i
 ```tsx
 <SelectContent>
   <SelectSearch alwaysVisible={false} placeholder="Search countries..." />
-  {/* ...items... */}
   <SelectEmpty>No countries found</SelectEmpty>
+  {/* ...items... */}
 </SelectContent>
 ```
 
@@ -125,9 +125,34 @@ Give items that lead with an icon, flag or avatar a `textValue`, so they match o
 </SelectItem>
 ```
 
+### Persistent items
+
+Mark an item `persistent` to keep it on screen while searching, such as a fallback choice that applies whatever the query. It is never a result: it doesn't count towards `SelectEmpty` or the announced result count, and <kbd>Enter</kbd> in the search box skips it. A `persistent` separator likewise stays visible. Try searching for a country that isn't listed below.
+
+<SelectDemo client:only="react" variant="with-search-persistent" />
+
+```tsx
+<SelectContent>
+  <SelectSearch placeholder="Search countries..." />
+  <SelectEmpty>No countries found</SelectEmpty>
+  <SelectItem persistent value="not-listed">
+    Not listed
+  </SelectItem>
+  <SelectSeparator persistent />
+  {countries.map((country) => (
+    <SelectItem key={country.value} value={country.value}>
+      {country.label}
+    </SelectItem>
+  ))}
+</SelectContent>
+```
+
+To read the search from a component inside the `Select`, such as to echo the query in a persistent item's label, call `useSelectSearchQuery()`. It returns the same `query`, `isSearching` and `matches(text)` as [`useDropdownMenuSearchQuery`](/components/dropdown-menu#persistent-items), and throws outside a `Select`.
+
 ### Keyboard
 
-<kbd>Enter</kbd> in the search box selects the first matching option.
+<kbd>Enter</kbd> in the search box selects the first matching option, skipping
+`persistent` ones.
 <kbd>↓</kbd> moves from the search box to the first option and <kbd>↑</kbd> to
 the last; <kbd>↑</kbd> on the first option returns to the search box. Typing or
 <kbd>Backspace</kbd> while an option is focused keeps editing the query.
@@ -207,11 +232,18 @@ The parts forward their [Radix Select](https://www.radix-ui.com/primitives/docs/
 
 ### SelectItem
 
-| Name        | Description                                                                 | Type      | Default | Required |
-| ----------- | --------------------------------------------------------------------------- | --------- | ------- | -------- |
-| `value`     | The value this item represents                                              | `string`  | —       | ✅       |
-| `disabled`  | Disables just this option                                                   | `boolean` | `false` | ❌       |
-| `textValue` | Text used for type-ahead and search matching; defaults to the rendered text | `string`  | —       | ❌       |
+| Name         | Description                                                                 | Type      | Default | Required |
+| ------------ | --------------------------------------------------------------------------- | --------- | ------- | -------- |
+| `value`      | The value this item represents                                              | `string`  | —       | ✅       |
+| `disabled`   | Disables just this option                                                   | `boolean` | `false` | ❌       |
+| `textValue`  | Text used for type-ahead and search matching; defaults to the rendered text | `string`  | —       | ❌       |
+| `persistent` | Stays visible while searching, and is never a result                        | `boolean` | `false` | ❌       |
+
+### SelectSeparator
+
+| Name         | Description                   | Type      | Default | Required |
+| ------------ | ----------------------------- | --------- | ------- | -------- |
+| `persistent` | Stays visible while searching | `boolean` | `false` | ❌       |
 
 ### SelectSearch
 
