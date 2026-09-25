@@ -259,22 +259,17 @@ Pass `alwaysVisible={false}` to keep the search box hidden until someone types i
 
 Mark an item `persistent` to keep it on screen while searching, such as a footer action that belongs to the whole list. It is never a result: it doesn't count towards `DropdownMenuEmpty` or the announced result count, and <kbd>Enter</kbd> in the search box skips it. A `persistent` separator likewise stays visible.
 
-To act on only what the search shows, read it with `useDropdownMenuSearchQuery` from any component inside the menu. `matches` applies the same rule the items use.
+To act on only what the search shows, call `useDropdownMenuSearchQuery()` from a component inside the menu. It returns the `query` as typed, `isSearching` (whether a non-blank query is active), and `matches(text)`, which applies the same rule the items use. Try searching for "e" below, then choosing "Hide all".
 
 <DropdownMenuDemo client:only="react" variant="with-search-persistent" />
 
 ```jsx
-const COLUMNS = [
-  { key: "name", label: "Name" },
-  { key: "email", label: "Email" },
-  // ...more columns...
-];
+import { useDropdownMenuSearchQuery } from "@eqtylab/equality";
 
-// Inside the menu, so it can read the search
-const ColumnFooter = ({ onShow }) => {
+const ColumnVisibilityFooter = ({ onShow }) => {
   const { matches } = useDropdownMenuSearchQuery();
-  const shown = COLUMNS.filter((column) => matches(column.label)).map(
-    (column) => column.key,
+  const shown = Object.keys(COLUMN_LABELS).filter((key) =>
+    matches(COLUMN_LABELS[key]),
   );
 
   return (
@@ -303,30 +298,36 @@ const ColumnFooter = ({ onShow }) => {
 };
 ```
 
+Render it inside `DropdownMenuContent`, after the items it acts on:
+
 ```jsx
 <DropdownMenuContent align="start">
   <DropdownMenuSearch placeholder="Search columns..." />
   <DropdownMenuEmpty>No columns found</DropdownMenuEmpty>
-  {COLUMNS.map(({ key, label }) => (
+  {Object.entries(COLUMN_LABELS).map(([key, label]) => (
     <DropdownMenuCheckboxItem
       key={key}
-      checked={visible[key]}
-      onCheckedChange={(checked) => setVisible({ ...visible, [key]: checked })}
+      checked={columns[key]}
+      onCheckedChange={(checked) =>
+        setColumns((prev) => ({ ...prev, [key]: checked }))
+      }
       onSelect={(event) => event.preventDefault()}
     >
       {label}
     </DropdownMenuCheckboxItem>
   ))}
-  <ColumnFooter
-    onShow={(keys, show) =>
-      setVisible({
-        ...visible,
-        ...Object.fromEntries(keys.map((key) => [key, show])),
-      })
+  <ColumnVisibilityFooter
+    onShow={(keys, visible) =>
+      setColumns((prev) => ({
+        ...prev,
+        ...Object.fromEntries(keys.map((key) => [key, visible])),
+      }))
     }
   />
 </DropdownMenuContent>
 ```
+
+`useDropdownMenuSearchQuery()` only works inside a `DropdownMenu` (it reads the search via context) and throws otherwise.
 
 ### Searching submenus
 
@@ -468,6 +469,12 @@ To pick a value in a form rather than run an action, use a [Select with search](
 | ------- | ----------------------------------------------------- | --------- | ------- | -------- |
 | `inset` | Adds left padding to align with items that have icons | `boolean` | `false` | ❌       |
 
+### DropdownMenuSeparator
+
+| Name         | Description                   | Type      | Default | Required |
+| ------------ | ----------------------------- | --------- | ------- | -------- |
+| `persistent` | Stays visible while searching | `boolean` | `false` | ❌       |
+
 ### DropdownMenuSearch
 
 Also accepts standard `input` attributes, except `value` and `onChange`, which are managed internally.
@@ -480,22 +487,6 @@ Also accepts standard `input` attributes, except `value` and `onChange`, which a
 | `aria-label`    | Accessible name for the input; defaults to the `placeholder` text             | `string`                | `placeholder` | ❌       |
 | `ref`           | Forwarded to the underlying `<input>`; `null` while the input is not rendered | `Ref<HTMLInputElement>` | -             | ❌       |
 
-### DropdownMenuSeparator
-
-| Name         | Description                   | Type      | Default | Required |
-| ------------ | ----------------------------- | --------- | ------- | -------- |
-| `persistent` | Stays visible while searching | `boolean` | `false` | ❌       |
-
 ### DropdownMenuEmpty
 
 Renders its `children` as a "no results" message, shown only while a search query matches no items. It is a live region (`role="status"`), so the message is announced when filtering empties the list. Also accepts standard `div` attributes.
-
-### useDropdownMenuSearchQuery
-
-Call from any component inside a `DropdownMenu`. Returns the current search state:
-
-| Name          | Description                                                | Type                             |
-| ------------- | ---------------------------------------------------------- | -------------------------------- |
-| `query`       | The query as typed                                         | `string`                         |
-| `isSearching` | Whether a non-blank query is active                        | `boolean`                        |
-| `matches`     | Whether some text matches the query, by the rule items use | `(textValue: string) => boolean` |

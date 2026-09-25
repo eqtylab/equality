@@ -10,8 +10,9 @@ Notable changes to Equality are recorded here, following [Keep a Changelog](http
   `DropdownMenuSeparator`, `SelectItem` and `SelectSeparator`. The item stays visible while
   searching but is never a result: it doesn't count towards the empty state or the result count,
   and <kbd>Enter</kbd> in the search box skips it.
-- `useDropdownMenuSearchQuery`, returning the query and a `matches` function for components
-  inside a `DropdownMenu` that act on what the search shows.
+- `useDropdownMenuSearchQuery` and `useSelectSearchQuery`, returning the `query`, `isSearching`
+  and a `matches` function for components inside a `DropdownMenu` or `Select` that act on what
+  the search shows.
 
 ### Changed
 

@@ -8,13 +8,14 @@ import { ELEVATION, generateElevationVariants } from '@/lib/elevations';
 import {
   assignRefs,
   formatResultCount,
-  isPrintableKey,
+  handleListKeyDown,
   isSearchActive,
   isSearchEmpty,
   useFilterableItem,
   useListSearchState,
   useMatchRegistry,
   useSearchInput,
+  useSearchQuery,
   useSearchSideLock,
   type ListSearchState,
   type MatchRegistry,
@@ -37,6 +38,14 @@ const SelectSearchContext = React.createContext<ListSearchState | null>(null);
 const useSelectSearch = () => React.useContext(SelectSearchContext);
 
 const useIsSearching = () => isSearchActive(useSelectSearch());
+
+const useSelectSearchQuery = () => {
+  const ctx = useSelectSearch();
+  if (!ctx) {
+    throw new Error('useSelectSearchQuery must be used within a Select');
+  }
+  return useSearchQuery(ctx);
+};
 
 const SelectGroupMatchContext = React.createContext<MatchRegistry | null>(null);
 
@@ -162,18 +171,16 @@ const SelectContent = React.forwardRef<
     const searching = isSearchActive(ctx);
     const resultCount = ctx?.matchCount ?? 0;
     const contentRef = React.useRef<HTMLDivElement | null>(null);
-    const sideProps = useSearchSideLock(
-      ctx,
-      contentRef,
-      { side, avoidCollisions },
-      position === 'popper'
-    );
+    const sideProps = useSearchSideLock(ctx, contentRef, {
+      side,
+      avoidCollisions,
+      enabled: position === 'popper',
+    });
 
     // Stable so React attaches once rather than re-running setListId every render
     const composedContentRef = React.useCallback(
       (node: HTMLDivElement | null) => {
-        assignRefs(node, ref);
-        contentRef.current = node;
+        assignRefs(node, ref, contentRef);
         setListId?.(node?.id || undefined);
       },
       [ref, setListId]
@@ -189,37 +196,10 @@ const SelectContent = React.forwardRef<
 
     const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
       onKeyDown?.(event);
-      if (!ctx?.enabled || event.defaultPrevented) return;
-
-      const target = event.target as HTMLElement | null;
-      if (target?.closest(SEARCH_INPUT_SELECTOR)) return;
-
-      // Radix stops at the first option on ArrowUp, so hand focus back to the search input
-      if (event.key === 'ArrowUp' && ctx.visible) {
-        const firstOption = event.currentTarget.querySelector(NAVIGABLE_OPTION_SELECTOR);
-        if (firstOption && firstOption === target?.closest(NAVIGABLE_OPTION_SELECTOR)) {
-          event.preventDefault();
-          ctx.requestFocus();
-          return;
-        }
-      }
-
-      if (event.key === 'Backspace' && ctx.visible && ctx.query) {
-        event.preventDefault();
-        ctx.setQuery(ctx.query.slice(0, -1));
-        ctx.requestFocus();
-        return;
-      }
-
-      if (!isPrintableKey(event)) return;
-
-      event.preventDefault();
-      if (!ctx.visible) {
-        ctx.reveal(event.key);
-      } else {
-        ctx.setQuery(ctx.query + event.key);
-        ctx.requestFocus();
-      }
+      handleListKeyDown(ctx, event, {
+        searchSelector: SEARCH_INPUT_SELECTOR,
+        itemSelector: NAVIGABLE_OPTION_SELECTOR,
+      });
     };
 
     return (
@@ -387,7 +367,7 @@ const SelectItem = React.forwardRef<
 >(({ className, children, textValue, hidden, persistent, ...props }, ref) => {
   const search = useSelectSearch();
   const group = React.useContext(SelectGroupMatchContext);
-  const matches = useFilterableItem(search, textValue, children, group, persistent);
+  const matches = useFilterableItem(search, textValue, children, { group, persistent });
 
   return (
     <SelectPrimitive.Item
@@ -442,3 +422,6 @@ export {
   SelectTrigger,
   SelectValue,
 };
+
+// eslint-disable-next-line react-refresh/only-export-components
+export { useSelectSearchQuery };

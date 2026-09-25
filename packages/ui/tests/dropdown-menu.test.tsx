@@ -11,15 +11,21 @@ import {
   DropdownMenuSearch,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
+  useDropdownMenuSearchQuery,
 } from '@/components/dropdown-menu/dropdown-menu';
-import { useDropdownMenuSearchQuery } from '@/components/dropdown-menu/dropdown-menu-search-context';
 
-function Menu({ onSelect, open }: { onSelect?: (item: string) => void; open?: boolean }) {
+type Props = {
+  onSelect?: (item: string) => void;
+  open?: boolean;
+  alwaysVisible?: boolean;
+};
+
+function Menu({ onSelect, open, alwaysVisible }: Props) {
   return (
     <DropdownMenu open={open}>
       <DropdownMenuTrigger>Actions</DropdownMenuTrigger>
       <DropdownMenuContent>
-        <DropdownMenuSearch placeholder="Search actions..." />
+        <DropdownMenuSearch alwaysVisible={alwaysVisible} placeholder="Search actions..." />
         {['Copy', 'Cut', 'Paste'].map((item) => (
           <DropdownMenuItem key={item} onSelect={() => onSelect?.(item)}>
             {item}
@@ -30,7 +36,7 @@ function Menu({ onSelect, open }: { onSelect?: (item: string) => void; open?: bo
   );
 }
 
-function MenuWithPersistentItem({ onSelect }: { onSelect?: (item: string) => void }) {
+function MenuWithPersistentItem({ onSelect }: Pick<Props, 'onSelect'>) {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger>Actions</DropdownMenuTrigger>
@@ -60,53 +66,41 @@ function QueryProbe() {
   );
 }
 
-const openActions = async (user: ReturnType<typeof userEvent.setup>) => {
+const open = async (user: ReturnType<typeof userEvent.setup>) => {
   screen.getByRole('button', { name: 'Actions' }).focus();
   await user.keyboard('{Enter}');
-  return screen.findByRole('searchbox');
+  return screen.findByRole('menu');
 };
 
 describe('DropdownMenu', () => {
   describe('search', () => {
     it('shows and focuses the search input on open by default', async () => {
       const user = userEvent.setup();
-      render(<MenuWithPersistentItem />);
+      render(<Menu />);
+      await open(user);
 
-      const search = await openActions(user);
-      await waitFor(() => expect(document.activeElement).toBe(search));
+      await waitFor(() => expect(document.activeElement).toBe(screen.getByRole('searchbox')));
     });
 
-    it('reveals the search on the first keystroke with alwaysVisible={false}, seeding the query', async () => {
+    it('reveals the search input on the first keystroke and seeds the query', async () => {
       const user = userEvent.setup();
-      render(
-        <DropdownMenu>
-          <DropdownMenuTrigger>Actions</DropdownMenuTrigger>
-          <DropdownMenuContent>
-            <DropdownMenuSearch alwaysVisible={false} placeholder="Search actions..." />
-            <DropdownMenuItem>Copy</DropdownMenuItem>
-            <DropdownMenuItem>Paste</DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
-      );
+      render(<Menu alwaysVisible={false} />);
+      await open(user);
 
-      screen.getByRole('button', { name: 'Actions' }).focus();
-      await user.keyboard('{Enter}');
-      await screen.findByRole('menu');
       expect(screen.queryByRole('searchbox')).toBeNull();
-
       await user.keyboard('a');
 
       const search = await screen.findByRole('searchbox');
-      expect(search).toHaveProperty('value', 'a');
+      expect((search as HTMLInputElement).value).toBe('a');
       await waitFor(() => expect(document.activeElement).toBe(search));
       expect(screen.queryByRole('menuitem', { name: 'Copy' })).toBeNull();
     });
 
     it('takes focus back when the menu itself is focused before any interaction', async () => {
       const user = userEvent.setup();
-      render(<MenuWithPersistentItem />);
-
-      const search = await openActions(user);
+      render(<Menu />);
+      await open(user);
+      const search = screen.getByRole('searchbox');
       await waitFor(() => expect(document.activeElement).toBe(search));
 
       act(() => screen.getByRole('menu').focus());
@@ -118,10 +112,9 @@ describe('DropdownMenu', () => {
       const user = userEvent.setup();
       const onSelect = vi.fn();
       render(<Menu onSelect={onSelect} />);
+      await open(user);
 
-      screen.getByRole('button', { name: 'Actions' }).focus();
-      await user.keyboard('{Enter}');
-      await user.type(await screen.findByRole('searchbox'), 'pa{Enter}');
+      await user.type(screen.getByRole('searchbox'), 'pa{Enter}');
 
       expect(onSelect).toHaveBeenCalledWith('Paste');
       await waitFor(() => expect(screen.queryByRole('menu')).toBeNull());
@@ -131,20 +124,51 @@ describe('DropdownMenu', () => {
       const user = userEvent.setup();
       const onSelect = vi.fn();
       render(<Menu onSelect={onSelect} />);
+      await open(user);
 
-      screen.getByRole('button', { name: 'Actions' }).focus();
-      await user.keyboard('{Enter}');
-      await user.type(await screen.findByRole('searchbox'), 'p{Backspace}{Enter}');
+      await user.type(screen.getByRole('searchbox'), 'p{Backspace}{Enter}');
 
       expect(onSelect).not.toHaveBeenCalled();
       expect(screen.getByRole('menu')).toBeTruthy();
     });
 
+    it('returns focus to the search input from the first visible item', async () => {
+      const user = userEvent.setup();
+      render(<Menu />);
+      await open(user);
+
+      await user.type(screen.getByRole('searchbox'), 'c');
+      await user.keyboard('{ArrowDown}');
+      await waitFor(() =>
+        expect(document.activeElement).toBe(screen.getByRole('menuitem', { name: 'Copy' }))
+      );
+
+      await user.keyboard('{ArrowUp}');
+      await waitFor(() => expect(document.activeElement).toBe(screen.getByRole('searchbox')));
+    });
+
+    it('keeps editing the query with Backspace while an item is focused', async () => {
+      const user = userEvent.setup();
+      render(<Menu />);
+      await open(user);
+      const search = screen.getByRole('searchbox');
+
+      await user.type(search, 'cu');
+      await user.keyboard('{ArrowDown}');
+      await waitFor(() => expect(document.activeElement).not.toBe(search));
+
+      await user.keyboard('{Backspace}');
+
+      expect((search as HTMLInputElement).value).toBe('c');
+      await waitFor(() => expect(document.activeElement).toBe(search));
+    });
+
     it('clears the query when a controlled menu is reopened without onOpenChange', async () => {
       const user = userEvent.setup();
       const { rerender } = render(<Menu open />);
+      await screen.findByRole('menu');
 
-      await user.type(await screen.findByRole('searchbox'), 'pa');
+      await user.type(screen.getByRole('searchbox'), 'pa');
       expect(screen.queryByRole('menuitem', { name: 'Copy' })).toBeNull();
 
       rerender(<Menu open={false} />);
@@ -173,29 +197,13 @@ describe('DropdownMenu', () => {
     });
   });
 
-  describe('keyboard', () => {
-    it('keeps editing the query with Backspace while an item is focused', async () => {
-      const user = userEvent.setup();
-      render(<MenuWithPersistentItem />);
-
-      const search = await openActions(user);
-      await user.type(search, 'cu');
-      await user.keyboard('{ArrowDown}{ArrowDown}');
-      expect(document.activeElement).not.toBe(search);
-
-      await user.keyboard('{Backspace}');
-
-      expect(search).toHaveProperty('value', 'c');
-      await waitFor(() => expect(document.activeElement).toBe(search));
-    });
-  });
-
   describe('persistent items', () => {
     it('stay visible while searching without counting as a match', async () => {
       const user = userEvent.setup();
       render(<MenuWithPersistentItem />);
+      await open(user);
 
-      await user.type(await openActions(user), 'zzz');
+      await user.type(screen.getByRole('searchbox'), 'zzz');
 
       expect(screen.getByRole('menuitem', { name: 'Create' })).toBeTruthy();
       expect(screen.queryByRole('menuitem', { name: 'Copy' })).toBeNull();
@@ -206,8 +214,9 @@ describe('DropdownMenu', () => {
       const user = userEvent.setup();
       const onSelect = vi.fn();
       render(<MenuWithPersistentItem onSelect={onSelect} />);
+      await open(user);
 
-      await user.type(await openActions(user), 'cu{Enter}');
+      await user.type(screen.getByRole('searchbox'), 'cu{Enter}');
 
       expect(onSelect).toHaveBeenCalledWith('Cut');
       expect(onSelect).not.toHaveBeenCalledWith('Create');
@@ -216,8 +225,9 @@ describe('DropdownMenu', () => {
     it('keep a persistent separator while searching', async () => {
       const user = userEvent.setup();
       render(<MenuWithPersistentItem />);
+      await open(user);
 
-      await user.type(await openActions(user), 'cu');
+      await user.type(screen.getByRole('searchbox'), 'cu');
 
       expect(screen.getByTestId('persistent-separator')).toBeTruthy();
     });
@@ -225,8 +235,9 @@ describe('DropdownMenu', () => {
     it('are left out of the announced result count', async () => {
       const user = userEvent.setup();
       render(<MenuWithPersistentItem />);
+      await open(user);
 
-      await user.type(await openActions(user), 'c');
+      await user.type(screen.getByRole('searchbox'), 'c');
 
       expect(screen.getByText('2 results available')).toBeTruthy();
     });
@@ -244,10 +255,19 @@ describe('DropdownMenu', () => {
           </DropdownMenuContent>
         </DropdownMenu>
       );
+      await open(user);
 
-      await user.type(await openActions(user), ' CO ');
+      await user.type(screen.getByRole('searchbox'), ' CO ');
 
       expect(screen.getByTestId('probe').textContent).toBe(' CO |true|true|false');
+    });
+
+    it('throws outside a DropdownMenu', () => {
+      vi.spyOn(console, 'error').mockImplementation(() => {});
+      expect(() => render(<QueryProbe />)).toThrow(
+        'useDropdownMenuSearchQuery must be used within a DropdownMenu'
+      );
+      vi.restoreAllMocks();
     });
   });
 });

@@ -150,8 +150,11 @@ export function useListSearchState(open?: boolean): ListSearchState {
 export function useSearchSideLock(
   state: ListSearchState | null | undefined,
   contentRef: React.RefObject<HTMLElement | null>,
-  { side, avoidCollisions }: { side?: PopperSide; avoidCollisions?: boolean },
-  enabled = true
+  {
+    side,
+    avoidCollisions,
+    enabled = true,
+  }: { side?: PopperSide; avoidCollisions?: boolean; enabled?: boolean }
 ) {
   const searching = isSearchActive(state);
   const lockedSide = state?.lockedSide;
@@ -213,13 +216,11 @@ function useRegisterMatch(
   }, [enabled, registerItem, unregisterItem, id, matches]);
 }
 
-// A persistent item always shows, keeps its group visible, and never counts as a result
 export function useFilterableItem(
   state: ListSearchState | null,
   textValue: string | undefined,
   children: React.ReactNode,
-  group?: MatchRegistry | null,
-  persistent = false
+  { group, persistent = false }: { group?: MatchRegistry | null; persistent?: boolean } = {}
 ): boolean {
   const id = React.useId();
   const matches = persistent || matchesQuery(state?.query ?? '', textValue, children);
@@ -263,6 +264,62 @@ export function useSearchInput(
   }, [alwaysVisible, visible, reveal]);
 
   return { ref, isRendered: alwaysVisible || visible };
+}
+
+export function useSearchQuery(state: ListSearchState) {
+  const { query } = state;
+  const isSearching = isSearchActive(state);
+  return React.useMemo(
+    () => ({
+      query,
+      isSearching,
+      matches: (textValue: string) => matchesQuery(query, textValue, null),
+    }),
+    [query, isSearching]
+  );
+}
+
+/*
+ * ArrowUp must be checked ahead of the defaultPrevented bail-out: DropdownMenu's roving focus
+ * group has already prevented it by the time the event bubbles up here
+ */
+export function handleListKeyDown(
+  state: ListSearchState | null,
+  event: React.KeyboardEvent<HTMLElement>,
+  { searchSelector, itemSelector }: { searchSelector: string; itemSelector: string }
+) {
+  if (!state?.enabled) return;
+
+  const target = event.target as HTMLElement | null;
+  if (target?.closest(searchSelector)) return;
+
+  if (event.key === 'ArrowUp' && state.visible) {
+    const firstItem = event.currentTarget.querySelector(itemSelector);
+    if (firstItem && firstItem === target?.closest(itemSelector)) {
+      event.preventDefault();
+      state.requestFocus();
+      return;
+    }
+  }
+
+  if (event.defaultPrevented) return;
+
+  if (event.key === 'Backspace' && state.visible && state.query) {
+    event.preventDefault();
+    state.setQuery(state.query.slice(0, -1));
+    state.requestFocus();
+    return;
+  }
+
+  if (!isPrintableKey(event)) return;
+
+  event.preventDefault();
+  if (!state.visible) {
+    state.reveal(event.key);
+  } else {
+    state.setQuery(state.query + event.key);
+    state.requestFocus();
+  }
 }
 
 export const isPrintableKey = (

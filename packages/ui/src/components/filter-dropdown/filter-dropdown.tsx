@@ -67,7 +67,7 @@ const FilterDropdown = ({
   };
 
   const clearAll = (className: string) => (
-    // Persistent keeps it through a search without Enter reaching it; an empty textValue skips typeahead
+    // Keep textValue empty: without search, typeahead would otherwise land a typed "c" on Clear all
     <DropdownMenuItem persistent textValue="" onSelect={handleClearAll} className={className}>
       <span className={buttonVariants({ variant: 'link', size: 'sm' })}>Clear all</span>
     </DropdownMenuItem>

@@ -14,6 +14,7 @@ import {
   SelectSeparator,
   SelectTrigger,
   SelectValue,
+  useSelectSearchQuery,
 } from '@/components/select/select';
 
 const REGIONS = [
@@ -31,6 +32,7 @@ function CountrySelect({ alwaysVisible, ...props }: Props) {
       </SelectTrigger>
       <SelectContent>
         <SelectSearch alwaysVisible={alwaysVisible} placeholder="Search countries..." />
+        <SelectEmpty>No countries found</SelectEmpty>
         {REGIONS.map((region, index) => (
           <React.Fragment key={region.label}>
             {index > 0 && <SelectSeparator data-testid="separator" />}
@@ -44,9 +46,37 @@ function CountrySelect({ alwaysVisible, ...props }: Props) {
             </SelectGroup>
           </React.Fragment>
         ))}
-        <SelectEmpty>No countries found</SelectEmpty>
       </SelectContent>
     </Select>
+  );
+}
+
+function SelectWithPersistentItem({ onValueChange }: Pick<Props, 'onValueChange'>) {
+  return (
+    <Select onValueChange={onValueChange}>
+      <SelectTrigger aria-label="Country">
+        <SelectValue placeholder="Select a country" />
+      </SelectTrigger>
+      <SelectContent>
+        <SelectSearch placeholder="Search countries..." />
+        <SelectEmpty>No countries found</SelectEmpty>
+        <SelectItem persistent value="not-listed">
+          Not listed
+        </SelectItem>
+        <SelectSeparator persistent data-testid="persistent-separator" />
+        <SelectItem value="brazil">Brazil</SelectItem>
+        <SelectItem value="canada">Canada</SelectItem>
+      </SelectContent>
+    </Select>
+  );
+}
+
+function QueryProbe() {
+  const { query, isSearching, matches } = useSelectSearchQuery();
+  return (
+    <output data-testid="probe">
+      {`${query}|${isSearching}|${matches('Canada')}|${matches('Japan')}`}
+    </output>
   );
 }
 
@@ -161,6 +191,22 @@ describe('Select', () => {
       await waitFor(() => expect(document.activeElement).toBe(screen.getByRole('searchbox')));
     });
 
+    it('keeps editing the query with Backspace while an option is focused', async () => {
+      const user = userEvent.setup();
+      render(<CountrySelect />);
+      await open(user);
+      const search = screen.getByRole('searchbox');
+
+      await user.type(search, 'br');
+      await user.keyboard('{ArrowDown}');
+      await waitFor(() => expect(document.activeElement).toBe(option('Brazil')));
+
+      await user.keyboard('{Backspace}');
+
+      expect((search as HTMLInputElement).value).toBe('b');
+      await waitFor(() => expect(document.activeElement).toBe(search));
+    });
+
     it('keeps the chosen value in the trigger while a query hides its option', async () => {
       const user = userEvent.setup();
       render(<CountrySelect defaultValue="canada" />);
@@ -216,34 +262,14 @@ describe('Select', () => {
   });
 
   describe('persistent items', () => {
-    function RegionSelect({ onValueChange }: { onValueChange?: (value: string) => void }) {
-      return (
-        <Select onValueChange={onValueChange}>
-          <SelectTrigger aria-label="Country">
-            <SelectValue placeholder="Select a country" />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectSearch placeholder="Search countries..." />
-            <SelectEmpty>No countries found</SelectEmpty>
-            <SelectItem persistent value="other">
-              Other
-            </SelectItem>
-            <SelectSeparator persistent data-testid="persistent-separator" />
-            <SelectItem value="brazil">Brazil</SelectItem>
-            <SelectItem value="canada">Canada</SelectItem>
-          </SelectContent>
-        </Select>
-      );
-    }
-
     it('stay visible while searching without counting as a match', async () => {
       const user = userEvent.setup();
-      render(<RegionSelect />);
+      render(<SelectWithPersistentItem />);
       await open(user);
 
       await user.type(screen.getByRole('searchbox'), 'zzz');
 
-      expect(option('Other').hidden).toBe(false);
+      expect(option('Not listed').hidden).toBe(false);
       expect(option('Brazil').hidden).toBe(true);
       expect(screen.getByText('No countries found')).toBeTruthy();
     });
@@ -251,7 +277,7 @@ describe('Select', () => {
     it('are skipped by Enter, which picks the first match instead', async () => {
       const user = userEvent.setup();
       const onValueChange = vi.fn();
-      render(<RegionSelect onValueChange={onValueChange} />);
+      render(<SelectWithPersistentItem onValueChange={onValueChange} />);
       await open(user);
 
       await user.type(screen.getByRole('searchbox'), 'can{Enter}');
@@ -261,7 +287,7 @@ describe('Select', () => {
 
     it('keep a persistent separator while searching', async () => {
       const user = userEvent.setup();
-      render(<RegionSelect />);
+      render(<SelectWithPersistentItem />);
       await open(user);
 
       await user.type(screen.getByRole('searchbox'), 'bra');
@@ -271,12 +297,42 @@ describe('Select', () => {
 
     it('are left out of the announced result count', async () => {
       const user = userEvent.setup();
-      render(<RegionSelect />);
+      render(<SelectWithPersistentItem />);
       await open(user);
 
       await user.type(screen.getByRole('searchbox'), 'a');
 
       expect(screen.getByText('2 results available')).toBeTruthy();
+    });
+  });
+
+  describe('useSelectSearchQuery', () => {
+    it('exposes the query and matches text the way items do', async () => {
+      const user = userEvent.setup();
+      render(
+        <Select>
+          <SelectTrigger aria-label="Country">
+            <SelectValue />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectSearch placeholder="Search countries..." />
+            <QueryProbe />
+          </SelectContent>
+        </Select>
+      );
+      await open(user);
+
+      await user.type(screen.getByRole('searchbox'), ' CA ');
+
+      expect(screen.getByTestId('probe').textContent).toBe(' CA |true|true|false');
+    });
+
+    it('throws outside a Select', () => {
+      vi.spyOn(console, 'error').mockImplementation(() => {});
+      expect(() => render(<QueryProbe />)).toThrow(
+        'useSelectSearchQuery must be used within a Select'
+      );
+      vi.restoreAllMocks();
     });
   });
 });

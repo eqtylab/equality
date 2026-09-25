@@ -147,6 +147,8 @@ Mark an item `persistent` to keep it on screen while searching, such as a fallba
 </SelectContent>
 ```
 
+To read the search from a component inside the `Select`, such as to echo the query in a persistent item's label, call `useSelectSearchQuery()`. It returns the same `query`, `isSearching` and `matches(text)` as [`useDropdownMenuSearchQuery`](/components/dropdown-menu#persistent-items), and throws outside a `Select`.
+
 ### Keyboard
 
 <kbd>Enter</kbd> in the search box selects the first matching option, skipping
@@ -237,6 +239,12 @@ The parts forward their [Radix Select](https://www.radix-ui.com/primitives/docs/
 | `textValue`  | Text used for type-ahead and search matching; defaults to the rendered text | `string`  | —       | ❌       |
 | `persistent` | Stays visible while searching, and is never a result                        | `boolean` | `false` | ❌       |
 
+### SelectSeparator
+
+| Name         | Description                   | Type      | Default | Required |
+| ------------ | ----------------------------- | --------- | ------- | -------- |
+| `persistent` | Stays visible while searching | `boolean` | `false` | ❌       |
+
 ### SelectSearch
 
 Also accepts standard `input` attributes, except `value` and `onChange`, which are managed internally, and `role`, which stays `searchbox`.
@@ -248,12 +256,6 @@ Also accepts standard `input` attributes, except `value` and `onChange`, which a
 | `icon`          | Custom leading icon; defaults to a search icon                                | `ReactNode`             | —             | ❌       |
 | `aria-label`    | Accessible name for the input; defaults to the `placeholder` text             | `string`                | `placeholder` | ❌       |
 | `ref`           | Forwarded to the underlying `<input>`; `null` while the input is not rendered | `Ref<HTMLInputElement>` | —             | ❌       |
-
-### SelectSeparator
-
-| Name         | Description                   | Type      | Default | Required |
-| ------------ | ----------------------------- | --------- | ------- | -------- |
-| `persistent` | Stays visible while searching | `boolean` | `false` | ❌       |
 
 ### SelectEmpty
 

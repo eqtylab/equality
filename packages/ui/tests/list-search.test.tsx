@@ -119,6 +119,30 @@ describe('useListSearchState', () => {
     rerender();
     expect(result.current.query).toBe('jap');
   });
+
+  it('tracks interaction until the list reopens', () => {
+    const { result } = renderHook(() => useListSearchState());
+    expect(result.current.interactedSinceOpen()).toBe(false);
+
+    act(() => result.current.markInteracted());
+    expect(result.current.interactedSinceOpen()).toBe(true);
+
+    act(() => result.current.resetForOpen());
+    expect(result.current.interactedSinceOpen()).toBe(false);
+  });
+
+  it('clears interaction when a controlled open flips to true', () => {
+    const { result, rerender } = renderHook(({ open }) => useListSearchState(open), {
+      initialProps: { open: true },
+    });
+
+    act(() => result.current.markInteracted());
+    rerender({ open: false });
+    expect(result.current.interactedSinceOpen()).toBe(true);
+
+    rerender({ open: true });
+    expect(result.current.interactedSinceOpen()).toBe(false);
+  });
 });
 
 describe('useSearchSideLock', () => {
@@ -159,24 +183,14 @@ describe('useSearchSideLock', () => {
     contentRef.current.dataset.side = 'top';
     const { result } = renderHook(() => {
       const state = useListSearchState();
-      return { state, sideProps: useSearchSideLock(state, contentRef, { side: 'left' }, false) };
+      return {
+        state,
+        sideProps: useSearchSideLock(state, contentRef, { side: 'left', enabled: false }),
+      };
     });
 
     act(() => result.current.state.setQuery('a'));
 
     expect(result.current.sideProps).toEqual({ side: 'left', avoidCollisions: undefined });
-  });
-});
-
-describe('interaction tracking', () => {
-  it('marks interaction until the list reopens', () => {
-    const { result } = renderHook(() => useListSearchState());
-    expect(result.current.interactedSinceOpen()).toBe(false);
-
-    act(() => result.current.markInteracted());
-    expect(result.current.interactedSinceOpen()).toBe(true);
-
-    act(() => result.current.resetForOpen());
-    expect(result.current.interactedSinceOpen()).toBe(false);
   });
 });
