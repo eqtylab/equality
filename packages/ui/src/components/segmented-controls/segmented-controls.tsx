@@ -1,11 +1,12 @@
 import * as React from 'react';
-import { useCallback, useLayoutEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
 
 import { Icon } from '@/components/icon/icon';
 import styles from '@/components/segmented-controls/segmented-controls.module.css';
 import { cn } from '@/lib/utils';
 
 export type SegmentedControlsDisplay = 'both' | 'text-only' | 'icon-only';
+export type SegmentedControlsSize = 'sm' | 'md' | 'lg';
 
 export interface SegmentedControlOption {
   /** Unique value used to identify the option. */
@@ -27,6 +28,8 @@ export interface SegmentedControlsProps {
    * `icon-only` requires every option to define an `icon` and falls back to `both` otherwise.
    */
   display?: SegmentedControlsDisplay;
+  /** Matches the height of a `Button` of the same size. */
+  size?: SegmentedControlsSize;
   className?: string;
 }
 
@@ -35,6 +38,7 @@ const SegmentedControls = ({
   value,
   onValueChange,
   display = 'both',
+  size = 'md',
   className,
 }: SegmentedControlsProps) => {
   const allHaveIcons = options.every((option) => option.icon != null);
@@ -48,6 +52,7 @@ const SegmentedControls = ({
     left: 0,
     width: 0,
   });
+  const [animateIndicator, setAnimateIndicator] = useState(false);
 
   const updateIndicator = useCallback(() => {
     const activeSegment = segmentRefs.current[value];
@@ -59,7 +64,13 @@ const SegmentedControls = ({
   // Reposition the indicator whenever the active value, options, or display mode change.
   useLayoutEffect(() => {
     updateIndicator();
-  }, [updateIndicator, options, effectiveDisplay]);
+  }, [updateIndicator, options, effectiveDisplay, size]);
+
+  // Enabling the transition in the same frame as the first measurement makes the indicator slide in from the left edge on mount.
+  useEffect(() => {
+    const frame = requestAnimationFrame(() => setAnimateIndicator(true));
+    return () => cancelAnimationFrame(frame);
+  }, []);
 
   // Keep the indicator aligned when the control is resized.
   useLayoutEffect(() => {
@@ -71,7 +82,10 @@ const SegmentedControls = ({
   }, [updateIndicator]);
 
   return (
-    <div ref={containerRef} className={cn(styles['segmented-controls'], className)}>
+    <div
+      ref={containerRef}
+      className={cn(styles['segmented-controls'], styles[`size--${size}`], className)}
+    >
       {options.map((option) => {
         const currentlyActive = option.value === value;
         const showIcon = option.icon != null && effectiveDisplay !== 'text-only';
@@ -103,8 +117,16 @@ const SegmentedControls = ({
         );
       })}
       <div
-        className={styles['active-segment-indicator']}
-        style={{ transform: `translateX(${indicator.left}px)`, width: `${indicator.width}px` }}
+        className={cn(
+          styles['active-segment-indicator'],
+          animateIndicator && styles['active-segment-indicator--animated']
+        )}
+        style={
+          {
+            transform: `translateX(${indicator.left}px)`,
+            '--indicator-width': `${indicator.width}px`,
+          } as React.CSSProperties
+        }
       />
     </div>
   );
