@@ -1,26 +1,27 @@
-import { useState } from "react";
 import {
+  Avatar,
+  AvatarFallback,
   Button,
   DropdownMenu,
-  DropdownMenuTrigger,
+  DropdownMenuCheckboxItem,
   DropdownMenuContent,
+  DropdownMenuEmpty,
+  DropdownMenuGroup,
   DropdownMenuItem,
   DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuCheckboxItem,
   DropdownMenuRadioGroup,
   DropdownMenuRadioItem,
+  DropdownMenuSearch,
+  DropdownMenuSeparator,
   DropdownMenuShortcut,
-  DropdownMenuGroup,
   DropdownMenuSub,
   DropdownMenuSubContent,
   DropdownMenuSubTrigger,
-  DropdownMenuSearch,
-  DropdownMenuEmpty,
-  Avatar,
-  AvatarFallback,
+  DropdownMenuTrigger,
+  useDropdownMenuSearchQuery,
 } from "@eqtylab/equality";
-import { Settings, User, LogOut } from "lucide-react";
+import { LogOut, Settings, User } from "lucide-react";
+import { useState } from "react";
 
 const MEMBERS = [
   { name: "Ada Lovelace", initials: "AL" },
@@ -42,6 +43,41 @@ const COLUMN_LABELS: Record<string, string> = {
   location: "Location",
 };
 
+const ColumnVisibilityFooter = ({
+  onShow,
+}: {
+  onShow: (keys: string[], visible: boolean) => void;
+}) => {
+  const { matches } = useDropdownMenuSearchQuery();
+  const shown = Object.keys(COLUMN_LABELS).filter((key) =>
+    matches(COLUMN_LABELS[key]),
+  );
+
+  return (
+    <>
+      <DropdownMenuSeparator persistent />
+      <DropdownMenuItem
+        persistent
+        onSelect={(event) => {
+          event.preventDefault();
+          onShow(shown, true);
+        }}
+      >
+        Show all
+      </DropdownMenuItem>
+      <DropdownMenuItem
+        persistent
+        onSelect={(event) => {
+          event.preventDefault();
+          onShow(shown, false);
+        }}
+      >
+        Hide all
+      </DropdownMenuItem>
+    </>
+  );
+};
+
 export const DropdownMenuDemo = ({
   variant = "default",
 }: {
@@ -55,7 +91,8 @@ export const DropdownMenuDemo = ({
     | "with-submenu"
     | "with-groups"
     | "with-search"
-    | "with-search-always"
+    | "with-search-reveal"
+    | "with-search-persistent"
     | "with-search-submenu";
 }) => {
   const [showStatusBar, setShowStatusBar] = useState(true);
@@ -338,7 +375,7 @@ export const DropdownMenuDemo = ({
     );
   }
 
-  if (variant === "with-search") {
+  if (variant === "with-search-reveal") {
     return (
       <div style={{ margin: "1rem 0" }}>
         <DropdownMenu>
@@ -348,7 +385,11 @@ export const DropdownMenuDemo = ({
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="start">
-            <DropdownMenuSearch placeholder="Search members..." />
+            <DropdownMenuSearch
+              alwaysVisible={false}
+              placeholder="Search members..."
+            />
+            <DropdownMenuEmpty>No members found</DropdownMenuEmpty>
             <DropdownMenuLabel>Team members</DropdownMenuLabel>
             {MEMBERS.map((person) => (
               <DropdownMenuItem
@@ -362,14 +403,13 @@ export const DropdownMenuDemo = ({
                 <span>{person.name}</span>
               </DropdownMenuItem>
             ))}
-            <DropdownMenuEmpty>No members found</DropdownMenuEmpty>
           </DropdownMenuContent>
         </DropdownMenu>
       </div>
     );
   }
 
-  if (variant === "with-search-always") {
+  if (variant === "with-search") {
     return (
       <div style={{ margin: "1rem 0" }}>
         <DropdownMenu>
@@ -379,7 +419,8 @@ export const DropdownMenuDemo = ({
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="start">
-            <DropdownMenuSearch alwaysVisible placeholder="Search columns..." />
+            <DropdownMenuSearch placeholder="Search columns..." />
+            <DropdownMenuEmpty>No columns found</DropdownMenuEmpty>
             <DropdownMenuLabel>Toggle columns</DropdownMenuLabel>
             {Object.entries(COLUMN_LABELS).map(([key, label]) => (
               <DropdownMenuCheckboxItem
@@ -393,7 +434,44 @@ export const DropdownMenuDemo = ({
                 {label}
               </DropdownMenuCheckboxItem>
             ))}
+          </DropdownMenuContent>
+        </DropdownMenu>
+      </div>
+    );
+  }
+
+  if (variant === "with-search-persistent") {
+    return (
+      <div style={{ margin: "1rem 0" }}>
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button size="sm" variant="tertiary">
+              Columns
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="start">
+            <DropdownMenuSearch placeholder="Search columns..." />
             <DropdownMenuEmpty>No columns found</DropdownMenuEmpty>
+            {Object.entries(COLUMN_LABELS).map(([key, label]) => (
+              <DropdownMenuCheckboxItem
+                key={key}
+                checked={columns[key]}
+                onCheckedChange={(checked) =>
+                  setColumns((prev) => ({ ...prev, [key]: checked }))
+                }
+                onSelect={(event) => event.preventDefault()}
+              >
+                {label}
+              </DropdownMenuCheckboxItem>
+            ))}
+            <ColumnVisibilityFooter
+              onShow={(keys, visible) =>
+                setColumns((prev) => ({
+                  ...prev,
+                  ...Object.fromEntries(keys.map((key) => [key, visible])),
+                }))
+              }
+            />
           </DropdownMenuContent>
         </DropdownMenu>
       </div>
@@ -411,6 +489,7 @@ export const DropdownMenuDemo = ({
           </DropdownMenuTrigger>
           <DropdownMenuContent align="start">
             <DropdownMenuSearch placeholder="Search actions..." />
+            <DropdownMenuEmpty>No actions found</DropdownMenuEmpty>
             <DropdownMenuItem>Cut</DropdownMenuItem>
             <DropdownMenuItem>Copy</DropdownMenuItem>
             <DropdownMenuItem>Paste</DropdownMenuItem>
@@ -434,7 +513,6 @@ export const DropdownMenuDemo = ({
                 </DropdownMenuSub>
               </DropdownMenuSubContent>
             </DropdownMenuSub>
-            <DropdownMenuEmpty>No actions found</DropdownMenuEmpty>
           </DropdownMenuContent>
         </DropdownMenu>
       </div>

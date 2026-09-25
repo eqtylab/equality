@@ -132,13 +132,13 @@ describe('FilterDropdown', () => {
       expect(document.activeElement).toBe(screen.getByRole('menu'));
     });
 
-    it('stays out of search results, so Enter toggles the match instead', async () => {
+    it('stays visible while searching, but Enter toggles the match instead', async () => {
       const user = userEvent.setup();
       const { onToggleFilter, onClearAll } = renderFilterDropdown({ selectedFilters: ['open'] });
       await openMenu(user);
 
       await user.keyboard('cl');
-      expect(screen.queryByRole('menuitem', { name: 'Clear all' })).toBeNull();
+      expect(screen.getByRole('menuitem', { name: 'Clear all' })).toBeTruthy();
 
       await user.keyboard('{Enter}');
       expect(onToggleFilter).toHaveBeenCalledWith('closed');

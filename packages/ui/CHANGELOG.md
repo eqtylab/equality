@@ -2,6 +2,34 @@
 
 Notable changes to Equality are recorded here, following [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## 4.4.0 - 2026-09-25
+
+### Added
+
+- A `persistent` prop on `DropdownMenuItem`, `DropdownMenuCheckboxItem`, `DropdownMenuRadioItem`,
+  `DropdownMenuSeparator`, `SelectItem` and `SelectSeparator`. The item stays visible while
+  searching but is never a result: it doesn't count towards the empty state or the result count,
+  and <kbd>Enter</kbd> in the search box skips it.
+- `useDropdownMenuSearchQuery`, returning the query and a `matches` function for components
+  inside a `DropdownMenu` that act on what the search shows.
+
+### Changed
+
+- `DropdownMenuSearch` shows its search box on open by default, as `SelectSearch` does. Pass
+  `alwaysVisible={false}` to keep revealing it on the first keystroke.
+- A searchable `FilterDropdown` keeps "Clear all" visible while a query is typed. It no longer
+  leaves an empty strip at the bottom of the menu.
+
+### Fixed
+
+- A searchable `DropdownMenu`, and so `FilterDropdown` and `RadioDropdown`, keeps the side it
+  opened on while searching, as `Select` does since 4.3.2.
+- <kbd>Backspace</kbd> while a `DropdownMenu` item has focus keeps editing the search query, as
+  it does in `Select`.
+- A searchable `DropdownMenu` inside a `Dialog` reliably focuses its search box when opened.
+  4.3.1 recovered focus only on the menu's first focus event, which the search input could
+  claim before the dialog's focus trap pulled focus back out.
+
 ## 4.3.2 - 2026-09-24
 
 ### Fixed

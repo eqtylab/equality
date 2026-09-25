@@ -15,6 +15,7 @@ import {
   useListSearchState,
   useMatchRegistry,
   useSearchInput,
+  useSearchSideLock,
   type ListSearchState,
   type MatchRegistry,
 } from '@/lib/list-search';
@@ -28,18 +29,10 @@ const SearchIcon = Search as React.ComponentType<{ className?: string }>;
 
 const SEARCH_INPUT_SELECTOR = '[data-select-search]';
 const NAVIGABLE_OPTION_SELECTOR = '[role="option"]:not([data-disabled]):not([hidden])';
+const MATCHING_OPTION_SELECTOR = `${NAVIGABLE_OPTION_SELECTOR}:not([data-persistent])`;
 const RADIX_HANDLED_SEARCH_KEYS = ['ArrowDown', 'ArrowUp', 'Escape', 'Tab'];
 
-type Side = NonNullable<SelectPrimitive.SelectContentProps['side']>;
-
-type SelectSearchContextValue = ListSearchState & {
-  markInteracted: () => void;
-  interactedSinceOpen: () => boolean;
-  lockedSide: Side | undefined;
-  lockSide: (side: Side) => void;
-};
-
-const SelectSearchContext = React.createContext<SelectSearchContextValue | null>(null);
+const SelectSearchContext = React.createContext<ListSearchState | null>(null);
 
 const useSelectSearch = () => React.useContext(SelectSearchContext);
 
@@ -55,39 +48,16 @@ const Select = ({
   const search = useListSearchState(open);
   const { resetForOpen } = search;
 
-  // A ref, not state: the option's pointermove focus lands before a re-render would
-  const interactedRef = React.useRef(false);
-  const markInteracted = React.useCallback(() => {
-    interactedRef.current = true;
-  }, []);
-  const interactedSinceOpen = React.useCallback(() => interactedRef.current, []);
-  const [lockedSide, setLockedSide] = React.useState<Side>();
-
-  React.useEffect(() => {
-    if (!open) return;
-    interactedRef.current = false;
-    setLockedSide(undefined);
-  }, [open]);
-
   const handleOpenChange = React.useCallback(
     (nextOpen: boolean) => {
-      if (nextOpen) {
-        resetForOpen();
-        interactedRef.current = false;
-        setLockedSide(undefined);
-      }
+      if (nextOpen) resetForOpen();
       onOpenChange?.(nextOpen);
     },
     [onOpenChange, resetForOpen]
   );
 
-  const value = React.useMemo<SelectSearchContextValue>(
-    () => ({ ...search, markInteracted, interactedSinceOpen, lockedSide, lockSide: setLockedSide }),
-    [search, markInteracted, interactedSinceOpen, lockedSide]
-  );
-
   return (
-    <SelectSearchContext.Provider value={value}>
+    <SelectSearchContext.Provider value={search}>
       <SelectPrimitive.Root open={open} onOpenChange={handleOpenChange} {...props} />
     </SelectSearchContext.Provider>
   );
@@ -192,8 +162,12 @@ const SelectContent = React.forwardRef<
     const searching = isSearchActive(ctx);
     const resultCount = ctx?.matchCount ?? 0;
     const contentRef = React.useRef<HTMLDivElement | null>(null);
-    const lockedSide = ctx?.lockedSide;
-    const lockSide = ctx?.lockSide;
+    const sideProps = useSearchSideLock(
+      ctx,
+      contentRef,
+      { side, avoidCollisions },
+      position === 'popper'
+    );
 
     // Stable so React attaches once rather than re-running setListId every render
     const composedContentRef = React.useCallback(
@@ -204,13 +178,6 @@ const SelectContent = React.forwardRef<
       },
       [ref, setListId]
     );
-
-    // Filtering resizes the list, and a flip then sticks because the size cap follows the new side
-    React.useEffect(() => {
-      if (position !== 'popper' || !searching || lockedSide) return;
-      const placed = contentRef.current?.dataset.side as Side | undefined;
-      if (placed) lockSide?.(placed);
-    }, [position, searching, lockedSide, lockSide]);
 
     const handleFocus = (event: React.FocusEvent<HTMLDivElement>) => {
       onFocus?.(event);
@@ -266,8 +233,7 @@ const SelectContent = React.forwardRef<
             className
           )}
           position={position}
-          side={lockedSide ?? side}
-          avoidCollisions={lockedSide ? false : avoidCollisions}
+          {...sideProps}
           onFocus={handleFocus}
           onKeyDown={handleKeyDown}
           onKeyDownCapture={(event) => {
@@ -358,7 +324,7 @@ const SelectSearch = React.forwardRef<HTMLInputElement, SelectSearchProps>(
               event.stopPropagation();
               const firstOption = event.currentTarget
                 .closest('[role="listbox"]')
-                ?.querySelector(NAVIGABLE_OPTION_SELECTOR);
+                ?.querySelector(MATCHING_OPTION_SELECTOR);
               // Radix selects only from the option's own key handler; click() is ignored once
               // the pointer has hovered an option
               firstOption?.dispatchEvent(
@@ -417,17 +383,18 @@ SelectLabel.displayName = SelectPrimitive.Label.displayName;
 
 const SelectItem = React.forwardRef<
   React.ElementRef<typeof SelectPrimitive.Item>,
-  React.ComponentPropsWithoutRef<typeof SelectPrimitive.Item>
->(({ className, children, textValue, hidden, ...props }, ref) => {
+  React.ComponentPropsWithoutRef<typeof SelectPrimitive.Item> & { persistent?: boolean }
+>(({ className, children, textValue, hidden, persistent, ...props }, ref) => {
   const search = useSelectSearch();
   const group = React.useContext(SelectGroupMatchContext);
-  const matches = useFilterableItem(search, textValue, children, group);
+  const matches = useFilterableItem(search, textValue, children, group, persistent);
 
   return (
     <SelectPrimitive.Item
       ref={ref}
       className={cn(styles['select-item'], className)}
       {...props}
+      data-persistent={persistent ? '' : undefined}
       textValue={textValue}
       // Hidden, never unmounted: Radix renders the trigger's value from the selected item
       hidden={hidden || !matches || undefined}
@@ -446,10 +413,10 @@ SelectItem.displayName = SelectPrimitive.Item.displayName;
 
 const SelectSeparator = React.forwardRef<
   React.ElementRef<typeof SelectPrimitive.Separator>,
-  React.ComponentPropsWithoutRef<typeof SelectPrimitive.Separator>
->(({ className, ...props }, ref) => {
+  React.ComponentPropsWithoutRef<typeof SelectPrimitive.Separator> & { persistent?: boolean }
+>(({ className, persistent, ...props }, ref) => {
   const searching = useIsSearching();
-  if (searching) return null;
+  if (searching && !persistent) return null;
 
   return (
     <SelectPrimitive.Separator

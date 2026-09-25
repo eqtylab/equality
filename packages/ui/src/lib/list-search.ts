@@ -14,6 +14,8 @@ export type MatchRegistry = {
   matchCount: number;
 };
 
+export type PopperSide = 'top' | 'right' | 'bottom' | 'left';
+
 export type ListSearchState = MatchRegistry & {
   enabled: boolean;
   setEnabled: (value: boolean) => void;
@@ -26,6 +28,10 @@ export type ListSearchState = MatchRegistry & {
   resetForOpen: () => void;
   listId: string | undefined;
   setListId: (id: string | undefined) => void;
+  lockedSide: PopperSide | undefined;
+  lockSide: (side: PopperSide) => void;
+  markInteracted: () => void;
+  interactedSinceOpen: () => boolean;
 };
 
 export function useMatchRegistry(): MatchRegistry {
@@ -54,6 +60,14 @@ export function useListSearchState(open?: boolean): ListSearchState {
   const [visible, setVisible] = React.useState(false);
   const [query, setQuery] = React.useState('');
   const [listId, setListId] = React.useState<string | undefined>(undefined);
+  const [lockedSide, setLockedSide] = React.useState<PopperSide | undefined>(undefined);
+
+  // A ref, not state: an item's pointermove focus lands before a re-render would
+  const interactedRef = React.useRef(false);
+  const markInteracted = React.useCallback(() => {
+    interactedRef.current = true;
+  }, []);
+  const interactedSinceOpen = React.useCallback(() => interactedRef.current, []);
 
   const [focusSignal, setFocusSignal] = React.useState(0);
   const requestFocus = React.useCallback(() => setFocusSignal((n) => n + 1), []);
@@ -65,18 +79,29 @@ export function useListSearchState(open?: boolean): ListSearchState {
     setQuery(seed);
   }, []);
 
-  // Call on open, never on close, or the list re-expands during its exit animation
-  const resetForOpen = React.useCallback(() => {
+  const resetStateForOpen = React.useCallback(() => {
     setVisible(false);
     setQuery('');
+    setLockedSide(undefined);
   }, []);
+
+  // Call on open, never on close, or the list re-expands during its exit animation
+  const resetForOpen = React.useCallback(() => {
+    resetStateForOpen();
+    interactedRef.current = false;
+  }, [resetStateForOpen]);
 
   // A controlled `open` can flip without onOpenChange(true), which would keep the last query
   const [previousOpen, setPreviousOpen] = React.useState(open);
   if (open !== previousOpen) {
     setPreviousOpen(open);
-    if (open) resetForOpen();
+    if (open) resetStateForOpen();
   }
+
+  // The ref half of that reset, which can't run during render
+  React.useEffect(() => {
+    if (open) interactedRef.current = false;
+  }, [open]);
 
   return React.useMemo(
     () => ({
@@ -94,6 +119,10 @@ export function useListSearchState(open?: boolean): ListSearchState {
       resetForOpen,
       listId,
       setListId,
+      lockedSide,
+      lockSide: setLockedSide,
+      markInteracted,
+      interactedSinceOpen,
     }),
     [
       enabled,
@@ -107,8 +136,36 @@ export function useListSearchState(open?: boolean): ListSearchState {
       matchCount,
       resetForOpen,
       listId,
+      lockedSide,
+      markInteracted,
+      interactedSinceOpen,
     ]
   );
+}
+
+/*
+ * Filtering resizes the list, and a flip then sticks because the popper's size cap follows the
+ * new side, so the side it was placed on holds from the first query until the list reopens
+ */
+export function useSearchSideLock(
+  state: ListSearchState | null | undefined,
+  contentRef: React.RefObject<HTMLElement | null>,
+  { side, avoidCollisions }: { side?: PopperSide; avoidCollisions?: boolean },
+  enabled = true
+) {
+  const searching = isSearchActive(state);
+  const lockedSide = state?.lockedSide;
+  const lockSide = state?.lockSide;
+
+  React.useEffect(() => {
+    if (!enabled || !searching || lockedSide) return;
+    const placed = contentRef.current?.dataset.side as PopperSide | undefined;
+    if (placed) lockSide?.(placed);
+  }, [enabled, searching, lockedSide, lockSide, contentRef]);
+
+  return lockedSide && enabled
+    ? { side: lockedSide, avoidCollisions: false }
+    : { side, avoidCollisions };
 }
 
 export const isSearchActive = (state: ListSearchState | null | undefined) =>
@@ -136,7 +193,7 @@ export const matchesQuery = (
   children: React.ReactNode
 ) => {
   const normalized = query.trim().toLowerCase();
-  // `??`, not `||`: an empty textValue must match nothing (FilterDropdown's Clear all relies on it)
+  // `??`, not `||`: an empty textValue must match nothing
   return !normalized || (textValue ?? getNodeText(children)).toLowerCase().includes(normalized);
 };
 
@@ -156,17 +213,19 @@ function useRegisterMatch(
   }, [enabled, registerItem, unregisterItem, id, matches]);
 }
 
+// A persistent item always shows, keeps its group visible, and never counts as a result
 export function useFilterableItem(
   state: ListSearchState | null,
   textValue: string | undefined,
   children: React.ReactNode,
-  group?: MatchRegistry | null
+  group?: MatchRegistry | null,
+  persistent = false
 ): boolean {
   const id = React.useId();
-  const matches = matchesQuery(state?.query ?? '', textValue, children);
+  const matches = persistent || matchesQuery(state?.query ?? '', textValue, children);
   const enabled = state?.enabled ?? false;
 
-  useRegisterMatch(state, enabled, id, matches);
+  useRegisterMatch(state, enabled && !persistent, id, matches);
   useRegisterMatch(group, enabled, id, matches);
 
   return matches;

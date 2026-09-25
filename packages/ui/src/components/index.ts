@@ -17,6 +17,7 @@ export * from './dialog/dialog';
 export * from './display-field/display-field';
 export * from './drawer/drawer';
 export * from './dropdown-menu/dropdown-menu';
+export { useDropdownMenuSearchQuery } from './dropdown-menu/dropdown-menu-search-context';
 export * from './empty-table-state/empty-table-state';
 export * from './filter-dropdown/filter-dropdown';
 export * from './form/form';

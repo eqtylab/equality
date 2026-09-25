@@ -61,7 +61,8 @@ export function SelectDemo({
     | "disabled"
     | "pre-selected"
     | "with-search"
-    | "with-search-reveal";
+    | "with-search-reveal"
+    | "with-search-persistent";
   elevation?: Elevation;
 }) {
   const [selectValue, setSelectValue] = useState<string>("");
@@ -137,6 +138,34 @@ export function SelectDemo({
     );
   }
 
+  if (variant === "with-search-persistent") {
+    const id = `select-${variant}`;
+
+    return (
+      <div className="flex flex-col gap-2">
+        <Label htmlFor={id}>Country</Label>
+        <Select value={selectValue} onValueChange={setSelectValue}>
+          <SelectTrigger id={id}>
+            <SelectValue placeholder="Select a country" />
+          </SelectTrigger>
+          <SelectContent elevation={elevation}>
+            <SelectSearch placeholder="Search countries..." />
+            <SelectEmpty>No countries found</SelectEmpty>
+            <SelectItem persistent value="not-listed">
+              Not listed
+            </SelectItem>
+            <SelectSeparator persistent />
+            {REGIONS.flatMap((region) => region.countries).map((country) => (
+              <SelectItem key={country} value={toValue(country)}>
+                {country}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
+      </div>
+    );
+  }
+
   if (variant === "with-search" || variant === "with-search-reveal") {
     const id = `select-${variant}`;
 
@@ -152,6 +181,7 @@ export function SelectDemo({
               alwaysVisible={variant === "with-search"}
               placeholder="Search countries..."
             />
+            <SelectEmpty>No countries found</SelectEmpty>
             {REGIONS.map((region, index) => (
               <Fragment key={region.label}>
                 {index > 0 && <SelectSeparator />}
@@ -165,7 +195,6 @@ export function SelectDemo({
                 </SelectGroup>
               </Fragment>
             ))}
-            <SelectEmpty>No countries found</SelectEmpty>
           </SelectContent>
         </Select>
       </div>

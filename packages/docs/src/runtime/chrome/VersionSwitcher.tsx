@@ -71,7 +71,7 @@ export default function VersionSwitcher({ data, className }: Props) {
           {/* Nesting holds the browse case to four rows; this holds the jump case, which nesting
               makes worse by burying a version one hover deep. Typing lifts every match out of its
               submenu into this list, each carrying its major as a breadcrumb. */}
-          <DropdownMenuSearch alwaysVisible placeholder="Search versions..." />
+          <DropdownMenuSearch placeholder="Search versions..." />
           <DropdownMenuRadioGroup value={current.href} onValueChange={go}>
             {/* A heading, not a suffix on the name: the trigger shows the version alone, and
                 "v4.1 (latest)" would then disagree with it and read twice in the banner. */}

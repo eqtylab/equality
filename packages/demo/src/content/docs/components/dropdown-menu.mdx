@@ -214,34 +214,16 @@ Import the additional parts:
 import { DropdownMenuSearch, DropdownMenuEmpty } from "@eqtylab/equality";
 ```
 
-### Reveal on typing
+### Default
 
-By default the search box is hidden and reveals as soon as you start typing — the first keystroke seeds the query. Add a `DropdownMenuEmpty` to show a "no results" row when nothing matches. Give items that lead with an icon or avatar a `textValue` so they filter on the label rather than the icon's contents.
+The search box shows, focused, the moment the menu opens. Filtering works across every item type, including checkbox and radio items. Labels and separators hide while a search is active so results stay compact, and submenu items are flattened into the main list (see below). Add a `DropdownMenuEmpty` to show a "no results" row when nothing matches.
 
 <DropdownMenuDemo client:only="react" variant="with-search" />
 
 ```jsx
 <DropdownMenuContent align="start">
-  <DropdownMenuSearch placeholder="Search members..." />
-  <DropdownMenuLabel>Team members</DropdownMenuLabel>
-  <DropdownMenuItem textValue="Ada Lovelace">
-    <Icon icon="User" />
-    <span>Ada Lovelace</span>
-  </DropdownMenuItem>
-  {/* ...more members... */}
-  <DropdownMenuEmpty>No members found</DropdownMenuEmpty>
-</DropdownMenuContent>
-```
-
-### Always visible
-
-Pass `alwaysVisible` to show the search box the moment the menu opens instead of waiting for the first keystroke. Filtering works across every item type, including checkbox and radio items. Labels and separators hide while a search is active so results stay compact, and submenu items are flattened into the main list (see below).
-
-<DropdownMenuDemo client:only="react" variant="with-search-always" />
-
-```jsx
-<DropdownMenuContent align="start">
-  <DropdownMenuSearch alwaysVisible placeholder="Search columns..." />
+  <DropdownMenuSearch placeholder="Search columns..." />
+  <DropdownMenuEmpty>No columns found</DropdownMenuEmpty>
   <DropdownMenuLabel>Toggle columns</DropdownMenuLabel>
   <DropdownMenuCheckboxItem
     checked={columns.email}
@@ -251,8 +233,97 @@ Pass `alwaysVisible` to show the search box the moment the menu opens instead of
     Email
   </DropdownMenuCheckboxItem>
   {/* ...more columns... */}
-  <DropdownMenuEmpty>No columns found</DropdownMenuEmpty>
 </DropdownMenuContent>
+```
+
+### Reveal on typing
+
+Pass `alwaysVisible={false}` to keep the search box hidden until someone types into the open menu — the first keystroke reveals it and seeds the query. Nothing on screen says search exists, so keep this for compact, keyboard-heavy menus. Give items that lead with an icon or avatar a `textValue` so they filter on the label rather than the icon's contents.
+
+<DropdownMenuDemo client:only="react" variant="with-search-reveal" />
+
+```jsx
+<DropdownMenuContent align="start">
+  <DropdownMenuSearch alwaysVisible={false} placeholder="Search members..." />
+  <DropdownMenuEmpty>No members found</DropdownMenuEmpty>
+  <DropdownMenuLabel>Team members</DropdownMenuLabel>
+  <DropdownMenuItem textValue="Ada Lovelace">
+    <Icon icon="User" />
+    <span>Ada Lovelace</span>
+  </DropdownMenuItem>
+  {/* ...more members... */}
+</DropdownMenuContent>
+```
+
+### Persistent items
+
+Mark an item `persistent` to keep it on screen while searching, such as a footer action that belongs to the whole list. It is never a result: it doesn't count towards `DropdownMenuEmpty` or the announced result count, and <kbd>Enter</kbd> in the search box skips it. A `persistent` separator likewise stays visible.
+
+To act on only what the search shows, read it with `useDropdownMenuSearchQuery` from any component inside the menu. `matches` applies the same rule the items use.
+
+<DropdownMenuDemo client:only="react" variant="with-search-persistent" />
+
+```jsx
+const COLUMNS = [
+  { key: "name", label: "Name" },
+  { key: "email", label: "Email" },
+  // ...more columns...
+];
+
+// Inside the menu, so it can read the search
+const ColumnFooter = ({ onShow }) => {
+  const { matches } = useDropdownMenuSearchQuery();
+  const shown = COLUMNS.filter((column) => matches(column.label)).map(
+    (column) => column.key,
+  );
+
+  return (
+    <>
+      <DropdownMenuSeparator persistent />
+      <DropdownMenuItem
+        persistent
+        onSelect={(event) => {
+          event.preventDefault();
+          onShow(shown, true);
+        }}
+      >
+        Show all
+      </DropdownMenuItem>
+      <DropdownMenuItem
+        persistent
+        onSelect={(event) => {
+          event.preventDefault();
+          onShow(shown, false);
+        }}
+      >
+        Hide all
+      </DropdownMenuItem>
+    </>
+  );
+};
+
+<DropdownMenuContent align="start">
+  <DropdownMenuSearch placeholder="Search columns..." />
+  <DropdownMenuEmpty>No columns found</DropdownMenuEmpty>
+  {COLUMNS.map(({ key, label }) => (
+    <DropdownMenuCheckboxItem
+      key={key}
+      checked={visible[key]}
+      onCheckedChange={(checked) => setVisible({ ...visible, [key]: checked })}
+      onSelect={(event) => event.preventDefault()}
+    >
+      {label}
+    </DropdownMenuCheckboxItem>
+  ))}
+  <ColumnFooter
+    onShow={(keys, show) =>
+      setVisible({
+        ...visible,
+        ...Object.fromEntries(keys.map((key) => [key, show])),
+      })
+    }
+  />
+</DropdownMenuContent>;
 ```
 
 ### Searching submenus
@@ -264,6 +335,7 @@ Items nested in a `DropdownMenuSub` are flattened into the main list while searc
 ```jsx
 <DropdownMenuContent align="start">
   <DropdownMenuSearch placeholder="Search actions..." />
+  <DropdownMenuEmpty>No actions found</DropdownMenuEmpty>
   <DropdownMenuItem>Cut</DropdownMenuItem>
   <DropdownMenuItem>Copy</DropdownMenuItem>
   <DropdownMenuItem>Paste</DropdownMenuItem>
@@ -287,7 +359,6 @@ Items nested in a `DropdownMenuSub` are flattened into the main list while searc
       </DropdownMenuSub>
     </DropdownMenuSubContent>
   </DropdownMenuSub>
-  <DropdownMenuEmpty>No actions found</DropdownMenuEmpty>
 </DropdownMenuContent>
 ```
 
@@ -295,9 +366,11 @@ Flattening only works when `DropdownMenuSubContent` is placed directly inside `D
 
 ### Keyboard
 
-<kbd>Enter</kbd> in the search box activates the first matching item.
+<kbd>Enter</kbd> in the search box activates the first matching item, skipping
+`persistent` ones.
 <kbd>↓</kbd> moves from the search box to the first item and <kbd>↑</kbd> to the
-last; <kbd>↑</kbd> on the first item returns to the search box.
+last; <kbd>↑</kbd> on the first item returns to the search box. Typing or
+<kbd>Backspace</kbd> while an item is focused keeps editing the query.
 
 ### Accessibility
 
@@ -352,13 +425,14 @@ To pick a value in a form rather than run an action, use a [Select with search](
 
 ### DropdownMenuItem
 
-| Name        | Description                                                                      | Type                           | Default   | Required |
-| ----------- | -------------------------------------------------------------------------------- | ------------------------------ | --------- | -------- |
-| `variant`   | Visual style; `warning` marks a consequential action, `danger` a destructive one | `neutral`, `warning`, `danger` | `neutral` | ❌       |
-| `inset`     | Adds left padding to align with items that have icons                            | `boolean`                      | `false`   | ❌       |
-| `disabled`  | Prevents interaction and dims the item                                           | `boolean`                      | `false`   | ❌       |
-| `textValue` | Text used for search filtering; falls back to the item's rendered text           | `string`                       | -         | ❌       |
-| `onSelect`  | Called when the item is selected                                                 | `() => void`                   | -         | ❌       |
+| Name         | Description                                                                      | Type                           | Default   | Required |
+| ------------ | -------------------------------------------------------------------------------- | ------------------------------ | --------- | -------- |
+| `variant`    | Visual style; `warning` marks a consequential action, `danger` a destructive one | `neutral`, `warning`, `danger` | `neutral` | ❌       |
+| `inset`      | Adds left padding to align with items that have icons                            | `boolean`                      | `false`   | ❌       |
+| `disabled`   | Prevents interaction and dims the item                                           | `boolean`                      | `false`   | ❌       |
+| `textValue`  | Text used for search filtering; falls back to the item's rendered text           | `string`                       | -         | ❌       |
+| `persistent` | Stays visible while searching, and is never a result                             | `boolean`                      | `false`   | ❌       |
+| `onSelect`   | Called when the item is selected                                                 | `() => void`                   | -         | ❌       |
 
 ### DropdownMenuCheckboxItem
 
@@ -368,6 +442,7 @@ To pick a value in a form rather than run an action, use a [Select with search](
 | `onCheckedChange` | Called when the checked state changes                                  | `(checked: boolean) => void` | -       | ❌       |
 | `disabled`        | Prevents interaction and dims the item                                 | `boolean`                    | `false` | ❌       |
 | `textValue`       | Text used for search filtering; falls back to the item's rendered text | `string`                     | -       | ❌       |
+| `persistent`      | Stays visible while searching, and is never a result                   | `boolean`                    | `false` | ❌       |
 
 ### DropdownMenuRadioGroup
 
@@ -378,11 +453,12 @@ To pick a value in a form rather than run an action, use a [Select with search](
 
 ### DropdownMenuRadioItem
 
-| Name        | Description                                                            | Type      | Default | Required |
-| ----------- | ---------------------------------------------------------------------- | --------- | ------- | -------- |
-| `value`     | The unique value of the item                                           | `string`  | -       | ✅       |
-| `disabled`  | Prevents interaction and dims the item                                 | `boolean` | `false` | ❌       |
-| `textValue` | Text used for search filtering; falls back to the item's rendered text | `string`  | -       | ❌       |
+| Name         | Description                                                            | Type      | Default | Required |
+| ------------ | ---------------------------------------------------------------------- | --------- | ------- | -------- |
+| `value`      | The unique value of the item                                           | `string`  | -       | ✅       |
+| `disabled`   | Prevents interaction and dims the item                                 | `boolean` | `false` | ❌       |
+| `textValue`  | Text used for search filtering; falls back to the item's rendered text | `string`  | -       | ❌       |
+| `persistent` | Stays visible while searching, and is never a result                   | `boolean` | `false` | ❌       |
 
 ### DropdownMenuLabel & DropdownMenuSubTrigger
 
@@ -396,12 +472,28 @@ Also accepts standard `input` attributes, except `value` and `onChange`, which a
 
 | Name            | Description                                                                   | Type                    | Default       | Required |
 | --------------- | ----------------------------------------------------------------------------- | ----------------------- | ------------- | -------- |
-| `alwaysVisible` | Show the input immediately instead of revealing on first keypress             | `boolean`               | `false`       | ❌       |
+| `alwaysVisible` | Show the input on open; `false` reveals it on the first keystroke instead     | `boolean`               | `true`        | ❌       |
 | `placeholder`   | Placeholder text for the input                                                | `string`                | `Search...`   | ❌       |
 | `icon`          | Custom leading icon; defaults to a search icon                                | `ReactNode`             | -             | ❌       |
 | `aria-label`    | Accessible name for the input; defaults to the `placeholder` text             | `string`                | `placeholder` | ❌       |
 | `ref`           | Forwarded to the underlying `<input>`; `null` while the input is not rendered | `Ref<HTMLInputElement>` | -             | ❌       |
 
+### DropdownMenuSeparator
+
+| Name         | Description                   | Type      | Default | Required |
+| ------------ | ----------------------------- | --------- | ------- | -------- |
+| `persistent` | Stays visible while searching | `boolean` | `false` | ❌       |
+
 ### DropdownMenuEmpty
 
 Renders its `children` as a "no results" message, shown only while a search query matches no items. It is a live region (`role="status"`), so the message is announced when filtering empties the list. Also accepts standard `div` attributes.
+
+### useDropdownMenuSearchQuery
+
+Call from any component inside a `DropdownMenu`. Returns the current search state:
+
+| Name          | Description                                                | Type                             |
+| ------------- | ---------------------------------------------------------- | -------------------------------- |
+| `query`       | The query as typed                                         | `string`                         |
+| `isSearching` | Whether a non-blank query is active                        | `boolean`                        |
+| `matches`     | Whether some text matches the query, by the rule items use | `(textValue: string) => boolean` |

@@ -196,12 +196,7 @@ describe('Select', () => {
             <SelectValue />
           </SelectTrigger>
           <SelectContent>
-            <SelectSearch
-              alwaysVisible
-              role="textbox"
-              data-select-search="nope"
-              name="country-search"
-            />
+            <SelectSearch role="textbox" data-select-search="nope" name="country-search" />
             <SelectItem value="japan" hidden={false}>
               Japan
             </SelectItem>
@@ -217,6 +212,71 @@ describe('Select', () => {
 
       await user.type(search, 'can');
       expect(option('Japan').hidden).toBe(true);
+    });
+  });
+
+  describe('persistent items', () => {
+    function RegionSelect({ onValueChange }: { onValueChange?: (value: string) => void }) {
+      return (
+        <Select onValueChange={onValueChange}>
+          <SelectTrigger aria-label="Country">
+            <SelectValue placeholder="Select a country" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectSearch placeholder="Search countries..." />
+            <SelectEmpty>No countries found</SelectEmpty>
+            <SelectItem persistent value="other">
+              Other
+            </SelectItem>
+            <SelectSeparator persistent data-testid="persistent-separator" />
+            <SelectItem value="brazil">Brazil</SelectItem>
+            <SelectItem value="canada">Canada</SelectItem>
+          </SelectContent>
+        </Select>
+      );
+    }
+
+    it('stay visible while searching without counting as a match', async () => {
+      const user = userEvent.setup();
+      render(<RegionSelect />);
+      await open(user);
+
+      await user.type(screen.getByRole('searchbox'), 'zzz');
+
+      expect(option('Other').hidden).toBe(false);
+      expect(option('Brazil').hidden).toBe(true);
+      expect(screen.getByText('No countries found')).toBeTruthy();
+    });
+
+    it('are skipped by Enter, which picks the first match instead', async () => {
+      const user = userEvent.setup();
+      const onValueChange = vi.fn();
+      render(<RegionSelect onValueChange={onValueChange} />);
+      await open(user);
+
+      await user.type(screen.getByRole('searchbox'), 'can{Enter}');
+
+      expect(onValueChange).toHaveBeenCalledWith('canada');
+    });
+
+    it('keep a persistent separator while searching', async () => {
+      const user = userEvent.setup();
+      render(<RegionSelect />);
+      await open(user);
+
+      await user.type(screen.getByRole('searchbox'), 'bra');
+
+      expect(screen.getByTestId('persistent-separator')).toBeTruthy();
+    });
+
+    it('are left out of the announced result count', async () => {
+      const user = userEvent.setup();
+      render(<RegionSelect />);
+      await open(user);
+
+      await user.type(screen.getByRole('searchbox'), 'a');
+
+      expect(screen.getByText('2 results available')).toBeTruthy();
     });
   });
 });
