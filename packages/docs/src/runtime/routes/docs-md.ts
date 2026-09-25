@@ -4,6 +4,7 @@ import type { APIRoute } from 'astro';
 import { getCollection } from 'astro:content';
 import CONFIG from 'virtual:eqty-docs/config';
 
+import { entryMarkdown } from '../lib/markdown-twin.ts';
 import { collectionsFor } from '../lib/nav-data.ts';
 
 export async function getStaticPaths() {
@@ -17,15 +18,19 @@ export async function getStaticPaths() {
     undefined,
     ...CONFIG.versionManifest.map((v) => v.id),
   ];
-  const out: Array<{ params: { slug: string }; props: { entry: unknown } }> = [];
+  const out: Array<{ params: { slug: string }; props: { entry: unknown; version?: string } }> = [];
   for (const versionId of versions) {
     const entries = (await anyCollection(collectionsFor(versionId).docs, visible)) as Array<{
       id: string;
     }>;
     for (const entry of entries) {
-      // An empty slug would emit a file literally called ".md".
+      // An empty slug would emit a file literally called ".md". Must match markdownTwinHref,
+      // which every link to a twin is built with.
       const page = idToPath(entry.id) || 'index';
-      out.push({ params: { slug: versionId ? `${versionId}/${page}` : page }, props: { entry } });
+      out.push({
+        params: { slug: versionId ? `${versionId}/${page}` : page },
+        props: { entry, version: versionId },
+      });
     }
   }
   return out;
@@ -48,9 +53,12 @@ function stripHtml(value?: string) {
 }
 
 export const GET: APIRoute = ({ props }) => {
-  const { entry } = props as {
+  const { entry, version } = props as {
+    version?: string;
     entry: {
+      id: string;
       body?: string;
+      filePath?: string;
       data: { title: string; description?: string; deprecated?: Deprecated };
     };
   };
@@ -64,7 +72,14 @@ export const GET: APIRoute = ({ props }) => {
   }
   frontmatter.push(`source: ${JSON.stringify(CONFIG.title)}`, '---', '');
 
-  const body = [...deprecationNotice(entry.data.deprecated), entry.body ?? ''].join('\n');
+  const { markdown, unexpanded } = entryMarkdown(entry, CONFIG.projectRoot, version);
+  if (unexpanded.length) {
+    console.warn(
+      `[@eqtylab/docs] ${entry.id}.md: ${unexpanded.map((n) => `<${n}>`).join(', ')} could not be expanded and stays as a tag`
+    );
+  }
+
+  const body = [...deprecationNotice(entry.data.deprecated), markdown].join('\n');
 
   return new Response(frontmatter.join('\n') + body, {
     headers: { 'Content-Type': 'text/markdown; charset=utf-8' },

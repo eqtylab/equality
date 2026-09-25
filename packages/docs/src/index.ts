@@ -122,6 +122,8 @@ export default function docs(
           env,
           // Read by the catch-all's getStaticPaths so no path is emitted twice.
           ownedByConsumer: consumer.ownedPaths,
+          // Content entries carry `filePath` relative to this; the Markdown twin resolves imports from it.
+          projectRoot: fileURLToPath(config.root),
           ...versionData,
         };
 

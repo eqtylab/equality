@@ -2,6 +2,18 @@
 
 Notable changes to Equality's Docsite Generator are recorded here, following [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## 0.5.2 - 2026-09-25
+
+### Fixed
+
+- The Markdown twin, "Copy as Markdown" and "View as Markdown" carry a page's imported content
+  - A tag that includes another `.mdx` or `.md` file is replaced by that file's text, and
+    `<CodeFence code={…} />` fed by a `?raw` import becomes a fenced block in its language,
+    instead of the bare import and tag
+  - A page with no such imports produces the same output as before
+  - A tag that should expand but cannot, such as an included file that cannot be read, is named in a build warning
+- The home page's `llms.txt` link points at its `index.md` twin, not a URL like `https://example.com.md`
+
 ## 0.5.1 - 2026-09-25
 
 ### Added

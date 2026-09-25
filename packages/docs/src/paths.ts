@@ -62,6 +62,14 @@ export function docsHref(id: string, ctx: PathContext): string {
   return ensureTrailingSlash(joinPath(ctx.base, ctx.pathPrefix, ctx.versionPrefix, idToPath(id)));
 }
 
+/**
+ * The URL of an entry's Markdown twin. The home page is `index.md`: its path is empty, and an
+ * empty name would give `/.md`, or `https://host.md` once an origin is prepended.
+ */
+export function markdownTwinHref(id: string, ctx: PathContext): string {
+  return `${joinPath(ctx.base, ctx.pathPrefix, ctx.versionPrefix, idToPath(id) || 'index')}.md`;
+}
+
 /** Remove `base` (and path/version prefixes) from a pathname, yielding a docs-relative path. */
 export function stripBase(pathname: string, ctx: PathContext): string {
   let rest = normalizePath(pathname);
