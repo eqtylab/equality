@@ -2,7 +2,7 @@
 import { createRequire } from "node:module";
 
 import { defineConfig } from "astro/config";
-import docs, { brandAssets, resolveDocsEnv } from "@eqtylab/docs";
+import docs, { resolveDocsEnv } from "@eqtylab/docs";
 import { linkWorkspacePackages } from "@eqtylab/docs/dev";
 
 // The version the site documents is the library's, not this package's 0.0.1.
@@ -35,20 +35,6 @@ export default defineConfig({
       title: "Equality",
       description: "A theme-driven component library for EQTY Lab projects",
       versions: { current: ui.version, granularity: "minor" },
-      logo: {
-        src: brandAssets.logo,
-        alt: "EQTY Lab",
-      },
-      header: {
-        links: [
-          {
-            label: "GitHub",
-            href: "https://github.com/eqtylab/equality",
-            icon: brandAssets.github,
-            external: true,
-          },
-        ],
-      },
       footer: {
         editUrl:
           "https://github.com/eqtylab/equality/edit/main/packages/demo/src/content/docs/",

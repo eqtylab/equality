@@ -1,3 +1,4 @@
+import { readFileSync } from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import type { AstroIntegration } from 'astro';
@@ -11,6 +12,7 @@ import {
 import { resolveDocsEnv, type DocsEnv } from './env.ts';
 import { assertMdxOnly } from './internal/assert-mdx-only.ts';
 import { EMPTY_VERSIONS, extractVersions } from './internal/extract-versions.ts';
+import { withGithubLink } from './internal/github-link.ts';
 import { microlighterGrammarsPlugin } from './internal/microlighter-grammars.ts';
 import { pagefindIntegration } from './internal/pagefind.ts';
 import { rehypeBaseUrl } from './internal/rehype-base-url.ts';
@@ -55,7 +57,7 @@ function plannedRoutes(cfg: DocsConfig) {
       enabled: cfg.routing.markdownTwins,
     },
     {
-      pattern: `${BRAND_ASSET_PREFIX}/[name].svg`,
+      pattern: `${BRAND_ASSET_PREFIX}/[file]`,
       entrypoint: '@eqtylab/docs/routes/brand-asset.ts',
       enabled: true,
     },
@@ -66,6 +68,14 @@ function plannedRoutes(cfg: DocsConfig) {
     },
   ];
   return routes.filter((r) => r.enabled);
+}
+
+function readRepository(root: URL): unknown {
+  try {
+    return JSON.parse(readFileSync(new URL('./package.json', root), 'utf8')).repository;
+  } catch {
+    return undefined;
+  }
 }
 
 export default function docs(
@@ -118,6 +128,10 @@ export default function docs(
 
         payload = {
           ...cfg,
+          header: {
+            ...cfg.header,
+            links: withGithubLink(cfg.header.links, cfg.github, readRepository(config.root)),
+          },
           sidebar: { ...cfg.sidebar, extra: [...cfg.sidebar.extra, ...contributions.navGroups] },
           env,
           // Read by the catch-all's getStaticPaths so no path is emitted twice.

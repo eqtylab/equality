@@ -2,6 +2,31 @@
 
 Notable changes to Equality's Docsite Generator are recorded here, following [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## 0.6.0 - 2026-09-25
+
+### Changed
+
+- The header shows the EQTY Lab logo and a GitHub link by default
+  - `logo: false` and `github: false` turn them off; a site's own `logo` still replaces the mark
+  - Sites that upgrade will see both appear with no config change
+- Below 640px the header drops the logo and shortens a long title with "…"
+  - Before, a long title, or any title beside the logo at 320px, pushed the menu button off screen
+
+### Added
+
+- A `github` option for the header's GitHub link
+  - Unset, it links to the `repository` field of the site's `package.json`, else `https://github.com/eqtylab`
+  - A GitHub URL or `owner/repo` overrides both; anything else fails the build, naming the value
+  - A header link the site already has to `github.com` replaces it, so the link never shows twice
+- Shared links get a preview card: every page carries Open Graph and Twitter card tags
+  - The picture defaults to EQTY Lab's 1200×630 share image; `ogImage` replaces it, `false` removes it
+  - The picture and page URL need Astro's `site`, since preview apps only accept full URLs
+
+### Fixed
+
+- The default favicon is EQTY Lab's, the one eqtylab.io uses, instead of Astro's logo
+  - A 32px PNG served at `/_equality/favicon.png`; `brandAssets.favicon` points there
+
 ## 0.5.2 - 2026-09-25
 
 ### Fixed
