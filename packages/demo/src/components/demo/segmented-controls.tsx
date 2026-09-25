@@ -109,3 +109,34 @@ export const SegmentedControlsSizesDemo = () => (
     ))}
   </div>
 );
+
+const variantOptions: SegmentedControlOption[] = [
+  { value: "primary", label: "Primary" },
+  {
+    value: "success",
+    label: "Success",
+    icon: "Check",
+    variant: "success",
+  },
+  {
+    value: "warning",
+    label: "Warning",
+    icon: "OctagonAlert",
+    variant: "warning",
+  },
+  {
+    value: "danger",
+    label: "Danger",
+    icon: "TriangleAlert",
+    variant: "danger",
+  },
+  {
+    value: "neutral",
+    label: "Neutral",
+    variant: "neutral",
+  },
+];
+
+export const SegmentedControlsVariantsDemo = () => (
+  <SegmentedControlsDemo defaultValue="danger" options={variantOptions} />
+);

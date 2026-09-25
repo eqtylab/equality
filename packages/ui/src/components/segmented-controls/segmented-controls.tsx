@@ -7,6 +7,7 @@ import { cn } from '@/lib/utils';
 
 export type SegmentedControlsDisplay = 'both' | 'text-only' | 'icon-only';
 export type SegmentedControlsSize = 'sm' | 'md' | 'lg';
+export type SegmentedControlVariant = 'primary' | 'neutral' | 'success' | 'warning' | 'danger';
 
 export interface SegmentedControlOption {
   /** Unique value used to identify the option. */
@@ -17,6 +18,8 @@ export interface SegmentedControlOption {
   icon?: React.ReactElement | string;
   /** Optional content rendered after the label. */
   suffix?: React.ReactNode;
+  /** Colour of the indicator while this option is selected. */
+  variant?: SegmentedControlVariant;
 }
 
 export interface SegmentedControlsProps {
@@ -45,6 +48,8 @@ const SegmentedControls = ({
   // icon-only is only valid when every option has an icon, otherwise fall back to showing both.
   const effectiveDisplay = display === 'icon-only' && !allHaveIcons ? 'both' : display;
   const isIconOnly = effectiveDisplay === 'icon-only';
+
+  const activeVariant = options.find((option) => option.value === value)?.variant ?? 'primary';
 
   const containerRef = useRef<HTMLDivElement>(null);
   const segmentRefs = useRef<Record<string, HTMLButtonElement | null>>({});
@@ -84,7 +89,12 @@ const SegmentedControls = ({
   return (
     <div
       ref={containerRef}
-      className={cn(styles['segmented-controls'], styles[`size--${size}`], className)}
+      className={cn(
+        styles['segmented-controls'],
+        styles[`size--${size}`],
+        styles[`variant--${activeVariant}`],
+        className
+      )}
     >
       {options.map((option) => {
         const currentlyActive = option.value === value;
