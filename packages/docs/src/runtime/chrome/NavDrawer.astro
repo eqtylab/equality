@@ -61,7 +61,7 @@ const currentVersion = versions.find((v) => v.current) ?? switcher?.latest;
         <details class="border-border-raised mb-2 block border-b pb-2" data-eq-versions>
           <summary class="text-text-secondary hover:text-text-primary focus-ring flex cursor-pointer select-none items-center justify-between rounded-md px-2 py-1.5 text-sm no-underline [&::-webkit-details-marker]:hidden">
             <span class="flex items-center gap-2">
-              <span class="text-xs font-medium uppercase">Version</span>
+              <span class="eq-docs-label">Version</span>
               <span class="text-text-primary font-medium">{currentVersion.label}</span>
             </span>
             <span class="shrink-0 transition-transform duration-200 [details[open]>summary_&]:rotate-90">

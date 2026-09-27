@@ -63,7 +63,7 @@ const action =
        on the page. */
     trail && trail.length > 0 && (
       <nav
-        class="text-text-tertiary mb-6 flex items-center text-sm"
+        class="eq-docs-label mb-6 flex items-center"
         data-eq-crumbs
         data-eq-chrome
         data-pagefind-ignore
@@ -78,7 +78,7 @@ const action =
             )}
             {node.href ? (
               <a
-                class="hover:text-text-secondary text-inherit no-underline hover:underline"
+                class="hover:text-text-primary text-inherit no-underline hover:underline"
                 href={node.href}
               >
                 {node.label}

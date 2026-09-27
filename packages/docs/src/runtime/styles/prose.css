@@ -27,28 +27,38 @@
         @apply text-3xl;
       }
     }
+    /* An h2 with an h3 straight after it has no content of its own: it only groups the
+     * h3s below (Variants, Examples, Props), so it becomes a label and the h3s lead.
+     * Any text in between makes it a title again. Keep the space above well clear of
+     * h3's 48px. */
     &:is(h2) {
-      @apply mb-3 mt-12 text-2xl font-semibold;
-      & > code {
-        @apply text-xl;
-      }
-    }
-    &:is(h3) {
-      @apply mb-3 mt-8 text-xl font-medium;
+      @apply text-text-primary mb-4 mt-20 text-xl font-semibold tracking-tight;
       & > code {
         @apply text-lg;
       }
+      &:has(+ h3) {
+        @apply eq-docs-label;
+        & > code {
+          @apply text-xs;
+        }
+      }
+    }
+    &:is(h3) {
+      @apply mb-3 mt-12 text-base font-semibold;
+      & > code {
+        @apply text-sm;
+      }
     }
     &:is(h4) {
-      @apply mb-3 mt-6 text-lg font-medium;
+      @apply mb-3 mt-6 text-sm font-semibold;
       & > code {
-        @apply text-base;
+        @apply text-xs;
       }
     }
     &:is(h5) {
-      @apply mb-3 mt-6 text-base font-medium;
+      @apply mb-3 mt-6 text-sm font-semibold;
       & > code {
-        @apply text-sm;
+        @apply text-xs;
       }
     }
     &:is(h6) {
@@ -58,18 +68,20 @@
       }
     }
 
-    /* 16px, which has to stay wider than the 28px line height inside a paragraph,
-     * or consecutive blocks read as one. */
+    /* The 24px gap has to clearly beat the 12px of leading between lines in a
+     * paragraph, or consecutive blocks read as one. */
     &:is(p) {
-      @apply text-text-secondary mb-4 text-base/7 font-normal;
+      @apply text-text-secondary mb-6 text-base/7 font-normal;
     }
 
+    /* Weight carries the emphasis: light-mode secondary text is near black, so the
+     * colour change alone is invisible. */
     :is(p, li) &:is(b, strong) {
-      @apply text-text-primary font-medium;
+      @apply text-text-primary font-semibold;
     }
 
     &:is(ul, ol) {
-      @apply text-text-secondary mb-4 pl-4;
+      @apply text-text-secondary mb-6 pl-4;
 
       /* Never `space-y-*` here: it unbalances against the `:not(:where(...))` above
        * and compiles to a rule the browser throws away, leaving items unspaced. */
@@ -85,7 +97,7 @@
     }
 
     &:is(a) {
-      @apply text-text-primary hover:text-lilac-400 font-medium underline underline-offset-4 transition-all;
+      @apply text-text-primary hover:text-text-link decoration-text-link font-semibold underline decoration-1 underline-offset-4 transition-all;
     }
 
     /*

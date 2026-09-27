@@ -16,6 +16,16 @@
 }
 
 /**
+ * Deliberately not Equality's PanelLabel, which stays sans for app UI.
+ *
+ * Sets its own size and colour, so a caller must not add a `text-*` size or colour:
+ * two unvariated utilities of one kind resolve by Tailwind's order, not the order written.
+ */
+@utility eq-docs-label {
+  @apply text-text-secondary font-mono text-xs font-medium uppercase tracking-widest;
+}
+
+/**
  * eqtylab.io's display-text fade, used by the header label and the page title.
  *
  * Callers add their own `forced-colors:text-*`: the header label inherits, the page

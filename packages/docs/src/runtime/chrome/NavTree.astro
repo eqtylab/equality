@@ -24,7 +24,13 @@ const list =
 // Equality's dropdown item, minus its `outline-hidden`: a link list needs keyboard
 // focus visible, so `focus-ring` stands in.
 const row =
-  'dropdown-item-hover focus-ring flex cursor-pointer select-none items-center gap-2 rounded-sm px-2 py-1.5 text-sm no-underline transition-colors';
+  'dropdown-item-hover focus-ring flex cursor-pointer select-none items-center gap-2 rounded-sm px-2 py-1.5 no-underline transition-colors';
+
+// `eq-docs-label` sets its own size and colour, so top-level groups must not also get
+// `text-sm` or `text-text-primary`.
+const groupText = depth === 0 ? 'eq-docs-label' : 'text-sm text-text-primary';
+const groupPointerFocus =
+  depth === 0 ? 'pointer-focus:text-text-secondary!' : 'pointer-focus:text-text-primary!';
 
 // Equality has no selected-row colour, so the current page borrows the hover one.
 // Search's selected row must keep matching it. The idle colour is left off a current
@@ -43,7 +49,7 @@ const current =
             {/* pointer-focus undoes Equality's hover firing on plain `:focus`, which
                 left a clicked header filled as if it were the current page. */}
             <summary
-              class={`${row} text-text-primary justify-between [&::-webkit-details-marker]:hidden pointer-focus:bg-transparent! pointer-focus:text-text-primary! pointer-focus:shadow-none!`}
+              class={`${row} ${groupText} justify-between [&::-webkit-details-marker]:hidden pointer-focus:bg-transparent! ${groupPointerFocus} pointer-focus:shadow-none!`}
             >
               <span class="flex min-w-0 flex-1 items-center gap-2 truncate">
                 {node.icon && <Icon icon={node.icon} size="sm" />}
@@ -67,7 +73,7 @@ const current =
           </details>
         ) : (
           <a
-            class={`${row} ${node.current ? current : 'text-text-secondary'}`}
+            class={`${row} text-sm ${node.current ? current : 'text-text-secondary'}`}
             href={node.href}
             aria-current={node.current ? 'page' : undefined}
             data-current={node.current ? '' : undefined}
