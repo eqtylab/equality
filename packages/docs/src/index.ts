@@ -219,6 +219,7 @@ export default function docs(
             rehypeRelativeLinks,
             {
               contentRoot: fileURLToPath(new URL(`./${cfg.contentDir}/`, config.srcDir)),
+              versionsDir,
               base: config.base,
               pathPrefix: cfg.pathPrefix,
               onMissing: (href: string, filePath: string) =>

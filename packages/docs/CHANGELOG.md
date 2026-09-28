@@ -12,6 +12,11 @@ Notable changes to Equality's Docsite Generator are recorded here, following [Ke
   - The build fails if a folder is missing, its key is not `MAJOR.MINOR.PATCH`, or it is not the
     newest release of its group
 
+### Fixed
+
+- Relative links between pages (`./usage.mdx`) resolve in archived versions too, to that
+  version's page; they reached the browser unchanged
+
 ## 0.8.0 - 2026-09-28
 
 ### Changed
