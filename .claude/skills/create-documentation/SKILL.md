@@ -35,6 +35,8 @@ Basic usage with required properties:
 
 <!-- Display the component and its variants in the best possible way given its various properties. The goal is not always to display EVERY combination of properties, rather to give developers a good overview of what is available. Display a code example either below each variant (if there are many) or as a single code block with the subheading "Usage". -->
 
+<!-- Go straight from `## Variants` to the first variant subheading, with no introductory text between them. Text there turns the Variants label back into a heading. Put any introduction in the Overview. -->
+
 ### Variant Subheadings
 
 <!-- Use subheading sections here when required to expose specific properties that change the component's use dramatically. For example the badge component has some stylistic variants, but a distinct subsection is used to explain that it can be made closable. -->

@@ -8,7 +8,7 @@ Notable changes to Equality's Docsite Generator are recorded here, following [Ke
 
 - Bold text and links in prose are semibold, and links underline in the link colour
 - Prose has more room: 24px between blocks, 48px above an h3, 80px above an h2
-- Headings are smaller and lean on weight: h2 is 20px, h3 16px, h4 14px
+- Headings are smaller and lean on weight: h2 is 20px, h3 16px, h4 and h5 14px
 - An h2 followed directly by an h3 renders as a small mono uppercase label
   - Any text between them keeps the h2 a normal heading
 - The breadcrumb, "On this page", top-level sidebar groups and the menu's version label share
@@ -17,6 +17,7 @@ Notable changes to Equality's Docsite Generator are recorded here, following [Ke
 ### Fixed
 
 - The breadcrumb passes contrast in light mode
+- Hovering a link in light mode no longer drops it below contrast; hover uses the link colour token
 
 ## 0.7.0 - 2026-09-25
 
