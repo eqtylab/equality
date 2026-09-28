@@ -30,12 +30,14 @@ import { SegmentedControls } from "@eqtylab/equality";
 ```
 
 `options`, `value`, and `onValueChange` are required. `value` and `onValueChange` should be
-controlled by the parent component.
+controlled by the parent component. Give the group an accessible name with `aria-label`, or
+`aria-labelledby` when a visible label already exists.
 
 ```tsx
 const [view, setView] = useState("day");
 
 <SegmentedControls
+  aria-label="View"
   value={view}
   onValueChange={setView}
   options={[
@@ -138,13 +140,15 @@ The `size` prop accepts `sm`, `md` (the default), or `lg`. Use the size that mak
 
 ## Props
 
-| Name            | Description                                           | Type                             | Default | Required |
-| --------------- | ----------------------------------------------------- | -------------------------------- | ------- | -------- |
-| `options`       | The set of segments to render.                        | `SegmentedControlOption[]`       | -       | ✅       |
-| `value`         | The value of the currently selected option.           | `string`                         | -       | ✅       |
-| `onValueChange` | Called with the new value when a segment is selected. | `(value: string) => void`        | -       | ✅       |
-| `display`       | Controls what is rendered inside each segment.        | `both`, `text-only`, `icon-only` | `both`  | ❌       |
-| `size`          | Height of the control, matching `Button` sizes.       | `sm`, `md`, `lg`                 | `md`    | ❌       |
+| Name              | Description                                           | Type                             | Default | Required |
+| ----------------- | ----------------------------------------------------- | -------------------------------- | ------- | -------- |
+| `options`         | The set of segments to render.                        | `SegmentedControlOption[]`       | -       | ✅       |
+| `value`           | The value of the currently selected option.           | `string`                         | -       | ✅       |
+| `onValueChange`   | Called with the new value when a segment is selected. | `(value: string) => void`        | -       | ✅       |
+| `display`         | Controls what is rendered inside each segment.        | `both`, `text-only`, `icon-only` | `both`  | ❌       |
+| `size`            | Height of the control, matching `Button` sizes.       | `sm`, `md`, `lg`                 | `md`    | ❌       |
+| `aria-label`      | Accessible name for the group.                        | `string`                         | -       | ❌       |
+| `aria-labelledby` | Id of a visible element that names the group.         | `string`                         | -       | ❌       |
 
 ### `SegmentedControlOption`
 

@@ -22,6 +22,7 @@ export const SegmentedControlsDemo = ({
 
   return (
     <SegmentedControls
+      aria-label="Example options"
       options={options}
       value={value}
       onValueChange={setValue}

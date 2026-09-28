@@ -33,6 +33,10 @@ export interface SegmentedControlsProps {
   display?: SegmentedControlsDisplay;
   /** Matches the height of a `Button` of the same size. */
   size?: SegmentedControlsSize;
+  /** Accessible name for the group. Provide this or `aria-labelledby`. */
+  'aria-label'?: string;
+  /** Id of a visible element that names the group. */
+  'aria-labelledby'?: string;
   className?: string;
 }
 
@@ -42,6 +46,8 @@ const SegmentedControls = ({
   onValueChange,
   display = 'both',
   size = 'md',
+  'aria-label': ariaLabel,
+  'aria-labelledby': ariaLabelledBy,
   className,
 }: SegmentedControlsProps) => {
   const allHaveIcons = options.every((option) => option.icon != null);
@@ -89,6 +95,9 @@ const SegmentedControls = ({
   return (
     <div
       ref={containerRef}
+      role="group"
+      aria-label={ariaLabel}
+      aria-labelledby={ariaLabelledBy}
       className={cn(
         styles['segmented-controls'],
         styles[`size--${size}`],

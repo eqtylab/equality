@@ -2,6 +2,14 @@
 
 Notable changes to Equality are recorded here, following [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## 4.7.0 - 2026-09-28
+
+### Added
+
+- `SegmentedControls` accepts `aria-label` and `aria-labelledby`, and renders as a `group`, so a
+  screen reader announces what the segments choose between. Consumers had to wrap it in their
+  own labelled `div` to get this.
+
 ## 4.6.0 - 2026-09-25
 
 ### Added
