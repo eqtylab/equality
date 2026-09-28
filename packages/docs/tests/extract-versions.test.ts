@@ -255,3 +255,17 @@ test('a folder that is not the newest release of its group fails naming the newe
     /5\.0\.0 is not the newest release of v5 \(v5\.0\.1 is\)/
   );
 });
+
+test('a folder for the current release waits until a newer release makes it old', () => {
+  // The release job saves X.Y.Z as a folder right after releasing it, while X.Y is still current.
+  const f = fixture();
+  mkdirSync(path.join(f.root, 'archive/v4'), { recursive: true });
+  writeFileSync(path.join(f.root, 'archive/v4/a.mdx'), 'saved');
+  const opts = f.opts({ folders: { '4.0.0': 'archive/v4' } });
+  const result = extractVersions(opts);
+  assert.equal(
+    result.versionManifest.find((m) => m.id === 'v4'),
+    undefined
+  );
+  assert.ok(opts.logger.lines.some((l) => l.startsWith('info:') && l.includes('4.0.0')));
+});

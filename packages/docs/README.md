@@ -343,7 +343,8 @@ What to know:
 - Releases that predate the docs site have no pages at their tag. Convert them once, commit the
   folder, and list it: `folders: { '2.2.0': 'archive/v2.2' }`. A folder version is served,
   listed and redirected exactly like a tag copy. It must be the newest release of its group, and
-  it replaces that release's tag copy when the tag has pages too.
+  it replaces that release's tag copy when the tag has pages too. A folder for the current release
+  is not an error: it is served once a newer release makes it old.
 - Moving `granularity` between `minor` and `patch` does not break published URLs: every grouping
   coarser than the one you set also resolves, so `/v3/` and `/v3.9/` both work at either setting.
   Moving **to `major` does** break them. Only groupings at or coarser than the setting are emitted,

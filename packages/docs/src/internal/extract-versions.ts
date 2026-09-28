@@ -162,9 +162,17 @@ export function extractVersions(o: ExtractOptions): ExtractResult {
 
   // Every folder must become its group's copy. One that is not the newest release of its group
   // would otherwise be dropped with the group, and its pages would silently not ship.
+  const currentGroup = groupOf(parseTag(currentVersion)!, o.granularity);
   for (const [version] of folders) {
     if (selection.copies.some((c) => c.tag === `${FOLDER}${version}`)) continue;
     const g = groupOf(parseTag(version)!, o.granularity);
+    // Saved on release, while its group is still current: served once a newer release makes it old.
+    if (g === currentGroup) {
+      o.logger.info(
+        `${TAG} folders ${version} is the current release; served once a newer one ships.`
+      );
+      continue;
+    }
     const newest = tags
       .map(parseTag)
       .filter((p): p is NonNullable<typeof p> => !!p && groupOf(p, o.granularity) === g)

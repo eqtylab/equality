@@ -9,6 +9,7 @@ Notable changes to Equality's Docsite Generator are recorded here, following [Ke
 - `versions.folders`: serve a version's pages from a folder, for releases that predate the docs site
   - Keys are releases (`'2.2.0'`), values folder paths relative to the project root
   - A folder replaces its release's tag copy when the tag has pages too
+  - A folder for the current release waits, and is served once a newer release ships
   - The build fails if a folder is missing, its key is not `MAJOR.MINOR.PATCH`, or it is not the
     newest release of its group
 
