@@ -191,3 +191,67 @@ test('a version that extracts no files fails the build, naming the tag', () => {
   const f = blobFixture();
   assert.throws(() => extractVersions(f.opts), /v1\.0\.0/);
 });
+
+/** A v5.0.0 release with no content dir at its tag, and a folder holding its converted pages. */
+function withFolder(f: ReturnType<typeof fixture>, version = '5.0.0') {
+  sh(f.repo, 'tag', 'v5.0.0', 'v2.0.0');
+  const dir = path.join(f.root, 'archive/v5');
+  mkdirSync(dir, { recursive: true });
+  writeFileSync(path.join(dir, 'a.mdx'), '---\ntitle: A\n---\nfive');
+  return { folders: { [version]: 'archive/v5' } };
+}
+
+test('a folder supplies the pages of a group whose tag has none', () => {
+  const f = fixture();
+  const { folders } = withFolder(f);
+  const result = extractVersions(f.opts({ current: '6.0.0', folders }));
+  const five = result.versionManifest.find((m) => m.id === 'v5');
+  assert.equal(five?.tag, 'folder:5.0.0');
+  assert.equal(
+    readFileSync(path.join(f.root, '.astro/eqty-docs/versions/v5/a.mdx'), 'utf8'),
+    '---\ntitle: A\n---\nfive'
+  );
+  // The release still redirects to its group's copy, as it would for a tag copy.
+  assert.ok(result.versionRedirects.some((r) => r.id === 'v5.0.0' && r.to === 'v5'));
+});
+
+test('a missing folder fails the build naming it', () => {
+  const f = fixture();
+  sh(f.repo, 'tag', 'v5.0.0', 'v2.0.0');
+  assert.throws(
+    () => extractVersions(f.opts({ current: '6.0.0', folders: { '5.0.0': 'archive/none' } })),
+    /archive\/none/
+  );
+});
+
+test('a folder key that is not MAJOR.MINOR.PATCH fails', () => {
+  const f = fixture();
+  assert.throws(
+    () => extractVersions(f.opts({ current: '4.0.0', folders: { '5.0': 'archive/v5' } })),
+    /"5\.0" is not MAJOR\.MINOR\.PATCH/
+  );
+});
+
+test('a folder replaces the pages of a tag that has them', () => {
+  // The release job saves each release, with its wheel reports, as a folder; the tag's own
+  // copy lacks them, so the folder must win.
+  const f = fixture();
+  mkdirSync(path.join(f.root, 'archive/v3'), { recursive: true });
+  writeFileSync(path.join(f.root, 'archive/v3/a.mdx'), 'from the folder');
+  const result = extractVersions(f.opts({ current: '4.0.0', folders: { '3.0.0': 'archive/v3' } }));
+  assert.equal(result.versionManifest.find((m) => m.id === 'v3')?.tag, 'folder:3.0.0');
+  assert.equal(
+    readFileSync(path.join(f.root, '.astro/eqty-docs/versions/v3/a.mdx'), 'utf8'),
+    'from the folder'
+  );
+});
+
+test('a folder that is not the newest release of its group fails naming the newest', () => {
+  const f = fixture();
+  const { folders } = withFolder(f, '5.0.0');
+  sh(f.repo, 'tag', 'v5.0.1', 'v2.0.0');
+  assert.throws(
+    () => extractVersions(f.opts({ current: '6.0.0', folders })),
+    /5\.0\.0 is not the newest release of v5 \(v5\.0\.1 is\)/
+  );
+});

@@ -5,7 +5,7 @@ import { brandAssets, resolveConfig } from '../src/config.ts';
 
 test('versions is on by default with tags and granularity filled in', () => {
   const cfg = resolveConfig({ title: 'x' });
-  assert.deepEqual(cfg.versions, { tags: 'v*', granularity: 'major' });
+  assert.deepEqual(cfg.versions, { tags: 'v*', granularity: 'major', folders: {} });
 });
 
 test('versions: false is the off switch', () => {
@@ -14,7 +14,12 @@ test('versions: false is the off switch', () => {
 
 test('an explicit current and granularity survive, defaults fill the rest', () => {
   const cfg = resolveConfig({ title: 'x', versions: { current: '4.0.0', granularity: 'minor' } });
-  assert.deepEqual(cfg.versions, { current: '4.0.0', tags: 'v*', granularity: 'minor' });
+  assert.deepEqual(cfg.versions, {
+    current: '4.0.0',
+    tags: 'v*',
+    granularity: 'minor',
+    folders: {},
+  });
 });
 
 test('an unknown granularity fails loudly', () => {
@@ -80,4 +85,16 @@ test('a github value that names no repo fails the build, quoting it', () => {
     () => resolveConfig({ title: 'x', github: 'https://gitlab.com/a/b' }),
     /github: .*gitlab/
   );
+});
+
+test('versions.folders defaults to an empty map and keeps what it is given', () => {
+  const plain = resolveConfig({ title: 'x' }).versions;
+  assert.ok(plain !== false);
+  assert.deepEqual(plain.folders, {});
+  const given = resolveConfig({
+    title: 'x',
+    versions: { folders: { '2.2.0': 'archive/v2.2' } },
+  }).versions;
+  assert.ok(given !== false);
+  assert.deepEqual(given.folders, { '2.2.0': 'archive/v2.2' });
 });

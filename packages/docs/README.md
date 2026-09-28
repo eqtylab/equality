@@ -319,6 +319,7 @@ docs({
     current: '4.0.0', // defaults to the highest matching tag
     tags: 'v*', // git tag glob; tags not ending in MAJOR.MINOR.PATCH are skipped
     granularity: 'minor', // 'major' (default) | 'minor' | 'patch'
+    folders: { '2.2.0': 'archive/v2.2' }, // releases converted by hand
   },
 });
 // or
@@ -339,6 +340,10 @@ What to know:
   kept; live component examples are not rendered, because an old page's imports bind it to
   today's library. The banner says so.
 - Old versions are read-only. A wrong page is fixed by a new tag.
+- Releases that predate the docs site have no pages at their tag. Convert them once, commit the
+  folder, and list it: `folders: { '2.2.0': 'archive/v2.2' }`. A folder version is served,
+  listed and redirected exactly like a tag copy. It must be the newest release of its group, and
+  it replaces that release's tag copy when the tag has pages too.
 - Moving `granularity` between `minor` and `patch` does not break published URLs: every grouping
   coarser than the one you set also resolves, so `/v3/` and `/v3.9/` both work at either setting.
   Moving **to `major` does** break them. Only groupings at or coarser than the setting are emitted,

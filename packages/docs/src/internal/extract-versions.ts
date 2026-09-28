@@ -23,6 +23,7 @@ export interface ExtractOptions {
   current?: string;
   tags: string;
   granularity: Granularity;
+  folders?: Record<string, string>;
   logger: { info(msg: string): void; warn(msg: string): void };
 }
 
@@ -54,6 +55,7 @@ export const EMPTY_VERSIONS: ExtractResult = {
 };
 
 const TAG = '[@eqtylab/docs] versions:';
+const FOLDER = 'folder:';
 
 function git(cwd: string, ...args: string[]): string {
   return execFileSync('git', args, {
@@ -114,7 +116,22 @@ export function extractVersions(o: ExtractOptions): ExtractResult {
     .split(path.sep)
     .join('/');
 
-  let selection = selectVersions(tags, currentVersion, o.granularity);
+  const folders = Object.entries(o.folders ?? {});
+  for (const [version] of folders) {
+    if (parseTag(version)?.version !== version) {
+      throw new Error(`${TAG} folders key "${version}" is not MAJOR.MINOR.PATCH`);
+    }
+  }
+  // A folder stands in for its release's tag, even when the tag has pages: the release job saves
+  // each release as a folder because the tag lacks what only the release run produces. The
+  // release keeps exactly one redirect.
+  const folderVersions = new Set(folders.map(([v]) => v));
+  const selectionTags = [
+    ...tags.filter((t) => !folderVersions.has(parseTag(t)?.version ?? '')),
+    ...folders.map(([v]) => `${FOLDER}${v}`),
+  ];
+
+  let selection = selectVersions(selectionTags, currentVersion, o.granularity);
   for (const tag of selection.skipped) {
     o.logger.warn(`${TAG} tag "${tag}" is not MAJOR.MINOR.PATCH; skipped.`);
   }
@@ -126,7 +143,9 @@ export function extractVersions(o: ExtractOptions): ExtractResult {
 
   // A pick whose tree predates the content directory takes its whole group out, and selection
   // re-runs so that group's releases redirect lower. One pass suffices: skipping never adds groups.
-  const missing = selection.copies.filter((c) => !hasPathAtTag(repoRoot, c.tag, contentRel));
+  const missing = selection.copies.filter(
+    (c) => !c.tag.startsWith(FOLDER) && !hasPathAtTag(repoRoot, c.tag, contentRel)
+  );
   if (missing.length) {
     for (const c of missing) {
       o.logger.warn(
@@ -134,10 +153,27 @@ export function extractVersions(o: ExtractOptions): ExtractResult {
       );
     }
     selection = selectVersions(
-      tags,
+      selectionTags,
       currentVersion,
       o.granularity,
       missing.map((c) => c.group)
+    );
+  }
+
+  // Every folder must become its group's copy. One that is not the newest release of its group
+  // would otherwise be dropped with the group, and its pages would silently not ship.
+  for (const [version] of folders) {
+    if (selection.copies.some((c) => c.tag === `${FOLDER}${version}`)) continue;
+    const g = groupOf(parseTag(version)!, o.granularity);
+    const newest = tags
+      .map(parseTag)
+      .filter((p): p is NonNullable<typeof p> => !!p && groupOf(p, o.granularity) === g)
+      .sort((a, b) => a.major - b.major || a.minor - b.minor || a.patch - b.patch)
+      .pop();
+    throw new Error(
+      `${TAG} folders ${version} is not the newest release of ${idOf(g)}${
+        newest ? ` (${newest.tag} is)` : ''
+      }, or is not below current ${currentVersion}`
     );
   }
 
@@ -146,23 +182,32 @@ export function extractVersions(o: ExtractOptions): ExtractResult {
   const versionManifest: ManifestEntry[] = selection.copies.map((c) => {
     const dir = path.join(versionsDir, c.id);
     fs.mkdirSync(dir, { recursive: true });
-    // Two processes rather than a shell pipeline: a pipeline reports only tar's status, so a
-    // failed `git archive` left an empty directory, a manifest entry pointing at it, and a build
-    // that succeeded with a version serving zero pages. `set -o pipefail` would fix that on
-    // macOS and break it on CI, where /bin/sh is dash and rejects the option outright.
-    try {
-      // `<tag>:<path>` makes the path the archive root, so there is nothing to strip.
-      const archive = execFileSync('git', ['archive', `${c.tag}:${contentRel}`], {
-        cwd: repoRoot,
-        maxBuffer: 512 * 1024 * 1024,
-        stdio: ['ignore', 'pipe', 'inherit'],
-      });
-      execFileSync('tar', ['-x', '-C', dir], {
-        input: archive,
-        stdio: ['pipe', 'ignore', 'inherit'],
-      });
-    } catch (cause) {
-      throw new Error(`${TAG} ${c.tag} failed to extract ${contentRel} into ${dir}`, { cause });
+    if (c.tag.startsWith(FOLDER)) {
+      const version = c.tag.slice(FOLDER.length);
+      const src = path.resolve(o.root, o.folders![version]!);
+      if (!fs.existsSync(src) || !fs.statSync(src).isDirectory()) {
+        throw new Error(`${TAG} folders ${version}: ${o.folders![version]} is not a directory`);
+      }
+      fs.cpSync(src, dir, { recursive: true });
+    } else {
+      // Two processes rather than a shell pipeline: a pipeline reports only tar's status, so a
+      // failed `git archive` left an empty directory, a manifest entry pointing at it, and a build
+      // that succeeded with a version serving zero pages. `set -o pipefail` would fix that on
+      // macOS and break it on CI, where /bin/sh is dash and rejects the option outright.
+      try {
+        // `<tag>:<path>` makes the path the archive root, so there is nothing to strip.
+        const archive = execFileSync('git', ['archive', `${c.tag}:${contentRel}`], {
+          cwd: repoRoot,
+          maxBuffer: 512 * 1024 * 1024,
+          stdio: ['ignore', 'pipe', 'inherit'],
+        });
+        execFileSync('tar', ['-x', '-C', dir], {
+          input: archive,
+          stdio: ['pipe', 'ignore', 'inherit'],
+        });
+      } catch (cause) {
+        throw new Error(`${TAG} ${c.tag} failed to extract ${contentRel} into ${dir}`, { cause });
+      }
     }
     // A content path that is a file rather than a directory passes `cat-file -e` and yields an
     // archive of nothing, so the exit status alone is not enough.

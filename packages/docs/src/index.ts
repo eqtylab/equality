@@ -98,6 +98,7 @@ export default function docs(
                 current: cfg.versions.current,
                 tags: cfg.versions.tags,
                 granularity: cfg.versions.granularity,
+                folders: cfg.versions.folders,
                 logger,
               });
 

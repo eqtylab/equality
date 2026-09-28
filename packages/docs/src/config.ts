@@ -191,6 +191,12 @@ export const docsConfigSchema = z.object({
             tags: z.string().default('v*'),
             /** One frozen copy per major, per minor, or per release. Releases without a copy redirect to theirs. */
             granularity: z.enum(['major', 'minor', 'patch']).default('major'),
+            /**
+             * Versions whose pages live in a folder rather than at their release tag, keyed by
+             * release (`'2.2.0': 'archive/v2.2'`), paths relative to the project root. For releases
+             * that predate the docs site: convert once, commit the folder.
+             */
+            folders: z.record(z.string(), z.string()).default({}),
           })
           .prefault({}),
       ],
@@ -199,7 +205,7 @@ export const docsConfigSchema = z.object({
         // would surface as "versions: Invalid input". Spelling the contract out here is what keeps
         // a misconfigured docsite failing loudly rather than silently versioning nothing.
         error:
-          'expected false, or an object with optional current, tags and granularity (major | minor | patch)',
+          'expected false, or an object with optional current, tags, granularity (major | minor | patch) and folders',
       }
     )
     .prefault({}),
