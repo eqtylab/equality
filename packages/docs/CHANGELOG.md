@@ -12,6 +12,8 @@ Notable changes to Equality's Docsite Generator are recorded here, following [Ke
   - A folder for the current release waits, and is served once a newer release ships
   - The build fails if a folder is missing, its key is not `MAJOR.MINOR.PATCH`, or it is not the
     newest release of its group
+  - The build warns if a folder in the current group is not the current release, or if folders
+    are listed while versioning is dormant
 
 ### Fixed
 

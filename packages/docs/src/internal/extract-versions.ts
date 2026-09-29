@@ -132,8 +132,8 @@ export function extractVersions(o: ExtractOptions): ExtractResult {
     }
   }
   // A folder stands in for its release's tag, even when the tag has pages: the release job saves
-  // each release as a folder because the tag lacks what only the release run produces. The
-  // release keeps exactly one redirect.
+  // each release as its group's folder, replacing the previous patch's, because the tag lacks
+  // what only the release run produces. The release keeps exactly one redirect.
   const folderVersions = new Set(folders.map(([v]) => v));
   const selectionTags = [
     ...tags.filter((t) => !folderVersions.has(parseTag(t)?.version ?? '')),
