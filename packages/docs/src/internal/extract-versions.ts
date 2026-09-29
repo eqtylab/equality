@@ -173,9 +173,16 @@ export function extractVersions(o: ExtractOptions): ExtractResult {
     const g = groupOf(parseTag(version)!, o.granularity);
     // Saved on release, while its group is still current: served once a newer release makes it old.
     if (g === currentGroup) {
-      o.logger.info(
-        `${TAG} folders ${version} is the current release; served once a newer one ships.`
-      );
+      if (version === currentVersion) {
+        o.logger.info(
+          `${TAG} folders ${version} is the current release; served once a newer one ships.`
+        );
+      } else {
+        // Normal between a patch's tag and the PR that saves it; fatal once the next group ships.
+        o.logger.warn(
+          `${TAG} folders ${version} is not current ${currentVersion} of ${idOf(g)}; the build fails once a newer group ships unless it is replaced.`
+        );
+      }
       continue;
     }
     const newest = tags

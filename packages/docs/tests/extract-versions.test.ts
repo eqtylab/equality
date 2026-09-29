@@ -270,6 +270,23 @@ test('a folder for the current release waits until a newer release makes it old'
   assert.ok(opts.logger.lines.some((l) => l.startsWith('info:') && l.includes('4.0.0')));
 });
 
+test('a folder older than current in the current group warns that it will fail', () => {
+  // Normal for the minutes between a patch's tag and its archive PR; fatal if it lasts until the
+  // next group ships, so the build says so now.
+  const f = fixture();
+  sh(f.repo, 'tag', 'v4.1.0');
+  mkdirSync(path.join(f.root, 'archive/v4'), { recursive: true });
+  writeFileSync(path.join(f.root, 'archive/v4/a.mdx'), 'saved');
+  const opts = f.opts({ folders: { '4.0.0': 'archive/v4' } });
+  const result = extractVersions(opts);
+  assert.equal(result.currentVersion?.version, '4.1.0');
+  assert.ok(
+    opts.logger.lines.some(
+      (l) => l.startsWith('warn:') && l.includes('4.0.0') && l.includes('4.1.0')
+    )
+  );
+});
+
 test('a missing folder for the current release fails the build naming it', () => {
   const f = fixture();
   assert.throws(
