@@ -108,6 +108,10 @@ export function extractVersions(o: ExtractOptions): ExtractResult {
     o.logger.info(
       `${TAG} on and dormant. No tag matches "${o.tags}"; versioning activates at the first release tag.`
     );
+    const listed = Object.keys(o.folders ?? {}).length;
+    if (listed) {
+      o.logger.warn(`${TAG} ${listed} folders listed but versioning is dormant; none is served.`);
+    }
     return EMPTY_VERSIONS;
   }
 

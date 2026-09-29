@@ -294,3 +294,10 @@ test('a missing folder for the current release fails the build naming it', () =>
     /archive\/none/
   );
 });
+
+test('folders listed while versioning is dormant warn that they are not served', () => {
+  const f = fixture();
+  const opts = f.opts({ tags: 'release-*', folders: { '4.0.0': 'archive/v4' } });
+  extractVersions(opts);
+  assert.ok(opts.logger.lines.some((l) => l.startsWith('warn:') && l.includes('folders')));
+});
