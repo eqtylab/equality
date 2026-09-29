@@ -269,3 +269,11 @@ test('a folder for the current release waits until a newer release makes it old'
   );
   assert.ok(opts.logger.lines.some((l) => l.startsWith('info:') && l.includes('4.0.0')));
 });
+
+test('a missing folder for the current release fails the build naming it', () => {
+  const f = fixture();
+  assert.throws(
+    () => extractVersions(f.opts({ folders: { '4.0.0': 'archive/none' } })),
+    /archive\/none/
+  );
+});

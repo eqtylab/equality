@@ -117,9 +117,14 @@ export function extractVersions(o: ExtractOptions): ExtractResult {
     .join('/');
 
   const folders = Object.entries(o.folders ?? {});
-  for (const [version] of folders) {
+  for (const [version, dir] of folders) {
     if (parseTag(version)?.version !== version) {
       throw new Error(`${TAG} folders key "${version}" is not MAJOR.MINOR.PATCH`);
+    }
+    // Checked here, not when copied, so a folder that waits as the current release fails too.
+    const src = path.resolve(o.root, dir);
+    if (!fs.existsSync(src) || !fs.statSync(src).isDirectory()) {
+      throw new Error(`${TAG} folders ${version}: ${dir} is not a directory`);
     }
   }
   // A folder stands in for its release's tag, even when the tag has pages: the release job saves
@@ -192,11 +197,7 @@ export function extractVersions(o: ExtractOptions): ExtractResult {
     fs.mkdirSync(dir, { recursive: true });
     if (c.tag.startsWith(FOLDER)) {
       const version = c.tag.slice(FOLDER.length);
-      const src = path.resolve(o.root, o.folders![version]!);
-      if (!fs.existsSync(src) || !fs.statSync(src).isDirectory()) {
-        throw new Error(`${TAG} folders ${version}: ${o.folders![version]} is not a directory`);
-      }
-      fs.cpSync(src, dir, { recursive: true });
+      fs.cpSync(path.resolve(o.root, o.folders![version]!), dir, { recursive: true });
     } else {
       // Two processes rather than a shell pipeline: a pipeline reports only tar's status, so a
       // failed `git archive` left an empty directory, a manifest entry pointing at it, and a build
