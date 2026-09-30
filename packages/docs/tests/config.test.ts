@@ -22,6 +22,11 @@ test('an explicit current and granularity survive, defaults fill the rest', () =
   });
 });
 
+test("versions.current accepts 'folders'", () => {
+  const cfg = resolveConfig({ title: 'x', versions: { current: 'folders' } });
+  assert.equal(cfg.versions && cfg.versions.current, 'folders');
+});
+
 test('an unknown granularity fails loudly', () => {
   assert.throws(
     () => resolveConfig({ title: 'x', versions: { granularity: 'weekly' } as never }),
