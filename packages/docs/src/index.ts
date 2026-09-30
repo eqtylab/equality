@@ -96,6 +96,7 @@ export default function docs(
                 contentDirAbs: fileURLToPath(new URL(`./${cfg.contentDir}/`, config.srcDir)),
                 cacheDir: fileURLToPath(new URL('./.astro/eqty-docs/', config.root)),
                 current: cfg.versions.current,
+                source: cfg.versions.source,
                 tags: cfg.versions.tags,
                 granularity: cfg.versions.granularity,
                 folders: cfg.versions.folders,
