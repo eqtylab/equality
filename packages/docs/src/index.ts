@@ -98,6 +98,7 @@ export default function docs(
                 current: cfg.versions.current,
                 tags: cfg.versions.tags,
                 granularity: cfg.versions.granularity,
+                folders: cfg.versions.folders,
                 logger,
               });
 
@@ -218,6 +219,7 @@ export default function docs(
             rehypeRelativeLinks,
             {
               contentRoot: fileURLToPath(new URL(`./${cfg.contentDir}/`, config.srcDir)),
+              versionsDir,
               base: config.base,
               pathPrefix: cfg.pathPrefix,
               onMissing: (href: string, filePath: string) =>

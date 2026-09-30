@@ -11,6 +11,7 @@ import path from 'node:path';
 import { visit } from 'unist-util-visit';
 
 import { docsHref, isExternalHref, type PathContext } from '../paths.ts';
+import { versionFromPath } from './rehype-base-url.ts';
 
 interface ElementNode {
   type: string;
@@ -24,6 +25,11 @@ interface VFile {
 export interface RelativeLinkOptions extends PathContext {
   /** Absolute path of the docs content directory. */
   contentRoot: string;
+  /**
+   * Where archived versions are extracted, one folder per version id. A page there resolves
+   * against its own version's folder and links under that version's prefix.
+   */
+  versionsDir?: string;
   /** Called with the resolved-but-missing target, so a typo fails loudly. */
   onMissing?: (href: string, filePath: string) => void;
 }
@@ -50,11 +56,15 @@ function splitTarget(href: string): { target: string; suffix: string } | undefin
 }
 
 export function rehypeRelativeLinks(options: RelativeLinkOptions) {
-  const { contentRoot, onMissing, ...ctx } = options;
+  const { contentRoot: currentRoot, versionsDir, onMissing, ...baseCtx } = options;
 
   return function transformer(tree: unknown, file?: VFile) {
     const filePath = file?.path;
     if (!filePath) return;
+
+    const version = versionFromPath(filePath, versionsDir);
+    const contentRoot = version ? path.join(versionsDir!, version) : currentRoot;
+    const ctx: PathContext = version ? { ...baseCtx, versionPrefix: version } : baseCtx;
 
     // Content files only. A page elsewhere in the project has its own notion of "here".
     const fromRoot = path.relative(contentRoot, filePath);

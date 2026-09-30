@@ -2,6 +2,24 @@
 
 Notable changes to Equality's Docsite Generator are recorded here, following [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## Unreleased
+
+### Added
+
+- `versions.folders`: serve a version's pages from a folder, for releases that predate the docs site
+  - Keys are releases (`'2.2.0'`), values folder paths relative to the project root
+  - A folder replaces its release's tag copy when the tag has pages too
+  - A folder for the current release waits, and is served once a newer release ships
+  - The build fails if a folder is missing, its key is not `MAJOR.MINOR.PATCH`, or it is not the
+    newest release of its group
+  - The build warns if a folder in the current group is not the current release, or if folders
+    are listed while versioning is dormant
+
+### Fixed
+
+- Relative links between pages (`./usage.mdx`) resolve in archived versions too, to that
+  version's page; they reached the browser unchanged
+
 ## 0.8.0 - 2026-09-28
 
 ### Changed

@@ -1,4 +1,6 @@
 import assert from 'node:assert/strict';
+import { mkdirSync, mkdtempSync, writeFileSync } from 'node:fs';
+import { tmpdir } from 'node:os';
 import path from 'node:path';
 import { test } from 'node:test';
 import { fileURLToPath } from 'node:url';
@@ -104,4 +106,24 @@ test('a tree with no file path is not rewritten', () => {
   const doc = tree('./usage.mdx');
   rehypeRelativeLinks({ contentRoot: CONTENT_ROOT, base: '/' })(doc);
   assert.equal(doc.children[0]!.properties.href, './usage.mdx');
+});
+
+test('a page in an archived version resolves within that version', () => {
+  // Version copies live outside the content root, under <versionsDir>/<id>/. Their links must
+  // name that version's pages, or every relative link in an old version reaches the browser
+  // as `./page.mdx`.
+  const versionsDir = mkdtempSync(path.join(tmpdir(), 'eqty-versions-'));
+  mkdirSync(path.join(versionsDir, 'v2.2/api'), { recursive: true });
+  writeFileSync(path.join(versionsDir, 'v2.2/api/signer.mdx'), '');
+  writeFileSync(path.join(versionsDir, 'v2.2/api/global-functions.mdx'), '');
+  const missing: string[] = [];
+  const doc = tree('./global-functions.mdx#set_active_signer');
+  rehypeRelativeLinks({
+    contentRoot: CONTENT_ROOT,
+    versionsDir,
+    base: '/',
+    onMissing: (target) => missing.push(target),
+  })(doc, { path: path.join(versionsDir, 'v2.2/api/signer.mdx') });
+  assert.equal(doc.children[0]!.properties.href, '/v2.2/api/global-functions/#set_active_signer');
+  assert.deepEqual(missing, []);
 });
