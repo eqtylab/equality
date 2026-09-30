@@ -311,12 +311,12 @@ On by default. With release tags in the repository (`v1.2.3`, one per release), 
 one frozen copy of the docs per older group and serves it under `/v<group>/`, adds a switcher to
 the header, a banner and `noindex` to every old page, and scopes search to the page's version.
 Every release tag that is not a copy of its own redirects to its group's copy. Without tags it
-is dormant and the build is unchanged.
+is dormant and the build is unchanged, unless the versions come from folders (below).
 
 ```js
 docs({
   versions: {
-    current: '4.0.0', // defaults to the highest matching tag
+    current: '4.0.0', // or 'folders'; defaults to the highest matching tag
     tags: 'v*', // git tag glob; tags not ending in MAJOR.MINOR.PATCH are skipped
     granularity: 'minor', // 'major' (default) | 'minor' | 'patch'
     folders: { '2.2.0': 'archive/v2.2' }, // releases converted by hand
@@ -333,9 +333,11 @@ What to know:
 - A tag counts when it **ends** in `MAJOR.MINOR.PATCH`. Any prefix is allowed, so `v1.2.3`,
   `1.2.3`, `sdk-v1.2.3` and `@scope/pkg@1.2.3` all work. Prereleases and anything else are
   skipped with a warning naming the tag.
-- CI needs the tags: check out with `fetch-depth: 0`.
+- CI needs the tags, `fetch-depth: 0`, for copies made from tags and for the checks on folders.
+  A site whose old versions all come from folders and that sets `current: 'folders'` needs none.
 - If a tag lands one deploy after its bump and `current` is inferred, the `/` label is one
-  release behind for that deploy. The content is current; the label heals on the next tag.
+  release behind for that deploy. The content is current; the label heals on the next tag. With
+  `current: 'folders'` the label moves when the new release's folder is merged.
 - An archived page is a document, not an app. Prose, headings, tables and code samples are
   kept; live component examples are not rendered, because an old page's imports bind it to
   today's library. The banner says so.
@@ -347,6 +349,19 @@ What to know:
   is not an error: it is served once a newer release makes it old. A release job that saves each
   patch must replace its group's previous folder, not add beside it: once the group is old, a
   folder that is not its newest release fails the build. Until then the build warns.
+- `current: 'folders'` takes the current release from the highest folder key, so the build needs
+  no tags and gives the same versions on every host, with tags or without (Vercel's clone has
+  none). Tags are still read when present: a tag with no folder is named in a warning until its
+  folder is saved. Until a new release's folder is merged, every host labels latest as the
+  previous release and does not yet serve it as an old version. A folder for the current release
+  is served once the next release's folder is merged.
+- In a full clone, a folder above every release tag fails the build: a typo, or a deleted tag.
+- Without tags, a site keeps one address per saved folder: `/v2.0/` and `/v2.0.9/` work; other
+  patches like `/v2.0.7/` don't. Nothing links to those.
+- At `minor`, a release job replaces each minor's folder on every patch. To switch to `patch`,
+  change the job to keep every patch's folder.
+- A folders-only site whose repository has unrelated tags of its own should set `tags` to a
+  pattern that matches none of them.
 - Moving `granularity` between `minor` and `patch` does not break published URLs: every grouping
   coarser than the one you set also resolves, so `/v3/` and `/v3.9/` both work at either setting.
   Moving **to `major` does** break them. Only groupings at or coarser than the setting are emitted,
