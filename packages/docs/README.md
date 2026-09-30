@@ -404,7 +404,9 @@ With `source: 'folders'`:
 - Tags are optional. Where they are present (CI), they add checks: a stale folder or a backport
   still fails the build, a release whose folder is not saved yet is named in a warning, and so is
   an older version that exists only as a tag, since hosts without tags won't have it.
-- In a full clone, a folder above every release tag fails the build: a typo, or a deleted tag.
+- A folder above every release tag in the clone is named in a warning: a typo, or tags that were
+  not fetched. It does not fail the build, because a clone can have full history and only some
+  tags, so the build cannot tell a mistyped key from a missing tag.
 - Until a new release's folder is merged, every host labels latest as the previous release and
   does not yet list it as an old version. Merge the release job's pull request promptly.
 - Without tags, a site keeps one address per saved folder: `/v2.0/` and `/v2.0.9/` work; other

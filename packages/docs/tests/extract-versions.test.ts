@@ -400,9 +400,13 @@ test("source: 'folders' outside a git repository serves the folders", () => {
 
 /** A shallow clone of the fixture with its own folders, as a host like Vercel would build it. */
 function shallowWithFolders(folders: Record<string, string>) {
+  return cloneWithFolders(folders, ['--depth', '1']);
+}
+
+function cloneWithFolders(folders: Record<string, string>, cloneArgs: string[]) {
   const f = fixture();
-  const shallow = mkdtempSync(path.join(tmpdir(), 'eqty-docs-shallow-folders-'));
-  execFileSync('git', ['clone', '-q', '--depth', '1', `file://${f.repo}`, shallow]);
+  const shallow = mkdtempSync(path.join(tmpdir(), 'eqty-docs-clone-folders-'));
+  execFileSync('git', ['clone', '-q', ...cloneArgs, `file://${f.repo}`, shallow]);
   const root = path.join(shallow, 'packages/demo');
   for (const dir of new Set(Object.values(folders))) {
     mkdirSync(path.join(root, dir), { recursive: true });
@@ -449,11 +453,32 @@ test('a shallow clone skips the typo check', () => {
   assert.equal(s.run().result.currentVersion?.version, '9.0.0');
 });
 
-test('a folder above every tag fails in a full clone, naming it', () => {
+test('a folder above every tag warns in a full clone, naming it', () => {
   const f = fixture();
-  assert.throws(
-    () => extractVersions(f.opts({ source: 'folders', folders: { '5.0.0': folder(f, 'v5') } })),
-    /folders 5\.0\.0 is above every release tag \(v4\.0\.0 is the highest\)/
+  const opts = f.opts({ source: 'folders', folders: { '5.0.0': folder(f, 'v5') } });
+  const result = extractVersions(opts);
+  assert.equal(result.currentVersion?.version, '5.0.0');
+  assert.ok(
+    opts.logger.lines.some(
+      (l) =>
+        l.startsWith('warn:') &&
+        l.includes('folders 5.0.0 is above every release tag in this clone (v4.0.0 is the highest)')
+    )
+  );
+});
+
+test('a full clone holding only an older tag builds the same as with every tag', () => {
+  // captjt's case on #177: `clone --no-tags`, then one `git fetch origin tag`. History is full,
+  // tags are not, so tag completeness cannot be inferred from the clone.
+  const c = cloneWithFolders({ '3.0.0': 'archive/v3', '4.0.0': 'archive/v4' }, ['--no-tags']);
+  assert.equal(sh(c.shallow, 'rev-parse', '--is-shallow-repository'), 'false');
+  sh(c.shallow, 'fetch', '-q', 'origin', 'tag', 'v3.0.0');
+  assert.equal(sh(c.shallow, 'tag'), 'v3.0.0');
+  const { result } = c.run();
+  assert.equal(result.currentVersion?.version, '4.0.0');
+  assert.deepEqual(
+    result.versionManifest.map((m) => [m.id, m.tag]),
+    [['v3', 'folder:3.0.0']]
   );
 });
 
