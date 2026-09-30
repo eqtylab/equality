@@ -185,7 +185,11 @@ export const docsConfigSchema = z.object({
         z.literal(false),
         z
           .object({
-            /** The documented product's version, e.g. '4.0.0'. Defaults to the highest tag matching `tags`. */
+            /**
+             * The documented product's version, e.g. '4.0.0', or 'folders' to take the highest key
+             * of `folders`, so a site built from folders needs no tags. Defaults to the highest
+             * tag matching `tags`.
+             */
             current: z.string().optional(),
             /** Git tag glob for releases. Tags that are not MAJOR.MINOR.PATCH are skipped with a warning. */
             tags: z.string().default('v*'),

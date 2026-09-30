@@ -7,6 +7,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 
 import {
+  compareTags,
   groupOf,
   highestTag,
   idOf,
@@ -88,39 +89,38 @@ function hasPathAtTag(repoRoot: string, tag: string, rel: string): boolean {
 }
 
 export function extractVersions(o: ExtractOptions): ExtractResult {
-  let repoRoot: string;
+  // `current: 'folders'` takes the current release from the highest folder key, so every host
+  // builds the same versions whether or not its clone has tags. Vercel's clone has none.
+  const fromFolders = o.current === 'folders';
+  const folders = Object.entries(o.folders ?? {});
+  if (fromFolders && !folders.length) {
+    throw new Error(`${TAG} current: 'folders' needs folders`);
+  }
+
+  let repoRoot: string | null = null;
   try {
     repoRoot = git(o.root, 'rev-parse', '--show-toplevel');
   } catch {
-    o.logger.warn(
-      `${TAG} not a git repository, or git is missing. Versioning is off for this build.`
-    );
-    return EMPTY_VERSIONS;
+    if (!fromFolders) {
+      o.logger.warn(
+        `${TAG} not a git repository, or git is missing. Versioning is off for this build.`
+      );
+      return EMPTY_VERSIONS;
+    }
+    o.logger.info(`${TAG} not a git repository; building versions from folders alone.`);
   }
 
-  if (git(o.root, 'rev-parse', '--is-shallow-repository') === 'true') {
+  const shallow =
+    repoRoot !== null && git(o.root, 'rev-parse', '--is-shallow-repository') === 'true';
+  // Tags are optional when current comes from folders, so a shallow clone is not a problem there.
+  if (shallow && !fromFolders) {
     o.logger.warn(`${TAG} shallow clone; tags may be incomplete. Check out with fetch-depth: 0.`);
   }
 
-  const tags = git(o.root, 'tag', '--list', o.tags).split('\n').filter(Boolean);
-  const currentVersion = o.current ?? highestTag(tags)?.version;
-  if (!currentVersion) {
-    o.logger.info(
-      `${TAG} on and dormant. No tag matches "${o.tags}"; versioning activates at the first release tag.`
-    );
-    const listed = Object.keys(o.folders ?? {}).length;
-    if (listed) {
-      o.logger.warn(`${TAG} ${listed} folders listed but versioning is dormant; none is served.`);
-    }
-    return EMPTY_VERSIONS;
-  }
+  const tags =
+    repoRoot === null ? [] : git(o.root, 'tag', '--list', o.tags).split('\n').filter(Boolean);
 
-  const contentRel = path
-    .relative(realpath(repoRoot), realpath(o.contentDirAbs))
-    .split(path.sep)
-    .join('/');
-
-  const folders = Object.entries(o.folders ?? {});
+  // Validated before anything reads them, so a bad key fails even on a dormant site.
   for (const [version, dir] of folders) {
     if (parseTag(version)?.version !== version) {
       throw new Error(`${TAG} folders key "${version}" is not MAJOR.MINOR.PATCH`);
@@ -131,6 +131,35 @@ export function extractVersions(o: ExtractOptions): ExtractResult {
       throw new Error(`${TAG} folders ${version}: ${dir} is not a directory`);
     }
   }
+
+  // A release job saves a folder only after its tag exists, so in a full clone a folder above
+  // every tag is a typo or a deleted tag. A shallow clone's tags cannot be trusted; skip it there.
+  const topTag = highestTag(tags);
+  const topFolder = highestTag(folders.map(([v]) => v));
+  if (repoRoot !== null && !shallow && topTag && topFolder && compareTags(topFolder, topTag) > 0) {
+    throw new Error(
+      `${TAG} folders ${topFolder.version} is above every release tag (${topTag.tag} is the highest); a typo, or a tag that was deleted?`
+    );
+  }
+
+  const currentVersion = fromFolders ? topFolder!.version : (o.current ?? topTag?.version);
+  if (!currentVersion) {
+    o.logger.info(
+      `${TAG} on and dormant. No tag matches "${o.tags}"; versioning activates at the first release tag.`
+    );
+    if (folders.length) {
+      o.logger.warn(
+        `${TAG} ${folders.length} folders listed but versioning is dormant; set current: 'folders' to serve them without tags.`
+      );
+    }
+    return EMPTY_VERSIONS;
+  }
+
+  const contentRel =
+    repoRoot === null
+      ? ''
+      : path.relative(realpath(repoRoot), realpath(o.contentDirAbs)).split(path.sep).join('/');
+
   // A folder stands in for its release's tag, even when the tag has pages: the release job saves
   // each release as its group's folder, replacing the previous patch's, because the tag lacks
   // what only the release run produces. The release keeps exactly one redirect.
@@ -145,15 +174,19 @@ export function extractVersions(o: ExtractOptions): ExtractResult {
     o.logger.warn(`${TAG} tag "${tag}" is not MAJOR.MINOR.PATCH; skipped.`);
   }
   if (selection.above.length) {
+    const above = selection.above.map((t) => (t.startsWith(FOLDER) ? t.slice(FOLDER.length) : t));
+    const one = above.length === 1;
     o.logger.warn(
-      `${TAG} tags above current ${currentVersion} ignored: ${selection.above.join(', ')}.`
+      fromFolders
+        ? `${TAG} ${above.join(', ')} ${one ? 'has' : 'have'} no folder yet; the site shows ${currentVersion} as current until ${one ? 'its folder is' : 'their folders are'} saved.`
+        : `${TAG} tags above current ${currentVersion} ignored: ${above.join(', ')}.`
     );
   }
 
   // A pick whose tree predates the content directory takes its whole group out, and selection
   // re-runs so that group's releases redirect lower. One pass suffices: skipping never adds groups.
   const missing = selection.copies.filter(
-    (c) => !c.tag.startsWith(FOLDER) && !hasPathAtTag(repoRoot, c.tag, contentRel)
+    (c) => !c.tag.startsWith(FOLDER) && !hasPathAtTag(repoRoot!, c.tag, contentRel)
   );
   if (missing.length) {
     for (const c of missing) {
@@ -217,7 +250,7 @@ export function extractVersions(o: ExtractOptions): ExtractResult {
       try {
         // `<tag>:<path>` makes the path the archive root, so there is nothing to strip.
         const archive = execFileSync('git', ['archive', `${c.tag}:${contentRel}`], {
-          cwd: repoRoot,
+          cwd: repoRoot!,
           maxBuffer: 512 * 1024 * 1024,
           stdio: ['ignore', 'pipe', 'inherit'],
         });
