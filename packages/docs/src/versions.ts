@@ -162,7 +162,7 @@ export function selectVersions(
   const copyIds = new Set(copies.map((c) => c.id));
   // The current version is known from config and need not be tagged yet, so it is seeded here:
   // `/v4.0/` and `/v4/` should resolve to latest on the strength of the config alone. Only when
-  // a copy exists, though, or a repository with no tags would stop being dormant.
+  // a copy exists, though: a site with no older version stays dormant.
   const stubSources = copies.length
     ? covered.some((p) => p.version === cur.version)
       ? covered

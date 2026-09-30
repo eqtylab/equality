@@ -4,6 +4,21 @@ Notable changes to Equality's Docsite Generator are recorded here, following [Ke
 
 ## Unreleased
 
+### Added
+
+- `versions.current: 'folders'`: the current release is the highest folder key, so a site built from folders needs no tags and builds the same versions on every host
+  - Tags are still read when present; a tag with no folder yet is named in a warning
+
+### Changed
+
+- Folder keys are validated before the dormant check, so a bad key fails on every site
+- In a full clone, a folder above every release tag fails the build
+- The dormant warning for listed folders names `current: 'folders'`
+
+### Fixed
+
+- The "tags above current" warning no longer prints the internal `folder:` prefix
+
 ## 0.9.0 - 2026-09-30
 
 ### Added
