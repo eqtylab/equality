@@ -135,12 +135,10 @@ export function extractVersions(o: ExtractOptions): ExtractResult {
   }
 
   // In folders mode the highest folder becomes the current release, so a mistyped key would
-  // relabel the whole site. A release job saves a folder only after its tag exists, so a folder
-  // above every tag the clone has may be a typo. It warns rather than fails: a full-history clone
-  // can still hold only some tags (`clone --no-tags`, then one `fetch origin tag`), so the clone
-  // cannot prove the tags are complete. Other modes keep untagged folders (a release converted by
-  // hand) and catch a folder above `current` in the group check below. A shallow clone's tags are
-  // expected to be partial, so it stays quiet there.
+  // relabel the whole site. Do not make this an error: a full-history clone can still hold only
+  // some tags (`clone --no-tags`, then one `fetch origin tag`), and valid builds would fail. Other
+  // modes keep untagged folders (a release converted by hand) and catch a folder above `current`
+  // in the group check below.
   const topTag = highestTag(tags);
   const topFolder = highestTag(folders.map(([v]) => v));
   if (
