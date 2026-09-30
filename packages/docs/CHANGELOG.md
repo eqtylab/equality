@@ -4,6 +4,8 @@ Notable changes to Equality's Docsite Generator are recorded here, following [Ke
 
 ## Unreleased
 
+## 0.10.0 - 2026-09-30
+
 ### Added
 
 - `versions.source`: where old versions come from, `'tags'` (default, unchanged) or `'folders'`
