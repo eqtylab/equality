@@ -132,11 +132,21 @@ export function extractVersions(o: ExtractOptions): ExtractResult {
     }
   }
 
-  // A release job saves a folder only after its tag exists, so in a full clone a folder above
-  // every tag is a typo or a deleted tag. A shallow clone's tags cannot be trusted; skip it there.
+  // In folders mode the highest folder becomes the current release, so a mistyped key would
+  // relabel the whole site. A release job saves a folder only after its tag exists, so in a full
+  // clone a folder above every tag is a typo or a deleted tag. Other modes keep untagged folders
+  // (a release converted by hand) and catch a folder above `current` in the group check below.
+  // A shallow clone's tags cannot be trusted, so it is skipped there.
   const topTag = highestTag(tags);
   const topFolder = highestTag(folders.map(([v]) => v));
-  if (repoRoot !== null && !shallow && topTag && topFolder && compareTags(topFolder, topTag) > 0) {
+  if (
+    fromFolders &&
+    repoRoot !== null &&
+    !shallow &&
+    topTag &&
+    topFolder &&
+    compareTags(topFolder, topTag) > 0
+  ) {
     throw new Error(
       `${TAG} folders ${topFolder.version} is above every release tag (${topTag.tag} is the highest); a typo, or a tag that was deleted?`
     );
@@ -200,6 +210,17 @@ export function extractVersions(o: ExtractOptions): ExtractResult {
       o.granularity,
       missing.map((c) => c.group)
     );
+  }
+
+  // A copy made from a tag exists only where the clone has tags, so hosts without them would
+  // build a different site: the one thing folders mode promises not to do.
+  if (fromFolders) {
+    for (const c of selection.copies) {
+      if (c.tag.startsWith(FOLDER)) continue;
+      o.logger.warn(
+        `${TAG} ${c.id} is copied from tag ${c.tag}; hosts without tags won't have it. To build the same everywhere, save a folder for it.`
+      );
+    }
   }
 
   // Every folder must become its group's copy. One that is not the newest release of its group
