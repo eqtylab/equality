@@ -398,29 +398,55 @@ test("current: 'folders' outside a git repository serves the folders", () => {
   assert.ok(!log.lines.some((l) => l.includes('Versioning is off')));
 });
 
-test('a shallow clone with some tags builds the same as with none', () => {
+/** A shallow clone of the fixture with its own folders, as a host like Vercel would build it. */
+function shallowWithFolders(folders: Record<string, string>) {
   const f = fixture();
   const shallow = mkdtempSync(path.join(tmpdir(), 'eqty-docs-shallow-folders-'));
   execFileSync('git', ['clone', '-q', '--depth', '1', `file://${f.repo}`, shallow]);
   const root = path.join(shallow, 'packages/demo');
-  for (const v of ['v3', 'v4']) {
-    mkdirSync(path.join(root, 'archive', v), { recursive: true });
-    writeFileSync(path.join(root, 'archive', v, 'a.mdx'), v);
+  for (const dir of new Set(Object.values(folders))) {
+    mkdirSync(path.join(root, dir), { recursive: true });
+    writeFileSync(path.join(root, dir, 'a.mdx'), dir);
   }
-  const log = logger();
-  const result = extractVersions({
-    root,
-    contentDirAbs: path.join(shallow, CONTENT),
-    cacheDir: path.join(root, '.astro/eqty-docs'),
-    current: 'folders',
-    tags: 'v*',
-    granularity: 'major',
-    // 9.0.0 is above every tag the clone has; a shallow clone skips the typo check.
-    folders: { '3.0.0': 'archive/v3', '9.0.0': 'archive/v4' },
-    logger: log,
+  const run = () => {
+    const log = logger();
+    const result = extractVersions({
+      root,
+      contentDirAbs: path.join(shallow, CONTENT),
+      cacheDir: path.join(root, '.astro/eqty-docs'),
+      current: 'folders',
+      tags: 'v*',
+      granularity: 'major',
+      folders,
+      logger: log,
+    });
+    return { result, log };
+  };
+  return { shallow, run };
+}
+
+test('a shallow clone with some tags builds the same as with none', () => {
+  // Every older group has a folder, so the tags inside the clone's depth (v4.0.0) add nothing.
+  const s = shallowWithFolders({ '3.0.0': 'archive/v3', '4.0.0': 'archive/v4' });
+  assert.ok(sh(s.shallow, 'tag').includes('v4.0.0'));
+  const withTags = s.run();
+  for (const t of sh(s.shallow, 'tag').split('\n').filter(Boolean)) sh(s.shallow, 'tag', '-d', t);
+  const withoutTags = s.run();
+  const shape = (r: typeof withTags.result) => ({
+    current: r.currentVersion?.version,
+    copies: r.versionManifest.map((m) => [m.id, m.tag]),
   });
-  assert.equal(result.currentVersion?.version, '9.0.0');
-  assert.ok(!log.lines.some((l) => l.includes('fetch-depth')));
+  assert.deepEqual(shape(withTags.result), shape(withoutTags.result));
+  assert.deepEqual(shape(withTags.result).copies, [['v3', 'folder:3.0.0']]);
+  for (const run of [withTags, withoutTags]) {
+    assert.ok(!run.log.lines.some((l) => l.includes('fetch-depth')));
+  }
+});
+
+test('a shallow clone skips the typo check', () => {
+  // 9.0.0 is above every tag the clone has; a shallow clone's tags cannot be trusted.
+  const s = shallowWithFolders({ '3.0.0': 'archive/v3', '9.0.0': 'archive/v9' });
+  assert.equal(s.run().result.currentVersion?.version, '9.0.0');
 });
 
 test('a folder above every tag fails in a full clone, naming it', () => {

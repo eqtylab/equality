@@ -350,11 +350,12 @@ What to know:
   patch must replace its group's previous folder, not add beside it: once the group is old, a
   folder that is not its newest release fails the build. Until then the build warns.
 - `current: 'folders'` takes the current release from the highest folder key, so the build needs
-  no tags and gives the same versions on every host, with tags or without (Vercel's clone has
-  none). Tags are still read when present: a tag with no folder is named in a warning until its
-  folder is saved. Until a new release's folder is merged, every host labels latest as the
-  previous release and does not yet serve it as an old version. A folder for the current release
-  is served once the next release's folder is merged.
+  no tags. When every older version has a folder, it gives the same versions on every host, with
+  tags or without (Vercel's clone has none); an older version with only a tag is copied where the
+  tags are present and missing where they aren't. Tags are still read when present: a tag with
+  no folder is named in a warning until its folder is saved. Until a new release's folder is
+  merged, every host labels latest as the previous release and does not yet serve it as an old
+  version. A folder for the current release is served once the next release's folder is merged.
 - In a full clone, a folder above every release tag fails the build: a typo, or a deleted tag.
 - Without tags, a site keeps one address per saved folder: `/v2.0/` and `/v2.0.9/` work; other
   patches like `/v2.0.7/` don't. Nothing links to those.
