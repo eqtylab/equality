@@ -452,7 +452,7 @@ test('a shallow clone skips the typo check', () => {
 test('a folder above every tag fails in a full clone, naming it', () => {
   const f = fixture();
   assert.throws(
-    () => extractVersions(f.opts({ folders: { '5.0.0': folder(f, 'v5') } })),
+    () => extractVersions(f.opts({ current: 'folders', folders: { '5.0.0': folder(f, 'v5') } })),
     /folders 5\.0\.0 is above every release tag \(v4\.0\.0 is the highest\)/
   );
 });
@@ -486,18 +486,31 @@ test('a missing folder fails even when versioning would be dormant', () => {
 });
 
 test("current: 'folders' works at granularity patch and major", () => {
+  const expected = {
+    patch: {
+      copies: ['v3.0.0'],
+      redirects: [
+        { id: 'v3.0', to: 'v3.0.0' },
+        { id: 'v3', to: 'v3.0.0' },
+      ],
+    },
+    major: { copies: ['v3'], redirects: [{ id: 'v3.0.0', to: 'v3' }] },
+  };
   for (const granularity of ['patch', 'major'] as const) {
     const f = fixture();
     dropTags(f);
     const folders = { '3.0.0': folder(f, 'v3'), '4.0.0': folder(f, 'v4') };
     const result = extractVersions(f.opts({ current: 'folders', granularity, folders }));
-    const id = granularity === 'patch' ? 'v3.0.0' : 'v3';
     assert.deepEqual(
       result.versionManifest.map((m) => m.id),
-      [id]
+      expected[granularity].copies
     );
-    // Coarser groupings resolve too: `/v3/` works at patch.
-    assert.ok(result.versionRedirects.some((r) => r.id === 'v3' || id === 'v3'));
+    for (const r of expected[granularity].redirects) {
+      assert.ok(
+        result.versionRedirects.some((x) => x.id === r.id && x.to === r.to),
+        `${granularity}: ${r.id} → ${r.to}`
+      );
+    }
   }
 });
 
@@ -508,4 +521,32 @@ test('the tags-above warning prints versions, not the internal folder: prefix', 
   assert.throws(() => extractVersions(opts), /4\.0\.0 is not the newest release of v4/);
   const above = opts.logger.lines.find((l) => l.includes('ignored'));
   assert.ok(above && above.includes('4.0.0') && !above.includes('folder:'));
+});
+
+test('an explicit current keeps an untagged folder above the tags', () => {
+  // A release converted by hand whose tag lives elsewhere; only folders mode runs the typo check.
+  const f = fixture();
+  const result = extractVersions(
+    f.opts({ current: '6.0.0', folders: { '5.0.0': folder(f, 'v5') } })
+  );
+  assert.ok(result.versionManifest.some((m) => m.id === 'v5' && m.tag === 'folder:5.0.0'));
+});
+
+test("current: 'folders' warns when an older version is copied from a tag", () => {
+  const f = fixture();
+  const opts = f.opts({ current: 'folders', folders: { '4.0.0': folder(f, 'v4') } });
+  const result = extractVersions(opts);
+  assert.ok(result.versionManifest.some((m) => m.id === 'v3' && m.tag === 'v3.0.0'));
+  assert.ok(
+    opts.logger.lines.some(
+      (l) => l.startsWith('warn:') && l.includes('v3.0.0') && l.includes('save a folder')
+    )
+  );
+});
+
+test('a shallow clone copying an older version from a tag warns', () => {
+  const s = shallowWithFolders({ '5.0.0': 'archive/v5' });
+  const { result, log } = s.run();
+  assert.ok(result.versionManifest.some((m) => m.id === 'v4' && m.tag === 'v4.0.0'));
+  assert.ok(log.lines.some((l) => l.includes('v4.0.0') && l.includes('save a folder')));
 });
