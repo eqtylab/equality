@@ -11,7 +11,7 @@ Notable changes to Equality's Docsite Generator are recorded here, following [Ke
 - `versions.source`: where old versions come from, `'tags'` (default, unchanged) or `'folders'`
   - `'folders'`: old versions and the current release come from the committed `folders`, saved by a release job, so the build needs no tags and every host builds the same versions when every older version has a folder. For versions a tag cannot carry: content made by the release build, tags in another repository, hosts without tags such as Vercel
   - Where tags are present, a tag above the highest folder and an older version copied from a tag are each named in a warning
-  - A folder above every release tag in a full clone fails the build, catching a mistyped key
+  - A folder above every release tag in the clone is named in a warning, flagging a mistyped key. A warning, not a failure: a full-history clone can hold only some tags
   - Works without a `.git` directory, and no longer prints the shallow-clone warning
 - README: "Where old versions come from" explains the two sources and when to pick each
 

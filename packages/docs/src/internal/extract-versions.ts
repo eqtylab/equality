@@ -135,10 +135,12 @@ export function extractVersions(o: ExtractOptions): ExtractResult {
   }
 
   // In folders mode the highest folder becomes the current release, so a mistyped key would
-  // relabel the whole site. A release job saves a folder only after its tag exists, so in a full
-  // clone a folder above every tag is a typo or a deleted tag. Other modes keep untagged folders
-  // (a release converted by hand) and catch a folder above `current` in the group check below.
-  // A shallow clone's tags cannot be trusted, so it is skipped there.
+  // relabel the whole site. A release job saves a folder only after its tag exists, so a folder
+  // above every tag the clone has may be a typo. It warns rather than fails: a full-history clone
+  // can still hold only some tags (`clone --no-tags`, then one `fetch origin tag`), so the clone
+  // cannot prove the tags are complete. Other modes keep untagged folders (a release converted by
+  // hand) and catch a folder above `current` in the group check below. A shallow clone's tags are
+  // expected to be partial, so it stays quiet there.
   const topTag = highestTag(tags);
   const topFolder = highestTag(folders.map(([v]) => v));
   if (
@@ -149,8 +151,8 @@ export function extractVersions(o: ExtractOptions): ExtractResult {
     topFolder &&
     compareTags(topFolder, topTag) > 0
   ) {
-    throw new Error(
-      `${TAG} folders ${topFolder.version} is above every release tag (${topTag.tag} is the highest); a typo, or a tag that was deleted?`
+    o.logger.warn(
+      `${TAG} folders ${topFolder.version} is above every release tag in this clone (${topTag.tag} is the highest); a typo, or tags not fetched?`
     );
   }
 
