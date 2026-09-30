@@ -22,6 +22,8 @@ export interface ExtractOptions {
   contentDirAbs: string;
   cacheDir: string;
   current?: string;
+  /** 'folders': old versions and the current release come from `folders`; tags are optional. */
+  source?: 'tags' | 'folders';
   tags: string;
   granularity: Granularity;
   folders?: Record<string, string>;
@@ -89,12 +91,12 @@ function hasPathAtTag(repoRoot: string, tag: string, rel: string): boolean {
 }
 
 export function extractVersions(o: ExtractOptions): ExtractResult {
-  // `current: 'folders'` takes the current release from the highest folder key, so every host
+  // With source 'folders' the current release comes from the highest folder key, so every host
   // builds the same versions whether or not its clone has tags. Vercel's clone has none.
-  const fromFolders = o.current === 'folders';
+  const fromFolders = o.source === 'folders';
   const folders = Object.entries(o.folders ?? {});
   if (fromFolders && !folders.length) {
-    throw new Error(`${TAG} current: 'folders' needs folders`);
+    throw new Error(`${TAG} source: 'folders' needs folders`);
   }
 
   let repoRoot: string | null = null;
@@ -152,14 +154,14 @@ export function extractVersions(o: ExtractOptions): ExtractResult {
     );
   }
 
-  const currentVersion = fromFolders ? topFolder!.version : (o.current ?? topTag?.version);
+  const currentVersion = o.current ?? (fromFolders ? topFolder!.version : topTag?.version);
   if (!currentVersion) {
     o.logger.info(
       `${TAG} on and dormant. No tag matches "${o.tags}"; versioning activates at the first release tag.`
     );
     if (folders.length) {
       o.logger.warn(
-        `${TAG} ${folders.length} folders listed but versioning is dormant; set current: 'folders' to serve them without tags.`
+        `${TAG} ${folders.length} folders listed but versioning is dormant; set source: 'folders' to serve them without tags.`
       );
     }
     return EMPTY_VERSIONS;

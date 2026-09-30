@@ -185,12 +185,15 @@ export const docsConfigSchema = z.object({
         z.literal(false),
         z
           .object({
-            /**
-             * The documented product's version, e.g. '4.0.0', or 'folders' to take the highest key
-             * of `folders`, so a site built from folders needs no tags. Defaults to the highest
-             * tag matching `tags`.
-             */
+            /** The documented product's version, e.g. '4.0.0'. Defaults to the newest release in `source`. */
             current: z.string().optional(),
+            /**
+             * Where old versions come from. 'tags' (default): a copy of the docs at each release
+             * tag, so pushing a tag is all it takes. 'folders': committed copies listed in
+             * `folders`, saved by a release job, so the build needs no tags; the current release is
+             * the highest folder. See the README's "Where old versions come from".
+             */
+            source: z.enum(['tags', 'folders']).default('tags'),
             /** Git tag glob for releases. Tags that are not MAJOR.MINOR.PATCH are skipped with a warning. */
             tags: z.string().default('v*'),
             /** One frozen copy per major, per minor, or per release. Releases without a copy redirect to theirs. */
@@ -209,7 +212,7 @@ export const docsConfigSchema = z.object({
         // would surface as "versions: Invalid input". Spelling the contract out here is what keeps
         // a misconfigured docsite failing loudly rather than silently versioning nothing.
         error:
-          'expected false, or an object with optional current, tags, granularity (major | minor | patch) and folders',
+          'expected false, or an object with optional current, source (tags | folders), tags, granularity (major | minor | patch) and folders',
       }
     )
     .prefault({}),

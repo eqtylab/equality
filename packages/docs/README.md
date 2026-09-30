@@ -307,68 +307,110 @@ header's `search` slot to replace it, or set `search.provider: 'none'` to drop i
 
 ## Versions
 
-On by default. With release tags in the repository (`v1.2.3`, one per release), the build makes
-one frozen copy of the docs per older group and serves it under `/v<group>/`, adds a switcher to
-the header, a banner and `noindex` to every old page, and scopes search to the page's version.
-Every release tag that is not a copy of its own redirects to its group's copy. Without tags it
-is dormant and the build is unchanged, unless the versions come from folders (below).
+On by default. The build makes one frozen copy of the docs per older release group and serves it
+under `/v<group>/`, adds a version switcher to the header, puts a banner and `noindex` on every old
+page, and scopes search to the page's version. Each release redirects to its group's copy.
 
 ```js
 docs({
   versions: {
-    current: '4.0.0', // or 'folders'; defaults to the highest matching tag
+    source: 'tags', // 'tags' (default) | 'folders': where old versions come from
     tags: 'v*', // git tag glob; tags not ending in MAJOR.MINOR.PATCH are skipped
     granularity: 'minor', // 'major' (default) | 'minor' | 'patch'
-    folders: { '2.2.0': 'archive/v2.2' }, // releases converted by hand
+    folders: { '2.2.0': 'archive/v2.2' }, // committed copies, keyed by release
+    current: '4.0.0', // optional; defaults to the newest release in the source
   },
 });
 // or
 docs({ versions: false });
 ```
 
-What to know:
+### Where old versions come from
+
+A version is a copy of the docs as they were at a release. There are two ways to keep one, and
+`source` picks between them.
+
+**`source: 'tags'` (default): copied from each release tag at build time.** Push a tag and that
+release has a version; there is nothing else to run. It works when two things are true:
+
+- the docs live in the same repository as the release tags, and everything a page shows is
+  committed by the time the tag is pushed;
+- the host's clone has the tags. GitHub Actions with `fetch-depth: 0` does; Vercel's clone does
+  not.
+
+With no matching tags the site is dormant and builds as if versions were off.
+
+**`source: 'folders'`: committed copies, saved when each release ships.** A release job copies the
+docs into a folder such as `archive/v2.5`, lists it in `folders`, and opens a pull request; merging
+it adds the version. The build reads only files in the branch, so it needs no tags and builds the
+same versions on every host. The current release is the highest folder. Use it when a tag cannot
+carry the version:
+
+- part of a page only exists after the release build runs (integrity-py's wheel requirement
+  reports are produced by the build the tag starts, so the tag itself can only hold placeholders);
+- the release tags live in another repository (a docs repo for a product released elsewhere);
+- the host has no tags (Vercel).
+
+```text
+source: 'tags'                         source: 'folders'
+tag v2.5.0 ─▶ build copies the docs    tag v2.5.0 ─▶ release job saves archive/v2.5 ─▶ PR
+              at that tag                            merged ─▶ build reads the folders
+```
+
+The cost of folders is the release job and the pull request each release, and a copy of the docs
+per version in the repository. The cost of tags is that the host needs them and the tag must hold
+the whole version.
+
+`folders` also works with `source: 'tags'`, for releases that predate the docs site: their tags
+hold pages the site cannot build, so convert them once, commit the folder and list it. The newer
+releases keep coming from their tags.
+
+### What to know
 
 - `current` is never read from your `package.json`. Set it from the product you document, or
-  leave it to the highest tag.
+  leave it to the newest release in the source.
 - A tag counts when it **ends** in `MAJOR.MINOR.PATCH`. Any prefix is allowed, so `v1.2.3`,
   `1.2.3`, `sdk-v1.2.3` and `@scope/pkg@1.2.3` all work. Prereleases and anything else are
   skipped with a warning naming the tag.
-- CI needs the tags, `fetch-depth: 0`, for copies made from tags and for the checks on folders.
-  A site whose old versions all come from folders and that sets `current: 'folders'` needs none.
-- If a tag lands one deploy after its bump and `current` is inferred, the `/` label is one
-  release behind for that deploy. The content is current; the label heals on the next tag. With
-  `current: 'folders'` the label moves when the new release's folder is merged.
 - An archived page is a document, not an app. Prose, headings, tables and code samples are
   kept; live component examples are not rendered, because an old page's imports bind it to
   today's library. The banner says so.
-- Old versions are read-only. A wrong page is fixed by a new tag.
-- Releases that predate the docs site have no pages at their tag. Convert them once, commit the
-  folder, and list it: `folders: { '2.2.0': 'archive/v2.2' }`. A folder version is served,
-  listed and redirected exactly like a tag copy. It must be the newest release of its group, and
-  it replaces that release's tag copy when the tag has pages too. A folder for the current release
-  is not an error: it is served once a newer release makes it old. A release job that saves each
-  patch must replace its group's previous folder, not add beside it: once the group is old, a
-  folder that is not its newest release fails the build. Until then the build warns.
-- `current: 'folders'` takes the current release from the highest folder key, so the build needs
-  no tags. When every older version has a folder, it gives the same versions on every host, with
-  tags or without (Vercel's clone has none); an older version with only a tag is copied where the
-  tags are present and missing where they aren't. Tags are still read when present: a tag above
-  the highest folder, and an older version copied from a tag, are each named in a warning. Until
-  a new release's folder is merged, every host labels latest as the previous release and does not
-  yet serve it as an old version. A folder for the current release is served once the next
-  release's folder is merged.
-- With `current: 'folders'`, in a full clone, a folder above every release tag fails the build:
-  a typo, or a deleted tag.
-- Without tags, a site keeps one address per saved folder: `/v2.0/` and `/v2.0.9/` work; other
-  patches like `/v2.0.7/` don't. Nothing links to those.
-- At `minor`, a release job replaces each minor's folder on every patch. To switch to `patch`,
-  change the job to keep every patch's folder.
-- A folders-only site whose repository has unrelated tags of its own should set `tags` to a
-  pattern that matches none of them.
+- Old versions are read-only. A wrong page is fixed by a new release.
 - Moving `granularity` between `minor` and `patch` does not break published URLs: every grouping
   coarser than the one you set also resolves, so `/v3/` and `/v3.9/` both work at either setting.
   Moving **to `major` does** break them. Only groupings at or coarser than the setting are emitted,
   so at `major` nothing emits `v3.9` and every published `/v3.9/` URL retires.
+
+With `source: 'tags'`:
+
+- CI needs the tags: check out with `fetch-depth: 0`.
+- If a tag lands one deploy after its bump and `current` is inferred, the `/` label is one
+  release behind for that deploy. The content is current; the label heals on the next tag.
+
+With folders, under either source:
+
+- A folder version is served, listed and redirected exactly like a tag copy. It must be the newest
+  release of its group, and it replaces that release's tag copy when the tag has pages too.
+- A folder for the current release is not an error: it waits, and is served once a newer release
+  makes it old.
+- A release job that saves each patch must replace its group's previous folder, not add beside
+  it: once the group is old, a folder that is not its newest release fails the build. Until then
+  the build warns. To switch to `granularity: 'patch'`, change the job to keep every patch's
+  folder.
+- Folder keys and directories are checked before anything else, so a bad key fails the build.
+
+With `source: 'folders'`:
+
+- Tags are optional. Where they are present (CI), they add checks: a stale folder or a backport
+  still fails the build, a release whose folder is not saved yet is named in a warning, and so is
+  an older version that exists only as a tag, since hosts without tags won't have it.
+- In a full clone, a folder above every release tag fails the build: a typo, or a deleted tag.
+- Until a new release's folder is merged, every host labels latest as the previous release and
+  does not yet list it as an old version. Merge the release job's pull request promptly.
+- Without tags, a site keeps one address per saved folder: `/v2.0/` and `/v2.0.9/` work; other
+  patches like `/v2.0.7/` don't. Nothing links to those.
+- If the repository has unrelated tags of its own, set `tags` to a pattern that matches none of
+  them.
 
 The `DOCS_BASE` family of environment variables still exists for consumers who deploy each
 version as a separate build under its own `base`; this feature does not use them.

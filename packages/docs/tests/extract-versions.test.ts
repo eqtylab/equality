@@ -302,7 +302,7 @@ test('folders listed while versioning is dormant say how to serve them', () => {
   const opts = f.opts({ tags: 'release-*', folders: { '4.0.0': 'archive/v4' } });
   extractVersions(opts);
   assert.ok(
-    opts.logger.lines.some((l) => l.startsWith('warn:') && l.includes("current: 'folders'"))
+    opts.logger.lines.some((l) => l.startsWith('warn:') && l.includes("source: 'folders'"))
   );
 });
 
@@ -318,11 +318,11 @@ function dropTags(f: ReturnType<typeof fixture>) {
   for (const t of sh(f.repo, 'tag').split('\n').filter(Boolean)) sh(f.repo, 'tag', '-d', t);
 }
 
-test("current: 'folders' with no tags takes the highest folder and serves the rest", () => {
+test("source: 'folders' with no tags takes the highest folder and serves the rest", () => {
   const f = fixture();
   dropTags(f);
   const folders = { '3.0.0': folder(f, 'v3'), '4.0.0': folder(f, 'v4') };
-  const opts = f.opts({ current: 'folders', folders });
+  const opts = f.opts({ source: 'folders', folders });
   const result = extractVersions(opts);
   assert.equal(result.currentVersion?.version, '4.0.0');
   assert.deepEqual(
@@ -332,10 +332,10 @@ test("current: 'folders' with no tags takes the highest folder and serves the re
   assert.ok(opts.logger.lines.some((l) => l.includes('4.0.0 is the current release')));
 });
 
-test("current: 'folders' builds the same with the tags present", () => {
+test("source: 'folders' builds the same with the tags present", () => {
   const f = fixture();
   const folders = { '3.0.0': folder(f, 'v3'), '4.0.0': folder(f, 'v4') };
-  const result = extractVersions(f.opts({ current: 'folders', folders }));
+  const result = extractVersions(f.opts({ source: 'folders', folders }));
   assert.equal(result.currentVersion?.version, '4.0.0');
   assert.deepEqual(
     result.versionManifest.map((m) => [m.id, m.tag]),
@@ -343,11 +343,11 @@ test("current: 'folders' builds the same with the tags present", () => {
   );
 });
 
-test("current: 'folders' names a tag that has no folder yet", () => {
+test("source: 'folders' names a tag that has no folder yet", () => {
   const f = fixture();
   sh(f.repo, 'tag', 'v5.0.0');
   const folders = { '3.0.0': folder(f, 'v3'), '4.0.0': folder(f, 'v4') };
-  const opts = f.opts({ current: 'folders', folders });
+  const opts = f.opts({ source: 'folders', folders });
   const result = extractVersions(opts);
   assert.equal(result.currentVersion?.version, '4.0.0');
   assert.ok(
@@ -361,19 +361,19 @@ test('tags ahead of the folders are named in one warning', () => {
   const f = fixture();
   sh(f.repo, 'tag', 'v5.0.0');
   sh(f.repo, 'tag', 'v6.0.0');
-  const opts = f.opts({ current: 'folders', folders: { '4.0.0': folder(f, 'v4') } });
+  const opts = f.opts({ source: 'folders', folders: { '4.0.0': folder(f, 'v4') } });
   extractVersions(opts);
   const warns = opts.logger.lines.filter((l) => l.includes('no folder yet'));
   assert.equal(warns.length, 1);
   assert.ok(warns[0]!.includes('v5.0.0') && warns[0]!.includes('v6.0.0'));
 });
 
-test("current: 'folders' with no folders is a config error", () => {
+test("source: 'folders' with no folders is a config error", () => {
   const f = fixture();
-  assert.throws(() => extractVersions(f.opts({ current: 'folders' })), /needs folders/);
+  assert.throws(() => extractVersions(f.opts({ source: 'folders' })), /needs folders/);
 });
 
-test("current: 'folders' outside a git repository serves the folders", () => {
+test("source: 'folders' outside a git repository serves the folders", () => {
   const dir = mkdtempSync(path.join(tmpdir(), 'eqty-docs-nogit-folders-'));
   for (const v of ['v3', 'v4']) {
     mkdirSync(path.join(dir, 'archive', v), { recursive: true });
@@ -384,7 +384,7 @@ test("current: 'folders' outside a git repository serves the folders", () => {
     root: dir,
     contentDirAbs: path.join(dir, 'src/content/docs'),
     cacheDir: path.join(dir, '.astro/eqty-docs'),
-    current: 'folders',
+    source: 'folders',
     tags: 'v*',
     granularity: 'major',
     folders: { '3.0.0': 'archive/v3', '4.0.0': 'archive/v4' },
@@ -414,7 +414,7 @@ function shallowWithFolders(folders: Record<string, string>) {
       root,
       contentDirAbs: path.join(shallow, CONTENT),
       cacheDir: path.join(root, '.astro/eqty-docs'),
-      current: 'folders',
+      source: 'folders',
       tags: 'v*',
       granularity: 'major',
       folders,
@@ -452,7 +452,7 @@ test('a shallow clone skips the typo check', () => {
 test('a folder above every tag fails in a full clone, naming it', () => {
   const f = fixture();
   assert.throws(
-    () => extractVersions(f.opts({ current: 'folders', folders: { '5.0.0': folder(f, 'v5') } })),
+    () => extractVersions(f.opts({ source: 'folders', folders: { '5.0.0': folder(f, 'v5') } })),
     /folders 5\.0\.0 is above every release tag \(v4\.0\.0 is the highest\)/
   );
 });
@@ -461,7 +461,7 @@ test('with no tags, a high folder is not a typo', () => {
   const f = fixture();
   dropTags(f);
   const result = extractVersions(
-    f.opts({ current: 'folders', folders: { '5.0.0': folder(f, 'v5') } })
+    f.opts({ source: 'folders', folders: { '5.0.0': folder(f, 'v5') } })
   );
   assert.equal(result.currentVersion?.version, '5.0.0');
 });
@@ -472,7 +472,7 @@ test('non-release tags alone never trigger the typo check', () => {
   sh(f.repo, 'tag', 'v-nightly');
   sh(f.repo, 'tag', 'v2.3.1-rc1');
   const result = extractVersions(
-    f.opts({ current: 'folders', folders: { '4.0.0': folder(f, 'v4') } })
+    f.opts({ source: 'folders', folders: { '4.0.0': folder(f, 'v4') } })
   );
   assert.equal(result.currentVersion?.version, '4.0.0');
 });
@@ -485,7 +485,7 @@ test('a missing folder fails even when versioning would be dormant', () => {
   );
 });
 
-test("current: 'folders' works at granularity patch and major", () => {
+test("source: 'folders' works at granularity patch and major", () => {
   const expected = {
     patch: {
       copies: ['v3.0.0'],
@@ -500,7 +500,7 @@ test("current: 'folders' works at granularity patch and major", () => {
     const f = fixture();
     dropTags(f);
     const folders = { '3.0.0': folder(f, 'v3'), '4.0.0': folder(f, 'v4') };
-    const result = extractVersions(f.opts({ current: 'folders', granularity, folders }));
+    const result = extractVersions(f.opts({ source: 'folders', granularity, folders }));
     assert.deepEqual(
       result.versionManifest.map((m) => m.id),
       expected[granularity].copies
@@ -532,9 +532,9 @@ test('an explicit current keeps an untagged folder above the tags', () => {
   assert.ok(result.versionManifest.some((m) => m.id === 'v5' && m.tag === 'folder:5.0.0'));
 });
 
-test("current: 'folders' warns when an older version is copied from a tag", () => {
+test("source: 'folders' warns when an older version is copied from a tag", () => {
   const f = fixture();
-  const opts = f.opts({ current: 'folders', folders: { '4.0.0': folder(f, 'v4') } });
+  const opts = f.opts({ source: 'folders', folders: { '4.0.0': folder(f, 'v4') } });
   const result = extractVersions(opts);
   assert.ok(result.versionManifest.some((m) => m.id === 'v3' && m.tag === 'v3.0.0'));
   assert.ok(

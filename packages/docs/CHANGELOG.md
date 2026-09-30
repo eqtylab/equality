@@ -6,14 +6,17 @@ Notable changes to Equality's Docsite Generator are recorded here, following [Ke
 
 ### Added
 
-- `versions.current: 'folders'`: the current release is the highest folder key, so a site built from folders needs no tags; when every older version has a folder, every host builds the same versions
-  - Tags are still read when present; a tag above the highest folder, and an older version copied from a tag, are each named in a warning
+- `versions.source`: where old versions come from, `'tags'` (default, unchanged) or `'folders'`
+  - `'folders'`: old versions and the current release come from the committed `folders`, saved by a release job, so the build needs no tags and every host builds the same versions when every older version has a folder. For versions a tag cannot carry: content made by the release build, tags in another repository, hosts without tags such as Vercel
+  - Where tags are present, a tag above the highest folder and an older version copied from a tag are each named in a warning
   - A folder above every release tag in a full clone fails the build, catching a mistyped key
+  - Works without a `.git` directory, and no longer prints the shallow-clone warning
+- README: "Where old versions come from" explains the two sources and when to pick each
 
 ### Changed
 
-- Folder keys and directories are validated before the dormant check, so a bad key fails on any site built from a git repository, and on any site with `current: 'folders'`
-- The dormant warning for listed folders names `current: 'folders'`
+- Folder keys and directories are validated before the dormant check
+- The dormant warning for listed folders suggests `source: 'folders'`
 
 ### Fixed
 

@@ -5,7 +5,7 @@ import { brandAssets, resolveConfig } from '../src/config.ts';
 
 test('versions is on by default with tags and granularity filled in', () => {
   const cfg = resolveConfig({ title: 'x' });
-  assert.deepEqual(cfg.versions, { tags: 'v*', granularity: 'major', folders: {} });
+  assert.deepEqual(cfg.versions, { source: 'tags', tags: 'v*', granularity: 'major', folders: {} });
 });
 
 test('versions: false is the off switch', () => {
@@ -16,15 +16,20 @@ test('an explicit current and granularity survive, defaults fill the rest', () =
   const cfg = resolveConfig({ title: 'x', versions: { current: '4.0.0', granularity: 'minor' } });
   assert.deepEqual(cfg.versions, {
     current: '4.0.0',
+    source: 'tags',
     tags: 'v*',
     granularity: 'minor',
     folders: {},
   });
 });
 
-test("versions.current accepts 'folders'", () => {
-  const cfg = resolveConfig({ title: 'x', versions: { current: 'folders' } });
-  assert.equal(cfg.versions && cfg.versions.current, 'folders');
+test("versions.source is 'tags' or 'folders'", () => {
+  const cfg = resolveConfig({ title: 'x', versions: { source: 'folders' } });
+  assert.equal(cfg.versions && cfg.versions.source, 'folders');
+  assert.throws(
+    () => resolveConfig({ title: 'x', versions: { source: 'branches' } as never }),
+    /source \(tags \| folders\)/
+  );
 });
 
 test('an unknown granularity fails loudly', () => {
