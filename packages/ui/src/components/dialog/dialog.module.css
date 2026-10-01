@@ -8,7 +8,7 @@
 
 .dialog-content {
   @apply max-h-[85vh] w-[90%] overflow-hidden;
-  @apply bg-popover-background rounded-lg border shadow-lg;
+  @apply bg-background-overlay border-border-overlay shadow-shadow-overlay rounded-lg border shadow-lg;
   @apply flex flex-col;
   @apply duration-200;
   @apply z-modal fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2;
