@@ -1,17 +1,32 @@
 @reference '../../theme/theme.module.css';
 
 .switch {
+  --switch-transition-duration: 250ms;
+  --switch-transition-easing: cubic-bezier(0.32, 0.72, 0, 1);
+  --switch-off-fill: var(--color-greyscale-500);
+  --switch-off-hover-fill: var(--color-greyscale-600);
+  --switch-on-hover-fill: color-mix(in oklch, var(--mix-color), black 16%);
   @apply cursor-pointer rounded-full;
   @apply transition-colors;
+  @apply duration-(--switch-transition-duration) ease-(--switch-transition-easing);
+  @apply motion-reduce:transition-none;
   @apply inline-flex shrink-0 items-center;
   @apply border-2 border-transparent;
   @apply focus-ring;
   @apply disabled:cursor-not-allowed disabled:opacity-50;
+
+  @variant dark {
+    --switch-off-fill: var(--color-greyscale-600);
+    --switch-off-hover-fill: var(--color-greyscale-500);
+    --switch-on-hover-fill: color-mix(in oklch, var(--mix-color), white 14%);
+  }
 }
 
 .thumb {
   @apply bg-background shadow-lg ring-0;
   @apply transition-transform;
+  @apply duration-(--switch-transition-duration) ease-(--switch-transition-easing);
+  @apply motion-reduce:transition-none;
   @apply flex items-center justify-center rounded-full;
   @apply pointer-events-none;
   @apply data-[state=unchecked]:translate-x-0;
@@ -51,11 +66,18 @@
 
 .switch.default {
   --mix-color: var(--color-button-primary-fill);
-  @apply data-[state=checked]:bg-(--mix-color) data-[state=unchecked]:bg-greyscale-700;
-  @apply data-[state=checked]:hover:bg-mixed-light data-[state=unchecked]:hover:bg-greyscale-600;
 }
 
 .switch.danger {
-  @apply data-[state=checked]:bg-red-500 data-[state=unchecked]:bg-red-700;
-  @apply data-[state=checked]:hover:bg-red-600 data-[state=unchecked]:hover:bg-red-600;
+  --mix-color: var(--color-button-danger-fill);
+}
+
+.switch[data-state='unchecked'] {
+  @apply bg-(--switch-off-fill);
+  @apply hover:not-disabled:bg-(--switch-off-hover-fill);
+}
+
+.switch[data-state='checked'] {
+  @apply bg-(--mix-color);
+  @apply hover:not-disabled:bg-(--switch-on-hover-fill);
 }
