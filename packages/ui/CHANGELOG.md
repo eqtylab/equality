@@ -2,6 +2,19 @@
 
 Notable changes to Equality are recorded here, following [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## 4.8.0 - 2026-10-01
+
+### Changed
+
+- `Switch`'s off track is a lighter grey in both themes and clears 3:1 against the page in each,
+  as WCAG 1.4.11 asks of a control's state. In dark mode it was 2.07:1. An off `danger` switch is
+  grey like any other off switch rather than dark red, so it no longer reads as on. Hover darkens
+  the track in light mode and lightens it in dark mode, and the track and thumb move with the
+  same 250ms easing as `SegmentedControls` and respect reduced motion.
+- A checked `RadioGroupItem` uses the primary fill a checked `Checkbox` uses, instead of a black
+  dot.
+- `Textarea` has the same 8px padding as `Input`, so their text lines up in a form.
+
 ## 4.7.0 - 2026-09-28
 
 ### Added
