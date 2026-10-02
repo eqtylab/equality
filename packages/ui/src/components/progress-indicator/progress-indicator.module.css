@@ -108,7 +108,7 @@
 }
 
 .progress-indicator-step-marker--active {
-  @apply bg-badge-background-primary! text-badge-text-primary!;
+  @apply bg-lilac-200! text-lilac-800! dark:bg-lilac-700! dark:text-lilac-200!;
 }
 
 /* TEXT */
