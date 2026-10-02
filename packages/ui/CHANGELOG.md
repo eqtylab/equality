@@ -2,6 +2,28 @@
 
 Notable changes to Equality are recorded here, following [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## 4.11.0 - 2026-10-02
+
+A visual refresh of `Button`. No props, variants or sizes change and no code needs to change.
+Components built on `Button`, such as `RadioDropdown`, `FilterDropdown`, `SortSelector`,
+`DateRangePicker` and `Pagination`, pick up the new look.
+
+### Changed
+
+- Filled variants (`primary`, `danger`, `warning`, `secondary`) have the sharp 1px rim light of
+  the active segment in `SegmentedControls`, over a soft top-to-bottom sheen, with a subtle drop
+  shadow and no visible border. In light mode the shadow is faintly tinted with the button's own
+  colour.
+- `tertiary` stays white in light mode and near black in dark, with the same soft sheen and lift
+  as the filled variants and a translucent edge in place of its grey border. In dark mode the top
+  of that edge is brighter, as a rim light.
+- Every variant except `link` and `navigation` has a pressed state. Transitions use the same
+  250ms easing as `SegmentedControls`, animate only colour and shadow, and respect reduced
+  motion.
+- Hover is gentler. In dark mode filled variants lighten slightly instead of darkening into a
+  muddy tone, and `primary` and `danger` keep their white text above 4.5:1 while hovered.
+- The gap between a button's icon and its label is 6px, as in `SegmentedControls`, up from 4px.
+
 ## 4.10.1 - 2026-10-02
 
 ### Fixed
