@@ -2,6 +2,14 @@
 
 Notable changes to Equality are recorded here, following [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## 4.9.0 - 2026-10-01
+
+### Changed
+
+- `Dialog` and `Command` use the overlay surface, border and shadow tokens that `AlertDialog`,
+  `Sheet`, `Drawer` and `Popover` already use. In dark mode a `Dialog` sat darker than the page
+  behind it; it now sits above it.
+
 ## 4.8.0 - 2026-10-01
 
 ### Changed

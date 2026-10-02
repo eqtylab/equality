@@ -1,8 +1,8 @@
 @reference '../../theme/theme.module.css';
 
 .command {
-  @apply bg-popover-background text-text-primary;
-  @apply border-card-border border;
+  @apply bg-background-overlay text-text-primary;
+  @apply border-border-overlay border;
   @apply size-full overflow-hidden rounded-md;
   @apply flex flex-col;
 }
@@ -26,7 +26,7 @@
 }
 
 .command-input {
-  @apply border-card-border border-b;
+  @apply border-border-overlay border-b;
   @apply h-9 px-3;
   @apply flex items-center gap-2;
 }
