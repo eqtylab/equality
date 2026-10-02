@@ -8,10 +8,10 @@ import { cn } from '@/lib/utils';
 const buttonVariants = cva(styles['button'], {
   variants: {
     variant: {
-      primary: styles['button--primary'],
-      danger: styles['button--danger'],
-      warning: styles['button--warning'],
-      secondary: styles['button--secondary'],
+      primary: [styles['button--filled'], styles['button--primary']],
+      danger: [styles['button--filled'], styles['button--danger']],
+      warning: [styles['button--filled'], styles['button--warning']],
+      secondary: [styles['button--filled'], styles['button--secondary']],
       tertiary: styles['button--tertiary'],
       link: styles['button--link'],
       navigation: styles['button--navigation'],

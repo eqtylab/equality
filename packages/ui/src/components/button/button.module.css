@@ -1,61 +1,99 @@
 @reference '../../theme/theme.module.css';
 
 .button {
+  --button-transition-duration: 250ms;
+  --button-transition-easing: cubic-bezier(0.32, 0.72, 0, 1);
   @apply rounded-md;
   @apply whitespace-nowrap text-sm font-medium;
-  @apply transition-all duration-300;
-  @apply flex-center gap-1;
+  @apply transition-[color,background-color,border-color,box-shadow,text-decoration-color,text-underline-offset];
+  @apply duration-(--button-transition-duration) ease-(--button-transition-easing);
+  @apply motion-reduce:transition-none;
+  @apply flex-center gap-1.5;
   @apply cursor-pointer;
-  @apply disabled:cursor-not-allowed disabled:opacity-50;
+  @apply disabled:cursor-not-allowed disabled:opacity-50 disabled:shadow-none;
   @apply [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0;
   @apply focus-ring;
 }
 
+/* Use shadow utilities, never a raw box-shadow: it would replace the focus ring */
+.button--filled {
+  @apply bg-(--mix-color) border border-transparent bg-origin-border;
+  @apply bg-[linear-gradient(to_bottom,rgb(255_255_255/0.14),rgb(255_255_255/0)_35%,rgb(0_0_0/0.06))];
+  @apply no-underline;
+  @apply shadow-[0_1px_2px_rgb(0_0_0/0.16),0_2px_6px_-2px_color-mix(in_oklch,var(--mix-color)_50%,transparent)];
+  @apply dark:shadow-[0_1px_2px_rgb(0_0_0/0.5)];
+  @apply active:not-disabled:shadow-[inset_0_1px_2px_rgb(0_0_0/0.2)];
+}
+
+.button--filled:hover:not(:disabled),
+.button--tertiary:hover:not(:disabled) {
+  background-color: var(--button-hover-fill);
+}
+
+.button--primary,
+.button--danger,
+.button--warning {
+  --button-hover-fill: color-mix(in oklch, var(--mix-color), black 16%);
+
+  @variant dark {
+    --button-hover-fill: color-mix(in oklch, var(--mix-color), white 6%);
+  }
+}
+
 .button--primary {
   --mix-color: var(--color-button-primary-fill);
-  @apply bg-(--mix-color);
-  @apply border-button-primary-border border;
   @apply text-button-primary-text;
-  @apply no-underline;
-  @apply hover:not-disabled:bg-mixed-dark;
 }
 
 .button--danger {
   --mix-color: var(--color-button-danger-fill);
-  @apply bg-(--mix-color);
-  @apply border-button-danger-border border;
   @apply text-button-danger-text;
-  @apply no-underline;
-  @apply hover:not-disabled:bg-mixed-dark;
 }
 
 /* Yellow is too light to carry white text, so this is the one filled variant with dark text */
 .button--warning {
   --mix-color: var(--color-button-warning-fill);
-  @apply bg-(--mix-color);
-  @apply border-button-warning-border border;
   @apply text-button-warning-text;
-  @apply no-underline;
-  @apply hover:not-disabled:bg-mixed-dark;
 }
 
 .button--secondary {
   --mix-color: var(--color-button-secondary-fill);
-  @apply bg-(--mix-color);
-  @apply border-button-secondary-border border;
+  --button-hover-fill: color-mix(in oklch, var(--mix-color), white 18%);
   @apply text-button-secondary-text;
-  @apply no-underline;
-  @apply hover:not-disabled:bg-mixed-light;
-  @apply dark:hover:not-disabled:bg-mixed-dark;
+
+  @variant dark {
+    --button-hover-fill: color-mix(in oklch, var(--mix-color), black 12%);
+  }
 }
 
 .button--tertiary {
-  --mix-color: var(--color-button-tertiary-fill);
-  @apply bg-(--mix-color);
-  @apply border-button-tertiary-border border;
+  --mix-color: color-mix(in oklch, var(--color-text-primary) 6%, transparent);
+  --button-hover-fill: color-mix(in oklch, var(--color-text-primary) 12%, transparent);
+  @apply bg-(--mix-color) border bg-origin-border;
+  @apply border-[color-mix(in_oklch,var(--color-text-primary)_16%,transparent)];
+  @apply dark:border-[color-mix(in_oklch,var(--color-text-primary)_22%,transparent)];
+  @apply bg-[linear-gradient(to_bottom,rgb(255_255_255/0.12),rgb(255_255_255/0)_35%,rgb(0_0_0/0.04))];
+  @apply dark:bg-[linear-gradient(to_bottom,rgb(255_255_255/0.08),rgb(255_255_255/0)_35%,rgb(0_0_0/0.1))];
   @apply text-button-tertiary-text;
   @apply no-underline;
-  @apply hover:dark:not-disabled:bg-mixed-light hover:not-disabled:bg-mixed-dark;
+  @apply shadow-[0_1px_2px_rgb(0_0_0/0.16),0_2px_6px_-2px_rgb(0_0_0/0.18)];
+  @apply dark:shadow-[0_1px_2px_rgb(0_0_0/0.5)];
+  @apply active:not-disabled:shadow-none;
+  @apply active:not-disabled:inset-shadow-[0_1px_2px_rgb(0_0_0/0.08)];
+  @apply dark:active:not-disabled:inset-shadow-[0_1px_2px_rgb(0_0_0/0.35)];
+
+  @variant dark {
+    --mix-color: color-mix(
+      in oklch,
+      var(--color-button-tertiary-fill),
+      var(--color-text-primary) 3%
+    );
+    --button-hover-fill: color-mix(
+      in oklch,
+      var(--color-button-tertiary-fill),
+      var(--color-text-primary) 20%
+    );
+  }
 }
 
 .button--link {

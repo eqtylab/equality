@@ -63,7 +63,7 @@
   --calendar-day-hover-fill: color-mix(in oklch, var(--color-lilac-400) 25%, transparent);
   @apply text-sm font-normal;
   @apply size-9 rounded-md p-0;
-  @apply border-transparent;
+  @apply border-transparent bg-none;
   @apply active:not-disabled:shadow-none active:not-disabled:inset-shadow-none shadow-none;
 
   @variant dark {
@@ -91,8 +91,10 @@
   --mix-color: var(--color-button-primary-fill);
   --calendar-day-hover-fill: color-mix(in oklch, var(--mix-color), black 16%);
   @apply text-button-primary-text;
-  @apply border-[color-mix(in_oklch,var(--mix-color),black_12%)];
-  @apply shadow-[0_1px_2px_rgb(0_0_0/0.2),inset_0_1px_0_rgb(255_255_255/0.25)];
+  @apply bg-origin-border;
+  @apply bg-[linear-gradient(to_bottom,rgb(255_255_255/0.14),rgb(255_255_255/0)_35%,rgb(0_0_0/0.06))];
+  @apply shadow-[0_1px_2px_rgb(0_0_0/0.16),0_2px_6px_-2px_color-mix(in_oklch,var(--mix-color)_50%,transparent)];
+  @apply dark:shadow-[0_1px_2px_rgb(0_0_0/0.5)];
 
   @variant dark {
     --calendar-day-hover-fill: color-mix(in oklch, var(--mix-color), white 6%);
