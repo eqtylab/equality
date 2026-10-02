@@ -91,10 +91,10 @@
   --mix-color: var(--color-button-primary-fill);
   --calendar-day-hover-fill: color-mix(in oklch, var(--mix-color), black 16%);
   @apply text-button-primary-text;
-  @apply bg-origin-border;
-  @apply bg-[linear-gradient(to_bottom,rgb(255_255_255/0.14),rgb(255_255_255/0)_35%,rgb(0_0_0/0.06))];
-  @apply shadow-[0_1px_2px_rgb(0_0_0/0.16),0_2px_6px_-2px_color-mix(in_oklch,var(--mix-color)_50%,transparent)];
-  @apply dark:shadow-[0_1px_2px_rgb(0_0_0/0.5)];
+  @apply border-0;
+  @apply bg-[linear-gradient(to_bottom,rgb(255_255_255/0.1),rgb(255_255_255/0)_35%,rgb(0_0_0/0.06))];
+  @apply shadow-[0_1px_2px_rgb(0_0_0/0.18),0_2px_6px_-2px_color-mix(in_oklch,var(--mix-color)_25%,transparent),inset_0_1px_0_rgb(255_255_255/0.25)];
+  @apply dark:shadow-[0_1px_2px_rgb(0_0_0/0.45),inset_0_1px_0_rgb(255_255_255/0.25)];
 
   @variant dark {
     --calendar-day-hover-fill: color-mix(in oklch, var(--mix-color), white 6%);

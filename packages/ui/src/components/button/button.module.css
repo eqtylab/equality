@@ -17,11 +17,11 @@
 
 /* Use shadow utilities, never a raw box-shadow: it would replace the focus ring */
 .button--filled {
-  @apply bg-(--mix-color) border border-transparent bg-origin-border;
-  @apply bg-[linear-gradient(to_bottom,rgb(255_255_255/0.14),rgb(255_255_255/0)_35%,rgb(0_0_0/0.06))];
+  @apply bg-(--mix-color) border-0;
+  @apply bg-[linear-gradient(to_bottom,rgb(255_255_255/0.1),rgb(255_255_255/0)_35%,rgb(0_0_0/0.06))];
   @apply no-underline;
-  @apply shadow-[0_1px_2px_rgb(0_0_0/0.16),0_2px_6px_-2px_color-mix(in_oklch,var(--mix-color)_50%,transparent)];
-  @apply dark:shadow-[0_1px_2px_rgb(0_0_0/0.5)];
+  @apply shadow-[0_1px_2px_rgb(0_0_0/0.18),0_2px_6px_-2px_color-mix(in_oklch,var(--mix-color)_25%,transparent),inset_0_1px_0_rgb(255_255_255/0.25)];
+  @apply dark:shadow-[0_1px_2px_rgb(0_0_0/0.45),inset_0_1px_0_rgb(255_255_255/0.25)];
   @apply active:not-disabled:shadow-[inset_0_1px_2px_rgb(0_0_0/0.2)];
 }
 
@@ -67,17 +67,18 @@
 }
 
 .button--tertiary {
-  --mix-color: color-mix(in oklch, var(--color-text-primary) 6%, transparent);
-  --button-hover-fill: color-mix(in oklch, var(--color-text-primary) 12%, transparent);
+  --mix-color: var(--color-button-tertiary-fill);
+  --button-hover-fill: color-mix(in oklch, var(--mix-color), var(--color-text-primary) 5%);
   @apply bg-(--mix-color) border bg-origin-border;
   @apply border-[color-mix(in_oklch,var(--color-text-primary)_16%,transparent)];
   @apply dark:border-[color-mix(in_oklch,var(--color-text-primary)_22%,transparent)];
-  @apply bg-[linear-gradient(to_bottom,rgb(255_255_255/0.12),rgb(255_255_255/0)_35%,rgb(0_0_0/0.04))];
-  @apply dark:bg-[linear-gradient(to_bottom,rgb(255_255_255/0.08),rgb(255_255_255/0)_35%,rgb(0_0_0/0.1))];
+  @apply dark:border-t-[color-mix(in_oklch,var(--color-text-primary)_34%,transparent)];
+  @apply bg-[linear-gradient(to_bottom,rgb(255_255_255/0.09),rgb(255_255_255/0)_35%,rgb(0_0_0/0.04))];
+  @apply dark:bg-[linear-gradient(to_bottom,rgb(255_255_255/0.06),rgb(255_255_255/0)_35%,rgb(0_0_0/0.1))];
   @apply text-button-tertiary-text;
   @apply no-underline;
-  @apply shadow-[0_1px_2px_rgb(0_0_0/0.16),0_2px_6px_-2px_rgb(0_0_0/0.18)];
-  @apply dark:shadow-[0_1px_2px_rgb(0_0_0/0.5)];
+  @apply shadow-[0_1px_2px_rgb(0_0_0/0.13),0_2px_6px_-2px_rgb(0_0_0/0.09)];
+  @apply dark:shadow-[0_1px_2px_rgb(0_0_0/0.45)];
   @apply active:not-disabled:shadow-none;
   @apply active:not-disabled:inset-shadow-[0_1px_2px_rgb(0_0_0/0.08)];
   @apply dark:active:not-disabled:inset-shadow-[0_1px_2px_rgb(0_0_0/0.35)];
@@ -123,4 +124,17 @@
 
 .size--lg:not(.button--link) {
   @apply h-11 rounded-md px-8;
+}
+
+/* Filled buttons have no border so the inset rim light sits on the edge; the extra 1px keeps them as wide as a bordered button */
+.button--filled.size--sm {
+  @apply px-[calc(--spacing(2)+1px)];
+}
+
+.button--filled.size--md {
+  @apply px-[calc(--spacing(3)+1px)];
+}
+
+.button--filled.size--lg {
+  @apply px-[calc(--spacing(8)+1px)];
 }

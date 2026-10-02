@@ -41,7 +41,7 @@
 }
 
 .toast--danger .toast-action {
-  @apply border-greyscale-400;
+  @apply border-greyscale-400 border;
 }
 
 .toast--danger:hover .toast-action:not(:disabled) {
