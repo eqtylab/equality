@@ -3,6 +3,7 @@ import * as ToastPrimitives from '@radix-ui/react-toast';
 import { cva, type VariantProps } from 'class-variance-authority';
 import { X } from 'lucide-react';
 
+import { buttonVariants } from '@/components/button/button';
 import styles from '@/components/toast/toast-components.module.css';
 import { cn } from '@/lib/utils';
 
@@ -56,7 +57,15 @@ const ToastAction = React.forwardRef<
   React.ElementRef<typeof ToastPrimitives.Action>,
   React.ComponentPropsWithoutRef<typeof ToastPrimitives.Action>
 >(({ className, ...props }, ref) => (
-  <ToastPrimitives.Action ref={ref} className={cn(styles['toast-action'], className)} {...props} />
+  <ToastPrimitives.Action
+    ref={ref}
+    className={cn(
+      buttonVariants({ variant: 'secondary', size: 'sm' }),
+      styles['toast-action'],
+      className
+    )}
+    {...props}
+  />
 ));
 ToastAction.displayName = ToastPrimitives.Action.displayName;
 

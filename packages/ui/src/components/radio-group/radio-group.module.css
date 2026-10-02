@@ -17,6 +17,6 @@
 }
 
 .indicator-icon {
-  @apply size-2;
+  @apply size-2.5;
   @apply fill-current text-current;
 }
