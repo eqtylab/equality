@@ -93,7 +93,7 @@
   @apply shadow-[0_1px_2px_rgb(0_0_0/0.2),inset_0_1px_0_rgb(255_255_255/0.25)];
 
   @variant dark {
-    --calendar-day-hover-fill: color-mix(in oklch, var(--mix-color), white 14%);
+    --calendar-day-hover-fill: color-mix(in oklch, var(--mix-color), white 6%);
   }
 }
 

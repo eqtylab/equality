@@ -9,7 +9,7 @@ Notable changes to Equality are recorded here, following [Keep a Changelog](http
 - `DateRangePicker` day cells are no longer a grid of bordered boxes. Selected days use the
   primary button colours, days in range use the primary badge tint, and hover is the lilac tint
   used by `IconButton`. Selected days in dark mode had white text on light lilac at 2.3:1; they
-  now meet WCAG AA.
+  now meet WCAG AA, hovered or not.
 - A checked radio or checkbox item in a `DropdownMenu`, and so in `RadioDropdown` and
   `FilterDropdown`, uses the primary fill a checked `Checkbox` uses instead of black and white.
 - A checked `RadioGroupItem`'s dot is back to 10px. 4.8.0 shrank it to 8px when the radio
