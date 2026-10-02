@@ -19,6 +19,11 @@ Notable changes to Equality are recorded here, following [Keep a Changelog](http
 - `ToastAction` is built on `Button` instead of a copy of its styles, so it always matches
   `Button`.
 
+### Fixed
+
+- A `DateRangePicker` trigger with a range selected no longer picks up every class name from
+  the picker's stylesheet, unhashed, as stray classes.
+
 ## 4.9.0 - 2026-10-01
 
 ### Changed

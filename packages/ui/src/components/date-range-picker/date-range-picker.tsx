@@ -178,7 +178,7 @@ const DateRangePicker = ({ dateRange, onSelect, className }: DateRangePickerProp
                 ></IconButton>
               )
             }
-            className={cn(dateRange.from && dateRange.to && styles, className)}
+            className={className}
           >
             <span className={styles['date-range']}>{formatRange(dateRange)}</span>
           </Button>
