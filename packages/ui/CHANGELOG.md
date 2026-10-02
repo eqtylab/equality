@@ -9,6 +9,8 @@ Notable changes to Equality are recorded here, following [Keep a Changelog](http
 - `DateRangePicker` days in a selected range use a lilac tint, the one `IconButton` and the
   `navigation` button use on hover, instead of the primary badge colours. The badge purple is
   a different hue from the lilac of the selected days beside them.
+- The active step's marker in a `ProgressIndicator` uses a lilac tint instead of the primary
+  badge colours, so it matches the lilac track it sits on and stays as soft as the other markers.
 
 ## 4.10.0 - 2026-10-02
 

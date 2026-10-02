@@ -21,8 +21,6 @@
 }
 
 .toast--default {
-  --mix-color: var(--color-brand-primary);
-  --hover-darken: 50%;
   @apply border-badge-text-primary bg-badge-background-primary text-badge-text-primary;
 }
 
