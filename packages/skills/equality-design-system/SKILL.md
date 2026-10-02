@@ -66,6 +66,11 @@ If you have no network access or web fetching fails, tell your user that you cou
   - Avoid using badge `size="sm"` except for specific scenarios where space is at a premium like within tables. Most badges should be the default `size="md"`
 - Icons should be used sparingly. Ensure consistency when using them, try not to conflate multiple concepts with the same icon
 - No custom hex codes, no `bg-{color}-{number}` palette classes.
+- Keep interactive and status colours apart. They are two different purples, and they clash side by side:
+  - `button-*` tokens and the `primary` variants of controls are lilac, for things you can click, select or toggle and their states. Never use them to colour a non-interactive surface, label or decoration.
+  - `brand-primary` is the same lilac family as a brand accent. Equality uses it for progress, loading and charts; that's fine.
+  - `badge-*` tokens and `Badge`, `Alert` and `Toast` colours are for non-interactive status. Their `primary` is the `purple` palette, not the brand lilac, despite the name. Never use them for a hover, selected, active, checked, in-range or current-step state.
+  - Get interactive states from the component that owns them (`Button`, `IconButton`, `SegmentedControls`, `Tabs`, `Checkbox`). If you need an interactive tint no component gives you, that's a gap: say so, as in rung 3 below, instead of borrowing a badge colour.
 
 ## Non-negotiables
 
