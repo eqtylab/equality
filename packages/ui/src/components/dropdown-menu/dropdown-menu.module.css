@@ -65,6 +65,11 @@
   @apply rounded-full;
 }
 
+.dropdown-menu-checkbox-item[data-state='checked'] .dropdown-menu-item-indicator-checkbox,
+.dropdown-menu-radio-item[data-state='checked'] .dropdown-menu-item-indicator-radio {
+  @apply bg-button-primary-fill border-button-primary-border text-button-primary-text;
+}
+
 .icon-size {
   @apply size-3;
 }

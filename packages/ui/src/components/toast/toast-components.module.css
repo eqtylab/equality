@@ -38,29 +38,15 @@
   @apply border-badge-text-success bg-badge-background-success text-badge-text-success;
 }
 
-.toast-action {
-  --mix-color: var(--color-button-secondary-fill);
-  @apply h-7 rounded-md px-2;
-  @apply text-xs;
-  @apply rounded-md;
-  @apply whitespace-nowrap text-sm font-medium;
-  @apply transition-all duration-300;
-  @apply flex-center gap-1;
-  @apply cursor-pointer;
-  @apply disabled:cursor-not-allowed disabled:opacity-50;
-  @apply [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0;
-  @apply focus-ring;
-  @apply bg-(--mix-color);
-  @apply border-button-secondary-border border;
-  @apply text-button-secondary-text;
-  @apply hover:not-disabled:bg-mixed-light;
+.toast .toast-action {
+  @apply text-sm;
 }
 
 .toast--danger .toast-action {
   @apply border-greyscale-400;
 }
 
-.toast--danger:hover .toast-action {
+.toast--danger:hover .toast-action:not(:disabled) {
   @apply border-red-400 bg-red-800 text-red-400;
 }
 

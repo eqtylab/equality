@@ -13,11 +13,11 @@
 }
 
 .size--md {
-  @apply size-10 rounded-[8.5px];
+  @apply size-10 rounded-md;
 }
 
 .size--lg {
-  @apply size-11 rounded-[9.5px];
+  @apply size-11 rounded-md;
 }
 
 /* Color Variants */

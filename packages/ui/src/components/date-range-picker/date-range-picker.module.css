@@ -57,21 +57,47 @@
   @apply grid grid-cols-7 gap-1;
 }
 
-.calendar-day-btn {
-  @apply text-sm font-normal transition-colors;
+/* Keep the `.calendar-grid` prefix: one class ties with Button's styles and loses on load order */
+.calendar-grid .calendar-day-btn {
+  --mix-color: transparent;
+  --calendar-day-hover-fill: color-mix(in oklch, var(--color-lilac-400) 25%, transparent);
+  @apply text-sm font-normal;
   @apply size-9 rounded-md p-0;
+  @apply border-transparent;
+  @apply active:not-disabled:shadow-none active:not-disabled:inset-shadow-none shadow-none;
+
+  @variant dark {
+    --calendar-day-hover-fill: color-mix(in oklch, var(--color-lilac-500) 25%, transparent);
+  }
 }
 
-.calendar-day-btn--selected {
-  @apply bg-brand-primary;
-  @apply text-text-primary;
+.calendar-grid .calendar-day-btn:hover:not(:disabled) {
+  background-color: var(--calendar-day-hover-fill);
 }
 
-.calendar-day-btn--today {
+.calendar-grid .calendar-day-btn--in-range {
+  --mix-color: var(--color-badge-background-primary);
+  --calendar-day-hover-fill: color-mix(
+    in oklch,
+    var(--mix-color),
+    var(--color-badge-text-primary) 12%
+  );
+  @apply text-badge-text-primary;
+}
+
+.calendar-grid .calendar-day-btn--selected {
+  --mix-color: var(--color-button-primary-fill);
+  --calendar-day-hover-fill: color-mix(in oklch, var(--mix-color), black 16%);
+  @apply text-button-primary-text;
+  @apply border-[color-mix(in_oklch,var(--mix-color),black_12%)];
+  @apply shadow-[0_1px_2px_rgb(0_0_0/0.2),inset_0_1px_0_rgb(255_255_255/0.25)];
+
+  @variant dark {
+    --calendar-day-hover-fill: color-mix(in oklch, var(--mix-color), white 6%);
+  }
+}
+
+.calendar-grid .calendar-day-btn--today {
   @apply font-semibold;
-  @apply border-brand-primary border;
-}
-
-.calendar-day-btn--in-range {
-  @apply bg-brand-primary/30;
+  @apply border-brand-primary;
 }
