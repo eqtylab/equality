@@ -75,14 +75,16 @@
   background-color: var(--calendar-day-hover-fill);
 }
 
+/* Badge tokens are for non-interactive status; their purple clashes with lilac beside a selected day */
 .calendar-grid .calendar-day-btn--in-range {
-  --mix-color: var(--color-badge-background-primary);
-  --calendar-day-hover-fill: color-mix(
-    in oklch,
-    var(--mix-color),
-    var(--color-badge-text-primary) 12%
-  );
-  @apply text-badge-text-primary;
+  --mix-color: color-mix(in oklch, var(--color-lilac-400) 25%, transparent);
+  --calendar-day-hover-fill: color-mix(in oklch, var(--color-lilac-400) 40%, transparent);
+  @apply text-lilac-800 dark:text-lilac-200;
+
+  @variant dark {
+    --mix-color: color-mix(in oklch, var(--color-lilac-500) 25%, transparent);
+    --calendar-day-hover-fill: color-mix(in oklch, var(--color-lilac-500) 40%, transparent);
+  }
 }
 
 .calendar-grid .calendar-day-btn--selected {
