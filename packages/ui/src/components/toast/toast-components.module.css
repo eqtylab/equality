@@ -13,11 +13,52 @@
   @apply border shadow-lg backdrop-blur-sm;
   @apply w-full overflow-hidden;
   @apply space-x-4 rounded-md p-4 pr-8;
-  @apply data-[state=open]:animate-in data-[state=open]:slide-in-from-top-full sm:data-[state=open]:slide-in-from-bottom-full;
-  @apply data-[state=closed]:animate-out data-[state=closed]:fade-out-80 data-[state=closed]:slide-out-to-right-full;
-  @apply data-[swipe=end]:animate-out data-[swipe=end]:translate-x-(--radix-toast-swipe-end-x);
+  @apply data-[swipe=end]:translate-x-(--radix-toast-swipe-end-x);
   @apply data-[swipe=move]:translate-x-(--radix-toast-swipe-move-x) data-[swipe=move]:transition-none;
   @apply data-[swipe=cancel]:translate-x-0;
+
+  /* Enters and leaves past the viewport edge it sits on: top below sm, bottom from sm up */
+  --toast-offset: calc(-100% - 1rem);
+
+  @variant sm {
+    --toast-offset: calc(100% + 1rem);
+  }
+
+  @variant motion-reduce {
+    --toast-offset: 0;
+  }
+
+  &[data-state='open'] {
+    animation: toast-in 400ms cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  &[data-state='closed'] {
+    animation: toast-out 250ms cubic-bezier(0.4, 0, 1, 1) forwards;
+  }
+
+  &[data-swipe='end'] {
+    animation: toast-swipe-out 150ms ease-out forwards;
+  }
+}
+
+@keyframes toast-in {
+  from {
+    opacity: 0;
+    transform: translateY(var(--toast-offset));
+  }
+}
+
+@keyframes toast-out {
+  to {
+    opacity: 0;
+    transform: translateY(var(--toast-offset));
+  }
+}
+
+@keyframes toast-swipe-out {
+  to {
+    opacity: 0;
+  }
 }
 
 .toast--default {
