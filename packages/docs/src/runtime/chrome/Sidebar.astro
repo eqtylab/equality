@@ -1,12 +1,16 @@
 ---
 import type { NavNode } from '@eqtylab/docs/types';
 
+import type { SwitcherData } from '../lib/versions-ui.ts';
 import NavTree from './NavTree.astro';
+import SiteCard from './SiteCard.astro';
 
 interface Props {
   nodes: NavNode[];
+  /** Absent when versioning is dormant or off. */
+  switcher?: SwitcherData;
 }
-const { nodes } = Astro.props;
+const { nodes, switcher } = Astro.props;
 ---
 
 {/* border-raised pairs with the raised fill, as Gov Studio does. */}
@@ -16,6 +20,7 @@ const { nodes } = Astro.props;
   data-pagefind-ignore
 >
   <nav class="px-4 py-6" aria-label="Documentation">
+    <SiteCard switcher={switcher} />
     <NavTree nodes={nodes} />
   </nav>
 </aside>

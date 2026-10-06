@@ -56,13 +56,13 @@ const suggested = nav
 >
   {/* A prop, not slot fallback: Astro registers a named slot at compile time, so a forwarded
       slot always counts as filled and the fallback never runs. */}
-  <Header showSearch={!Astro.slots.has('search')} suggested={suggested} switcher={switcher}>
+  <Header showSearch={!Astro.slots.has('search')} suggested={suggested}>
     <slot name="search" slot="search" />
     <slot name="versions" slot="versions" />
   </Header>
   <NavDrawer nodes={nav} switcher={switcher} />
   <div class="flex items-start">
-    {!splash && <Sidebar nodes={nav} />}
+    {!splash && <Sidebar nodes={nav} switcher={switcher} />}
     {/* 128px of runway, so a page stops deliberately rather than at its last line. */}
     <main
       class="mx-auto flex w-full min-w-0 max-w-[calc(var(--eq-docs-content-max)+var(--eq-docs-toc-width)+8rem)] items-start gap-12 px-6 pb-32 pt-10 data-[splash]:max-w-none xl:gap-16"

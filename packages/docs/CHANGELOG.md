@@ -4,6 +4,27 @@ Notable changes to Equality's Docsite Generator are recorded here, following [Ke
 
 ## Unreleased
 
+### Added
+
+- A card at the top of the sidebar names the site and switches between EQTY Lab docs sites, each
+  row saying what the site is for; `sites` sets the list or turns it off with `false`, and the
+  shared list is `eqtyDocsSites`
+- Phones get the same card at the top of the menu
+
+### Changed
+
+- The header reads "[logo] | Docs" on every site; the site name moved to the sidebar card, so a
+  long name no longer runs into the search box
+- The version menu opens from the version under the site name instead of the header; on phones it
+  replaces the version list in the menu
+- With `logo: false` the header shows `title` as text, then "Docs"
+- Below 360px the header shows the logo without "Docs", so nothing runs into the search button
+
+### Removed
+
+- `chrome/VersionSwitcher.tsx` and `Header`'s `switcher` prop: the version menu lives in the
+  sidebar card
+
 ## 0.11.0 - 2026-10-06
 
 ### Added

@@ -69,11 +69,11 @@ into `public/`.
 
 Each one can be replaced or turned off:
 
-| Option    | Replace                                   | Turn off                                         |
-| --------- | ----------------------------------------- | ------------------------------------------------ |
-| `favicon` | `favicon: '/mine.svg'`                    | —                                                |
-| `logo`    | `logo: { src: '/mine.svg', alt: 'Acme' }` | `logo: false` (the header shows `title` as text) |
-| `ogImage` | `ogImage: '/share.png'` or a URL          | `ogImage: false`                                 |
+| Option    | Replace                                   | Turn off                                                      |
+| --------- | ----------------------------------------- | ------------------------------------------------------------- |
+| `favicon` | `favicon: '/mine.svg'`                    | —                                                             |
+| `logo`    | `logo: { src: '/mine.svg', alt: 'Acme' }` | `logo: false` (the header shows `title` as text, then "Docs") |
+| `ogImage` | `ogImage: '/share.png'` or a URL          | `ogImage: false`                                              |
 
 `ogImage` is the picture in a shared link's preview card, in Slack, LinkedIn and the like. Those
 apps only accept a full URL, so set Astro's `site`; without it a path is left out.
@@ -131,6 +131,33 @@ Both sets come with the package. A name that doesn't exist stops the build and s
 
 Sidebar icons (`icon` in a page's frontmatter, and `sidebar.extra`) still take Lucide's own names,
 like `BookOpen`, until the sidebar moves to these links.
+
+## The site card
+
+The sidebar starts with a card naming the site. On EQTY Lab docs sites it is also a switcher: the
+name opens a menu of every EQTY Lab docs site, and the version under it opens the version menu. The
+header shows only the logo and "Docs", however long the site's name is.
+
+The list ships with this package, so a new site appears in every switcher once the others upgrade.
+To add one, add it to `eqtyDocsSites` in `src/sites.ts` and release.
+
+| `sites`       | The card                                                                                                    |
+| ------------- | ----------------------------------------------------------------------------------------------------------- |
+| unset         | Switches between the EQTY Lab docs sites. If `title` isn't on that list, a plain label, and the build warns |
+| `false`       | A plain label                                                                                               |
+| your own list | Switches between those sites. It must include this one, matched by `title`                                  |
+
+```js
+docs({
+  title: 'Acme Docs',
+  sites: [
+    { title: 'Acme Docs', href: 'https://docs.acme.example/' },
+    { title: 'Acme API', href: 'https://api.acme.example/', description: 'The REST reference' },
+  ],
+});
+```
+
+Each row shows the site's `description`, or its address when it has none.
 
 ## Navigation comes from folders
 
@@ -371,8 +398,9 @@ header's `search` slot to replace it, or set `search.provider: 'none'` to drop i
 ## Versions
 
 On by default. The build makes one frozen copy of the docs per older release group and serves it
-under `/v<group>/`, adds a version switcher to the header, puts a banner and `noindex` on every old
-page, and scopes search to the page's version. Each release redirects to its group's copy.
+under `/v<group>/`, adds a version menu under the site name in the sidebar, puts a banner and
+`noindex` on every old page, and scopes search to the page's version. Each release redirects to its
+group's copy.
 
 ```js
 docs({

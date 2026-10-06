@@ -46,3 +46,9 @@
     -webkit-text-fill-color: currentColor;
   }
 }
+
+/** The display fade for text under 18.66px bold, such as the sidebar card's name. */
+@utility eq-display-gradient-sm {
+  @apply eq-display-gradient;
+  --eq-docs-display-gradient: var(--eq-docs-display-gradient-sm);
+}

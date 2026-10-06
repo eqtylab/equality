@@ -1,0 +1,24 @@
+---
+import CONFIG from 'virtual:eqty-docs/config';
+
+import type { SwitcherData } from '../lib/versions-ui.ts';
+import SiteCardControls from './SiteCardControls.tsx';
+
+interface Props {
+  /** Absent when versioning is dormant or off. */
+  switcher?: SwitcherData;
+  inDrawer?: boolean;
+}
+const { switcher, inDrawer = false } = Astro.props;
+const props = { title: CONFIG.title, sites: CONFIG.siteMenu, versions: switcher, inDrawer };
+---
+
+<div class="border-border-raised mb-4 border-b pb-3">
+  {
+    CONFIG.siteMenu || switcher ? (
+      <SiteCardControls client:load {...props} />
+    ) : (
+      <SiteCardControls {...props} />
+    )
+  }
+</div>
