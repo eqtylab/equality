@@ -9,7 +9,7 @@ import { ArrowUp, Grid3X3, ArrowRight } from "lucide-react";
 
 ## Overview
 
-Buttons are interactive elements that trigger actions when clicked. They are used for form submissions, dialogs, and other user interactions where the user performs an action.
+Buttons are interactive elements that trigger actions when clicked. They are used for form submissions, dialogs, and other user interactions where the user performs an action. Multiple visual variants communicate different levels of emphasis and intent.
 
 ## Usage
 
@@ -26,8 +26,6 @@ Basic usage with required properties:
 ```
 
 ## Variants
-
-The Button component supports multiple visual variants to communicate different levels of emphasis and intent.
 
 ### Primary
 
@@ -88,7 +86,7 @@ Use the `tertiary` variant for most other lower-emphasis actions.
 
 ### Danger
 
-Use the `danger` variant For destructive actions like delete or remove.
+Use the `danger` variant for destructive actions like delete or remove.
 
 {
 
@@ -217,7 +215,7 @@ import { ArrowRight, Grid3X3 } from 'lucide-react';
 
 ## As a Link
 
-When an `href` prop is provided, buttons render as an anchor elements while maintaining their styling. This should be used in favor of `onClick` events when using buttons for navigation.
+When an `href` prop is provided, buttons render as anchor elements while maintaining their styling. This should be used in favor of `onClick` events when using buttons for navigation.
 
 Button also accepts common HTML link-related properties such as `target`, and `download`.
 
@@ -244,6 +242,12 @@ Buttons tagged with the `disabled` property are non-interactive and visually mut
   </Button>
   <Button variant="danger" size="sm" disabled>
     Disabled Danger
+  </Button>
+  <Button variant="warning" size="sm" disabled>
+    Disabled Warning
+  </Button>
+  <Button variant="link" size="sm" disabled>
+    Disabled Link
   </Button>
   <Button variant="navigation" size="sm" disabled>
     Disabled Navigation

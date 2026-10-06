@@ -1,14 +1,12 @@
 @reference '../../theme/theme.module.css';
 
 .segmented-controls {
-  --segment-transition-duration: 250ms;
-  --segment-transition-easing: cubic-bezier(0.32, 0.72, 0, 1);
-  @apply border-button-tertiary-border border;
+  @apply border-control-edge dark:border-control-edge-dark border;
   @apply flex rounded-md;
   @apply w-max overflow-hidden;
   @apply bg-button-tertiary-fill;
   @apply relative;
-  @apply shadow-[inset_0_1px_2px_rgb(0_0_0/0.08)] dark:shadow-[inset_0_1px_2px_rgb(0_0_0/0.35)];
+  @apply inset-shadow-control-sunken dark:inset-shadow-control-sunken-dark;
 }
 
 .segment {
@@ -18,7 +16,7 @@
   @apply h-full px-3;
   @apply whitespace-nowrap text-sm font-medium;
   @apply cursor-pointer bg-transparent;
-  @apply duration-(--segment-transition-duration) ease-(--segment-transition-easing) transition-colors;
+  @apply ease-control duration-250 transition-colors;
   @apply focus-visible:outline-none;
   @apply motion-reduce:transition-none;
 }
@@ -31,7 +29,7 @@
 
 .segment::before {
   @apply inset-[2px] -z-10 rounded-[3px];
-  @apply duration-(--segment-transition-duration) ease-(--segment-transition-easing) transition-colors;
+  @apply ease-control duration-250 transition-colors;
   @apply motion-reduce:transition-none;
 }
 
@@ -121,20 +119,19 @@
 }
 
 .segment-icon {
-  @apply duration-(--segment-transition-duration) ease-(--segment-transition-easing) transition-colors;
+  @apply ease-control duration-250 transition-colors;
   @apply motion-reduce:transition-none;
 }
 
 .active-segment-indicator {
   @apply absolute bottom-[2px] left-[2px] top-[2px];
   @apply w-[calc(var(--indicator-width)-4px)] rounded-[3px];
-  @apply bg-(--segment-active-fill);
-  box-shadow:
-    0 1px 2px rgb(0 0 0 / 0.2),
-    inset 0 1px 0px rgb(255 255 255 / 0.25);
+  --mix-color: var(--segment-active-fill);
+  @apply bg-(--mix-color);
+  @apply shadow-control-raised dark:shadow-control-raised-dark;
 }
 
 .active-segment-indicator--animated {
-  @apply duration-(--segment-transition-duration) ease-(--segment-transition-easing) transition-[transform,width,background-color];
+  @apply ease-control duration-250 transition-[transform,width,background-color];
   @apply motion-reduce:transition-none;
 }

@@ -2,6 +2,40 @@
 
 Notable changes to Equality are recorded here, following [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## 4.11.0 - 2026-10-06
+
+A visual refresh of `Button`. No props, variants or sizes change and no code needs to change.
+Components built on `Button`, such as `RadioDropdown`, `FilterDropdown`, `SortSelector`,
+`DateRangePicker` and `Pagination`, pick up the new look.
+
+### Changed
+
+- Filled variants (`primary`, `danger`, `warning`, `secondary`) have the sharp 1px rim light of
+  the active segment in `SegmentedControls`, over a soft top-to-bottom sheen, with a subtle drop
+  shadow and no visible border. In light mode the shadow is faintly tinted with the button's own
+  colour.
+- `tertiary` stays white in light mode and near black in dark, with the same soft sheen and lift
+  as the filled variants and a translucent edge in place of its grey border. In dark mode the top
+  of that edge is brighter, as a rim light.
+- Every variant except `link` and `navigation` has a pressed state. Transitions use the same
+  250ms easing as `SegmentedControls`, animate only colour, shadow and underline, and respect
+  reduced motion.
+- Hover is gentler. In dark mode filled variants lighten slightly instead of darkening into a
+  muddy tone, and `primary` and `danger` keep their white text above 4.5:1 while hovered.
+- Disabled buttons have no shadow.
+- The gap between a button's icon and its label is 6px, as in `SegmentedControls`, up from 4px.
+- The active segment in `SegmentedControls` shares the filled button's shadow, so in light mode
+  it is faintly tinted with the segment's colour and in dark mode its drop shadow is deeper. The
+  track's grey border is the same translucent edge as `tertiary`.
+- A selected `DateRangePicker` day matches a filled button, including its pressed state.
+- Hovering a danger `Toast` turns its action the `danger` button colour instead of dark red with
+  red text, and the action's outline no longer makes it 2px wider than in other toasts.
+
+### Fixed
+
+- Hover colours on `Button`, `DateRangePicker` days and the `Badge` close button only apply on
+  devices that can hover, so a tapped control no longer stays highlighted on a touch screen.
+
 ## 4.10.2 - 2026-10-06
 
 ### Fixed
