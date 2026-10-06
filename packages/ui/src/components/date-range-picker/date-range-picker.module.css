@@ -93,8 +93,7 @@
   @apply text-button-primary-text;
   @apply border-0;
   @apply bg-[linear-gradient(to_bottom,rgb(255_255_255/0.1),rgb(255_255_255/0)_35%,rgb(0_0_0/0.06))];
-  @apply shadow-[0_1px_2px_rgb(0_0_0/0.18),0_2px_6px_-2px_color-mix(in_oklch,var(--mix-color)_25%,transparent),inset_0_1px_0_rgb(255_255_255/0.25)];
-  @apply dark:shadow-[0_1px_2px_rgb(0_0_0/0.45),inset_0_1px_0_rgb(255_255_255/0.25)];
+  @apply shadow-control-raised dark:shadow-control-raised-dark;
 
   @variant dark {
     --calendar-day-hover-fill: color-mix(in oklch, var(--mix-color), white 6%);
