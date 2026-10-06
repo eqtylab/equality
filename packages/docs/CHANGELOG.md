@@ -4,6 +4,11 @@ Notable changes to Equality's Docsite Generator are recorded here, following [Ke
 
 ## Unreleased
 
+### Fixed
+
+- "On this page" highlights the current section in lilac on pages whose headings have no
+  sub-sections too; it showed white, or nothing, in Chrome
+
 ## 0.10.0 - 2026-09-30
 
 ### Added
