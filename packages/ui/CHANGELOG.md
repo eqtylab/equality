@@ -2,6 +2,15 @@
 
 Notable changes to Equality are recorded here, following [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## 4.10.2 - 2026-10-06
+
+### Fixed
+
+- `Toast` slides in and out past the same viewport edge, fading as it goes, instead of rising
+  from the bottom and leaving to the right. It eases in over 400ms rather than snapping in at
+  150ms, and only fades when the user prefers reduced motion. A swiped-away toast fades where
+  it was released.
+
 ## 4.10.1 - 2026-10-02
 
 ### Fixed
