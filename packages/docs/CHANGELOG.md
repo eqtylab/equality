@@ -4,6 +4,8 @@ Notable changes to Equality's Docsite Generator are recorded here, following [Ke
 
 ## Unreleased
 
+## 0.11.0 - 2026-10-06
+
 ### Added
 
 - `footer.links`: footer rows after "Edit this page", shaped like header links, with a lead-in
