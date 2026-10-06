@@ -71,8 +71,10 @@
   }
 }
 
-.calendar-grid .calendar-day-btn:hover:not(:disabled) {
-  background-color: var(--calendar-day-hover-fill);
+.calendar-grid .calendar-day-btn:not(:disabled) {
+  @variant hover {
+    background-color: var(--calendar-day-hover-fill);
+  }
 }
 
 /* Badge tokens are for non-interactive status; their purple clashes with lilac beside a selected day */
@@ -91,9 +93,9 @@
   --mix-color: var(--color-button-primary-fill);
   --calendar-day-hover-fill: color-mix(in oklch, var(--mix-color), black 16%);
   @apply text-button-primary-text;
-  @apply border-0;
-  @apply bg-[linear-gradient(to_bottom,rgb(255_255_255/0.1),rgb(255_255_255/0)_35%,rgb(0_0_0/0.06))];
+  @apply bg-control-sheen border-0;
   @apply shadow-control-raised dark:shadow-control-raised-dark;
+  @apply active:not-disabled:shadow-control-pressed;
 
   @variant dark {
     --calendar-day-hover-fill: color-mix(in oklch, var(--mix-color), white 6%);

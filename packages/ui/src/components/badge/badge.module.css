@@ -63,9 +63,11 @@
   color: var(--badge-fg-color);
 }
 
-.badge .closable-btn:hover:not(:disabled) {
-  background-color: var(--badge-fg-color);
-  color: var(--badge-bg-color);
+.badge .closable-btn:not(:disabled) {
+  @variant hover {
+    background-color: var(--badge-fg-color);
+    color: var(--badge-bg-color);
+  }
 }
 
 .badge--sm .closable-btn {

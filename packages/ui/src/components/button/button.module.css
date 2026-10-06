@@ -1,12 +1,10 @@
 @reference '../../theme/theme.module.css';
 
 .button {
-  --button-transition-duration: 250ms;
-  --button-transition-easing: cubic-bezier(0.32, 0.72, 0, 1);
   @apply rounded-md;
   @apply whitespace-nowrap text-sm font-medium;
   @apply transition-[color,background-color,border-color,box-shadow,text-decoration-color,text-underline-offset];
-  @apply duration-(--button-transition-duration) ease-(--button-transition-easing);
+  @apply ease-control duration-250;
   @apply motion-reduce:transition-none;
   @apply flex-center gap-1.5;
   @apply cursor-pointer;
@@ -17,16 +15,18 @@
 
 /* Use shadow utilities, never a raw box-shadow: it would replace the focus ring */
 .button--filled {
-  @apply bg-(--mix-color) border-0;
-  @apply bg-[linear-gradient(to_bottom,rgb(255_255_255/0.1),rgb(255_255_255/0)_35%,rgb(0_0_0/0.06))];
+  --button-edge-inset: 1px;
+  @apply bg-(--mix-color) bg-control-sheen border-0;
   @apply no-underline;
   @apply shadow-control-raised dark:shadow-control-raised-dark;
-  @apply active:not-disabled:shadow-[inset_0_1px_2px_rgb(0_0_0/0.2)];
+  @apply active:not-disabled:shadow-control-pressed;
 }
 
-.button--filled:hover:not(:disabled),
-.button--tertiary:hover:not(:disabled) {
-  background-color: var(--button-hover-fill);
+.button--filled:not(:disabled),
+.button--tertiary:not(:disabled) {
+  @variant hover {
+    background-color: var(--button-hover-fill);
+  }
 }
 
 .button--primary,
@@ -69,18 +69,13 @@
   --mix-color: var(--color-button-tertiary-fill);
   --button-hover-fill: color-mix(in oklch, var(--mix-color), var(--color-text-primary) 5%);
   @apply bg-(--mix-color) border bg-origin-border;
-  @apply border-[color-mix(in_oklch,var(--color-text-primary)_16%,transparent)];
-  @apply dark:border-[color-mix(in_oklch,var(--color-text-primary)_22%,transparent)];
-  @apply dark:border-t-[color-mix(in_oklch,var(--color-text-primary)_34%,transparent)];
-  @apply bg-[linear-gradient(to_bottom,rgb(255_255_255/0.09),rgb(255_255_255/0)_35%,rgb(0_0_0/0.04))];
-  @apply dark:bg-[linear-gradient(to_bottom,rgb(255_255_255/0.06),rgb(255_255_255/0)_35%,rgb(0_0_0/0.1))];
+  @apply border-control-edge dark:border-control-edge-dark dark:border-t-control-edge-top-dark;
+  @apply bg-control-sheen-soft dark:bg-control-sheen-soft-dark;
   @apply text-button-tertiary-text;
   @apply no-underline;
-  @apply shadow-[0_1px_2px_rgb(0_0_0/0.13),0_2px_6px_-2px_rgb(0_0_0/0.09)];
-  @apply dark:shadow-[0_1px_2px_rgb(0_0_0/0.45)];
+  @apply shadow-control-raised-soft dark:shadow-control-raised-soft-dark;
   @apply active:not-disabled:shadow-none;
-  @apply active:not-disabled:inset-shadow-[0_1px_2px_rgb(0_0_0/0.08)];
-  @apply dark:active:not-disabled:inset-shadow-[0_1px_2px_rgb(0_0_0/0.35)];
+  @apply active:not-disabled:inset-shadow-control-sunken dark:active:not-disabled:inset-shadow-control-sunken-dark;
 
   @variant dark {
     --mix-color: color-mix(
@@ -114,26 +109,13 @@
 }
 
 .size--sm:not(.button--link) {
-  @apply h-7 rounded-md px-2;
+  @apply h-7 rounded-md px-[calc(--spacing(2)+var(--button-edge-inset,0px))];
 }
 
 .size--md:not(.button--link) {
-  @apply h-10 rounded-md px-3 py-2;
+  @apply h-10 rounded-md px-[calc(--spacing(3)+var(--button-edge-inset,0px))] py-2;
 }
 
 .size--lg:not(.button--link) {
-  @apply h-11 rounded-md px-8;
-}
-
-/* Filled buttons have no border so the inset rim light sits on the edge; the extra 1px keeps them as wide as a bordered button */
-.button--filled.size--sm {
-  @apply px-[calc(--spacing(2)+1px)];
-}
-
-.button--filled.size--md {
-  @apply px-[calc(--spacing(3)+1px)];
-}
-
-.button--filled.size--lg {
-  @apply px-[calc(--spacing(8)+1px)];
+  @apply h-11 rounded-md px-[calc(--spacing(8)+var(--button-edge-inset,0px))];
 }

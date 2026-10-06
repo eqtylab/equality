@@ -82,15 +82,11 @@
 }
 
 .toast--danger .toast-action {
-  @apply border-greyscale-400 border;
+  @apply inset-ring-border inset-ring;
 }
 
 .toast--danger:hover .toast-action:not(:disabled) {
-  @apply border-red-400 bg-red-800 text-red-400;
-}
-
-.toast--danger:focus .toast-action {
-  @apply ring-red-400;
+  @apply bg-button-danger-fill text-button-danger-text inset-ring-button-danger-fill;
 }
 
 .toast-close {
