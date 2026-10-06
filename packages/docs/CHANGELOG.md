@@ -4,6 +4,8 @@ Notable changes to Equality's Docsite Generator are recorded here, following [Ke
 
 ## Unreleased
 
+## 0.10.1 - 2026-10-06
+
 ### Fixed
 
 - "On this page" highlights the current section in lilac on pages whose headings have no
