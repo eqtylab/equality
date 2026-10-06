@@ -3,59 +3,92 @@
 .button {
   @apply rounded-md;
   @apply whitespace-nowrap text-sm font-medium;
-  @apply transition-all duration-300;
-  @apply flex-center gap-1;
+  @apply transition-[color,background-color,border-color,box-shadow,text-decoration-color,text-underline-offset];
+  @apply ease-control duration-250;
+  @apply motion-reduce:transition-none;
+  @apply flex-center gap-1.5;
   @apply cursor-pointer;
-  @apply disabled:cursor-not-allowed disabled:opacity-50;
+  @apply disabled:cursor-not-allowed disabled:opacity-50 disabled:shadow-none;
   @apply [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0;
   @apply focus-ring;
 }
 
+/* Use shadow utilities, never a raw box-shadow: it would replace the focus ring */
+.button--filled {
+  --button-edge-inset: 1px;
+  @apply bg-(--mix-color) bg-control-sheen border-0;
+  @apply no-underline;
+  @apply shadow-control-raised dark:shadow-control-raised-dark;
+  @apply active:not-disabled:shadow-control-pressed;
+}
+
+.button--filled:not(:disabled),
+.button--tertiary:not(:disabled) {
+  @variant hover {
+    background-color: var(--button-hover-fill);
+  }
+}
+
+.button--primary,
+.button--danger,
+.button--warning {
+  --button-hover-fill: color-mix(in oklch, var(--mix-color), black 16%);
+
+  @variant dark {
+    --button-hover-fill: color-mix(in oklch, var(--mix-color), white 6%);
+  }
+}
+
 .button--primary {
   --mix-color: var(--color-button-primary-fill);
-  @apply bg-(--mix-color);
-  @apply border-button-primary-border border;
   @apply text-button-primary-text;
-  @apply no-underline;
-  @apply hover:not-disabled:bg-mixed-dark;
 }
 
 .button--danger {
   --mix-color: var(--color-button-danger-fill);
-  @apply bg-(--mix-color);
-  @apply border-button-danger-border border;
   @apply text-button-danger-text;
-  @apply no-underline;
-  @apply hover:not-disabled:bg-mixed-dark;
 }
 
 /* Yellow is too light to carry white text, so this is the one filled variant with dark text */
 .button--warning {
   --mix-color: var(--color-button-warning-fill);
-  @apply bg-(--mix-color);
-  @apply border-button-warning-border border;
   @apply text-button-warning-text;
-  @apply no-underline;
-  @apply hover:not-disabled:bg-mixed-dark;
 }
 
 .button--secondary {
   --mix-color: var(--color-button-secondary-fill);
-  @apply bg-(--mix-color);
-  @apply border-button-secondary-border border;
+  --button-hover-fill: color-mix(in oklch, var(--mix-color), white 18%);
   @apply text-button-secondary-text;
-  @apply no-underline;
-  @apply hover:not-disabled:bg-mixed-light;
-  @apply dark:hover:not-disabled:bg-mixed-dark;
+
+  @variant dark {
+    --button-hover-fill: color-mix(in oklch, var(--mix-color), black 12%);
+  }
 }
 
 .button--tertiary {
   --mix-color: var(--color-button-tertiary-fill);
-  @apply bg-(--mix-color);
-  @apply border-button-tertiary-border border;
+  --button-hover-fill: color-mix(in oklch, var(--mix-color), var(--color-text-primary) 5%);
+  @apply bg-(--mix-color) border bg-origin-border;
+  @apply border-control-edge dark:border-control-edge-dark dark:border-t-control-edge-top-dark;
+  @apply bg-control-sheen-soft dark:bg-control-sheen-soft-dark;
   @apply text-button-tertiary-text;
   @apply no-underline;
-  @apply hover:dark:not-disabled:bg-mixed-light hover:not-disabled:bg-mixed-dark;
+  @apply shadow-control-raised-soft dark:shadow-control-raised-soft-dark;
+  @apply active:not-disabled:shadow-none;
+  @apply active:not-disabled:inset-shadow-control-sunken dark:active:not-disabled:inset-shadow-control-sunken-dark;
+
+  @variant dark {
+    --mix-color: color-mix(
+      in oklch,
+      var(--color-button-tertiary-fill),
+      var(--color-text-primary) 3%
+    );
+    --button-hover-fill: color-mix(
+      in oklch,
+      var(--color-button-tertiary-fill),
+      var(--color-text-primary) 20%
+    );
+  }
 }
 
 .button--link {
@@ -76,13 +109,13 @@
 }
 
 .size--sm:not(.button--link) {
-  @apply h-7 rounded-md px-2;
+  @apply h-7 rounded-md px-[calc(--spacing(2)+var(--button-edge-inset,0px))];
 }
 
 .size--md:not(.button--link) {
-  @apply h-10 rounded-md px-3 py-2;
+  @apply h-10 rounded-md px-[calc(--spacing(3)+var(--button-edge-inset,0px))] py-2;
 }
 
 .size--lg:not(.button--link) {
-  @apply h-11 rounded-md px-8;
+  @apply h-11 rounded-md px-[calc(--spacing(8)+var(--button-edge-inset,0px))];
 }

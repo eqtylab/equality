@@ -34,6 +34,13 @@ Notable changes to Equality's Docsite Generator are recorded here, following [Ke
 - SVG files as icons, such as `/github.svg`
 - The `/_equality/github.svg` file; `brandAssets.github` is now `'simple-icons:github'`
 
+## 0.10.1 - 2026-10-06
+
+### Fixed
+
+- "On this page" highlights the current section in lilac on pages whose headings have no
+  sub-sections too; it showed white, or nothing, in Chrome
+
 ## 0.10.0 - 2026-09-30
 
 ### Added
