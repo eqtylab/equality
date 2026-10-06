@@ -12,6 +12,13 @@ Notable changes to Equality's Docsite Generator are recorded here, following [Ke
 
 - Header links starting with `/` get the site's sub-folder, by the same rule as links in page text
 
+## 0.10.1 - 2026-10-06
+
+### Fixed
+
+- "On this page" highlights the current section in lilac on pages whose headings have no
+  sub-sections too; it showed white, or nothing, in Chrome
+
 ## 0.10.0 - 2026-09-30
 
 ### Added

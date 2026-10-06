@@ -57,15 +57,17 @@
 /* Closable Variant */
 
 .badge .closable-btn {
-  @apply -mr-1 size-3.5 rounded-full border-none p-0 [&_svg]:size-3;
+  @apply -mr-1 size-3.5 rounded-full border-none bg-none p-0 [&_svg]:size-3;
   @apply active:not-disabled:shadow-none active:not-disabled:inset-shadow-none shadow-none;
   background-color: var(--badge-bg-color);
   color: var(--badge-fg-color);
 }
 
-.badge .closable-btn:hover:not(:disabled) {
-  background-color: var(--badge-fg-color);
-  color: var(--badge-bg-color);
+.badge .closable-btn:not(:disabled) {
+  @variant hover {
+    background-color: var(--badge-fg-color);
+    color: var(--badge-bg-color);
+  }
 }
 
 .badge--sm .closable-btn {

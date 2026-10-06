@@ -4,6 +4,8 @@ Equality is the design system for all EQTY Lab projects. It is a monorepo compos
 
 The "demo" package is the Astro documentation site. Each component has a corresponding MDX docs page under `packages/demo/src/content/docs/components`.
 
+The "docs" package (`@eqtylab/docs`) is the Astro documentation framework the "demo" site is built with.
+
 The "tokens" package contains a design tokens formatted JSON file which is generated using Bjango's Pinwheel app. Tokens should always be added with Pinwheel and exported to JSON. Tokens are automatically built to CSS by the "ui" package's `build:tokens` script, which `pnpm build` runs; `pnpm dev` rebuilds them whenever the JSON changes.
 
 The "ui" package contains our React components located under `ui/src/components/`. Its tests live in `packages/ui/tests`.

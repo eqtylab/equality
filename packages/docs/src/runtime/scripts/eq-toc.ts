@@ -42,7 +42,9 @@ function measureRail(root: HTMLElement, path: SVGPathElement) {
     } else {
       // The border's centre line, so the lit segment covers the grey one exactly.
       const x = box.left - origin.left + parseFloat(getComputedStyle(row).borderLeftWidth) / 2;
-      if (parts.length === 0) parts.push(`M ${x} ${top}`);
+      // The 0.01px stub gives a flat list's straight path some width. Chrome paints no
+      // gradient on a shape whose box has none, so without it the lit segment vanished.
+      if (parts.length === 0) parts.push(`M ${x + 0.01} ${top} L ${x} ${top}`);
       parts.push(`L ${x} ${bottom}`);
     }
 
