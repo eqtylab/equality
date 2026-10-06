@@ -3,6 +3,11 @@
 import type { NavNode } from '@eqtylab/docs/types';
 import { Icon } from '@eqtylab/equality';
 
+import CONFIG from 'virtual:eqty-docs/config';
+import { linkTarget } from '@eqtylab/docs/paths';
+import { footerRowsFor } from '../lib/footer-links.ts';
+import LinkIcon from './LinkIcon.astro';
+
 interface Props {
   prev?: NavNode;
   next?: NavNode;
@@ -11,7 +16,16 @@ interface Props {
 }
 
 const { prev, next, editHref, text } = Astro.props;
+const paths = { base: import.meta.env.BASE_URL, pathPrefix: CONFIG.pathPrefix };
+const links = footerRowsFor(CONFIG.footer.links, { editHref, editIcon: CONFIG.editIcon }).map(
+  (row) => (row.href ? { ...row, ...linkTarget({ href: row.href, external: row.external }, paths) } : row)
+);
 const hasPager = Boolean(prev?.href || next?.href);
+const hasLinks = links.length > 0;
+const anyIcon = links.some((row) => row.icon);
+// Always underlined: the link colour is under 3:1 against the row's text, so colour alone
+// would not mark it as a link (WCAG 1.4.1).
+const rowLink = 'text-text-link decoration-text-link font-medium underline decoration-1 underline-offset-4';
 
 const page = 'group inline-flex flex-col gap-1 no-underline';
 const direction = 'text-text-tertiary inline-flex items-center gap-1.5 text-sm';
@@ -21,12 +35,13 @@ const pageLabel = 'text-text-secondary group-hover:text-text-primary text-base f
 {
   /* 96px, a step above the 64px under the page header, so the footer sits further out
      than anything inside the prose. Capped to the prose width so it does not run under
-     the table of contents. */
+     the table of contents. 64px below, on top of the page's 128px runway, so the page
+     ends well past its last link. */
 }
 {
-  (hasPager || editHref || text) && (
+  (hasPager || hasLinks || text) && (
     <footer
-      class="mt-24 max-w-[var(--eq-docs-content-max)]"
+      class="mt-24 max-w-[var(--eq-docs-content-max)] pb-16"
       data-eq-chrome
       data-pagefind-ignore
     >
@@ -58,21 +73,28 @@ const pageLabel = 'text-text-secondary group-hover:text-text-primary text-base f
         </nav>
       )}
 
-      {/* 32px: inside the footer's own group, so tighter than the 96px around it. */}
-      {(editHref || text) && (
-        <div class="text-text-tertiary mt-8 flex flex-wrap items-center justify-center gap-x-4 gap-y-1 text-sm">
-          {editHref && (
-            <a
-              class="hover:text-text-primary inline-flex items-center gap-1.5 text-inherit no-underline"
-              href={editHref}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <Icon icon="Pencil" size="xs" />
-              Edit this page
-            </a>
+      {/* 48px above the rule and 32px below it: inside the footer's own group, so
+          tighter than the 96px around it. */}
+      {(hasLinks || text) && (
+        <div class={`border-border border-t pt-8 text-sm ${hasPager ? 'mt-12' : ''}`}>
+          {hasLinks && (
+            <ul class="m-0 flex list-none flex-col gap-3 p-0">
+              {links.map((row) => (
+                <li class="text-text-secondary flex items-center gap-2.5">
+                  {row.icon ? (
+                    <span class="text-text-tertiary inline-flex shrink-0">
+                      <LinkIcon icon={row.icon} />
+                    </span>
+                  ) : (
+                    anyIcon && <span class="inline-flex size-4 shrink-0" aria-hidden="true" />
+                  )}
+                  {/* One line: Astro keeps line breaks as spaces, which would put one before the full stop. */}
+                  <span>{row.href ? <Fragment>{row.prefix && `${row.prefix} `}<a class={rowLink} href={row.href} target={row.external ? '_blank' : undefined} rel={row.external ? 'noopener noreferrer' : undefined}>{row.label}{row.external && <span class="sr-only"> (opens in a new tab)</span>}</a>{row.end}</Fragment> : row.plain}</span>
+                </li>
+              ))}
+            </ul>
           )}
-          {text && <p class="m-0">{text}</p>}
+          {text && <p class={`text-text-tertiary m-0 ${hasLinks ? 'mt-8' : ''}`}>{text}</p>}
         </div>
       )}
     </footer>

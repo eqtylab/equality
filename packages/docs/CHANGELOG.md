@@ -6,11 +6,31 @@ Notable changes to Equality's Docsite Generator are recorded here, following [Ke
 
 ### Added
 
-- Header links that open a new tab say so to screen readers
+- `footer.links`: footer rows after "Edit this page", shaped like header links, with a lead-in
+  `prefix`; a row without `href` is plain text
+- Icons are named with their set, `lucide:<name>` or `simple-icons:<name>`, in header links and
+  footer rows
+  - Both sets come with the package, Simple Icons for logos
+  - Icons follow the text colour in both themes
+  - A name that doesn't exist stops the build and says which
+- Header and footer links that open a new tab say so to screen readers
 
 ### Changed
 
+- "Edit this page" and any `footer.links` rows sit below a rule at the end of the page, one per line
+  with an icon; `footer.text` follows them, left-aligned
+- The page footer has 64px more space below it
 - Header links starting with `/` get the site's sub-folder, by the same rule as links in page text
+
+### Removed
+
+- The `github` option and the automatic GitHub link: write it in `header.links`, as the README's
+  quick start does; a leftover `github` stops the build and shows the link to write
+  - Links to github.com no longer get the GitHub icon added; they show the icon you give them
+- Lucide names without a set, such as `BookOpen`: write `lucide:book-open`; the build error names
+  the replacement
+- SVG files as icons, such as `/github.svg`
+- The `/_equality/github.svg` file; `brandAssets.github` is now `'simple-icons:github'`
 
 ## 0.10.0 - 2026-09-30
 

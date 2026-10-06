@@ -17,6 +17,8 @@ declare module 'virtual:eqty-docs/config' {
     env: import('./env.ts').DocsEnv;
     ownedByConsumer: string[];
     projectRoot: string;
+    icons: Record<string, import('./internal/icons.ts').IconSvg>;
+    editIcon: string;
     currentVersion: import('./internal/extract-versions.ts').CurrentVersion | null;
     versionManifest: import('./internal/extract-versions.ts').ManifestEntry[];
     versionRedirects: import('./versions.ts').VersionRedirect[];

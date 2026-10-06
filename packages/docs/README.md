@@ -15,10 +15,33 @@ pnpm add @eqtylab/docs @eqtylab/equality astro react react-dom
 import docs from '@eqtylab/docs';
 import { defineConfig } from 'astro/config';
 
+// TODO: change these to your project's.
+const REPO = 'https://github.com/eqtylab/my-repo';
+const DOCS_DIR = 'src/content/docs';
+
 export default defineConfig({
   site: 'https://docs.example.com',
   base: process.env.DOCS_BASE ?? '/',
-  integrations: [docs({ title: 'My Docs' })],
+  integrations: [
+    docs({
+      title: 'My Docs',
+      header: {
+        links: [{ label: 'GitHub', href: REPO, icon: 'simple-icons:github', external: true }],
+      },
+      footer: {
+        editUrl: `${REPO}/edit/main/${DOCS_DIR}/`,
+        links: [
+          {
+            prefix: 'Something broken?',
+            label: 'Report an issue',
+            href: `${REPO}/issues/new`,
+            icon: 'lucide:circle-dot',
+            external: true,
+          },
+        ],
+      },
+    }),
+  ],
 });
 ```
 
@@ -40,19 +63,9 @@ only change needed, since MDX is a superset of Markdown.
 
 ## EQTY Lab brand files
 
-Every site gets the EQTY Lab favicon, the header logo, a GitHub link and a share image without configuring
+Every site gets the EQTY Lab favicon, the header logo and a share image without configuring
 anything. The files are served from the package under `/_equality/`, so a site copies nothing
 into `public/`.
-
-Point the GitHub link at the project's repo in the Astro config. Unset, it points at the EQTY Lab
-organisation, `https://github.com/eqtylab`, rather than the project's code:
-
-```js
-docs({
-  title: 'My Docs',
-  github: 'eqtylab/my-repo', // or 'https://github.com/eqtylab/my-repo'
-});
-```
 
 Each one can be replaced or turned off:
 
@@ -60,14 +73,64 @@ Each one can be replaced or turned off:
 | --------- | ----------------------------------------- | ------------------------------------------------ |
 | `favicon` | `favicon: '/mine.svg'`                    | —                                                |
 | `logo`    | `logo: { src: '/mine.svg', alt: 'Acme' }` | `logo: false` (the header shows `title` as text) |
-| `github`  | `github: 'eqtylab/my-repo'` or a URL      | `github: false`                                  |
 | `ogImage` | `ogImage: '/share.png'` or a URL          | `ogImage: false`                                 |
 
 `ogImage` is the picture in a shared link's preview card, in Slack, LinkedIn and the like. Those
 apps only accept a full URL, so set Astro's `site`; without it a path is left out.
 
-A header link you write yourself to `github.com` replaces the automatic one, and gets the GitHub
-icon if it has none. `brandAssets` exports the served paths, e.g. `brandAssets.github` for a link icon.
+## Header and footer links
+
+```js
+docs({
+  title: 'My Docs',
+  header: {
+    links: [
+      { label: 'Blog', href: 'https://eqtylab.io/blog', icon: 'lucide:newspaper', external: true },
+    ],
+  },
+  footer: {
+    editUrl: 'https://github.com/eqtylab/my-repo/edit/main/src/content/docs/',
+    links: [
+      {
+        prefix: 'Something broken?',
+        label: 'Report an issue',
+        href: 'https://github.com/eqtylab/my-repo/issues/new',
+        icon: 'lucide:circle-dot',
+        external: true,
+      },
+      { label: 'Licensed under Apache 2.0', icon: 'lucide:scale' },
+    ],
+  },
+});
+```
+
+Header links and footer rows share one shape: `label`, `href`, `icon` and `external`. A footer
+row adds `prefix`, and its `href` is optional.
+
+`editUrl` adds "Spotted a mistake? Edit this page." as the first footer row, linked to the page's
+own file. It is left off archived versions, whose files are no longer in the repo.
+
+| Footer row has               | Shows                                                               |
+| ---------------------------- | ------------------------------------------------------------------- |
+| `prefix`, `label` and `href` | "Something broken? **Report an issue**." with the label linked      |
+| `label` and `href`           | "**Report an issue**."                                              |
+| `label` only                 | Plain text, exactly as written, such as "Licensed under Apache 2.0" |
+| `icon`                       | The icon in front; rows without one still line up                   |
+
+`external: true` opens a link in a new tab. A link starting with `/` gets the site's sub-folder
+(Astro's `base`), so `/latest/` works on a site served from `/integrity-py/`.
+
+### Icons
+
+| Write                 | For                                                   |
+| --------------------- | ----------------------------------------------------- |
+| `lucide:<name>`       | Any [Lucide](https://lucide.dev/icons) icon           |
+| `simple-icons:<name>` | Any logo from [Simple Icons](https://simpleicons.org) |
+
+Both sets come with the package. A name that doesn't exist stops the build and says which.
+
+Sidebar icons (`icon` in a page's frontmatter, and `sidebar.extra`) still take Lucide's own names,
+like `BookOpen`, until the sidebar moves to these links.
 
 ## Navigation comes from folders
 

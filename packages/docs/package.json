@@ -97,6 +97,10 @@
     "release": "pnpm run build && pnpm publish --access public --no-git-checks"
   },
   "dependencies": {
+    "@iconify-json/lucide": "^1.2.138",
+    "@iconify-json/simple-icons": "^1.2.98",
+    "@iconify/types": "^2.0.0",
+    "@iconify/utils": "^3.1.7",
     "@tailwindcss/vite": "^4.1.16",
     "github-slugger": "^2.0.0",
     "mdast-util-from-markdown": "^2.0.2",

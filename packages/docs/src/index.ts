@@ -4,14 +4,16 @@ import type { AstroIntegration } from 'astro';
 
 import {
   BRAND_ASSET_PREFIX,
+  EDIT_ICON,
   resolveConfig,
   type DocsConfig,
   type DocsUserConfig,
 } from './config.ts';
 import { resolveDocsEnv, type DocsEnv } from './env.ts';
 import { assertMdxOnly } from './internal/assert-mdx-only.ts';
+import { configuredIcons } from './internal/configured-icons.ts';
 import { EMPTY_VERSIONS, extractVersions } from './internal/extract-versions.ts';
-import { withGithubLink } from './internal/github-link.ts';
+import { resolveIcons } from './internal/icons.ts';
 import { microlighterGrammarsPlugin } from './internal/microlighter-grammars.ts';
 import { pagefindIntegration } from './internal/pagefind.ts';
 import { rehypeBaseUrl } from './internal/rehype-base-url.ts';
@@ -121,10 +123,8 @@ export default function docs(
 
         payload = {
           ...cfg,
-          header: {
-            ...cfg.header,
-            links: withGithubLink(cfg.header.links, cfg.github),
-          },
+          icons: resolveIcons(configuredIcons(cfg)),
+          editIcon: EDIT_ICON,
           sidebar: { ...cfg.sidebar, extra: [...cfg.sidebar.extra, ...contributions.navGroups] },
           env,
           // Read by the catch-all's getStaticPaths so no path is emitted twice.
@@ -265,6 +265,8 @@ export default function docs(
             `    currentVersion: { id: string; group: string; version: string } | null;`,
             `    versionManifest: Array<{ id: string; suffix: string; group: string; tag: string; dir: string }>;`,
             `    versionRedirects: Array<{ id: string; to: string | null }>;`,
+            `    icons: Record<string, { viewBox: string; body: string }>;`,
+            `    editIcon: string;`,
             `  };`,
             `  export default config;`,
             `}`,
