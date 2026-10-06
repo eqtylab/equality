@@ -1,6 +1,6 @@
 ---
 import CONFIG from 'virtual:eqty-docs/config';
-import { withBase } from '@eqtylab/docs/paths';
+import { linkTarget, withBase } from '@eqtylab/docs/paths';
 import { Icon } from '@eqtylab/equality';
 import GlobalSearch from './GlobalSearch.tsx';
 import LinkIcon from './LinkIcon.astro';
@@ -77,20 +77,23 @@ const navLink = 'eq-nav-control flex';
       <slot name="versions" />
       {switcher && <VersionSwitcher client:load data={switcher} className="eq-nav-control" />}
       <div class="hidden items-center gap-1 lg:flex">
-        {CONFIG.header.links.map((link) => (
-          <a
-            class={navLink}
-            href={link.href}
-            target={link.external ? '_blank' : undefined}
-            rel={link.external ? 'noopener noreferrer' : undefined}
-          >
-            {link.icon && <LinkIcon icon={link.icon} />}
-            {/* Always visible. Hiding it shipped a nameless link, because `icon` is
-                optional and Lucide has no brand marks, so a GitHub link had nothing
-                left to render. */}
-            <span class="inline">{link.label}</span>
-          </a>
-        ))}
+        {CONFIG.header.links.map((link) => {
+          const to = linkTarget(link, paths);
+          return (
+            <a
+              class={navLink}
+              href={to.href}
+              target={to.external ? '_blank' : undefined}
+              rel={to.external ? 'noopener noreferrer' : undefined}
+            >
+              {link.icon && <LinkIcon icon={link.icon} />}
+              {/* Always visible. Hiding it shipped a nameless link, because `icon` is
+                  optional, so a link without one had nothing left to render. */}
+              <span class="inline">{link.label}</span>
+              {to.external && <span class="sr-only"> (opens in a new tab)</span>}
+            </a>
+          );
+        })}
       </div>
       {CONFIG.header.showThemeToggle && <ThemeToggle client:load className="eq-nav-control" />}
       {

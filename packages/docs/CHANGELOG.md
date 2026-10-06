@@ -4,6 +4,14 @@ Notable changes to Equality's Docsite Generator are recorded here, following [Ke
 
 ## Unreleased
 
+### Added
+
+- Header links that open a new tab say so to screen readers
+
+### Changed
+
+- Header links starting with `/` get the site's sub-folder, by the same rule as links in page text
+
 ## 0.10.0 - 2026-09-30
 
 ### Added

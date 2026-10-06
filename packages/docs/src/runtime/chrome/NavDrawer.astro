@@ -7,6 +7,7 @@
  * everything else. It also avoids `DialogContainer`'s focus-restoration bug.
  */
 import CONFIG from 'virtual:eqty-docs/config';
+import { linkTarget } from '@eqtylab/docs/paths';
 import type { NavNode } from '@eqtylab/docs/types';
 import { Icon } from '@eqtylab/equality';
 
@@ -81,18 +82,25 @@ const currentVersion = versions.find((v) => v.current) ?? switcher?.latest;
       )
     }
     {
-      CONFIG.header.links.map((link) => (
-        <a
-          class="text-text-secondary hover:text-text-primary mb-1 flex max-h-10 items-center gap-2 rounded-md px-2 py-1.5 text-sm font-medium no-underline"
-          href={link.href}
-          target={link.external ? '_blank' : undefined}
-          rel={link.external ? 'noopener noreferrer' : undefined}
-        >
-          {link.icon && <LinkIcon icon={link.icon} />}
-          <span>{link.label}</span>
-          {link.external && <Icon icon="ArrowUpRight" size="xs" />}
-        </a>
-      ))
+      CONFIG.header.links.map((link) => {
+        const to = linkTarget(link, {
+          base: import.meta.env.BASE_URL,
+          pathPrefix: CONFIG.pathPrefix,
+        });
+        return (
+          <a
+            class="text-text-secondary hover:text-text-primary mb-1 flex max-h-10 items-center gap-2 rounded-md px-2 py-1.5 text-sm font-medium no-underline"
+            href={to.href}
+            target={to.external ? '_blank' : undefined}
+            rel={to.external ? 'noopener noreferrer' : undefined}
+          >
+            {link.icon && <LinkIcon icon={link.icon} />}
+            <span>{link.label}</span>
+            {to.external && <Icon icon="ArrowUpRight" size="xs" />}
+            {to.external && <span class="sr-only"> (opens in a new tab)</span>}
+          </a>
+        );
+      })
     }
     <NavTree nodes={nodes} />
   </nav>

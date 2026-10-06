@@ -131,3 +131,63 @@ export function resolveVersionedPath(pathname: string, opts: VersionFallback): s
   if (!redirect) return null;
   return reapply(redirect.to ?? '', tail);
 }
+
+function trimSlashes(s: string): string {
+  return s.replace(/^\/+|\/+$/g, '');
+}
+
+/** `/site/` + `docs` + `v3.9` → `/site/docs/v3.9`. Empty parts vanish. Returns '' when nothing applies. */
+function prefixOf(
+  base: string,
+  pathPrefix: string | undefined,
+  version: string | undefined
+): string {
+  const parts = [base, pathPrefix, version].map((p) => (p ? trimSlashes(p) : '')).filter(Boolean);
+  return parts.length ? '/' + parts.join('/') : '';
+}
+
+function shouldRewrite(value: string, prefix: string): boolean {
+  if (!value.startsWith('/')) return false;
+  if (value.startsWith('//')) return false; // protocol-relative
+  if (prefix && (value === prefix || value.startsWith(prefix + '/'))) return false;
+  return true;
+}
+
+/**
+ * When the URL already carries the path prefix (`/docs/x`), the version goes after it (`/docs/v3.9/x`),
+ * matching the injected route `${pathPrefix}/[...slug]`.
+ */
+function rewrite(
+  value: string,
+  base: string,
+  pathPrefix: string | undefined,
+  version: string | undefined
+): string {
+  const full = prefixOf(base, pathPrefix, version);
+  if (!full || !shouldRewrite(value, full)) return value;
+  const pp = pathPrefix ? '/' + trimSlashes(pathPrefix) : '';
+  if (pp && (value === pp || value.startsWith(pp + '/'))) {
+    const rest = value.slice(pp.length);
+    return prefixOf(base, pathPrefix, version) + rest;
+  }
+  return full + value;
+}
+
+/**
+ * A root-relative link with `base`, the docs mount and, in an archived copy, the version. The one
+ * rule for page text and configured links alike, so a `/x/` link lands in the same place in both.
+ */
+export function siteHref(href: string, ctx: PathContext): string {
+  const base = ctx.base || '/';
+  // Page text skips rewriting at the root with no version, docs mount included. Configured
+  // links must skip too, or the same `/x/` lands in two places on one page.
+  if (base === '/' && !ctx.versionPrefix) return href;
+  return rewrite(href, base, ctx.pathPrefix, ctx.versionPrefix);
+}
+
+export function linkTarget(
+  link: { href: string; external?: boolean },
+  ctx: PathContext
+): { href: string; external: boolean } {
+  return { href: siteHref(link.href, ctx), external: link.external ?? false };
+}
