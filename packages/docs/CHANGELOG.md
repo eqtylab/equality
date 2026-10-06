@@ -20,6 +20,11 @@ Notable changes to Equality's Docsite Generator are recorded here, following [Ke
 - With `logo: false` the header shows `title` as text, then "Docs"
 - Below 360px the header shows the logo without "Docs", so nothing runs into the search button
 
+### Fixed
+
+- The brand link, header links and theme toggle show Equality's focus ring instead of the
+  browser's outline
+
 ### Removed
 
 - `chrome/VersionSwitcher.tsx` and `Header`'s `switcher` prop: the version menu lives in the

@@ -13,6 +13,7 @@
   @apply text-text-secondary hover:text-text-primary hover:bg-background;
   @apply h-10 items-center gap-1.5 rounded-md px-3;
   @apply text-sm font-medium no-underline transition-colors;
+  @apply focus-ring;
 }
 
 /**
