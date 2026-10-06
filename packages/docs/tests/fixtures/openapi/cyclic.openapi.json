@@ -1,0 +1,20 @@
+{
+  "openapi": "3.0.3",
+  "info": { "title": "Cyclic", "version": "1.0.0" },
+  "paths": {
+    "/nodes/{id}": {
+      "get": {
+        "summary": "Get node",
+        "parameters": [{ "name": "id", "in": "path", "required": true, "schema": { "type": "string" } }],
+        "responses": {
+          "200": { "description": "ok", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Node" } } } }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Node": { "type": "object", "properties": { "name": { "type": "string" }, "child": { "$ref": "#/components/schemas/Node" } } }
+    }
+  }
+}
