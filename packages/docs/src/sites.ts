@@ -18,12 +18,12 @@ export const eqtyDocsSites: DocsSite[] = [
   {
     title: 'Guardian',
     href: 'https://guardian.docs.eqtylab.io/',
-    description: 'Product, service, API, and deployment documentation for Guardian',
+    description: 'User guide, API, and deployment documentation',
   },
   {
     title: 'Integrity Python SDK',
     href: 'https://integrity-py.docs.eqtylab.io/',
-    description: 'Python SDK for tracking data provenance, asset lineage and computation integrity',
+    description: 'Track data provenance and computation integrity',
   },
   {
     title: 'Verifiable Compute',
