@@ -91,8 +91,8 @@ docs({
         icon: 'simple-icons:npm',
         external: true,
       },
-      { label: 'Licensed under Apache 2.0', icon: 'lucide:scale' },
     ],
+    license: 'Apache 2.0',
   },
 });
 ```
@@ -108,14 +108,15 @@ pages, then two rows of its own.
 - `issueUrl` adds "Something broken? Report an issue" after it.
 
 The app footer runs across the bottom of every page, under the article and the table of contents
-but not the sidebar. It holds `footer.links`, then `footer.text`.
+but not the sidebar. It holds `footer.links`, then "© <year> EQTY Lab". `license` names the
+project's license, shown as "Licensed under Apache 2.0" with a scale icon under the copyright.
 
-| Footer row has               | Shows                                                               |
-| ---------------------------- | ------------------------------------------------------------------- |
-| `prefix`, `label` and `href` | "Install it from **npm**" with the label linked                     |
-| `label` and `href`           | "**npm**"                                                           |
-| `label` only                 | Plain text, exactly as written, such as "Licensed under Apache 2.0" |
-| `icon`                       | The icon in front                                                   |
+| Footer row has               | Shows                                                      |
+| ---------------------------- | ---------------------------------------------------------- |
+| `prefix`, `label` and `href` | "Install it from **npm**" with the label linked            |
+| `label` and `href`           | "**npm**"                                                  |
+| `label` only                 | Plain text, exactly as written, such as "Built with Astro" |
+| `icon`                       | The icon in front                                          |
 
 `external: true` opens a link in a new tab. A link starting with `/` gets the site's sub-folder
 (Astro's `base`), so `/latest/` works on a site served from `/integrity-py/`.

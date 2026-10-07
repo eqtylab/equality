@@ -8,15 +8,22 @@ Notable changes to Equality's Docsite Generator are recorded here, following [Ke
 
 - `footer.issueUrl`: "Something broken? Report an issue" in the article footer, after "Edit this
   page"
+- `footer.license`: the license's name, shown as "Licensed under …" with a scale icon under the
+  copyright in the app footer
 
 ### Changed
 
 - The page footer is split in two. The article footer, under the prose, keeps the previous and
-  next links, "Edit this page" and the new issue row. `footer.links` and `footer.text` move to an
-  app footer that runs under the article and table of contents on every page, splash pages too
+  next links, "Edit this page" and the new issue row. `footer.links` moves to an app footer that
+  runs under the article and table of contents on every page, splash pages too
 - A "Something broken?" row in `footer.links` now shows in the app footer: move its `href` to
   `footer.issueUrl` to keep it at the end of the article
 - Footer links no longer get a full stop added after them
+
+### Removed
+
+- `footer.text`: the app footer always ends with "© <year> EQTY Lab", and a leftover `text` is
+  ignored
 
 ## 0.11.0 - 2026-10-06
 

@@ -136,7 +136,8 @@ export const docsConfigSchema = z.object({
       /** Site-wide rows in the app footer under the content: links, or plain information. */
       links: z.array(footerLink).default([]),
       showPrevNext: z.boolean().default(true),
-      text: z.string().optional(),
+      /** The license's name, such as "Apache 2.0". Shown as "Licensed under …" under the copyright. */
+      license: z.string().min(1).optional(),
     })
     .prefault({}),
 
