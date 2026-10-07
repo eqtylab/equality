@@ -4,6 +4,8 @@ Notable changes to Equality's Docsite Generator are recorded here, following [Ke
 
 ## Unreleased
 
+## 0.11.0 - 2026-10-07
+
 ### Changed
 
 - Requires Astro 7: `astro` 7.2.10 or later, `@astrojs/mdx` 8 and `@astrojs/react` 7
