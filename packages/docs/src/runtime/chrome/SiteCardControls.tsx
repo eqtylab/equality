@@ -79,7 +79,6 @@ function SiteMenu({ title, sites }: { title: string; sites: SiteMenuRow[] }) {
         </button>
       </DropdownMenuTrigger>
       <DropdownMenuContent {...MENU}>
-        <DropdownMenuLabel className="eq-docs-label">EQTY Lab docs</DropdownMenuLabel>
         <DropdownMenuRadioGroup value={current.href} onValueChange={go}>
           {sites.map((site) => (
             <DropdownMenuRadioItem key={site.href} value={site.href} textValue={site.title}>
