@@ -104,6 +104,12 @@ test('footer rows default to none, and editUrl still works', () => {
   assert.equal(cfg.footer.editUrl, 'https://github.com/a/b/edit/main/docs/');
 });
 
+test('issueUrl is kept, and an empty one fails instead of linking nowhere', () => {
+  const issueUrl = 'https://github.com/a/b/issues/new';
+  assert.equal(resolveConfig({ title: 'x', footer: { issueUrl } }).footer.issueUrl, issueUrl);
+  assert.throws(() => resolveConfig({ title: 'x', footer: { issueUrl: '' } }), /footer\.issueUrl/);
+});
+
 test('a footer link row keeps prefix, label, href, icon and external', () => {
   const row = {
     prefix: 'Something broken?',

@@ -50,14 +50,8 @@ export default defineConfig({
       },
       footer: {
         editUrl: `${REPO}/edit/main/${DOCS_DIR}/`,
+        issueUrl: `${REPO}/issues/new`,
         links: [
-          {
-            prefix: "Something broken?",
-            label: "Report an issue",
-            href: `${REPO}/issues/new`,
-            icon: "lucide:circle-dot",
-            external: true,
-          },
           {
             label: "GitHub",
             href: REPO,
@@ -65,7 +59,6 @@ export default defineConfig({
             external: true,
           },
           {
-            prefix: "Install it from",
             label: "npm",
             href: "https://www.npmjs.com/package/@eqtylab/equality",
             icon: "simple-icons:npm",

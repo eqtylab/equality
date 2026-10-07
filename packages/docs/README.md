@@ -30,15 +30,7 @@ export default defineConfig({
       },
       footer: {
         editUrl: `${REPO}/edit/main/${DOCS_DIR}/`,
-        links: [
-          {
-            prefix: 'Something broken?',
-            label: 'Report an issue',
-            href: `${REPO}/issues/new`,
-            icon: 'lucide:circle-dot',
-            external: true,
-          },
-        ],
+        issueUrl: `${REPO}/issues/new`,
       },
     }),
   ],
@@ -90,12 +82,13 @@ docs({
   },
   footer: {
     editUrl: 'https://github.com/eqtylab/my-repo/edit/main/src/content/docs/',
+    issueUrl: 'https://github.com/eqtylab/my-repo/issues/new',
     links: [
       {
-        prefix: 'Something broken?',
-        label: 'Report an issue',
-        href: 'https://github.com/eqtylab/my-repo/issues/new',
-        icon: 'lucide:circle-dot',
+        prefix: 'Install it from',
+        label: 'npm',
+        href: 'https://www.npmjs.com/package/my-package',
+        icon: 'simple-icons:npm',
         external: true,
       },
       { label: 'Licensed under Apache 2.0', icon: 'lucide:scale' },
@@ -107,15 +100,22 @@ docs({
 Header links and footer rows share one shape: `label`, `href`, `icon` and `external`. A footer
 row adds `prefix`, and its `href` is optional.
 
-`editUrl` adds "Spotted a mistake? Edit this page." as the first footer row, linked to the page's
-own file. It is left off archived versions, whose files are no longer in the repo.
+There are two footers. The article footer ends each page, under the prose: the previous and next
+pages, then two rows of its own.
+
+- `editUrl` adds "Spotted a mistake? Edit this page", linked to the page's own file. It is left
+  off archived versions, whose files are no longer in the repo.
+- `issueUrl` adds "Something broken? Report an issue" after it.
+
+The app footer runs across the bottom of every page, under the article and the table of contents
+but not the sidebar. It holds `footer.links`, then `footer.text`.
 
 | Footer row has               | Shows                                                               |
 | ---------------------------- | ------------------------------------------------------------------- |
-| `prefix`, `label` and `href` | "Something broken? **Report an issue**." with the label linked      |
-| `label` and `href`           | "**Report an issue**."                                              |
+| `prefix`, `label` and `href` | "Install it from **npm**" with the label linked                     |
+| `label` and `href`           | "**npm**"                                                           |
 | `label` only                 | Plain text, exactly as written, such as "Licensed under Apache 2.0" |
-| `icon`                       | The icon in front; rows without one still line up                   |
+| `icon`                       | The icon in front                                                   |
 
 `external: true` opens a link in a new tab. A link starting with `/` gets the site's sub-folder
 (Astro's `base`), so `/latest/` works on a site served from `/integrity-py/`.

@@ -1,0 +1,32 @@
+---
+/** One footer row's text: a lead-in and the link, or plain information. */
+import type { PageFooterRow } from '../lib/footer-links.ts';
+
+interface Props {
+  row: PageFooterRow;
+}
+
+const { row } = Astro.props;
+// Always underlined: the link colour is under 3:1 against the row's text, so colour alone
+// would not mark it as a link (WCAG 1.4.1).
+const rowLink = 'text-text-link decoration-text-link font-medium underline decoration-1 underline-offset-4';
+---
+
+<span>
+  {row.prefix && row.href && `${row.prefix} `}
+  {
+    row.href ? (
+      <a
+        class={rowLink}
+        href={row.href}
+        target={row.external ? '_blank' : undefined}
+        rel={row.external ? 'noopener noreferrer' : undefined}
+      >
+        {row.label}
+        {row.external && <span class="sr-only"> (opens in a new tab)</span>}
+      </a>
+    ) : (
+      row.plain
+    )
+  }
+</span>

@@ -28,6 +28,14 @@ test("the edit row's icon is always listed, so a page given editHref without edi
   assert.deepEqual(configuredIcons(withEdit), ['lucide:pencil']);
 });
 
+test("the issue row's icon is listed only when issueUrl is set", () => {
+  const withIssue = resolveConfig({
+    title: 'x',
+    footer: { issueUrl: 'https://github.com/a/b/issues/new' },
+  });
+  assert.deepEqual(configuredIcons(withIssue), ['lucide:pencil', 'lucide:circle-dot']);
+});
+
 test('only header and footer links are read; sidebar and plugin icons are left to their own code', () => {
   const cfg = resolveConfig({
     title: 'x',

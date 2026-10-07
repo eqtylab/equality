@@ -16,6 +16,7 @@ export const brandAssets = {
 
 /** The edit row's icon. Sent to the page in the config, so it lives in one place. */
 export const EDIT_ICON = 'lucide:pencil';
+export const ISSUE_ICON = 'lucide:circle-dot';
 
 export const ICON_NAME = /^(?:lucide|simple-icons):[a-z0-9]+(?:-[a-z0-9]+)*$/;
 
@@ -128,9 +129,11 @@ export const docsConfigSchema = z.object({
 
   footer: z
     .object({
-      /** Base URL for "Edit this page"; the content path is appended. The row comes first. */
+      /** Base URL for "Edit this page" in the article footer; the content path is appended. */
       editUrl: z.string().optional(),
-      /** Rows after "Edit this page": links, or plain information. */
+      /** Where "Report an issue" in the article footer goes, after "Edit this page". */
+      issueUrl: z.string().min(1).optional(),
+      /** Site-wide rows in the app footer under the content: links, or plain information. */
       links: z.array(footerLink).default([]),
       showPrevNext: z.boolean().default(true),
       text: z.string().optional(),

@@ -1,0 +1,38 @@
+---
+/** The site's own footer, under the article and table of contents on every page. */
+import CONFIG from 'virtual:eqty-docs/config';
+import { linkTarget } from '@eqtylab/docs/paths';
+import { footerRowsFor } from '../lib/footer-links.ts';
+import FooterRow from './FooterRow.astro';
+import LinkIcon from './LinkIcon.astro';
+
+const paths = { base: import.meta.env.BASE_URL, pathPrefix: CONFIG.pathPrefix };
+const links = footerRowsFor(CONFIG.footer.links).map((row) =>
+  row.href ? { ...row, ...linkTarget({ href: row.href, external: row.external }, paths) } : row
+);
+const { text } = CONFIG.footer;
+---
+
+{
+  (links.length > 0 || text) && (
+    <footer class="border-border border-t bg-background-raised" data-eq-chrome data-pagefind-ignore>
+      <div class="mx-auto flex max-w-[calc(var(--eq-docs-content-max)+var(--eq-docs-toc-width)+8rem)] flex-col gap-6 px-6 py-10 text-sm md:flex-row md:items-start md:justify-between">
+        {links.length > 0 && (
+          <ul class="m-0 flex list-none flex-wrap gap-x-6 gap-y-3 p-0">
+            {links.map((row) => (
+              <li class="text-text-secondary flex items-center gap-2">
+                {row.icon && (
+                  <span class="text-text-tertiary inline-flex shrink-0">
+                    <LinkIcon icon={row.icon} />
+                  </span>
+                )}
+                <FooterRow row={row} />
+              </li>
+            ))}
+          </ul>
+        )}
+        {text && <p class="text-text-tertiary m-0 shrink-0">{text}</p>}
+      </div>
+    </footer>
+  )
+}

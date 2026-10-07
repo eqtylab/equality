@@ -5,6 +5,7 @@ import type { AstroIntegration } from 'astro';
 import {
   BRAND_ASSET_PREFIX,
   EDIT_ICON,
+  ISSUE_ICON,
   resolveConfig,
   type DocsConfig,
   type DocsUserConfig,
@@ -125,6 +126,7 @@ export default function docs(
           ...cfg,
           icons: resolveIcons(configuredIcons(cfg)),
           editIcon: EDIT_ICON,
+          issueIcon: ISSUE_ICON,
           sidebar: { ...cfg.sidebar, extra: [...cfg.sidebar.extra, ...contributions.navGroups] },
           env,
           // Read by the catch-all's getStaticPaths so no path is emitted twice.
@@ -267,6 +269,7 @@ export default function docs(
             `    versionRedirects: Array<{ id: string; to: string | null }>;`,
             `    icons: Record<string, { viewBox: string; body: string }>;`,
             `    editIcon: string;`,
+            `    issueIcon: string;`,
             `  };`,
             `  export default config;`,
             `}`,
