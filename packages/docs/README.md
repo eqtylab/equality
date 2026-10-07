@@ -72,6 +72,7 @@ apps only accept a full URL, so set Astro's `site`; without it a path is left ou
 docs({
   title: 'My Docs',
   repository: { url: 'https://github.com/eqtylab/my-repo' },
+  license: 'Apache 2.0',
   header: {
     links: [
       { label: 'Blog', href: 'https://eqtylab.io/blog', icon: 'lucide:newspaper', external: true },
@@ -87,7 +88,6 @@ docs({
         external: true,
       },
     ],
-    license: 'Apache 2.0',
   },
 });
 ```
@@ -105,8 +105,9 @@ pages, then, when `repository` is set, two links side by side.
 - "Something broken? Report an issue" opens a new issue in the repository.
 
 The app footer runs across the bottom of every page, under the article and the table of contents
-but not the sidebar. It holds `footer.links`, then "© <year> EQTY Lab". `license` names the
-project's license, shown as "Licensed under Apache 2.0" with a scale icon under the copyright.
+but not the sidebar. It holds `footer.links`, then "© <year> EQTY Lab". The top-level
+`license` names the project's license, such as "Apache 2.0", shown as written with a scale icon
+under the copyright.
 
 | Footer row has               | Shows                                                      |
 | ---------------------------- | ---------------------------------------------------------- |

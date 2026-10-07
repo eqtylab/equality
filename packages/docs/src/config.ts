@@ -106,6 +106,9 @@ export const docsConfigSchema = z.object({
     })
     .optional(),
 
+  /** The license's name, such as "Apache 2.0". Shown with a scale icon under the copyright. */
+  license: z.string().min(1).optional(),
+
   /** Content directory, relative to `src/`. */
   contentDir: z.string().default('content/docs'),
 
@@ -148,8 +151,6 @@ export const docsConfigSchema = z.object({
       /** Site-wide rows in the app footer under the content: links, or plain information. */
       links: z.array(footerLink).default([]),
       showPrevNext: z.boolean().default(true),
-      /** The license's name, such as "Apache 2.0". Shown as "Licensed under …" under the copyright. */
-      license: z.string().min(1).optional(),
     })
     .prefault({}),
 

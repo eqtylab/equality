@@ -36,6 +36,7 @@ export default defineConfig({
       description: "A theme-driven component library for EQTY Lab projects",
       versions: { current: ui.version, granularity: "minor" },
       repository: { url: "https://github.com/eqtylab/equality" },
+      license: "Apache 2.0",
       header: {
         links: [
           {
@@ -61,7 +62,6 @@ export default defineConfig({
             external: true,
           },
         ],
-        license: "Apache 2.0",
       },
     }),
   ],

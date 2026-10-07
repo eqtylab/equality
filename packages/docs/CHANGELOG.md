@@ -9,7 +9,7 @@ Notable changes to Equality's Docsite Generator are recorded here, following [Ke
 - `repository: { url, branch }`: the site's GitHub repository. Every article ends with "Spotted a
   mistake? Edit this page" and "Something broken? Report an issue", side by side, worked out from
   it; the page's path in the repo is read from git
-- `footer.license`: the license's name, shown as "Licensed under …" with a scale icon under the
+- `license`: the project's license, such as "Apache 2.0", shown with a scale icon under the
   copyright in the app footer
 
 ### Changed
