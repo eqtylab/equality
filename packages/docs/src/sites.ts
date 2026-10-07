@@ -11,11 +11,6 @@ export interface DocsSite {
 /** Every EQTY Lab docs site, in menu order. A new entry reaches a site when it upgrades. */
 export const eqtyDocsSites: DocsSite[] = [
   {
-    title: 'Equality',
-    href: 'https://equality.eqtylab.io/',
-    description: 'A theme-driven component library for EQTY Lab projects',
-  },
-  {
     title: 'Guardian',
     href: 'https://guardian.docs.eqtylab.io/',
     description: 'User guide, API, and deployment documentation',
