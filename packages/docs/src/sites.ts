@@ -1,6 +1,9 @@
 /** A docs site in the sidebar card's switcher. */
 export interface DocsSite {
-  /** Must equal that site's own `title`: the card marks the current site by it. */
+  /**
+   * Should equal that site's own `title`. A site whose title drifts is still matched by its
+   * Astro `site` address, but only if that equals `href`.
+   */
   title: string;
   /** The site's home page, a full address. */
   href: string;
@@ -8,7 +11,11 @@ export interface DocsSite {
   description?: string;
 }
 
-/** Every EQTY Lab docs site, in menu order. A new entry reaches a site when it upgrades. */
+/**
+ * EQTY Lab's public docs sites, in menu order. A new entry reaches a site when it upgrades.
+ * This package is public: a private site stays off this list. It still gets the menu, with
+ * itself at the top.
+ */
 export const eqtyDocsSites: DocsSite[] = [
   {
     title: 'Guardian',

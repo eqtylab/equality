@@ -6,9 +6,9 @@ Notable changes to Equality's Docsite Generator are recorded here, following [Ke
 
 ### Added
 
-- A card at the top of the sidebar names the site and switches between EQTY Lab docs sites, each
-  row saying what the site is for; `sites` sets the list or turns it off with `false`, and the
-  shared list is `eqtyDocsSites`
+- A card at the top of the sidebar names the site and switches between EQTY Lab's public docs
+  sites, each row saying what the site is for. A site not on the public list (`eqtyDocsSites`) sits
+  at the top of its own menu, so new and private sites need no setup
 - Phones get the same card at the top of the menu
 
 ### Changed

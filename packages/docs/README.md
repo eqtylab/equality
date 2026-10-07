@@ -134,30 +134,19 @@ like `BookOpen`, until the sidebar moves to these links.
 
 ## The site card
 
-The sidebar starts with a card naming the site. On EQTY Lab docs sites it is also a switcher: the
-name opens a menu of every EQTY Lab docs site, and the version row under it opens the version menu. The
-header shows only the logo and "Docs", however long the site's name is.
+The sidebar starts with a card naming the site. The name opens a menu of EQTY Lab's public docs
+sites, and the version row under it opens the version menu. The header shows only the logo and
+"Docs", however long the site's name is. There is nothing to configure.
 
-The list ships with this package, so a new site appears in every switcher once the others upgrade.
-To add one, add it to `eqtyDocsSites` in `src/sites.ts` and release.
+| The site is | To get there                                            | Its menu                                 | Other sites' menus        |
+| ----------- | ------------------------------------------------------- | ---------------------------------------- | ------------------------- |
+| Public      | Add it to `eqtyDocsSites` in `src/sites.ts` and release | The public sites, in list order          | List it once they upgrade |
+| Private     | Nothing                                                 | Itself at the top, then the public sites | Never list it             |
 
-| `sites`       | The card                                                                                                    |
-| ------------- | ----------------------------------------------------------------------------------------------------------- |
-| unset         | Switches between the EQTY Lab docs sites. If `title` isn't on that list, a plain label, and the build warns |
-| `false`       | A plain label                                                                                               |
-| your own list | Switches between those sites. It must include this one, matched by `title`                                  |
+This package is public, so a private site's address never goes in the list.
 
-```js
-docs({
-  title: 'Acme Docs',
-  sites: [
-    { title: 'Acme Docs', href: 'https://docs.acme.example/' },
-    { title: 'Acme API', href: 'https://api.acme.example/', description: 'The REST reference' },
-  ],
-});
-```
-
-Each row shows the site's `description`, or its address when it has none.
+A public site's row shows the `description` on its list entry. A private site's row shows its own
+`description` from `docs({ ... })`. Either falls back to the site's address.
 
 ## Navigation comes from folders
 

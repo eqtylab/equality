@@ -2,41 +2,81 @@ import assert from 'node:assert/strict';
 import { test } from 'node:test';
 
 import { siteAddress, siteMenu } from '../src/internal/site-list.ts';
+import { eqtyDocsSites } from '../src/sites.ts';
 
 const shared = [
-  { title: 'Equality', href: 'https://equality.eqtylab.io/', description: 'Components' },
+  { title: 'Guardian', href: 'https://guardian.docs.eqtylab.io/', description: 'Guides' },
   { title: 'Integrity Python SDK', href: 'https://integrity-py.docs.eqtylab.io/' },
   { title: 'Verifiable Compute', href: 'https://eqtylab.github.io/vcomp-docs/' },
 ];
 
-test('rows keep the list order and flag the current site', () => {
-  const { rows } = siteMenu({ title: 'Integrity Python SDK' }, shared);
-  assert.deepEqual(
-    rows?.map((r) => [r.title, r.current]),
-    [
-      ['Equality', false],
-      ['Integrity Python SDK', true],
-      ['Verifiable Compute', false],
-    ]
+const rowsOf = (menu: ReturnType<typeof siteMenu>) => menu?.map((r) => [r.title, r.current]);
+
+test('a public site gets the list in its order, with itself checked', () => {
+  assert.deepEqual(rowsOf(siteMenu({ title: 'Integrity Python SDK' }, undefined, shared)), [
+    ['Guardian', false],
+    ['Integrity Python SDK', true],
+    ['Verifiable Compute', false],
+  ]);
+});
+
+test('a private site sits at the top of its own menu, above the public sites', () => {
+  const menu = siteMenu({ title: 'Equality' }, 'https://equality.eqtylab.io', shared);
+  assert.deepEqual(rowsOf(menu), [
+    ['Equality', true],
+    ['Guardian', false],
+    ['Integrity Python SDK', false],
+    ['Verifiable Compute', false],
+  ]);
+  assert.equal(menu?.[0].href, 'https://equality.eqtylab.io');
+});
+
+test('a public site whose title drifted is matched by its address, not listed twice', () => {
+  const menu = siteMenu({ title: 'Integrity SDK' }, 'https://integrity-py.docs.eqtylab.io', shared);
+  assert.equal(menu?.length, 3);
+  assert.equal(menu?.find((r) => r.current)?.title, 'Integrity Python SDK');
+});
+
+test("a private site's row shows its config description", () => {
+  const menu = siteMenu(
+    { title: 'Equality', description: 'Components' },
+    'https://equality.eqtylab.io/',
+    shared
   );
+  assert.equal(menu?.[0].detail, 'Components');
+  assert.equal(menu?.[0].detailIsAddress, false);
+});
+
+test('a private site with no description shows its address', () => {
+  const menu = siteMenu({ title: 'Equality' }, 'https://equality.eqtylab.io/', shared);
+  assert.equal(menu?.[0].detail, 'equality.eqtylab.io');
+  assert.equal(menu?.[0].detailIsAddress, true);
 });
 
 test("a row shows the site's own description", () => {
-  const { rows } = siteMenu({ title: 'Integrity Python SDK' }, shared);
-  assert.equal(rows?.[0].detail, 'Components');
-  assert.equal(rows?.[0].detailIsAddress, false);
+  const menu = siteMenu({ title: 'Integrity Python SDK' }, undefined, shared);
+  assert.equal(menu?.[0].detail, 'Guides');
+  assert.equal(menu?.[0].detailIsAddress, false);
 });
 
 test("the current site, with no description in the list, borrows the config's", () => {
-  const { rows } = siteMenu({ title: 'Integrity Python SDK', description: 'Provenance' }, shared);
-  assert.equal(rows?.[1].detail, 'Provenance');
-  assert.equal(rows?.[1].detailIsAddress, false);
+  const menu = siteMenu(
+    { title: 'Integrity Python SDK', description: 'Provenance' },
+    undefined,
+    shared
+  );
+  assert.equal(menu?.[1].detail, 'Provenance');
+  assert.equal(menu?.[1].detailIsAddress, false);
 });
 
 test('any other row with no description shows its address', () => {
-  const { rows } = siteMenu({ title: 'Integrity Python SDK', description: 'Provenance' }, shared);
-  assert.equal(rows?.[2].detail, 'eqtylab.github.io/vcomp-docs');
-  assert.equal(rows?.[2].detailIsAddress, true);
+  const menu = siteMenu(
+    { title: 'Integrity Python SDK', description: 'Provenance' },
+    undefined,
+    shared
+  );
+  assert.equal(menu?.[2].detail, 'eqtylab.github.io/vcomp-docs');
+  assert.equal(menu?.[2].detailIsAddress, true);
 });
 
 test('an address drops the scheme and the trailing slash', () => {
@@ -50,26 +90,17 @@ test('an address drops the scheme and the trailing slash', () => {
   );
 });
 
-test('sites: false gives a plain label and no warning', () => {
-  assert.deepEqual(siteMenu({ title: 'Equality', sites: false }, shared), { rows: null });
+test('the only site there is gets a plain label', () => {
+  assert.equal(siteMenu({ title: 'Guardian' }, undefined, [shared[0]]), null);
 });
 
-test('a list holding only this site gives a plain label', () => {
-  assert.deepEqual(siteMenu({ title: 'Equality', sites: [shared[0]] }, shared), { rows: null });
+test('the public list is the default', () => {
+  const menu = siteMenu({ title: 'Equality' }, 'https://equality.eqtylab.io/');
+  assert.equal(menu?.[0].title, 'Equality');
+  assert.equal(menu?.length, eqtyDocsSites.length + 1);
 });
 
-test('a site missing from the shared list gets a plain label and a warning naming it', () => {
-  const menu = siteMenu({ title: 'Acme Docs' }, shared);
-  assert.equal(menu.rows, null);
-  assert.match(menu.warning ?? '', /"Acme Docs" is not in the EQTY Lab docs list/);
-});
-
-test('the shared EQTY Lab list is the default', () => {
-  const { rows } = siteMenu({ title: 'Integrity Python SDK' });
-  assert.ok(rows && rows.length >= 2);
-});
-
-test("Equality's own site gets the switcher from the shared list", () => {
-  const { rows } = siteMenu({ title: 'Equality' });
-  assert.equal(rows?.find((r) => r.current)?.title, 'Equality');
+test('every public site has a full https address, and no two share a title', () => {
+  for (const site of eqtyDocsSites) assert.equal(new URL(site.href).protocol, 'https:');
+  assert.equal(new Set(eqtyDocsSites.map((s) => s.title)).size, eqtyDocsSites.length);
 });

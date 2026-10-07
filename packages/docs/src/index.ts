@@ -123,14 +123,11 @@ export default function docs(
         // before the payload is sealed, so its sidebar groups ride into the runtime config.
         const contributions = await runPlugins(assertPlugins(cfg.plugins), params, logger);
 
-        const sites = siteMenu(cfg);
-        if (sites.warning) logger.warn(sites.warning);
-
         payload = {
           ...cfg,
           icons: resolveIcons(configuredIcons(cfg)),
           editIcon: EDIT_ICON,
-          siteMenu: sites.rows,
+          siteMenu: siteMenu(cfg, config.site),
           sidebar: { ...cfg.sidebar, extra: [...cfg.sidebar.extra, ...contributions.navGroups] },
           env,
           // Read by the catch-all's getStaticPaths so no path is emitted twice.

@@ -59,13 +59,7 @@ const footerLink = navLink.extend({
   prefix: z.string().optional(),
 });
 
-const docsSite = z.object({
-  title: z.string().min(1),
-  href: z.url({ protocol: /^https?$/, error: 'needs a full http(s) address' }),
-  description: z.string().optional(),
-});
-
-const docsConfigObject = z.object({
+export const docsConfigSchema = z.object({
   /** Site name: heads the sidebar card and ends every `<title>`. */
   title: z.string(),
   description: z.string().optional(),
@@ -93,18 +87,6 @@ const docsConfigObject = z.object({
       }),
     ])
     .default({ src: brandAssets.logo, alt: 'EQTY Lab' }),
-
-  /**
-   * The sites the sidebar card switches between. Unset: every EQTY Lab docs site, from
-   * `eqtyDocsSites`. `false`: a plain label. A list of your own must include this site, by `title`.
-   */
-  sites: z
-    .union([z.literal(false), z.array(docsSite).min(1)], {
-      // Shown only when the value is neither false nor an array. A bad entry in a list keeps its
-      // own path and message (`sites.0.href: ...`), because only one option failed past its type.
-      error: 'expected false, or a list of sites, each with a title and a full https:// href',
-    })
-    .optional(),
 
   // Removed in 0.11: without this key Zod drops a leftover `github` silently, and the site's
   // GitHub link disappears with no error.
@@ -265,16 +247,6 @@ const docsConfigObject = z.object({
 
   /** Generated-section plugins (OpenAPI reference, changelogs, ...). */
   plugins: z.array(z.any()).default([]),
-});
-
-export const docsConfigSchema = docsConfigObject.superRefine((cfg, ctx) => {
-  if (Array.isArray(cfg.sites) && !cfg.sites.some((site) => site.title === cfg.title)) {
-    ctx.addIssue({
-      code: 'custom',
-      path: ['sites'],
-      message: `has no site titled "${cfg.title}". The card finds this site by matching \`title\` exactly.`,
-    });
-  }
 });
 
 export type DocsUserConfig = z.input<typeof docsConfigSchema>;

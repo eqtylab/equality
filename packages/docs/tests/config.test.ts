@@ -2,7 +2,6 @@ import assert from 'node:assert/strict';
 import { test } from 'node:test';
 
 import { brandAssets, resolveConfig } from '../src/config.ts';
-import { eqtyDocsSites } from '../src/sites.ts';
 
 test('versions is on by default with tags and granularity filled in', () => {
   const cfg = resolveConfig({ title: 'x' });
@@ -197,50 +196,4 @@ test('a footer row with an empty label, or an empty href, fails instead of rende
     () => resolveConfig({ title: 'x', footer: { links: [{ label: 'a', href: '' }] } }),
     /footer\.links\.0\.href: .*leave it out/
   );
-});
-
-test('sites is unset by default, which means the shared EQTY Lab list', () => {
-  assert.equal(resolveConfig({ title: 'x' }).sites, undefined);
-});
-
-test('sites: false turns the switcher off', () => {
-  assert.equal(resolveConfig({ title: 'x', sites: false }).sites, false);
-});
-
-test('a sites list that includes this site is kept as written', () => {
-  const sites = [
-    { title: 'x', href: 'https://x.example/' },
-    { title: 'y', href: 'https://y.example/docs/', description: 'Y' },
-  ];
-  assert.deepEqual(resolveConfig({ title: 'x', sites }).sites, sites);
-});
-
-test('a sites list without this site stops the build and names the title', () => {
-  assert.throws(
-    () =>
-      resolveConfig({
-        title: 'Integrity Python SDK',
-        sites: [{ title: 'Equality', href: 'https://equality.eqtylab.io/' }],
-      }),
-    /sites: has no site titled "Integrity Python SDK"/
-  );
-});
-
-test('a site address must be a full http(s) address', () => {
-  assert.throws(
-    () => resolveConfig({ title: 'x', sites: [{ title: 'x', href: '/docs/' }] }),
-    /sites\.0\.href: needs a full http\(s\) address/
-  );
-});
-
-test('sites must be false or a list', () => {
-  assert.throws(
-    () => resolveConfig({ title: 'x', sites: 'all' as never }),
-    /sites: expected false, or a list of sites/
-  );
-});
-
-test('every shared site parses, and no two share a title', () => {
-  for (const site of eqtyDocsSites) resolveConfig({ title: site.title, sites: eqtyDocsSites });
-  assert.equal(new Set(eqtyDocsSites.map((s) => s.title)).size, eqtyDocsSites.length);
 });

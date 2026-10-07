@@ -2,44 +2,37 @@ import type { DocsConfig } from '../config.ts';
 import { eqtyDocsSites, type DocsSite } from '../sites.ts';
 import type { SiteMenuRow } from '../types.ts';
 
-export interface SiteMenu {
-  /** `null`: the card is a plain label. */
-  rows: SiteMenuRow[] | null;
-  warning?: string;
-}
-
 export function siteAddress(href: string): string {
   const url = new URL(href);
   return `${url.host}${url.pathname}`.replace(/\/$/, '');
 }
 
+/**
+ * The sidebar card's menu: the public sites, with this site first when it isn't one of them.
+ * `null`: the card is a plain label. `address` is Astro's `site`.
+ */
 export function siteMenu(
-  cfg: Pick<DocsConfig, 'title' | 'description' | 'sites'>,
+  cfg: Pick<DocsConfig, 'title' | 'description'>,
+  address: string | undefined,
   shared: DocsSite[] = eqtyDocsSites
-): SiteMenu {
-  if (cfg.sites === false) return { rows: null };
-  const sites = cfg.sites ?? shared;
-  // Only the shared list can get here without a match: config validation rejects a custom one.
-  if (!sites.some((site) => site.title === cfg.title)) {
+): SiteMenuRow[] | null {
+  // The address catches a public site whose `title` has drifted from its entry, which would
+  // otherwise list it twice: once as this site, once as someone else.
+  const isThisSite = (site: DocsSite) =>
+    site.title === cfg.title || (!!address && siteAddress(site.href) === siteAddress(address));
+  const sites = shared.some(isThisSite)
+    ? shared
+    : [{ title: cfg.title, href: address ?? '/' }, ...shared];
+  if (sites.length < 2) return null;
+  return sites.map((site) => {
+    const current = isThisSite(site);
+    const description = site.description ?? (current ? cfg.description : undefined);
     return {
-      rows: null,
-      warning:
-        `"${cfg.title}" is not in the EQTY Lab docs list, so the sidebar shows no site switcher. ` +
-        `Add it to eqtyDocsSites in @eqtylab/docs, or set sites: false.`,
+      title: site.title,
+      href: site.href,
+      detail: description ?? (URL.canParse(site.href) ? siteAddress(site.href) : ''),
+      detailIsAddress: !description,
+      current,
     };
-  }
-  if (sites.length < 2) return { rows: null };
-  return {
-    rows: sites.map((site) => {
-      const current = site.title === cfg.title;
-      const description = site.description ?? (current ? cfg.description : undefined);
-      return {
-        title: site.title,
-        href: site.href,
-        detail: description ?? siteAddress(site.href),
-        detailIsAddress: !description,
-        current,
-      };
-    }),
-  };
+  });
 }
