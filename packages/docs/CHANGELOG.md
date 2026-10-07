@@ -43,6 +43,8 @@ Notable changes to Equality's Docsite Generator are recorded here, following [Ke
 
 - The brand link, header links and theme toggle show Equality's focus ring instead of the
   browser's outline
+- "On this page" highlights the last section at the bottom of the page, even when that section is
+  too short to scroll its heading up to the top
 
 ### Removed
 

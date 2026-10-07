@@ -124,6 +124,11 @@ class EqToc extends HTMLElement {
         if (target.getBoundingClientRect().top <= line) active = target;
         else break;
       }
+      // A short last section never scrolls its heading up to the line. The 1px absorbs
+      // the fractional scroll positions a zoomed page stops at.
+      const { scrollHeight } = document.documentElement;
+      if (window.scrollY + window.innerHeight >= scrollHeight - 1)
+        active = targets[targets.length - 1];
       for (const [slug, link] of links) {
         if (slug === active.id) {
           link.setAttribute('data-active', '');
