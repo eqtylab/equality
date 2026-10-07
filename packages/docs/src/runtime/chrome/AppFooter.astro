@@ -4,14 +4,16 @@ import { Icon } from '@eqtylab/equality';
 
 import CONFIG from 'virtual:eqty-docs/config';
 import { linkTarget } from '@eqtylab/docs/paths';
-import { footerRowsFor } from '../lib/footer-links.ts';
-import FooterRow from './FooterRow.astro';
 import LinkIcon from './LinkIcon.astro';
 
 const paths = { base: import.meta.env.BASE_URL, pathPrefix: CONFIG.pathPrefix };
-const links = footerRowsFor(CONFIG.footer.links).map((row) =>
-  row.href ? { ...row, ...linkTarget({ href: row.href, external: row.external }, paths) } : row
-);
+const links = CONFIG.footer.links.map((row) => ({
+  ...row,
+  target: row.href ? linkTarget({ href: row.href, external: row.external }, paths) : undefined,
+}));
+// Always underlined: the link colour is under 3:1 against the row's text, so colour alone
+// would not mark it as a link (WCAG 1.4.1).
+const rowLink = 'text-text-link decoration-text-link font-medium underline decoration-1 underline-offset-4';
 
 const currentYear = new Date().getFullYear();
 const { license } = CONFIG.footer;
@@ -30,7 +32,22 @@ const { license } = CONFIG.footer;
                 <LinkIcon icon={row.icon} />
               </span>
             )}
-            <FooterRow row={row} />
+            {row.target ? (
+              <span>
+                {row.prefix && `${row.prefix} `}
+                <a
+                  class={rowLink}
+                  href={row.target.href}
+                  target={row.target.external ? '_blank' : undefined}
+                  rel={row.target.external ? 'noopener noreferrer' : undefined}
+                >
+                  {row.label}
+                  {row.target.external && <span class="sr-only"> (opens in a new tab)</span>}
+                </a>
+              </span>
+            ) : (
+              <span>{[row.prefix, row.label].filter(Boolean).join(' ')}</span>
+            )}
           </li>
         ))}
       </ul>

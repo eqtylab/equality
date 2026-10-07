@@ -15,9 +15,8 @@ pnpm add @eqtylab/docs @eqtylab/equality astro react react-dom
 import docs from '@eqtylab/docs';
 import { defineConfig } from 'astro/config';
 
-// TODO: change these to your project's.
+// TODO: change this to your project's.
 const REPO = 'https://github.com/eqtylab/my-repo';
-const DOCS_DIR = 'src/content/docs';
 
 export default defineConfig({
   site: 'https://docs.example.com',
@@ -25,12 +24,9 @@ export default defineConfig({
   integrations: [
     docs({
       title: 'My Docs',
+      repository: { url: REPO },
       header: {
         links: [{ label: 'GitHub', href: REPO, icon: 'simple-icons:github', external: true }],
-      },
-      footer: {
-        editUrl: `${REPO}/edit/main/${DOCS_DIR}/`,
-        issueUrl: `${REPO}/issues/new`,
       },
     }),
   ],
@@ -75,14 +71,13 @@ apps only accept a full URL, so set Astro's `site`; without it a path is left ou
 ```js
 docs({
   title: 'My Docs',
+  repository: { url: 'https://github.com/eqtylab/my-repo' },
   header: {
     links: [
       { label: 'Blog', href: 'https://eqtylab.io/blog', icon: 'lucide:newspaper', external: true },
     ],
   },
   footer: {
-    editUrl: 'https://github.com/eqtylab/my-repo/edit/main/src/content/docs/',
-    issueUrl: 'https://github.com/eqtylab/my-repo/issues/new',
     links: [
       {
         prefix: 'Install it from',
@@ -101,11 +96,13 @@ Header links and footer rows share one shape: `label`, `href`, `icon` and `exter
 row adds `prefix`, and its `href` is optional.
 
 There are two footers. The article footer ends each page, under the prose: the previous and next
-pages, then two rows of its own.
+pages, then, when `repository` is set, two links side by side.
 
-- `editUrl` adds "Spotted a mistake? Edit this page", linked to the page's own file. It is left
-  off archived versions, whose files are no longer in the repo.
-- `issueUrl` adds "Something broken? Report an issue" after it.
+- "Spotted a mistake? Edit this page" opens the page's own file on GitHub, on
+  `repository.branch` (`main` unless you say otherwise). The file's path is read from git, so the
+  site has to build from a checkout; outside one the build warns and leaves this link off. It is
+  also left off archived versions, whose files are no longer in the repo.
+- "Something broken? Report an issue" opens a new issue in the repository.
 
 The app footer runs across the bottom of every page, under the article and the table of contents
 but not the sidebar. It holds `footer.links`, then "© <year> EQTY Lab". `license` names the

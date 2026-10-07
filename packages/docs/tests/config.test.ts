@@ -2,6 +2,7 @@ import assert from 'node:assert/strict';
 import { test } from 'node:test';
 
 import { brandAssets, resolveConfig } from '../src/config.ts';
+import { repositoryLinks } from '../src/internal/repository.ts';
 
 test('versions is on by default with tags and granularity filled in', () => {
   const cfg = resolveConfig({ title: 'x' });
@@ -95,19 +96,32 @@ test('versions.folders defaults to an empty map and keeps what it is given', () 
 const withHeaderIcon = (icon: string) =>
   resolveConfig({ title: 'x', header: { links: [{ label: 'a', href: '/', icon }] } });
 
-test('footer rows default to none, and editUrl still works', () => {
-  const cfg = resolveConfig({
-    title: 'x',
-    footer: { editUrl: 'https://github.com/a/b/edit/main/docs/' },
-  });
-  assert.deepEqual(cfg.footer.links, []);
-  assert.equal(cfg.footer.editUrl, 'https://github.com/a/b/edit/main/docs/');
+test('footer rows default to none, and a leftover editUrl fails and points at repository', () => {
+  assert.deepEqual(resolveConfig({ title: 'x' }).footer.links, []);
+  assert.throws(
+    () =>
+      resolveConfig({
+        title: 'x',
+        footer: { editUrl: 'https://github.com/a/b/edit/main/' },
+      } as never),
+    /editUrl was removed\. Set repository instead/
+  );
 });
 
-test('issueUrl is kept, and an empty one fails instead of linking nowhere', () => {
-  const issueUrl = 'https://github.com/a/b/issues/new';
-  assert.equal(resolveConfig({ title: 'x', footer: { issueUrl } }).footer.issueUrl, issueUrl);
-  assert.throws(() => resolveConfig({ title: 'x', footer: { issueUrl: '' } }), /footer\.issueUrl/);
+test('the edit and issue links are worked out from the repository, on main unless told otherwise', () => {
+  const { repository } = resolveConfig({
+    title: 'x',
+    repository: { url: 'https://github.com/a/b/' },
+  });
+  assert.deepEqual(repositoryLinks(repository, 'packages/site/src/content/docs'), {
+    editBase: 'https://github.com/a/b/edit/main/packages/site/src/content/docs',
+    issueHref: 'https://github.com/a/b/issues/new',
+  });
+  assert.deepEqual(repositoryLinks(repository, null), {
+    editBase: undefined,
+    issueHref: 'https://github.com/a/b/issues/new',
+  });
+  assert.deepEqual(repositoryLinks(undefined, 'docs'), {});
 });
 
 test('a footer link row keeps prefix, label, href, icon and external', () => {

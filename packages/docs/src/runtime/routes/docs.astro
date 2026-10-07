@@ -156,8 +156,8 @@ const { entry, version, switcher, canonical, latestHref, latestLabel, redirectTo
       // return the whole cache path and produce a bogus link. Latest only.
       const contentPath = version ? undefined : entry.filePath?.split(`${CONFIG.contentDir}/`).pop();
       const editHref =
-        CONFIG.footer.editUrl && contentPath
-          ? `${CONFIG.footer.editUrl.replace(/\/$/, '')}/${contentPath}`
+        CONFIG.repositoryLinks.editBase && contentPath
+          ? `${CONFIG.repositoryLinks.editBase}/${contentPath}`
           : undefined;
 
       // File-shaped (/v3.9/x/label.md) beside the directory-shaped page.

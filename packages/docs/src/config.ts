@@ -14,10 +14,6 @@ export const brandAssets = {
   ogImage: `${BRAND_ASSET_PREFIX}/og-image.jpg`,
 } as const;
 
-/** The edit row's icon. Sent to the page in the config, so it lives in one place. */
-export const EDIT_ICON = 'lucide:pencil';
-export const ISSUE_ICON = 'lucide:circle-dot';
-
 export const ICON_NAME = /^(?:lucide|simple-icons):[a-z0-9]+(?:-[a-z0-9]+)*$/;
 
 function iconNameProblem(value: string): string {
@@ -98,6 +94,18 @@ export const docsConfigSchema = z.object({
     })
     .optional(),
 
+  /**
+   * The site's GitHub repository. Adds "Spotted a mistake? Edit this page" and "Something broken?
+   * Report an issue" to the end of every article.
+   */
+  repository: z
+    .object({
+      url: z.string().min(1, 'needs a url, such as https://github.com/owner/repo'),
+      /** The branch "Edit this page" opens. */
+      branch: z.string().min(1).default('main'),
+    })
+    .optional(),
+
   /** Content directory, relative to `src/`. */
   contentDir: z.string().default('content/docs'),
 
@@ -129,10 +137,14 @@ export const docsConfigSchema = z.object({
 
   footer: z
     .object({
-      /** Base URL for "Edit this page" in the article footer; the content path is appended. */
-      editUrl: z.string().optional(),
-      /** Where "Report an issue" in the article footer goes, after "Edit this page". */
-      issueUrl: z.string().min(1).optional(),
+      // Removed after 0.11: without this key Zod drops a leftover `editUrl` silently, and every
+      // page's edit link disappears with no error.
+      editUrl: z
+        .undefined({
+          error:
+            "editUrl was removed. Set repository instead, and the edit link is worked out from it: repository: { url: 'https://github.com/owner/repo' }",
+        })
+        .optional(),
       /** Site-wide rows in the app footer under the content: links, or plain information. */
       links: z.array(footerLink).default([]),
       showPrevNext: z.boolean().default(true),

@@ -4,9 +4,6 @@ import type { NavNode } from '@eqtylab/docs/types';
 import { Icon } from '@eqtylab/equality';
 
 import CONFIG from 'virtual:eqty-docs/config';
-import { articleRowsFor } from '../lib/footer-links.ts';
-import FooterRow from './FooterRow.astro';
-import LinkIcon from './LinkIcon.astro';
 
 interface Props {
   prev?: NavNode;
@@ -15,18 +12,17 @@ interface Props {
 }
 
 const { prev, next, editHref } = Astro.props;
-const links = articleRowsFor({
-  editHref,
-  editIcon: CONFIG.editIcon,
-  issueHref: CONFIG.footer.issueUrl,
-  issueIcon: CONFIG.issueIcon,
-});
+const { issueHref } = CONFIG.repositoryLinks;
 const hasPager = Boolean(prev?.href || next?.href);
-const hasLinks = links.length > 0;
+const hasLinks = Boolean(editHref || issueHref);
 
 const page = 'group inline-flex flex-col gap-1 no-underline';
 const direction = 'text-text-tertiary inline-flex items-center gap-1.5 text-sm';
 const pageLabel = 'text-text-secondary group-hover:text-text-primary text-base font-medium';
+const row = 'text-text-secondary flex items-center gap-2.5';
+// Always underlined: the link colour is under 3:1 against the row's text, so colour alone
+// would not mark it as a link (WCAG 1.4.1).
+const rowLink = 'text-text-link decoration-text-link font-medium underline decoration-1 underline-offset-4';
 ---
 
 {
@@ -73,16 +69,32 @@ const pageLabel = 'text-text-secondary group-hover:text-text-primary text-base f
           tighter than the 96px around it. */}
       {hasLinks && (
         <ul
-          class={`border-border m-0 flex list-none flex-col gap-3 border-t p-0 pt-8 text-sm ${hasPager ? 'mt-12' : ''}`}
+          class={`border-border m-0 flex list-none flex-wrap justify-between w-full gap-x-8 gap-y-3 border-t p-0 pt-8 text-sm ${hasPager ? 'mt-12' : ''}`}
         >
-          {links.map((row) => (
-            <li class="text-text-secondary flex items-center gap-2.5">
-              <span class="text-text-tertiary inline-flex shrink-0">
-                <LinkIcon icon={row.icon!} />
+          {editHref && (
+            <li class={row}>
+              <Icon icon="Pencil" size="xs" className="text-text-tertiary!" />
+              <span>
+                Spotted a mistake?{' '}
+                <a class={rowLink} href={editHref} target="_blank" rel="noopener noreferrer">
+                  Edit this page
+                  <span class="sr-only"> (opens in a new tab)</span>
+                </a>
               </span>
-              <FooterRow row={row} />
             </li>
-          ))}
+          )}
+          {issueHref && (
+            <li class={row}>
+              <Icon icon="CircleDot" size="xs" className="text-text-tertiary!" />
+              <span>
+                Something broken?{' '}
+                <a class={rowLink} href={issueHref} target="_blank" rel="noopener noreferrer">
+                  Report an issue
+                  <span class="sr-only"> (opens in a new tab)</span>
+                </a>
+              </span>
+            </li>
+          )}
         </ul>
       )}
     </footer>

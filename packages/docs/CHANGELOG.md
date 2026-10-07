@@ -6,22 +6,24 @@ Notable changes to Equality's Docsite Generator are recorded here, following [Ke
 
 ### Added
 
-- `footer.issueUrl`: "Something broken? Report an issue" in the article footer, after "Edit this
-  page"
+- `repository: { url, branch }`: the site's GitHub repository. Every article ends with "Spotted a
+  mistake? Edit this page" and "Something broken? Report an issue", side by side, worked out from
+  it; the page's path in the repo is read from git
 - `footer.license`: the license's name, shown as "Licensed under …" with a scale icon under the
   copyright in the app footer
 
 ### Changed
 
 - The page footer is split in two. The article footer, under the prose, keeps the previous and
-  next links, "Edit this page" and the new issue row. `footer.links` moves to an app footer that
+  next links, "Edit this page" and the new issue link. `footer.links` moves to an app footer that
   runs under the article and table of contents on every page, splash pages too
-- A "Something broken?" row in `footer.links` now shows in the app footer: move its `href` to
-  `footer.issueUrl` to keep it at the end of the article
+- A "Something broken?" row in `footer.links` now shows in the app footer: delete it and set
+  `repository` to keep it at the end of the article
 - Footer links no longer get a full stop added after them
 
 ### Removed
 
+- `footer.editUrl`: set `repository` instead; a leftover `editUrl` stops the build and says so
 - `footer.text`: the app footer always ends with "© <year> EQTY Lab", and a leftover `text` is
   ignored
 
@@ -47,6 +49,7 @@ Notable changes to Equality's Docsite Generator are recorded here, following [Ke
 
 ### Removed
 
+- `footer.editUrl`: set `repository` instead; a leftover `editUrl` stops the build and says so
 - The `github` option and the automatic GitHub link: write it in `header.links`, as the README's
   quick start does; a leftover `github` stops the build and shows the link to write
   - Links to github.com no longer get the GitHub icon added; they show the icon you give them

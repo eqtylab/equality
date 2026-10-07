@@ -1,4 +1,4 @@
-import { EDIT_ICON, ICON_NAME, ISSUE_ICON, type DocsConfig } from '../config.ts';
+import { ICON_NAME, type DocsConfig } from '../config.ts';
 
 // Only the areas LinkIcon draws. The sidebar draws its icons through Equality's Icon with
 // Lucide's own names, and plugins may carry unrelated `icon` fields, so walking the whole config
@@ -8,8 +8,5 @@ export function configuredIcons(cfg: DocsConfig): string[] {
   for (const link of [...cfg.header.links, ...cfg.footer.links]) {
     if (link.icon && ICON_NAME.test(link.icon)) names.add(link.icon);
   }
-  // Always: a page can pass editHref to ArticleFooter without the site setting editUrl.
-  names.add(EDIT_ICON);
-  if (cfg.footer.issueUrl) names.add(ISSUE_ICON);
   return [...names];
 }

@@ -4,8 +4,6 @@ import type { AstroIntegration } from 'astro';
 
 import {
   BRAND_ASSET_PREFIX,
-  EDIT_ICON,
-  ISSUE_ICON,
   resolveConfig,
   type DocsConfig,
   type DocsUserConfig,
@@ -23,6 +21,7 @@ import { rehypeProseScope } from './internal/rehype-prose-scope.ts';
 import { rehypeRelativeLinks } from './internal/rehype-relative-links.ts';
 import { rehypeTableColumns } from './internal/rehype-table-columns.ts';
 import { remarkArchiveDocument } from './internal/remark-archive-document.ts';
+import { contentPathInRepo, repositoryLinks } from './internal/repository.ts';
 import { assertPlugins, pluginComponentsSource, runPlugins } from './internal/run-plugins.ts';
 import { scanConsumerPages } from './internal/scan-consumer-pages.ts';
 import { virtualConfigPlugin, virtualPluginComponentsPlugin } from './internal/virtual-config.ts';
@@ -122,11 +121,22 @@ export default function docs(
         // before the payload is sealed, so its sidebar groups ride into the runtime config.
         const contributions = await runPlugins(assertPlugins(cfg.plugins), params, logger);
 
+        const contentPath = cfg.repository
+          ? contentPathInRepo(
+              fileURLToPath(config.root),
+              fileURLToPath(new URL(`./${cfg.contentDir}/`, config.srcDir))
+            )
+          : null;
+        if (cfg.repository && contentPath === null) {
+          logger.warn(
+            'repository is set but the site is not in a git checkout, so pages have no "Edit this page" link.'
+          );
+        }
+
         payload = {
           ...cfg,
+          repositoryLinks: repositoryLinks(cfg.repository, contentPath),
           icons: resolveIcons(configuredIcons(cfg)),
-          editIcon: EDIT_ICON,
-          issueIcon: ISSUE_ICON,
           sidebar: { ...cfg.sidebar, extra: [...cfg.sidebar.extra, ...contributions.navGroups] },
           env,
           // Read by the catch-all's getStaticPaths so no path is emitted twice.
@@ -268,8 +278,7 @@ export default function docs(
             `    versionManifest: Array<{ id: string; suffix: string; group: string; tag: string; dir: string }>;`,
             `    versionRedirects: Array<{ id: string; to: string | null }>;`,
             `    icons: Record<string, { viewBox: string; body: string }>;`,
-            `    editIcon: string;`,
-            `    issueIcon: string;`,
+            `    repositoryLinks: { editBase?: string; issueHref?: string };`,
             `  };`,
             `  export default config;`,
             `}`,

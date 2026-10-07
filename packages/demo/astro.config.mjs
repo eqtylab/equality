@@ -18,9 +18,6 @@ const linkSource =
   process.env.EQ_LINK_SOURCE === "1" ||
   (!process.env.CI && process.env.NODE_ENV !== "production");
 
-const REPO = "https://github.com/eqtylab/equality";
-const DOCS_DIR = "packages/demo/src/content/docs";
-
 export default defineConfig({
   site: env.site,
   base: env.base,
@@ -38,23 +35,22 @@ export default defineConfig({
       title: "Equality",
       description: "A theme-driven component library for EQTY Lab projects",
       versions: { current: ui.version, granularity: "minor" },
+      repository: { url: "https://github.com/eqtylab/equality" },
       header: {
         links: [
           {
             label: "GitHub",
-            href: REPO,
+            href: "https://github.com/eqtylab/equality",
             icon: "simple-icons:github",
             external: true,
           },
         ],
       },
       footer: {
-        editUrl: `${REPO}/edit/main/${DOCS_DIR}/`,
-        issueUrl: `${REPO}/issues/new`,
         links: [
           {
             label: "GitHub",
-            href: REPO,
+            href: "https://github.com/eqtylab/equality",
             icon: "simple-icons:github",
             external: true,
           },
