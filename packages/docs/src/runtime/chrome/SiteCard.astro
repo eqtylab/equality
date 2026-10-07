@@ -13,7 +13,7 @@ const { switcher, inDrawer = false } = Astro.props;
 const props = { title: CONFIG.title, sites: CONFIG.siteMenu, versions: switcher, inDrawer };
 ---
 
-<div class="border-border-raised mb-4 border-b pb-3">
+<div class="border-border-raised mb-4 border-b pb-4">
   {
     CONFIG.siteMenu || switcher ? (
       <SiteCardControls client:load {...props} />

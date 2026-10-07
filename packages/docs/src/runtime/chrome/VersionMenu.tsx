@@ -23,6 +23,8 @@ const SURFACE = 'overflow-y-auto';
 interface Props {
   data: SwitcherData;
   align: 'start' | 'end';
+  sideOffset?: number;
+  className?: string;
 }
 
 /**
@@ -33,14 +35,18 @@ interface Props {
  * latest, and one inside every major's submenu. Only the group holding the current version shows
  * a checked item, which is what the reader wants.
  */
-export function VersionMenuContent({ data, align }: Props) {
+export function VersionMenuContent({ data, align, sideOffset, className }: Props) {
   const current = currentVersion(data);
   const go = (href: string) => {
     if (href !== current.href) window.location.assign(href);
   };
 
   return (
-    <DropdownMenuContent align={align} className={SURFACE}>
+    <DropdownMenuContent
+      align={align}
+      sideOffset={sideOffset}
+      className={className ? `${SURFACE} ${className}` : SURFACE}
+    >
       {/* Nesting holds the browse case to four rows; this holds the jump case, which nesting
           makes worse by burying a version one hover deep. Typing lifts every match out of its
           submenu into this list, each carrying its major as a breadcrumb. */}

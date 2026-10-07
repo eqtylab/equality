@@ -135,7 +135,7 @@ like `BookOpen`, until the sidebar moves to these links.
 ## The site card
 
 The sidebar starts with a card naming the site. On EQTY Lab docs sites it is also a switcher: the
-name opens a menu of every EQTY Lab docs site, and the version under it opens the version menu. The
+name opens a menu of every EQTY Lab docs site, and the version row under it opens the version menu. The
 header shows only the logo and "Docs", however long the site's name is.
 
 The list ships with this package, so a new site appears in every switcher once the others upgrade.

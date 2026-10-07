@@ -15,23 +15,30 @@ import { currentVersion, type SwitcherData } from '../lib/versions-ui.ts';
 import { VersionMenuContent } from './VersionMenu.tsx';
 
 /* w-fit: the gradient spans the element's box, so a full-width box gives a short name only the
-   start of the fade, which reads as no gradient at all. */
+   start of the fade, which reads as no gradient at all.
+   -my-[0.05em]: the gradient pads the name so descenders aren't clipped. Without this the row
+   grows to 33.6px and drops off the nav's 4px rhythm. */
 const NAME =
-  'eq-display-gradient-sm block w-fit text-base leading-tight font-semibold text-balance forced-colors:text-inherit';
-
-/* The `before:` box is the 24px-tall hit area WCAG 2.5.8 asks for; the line itself is 16px. */
-const VERSION_LINE =
-  'eq-docs-label focus-ring hover:text-text-primary relative inline-flex items-center gap-1 rounded-sm before:absolute before:-inset-x-2 before:-inset-y-1 before:content-[""]';
+  'eq-display-gradient-sm -my-[0.05em] block w-fit text-base leading-tight font-semibold text-balance forced-colors:text-inherit';
 
 /* Equality's Icon colours and sizes itself in unlayered CSS, which beats any utility; hence `!`. */
-const SITE_CHEVRON = 'text-text-tertiary! [&_svg]:size-3.5!';
-const VERSION_CHEVRON = 'text-inherit!';
+const QUIET_ICON = 'text-text-tertiary! [&_svg]:size-3.5!';
+const TAG_ICON = 'text-text-secondary! [&_svg]:size-3.5!';
 
-/* Side padding must match NavTree's row `px-2` (7px + 1px border), or the name drifts off the
+/* Side padding must match NavTree's row `px-2` (7px + 1px border), or the text drifts off the
    nav labels' left edge. */
-const CARD_BOX = 'rounded-lg border border-transparent px-[7px] py-[5px]';
+const BOX = 'rounded-lg border border-transparent px-[7px] py-[5px]';
+const ROW = `${BOX} focus-ring hover:bg-background data-[state=open]:border-brand-primary data-[state=open]:bg-background flex w-full items-center text-left transition-colors`;
 
-function VersionLine({ data }: { data: SwitcherData }) {
+/* Trigger width, not a 16rem floor: the sidebar's border leaves each row 255px on desktop, and a
+   16rem menu overhangs its row by a pixel. */
+const MENU = {
+  align: 'start',
+  sideOffset: 8,
+  className: 'w-(--radix-dropdown-menu-trigger-width)',
+} as const;
+
+function VersionRow({ data }: { data: SwitcherData }) {
   const current = currentVersion(data);
   return (
     // modal={false}: a modal Radix menu closes in the same tap that opens it on iOS Safari.
@@ -39,27 +46,20 @@ function VersionLine({ data }: { data: SwitcherData }) {
       <DropdownMenuTrigger asChild>
         <button
           type="button"
-          className={VERSION_LINE}
+          className={`${ROW} gap-2 text-sm font-medium tabular-nums`}
           aria-label={`Version ${current.label}, change version`}
         >
+          <Icon icon="Tag" size="xs" className={TAG_ICON} />
           {current.label}
-          <Icon icon="ChevronDown" size="xs" className={VERSION_CHEVRON} />
+          <Icon icon="ChevronDown" size="xs" className={`${QUIET_ICON} ml-auto`} />
         </button>
       </DropdownMenuTrigger>
-      <VersionMenuContent data={data} align="start" />
+      <VersionMenuContent data={data} {...MENU} />
     </DropdownMenu>
   );
 }
 
-function SiteMenu({
-  title,
-  sites,
-  hasVersion,
-}: {
-  title: string;
-  sites: SiteMenuRow[];
-  hasVersion: boolean;
-}) {
+function SiteMenu({ title, sites }: { title: string; sites: SiteMenuRow[] }) {
   const current = sites.find((site) => site.current)!;
   const go = (href: string) => {
     if (href !== current.href) window.location.assign(href);
@@ -67,27 +67,18 @@ function SiteMenu({
   return (
     <DropdownMenu modal={false}>
       <DropdownMenuTrigger asChild>
-        {/* group-hover, not hover: the version line sits on top of this button, and the card
-            keeps its hover while the pointer is over it. */}
         <button
           type="button"
-          className={`${CARD_BOX} focus-ring group-hover/card:bg-background data-[state=open]:border-brand-primary data-[state=open]:bg-background flex w-full items-center gap-3 text-left transition-colors`}
+          className={`${ROW} gap-3`}
           aria-label={`Switch docs site, current: ${title}`}
         >
           <span className="min-w-0 flex-1">
             <span className={NAME}>{title}</span>
-            {/* The version line sits on top of this space, because a button cannot hold another.
-                Keep this height equal to eq-docs-label's 16px line height or the two overlap. */}
-            {hasVersion && <span className="mt-1 block h-4" aria-hidden="true" />}
           </span>
-          <Icon icon="ChevronsUpDown" size="xs" className={SITE_CHEVRON} />
+          <Icon icon="ChevronsUpDown" size="xs" className={QUIET_ICON} />
         </button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent
-        align="start"
-        sideOffset={8}
-        className="w-[max(16rem,var(--radix-dropdown-menu-trigger-width))]"
-      >
+      <DropdownMenuContent {...MENU}>
         <DropdownMenuLabel className="eq-docs-label">EQTY Lab docs</DropdownMenuLabel>
         <DropdownMenuRadioGroup value={current.href} onValueChange={go}>
           {sites.map((site) => (
@@ -130,24 +121,15 @@ export default function SiteCardControls({ title, sites, versions, inDrawer = fa
   }, [inDrawer]);
 
   const card = (
-    <div ref={ref} className="group/card relative -mt-1.5">
+    <div ref={ref} className="-mt-1.5 flex flex-col gap-1">
       {sites ? (
-        <SiteMenu title={title} sites={sites} hasVersion={Boolean(versions)} />
+        <SiteMenu title={title} sites={sites} />
       ) : (
-        <div className={CARD_BOX}>
+        <div className={BOX}>
           <p className={NAME}>{title}</p>
-          {versions && (
-            <span className="mt-1 flex">
-              <VersionLine data={versions} />
-            </span>
-          )}
         </div>
       )}
-      {sites && versions && (
-        <span className="absolute bottom-1.5 left-2 flex">
-          <VersionLine data={versions} />
-        </span>
-      )}
+      {versions && <VersionRow data={versions} />}
     </div>
   );
 
