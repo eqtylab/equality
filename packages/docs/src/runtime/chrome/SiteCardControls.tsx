@@ -3,7 +3,6 @@ import type { SiteMenuRow } from '@eqtylab/docs/types';
 import {
   DropdownMenu,
   DropdownMenuContent,
-  DropdownMenuLabel,
   DropdownMenuRadioGroup,
   DropdownMenuRadioItem,
   DropdownMenuTrigger,
