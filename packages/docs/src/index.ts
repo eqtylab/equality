@@ -1,5 +1,6 @@
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { isUnifiedProcessor, unified } from '@astrojs/markdown-remark';
 import type { AstroIntegration } from 'astro';
 
 import {
@@ -32,7 +33,7 @@ export { eqtyDocsSites, type DocsSite } from './sites.ts';
 export { resolveDocsEnv, type DocsEnv } from './env.ts';
 // Do not re-export the loaders: this entry runs in Node when astro.config loads,
 // and they import `astro:content`, which only exists in the Vite graph.
-export { docsSchema, groupSchema, badgeSchema } from './schema.ts';
+export { badgeSchema, docsSchema, groupSchema } from './schema.ts';
 export * from './types.ts';
 
 export interface DocsIntegrationOptions extends DocsUserConfig {
@@ -215,19 +216,13 @@ export default function docs(
                 },
               };
 
-        /*
-          Pin the markdown flavour rather than inheriting Astro's defaults. Astro 6.4 stopped defaulting `gfm` and `smartypants` onto `config.markdown`.
-        */
-        markdown.gfm = true;
-        markdown.smartypants = true;
-
         const versionsDir = fileURLToPath(new URL('./.astro/eqty-docs/versions/', config.root));
 
         // Archived pages are documents, not apps: their imports bind them to today's library.
-        markdown.remarkPlugins = [[remarkArchiveDocument, { versionsDir }]];
+        const remarkPlugins = [[remarkArchiveDocument, { versionsDir }]];
 
         // Astro does not apply `base` to authored markdown links. MDX inherits these via extendMarkdownConfig.
-        markdown.rehypePlugins = [
+        const rehypePlugins = [
           [rehypeBaseUrl, { base: config.base, pathPrefix: cfg.pathPrefix, versionsDir }],
           // Must follow rehypeBaseUrl: the hrefs this emits already carry `base`, and
           // rehypeBaseUrl would prefix them a second time.
@@ -249,6 +244,20 @@ export default function docs(
           rehypeTableColumns,
           ...(cfg.code.highlighter === 'codeblock' ? [rehypeCodeFence] : []),
         ];
+
+        // Sätteri runs no remark or rehype plugins, so these go on the site's `unified` processor,
+        // or a new one. Replacing the site's processor would drop its own plugins.
+        const existing = config.markdown.processor;
+        const processor =
+          existing && isUnifiedProcessor(existing)
+            ? existing
+            : unified({ remarkPlugins: [], rehypePlugins: [] });
+        processor.options.remarkPlugins.push(...(remarkPlugins as never[]));
+        processor.options.rehypePlugins.push(...(rehypePlugins as never[]));
+        // Pin the markdown flavour rather than inheriting Astro's defaults.
+        processor.options.gfm = true;
+        processor.options.smartypants = true;
+        markdown.processor = processor;
 
         // Resolve against the project root first, or a './...' path means different things
         // in dev and in a build.
