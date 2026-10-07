@@ -26,14 +26,15 @@ const rowLink = 'text-text-link decoration-text-link font-medium underline decor
 ---
 
 {
-  /* 96px, a step above the 64px under the page header, so the footer sits further out
-     than anything inside the prose. Capped to the prose width so it does not run under
-     the table of contents. */
+  /* 96px above, a step above the 80px before an h2, so the footer sits further out than
+     anything inside the prose. The 32px below adds to the app footer's 64px for the same
+     96px on that side. Capped to the prose width so it does not run under the table of
+     contents. */
 }
 {
   (hasPager || hasLinks) && (
     <footer
-      class="mt-24 max-w-[var(--eq-docs-content-max)]"
+      class="mt-24 pb-8 max-w-[var(--eq-docs-content-max)]"
       data-eq-chrome
       data-pagefind-ignore
     >
