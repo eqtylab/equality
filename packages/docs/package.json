@@ -97,6 +97,7 @@
     "release": "pnpm run build && pnpm publish --access public --no-git-checks"
   },
   "dependencies": {
+    "@astrojs/markdown-remark": "^7.3.2",
     "@tailwindcss/vite": "^4.1.16",
     "github-slugger": "^2.0.0",
     "mdast-util-from-markdown": "^2.0.2",
@@ -109,10 +110,10 @@
     "yaml": "^2.8.2"
   },
   "peerDependencies": {
-    "@astrojs/mdx": "^5.0.2",
-    "@astrojs/react": "^5.0.1 || ^6.0.0",
+    "@astrojs/mdx": "^8.0.0",
+    "@astrojs/react": "^7.0.0",
     "@eqtylab/equality": "^4.1.0",
-    "astro": "^6.0.0",
+    "astro": "^7.2.10",
     "react": "^18.2.0 || ^19.0.0",
     "react-dom": "^18.2.0 || ^19.0.0"
   },
@@ -121,11 +122,11 @@
     "@types/node": "^24.9.2",
     "@types/react": "^19.2.2",
     "@types/react-dom": "^19.2.2",
-    "astro": "^6.0.8",
+    "astro": "^7.3.6",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
     "tsup": "^8.5.0",
     "typescript": ">=5.4.x",
-    "vite": "^7.0.0"
+    "vite": "^8.3.1"
   }
 }
