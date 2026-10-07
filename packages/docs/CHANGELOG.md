@@ -4,6 +4,15 @@ Notable changes to Equality's Docsite Generator are recorded here, following [Ke
 
 ## Unreleased
 
+## 0.11.0 - 2026-10-07
+
+### Changed
+
+- Requires Astro 7: `astro` 7.2.10 or later, `@astrojs/mdx` 8 and `@astrojs/react` 7
+- The remark and rehype plugins run on a `unified` processor from `@astrojs/markdown-remark`: the
+  site's own when it sets one, otherwise a new one. Sätteri, Astro 7's default, runs neither
+- `gfm` and `smartypants` are set on that processor, not on `config.markdown`
+
 ## 0.10.1 - 2026-10-06
 
 ### Fixed
