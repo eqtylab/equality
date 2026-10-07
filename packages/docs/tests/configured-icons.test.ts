@@ -16,16 +16,7 @@ test('icons come from header links and footer rows, each once', () => {
       ],
     },
   });
-  assert.deepEqual(configuredIcons(cfg), ['lucide:newspaper', 'lucide:scale', 'lucide:pencil']);
-});
-
-test("the edit row's icon is always listed, so a page given editHref without editUrl still draws", () => {
-  assert.deepEqual(configuredIcons(resolveConfig({ title: 'x' })), ['lucide:pencil']);
-  const withEdit = resolveConfig({
-    title: 'x',
-    footer: { editUrl: 'https://github.com/a/b/edit/main/' },
-  });
-  assert.deepEqual(configuredIcons(withEdit), ['lucide:pencil']);
+  assert.deepEqual(configuredIcons(cfg), ['lucide:newspaper', 'lucide:scale']);
 });
 
 test('only header and footer links are read; sidebar and plugin icons are left to their own code', () => {
@@ -34,5 +25,5 @@ test('only header and footer links are read; sidebar and plugin icons are left t
     sidebar: { extra: [{ label: 'Docs', icon: 'lucide:book' }] },
     plugins: [{ name: 'p', icon: 'lucide:typo' }],
   });
-  assert.deepEqual(configuredIcons(cfg), ['lucide:pencil']);
+  assert.deepEqual(configuredIcons(cfg), []);
 });

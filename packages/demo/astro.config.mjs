@@ -18,9 +18,6 @@ const linkSource =
   process.env.EQ_LINK_SOURCE === "1" ||
   (!process.env.CI && process.env.NODE_ENV !== "production");
 
-const REPO = "https://github.com/eqtylab/equality";
-const DOCS_DIR = "packages/demo/src/content/docs";
-
 export default defineConfig({
   site: env.site,
   base: env.base,
@@ -38,42 +35,33 @@ export default defineConfig({
       title: "Equality",
       description: "A theme-driven component library for EQTY Lab projects",
       versions: { current: ui.version, granularity: "minor" },
+      repository: { url: "https://github.com/eqtylab/equality" },
+      license: "Apache 2.0",
       header: {
         links: [
           {
             label: "GitHub",
-            href: REPO,
+            href: "https://github.com/eqtylab/equality",
             icon: "simple-icons:github",
             external: true,
           },
         ],
       },
       footer: {
-        editUrl: `${REPO}/edit/main/${DOCS_DIR}/`,
         links: [
           {
-            prefix: "Something broken?",
-            label: "Report an issue",
-            href: `${REPO}/issues/new`,
-            icon: "lucide:circle-dot",
-            external: true,
-          },
-          {
             label: "GitHub",
-            href: REPO,
+            href: "https://github.com/eqtylab/equality",
             icon: "simple-icons:github",
             external: true,
           },
           {
-            prefix: "Install it from",
             label: "npm",
             href: "https://www.npmjs.com/package/@eqtylab/equality",
             icon: "simple-icons:npm",
             external: true,
           },
-          { label: "Licensed under Apache 2.0", icon: "lucide:scale" },
         ],
-        text: `© ${new Date().getFullYear()} EQTY Lab`,
       },
     }),
   ],

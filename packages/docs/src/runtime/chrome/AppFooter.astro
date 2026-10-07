@@ -1,0 +1,72 @@
+---
+/** The site's own footer, under the article and table of contents on every page. */
+import { Icon } from '@eqtylab/equality';
+
+import CONFIG from 'virtual:eqty-docs/config';
+import { linkTarget } from '@eqtylab/docs/paths';
+import LinkIcon from './LinkIcon.astro';
+
+const paths = { base: import.meta.env.BASE_URL, pathPrefix: CONFIG.pathPrefix };
+const links = CONFIG.footer.links.map((row) => ({
+  ...row,
+  target: row.href ? linkTarget({ href: row.href, external: row.external }, paths) : undefined,
+}));
+// Always underlined: the link colour is under 3:1 against the row's text, so colour alone
+// would not mark it as a link (WCAG 1.4.1).
+const rowLink = 'text-text-link decoration-text-link font-medium underline decoration-1 underline-offset-4';
+
+const currentYear = new Date().getFullYear();
+const { license } = CONFIG;
+---
+
+<footer class="border-border border-t mt-16 bg-background-raised" data-eq-chrome data-pagefind-ignore>
+  {/* Mirrors main's columns from xl, where the table of contents appears: the same max width,
+      padding and gap, and a TOC-wide column, so the license lines up under the TOC. */}
+  <div class="mx-auto flex max-w-[calc(var(--eq-docs-content-max)+var(--eq-docs-toc-width)+8rem)] flex-col gap-6 px-6 py-10 text-sm md:flex-row md:items-start md:justify-between xl:gap-16">
+    {links.length > 0 && (
+      <ul class="m-0 flex flex-col list-none flex-wrap gap-2 p-0 xl:min-w-0 xl:flex-1">
+        {links.map((row) => (
+          <li class="text-text-secondary flex items-center gap-2">
+            {row.icon && (
+              <span class="text-text-tertiary inline-flex shrink-0">
+                <LinkIcon icon={row.icon} />
+              </span>
+            )}
+            {row.target ? (
+              <span>
+                {row.prefix && `${row.prefix} `}
+                <a
+                  class={rowLink}
+                  href={row.target.href}
+                  target={row.target.external ? '_blank' : undefined}
+                  rel={row.target.external ? 'noopener noreferrer' : undefined}
+                >
+                  {row.label}
+                  {row.target.external && <span class="sr-only"> (opens in a new tab)</span>}
+                </a>
+              </span>
+            ) : (
+              <span>{[row.prefix, row.label].filter(Boolean).join(' ')}</span>
+            )}
+          </li>
+        ))}
+      </ul>
+    )}
+    <div class="text-text-tertiary flex shrink-0 flex-col gap-2 xl:ml-auto xl:w-[var(--eq-docs-toc-width)]">
+      <div class="m-0 flex items-center gap-1">
+          <Icon icon="Copyright" size="xs" className="text-text-tertiary!" />
+          <p>
+            {currentYear} EQTY Lab
+          </p>
+        </div>
+      {license && (
+        <div class="m-0 flex items-center gap-1">
+          <Icon icon="Scale" size="xs" className="text-text-tertiary!" />
+          <p>
+            {license}
+          </p>
+        </div>
+      )}
+    </div>
+  </div>
+</footer>

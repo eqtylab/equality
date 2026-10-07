@@ -17,7 +17,7 @@ import { entryMarkdown } from '../lib/markdown-twin.ts';
 import { firstParagraph } from '../lib/summary.ts';
 import { mdxComponents } from '../lib/mdx-components.ts';
 import type { SwitcherData } from '../lib/versions-ui.ts';
-import PageFooter from '../chrome/PageFooter.astro';
+import ArticleFooter from '../chrome/ArticleFooter.astro';
 import Prose from '../chrome/Prose.astro';
 
 type Entry = Awaited<ReturnType<typeof docsEntries>>[number] & {
@@ -156,8 +156,8 @@ const { entry, version, switcher, canonical, latestHref, latestLabel, redirectTo
       // return the whole cache path and produce a bogus link. Latest only.
       const contentPath = version ? undefined : entry.filePath?.split(`${CONFIG.contentDir}/`).pop();
       const editHref =
-        CONFIG.footer.editUrl && contentPath
-          ? `${CONFIG.footer.editUrl.replace(/\/$/, '')}/${contentPath}`
+        CONFIG.repositoryLinks.editBase && contentPath
+          ? `${CONFIG.repositoryLinks.editBase}/${contentPath}`
           : undefined;
 
       // File-shaped (/v3.9/x/label.md) beside the directory-shaped page.
@@ -198,7 +198,7 @@ const { entry, version, switcher, canonical, latestHref, latestLabel, redirectTo
             <Content components={mdxComponents} />
           </Prose>
           {!splash && (
-            <PageFooter prev={prev} next={next} editHref={editHref} text={CONFIG.footer.text} />
+            <ArticleFooter prev={prev} next={next} editHref={editHref} />
           )}
         </DocsPage>
       );

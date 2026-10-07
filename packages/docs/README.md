@@ -15,9 +15,8 @@ pnpm add @eqtylab/docs @eqtylab/equality astro react react-dom
 import docs from '@eqtylab/docs';
 import { defineConfig } from 'astro/config';
 
-// TODO: change these to your project's.
+// TODO: change this to your project's.
 const REPO = 'https://github.com/eqtylab/my-repo';
-const DOCS_DIR = 'src/content/docs';
 
 export default defineConfig({
   site: 'https://docs.example.com',
@@ -25,20 +24,9 @@ export default defineConfig({
   integrations: [
     docs({
       title: 'My Docs',
+      repository: { url: REPO },
       header: {
         links: [{ label: 'GitHub', href: REPO, icon: 'simple-icons:github', external: true }],
-      },
-      footer: {
-        editUrl: `${REPO}/edit/main/${DOCS_DIR}/`,
-        links: [
-          {
-            prefix: 'Something broken?',
-            label: 'Report an issue',
-            href: `${REPO}/issues/new`,
-            icon: 'lucide:circle-dot',
-            external: true,
-          },
-        ],
       },
     }),
   ],
@@ -83,22 +71,22 @@ apps only accept a full URL, so set Astro's `site`; without it a path is left ou
 ```js
 docs({
   title: 'My Docs',
+  repository: { url: 'https://github.com/eqtylab/my-repo' },
+  license: 'Apache 2.0',
   header: {
     links: [
       { label: 'Blog', href: 'https://eqtylab.io/blog', icon: 'lucide:newspaper', external: true },
     ],
   },
   footer: {
-    editUrl: 'https://github.com/eqtylab/my-repo/edit/main/src/content/docs/',
     links: [
       {
-        prefix: 'Something broken?',
-        label: 'Report an issue',
-        href: 'https://github.com/eqtylab/my-repo/issues/new',
-        icon: 'lucide:circle-dot',
+        prefix: 'Install it from',
+        label: 'npm',
+        href: 'https://www.npmjs.com/package/my-package',
+        icon: 'simple-icons:npm',
         external: true,
       },
-      { label: 'Licensed under Apache 2.0', icon: 'lucide:scale' },
     ],
   },
 });
@@ -107,15 +95,26 @@ docs({
 Header links and footer rows share one shape: `label`, `href`, `icon` and `external`. A footer
 row adds `prefix`, and its `href` is optional.
 
-`editUrl` adds "Spotted a mistake? Edit this page." as the first footer row, linked to the page's
-own file. It is left off archived versions, whose files are no longer in the repo.
+There are two footers. The article footer ends each page, under the prose: the previous and next
+pages, then, when `repository` is set, two links side by side.
 
-| Footer row has               | Shows                                                               |
-| ---------------------------- | ------------------------------------------------------------------- |
-| `prefix`, `label` and `href` | "Something broken? **Report an issue**." with the label linked      |
-| `label` and `href`           | "**Report an issue**."                                              |
-| `label` only                 | Plain text, exactly as written, such as "Licensed under Apache 2.0" |
-| `icon`                       | The icon in front; rows without one still line up                   |
+- "Spotted a mistake? Edit this page" opens the page's own file on GitHub, on
+  `repository.branch` (`main` unless you say otherwise). The file's path is read from git, so the
+  site has to build from a checkout; outside one the build warns and leaves this link off. It is
+  also left off archived versions, whose files are no longer in the repo.
+- "Something broken? Report an issue" opens a new issue in the repository.
+
+The app footer runs across the bottom of every page, under the article and the table of contents
+but not the sidebar. It holds `footer.links`, then "© <year> EQTY Lab". The top-level
+`license` names the project's license, such as "Apache 2.0", shown as written with a scale icon
+under the copyright.
+
+| Footer row has               | Shows                                                      |
+| ---------------------------- | ---------------------------------------------------------- |
+| `prefix`, `label` and `href` | "Install it from **npm**" with the label linked            |
+| `label` and `href`           | "**npm**"                                                  |
+| `label` only                 | Plain text, exactly as written, such as "Built with Astro" |
+| `icon`                       | The icon in front                                          |
 
 `external: true` opens a link in a new tab. A link starting with `/` gets the site's sub-folder
 (Astro's `base`), so `/latest/` works on a site served from `/integrity-py/`.
