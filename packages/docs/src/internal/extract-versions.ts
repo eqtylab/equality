@@ -60,7 +60,7 @@ export const EMPTY_VERSIONS: ExtractResult = {
 const TAG = '[@eqtylab/docs] versions:';
 const FOLDER = 'folder:';
 
-function git(cwd: string, ...args: string[]): string {
+export function git(cwd: string, ...args: string[]): string {
   return execFileSync('git', args, {
     cwd,
     encoding: 'utf8',
@@ -73,7 +73,7 @@ function git(cwd: string, ...args: string[]): string {
  * home, a linked workspace) yields a relative path full of `..` and matches no tag. The failure
  * is silent: every group looks like it predates the content directory and gets skipped.
  */
-function realpath(p: string): string {
+export function realpath(p: string): string {
   try {
     return fs.realpathSync(p);
   } catch {

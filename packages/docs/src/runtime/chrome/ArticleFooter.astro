@@ -1,0 +1,103 @@
+---
+/** The end of an article: where to go next, and how to fix what you just read. */
+import type { NavNode } from '@eqtylab/docs/types';
+import { Icon } from '@eqtylab/equality';
+
+import CONFIG from 'virtual:eqty-docs/config';
+
+interface Props {
+  prev?: NavNode;
+  next?: NavNode;
+  editHref?: string;
+}
+
+const { prev, next, editHref } = Astro.props;
+const { issueHref } = CONFIG.repositoryLinks;
+const hasPager = Boolean(prev?.href || next?.href);
+const hasLinks = Boolean(editHref || issueHref);
+
+const page = 'group inline-flex flex-col gap-1 no-underline';
+const direction = 'text-text-tertiary inline-flex items-center gap-1.5 text-sm';
+const pageLabel = 'text-text-secondary group-hover:text-text-primary text-base font-medium';
+const row = 'text-text-secondary flex items-center gap-2.5';
+// Always underlined: the link colour is under 3:1 against the row's text, so colour alone
+// would not mark it as a link (WCAG 1.4.1).
+const rowLink = 'text-text-link decoration-text-link font-medium underline decoration-1 underline-offset-4';
+---
+
+{
+  /* 96px above, a step above the 80px before an h2, so the footer sits further out than
+     anything inside the prose. The 32px below adds to the app footer's 64px for the same
+     96px on that side. Capped to the prose width so it does not run under the table of
+     contents. */
+}
+{
+  (hasPager || hasLinks) && (
+    <footer
+      class="mt-24 pb-8 max-w-[var(--eq-docs-content-max)]"
+      data-eq-chrome
+      data-pagefind-ignore
+    >
+      {hasPager && (
+        <nav class="grid grid-cols-2 gap-4" aria-label="Previous and next page">
+          {/* Both cells always, so a page with only a next link keeps it on the right. */}
+          <div>
+            {prev?.href && (
+              <a class={page} href={prev.href} rel="prev">
+                <span class={direction}>
+                  <Icon icon="ArrowLeft" size="xs" />
+                  Previous
+                </span>
+                <span class={pageLabel}>{prev.label}</span>
+              </a>
+            )}
+          </div>
+          <div class="text-right">
+            {next?.href && (
+              <a class={page} href={next.href} rel="next">
+                <span class={`${direction} justify-end`}>
+                  Next
+                  <Icon icon="ArrowRight" size="xs" />
+                </span>
+                <span class={pageLabel}>{next.label}</span>
+              </a>
+            )}
+          </div>
+        </nav>
+      )}
+
+      {/* 48px above the rule and 32px below it: inside the footer's own group, so
+          tighter than the 96px around it. */}
+      {hasLinks && (
+        <ul
+          class={`border-border m-0 flex list-none flex-wrap justify-between w-full gap-x-8 gap-y-3 border-t p-0 pt-8 text-sm ${hasPager ? 'mt-12' : ''}`}
+        >
+          {editHref && (
+            <li class={row}>
+              <Icon icon="Pencil" size="xs" className="text-text-tertiary!" />
+              <span>
+                Spotted a mistake?{' '}
+                <a class={rowLink} href={editHref} target="_blank" rel="noopener noreferrer">
+                  Edit this page
+                  <span class="sr-only"> (opens in a new tab)</span>
+                </a>
+              </span>
+            </li>
+          )}
+          {issueHref && (
+            <li class={row}>
+              <Icon icon="CircleDot" size="xs" className="text-text-tertiary!" />
+              <span>
+                Something broken?{' '}
+                <a class={rowLink} href={issueHref} target="_blank" rel="noopener noreferrer">
+                  Report an issue
+                  <span class="sr-only"> (opens in a new tab)</span>
+                </a>
+              </span>
+            </li>
+          )}
+        </ul>
+      )}
+    </footer>
+  )
+}

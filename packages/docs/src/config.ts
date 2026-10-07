@@ -1,7 +1,7 @@
 /** Integration options: the whole consumer-facing configuration surface. */
 import { z } from 'astro/zod';
 
-import { githubUrl } from './internal/github-url.ts';
+import { lucideNameFor } from './internal/icons.ts';
 
 export const BRAND_ASSET_PREFIX = '/_equality';
 
@@ -9,23 +9,55 @@ export const BRAND_ASSET_PREFIX = '/_equality';
 export const brandAssets = {
   logo: `${BRAND_ASSET_PREFIX}/eqty-logo.svg`,
   favicon: `${BRAND_ASSET_PREFIX}/favicon.png`,
-  github: `${BRAND_ASSET_PREFIX}/github.svg`,
+  /** An icon name, not a file. Removing it would leave 0.10 configs with `icon: undefined`, which passes silently. */
+  github: 'simple-icons:github',
   ogImage: `${BRAND_ASSET_PREFIX}/og-image.jpg`,
 } as const;
 
-const headerLink = z.object({
-  label: z.string(),
-  href: z.string(),
-  /**
-   * A Lucide name like `BookOpen`, or a path to an SVG in `public/` like
-   * `/github.svg`, or `brandAssets.github`. An SVG must be white: light mode inverts it.
-   */
-  icon: z.string().optional(),
+export const ICON_NAME = /^(?:lucide|simple-icons):[a-z0-9]+(?:-[a-z0-9]+)*$/;
+
+function iconNameProblem(value: string): string {
+  if (value.includes('/') || value.endsWith('.svg')) {
+    return `SVG files are no longer accepted as icons. Use an icon name: 'simple-icons:github' for logos, 'lucide:<name>' for everything else.`;
+  }
+  if (/^simple-icons:/i.test(value) && /[A-Z]/.test(value)) {
+    return `Icon names are lowercase: use '${value.toLowerCase()}'.`;
+  }
+  if (/[A-Z]/.test(value)) {
+    const suggestion = lucideNameFor(value.replace(/^lucide:/i, ''));
+    return suggestion
+      ? `Lucide names now include their set: use '${suggestion}'.`
+      : `Lucide names now include their set, like 'lucide:book-open'. Find the name on lucide.dev/icons.`;
+  }
+  return `expected 'lucide:<name>' or 'simple-icons:<name>', got ${JSON.stringify(value)}`;
+}
+
+const iconName = z.string().superRefine((value, ctx) => {
+  if (!ICON_NAME.test(value)) ctx.addIssue({ code: 'custom', message: iconNameProblem(value) });
+});
+
+/**
+ * The link item every area that takes configured links shares: header and footer now, the table
+ * of contents and sidebar later. Each area extends it rather than defining its own, so icons,
+ * new-tab and sub-folder rules stay the same everywhere.
+ */
+export const navLink = z.object({
+  label: z.string({ error: 'needs a label' }),
+  href: z.string().optional(),
+  icon: iconName.optional(),
   external: z.boolean().optional(),
 });
 
+const headerLink = navLink.extend({ href: z.string({ error: 'needs an href' }) });
+
+const footerLink = navLink.extend({
+  label: z.string({ error: 'needs a label' }).min(1, 'needs a label'),
+  href: z.string().min(1, 'is empty; leave it out for a row without a link').optional(),
+  prefix: z.string().optional(),
+});
+
 export const docsConfigSchema = z.object({
-  /** Site name, shown in the header and used as the `<title>` suffix. */
+  /** Site name: heads the sidebar card and ends every `<title>`. */
   title: z.string(),
   description: z.string().optional(),
   /** Path to a favicon, relative to `public/`. Base is applied automatically. */
@@ -53,23 +85,29 @@ export const docsConfigSchema = z.object({
     ])
     .default({ src: brandAssets.logo, alt: 'EQTY Lab' }),
 
-  /**
-   * The header's GitHub link: `owner/repo` or a github.com URL. Unset, it points at the EQTY Lab
-   * organisation; `false` removes it. A GitHub link in `header.links` replaces it.
-   */
+  // Removed in 0.11: without this key Zod drops a leftover `github` silently, and the site's
+  // GitHub link disappears with no error.
   github: z
-    .union([z.literal(false), z.string()])
-    .transform((value, ctx) => {
-      if (value === false) return value;
-      const url = githubUrl(value);
-      if (url) return url;
-      ctx.addIssue({
-        code: 'custom',
-        message: `expected a GitHub URL or owner/repo, got ${JSON.stringify(value)}`,
-      });
-      return z.NEVER;
+    .undefined({
+      error:
+        "github was removed. Add the link to header.links instead: { label: 'GitHub', href: 'https://github.com/owner/repo', icon: 'simple-icons:github', external: true }",
     })
     .optional(),
+
+  /**
+   * The site's GitHub repository. Adds "Spotted a mistake? Edit this page" and "Something broken?
+   * Report an issue" to the end of every article.
+   */
+  repository: z
+    .object({
+      url: z.string().min(1, 'needs a url, such as https://github.com/owner/repo'),
+      /** The branch "Edit this page" opens. */
+      branch: z.string().min(1).default('main'),
+    })
+    .optional(),
+
+  /** The license's name, such as "Apache 2.0". Shown with a scale icon under the copyright. */
+  license: z.string().min(1).optional(),
 
   /** Content directory, relative to `src/`. */
   contentDir: z.string().default('content/docs'),
@@ -102,10 +140,17 @@ export const docsConfigSchema = z.object({
 
   footer: z
     .object({
-      /** Base URL for "Edit this page"; the content path is appended. */
-      editUrl: z.string().optional(),
+      // Removed after 0.11: without this key Zod drops a leftover `editUrl` silently, and every
+      // page's edit link disappears with no error.
+      editUrl: z
+        .undefined({
+          error:
+            "editUrl was removed. Set repository instead, and the edit link is worked out from it: repository: { url: 'https://github.com/owner/repo' }",
+        })
+        .optional(),
+      /** Site-wide rows in the app footer under the content: links, or plain information. */
+      links: z.array(footerLink).default([]),
       showPrevNext: z.boolean().default(true),
-      text: z.string().optional(),
     })
     .prefault({}),
 

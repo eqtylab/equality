@@ -35,10 +35,33 @@ export default defineConfig({
       title: "Equality",
       description: "A theme-driven component library for EQTY Lab projects",
       versions: { current: ui.version, granularity: "minor" },
-      github: "eqtylab/equality",
+      repository: { url: "https://github.com/eqtylab/equality" },
+      license: "Apache 2.0",
+      header: {
+        links: [
+          {
+            label: "GitHub",
+            href: "https://github.com/eqtylab/equality",
+            icon: "simple-icons:github",
+            external: true,
+          },
+        ],
+      },
       footer: {
-        editUrl:
-          "https://github.com/eqtylab/equality/edit/main/packages/demo/src/content/docs/",
+        links: [
+          {
+            label: "GitHub",
+            href: "https://github.com/eqtylab/equality",
+            icon: "simple-icons:github",
+            external: true,
+          },
+          {
+            label: "npm",
+            href: "https://www.npmjs.com/package/@eqtylab/equality",
+            icon: "simple-icons:npm",
+            external: true,
+          },
+        ],
       },
     }),
   ],

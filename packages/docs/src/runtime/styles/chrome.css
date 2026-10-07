@@ -23,6 +23,13 @@
     var(--color-text-primary),
     var(--color-background) 175%
   );
+  /* Text under 18.66px bold needs 4.5:1 to its faded end. This fades 40% toward the
+   * background; the 175% stop above fades 57% and measures 2.9:1 in light. */
+  --eq-docs-display-gradient-sm: linear-gradient(
+    135deg,
+    var(--color-text-primary),
+    var(--color-background) 250%
+  );
 }
 
 body {

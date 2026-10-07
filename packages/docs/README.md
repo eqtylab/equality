@@ -15,10 +15,21 @@ pnpm add @eqtylab/docs @eqtylab/equality astro react react-dom
 import docs from '@eqtylab/docs';
 import { defineConfig } from 'astro/config';
 
+// TODO: change this to your project's.
+const REPO = 'https://github.com/eqtylab/my-repo';
+
 export default defineConfig({
   site: 'https://docs.example.com',
   base: process.env.DOCS_BASE ?? '/',
-  integrations: [docs({ title: 'My Docs' })],
+  integrations: [
+    docs({
+      title: 'My Docs',
+      repository: { url: REPO },
+      header: {
+        links: [{ label: 'GitHub', href: REPO, icon: 'simple-icons:github', external: true }],
+      },
+    }),
+  ],
 });
 ```
 
@@ -40,34 +51,101 @@ only change needed, since MDX is a superset of Markdown.
 
 ## EQTY Lab brand files
 
-Every site gets the EQTY Lab favicon, the header logo, a GitHub link and a share image without configuring
+Every site gets the EQTY Lab favicon, the header logo and a share image without configuring
 anything. The files are served from the package under `/_equality/`, so a site copies nothing
 into `public/`.
 
-Point the GitHub link at the project's repo in the Astro config. Unset, it points at the EQTY Lab
-organisation, `https://github.com/eqtylab`, rather than the project's code:
-
-```js
-docs({
-  title: 'My Docs',
-  github: 'eqtylab/my-repo', // or 'https://github.com/eqtylab/my-repo'
-});
-```
-
 Each one can be replaced or turned off:
 
-| Option    | Replace                                   | Turn off                                         |
-| --------- | ----------------------------------------- | ------------------------------------------------ |
-| `favicon` | `favicon: '/mine.svg'`                    | —                                                |
-| `logo`    | `logo: { src: '/mine.svg', alt: 'Acme' }` | `logo: false` (the header shows `title` as text) |
-| `github`  | `github: 'eqtylab/my-repo'` or a URL      | `github: false`                                  |
-| `ogImage` | `ogImage: '/share.png'` or a URL          | `ogImage: false`                                 |
+| Option    | Replace                                   | Turn off                                                      |
+| --------- | ----------------------------------------- | ------------------------------------------------------------- |
+| `favicon` | `favicon: '/mine.svg'`                    | —                                                             |
+| `logo`    | `logo: { src: '/mine.svg', alt: 'Acme' }` | `logo: false` (the header shows `title` as text, then "Docs") |
+| `ogImage` | `ogImage: '/share.png'` or a URL          | `ogImage: false`                                              |
 
 `ogImage` is the picture in a shared link's preview card, in Slack, LinkedIn and the like. Those
 apps only accept a full URL, so set Astro's `site`; without it a path is left out.
 
-A header link you write yourself to `github.com` replaces the automatic one, and gets the GitHub
-icon if it has none. `brandAssets` exports the served paths, e.g. `brandAssets.github` for a link icon.
+## Header and footer links
+
+```js
+docs({
+  title: 'My Docs',
+  repository: { url: 'https://github.com/eqtylab/my-repo' },
+  license: 'Apache 2.0',
+  header: {
+    links: [
+      { label: 'Blog', href: 'https://eqtylab.io/blog', icon: 'lucide:newspaper', external: true },
+    ],
+  },
+  footer: {
+    links: [
+      {
+        prefix: 'Install it from',
+        label: 'npm',
+        href: 'https://www.npmjs.com/package/my-package',
+        icon: 'simple-icons:npm',
+        external: true,
+      },
+    ],
+  },
+});
+```
+
+Header links and footer rows share one shape: `label`, `href`, `icon` and `external`. A footer
+row adds `prefix`, and its `href` is optional.
+
+There are two footers. The article footer ends each page, under the prose: the previous and next
+pages, then, when `repository` is set, two links side by side.
+
+- "Spotted a mistake? Edit this page" opens the page's own file on GitHub, on
+  `repository.branch` (`main` unless you say otherwise). The file's path is read from git, so the
+  site has to build from a checkout; outside one the build warns and leaves this link off. It is
+  also left off archived versions, whose files are no longer in the repo.
+- "Something broken? Report an issue" opens a new issue in the repository.
+
+The app footer runs across the bottom of every page, under the article and the table of contents
+but not the sidebar. It holds `footer.links`, then "© <year> EQTY Lab". The top-level
+`license` names the project's license, such as "Apache 2.0", shown as written with a scale icon
+under the copyright.
+
+| Footer row has               | Shows                                                      |
+| ---------------------------- | ---------------------------------------------------------- |
+| `prefix`, `label` and `href` | "Install it from **npm**" with the label linked            |
+| `label` and `href`           | "**npm**"                                                  |
+| `label` only                 | Plain text, exactly as written, such as "Built with Astro" |
+| `icon`                       | The icon in front                                          |
+
+`external: true` opens a link in a new tab. A link starting with `/` gets the site's sub-folder
+(Astro's `base`), so `/latest/` works on a site served from `/integrity-py/`.
+
+### Icons
+
+| Write                 | For                                                   |
+| --------------------- | ----------------------------------------------------- |
+| `lucide:<name>`       | Any [Lucide](https://lucide.dev/icons) icon           |
+| `simple-icons:<name>` | Any logo from [Simple Icons](https://simpleicons.org) |
+
+Both sets come with the package. A name that doesn't exist stops the build and says which.
+
+Sidebar icons (`icon` in a page's frontmatter, and `sidebar.extra`) still take Lucide's own names,
+like `BookOpen`, until the sidebar moves to these links.
+
+## The site card
+
+The sidebar starts with a card naming the site. The name opens a menu of EQTY Lab's public docs
+sites, and the version row under it opens the version menu. The header shows only the logo and
+"Docs", however long the site's name is. There is nothing to configure.
+
+| The site is | To get there                                            | Its menu                                 | Other sites' menus        |
+| ----------- | ------------------------------------------------------- | ---------------------------------------- | ------------------------- |
+| Public      | Add it to `eqtyDocsSites` in `src/sites.ts` and release | The public sites, in list order          | List it once they upgrade |
+| Private     | Nothing                                                 | Itself at the top, then the public sites | Never list it             |
+
+This package is public, so a private site's address never goes in the list.
+
+A public site's row shows the `description` on its list entry. A private site's row shows its own
+`description` from `docs({ ... })`. Either falls back to the site's address.
 
 ## Navigation comes from folders
 
@@ -308,8 +386,9 @@ header's `search` slot to replace it, or set `search.provider: 'none'` to drop i
 ## Versions
 
 On by default. The build makes one frozen copy of the docs per older release group and serves it
-under `/v<group>/`, adds a version switcher to the header, puts a banner and `noindex` on every old
-page, and scopes search to the page's version. Each release redirects to its group's copy.
+under `/v<group>/`, adds a version menu under the site name in the sidebar, puts a banner and
+`noindex` on every old page, and scopes search to the page's version. Each release redirects to its
+group's copy.
 
 ```js
 docs({

@@ -11,8 +11,9 @@ import {
 } from './config.ts';
 import { resolveDocsEnv, type DocsEnv } from './env.ts';
 import { assertMdxOnly } from './internal/assert-mdx-only.ts';
+import { configuredIcons } from './internal/configured-icons.ts';
 import { EMPTY_VERSIONS, extractVersions } from './internal/extract-versions.ts';
-import { withGithubLink } from './internal/github-link.ts';
+import { resolveIcons } from './internal/icons.ts';
 import { microlighterGrammarsPlugin } from './internal/microlighter-grammars.ts';
 import { pagefindIntegration } from './internal/pagefind.ts';
 import { rehypeBaseUrl } from './internal/rehype-base-url.ts';
@@ -21,11 +22,14 @@ import { rehypeProseScope } from './internal/rehype-prose-scope.ts';
 import { rehypeRelativeLinks } from './internal/rehype-relative-links.ts';
 import { rehypeTableColumns } from './internal/rehype-table-columns.ts';
 import { remarkArchiveDocument } from './internal/remark-archive-document.ts';
+import { contentPathInRepo, repositoryLinks } from './internal/repository.ts';
 import { assertPlugins, pluginComponentsSource, runPlugins } from './internal/run-plugins.ts';
 import { scanConsumerPages } from './internal/scan-consumer-pages.ts';
+import { siteMenu } from './internal/site-list.ts';
 import { virtualConfigPlugin, virtualPluginComponentsPlugin } from './internal/virtual-config.ts';
 
 export { brandAssets, resolveConfig, type DocsConfig, type DocsUserConfig } from './config.ts';
+export { eqtyDocsSites, type DocsSite } from './sites.ts';
 export { resolveDocsEnv, type DocsEnv } from './env.ts';
 // Do not re-export the loaders: this entry runs in Node when astro.config loads,
 // and they import `astro:content`, which only exists in the Vite graph.
@@ -120,12 +124,23 @@ export default function docs(
         // before the payload is sealed, so its sidebar groups ride into the runtime config.
         const contributions = await runPlugins(assertPlugins(cfg.plugins), params, logger);
 
+        const contentPath = cfg.repository
+          ? contentPathInRepo(
+              fileURLToPath(config.root),
+              fileURLToPath(new URL(`./${cfg.contentDir}/`, config.srcDir))
+            )
+          : null;
+        if (cfg.repository && contentPath === null) {
+          logger.warn(
+            'repository is set but the site is not in a git checkout, so pages have no "Edit this page" link.'
+          );
+        }
+
         payload = {
           ...cfg,
-          header: {
-            ...cfg.header,
-            links: withGithubLink(cfg.header.links, cfg.github),
-          },
+          repositoryLinks: repositoryLinks(cfg.repository, contentPath),
+          icons: resolveIcons(configuredIcons(cfg)),
+          siteMenu: siteMenu(cfg, config.site),
           sidebar: { ...cfg.sidebar, extra: [...cfg.sidebar.extra, ...contributions.navGroups] },
           env,
           // Read by the catch-all's getStaticPaths so no path is emitted twice.
@@ -274,6 +289,9 @@ export default function docs(
             `    currentVersion: { id: string; group: string; version: string } | null;`,
             `    versionManifest: Array<{ id: string; suffix: string; group: string; tag: string; dir: string }>;`,
             `    versionRedirects: Array<{ id: string; to: string | null }>;`,
+            `    icons: Record<string, { viewBox: string; body: string }>;`,
+            `    repositoryLinks: { editBase?: string; issueHref?: string };`,
+            `    siteMenu: import('@eqtylab/docs').SiteMenuRow[] | null;`,
             `  };`,
             `  export default config;`,
             `}`,

@@ -74,3 +74,13 @@ export interface DocsPluginContext {
   /** Raw `astro:config:setup` params: config, injectRoute, updateConfig, addWatchFile, logger. */
   astro: unknown;
 }
+
+/** A row in the sidebar card's site menu. Computed at build; the chrome holds no logic. */
+export interface SiteMenuRow {
+  title: string;
+  href: string;
+  /** The site's description, or its address when it has none. */
+  detail: string;
+  detailIsAddress: boolean;
+  current: boolean;
+}

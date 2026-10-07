@@ -4,6 +4,63 @@ Notable changes to Equality's Docsite Generator are recorded here, following [Ke
 
 ## Unreleased
 
+## 0.12.0 - 2026-10-07
+
+### Added
+
+- `repository: { url, branch }`: the site's GitHub repository. Every article ends with "Spotted a
+  mistake? Edit this page" and "Something broken? Report an issue", side by side, worked out from
+  it; the page's path in the repo is read from git
+- `license`: the project's license, such as "Apache 2.0", shown with a scale icon under the
+  copyright in the app footer
+- `footer.links`: rows in the app footer, shaped like header links, with a lead-in `prefix`; a row
+  without `href` is plain text
+- Icons are named with their set, `lucide:<name>` or `simple-icons:<name>`, in header links and
+  footer rows
+  - Both sets come with the package, Simple Icons for logos
+  - Icons follow the text colour in both themes
+  - A name that doesn't exist stops the build and says which
+- Header and footer links that open a new tab say so to screen readers
+- A card at the top of the sidebar names the site and switches between EQTY Lab's public docs
+  sites, each row saying what the site is for. A site not on the public list (`eqtyDocsSites`) sits
+  at the top of its own menu, so new and private sites need no setup
+- Phones get the same card at the top of the menu
+
+### Changed
+
+- The page footer is split in two. The article footer, under the prose, keeps the previous and
+  next links, "Edit this page" and the new issue link. An app footer, holding `footer.links`, runs
+  under the article and table of contents on every page, splash pages too
+- Header links starting with `/` get the site's sub-folder, by the same rule as links in page text
+- The header reads "[logo] | Docs" on every site; the site name moved to the sidebar card, so a
+  long name no longer runs into the search box
+- The version menu opens from its own row under the site name instead of the header; on phones it
+  replaces the version list in the menu
+- With `logo: false` the header shows `title` as text, then "Docs"
+- Below 360px the header shows the logo without "Docs", so nothing runs into the search button
+
+### Fixed
+
+- The brand link, header links and theme toggle show Equality's focus ring instead of the
+  browser's outline
+- "On this page" highlights the last section at the bottom of the page, even when that section is
+  too short to scroll its heading up to the top
+
+### Removed
+
+- `footer.editUrl`: set `repository` instead; a leftover `editUrl` stops the build and says so
+- `footer.text`: the app footer always ends with "© <year> EQTY Lab", and a leftover `text` is
+  ignored
+- The `github` option and the automatic GitHub link: write it in `header.links`, as the README's
+  quick start does; a leftover `github` stops the build and shows the link to write
+  - Links to github.com no longer get the GitHub icon added; they show the icon you give them
+- Lucide names without a set, such as `BookOpen`: write `lucide:book-open`; the build error names
+  the replacement
+- SVG files as icons, such as `/github.svg`
+- The `/_equality/github.svg` file; `brandAssets.github` is now `'simple-icons:github'`
+- `chrome/VersionSwitcher.tsx` and `Header`'s `switcher` prop: the version menu lives in the
+  sidebar card
+
 ## 0.11.0 - 2026-10-07
 
 ### Changed
