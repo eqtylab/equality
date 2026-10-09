@@ -4,6 +4,13 @@ Notable changes to Equality's Docsite Generator are recorded here, following [Ke
 
 ## Unreleased
 
+## 0.14.0 - 2026-10-09
+
+### Changed
+
+- The license sits on the copyright line, as "© 2026 EQTY Lab · Apache 2.0", in place of its own
+  row with a scale icon. `license` also takes `{ name, href }` to link the name to the license text
+
 ## 0.13.0 - 2026-10-08
 
 ### Added
