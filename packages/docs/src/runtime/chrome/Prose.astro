@@ -92,9 +92,10 @@ const action =
     )
   }
 
-  {/* 64px, a step above the 48px between sections, so the header reads as further out. */}
+  {/* Keep this under the 80px above an h2. The header introduces the content rather than
+      separating it, and at 80px the first heading reads as a section break. */}
   <header
-    class="mb-16"
+    class="mb-12"
     data-eq-chrome
     data-pagefind-meta={fallbackSummary ? `description:${fallbackSummary}` : undefined}
   >
