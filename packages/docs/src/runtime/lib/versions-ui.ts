@@ -40,7 +40,7 @@ export function isSwitcherData(value: unknown): value is SwitcherData {
     item(data.latest) &&
     Array.isArray(data.groups) &&
     data.groups.every(
-      (g) => typeof g.label === 'string' && Array.isArray(g.items) && g.items.every(item)
+      (g) => !!g && typeof g.label === 'string' && Array.isArray(g.items) && g.items.every(item)
     )
   );
 }

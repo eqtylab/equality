@@ -21,6 +21,7 @@ test('withCurrent returns null when the list does not contain the page', () => {
 test('isSwitcherData accepts the switcher shape and rejects anything malformed', () => {
   assert.equal(isSwitcherData(list), true);
   assert.equal(isSwitcherData(null), false);
+  assert.equal(isSwitcherData({ ...list, groups: [null] }), false);
   assert.equal(isSwitcherData({ latest: list.latest }), false);
   assert.equal(
     isSwitcherData({ ...list, groups: [{ label: 'v1', items: [{ label: 'x' }] }] }),
