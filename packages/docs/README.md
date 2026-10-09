@@ -72,7 +72,7 @@ apps only accept a full URL, so set Astro's `site`; without it a path is left ou
 docs({
   title: 'My Docs',
   repository: { url: 'https://github.com/eqtylab/my-repo' },
-  license: 'Apache 2.0',
+  license: { name: 'Apache 2.0', href: 'https://github.com/eqtylab/my-repo/blob/main/LICENSE' },
   header: {
     links: [
       { label: 'Blog', href: 'https://eqtylab.io/blog', icon: 'lucide:newspaper', external: true },
@@ -108,8 +108,9 @@ pages, then, when `repository` or `feedback` is set, up to two links side by sid
 
 The app footer runs across the bottom of every page, under the article and the table of contents
 but not the sidebar. It holds `footer.links`, then "© <year> EQTY Lab". The top-level
-`license` names the project's license, such as "Apache 2.0", shown as written with a scale icon
-under the copyright.
+`license` adds the project's license to that line, as "© <year> EQTY Lab · Apache 2.0". Give its
+name, such as `'Apache 2.0'`, or `{ name, href }` to link the name to the license text. Leave it
+out for a project without one, such as an internal product.
 
 | Footer row has               | Shows                                                      |
 | ---------------------------- | ---------------------------------------------------------- |

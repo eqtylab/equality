@@ -4,7 +4,7 @@ Notable changes to Equality's Docsite Generator are recorded here, following [Ke
 
 ## Unreleased
 
-## 0.13.1 - 2026-10-09
+## 0.14.1 - 2026-10-09
 
 ### Changed
 
@@ -12,13 +12,20 @@ Notable changes to Equality's Docsite Generator are recorded here, following [Ke
   above, h4 to h6 14px with 24px above, and 96px above the article footer with 48px above its
   rule. Hierarchy comes from weight and the mono label, not heading size
 - A label sits 24px above its first h3, as on Tailwind's docs, so it reads as part of the group
-  below; it was 48px in 0.12 and 12px in 0.13.0
+  below; it was 48px in 0.12 and 12px in 0.13.0 and 0.14.0
 - Content starts 48px under the page header's rule, less than the 80px above an h2, so the first
   heading reads as the start of the page rather than a section break, as on Tailwind's docs. It
-  was 32px in 0.13.0, and 80px in 0.12, where the first heading's own margin overrode the
-  header's 64px
+  was 32px in 0.13.0 and 0.14.0, and 80px in 0.12, where the first heading's own margin overrode
+  the header's 64px
 - Code blocks, tables, alerts and rules keep 0.13.0's 24px below, matching the gap between
   paragraphs
+
+## 0.14.0 - 2026-10-09
+
+### Changed
+
+- The license sits on the copyright line, as "© 2026 EQTY Lab · Apache 2.0", in place of its own
+  row with a scale icon. `license` also takes `{ name, href }` to link the name to the license text
 
 ## 0.13.0 - 2026-10-08
 

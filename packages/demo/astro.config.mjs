@@ -35,19 +35,13 @@ export default defineConfig({
       title: "Equality",
       description: "A theme-driven component library for EQTY Lab projects",
       versions: { current: ui.version, granularity: "minor" },
-      repository: { url: "https://github.com/eqtylab/equality" },
-      license: "Apache 2.0",
-      header: {
-        links: [
-          {
-            label: "GitHub",
-            href: "https://github.com/eqtylab/equality",
-            icon: "simple-icons:github",
-            external: true,
-          },
-        ],
+      // No `repository`: reports go to the support portal, the same as the other EQTY Lab docs sites
+      feedback: "https://support.eqtylab.io",
+      license: {
+        name: "Apache 2.0",
+        href: "https://github.com/eqtylab/equality/blob/main/LICENSE",
       },
-      footer: {
+      header: {
         links: [
           {
             label: "GitHub",

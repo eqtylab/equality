@@ -112,8 +112,13 @@ export const docsConfigSchema = z.object({
    */
   feedback: z.url().optional(),
 
-  /** The license's name, such as "Apache 2.0". Shown with a scale icon under the copyright. */
-  license: z.string().min(1).optional(),
+  /**
+   * The project's license, shown after the copyright: its name, such as "Apache 2.0", or
+   * `{ name, href }` to link the name to the license text.
+   */
+  license: z
+    .union([z.string().min(1), z.object({ name: z.string().min(1), href: z.url() })])
+    .optional(),
 
   /** Content directory, relative to `src/`. */
   contentDir: z.string().default('content/docs'),

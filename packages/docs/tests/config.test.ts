@@ -140,6 +140,15 @@ test('feedback must be a full URL', () => {
   assert.throws(() => resolveConfig({ title: 'x', feedback: '/support/' }));
 });
 
+test('license is a name, or a name linked to a full URL', () => {
+  assert.equal(resolveConfig({ title: 'x', license: 'Apache 2.0' }).license, 'Apache 2.0');
+  const linked = { name: 'Apache 2.0', href: 'https://github.com/a/b/blob/main/LICENSE' };
+  assert.deepEqual(resolveConfig({ title: 'x', license: linked }).license, linked);
+  assert.throws(() =>
+    resolveConfig({ title: 'x', license: { name: 'Apache 2.0', href: '/LICENSE' } })
+  );
+});
+
 test('a landing page needs sections and no body, and only a landing page takes sections', () => {
   const sections = [{ heading: 'Start' }];
   assert.equal(landingError('index', { template: 'landing', sections }, ''), null);
