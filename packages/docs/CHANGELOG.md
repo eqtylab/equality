@@ -4,6 +4,21 @@ Notable changes to Equality's Docsite Generator are recorded here, following [Ke
 
 ## Unreleased
 
+## 0.13.1 - 2026-10-09
+
+### Changed
+
+- Headings and vertical spacing go back to 0.12's: h2 20px with 80px above, h3 16px with 48px
+  above, h4 to h6 14px with 24px above, 64px under the page header's rule, and 96px above the
+  article footer with 48px above its rule. Hierarchy comes from weight and the mono label, not
+  heading size
+- A label sits 24px above its first h3, as on Tailwind's docs, so it reads as part of the group
+  below; it was 48px in 0.12 and 12px in 0.13.0
+- The page header's 64px now applies when the page opens with a heading; before 0.13.0 the
+  heading's own 80px overrode it
+- Code blocks, tables, alerts and rules keep 0.13.0's 24px below, matching the gap between
+  paragraphs
+
 ## 0.13.0 - 2026-10-08
 
 ### Added
