@@ -22,6 +22,15 @@ if (drawer && trigger) {
     const open = (event as ToggleEvent).newState === 'open';
     trigger.setAttribute('aria-expanded', String(open));
 
+    // The same centring as the sidebar's inline script in Sidebar.astro; keep the two in sync.
+    const current = drawer.querySelector<HTMLElement>('[data-current]');
+    if (open && current) {
+      const top = current.getBoundingClientRect().top - drawer.getBoundingClientRect().top;
+      if (top < 0 || top + current.offsetHeight > drawer.clientHeight) {
+        drawer.scrollTop += top - (drawer.clientHeight - current.offsetHeight) / 2;
+      }
+    }
+
     // Only when the engine left focus nowhere. Clicking a link inside the drawer
     // navigates away, and light-dismissing onto another control should keep it.
     if (!open && document.activeElement === document.body) {

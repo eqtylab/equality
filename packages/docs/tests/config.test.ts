@@ -124,6 +124,17 @@ test('the edit and issue links are worked out from the repository, on main unles
   assert.deepEqual(repositoryLinks(undefined, 'docs'), {});
 });
 
+test('feedback replaces the new-issue page, and stands alone without a repository', () => {
+  const repository = { url: 'https://github.com/a/b', branch: 'main' };
+  assert.deepEqual(repositoryLinks(repository, 'docs', 'https://support.example.com'), {
+    editBase: 'https://github.com/a/b/edit/main/docs',
+    issueHref: 'https://support.example.com',
+  });
+  assert.deepEqual(repositoryLinks(undefined, null, 'https://support.example.com'), {
+    issueHref: 'https://support.example.com',
+  });
+});
+
 test('a footer link row keeps prefix, label, href, icon and external', () => {
   const row = {
     prefix: 'Something broken?',

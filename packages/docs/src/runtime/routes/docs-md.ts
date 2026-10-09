@@ -4,7 +4,7 @@ import type { APIRoute } from 'astro';
 import { getCollection } from 'astro:content';
 import CONFIG from 'virtual:eqty-docs/config';
 
-import { entryMarkdown } from '../lib/markdown-twin.ts';
+import { entryMarkdown, landingMarkdown } from '../lib/markdown-twin.ts';
 import { collectionsFor } from '../lib/nav-data.ts';
 
 export async function getStaticPaths() {
@@ -59,7 +59,13 @@ export const GET: APIRoute = ({ props }) => {
       id: string;
       body?: string;
       filePath?: string;
-      data: { title: string; description?: string; deprecated?: Deprecated };
+      data: {
+        title: string;
+        description?: string;
+        deprecated?: Deprecated;
+        template?: string;
+        sections?: Parameters<typeof landingMarkdown>[0];
+      };
     };
   };
 
@@ -72,7 +78,10 @@ export const GET: APIRoute = ({ props }) => {
   }
   frontmatter.push(`source: ${JSON.stringify(CONFIG.title)}`, '---', '');
 
-  const { markdown, unexpanded } = entryMarkdown(entry, CONFIG.projectRoot, version);
+  const { markdown, unexpanded } =
+    entry.data.template === 'landing' && entry.data.sections
+      ? { markdown: landingMarkdown(entry.data.sections), unexpanded: [] }
+      : entryMarkdown(entry, CONFIG.projectRoot, version);
   if (unexpanded.length) {
     console.warn(
       `[@eqtylab/docs] ${entry.id}.md: ${unexpanded.map((n) => `<${n}>`).join(', ')} could not be expanded and stays as a tag`

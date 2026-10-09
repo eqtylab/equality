@@ -18,6 +18,7 @@ import { firstParagraph } from '../lib/summary.ts';
 import { mdxComponents } from '../lib/mdx-components.ts';
 import type { SwitcherData } from '../lib/versions-ui.ts';
 import ArticleFooter from '../chrome/ArticleFooter.astro';
+import Landing from '../components/Landing.astro';
 import Prose from '../chrome/Prose.astro';
 
 type Entry = Awaited<ReturnType<typeof docsEntries>>[number] & {
@@ -168,6 +169,45 @@ const { entry, version, switcher, canonical, latestHref, latestLabel, redirectTo
             versionPrefix: version ?? undefined,
           })
         : undefined;
+
+      // Checked here rather than in docsSchema, which sites extend and a refinement would block.
+      const landing = entry.data.template === 'landing';
+      if (landing && !entry.data.sections?.length) {
+        throw new Error(`[@eqtylab/docs] ${entry.id}: template: landing needs \`sections\`.`);
+      }
+      if (landing && entry.body?.trim()) {
+        throw new Error(
+          `[@eqtylab/docs] ${entry.id}: a landing page renders \`sections\`, not its body. Move the body to another page.`
+        );
+      }
+      if (!landing && entry.data.sections) {
+        throw new Error(`[@eqtylab/docs] ${entry.id}: \`sections\` only applies to template: landing.`);
+      }
+
+      if (landing) {
+        return (
+          <DocsPage
+            title={entry.data.title}
+            description={entry.data.description}
+            nav={nav}
+            toc={[]}
+            showToc={false}
+            version={version ?? undefined}
+            switcher={switcher}
+            noIndex={Boolean(version)}
+            canonical={canonical}
+            latestHref={latestHref}
+            latestLabel={latestLabel}
+          >
+            <Landing
+              title={entry.data.title}
+              description={entry.data.description}
+              sections={entry.data.sections ?? []}
+              version={version ?? undefined}
+            />
+          </DocsPage>
+        );
+      }
 
       return (
         <DocsPage

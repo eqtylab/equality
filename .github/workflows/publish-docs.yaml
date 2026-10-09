@@ -1,0 +1,71 @@
+name: Publish Docs Framework
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'packages/docs/package.json'
+      - '.github/workflows/publish-docs.yaml'
+  workflow_dispatch:
+
+permissions:
+  contents: write # needed to push the release tag. Nothing commits to main.
+  id-token: write
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Setup pnpm
+        uses: eqtylab-actions/setup-pnpm@master
+
+      - name: Setup node
+        uses: actions/setup-node@v6
+        with:
+          node-version: 24
+          registry-url: https://registry.npmjs.org
+
+      - name: Upgrade npm
+        run: npm install -g npm@latest
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Check if version exists
+        id: version_check
+        run: |
+          PKG_NAME="@eqtylab/docs"
+          PKG_VERSION=$(node -p "require('./packages/docs/package.json').version")
+          echo "Checking $PKG_NAME@$PKG_VERSION"
+
+          if npm view "$PKG_NAME@$PKG_VERSION" version --registry=https://registry.npmjs.org >/dev/null 2>&1; then
+            echo "exists=true" >> "$GITHUB_OUTPUT"
+            echo "Version already exists; skipping publish."
+          else
+            echo "exists=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Tag release
+        run: |
+          # Prefixed: plain v<version> tags belong to @eqtylab/equality.
+          TAG="docs-v$(node -p "require('./packages/docs/package.json').version")"
+          # A depth-1 checkout has no tags, so ask the remote, not the local repo.
+          if git ls-remote --exit-code --tags origin "refs/tags/$TAG" >/dev/null 2>&1; then
+            echo "$TAG already exists on origin"; exit 0
+          fi
+          git tag "$TAG"
+          git push origin "$TAG"
+
+      - name: Build and publish
+        if: steps.version_check.outputs.exists != 'true'
+        # The trailing ... builds the workspace packages it depends on first. pnpm pack rewrites
+        # workspace: ranges, then npm publish, which handles the trusted-publishing token.
+        run: |
+          pnpm --filter "@eqtylab/docs..." run build
+          cd packages/docs
+          pnpm pack --pack-destination "$RUNNER_TEMP"
+          npm publish "$RUNNER_TEMP"/eqtylab-docs-*.tgz --access public

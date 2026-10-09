@@ -39,8 +39,28 @@ export function docsSchema() {
     /** Excluded from builds entirely, but visible in `astro dev`. */
     draft: z.boolean().default(false),
     deprecated: deprecatedSchema().default(false),
-    /** 'doc' gets sidebar + TOC; 'splash' is full-bleed with neither. */
-    template: z.enum(['doc', 'splash']).default('doc'),
+    /**
+     * 'doc' gets sidebar + TOC; 'splash' is full-bleed with neither; 'landing' keeps the sidebar
+     * and renders `sections` as cards in place of the body.
+     */
+    template: z.enum(['doc', 'splash', 'landing']).default('doc'),
+    /** A 'landing' page's cards. Each link is `[label, href]`. */
+    sections: z
+      .array(
+        z.object({
+          heading: z.string().min(1),
+          cards: z
+            .array(
+              z.object({
+                title: z.string().min(1),
+                description: z.string(),
+                links: z.array(z.tuple([z.string().min(1), z.string().min(1)])),
+              })
+            )
+            .min(1),
+        })
+      )
+      .optional(),
     tableOfContents: z.union([tocSchema(), z.literal(false)]).optional(),
     /** Opt out of the markdown twin and the search index for this page. */
     noIndex: z.boolean().default(false),

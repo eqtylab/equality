@@ -99,6 +99,32 @@ export function expandMdxSource(source: string, filePath: string): ExpandedSourc
  * The Markdown of a content entry. Archived copies stay as written: their imports point at
  * files the version cache does not hold, and their rendered page drops those tags anyway.
  */
+/** A landing page's twin: its `sections` as headings and link lists, since it has no body. */
+export function landingMarkdown(
+  sections: Array<{
+    heading: string;
+    cards: Array<{ title: string; description: string; links: Array<[string, string]> }>;
+  }>
+): string {
+  return sections
+    .map((section) =>
+      [
+        `## ${section.heading}`,
+        ...section.cards.map((card) =>
+          [
+            `### ${card.title}`,
+            card.description,
+            card.links.map(([label, href]) => `- [${label}](${href})`).join('\n'),
+          ]
+            .filter(Boolean)
+            .join('\n\n')
+        ),
+      ].join('\n\n')
+    )
+    .join('\n\n')
+    .concat('\n');
+}
+
 export function entryMarkdown(
   entry: { body?: string; filePath?: string },
   projectRoot: string,

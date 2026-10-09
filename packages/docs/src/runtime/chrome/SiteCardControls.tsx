@@ -10,7 +10,12 @@ import {
   PortalContainerProvider,
 } from '@eqtylab/equality';
 
-import { currentVersion, type SwitcherData } from '../lib/versions-ui.ts';
+import {
+  currentVersion,
+  isSwitcherData,
+  withCurrent,
+  type SwitcherData,
+} from '../lib/versions-ui.ts';
 import { VersionMenuContent } from './VersionMenu.tsx';
 
 /* w-fit: the gradient spans the element's box, so a full-width box gives a short name only the
@@ -37,7 +42,35 @@ const MENU = {
   className: 'w-(--radix-dropdown-menu-trigger-width)',
 } as const;
 
-function VersionRow({ data }: { data: SwitcherData }) {
+/* The sidebar and the phone drawer each render a VersionRow, so they share one request. */
+const refreshed = new Map<string, Promise<unknown>>();
+
+function refreshedList(url: string): Promise<unknown> {
+  if (!refreshed.has(url)) {
+    refreshed.set(
+      url,
+      fetch(url, { headers: { Accept: 'application/json' } })
+        .then((response) => (response.ok ? response.json() : null))
+        .catch(() => null)
+    );
+  }
+  return refreshed.get(url)!;
+}
+
+function VersionRow({ data: built }: { data: SwitcherData }) {
+  const [data, setData] = React.useState(built);
+  React.useEffect(() => {
+    if (!built.refresh) return;
+    let cancelled = false;
+    refreshedList(built.refresh).then((next) => {
+      const marked = isSwitcherData(next) && withCurrent(next, currentVersion(built).href);
+      if (marked && !cancelled) setData(marked);
+    });
+    return () => {
+      cancelled = true;
+    };
+  }, [built]);
+
   const current = currentVersion(data);
   return (
     // modal={false}: a modal Radix menu closes in the same tap that opens it on iOS Safari.
