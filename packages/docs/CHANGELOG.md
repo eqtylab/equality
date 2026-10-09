@@ -13,16 +13,17 @@ Notable changes to Equality's Docsite Generator are recorded here, following [Ke
   a `title`, `description` and `links` as `[label, href]`
   - `/` links stay inside an old version's copy; full URLs open a new tab
   - The build stops when a landing page has no `sections` or has a body, and when another page
-    has `sections`
+    has `sections`. Every card needs a description and at least one link
   - Its Markdown twin lists the sections as links; search leaves it out
 - `components/Landing.astro`: the same landing page for a site's own `src/pages/index.astro`
-- `feedback`: a full URL for "Report a problem with this page", such as a support portal, in place
+- `feedback`: a URL for "Report a problem with this page", such as a support portal, in place
   of the repository's new-issue page. It works without `repository`, for sites whose repo is
   private
 - `refresh` on the version switcher's data: a URL serving the same shape, fetched on load, so a
   frozen copy can list versions released after it
-- Inter and IBM Plex Mono are loaded, so pages render in Equality's typefaces without the reader
-  having them installed. A site that loads them itself can drop its own copy
+- Inter and IBM Plex Mono are loaded, so pages render in them without the reader having them
+  installed. Inter is the sans stack's fallback after TWK Lausanne, a licensed face this package
+  can't ship. A site that loads them itself can drop its own copy
 - Page loads cross-fade where the browser supports it, with the header and sidebar held still
 
 ### Changed
@@ -31,7 +32,7 @@ Notable changes to Equality's Docsite Generator are recorded here, following [Ke
   no headings keeps the column
   - `DocsPage` shows it unless `showToc` is `false`, even with an empty `toc`; a page of your own
     without an outline passes `showToc={false}`
-- Headings are larger: h2 24px, h3 20px, h4 16px, so none is smaller than body text
+- Headings are larger: h2 24px, h3 20px, h4 16px, so h2 to h4 are never smaller than body text
 - Tighter vertical spacing: 48px above an h2 and above the article footer, 32px above an h3 to h6,
   24px below code blocks, tables, alerts and rules, 32px under the page header's rule, and 32px on
   both sides of the article footer's

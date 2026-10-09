@@ -110,7 +110,7 @@ export const docsConfigSchema = z.object({
    * A full URL for "Report a problem with this page", such as a support portal, in place of the
    * repository's new-issue page. Adds the link on its own when `repository` is unset.
    */
-  feedback: z.string().min(1).optional(),
+  feedback: z.url().optional(),
 
   /** The license's name, such as "Apache 2.0". Shown with a scale icon under the copyright. */
   license: z.string().min(1).optional(),

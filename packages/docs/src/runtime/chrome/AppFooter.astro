@@ -21,7 +21,7 @@ const { license } = CONFIG;
 
 <footer class="border-border border-t mt-16 bg-background-raised" data-eq-chrome data-pagefind-ignore>
   {/* Mirrors main's columns from xl, where the table of contents appears: the same max width,
-      padding and gap, and a TOC-wide column, so the license lines up under the TOC. */}
+      padding and gap, and a TOC-wide column, so the license's right edge meets the TOC's. */}
   <div class="mx-auto flex max-w-[calc(var(--eq-docs-content-max)+var(--eq-docs-toc-width)+8rem)] flex-col gap-6 px-6 py-10 text-sm md:flex-row md:items-start md:justify-between xl:gap-16">
     {links.length > 0 && (
       <ul class="m-0 flex flex-col list-none flex-wrap gap-2 p-0 xl:min-w-0 xl:flex-1">

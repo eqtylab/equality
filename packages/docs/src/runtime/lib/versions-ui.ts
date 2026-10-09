@@ -19,7 +19,6 @@ export function currentVersion(data: SwitcherData): SwitcherItem {
   );
 }
 
-/** Marks `href` current, or null when the list doesn't contain it. */
 export function withCurrent(data: SwitcherData, href: string): SwitcherData | null {
   const mark = (item: SwitcherItem) => ({ ...item, current: item.href === href });
   const next = {

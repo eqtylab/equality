@@ -104,7 +104,7 @@ pages, then, when `repository` or `feedback` is set, up to two links side by sid
   also left off archived versions, whose files are no longer in the repo.
 - "Report a problem with this page" opens `feedback` when set, such as a support portal, and
   otherwise a new issue in the repository. With `feedback` alone, it is the only link. `feedback`
-  is used as written, so give a full URL.
+  must be a full URL; the build rejects a relative one.
 
 The app footer runs across the bottom of every page, under the article and the table of contents
 but not the sidebar. It holds `footer.links`, then "© <year> EQTY Lab". The top-level
@@ -183,7 +183,8 @@ when any other page has `sections`. The Markdown twin lists the sections as link
 the page out, since it has no article.
 
 A page of your own renders the same layout with `Landing` from
-`@eqtylab/docs/components/Landing.astro`, typed by its `LandingSection` export.
+`@eqtylab/docs/components/Landing.astro`, typed by its `LandingSection` export. Put it in `DocsPage`
+with `showToc={false}`, or the page gets an outline holding only its title.
 
 ## Navigation comes from folders
 

@@ -24,6 +24,38 @@ const tocSchema = () =>
     maxLevel: z.number().int().min(1).max(6).default(3),
   });
 
+export const landingSectionSchema = () =>
+  z.object({
+    heading: z.string().min(1),
+    cards: z
+      .array(
+        z.object({
+          title: z.string().min(1),
+          description: z.string().min(1),
+          links: z.array(z.tuple([z.string().min(1), z.string().min(1)])).min(1),
+        })
+      )
+      .min(1),
+  });
+
+/**
+ * Why a page's `template` and `sections` disagree, or null. Checked at render rather than in
+ * docsSchema, because sites extend that schema and a refinement would block them.
+ */
+export function landingError(
+  id: string,
+  data: { template?: string; sections?: unknown[] },
+  body: string | undefined
+): string | null {
+  const landing = data.template === 'landing';
+  if (landing && !data.sections?.length) return `${id}: template: landing needs \`sections\`.`;
+  if (landing && body?.trim()) {
+    return `${id}: a landing page renders \`sections\`, not its body. Move the body to another page.`;
+  }
+  if (!landing && data.sections) return `${id}: \`sections\` only applies to template: landing.`;
+  return null;
+}
+
 /** Page frontmatter. Ordering lives in `_group.yaml`, not here. */
 export function docsSchema() {
   return z.object({
@@ -45,22 +77,7 @@ export function docsSchema() {
      */
     template: z.enum(['doc', 'splash', 'landing']).default('doc'),
     /** A 'landing' page's cards. Each link is `[label, href]`. */
-    sections: z
-      .array(
-        z.object({
-          heading: z.string().min(1),
-          cards: z
-            .array(
-              z.object({
-                title: z.string().min(1),
-                description: z.string(),
-                links: z.array(z.tuple([z.string().min(1), z.string().min(1)])),
-              })
-            )
-            .min(1),
-        })
-      )
-      .optional(),
+    sections: z.array(landingSectionSchema()).optional(),
     tableOfContents: z.union([tocSchema(), z.literal(false)]).optional(),
     /** Opt out of the markdown twin and the search index for this page. */
     noIndex: z.boolean().default(false),
@@ -102,3 +119,4 @@ export function groupSchema() {
 
 export type DocsFrontmatter = z.infer<ReturnType<typeof docsSchema>>;
 export type GroupFrontmatter = z.infer<ReturnType<typeof groupSchema>>;
+export type LandingSection = z.infer<ReturnType<typeof landingSectionSchema>>;

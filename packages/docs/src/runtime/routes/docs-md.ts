@@ -1,5 +1,6 @@
 /** Markdown twin of every page, for LLM and agent consumption. */
 import { idToPath } from '@eqtylab/docs/paths';
+import type { LandingSection } from '@eqtylab/docs/types';
 import type { APIRoute } from 'astro';
 import { getCollection } from 'astro:content';
 import CONFIG from 'virtual:eqty-docs/config';
@@ -64,7 +65,7 @@ export const GET: APIRoute = ({ props }) => {
         description?: string;
         deprecated?: Deprecated;
         template?: string;
-        sections?: Parameters<typeof landingMarkdown>[0];
+        sections?: LandingSection[];
       };
     };
   };

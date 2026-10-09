@@ -18,7 +18,6 @@ export function contentPathInRepo(root: string, contentDirAbs: string): string |
   }
 }
 
-/** `feedback` replaces the repository's new-issue page, and stands alone without a repository. */
 export function repositoryLinks(
   repository: { url: string; branch: string } | undefined,
   contentPath: string | null,

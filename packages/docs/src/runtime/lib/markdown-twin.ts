@@ -5,6 +5,7 @@
  */
 import { readFileSync } from 'node:fs';
 import { dirname, resolve } from 'node:path';
+import type { LandingSection } from '@eqtylab/docs/types';
 import { fromMarkdown } from 'mdast-util-from-markdown';
 import { mdxFromMarkdown } from 'mdast-util-mdx';
 import { mdxjs } from 'micromark-extension-mdxjs';
@@ -99,13 +100,18 @@ export function expandMdxSource(source: string, filePath: string): ExpandedSourc
  * The Markdown of a content entry. Archived copies stay as written: their imports point at
  * files the version cache does not hold, and their rendered page drops those tags anyway.
  */
+export function entryMarkdown(
+  entry: { body?: string; filePath?: string },
+  projectRoot: string,
+  version: string | null | undefined
+): ExpandedSource {
+  const body = entry.body ?? '';
+  if (version || !entry.filePath) return { markdown: body, unexpanded: [] };
+  return expandMdxSource(body, resolve(projectRoot, entry.filePath));
+}
+
 /** A landing page's twin: its `sections` as headings and link lists, since it has no body. */
-export function landingMarkdown(
-  sections: Array<{
-    heading: string;
-    cards: Array<{ title: string; description: string; links: Array<[string, string]> }>;
-  }>
-): string {
+export function landingMarkdown(sections: LandingSection[]): string {
   return sections
     .map((section) =>
       [
@@ -123,16 +129,6 @@ export function landingMarkdown(
     )
     .join('\n\n')
     .concat('\n');
-}
-
-export function entryMarkdown(
-  entry: { body?: string; filePath?: string },
-  projectRoot: string,
-  version: string | null | undefined
-): ExpandedSource {
-  const body = entry.body ?? '';
-  if (version || !entry.filePath) return { markdown: body, unexpanded: [] };
-  return expandMdxSource(body, resolve(projectRoot, entry.filePath));
 }
 
 /** Null when a partial will not parse, so its caller can leave the tag and report it. */

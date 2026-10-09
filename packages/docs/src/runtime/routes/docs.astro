@@ -2,6 +2,7 @@
 import { render } from 'astro:content';
 import CONFIG from 'virtual:eqty-docs/config';
 import { docsHref, idToPath, markdownTwinHref, normalizePath } from '@eqtylab/docs/paths';
+import { landingError } from '@eqtylab/docs/schema';
 import DocsPage from '../layouts/DocsPage.astro';
 import RedirectPage from '../layouts/RedirectPage.astro';
 import {
@@ -170,21 +171,10 @@ const { entry, version, switcher, canonical, latestHref, latestLabel, redirectTo
           })
         : undefined;
 
-      // Checked here rather than in docsSchema, which sites extend and a refinement would block.
-      const landing = entry.data.template === 'landing';
-      if (landing && !entry.data.sections?.length) {
-        throw new Error(`[@eqtylab/docs] ${entry.id}: template: landing needs \`sections\`.`);
-      }
-      if (landing && entry.body?.trim()) {
-        throw new Error(
-          `[@eqtylab/docs] ${entry.id}: a landing page renders \`sections\`, not its body. Move the body to another page.`
-        );
-      }
-      if (!landing && entry.data.sections) {
-        throw new Error(`[@eqtylab/docs] ${entry.id}: \`sections\` only applies to template: landing.`);
-      }
+      const misfit = landingError(entry.id, entry.data, entry.body);
+      if (misfit) throw new Error(`[@eqtylab/docs] ${misfit}`);
 
-      if (landing) {
+      if (entry.data.template === 'landing') {
         return (
           <DocsPage
             title={entry.data.title}

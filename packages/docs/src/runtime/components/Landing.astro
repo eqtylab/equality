@@ -2,6 +2,7 @@
 /** A site's landing page body: the title, then sections of cards linking into the docs. */
 import { pathContext } from '@eqtylab/docs/lib/nav-data.ts';
 import { isExternalHref, siteHref } from '@eqtylab/docs/paths';
+import type { LandingSection } from '@eqtylab/docs/types';
 import {
   Button,
   Card,
@@ -15,17 +16,7 @@ import {
 import GithubSlugger from 'github-slugger';
 import { createElement } from 'react';
 
-export interface LandingCard {
-  title: string;
-  description: string;
-  /** `[label, href]`. A site path is rewritten like a link in page text; a full URL opens a new tab. */
-  links: Array<[string, string]>;
-}
-
-export interface LandingSection {
-  heading: string;
-  cards: LandingCard[];
-}
+export type { LandingSection };
 
 interface Props {
   title: string;
@@ -59,12 +50,13 @@ const arrowUpRight = createElement(Icon, { icon: 'ArrowUpRight', size: 'xs' });
           <Heading as="h2" id={id}>
             {section.heading}
           </Heading>
-          {/* Subgrid rows line up every card's header and links across a row. */}
           <div class="grid grid-cols-[repeat(auto-fit,minmax(min(100%,17rem),1fr))] grid-rows-[auto_auto] gap-3">
             {section.cards.map((card) => (
               <Card className="row-span-2! grid! h-full! grid-rows-subgrid!">
                 <CardHeader className="border-border border-b">
-                  <CardTitle>{card.title}</CardTitle>
+                  <CardTitle role="heading" aria-level={3}>
+                    {card.title}
+                  </CardTitle>
                   <CardDescription>{card.description}</CardDescription>
                 </CardHeader>
                 <CardContent>

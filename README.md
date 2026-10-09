@@ -162,7 +162,7 @@ pnpm release
 
 This requires being logged in to npm (`npm login`) with publish rights on the `@eqtylab` scope.
 
-The docs framework, [`@eqtylab/docs`](https://www.npmjs.com/package/@eqtylab/docs), releases the same way when `packages/docs/package.json` changes, tagged `docs-v<version>`.
+The docs framework, [`@eqtylab/docs`](https://www.npmjs.com/package/@eqtylab/docs), is published by its own workflow when the version in `packages/docs/package.json` changes, and tagged `docs-v<version>`. To release it by hand, run `pnpm release` in `packages/docs`.
 
 Both workflows publish through npm trusted publishing, so neither needs a token. Each package names its workflow under Settings → Trusted Publisher on npmjs.com: `publish.yaml` for `@eqtylab/equality`, `publish-docs.yaml` for `@eqtylab/docs`.
 
