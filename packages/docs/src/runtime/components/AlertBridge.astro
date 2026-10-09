@@ -11,6 +11,6 @@ const { class: className, ...rest } = Astro.props as Props & { class?: string };
 ---
 
 {/* Flow spacing only; every visual property comes from Alert. */}
-<Alert as="aside" {...rest} className={['mb-4', className].filter(Boolean).join(' ')} data-eq-chrome>
+<Alert as="aside" {...rest} className={['mb-6', className].filter(Boolean).join(' ')} data-eq-chrome>
   <slot />
 </Alert>

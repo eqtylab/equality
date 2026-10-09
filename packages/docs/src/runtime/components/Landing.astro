@@ -1,0 +1,91 @@
+---
+/** A site's landing page body: the title, then sections of cards linking into the docs. */
+import { pathContext } from '@eqtylab/docs/lib/nav-data.ts';
+import { isExternalHref, siteHref } from '@eqtylab/docs/paths';
+import type { LandingSection } from '@eqtylab/docs/types';
+import {
+  Button,
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+  Heading,
+  Icon,
+} from '@eqtylab/equality';
+import GithubSlugger from 'github-slugger';
+import { createElement } from 'react';
+
+export type { LandingSection };
+
+interface Props {
+  title: string;
+  description?: string;
+  sections: LandingSection[];
+  /** The version a pinned copy belongs to, so its site paths stay inside that copy. */
+  version?: string;
+}
+
+const { title, description, sections, version } = Astro.props;
+
+const paths = pathContext(version);
+const slugger = new GithubSlugger();
+
+// Button's suffix slot takes a React element, which an Astro component cannot pass as a prop.
+const arrowRight = createElement(Icon, { icon: 'ArrowRight', size: 'xs' });
+const arrowUpRight = createElement(Icon, { icon: 'ArrowUpRight', size: 'xs' });
+---
+
+{/* No outline on a landing page, so it owns its width: room for cards two or three across. */}
+<div class="w-full max-w-5xl" data-eq-chrome>
+  <header class="mb-6">
+    <h1 class="text-text-primary w-fit text-4xl font-bold">{title}</h1>
+    {description && <p class="text-text-secondary mt-3 text-lg/7">{description}</p>}
+  </header>
+  {
+    sections.map((section) => {
+      const id = slugger.slug(section.heading);
+      return (
+        <section class="grid gap-4 pt-8" aria-labelledby={id}>
+          <Heading as="h2" id={id}>
+            {section.heading}
+          </Heading>
+          <div class="grid grid-cols-[repeat(auto-fit,minmax(min(100%,17rem),1fr))] grid-rows-[auto_auto] gap-3">
+            {section.cards.map((card) => (
+              <Card className="row-span-2! grid! h-full! grid-rows-subgrid!">
+                <CardHeader className="border-border border-b">
+                  <CardTitle role="heading" aria-level={3}>
+                    {card.title}
+                  </CardTitle>
+                  <CardDescription>{card.description}</CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <div class="grid justify-items-start gap-2">
+                    {card.links.map(([label, to]) =>
+                      isExternalHref(to) ? (
+                        <Button
+                          variant="link"
+                          suffix={arrowUpRight}
+                          href={to}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          {label}
+                          <span class="sr-only"> (opens in a new tab)</span>
+                        </Button>
+                      ) : (
+                        <Button variant="link" suffix={arrowRight} href={siteHref(to, paths)}>
+                          {label}
+                        </Button>
+                      )
+                    )}
+                  </div>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        </section>
+      );
+    })
+  }
+</div>

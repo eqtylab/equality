@@ -30,6 +30,6 @@ export const eqtyDocsSites: DocsSite[] = [
   {
     title: 'Verifiable Compute',
     href: 'https://vcomp.docs.eqtylab.io/',
-    description: 'Verifiable builds and confidential workloads with hardware-rooted attestation',
+    description: 'Verifiable builds and confidential workloads',
   },
 ];

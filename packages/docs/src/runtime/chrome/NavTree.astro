@@ -51,7 +51,7 @@ const current =
             <summary
               class={`${row} ${groupText} justify-between [&::-webkit-details-marker]:hidden pointer-focus:bg-transparent! ${groupPointerFocus} pointer-focus:shadow-none!`}
             >
-              <span class="flex min-w-0 flex-1 items-center gap-2 truncate">
+              <span class="flex min-w-0 flex-1 items-center gap-2">
                 {node.icon && <Icon icon={node.icon} size="sm" />}
                 <span>{node.label}</span>
                 {node.badge && (
@@ -82,7 +82,7 @@ const current =
             {...(node.attrs ?? {})}
           >
             {node.icon && <Icon icon={node.icon} size="sm" />}
-            <span class="min-w-0 flex-1 truncate">{node.label}</span>
+            <span class="min-w-0 flex-1">{node.label}</span>
             {node.badge && (
               <Badge variant={node.badge.variant} size="sm" className="shrink-0">
                 {node.badge.text}

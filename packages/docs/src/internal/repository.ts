@@ -20,15 +20,16 @@ export function contentPathInRepo(root: string, contentDirAbs: string): string |
 
 export function repositoryLinks(
   repository: { url: string; branch: string } | undefined,
-  contentPath: string | null
+  contentPath: string | null,
+  feedback?: string
 ): RepositoryLinks {
-  if (!repository) return {};
+  if (!repository) return feedback ? { issueHref: feedback } : {};
   const url = repository.url.replace(/\/$/, '');
   return {
     editBase:
       contentPath === null
         ? undefined
         : [url, 'edit', repository.branch, contentPath].filter(Boolean).join('/'),
-    issueHref: `${url}/issues/new`,
+    issueHref: feedback ?? `${url}/issues/new`,
   };
 }

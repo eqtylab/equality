@@ -138,7 +138,7 @@ export default function docs(
 
         payload = {
           ...cfg,
-          repositoryLinks: repositoryLinks(cfg.repository, contentPath),
+          repositoryLinks: repositoryLinks(cfg.repository, contentPath, cfg.feedback),
           icons: resolveIcons(configuredIcons(cfg)),
           siteMenu: siteMenu(cfg, config.site),
           sidebar: { ...cfg.sidebar, extra: [...cfg.sidebar.extra, ...contributions.navGroups] },

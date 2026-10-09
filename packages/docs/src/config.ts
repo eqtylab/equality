@@ -95,8 +95,8 @@ export const docsConfigSchema = z.object({
     .optional(),
 
   /**
-   * The site's GitHub repository. Adds "Spotted a mistake? Edit this page" and "Something broken?
-   * Report an issue" to the end of every article.
+   * The site's GitHub repository. Adds "Edit this page" and "Report a problem with this page" to
+   * the end of every article.
    */
   repository: z
     .object({
@@ -105,6 +105,12 @@ export const docsConfigSchema = z.object({
       branch: z.string().min(1).default('main'),
     })
     .optional(),
+
+  /**
+   * A full URL for "Report a problem with this page", such as a support portal, in place of the
+   * repository's new-issue page. Adds the link on its own when `repository` is unset.
+   */
+  feedback: z.url().optional(),
 
   /** The license's name, such as "Apache 2.0". Shown with a scale icon under the copyright. */
   license: z.string().min(1).optional(),

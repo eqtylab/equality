@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import { test } from 'node:test';
 
-import { linkTarget } from '../src/paths.ts';
+import { linkTarget, siteHref } from '../src/paths.ts';
 
 const atRoot = { base: '/' };
 const inSubFolder = { base: '/integrity-py/' };
@@ -62,4 +62,12 @@ test('configured links and page text place / links the same way, at every base',
       `${base} ${pathPrefix}`
     );
   }
+});
+
+test('a / link in a pinned copy stays inside that copy', () => {
+  assert.equal(siteHref('/examples/', { base: '/', versionPrefix: 'v3.9' }), '/v3.9/examples/');
+  assert.equal(
+    siteHref('https://pypi.org/', { base: '/', versionPrefix: 'v3.9' }),
+    'https://pypi.org/'
+  );
 });

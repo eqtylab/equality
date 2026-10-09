@@ -41,6 +41,10 @@ const {
   latestLabel,
 } = Astro.props;
 
+// The title entry keeps the outline on a page with no headings. Not "Overview": many pages open
+// with a heading of that name.
+const outline: TocNode[] = [{ slug: '_top', text: title, depth: 1, children: [] }, ...toc];
+
 // A section's own index page if it has one, else its first child. Never the sidebar repeated.
 const suggested = nav
   .map((node) => ({ label: node.label, href: node.href ?? node.children?.[0]?.href }))
@@ -71,6 +75,8 @@ const suggested = nav
         data-splash={splash ? '' : undefined}
       >
         <div class="min-w-0 flex-1 [&>.eq-prose]:max-w-[var(--eq-docs-content-max)]">
+          {/* Taller than any offset, so the browser clamps #_top to the very top. */}
+          <span id="_top" class="block scroll-mt-[100vh]" aria-hidden="true"></span>
           {
             version && latestHref && latestLabel && (
               <VersionBanner version={version} latestLabel={latestLabel} latestHref={latestHref} />
@@ -78,7 +84,7 @@ const suggested = nav
           }
           <slot />
         </div>
-        {!splash && showToc && toc.length > 0 && <TableOfContents items={toc} />}
+        {!splash && showToc && <TableOfContents items={outline} />}
       </main>
       <AppFooter />
     </div>

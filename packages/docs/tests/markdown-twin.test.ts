@@ -6,7 +6,11 @@ import { test } from 'node:test';
 import { fileURLToPath } from 'node:url';
 
 import { markdownTwinHref } from '../src/paths.ts';
-import { entryMarkdown, expandMdxSource } from '../src/runtime/lib/markdown-twin.ts';
+import {
+  entryMarkdown,
+  expandMdxSource,
+  landingMarkdown,
+} from '../src/runtime/lib/markdown-twin.ts';
 
 const page = fileURLToPath(new URL('./fixtures/markdown-twin/page.mdx', import.meta.url));
 
@@ -236,4 +240,26 @@ test('a comment inside an import block goes with the imports', () => {
 test('a partial imported through an alias is reported, not skipped silently', () => {
   const source = "import Aliased from '~/partials/a.mdx';\n\n<Aliased />\n";
   assert.deepEqual(expandMdxSource(source, page), { markdown: source, unexpanded: ['Aliased'] });
+});
+
+test('a landing twin lists each section and card with its links', () => {
+  const markdown = landingMarkdown([
+    {
+      heading: 'Get Started',
+      cards: [
+        {
+          title: 'Install',
+          description: 'From PyPI or source.',
+          links: [
+            ['Package Managers', '/install/package-managers/'],
+            ['Source', '/install/source/'],
+          ],
+        },
+      ],
+    },
+  ]);
+  assert.equal(
+    markdown,
+    '## Get Started\n\n### Install\n\nFrom PyPI or source.\n\n- [Package Managers](/install/package-managers/)\n- [Source](/install/source/)\n'
+  );
 });

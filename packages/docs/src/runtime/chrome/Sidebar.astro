@@ -15,7 +15,8 @@ const { nodes, switcher } = Astro.props;
 
 {/* border-raised pairs with the raised fill, as Gov Studio does. */}
 <aside
-  class="bg-background-raised border-border-raised top-[var(--eq-docs-header-height)] hidden w-[var(--eq-docs-sidebar-width)] shrink-0 border-r lg:sticky lg:block lg:h-[calc(100vh-var(--eq-docs-header-height))] lg:overflow-y-auto"
+  id="eq-sidebar"
+  class="bg-background-raised border-border-raised [view-transition-name:eq-docs-sidebar] top-[var(--eq-docs-header-height)] hidden w-[var(--eq-docs-sidebar-width)] shrink-0 border-r lg:sticky lg:block lg:h-[calc(100vh-var(--eq-docs-header-height))] lg:overflow-y-auto"
   data-eq-chrome
   data-pagefind-ignore
 >
@@ -24,3 +25,39 @@ const { nodes, switcher } = Astro.props;
     <NavTree nodes={nodes} />
   </nav>
 </aside>
+
+{/* Inline and straight after the sidebar, or the restored scroll lands after first paint. */}
+<script is:inline>
+  (() => {
+    const KEY = 'eqty-docs-sidebar';
+    const sidebar = document.getElementById('eq-sidebar');
+    if (!sidebar) return;
+    const offset = (link) => link.getBoundingClientRect().top - sidebar.getBoundingClientRect().top;
+
+    sidebar.addEventListener('click', (event) => {
+      const link = event.target instanceof Element && event.target.closest('a[href]');
+      // A click that opens another tab leaves this page, and its sidebar, where they are.
+      const newTab = event.metaKey || event.ctrlKey || event.shiftKey || link?.target === '_blank';
+      if (!link || newTab) return;
+      try {
+        sessionStorage.setItem(KEY, JSON.stringify({ path: link.pathname, top: offset(link) }));
+      } catch {}
+    });
+
+    const current = sidebar.querySelector('[data-current]');
+    if (!current) return;
+    let saved = null;
+    try {
+      const raw = sessionStorage.getItem(KEY);
+      sessionStorage.removeItem(KEY);
+      saved = JSON.parse(raw ?? 'null');
+    } catch {}
+    // The centring branch is repeated in eq-nav-drawer.ts; keep the two in sync.
+    const top = offset(current);
+    if (saved?.path === current.pathname) {
+      sidebar.scrollTop += top - saved.top;
+    } else if (top < 0 || top + current.offsetHeight > sidebar.clientHeight) {
+      sidebar.scrollTop += top - (sidebar.clientHeight - current.offsetHeight) / 2;
+    }
+  })();
+</script>

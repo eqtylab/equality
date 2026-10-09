@@ -5,6 +5,7 @@
  */
 import { readFileSync } from 'node:fs';
 import { dirname, resolve } from 'node:path';
+import type { LandingSection } from '@eqtylab/docs/types';
 import { fromMarkdown } from 'mdast-util-from-markdown';
 import { mdxFromMarkdown } from 'mdast-util-mdx';
 import { mdxjs } from 'micromark-extension-mdxjs';
@@ -107,6 +108,27 @@ export function entryMarkdown(
   const body = entry.body ?? '';
   if (version || !entry.filePath) return { markdown: body, unexpanded: [] };
   return expandMdxSource(body, resolve(projectRoot, entry.filePath));
+}
+
+/** A landing page's twin: its `sections` as headings and link lists, since it has no body. */
+export function landingMarkdown(sections: LandingSection[]): string {
+  return sections
+    .map((section) =>
+      [
+        `## ${section.heading}`,
+        ...section.cards.map((card) =>
+          [
+            `### ${card.title}`,
+            card.description,
+            card.links.map(([label, href]) => `- [${label}](${href})`).join('\n'),
+          ]
+            .filter(Boolean)
+            .join('\n\n')
+        ),
+      ].join('\n\n')
+    )
+    .join('\n\n')
+    .concat('\n');
 }
 
 /** Null when a partial will not parse, so its caller can leave the tag and report it. */

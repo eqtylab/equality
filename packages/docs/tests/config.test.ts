@@ -3,6 +3,7 @@ import { test } from 'node:test';
 
 import { brandAssets, resolveConfig } from '../src/config.ts';
 import { repositoryLinks } from '../src/internal/repository.ts';
+import { landingError } from '../src/schema.ts';
 
 test('versions is on by default with tags and granularity filled in', () => {
   const cfg = resolveConfig({ title: 'x' });
@@ -122,6 +123,33 @@ test('the edit and issue links are worked out from the repository, on main unles
     issueHref: 'https://github.com/a/b/issues/new',
   });
   assert.deepEqual(repositoryLinks(undefined, 'docs'), {});
+});
+
+test('feedback replaces the new-issue page, and stands alone without a repository', () => {
+  const repository = { url: 'https://github.com/a/b', branch: 'main' };
+  assert.deepEqual(repositoryLinks(repository, 'docs', 'https://support.example.com'), {
+    editBase: 'https://github.com/a/b/edit/main/docs',
+    issueHref: 'https://support.example.com',
+  });
+  assert.deepEqual(repositoryLinks(undefined, null, 'https://support.example.com'), {
+    issueHref: 'https://support.example.com',
+  });
+});
+
+test('feedback must be a full URL', () => {
+  assert.throws(() => resolveConfig({ title: 'x', feedback: '/support/' }));
+});
+
+test('a landing page needs sections and no body, and only a landing page takes sections', () => {
+  const sections = [{ heading: 'Start' }];
+  assert.equal(landingError('index', { template: 'landing', sections }, ''), null);
+  assert.match(landingError('index', { template: 'landing' }, '') ?? '', /needs `sections`/);
+  assert.match(
+    landingError('index', { template: 'landing', sections }, 'Intro text.') ?? '',
+    /not its body/
+  );
+  assert.match(landingError('guide', { template: 'doc', sections }, '') ?? '', /only applies/);
+  assert.equal(landingError('guide', { template: 'doc' }, 'Body.'), null);
 });
 
 test('a footer link row keeps prefix, label, href, icon and external', () => {

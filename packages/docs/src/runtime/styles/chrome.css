@@ -35,3 +35,18 @@
 body {
   @apply bg-background text-text-primary;
 }
+
+/* The header and sidebar carry their own transition names, or they fade with the content. */
+@view-transition {
+  navigation: auto;
+}
+
+::view-transition-group(root) {
+  animation-duration: 150ms;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  @view-transition {
+    navigation: none;
+  }
+}

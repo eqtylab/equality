@@ -84,3 +84,5 @@ export interface SiteMenuRow {
   detailIsAddress: boolean;
   current: boolean;
 }
+
+export type { LandingSection } from './schema.ts';

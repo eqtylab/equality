@@ -1,8 +1,10 @@
 # Equality
 
 [![npm](https://img.shields.io/npm/v/@eqtylab/equality)](https://www.npmjs.com/package/@eqtylab/equality)
+[![npm](https://img.shields.io/npm/v/@eqtylab/docs?label=npm%20%40eqtylab%2Fdocs)](https://www.npmjs.com/package/@eqtylab/docs)
 [![Deploy Equality Docs](https://github.com/eqtylab/equality/actions/workflows/docs.yaml/badge.svg)](https://github.com/eqtylab/equality/actions/workflows/docs.yaml)
 [![Publish Equality Package](https://github.com/eqtylab/equality/actions/workflows/publish.yaml/badge.svg)](https://github.com/eqtylab/equality/actions/workflows/publish.yaml)
+[![Publish Docs Framework](https://github.com/eqtylab/equality/actions/workflows/publish-docs.yaml/badge.svg)](https://github.com/eqtylab/equality/actions/workflows/publish-docs.yaml)
 [![Code Quality Checks](https://github.com/eqtylab/equality/actions/workflows/code-quality.yaml/badge.svg)](https://github.com/eqtylab/equality/actions/workflows/code-quality.yaml)
 
 EQTY Lab's design system — accessible React components and design tokens, built on Radix UI and Tailwind CSS v4.
@@ -159,6 +161,10 @@ pnpm release
 ```
 
 This requires being logged in to npm (`npm login`) with publish rights on the `@eqtylab` scope.
+
+The docs framework, [`@eqtylab/docs`](https://www.npmjs.com/package/@eqtylab/docs), is published by its own workflow when the version in `packages/docs/package.json` changes, and tagged `docs-v<version>`. To release it by hand, run `pnpm release` in `packages/docs`.
+
+Both workflows publish through npm trusted publishing, so neither needs a token. Each package names its workflow under Settings → Trusted Publisher on npmjs.com: `publish.yaml` for `@eqtylab/equality`, `publish-docs.yaml` for `@eqtylab/docs`.
 
 ## Troubleshooting
 

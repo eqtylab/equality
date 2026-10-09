@@ -96,13 +96,15 @@ Header links and footer rows share one shape: `label`, `href`, `icon` and `exter
 row adds `prefix`, and its `href` is optional.
 
 There are two footers. The article footer ends each page, under the prose: the previous and next
-pages, then, when `repository` is set, two links side by side.
+pages, then, when `repository` or `feedback` is set, up to two links side by side.
 
-- "Spotted a mistake? Edit this page" opens the page's own file on GitHub, on
+- "Edit this page" opens the page's own file on GitHub, on
   `repository.branch` (`main` unless you say otherwise). The file's path is read from git, so the
   site has to build from a checkout; outside one the build warns and leaves this link off. It is
   also left off archived versions, whose files are no longer in the repo.
-- "Something broken? Report an issue" opens a new issue in the repository.
+- "Report a problem with this page" opens `feedback` when set, such as a support portal, and
+  otherwise a new issue in the repository. With `feedback` alone, it is the only link. `feedback`
+  must be a full URL; the build rejects a relative one.
 
 The app footer runs across the bottom of every page, under the article and the table of contents
 but not the sidebar. It holds `footer.links`, then "© <year> EQTY Lab". The top-level
@@ -146,6 +148,43 @@ This package is public, so a private site's address never goes in the list.
 
 A public site's row shows the `description` on its list entry. A private site's row shows its own
 `description` from `docs({ ... })`. Either falls back to the site's address.
+
+A site that keeps its own version list, rather than using [Versions](#versions), passes it to
+`DocsPage` as `switcher`. Its `refresh` names a URL serving the same shape, fetched on load, so a
+frozen copy can offer versions released after it was built. Make it root-absolute or a full URL,
+since a relative one resolves against each page; another origin needs CORS. A fetched list that
+does not contain the current page's `href` is ignored, and so is any failure.
+
+## A landing page
+
+Set `template: landing` on a page, usually the content root's `index.mdx`, and list its cards in
+`sections`. It keeps the sidebar and version menu, has no outline, and shows the title, description
+and cards in place of a body:
+
+```yaml
+---
+title: Integrity Python SDK
+description: Track data provenance, asset lineage and computation integrity from Python.
+template: landing
+sections:
+  - heading: Get Started
+    cards:
+      - title: Install
+        description: From PyPI or source.
+        links:
+          - [Package Managers, /install/package-managers/]
+          - [Changelog, https://github.com/eqtylab/integrity-py/blob/main/CHANGELOG.md]
+---
+```
+
+A `/` link is rewritten like a link in page text, so in an old version it stays in that version; a
+full URL opens a new tab. The build stops when a landing page has no `sections` or has a body, and
+when any other page has `sections`. The Markdown twin lists the sections as links. Search leaves
+the page out, since it has no article.
+
+A page of your own renders the same layout with `Landing` from
+`@eqtylab/docs/components/Landing.astro`, typed by its `LandingSection` export. Put it in `DocsPage`
+with `showToc={false}`, or the page gets an outline holding only its title.
 
 ## Navigation comes from folders
 
@@ -322,6 +361,9 @@ const nav = await docsNav(Astro.url.pathname);
   <Prose title="Home">Anything at all.</Prose>
 </DocsPage>
 ```
+
+`DocsPage` shows "On this page" unless `showToc` is `false`, even with an empty `toc`, so a page of
+your own without an outline passes `showToc={false}`, as above.
 
 `@eqtylab/docs/lib/*` ships the rest of what the injected route uses, with the collection already
 wired in: `docsEntries` and `pathContext` alongside `docsNav` in `nav-data.ts`, `breadcrumbsFor` /

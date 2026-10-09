@@ -26,15 +26,12 @@ const rowLink = 'text-text-link decoration-text-link font-medium underline decor
 ---
 
 {
-  /* 96px above, a step above the 80px before an h2, so the footer sits further out than
-     anything inside the prose. The 32px below adds to the app footer's 64px for the same
-     96px on that side. Capped to the prose width so it does not run under the table of
-     contents. */
+  /* Capped to the prose width so it does not run under the table of contents. */
 }
 {
   (hasPager || hasLinks) && (
     <footer
-      class="mt-24 pb-8 max-w-[var(--eq-docs-content-max)]"
+      class="mt-12 pb-8 max-w-[var(--eq-docs-content-max)]"
       data-eq-chrome
       data-pagefind-ignore
     >
@@ -66,34 +63,26 @@ const rowLink = 'text-text-link decoration-text-link font-medium underline decor
         </nav>
       )}
 
-      {/* 48px above the rule and 32px below it: inside the footer's own group, so
-          tighter than the 96px around it. */}
       {hasLinks && (
         <ul
-          class={`border-border m-0 flex list-none flex-wrap justify-between w-full gap-x-8 gap-y-3 border-t p-0 pt-8 text-sm ${hasPager ? 'mt-12' : ''}`}
+          class={`border-border m-0 flex list-none flex-wrap justify-between w-full gap-x-8 gap-y-3 border-t p-0 pt-8 text-sm ${hasPager ? 'mt-8' : ''}`}
         >
           {editHref && (
             <li class={row}>
               <Icon icon="Pencil" size="xs" className="text-text-tertiary!" />
-              <span>
-                Spotted a mistake?{' '}
-                <a class={rowLink} href={editHref} target="_blank" rel="noopener noreferrer">
-                  Edit this page
-                  <span class="sr-only"> (opens in a new tab)</span>
-                </a>
-              </span>
+              <a class={rowLink} href={editHref} target="_blank" rel="noopener noreferrer">
+                Edit this page
+                <span class="sr-only"> (opens in a new tab)</span>
+              </a>
             </li>
           )}
           {issueHref && (
             <li class={row}>
-              <Icon icon="CircleDot" size="xs" className="text-text-tertiary!" />
-              <span>
-                Something broken?{' '}
-                <a class={rowLink} href={issueHref} target="_blank" rel="noopener noreferrer">
-                  Report an issue
-                  <span class="sr-only"> (opens in a new tab)</span>
-                </a>
-              </span>
+              <Icon icon="MessageSquareWarning" size="xs" className="text-text-tertiary!" />
+              <a class={rowLink} href={issueHref} target="_blank" rel="noopener noreferrer">
+                Report a problem with this page
+                <span class="sr-only"> (opens in a new tab)</span>
+              </a>
             </li>
           )}
         </ul>
