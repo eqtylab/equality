@@ -16,7 +16,7 @@ const links = CONFIG.footer.links.map((row) => ({
 const rowLink = 'text-text-link decoration-text-link font-medium underline decoration-1 underline-offset-4';
 
 const currentYear = new Date().getFullYear();
-const { license } = CONFIG;
+const license = typeof CONFIG.license === 'string' ? { name: CONFIG.license, href: undefined } : CONFIG.license;
 ---
 
 <footer class="border-border border-t mt-16 bg-background-raised" data-eq-chrome data-pagefind-ignore>
@@ -52,21 +52,26 @@ const { license } = CONFIG;
         ))}
       </ul>
     )}
-    <div class="text-text-tertiary flex shrink-0 flex-col gap-2 md:items-end xl:ml-auto xl:w-[var(--eq-docs-toc-width)]">
-      <div class="m-0 flex items-center gap-1">
+    <div class="text-text-tertiary flex shrink-0 flex-col md:items-end xl:ml-auto xl:w-[var(--eq-docs-toc-width)]">
+      <div class="flex flex-wrap items-center gap-x-1.5">
+        <span class="flex items-center gap-1">
           <Icon icon="Copyright" size="xs" className="text-text-tertiary!" />
-          <p>
-            {currentYear} EQTY Lab
-          </p>
-        </div>
-      {license && (
-        <div class="m-0 flex items-center gap-1">
-          <Icon icon="Scale" size="xs" className="text-text-tertiary!" />
-          <p>
-            {license}
-          </p>
-        </div>
-      )}
+          {currentYear} EQTY Lab
+        </span>
+        {license && (
+          <>
+            <span aria-hidden="true">·</span>
+            {license.href ? (
+              <a class={rowLink} href={license.href} target="_blank" rel="noopener noreferrer license">
+                {license.name}
+                <span class="sr-only"> license (opens in a new tab)</span>
+              </a>
+            ) : (
+              <span>{license.name}<span class="sr-only"> license</span></span>
+            )}
+          </>
+        )}
+      </div>
     </div>
   </div>
 </footer>
