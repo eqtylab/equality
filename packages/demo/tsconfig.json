@@ -5,10 +5,7 @@
   "compilerOptions": {
     "paths": {
       "@demo/*": ["./src/*"],
-      "@demo/components/*": ["./src/components/*"],
-      "@eqtylab/equality": ["../ui/src"],
-      "@eqtylab/equality/*": ["../ui/src/*"],
-      "@/*": ["../ui/src/*"]
+      "@demo/components/*": ["./src/components/*"]
     },
     "jsx": "react-jsx",
     "jsxImportSource": "react",
