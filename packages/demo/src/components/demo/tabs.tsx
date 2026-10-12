@@ -13,7 +13,6 @@ export function TabsDemo({
   if (variant === "default") {
     return (
       <Tabs
-        id="default-tabs"
         items={[
           {
             label: "Declarations",
@@ -41,7 +40,6 @@ export function TabsDemo({
   if (variant === "with-icons") {
     return (
       <Tabs
-        id="with-icons-tabs"
         items={[
           {
             label: "Declarations",
@@ -71,7 +69,6 @@ export function TabsDemo({
   if (variant === "with-active-fill") {
     return (
       <Tabs
-        id="with-active-fill-tabs"
         items={[
           {
             label: "Implementation",
@@ -109,7 +106,6 @@ export function TabsDemo({
   if (variant === "with-icons-and-active-fill") {
     return (
       <Tabs
-        id="with-icons-and-active-fill-tabs"
         items={[
           {
             label: "Implementation",
@@ -150,7 +146,6 @@ export function TabsDemo({
   if (variant === "with-suffix") {
     return (
       <Tabs
-        id="with-suffix-tabs"
         items={[
           {
             label: "Declarations",

@@ -2,6 +2,40 @@
 
 Notable changes to Equality are recorded here, following [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## 4.12.0 - 2026-10-12
+
+`Tabs` respond to hover, and filled `Tabs` match `SegmentedControls`. Two `SegmentedControls`
+fixes come with it. No code needs to change.
+
+### Changed
+
+- Hovering an inactive tab brightens its label. Filled tabs also show a faint fill inset inside
+  the track, and transparent tabs a faint underline where the active indicator sits. As on
+  `Button`, hover only applies on devices that can hover.
+- Filled tabs share the `SegmentedControls` track and indicator: a translucent edge and sunken
+  inner shadow on the track, and an active fill inset 2px inside it with 3px corners and the
+  raised control shadow.
+- The active indicator is a single element that slides beneath the labels instead of over them.
+  A one-tab move takes 250ms with the `SegmentedControls` easing, longer moves take up to 400ms
+  so the speed stays even, and reduced motion turns the slide off.
+- Tab triggers have a pointer cursor and animate only colour, over 250ms. This includes
+  `TabsTrigger` used on its own.
+
+### Fixed
+
+- The keyboard focus ring on filled tabs is drawn inside the tab. Before, the track clipped it to
+  a sliver on one edge.
+- The keyboard focus ring on the active segment of `SegmentedControls` is visible in light mode.
+  The background band meant to separate it from the indicator was the same width as the ring, so
+  the ring merged into the indicator's fill.
+- Hover on `SegmentedControls` only applies on devices that can hover, as on `Button`, so a tapped
+  segment no longer stays highlighted on a touch screen.
+
+### Deprecated
+
+- The `id` prop on `Tabs`. It is optional and ignored, and only existed to pair the old animated
+  indicator across renders.
+
 ## 4.11.0 - 2026-10-06
 
 A visual refresh of `Button`. No props, variants or sizes change and no code needs to change.

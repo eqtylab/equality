@@ -1,5 +1,11 @@
-import { useState, type ComponentPropsWithoutRef } from 'react';
-import { motion } from 'motion/react';
+import {
+  useCallback,
+  useEffect,
+  useLayoutEffect,
+  useRef,
+  useState,
+  type ComponentPropsWithoutRef,
+} from 'react';
 
 import { Icon } from '@/components/icon/icon';
 import {
@@ -12,7 +18,8 @@ import styles from '@/components/tabs/tabs.module.css';
 import { cn } from '@/lib/utils';
 
 interface TabsProps {
-  id: string;
+  /** @deprecated No longer used. The active indicator is positioned without it. */
+  id?: string;
   items: {
     label: string;
     value: string;
@@ -34,7 +41,6 @@ interface TabsProps {
 }
 
 const Tabs = ({
-  id,
   items,
   className,
   tabsListBackground = 'transparent',
@@ -45,6 +51,48 @@ const Tabs = ({
   const [activeTab, setActiveTab] = useState(defaultValue ?? items[0].value);
 
   const isFilled = tabsListBackground === 'filled';
+
+  const listRef = useRef<HTMLDivElement>(null);
+  const triggerRefs = useRef<Record<string, HTMLButtonElement | null>>({});
+  const [indicator, setIndicator] = useState({ left: 0, width: 0, duration: 250 });
+  const [animateIndicator, setAnimateIndicator] = useState(false);
+
+  // A one-tab hop matches SegmentedControls' 250ms; longer jumps stretch so the speed stays even.
+  const updateIndicator = useCallback(() => {
+    const activeTrigger = triggerRefs.current[activeTab];
+    if (activeTrigger) {
+      const left = activeTrigger.offsetLeft;
+      const width = activeTrigger.offsetWidth;
+      setIndicator((previous) => {
+        if (previous.left === left && previous.width === width) return previous;
+        const hops = width > 0 ? Math.abs(left - previous.left) / width : 0;
+        const duration = Math.min(400, Math.max(250, 250 + (hops - 1) * 100));
+        return { left, width, duration };
+      });
+    }
+  }, [activeTab]);
+
+  useLayoutEffect(() => {
+    if (!staticRender) updateIndicator();
+  }, [updateIndicator, items, staticRender]);
+
+  // Enabling the transition in the same frame as the first measurement makes the indicator slide in from the left edge on mount.
+  useEffect(() => {
+    const frame = requestAnimationFrame(() => setAnimateIndicator(true));
+    return () => cancelAnimationFrame(frame);
+  }, []);
+
+  // The list is full width, so a trigger can change size (a suffix count, a late web font) without it.
+  useLayoutEffect(() => {
+    const list = listRef.current;
+    if (!list || staticRender) return;
+    const observer = new ResizeObserver(updateIndicator);
+    observer.observe(list);
+    for (const trigger of Object.values(triggerRefs.current)) {
+      if (trigger) observer.observe(trigger);
+    }
+    return () => observer.disconnect();
+  }, [updateIndicator, items, staticRender]);
 
   const handleValueChange = (newTab: string) => {
     setActiveTab(newTab);
@@ -63,26 +111,14 @@ const Tabs = ({
     isFilled ? styles['active-tab-indicator--filled'] : styles['active-tab-indicator--transparent']
   );
 
-  const renderActiveStyle = (isActive: boolean) => {
-    /*
-      Static mode has no React on the page, so switching tabs is an attribute flip: the
-      indicator has to ship in every trigger and be revealed by `data-state`. No `layoutId`
-      here either - motion treats duplicate ids as one shared element.
-    */
-    if (staticRender) {
-      return <span className={cn(indicatorClass, styles['active-tab-indicator--static'])} />;
-    }
-    if (isActive) {
-      return (
-        <motion.span
-          className={indicatorClass}
-          initial={false}
-          layoutId={`${id}-active-tab-indicator`}
-        />
-      );
-    }
-    return null;
-  };
+  /*
+    Static mode has no React on the page, so switching tabs is an attribute flip: the
+    indicator has to ship in every trigger and be revealed by `data-state`.
+  */
+  const renderStaticIndicator = () =>
+    staticRender ? (
+      <span className={cn(indicatorClass, styles['active-tab-indicator--static'])} />
+    ) : null;
 
   return (
     <TabsContainer
@@ -91,18 +127,20 @@ const Tabs = ({
       className={cn(styles['tabs'], className)}
     >
       <TabsList
+        ref={listRef}
         className={cn(
           styles['tabs-list'],
           isFilled ? styles['tabs-list--filled'] : styles['tabs-list--transparent']
         )}
       >
         {items.map(({ label, value, icon, suffix, triggerProps }) => {
-          const isActive = activeTab === value;
-
           return (
             <TabsTrigger
               {...triggerProps}
               key={value}
+              ref={(el) => {
+                triggerRefs.current[value] = el;
+              }}
               value={value}
               className={cn(
                 styles['tabs-trigger'],
@@ -113,10 +151,27 @@ const Tabs = ({
               {renderIcon(icon)}
               {label}
               {suffix}
-              {renderActiveStyle(isActive)}
+              {renderStaticIndicator()}
             </TabsTrigger>
           );
         })}
+        {!staticRender && (
+          <span
+            aria-hidden
+            className={cn(
+              indicatorClass,
+              styles['active-tab-indicator--shared'],
+              animateIndicator && styles['active-tab-indicator--animated']
+            )}
+            style={
+              {
+                transform: `translateX(${indicator.left}px)`,
+                '--indicator-width': `${indicator.width}px`,
+                '--indicator-duration': `${indicator.duration}ms`,
+              } as React.CSSProperties
+            }
+          />
+        )}
       </TabsList>
 
       {items.map(({ value, content }) => (
