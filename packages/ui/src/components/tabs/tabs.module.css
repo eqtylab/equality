@@ -13,15 +13,21 @@
 }
 
 .tabs-list--filled {
-  @apply border-control-edge dark:border-control-edge-dark border;
-  @apply bg-background-sunken inset-shadow-control-sunken dark:inset-shadow-control-sunken-dark;
-  @apply overflow-hidden rounded-md;
+  @apply control-track;
+  @apply bg-background-sunken;
+}
+
+/* Triggers must fill the list's height, or their hover fill and underline drift from the shared indicator */
+.tabs-trigger--filled,
+.tabs-trigger--transparent {
+  @apply self-stretch;
 }
 
 .tabs-trigger--filled {
   @apply w-full;
   @apply px-3 py-1.5;
   @apply text-text-secondary;
+  @apply control-segment-fill control-segment-focus-ring;
 }
 
 .tabs-icon {
@@ -36,30 +42,20 @@
   @apply data-[state=active]:text-text-primary;
 }
 
-.tabs-trigger--filled::before,
 .tabs-trigger--transparent::before {
   content: '';
   @apply z-behind pointer-events-none absolute;
+  @apply bottom-0 left-0 right-0 h-0.5;
   @apply ease-control duration-250 transition-colors;
   @apply motion-reduce:transition-none;
 }
 
-.tabs-trigger--filled::before {
-  @apply inset-[2px] rounded-[3px];
-}
-
-.tabs-trigger--transparent::before {
-  @apply bottom-0 left-0 right-0 h-0.5;
-}
-
 .tabs-trigger--filled[data-state='inactive'],
 .tabs-trigger--transparent[data-state='inactive'] {
+  @apply control-segment-hover;
+
   @variant hover {
     @apply text-text-primary;
-
-    &::before {
-      @apply bg-text-primary/8;
-    }
   }
 }
 
@@ -68,22 +64,14 @@
   box-shadow: none;
 }
 
-.tabs-trigger--filled:focus-visible::after {
-  content: '';
-  @apply pointer-events-none absolute inset-0 rounded-[5px];
-  box-shadow:
-    inset 0 0 0 2px var(--color-focus-ring),
-    inset 0 0 0 4px var(--color-background);
-}
-
 .active-tab-indicator {
   @apply bg-button-primary-fill z-behind absolute w-full;
 }
 
 .active-tab-indicator--filled {
   @apply inset-[2px] w-auto;
-  @apply rounded-[3px];
-  @apply shadow-control-raised dark:shadow-control-raised-dark;
+  @apply control-segment-indicator;
+  --mix-color: var(--color-button-primary-fill);
 }
 
 .active-tab-indicator--transparent {

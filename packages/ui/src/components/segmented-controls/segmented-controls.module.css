@@ -1,12 +1,10 @@
 @reference '../../theme/theme.module.css';
 
 .segmented-controls {
-  @apply border-control-edge dark:border-control-edge-dark border;
-  @apply flex rounded-md;
-  @apply w-max overflow-hidden;
+  @apply control-track;
+  @apply flex w-max;
   @apply bg-button-tertiary-fill;
   @apply relative;
-  @apply inset-shadow-control-sunken dark:inset-shadow-control-sunken-dark;
 }
 
 .segment {
@@ -19,34 +17,11 @@
   @apply ease-control duration-250 transition-colors;
   @apply focus-visible:outline-none;
   @apply motion-reduce:transition-none;
-}
-
-.segment::before,
-.segment::after {
-  content: '';
-  @apply pointer-events-none absolute;
-}
-
-.segment::before {
-  @apply inset-[2px] -z-10 rounded-[3px];
-  @apply ease-control duration-250 transition-colors;
-  @apply motion-reduce:transition-none;
+  @apply control-segment-fill control-segment-focus-ring;
 }
 
 .segment--inactive {
-  @variant hover {
-    &::before {
-      @apply bg-text-primary/8;
-    }
-  }
-}
-
-/* The inner band keeps the ring visible against the indicator, which shares its colour in light mode */
-.segment:focus-visible::after {
-  @apply inset-0 rounded-[5px];
-  box-shadow:
-    inset 0 0 0 2px var(--color-focus-ring),
-    inset 0 0 0 4px var(--color-background);
+  @apply control-segment-hover;
 }
 
 .segment--icon-only {
@@ -133,10 +108,10 @@
 
 .active-segment-indicator {
   @apply absolute bottom-[2px] left-[2px] top-[2px];
-  @apply w-[calc(var(--indicator-width)-4px)] rounded-[3px];
+  @apply w-[calc(var(--indicator-width)-4px)];
+  @apply control-segment-indicator;
   --mix-color: var(--segment-active-fill);
   @apply bg-(--mix-color);
-  @apply shadow-control-raised dark:shadow-control-raised-dark;
 }
 
 .active-segment-indicator--animated {

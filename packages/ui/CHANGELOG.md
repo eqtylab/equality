@@ -16,10 +16,10 @@ fixes come with it. No code needs to change.
   inner shadow on the track, and an active fill inset 2px inside it with 3px corners and the
   raised control shadow.
 - The active indicator is a single element that slides beneath the labels instead of over them.
-  A one-tab move takes 250ms with the `SegmentedControls` easing, longer moves take up to 400ms
-  so the speed stays even, and reduced motion turns the slide off.
+  A one-tab move takes 250ms with the `SegmentedControls` easing, longer moves take a little
+  longer, up to 400ms, and reduced motion turns the slide off.
 - Tab triggers have a pointer cursor and animate only colour, over 250ms. This includes
-  `TabsTrigger` used on its own.
+  `TabsTrigger` used on its own, which no longer fades into its disabled opacity.
 
 ### Fixed
 
@@ -30,6 +30,8 @@ fixes come with it. No code needs to change.
   the ring merged into the indicator's fill.
 - Hover on `SegmentedControls` only applies on devices that can hover, as on `Button`, so a tapped
   segment no longer stays highlighted on a touch screen.
+- `SegmentedControls` no longer logs a `useLayoutEffect` warning when server-rendered with
+  React 18.
 
 ### Deprecated
 

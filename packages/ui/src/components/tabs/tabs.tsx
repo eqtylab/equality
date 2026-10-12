@@ -1,11 +1,4 @@
-import {
-  useCallback,
-  useEffect,
-  useLayoutEffect,
-  useRef,
-  useState,
-  type ComponentPropsWithoutRef,
-} from 'react';
+import { useCallback, useEffect, useRef, useState, type ComponentPropsWithoutRef } from 'react';
 
 import { Icon } from '@/components/icon/icon';
 import {
@@ -15,7 +8,14 @@ import {
   TabsTrigger,
 } from '@/components/tabs/tabs-components';
 import styles from '@/components/tabs/tabs.module.css';
+import { useIsomorphicLayoutEffect } from '@/lib/use-isomorphic-layout-effect';
 import { cn } from '@/lib/utils';
+
+interface IndicatorPosition {
+  left: number;
+  width: number;
+  duration: number;
+}
 
 interface TabsProps {
   /** @deprecated No longer used. The active indicator is positioned without it. */
@@ -54,27 +54,33 @@ const Tabs = ({
 
   const listRef = useRef<HTMLDivElement>(null);
   const triggerRefs = useRef<Record<string, HTMLButtonElement | null>>({});
-  const [indicator, setIndicator] = useState({ left: 0, width: 0, duration: 250 });
+  const [indicator, setIndicator] = useState<IndicatorPosition | null>(null);
   const [animateIndicator, setAnimateIndicator] = useState(false);
+  const itemValues = items.map((item) => item.value).join('\0');
 
-  // A one-tab hop matches SegmentedControls' 250ms; longer jumps stretch so the speed stays even.
+  // A one-tab hop matches SegmentedControls' 250ms; longer jumps take a little longer, up to 400ms.
   const updateIndicator = useCallback(() => {
     const activeTrigger = triggerRefs.current[activeTab];
-    if (activeTrigger) {
-      const left = activeTrigger.offsetLeft;
-      const width = activeTrigger.offsetWidth;
-      setIndicator((previous) => {
-        if (previous.left === left && previous.width === width) return previous;
-        const hops = width > 0 ? Math.abs(left - previous.left) / width : 0;
-        const duration = Math.min(400, Math.max(250, 250 + (hops - 1) * 100));
-        return { left, width, duration };
-      });
+    const width = activeTrigger?.offsetWidth ?? 0;
+    if (!activeTrigger || width === 0) {
+      setIndicator(null);
+      return;
     }
+    const left = activeTrigger.offsetLeft;
+    setIndicator((previous) => {
+      if (previous?.left === left && previous.width === width) return previous;
+      const hops = previous
+        ? Math.abs(left + width / 2 - (previous.left + previous.width / 2)) /
+          ((width + previous.width) / 2)
+        : 0;
+      const duration = Math.min(400, Math.max(250, 250 + (hops - 1) * 100));
+      return { left, width, duration };
+    });
   }, [activeTab]);
 
-  useLayoutEffect(() => {
+  useIsomorphicLayoutEffect(() => {
     if (!staticRender) updateIndicator();
-  }, [updateIndicator, items, staticRender]);
+  }, [updateIndicator, itemValues, staticRender]);
 
   // Enabling the transition in the same frame as the first measurement makes the indicator slide in from the left edge on mount.
   useEffect(() => {
@@ -83,7 +89,7 @@ const Tabs = ({
   }, []);
 
   // The list is full width, so a trigger can change size (a suffix count, a late web font) without it.
-  useLayoutEffect(() => {
+  useIsomorphicLayoutEffect(() => {
     const list = listRef.current;
     if (!list || staticRender) return;
     const observer = new ResizeObserver(updateIndicator);
@@ -92,7 +98,7 @@ const Tabs = ({
       if (trigger) observer.observe(trigger);
     }
     return () => observer.disconnect();
-  }, [updateIndicator, items, staticRender]);
+  }, [updateIndicator, itemValues, staticRender]);
 
   const handleValueChange = (newTab: string) => {
     setActiveTab(newTab);
@@ -114,11 +120,25 @@ const Tabs = ({
   /*
     Static mode has no React on the page, so switching tabs is an attribute flip: the
     indicator has to ship in every trigger and be revealed by `data-state`.
+    Until the shared indicator is measured (server HTML before hydration, or a hidden list)
+    the active trigger carries its own. Without it a filled tab's white label sits on the
+    bare track.
   */
-  const renderStaticIndicator = () =>
-    staticRender ? (
-      <span className={cn(indicatorClass, styles['active-tab-indicator--static'])} />
-    ) : null;
+  const renderTriggerIndicator = (value: string) => {
+    if (staticRender) {
+      return (
+        <span
+          aria-hidden
+          data-slot="tabs-indicator"
+          className={cn(indicatorClass, styles['active-tab-indicator--static'])}
+        />
+      );
+    }
+    if (!indicator && value === activeTab) {
+      return <span aria-hidden data-slot="tabs-indicator" className={indicatorClass} />;
+    }
+    return null;
+  };
 
   return (
     <TabsContainer
@@ -151,13 +171,14 @@ const Tabs = ({
               {renderIcon(icon)}
               {label}
               {suffix}
-              {renderStaticIndicator()}
+              {renderTriggerIndicator(value)}
             </TabsTrigger>
           );
         })}
-        {!staticRender && (
+        {!staticRender && indicator && (
           <span
             aria-hidden
+            data-slot="tabs-indicator"
             className={cn(
               indicatorClass,
               styles['active-tab-indicator--shared'],
