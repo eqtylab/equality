@@ -2,6 +2,19 @@
 
 Notable changes to Equality are recorded here, following [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## 4.12.1 - 2026-10-13
+
+The `Tabs` indicator from 4.12.0 can slide when the active tab comes from outside, such as the
+URL. No code needs to change.
+
+### Fixed
+
+- `Tabs` take a `value` prop, so the active tab can be controlled. Code that remounts `Tabs` with
+  `key` to change the tab can pass `value` instead. The indicator then slides to the new tab
+  rather than jumping partway through.
+- A click on a controlled tab calls `onValueChange` once. Radix requests the tab on both mousedown
+  and focus, so a parent that commits the new value later, as React Router does, was called twice.
+
 ## 4.12.0 - 2026-10-12
 
 `Tabs` respond to hover, and filled `Tabs` match `SegmentedControls`. Two `SegmentedControls`

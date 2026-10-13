@@ -90,6 +90,35 @@ describe('Tabs', () => {
     expect(sharedIndicator().style.getPropertyValue('--indicator-width')).toBe('80px');
   });
 
+  it('slides the same indicator when a controlled value changes', () => {
+    const { rerender } = render(<Tabs items={ITEMS} value="declarations" />);
+    const indicator = sharedIndicator();
+
+    rerender(<Tabs items={ITEMS} value="reviews" />);
+
+    expect(sharedIndicator()).toBe(indicator);
+    expect(indicator.style.transform).toBe('translateX(120px)');
+    expect(screen.getByRole('tab', { name: 'Reviews' }).getAttribute('aria-selected')).toBe('true');
+  });
+
+  it('reports a click once and waits for a controlled value before moving', async () => {
+    const user = userEvent.setup();
+    const changes: string[] = [];
+    render(<Tabs items={ITEMS} value="declarations" onValueChange={(v) => changes.push(v)} />);
+
+    await user.click(screen.getByRole('tab', { name: 'Reviews' }));
+
+    expect(changes).toEqual(['reviews']);
+    expect(sharedIndicator().style.transform).toBe('translateX(0px)');
+    expect(screen.getByRole('tab', { name: 'Declarations' }).getAttribute('aria-selected')).toBe(
+      'true'
+    );
+
+    await user.click(screen.getByRole('tab', { name: 'Reviews' }));
+
+    expect(changes).toEqual(['reviews', 'reviews']);
+  });
+
   it('takes 250ms for a one-tab move and longer for a longer one', async () => {
     LAYOUT = {
       Alpha: { left: 0, width: 100 },

@@ -34,6 +34,7 @@ interface TabsProps {
   }[];
   className?: string;
   tabsListBackground?: 'transparent' | 'filled';
+  value?: string;
   defaultValue?: string;
   onValueChange?: (value: string) => void;
   // Render for an environment where React never runs on the client (statically rendered sites).
@@ -44,11 +45,13 @@ const Tabs = ({
   items,
   className,
   tabsListBackground = 'transparent',
+  value,
   defaultValue,
   onValueChange,
   staticRender = false,
 }: TabsProps) => {
-  const [activeTab, setActiveTab] = useState(defaultValue ?? items[0].value);
+  const [uncontrolledTab, setUncontrolledTab] = useState(defaultValue ?? items[0].value);
+  const activeTab = value ?? uncontrolledTab;
 
   const isFilled = tabsListBackground === 'filled';
 
@@ -100,8 +103,21 @@ const Tabs = ({
     return () => observer.disconnect();
   }, [updateIndicator, itemValues, staticRender]);
 
+  /*
+    Radix requests a tab on mousedown and again on the focus that follows, in the same task.
+    A controlled parent that commits later (React Router navigates in a transition) has not
+    updated `value` by then, so without this every click reports twice and pushes a
+    duplicate history entry.
+  */
+  const requestedTab = useRef<string | null>(null);
+
   const handleValueChange = (newTab: string) => {
-    setActiveTab(newTab);
+    if (newTab === requestedTab.current) return;
+    requestedTab.current = newTab;
+    setTimeout(() => {
+      requestedTab.current = null;
+    });
+    setUncontrolledTab(newTab);
     onValueChange?.(newTab);
   };
 
