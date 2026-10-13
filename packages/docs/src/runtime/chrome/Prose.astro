@@ -92,8 +92,7 @@ const action =
     )
   }
 
-  {/* Keep this under the 80px above an h2. The header introduces the content rather than
-      separating it, and at 80px the first heading reads as a section break. */}
+  {/* Must stay below the h2 gap (80px), or the first heading reads as a section break. */}
   <header
     class="mb-12"
     data-eq-chrome

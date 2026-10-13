@@ -26,9 +26,7 @@ const rowLink = 'text-text-link decoration-text-link font-medium underline decor
 ---
 
 {
-  /* `pb-8` pairs with AppFooter's `mt-16` for 96px below, matching the 96px above;
-     change them together. Capped to the prose width so it does not run under the table
-     of contents. */
+  /* pb-8 + AppFooter's mt-16 must total 96px; change both. Without max-w it runs under the TOC. */
 }
 {
   (hasPager || hasLinks) && (
