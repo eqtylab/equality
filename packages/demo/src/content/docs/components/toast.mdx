@@ -6,8 +6,6 @@ description: "Auto-dismissing notification message with variants"
 import { ToastDemo } from "@demo/components/demo/toast";
 import { ToastRoot } from "@eqtylab/equality";
 
-<ToastRoot client:only="react" />
-
 ## Overview
 
 The Toast component provides a non-intrusive way to display notifications to users. It supports status-dependant variants, optional (though suggested) titles and descriptions, and action buttons. Toasts automatically dismiss after a delay and can be manually dismissed via a close button.
@@ -157,3 +155,5 @@ const toastInstance = toast({
 // Dismiss programmatically
 toastInstance.dismiss();
 ```
+
+<ToastRoot client:only="react" />

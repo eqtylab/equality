@@ -11,6 +11,8 @@ metadata:
 
 After creating a component in the "ui" package, always create a corresponding docs MDX file with the following structure. Comments in this example are instructions for you to fill in information.
 
+Start the page body with `## Overview`, straight after the imports. A component that renders nothing visible, such as `<ToastRoot client:only="react" />`, goes at the end of the page, never before the first heading: placed first, it takes the page header's spacing rule and the first heading lands 80px below the header instead of 48px.
+
 ````md
 ## Overview
 

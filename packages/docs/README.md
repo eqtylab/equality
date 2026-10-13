@@ -259,8 +259,8 @@ per-page overrides stay possible.
 
 **An h2 is a title or a label, decided by what follows it.** With text after it, an h2 is a 20px
 title. With an h3 straight after it, it becomes a mono label that groups the h3s below (Variants,
-Props). Any text in between turns it back into a title, so put a section's introduction in the
-section before it. Tailwind's docs follow the same rule.
+Props). Text between them is fine; the h2 simply stays a title. Tailwind's docs follow the same
+rule.
 
 **Space follows level, not size.** A label is the smallest heading on the page, yet it gets the
 largest gap, because it starts the biggest change of topic.
@@ -282,6 +282,11 @@ largest gap, because it starts the biggest change of topic.
 separating it, so the first heading must not read as a section break. The heading right after the
 header has its top margin zeroed in `runtime/styles/prose.css`; without that, its 80px wins over
 the header's own margin, which is how 0.12 shipped 80px there by accident.
+
+**A component that shows nothing goes below the first heading.** Something like
+`<ToastRoot client:only="react" />` renders no box, but it is still the element after the header,
+so it takes the zeroed margin and the first heading keeps its 80px. CSS cannot tell it from an
+island that does render, so put it at the end of the page.
 
 ## Code blocks
 
