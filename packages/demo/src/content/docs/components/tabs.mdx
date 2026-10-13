@@ -11,7 +11,7 @@ import { TabsDemo } from "@demo/components/demo/tabs";
 
 The `Tabs` component provides a clean and accessible way to organize content into multiple panels. Built on top of Radix UI primitives, it includes smooth animations for tab switching and supports icons, custom styling, and different background variants.
 
-The component automatically manages the active tab state and provides a smooth animated indicator that follows the active tab.
+The component automatically manages the active tab state and provides a smooth animated indicator that follows the active tab. Inactive tabs respond to hover, and the filled variant shares its track, indicator and timing with `SegmentedControls`. When the user prefers reduced motion, the indicator moves without sliding.
 
 ## Usage
 
@@ -21,11 +21,10 @@ Import the component from the Equality UI library:
 import { Tabs } from "@eqtylab/equality";
 ```
 
-Basic usage requires an `id` and an array of `items`:
+Basic usage requires an array of `items`:
 
 ```tsx
 <Tabs
-  id="my-tabs"
   items={[
     {
       label: "Tab 1",
@@ -53,7 +52,6 @@ The default variant uses a transparent background with an animated underline ind
 
 ```tsx
 <Tabs
-  id="default-tabs"
   items={[
     {
       label: "Declarations",
@@ -79,7 +77,6 @@ Add icons to tabs by including the `icon` property in each item. Icons can be pr
 
 ```tsx
 <Tabs
-  id="with-icons-tabs"
   items={[
     {
       label: "Declarations",
@@ -107,7 +104,6 @@ Use `tabsListBackground="filled"` to apply a filled background style to the tabs
 
 ```tsx
 <Tabs
-  id="with-active-fill-tabs"
   tabsListBackground="filled"
   items={[
     {
@@ -139,7 +135,6 @@ Combine icons with the filled background variant for a more prominent tab design
 
 ```tsx
 <Tabs
-  id="with-icons-and-active-fill-tabs"
   tabsListBackground="filled"
   items={[
     {
@@ -174,7 +169,6 @@ Use the `suffix` property to render any React component after a tab's label. Thi
 
 ```tsx
 <Tabs
-  id="with-suffix-tabs"
   items={[
     {
       label: "Declarations",
@@ -208,7 +202,6 @@ Any props are spread onto the trigger before the component's own `value` and sty
 
 ```tsx
 <Tabs
-  id="prefetch-tabs"
   items={[
     {
       label: "Declarations",
@@ -234,14 +227,14 @@ Any props are spread onto the trigger before the component's own `value` and sty
 
 ## Props
 
-| Name                 | Description                                                              | Type                      | Default       | Required |
-| -------------------- | ------------------------------------------------------------------------ | ------------------------- | ------------- | -------- |
-| `id`                 | Unique identifier for the tabs instance, used for the animated indicator | `string`                  | -             | ✅       |
-| `items`              | Array of tab items (see TabItem structure below)                         | `Array<TabItem>`          | -             | ✅       |
-| `defaultValue`       | The value of the tab that should be active by default                    | `string`                  | First item    | ❌       |
-| `tabsListBackground` | Background style for the tabs list                                       | `transparent`, `filled`   | `transparent` | ❌       |
-| `onValueChange`      | Callback fired when the active tab changes                               | `(value: string) => void` | -             | ❌       |
-| `staticRender`       | Render for a page where React never runs on the client                   | `boolean`                 | `false`       | ❌       |
+| Name                 | Description                                            | Type                      | Default       | Required |
+| -------------------- | ------------------------------------------------------ | ------------------------- | ------------- | -------- |
+| `id`                 | Deprecated and ignored. Kept so existing code compiles | `string`                  | -             | ❌       |
+| `items`              | Array of tab items (see TabItem structure below)       | `Array<TabItem>`          | -             | ✅       |
+| `defaultValue`       | The value of the tab that should be active by default  | `string`                  | First item    | ❌       |
+| `tabsListBackground` | Background style for the tabs list                     | `transparent`, `filled`   | `transparent` | ❌       |
+| `onValueChange`      | Callback fired when the active tab changes             | `(value: string) => void` | -             | ❌       |
+| `staticRender`       | Render for a page where React never runs on the client | `boolean`                 | `false`       | ❌       |
 
 ### Statically Rendered Tabs
 

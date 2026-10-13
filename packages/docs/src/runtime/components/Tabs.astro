@@ -108,7 +108,7 @@ const items = panels.map((panel) => ({
   html: panel.html,
 }));
 
-// Equality requires an id, but `staticRender` never renders the motion layoutId that uses it.
+// Equality before 4.12 requires an id, and the peer range still allows those versions. Nothing reads it.
 const id = `eq-tabs-${items[0]?.value}`;
 ---
 
