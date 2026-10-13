@@ -2,6 +2,59 @@
 
 Notable changes to Equality are recorded here, following [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## 4.13.0 - 2026-10-13
+
+`Tabs` can be controlled with a `value` prop, so the indicator from 4.12.0 slides when the active
+tab comes from outside, such as the URL. Existing code keeps working, but code that remounts
+`Tabs` with `key` to change the tab has to pass `value` instead to get the slide.
+
+### Added
+
+- A `value` prop on `Tabs`, so the active tab can be controlled. Code that remounts `Tabs` with
+  `key` to change the tab can pass `value` instead. The indicator then slides to the new tab
+  rather than jumping partway through.
+
+### Fixed
+
+- A click on a controlled tab calls `onValueChange` once. Radix requests the tab on both mousedown
+  and focus, so a parent that commits the new value later, as React Router does, was called twice.
+
+## 4.12.0 - 2026-10-12
+
+`Tabs` respond to hover, and filled `Tabs` match `SegmentedControls`. Two `SegmentedControls`
+fixes come with it. No code needs to change.
+
+### Changed
+
+- Hovering an inactive tab brightens its label. Filled tabs also show a faint fill inset inside
+  the track, and transparent tabs a faint underline where the active indicator sits. As on
+  `Button`, hover only applies on devices that can hover.
+- Filled tabs share the `SegmentedControls` track and indicator: a translucent edge and sunken
+  inner shadow on the track, and an active fill inset 2px inside it with 3px corners and the
+  raised control shadow.
+- The active indicator is a single element that slides beneath the labels instead of over them.
+  A one-tab move takes 250ms with the `SegmentedControls` easing, longer moves take a little
+  longer, up to 400ms, and reduced motion turns the slide off.
+- Tab triggers have a pointer cursor and animate only colour, over 250ms. This includes
+  `TabsTrigger` used on its own, which no longer fades into its disabled opacity.
+
+### Fixed
+
+- The keyboard focus ring on filled tabs is drawn inside the tab. Before, the track clipped it to
+  a sliver on one edge.
+- The keyboard focus ring on the active segment of `SegmentedControls` is visible in light mode.
+  The background band meant to separate it from the indicator was the same width as the ring, so
+  the ring merged into the indicator's fill.
+- Hover on `SegmentedControls` only applies on devices that can hover, as on `Button`, so a tapped
+  segment no longer stays highlighted on a touch screen.
+- `SegmentedControls` no longer logs a `useLayoutEffect` warning when server-rendered with
+  React 18.
+
+### Deprecated
+
+- The `id` prop on `Tabs`. It is optional and ignored, and only existed to pair the old animated
+  indicator across renders.
+
 ## 4.11.0 - 2026-10-06
 
 A visual refresh of `Button`. No props, variants or sizes change and no code needs to change.

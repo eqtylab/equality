@@ -1,8 +1,9 @@
 import * as React from 'react';
-import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 
 import { Icon } from '@/components/icon/icon';
 import styles from '@/components/segmented-controls/segmented-controls.module.css';
+import { useIsomorphicLayoutEffect } from '@/lib/use-isomorphic-layout-effect';
 import { cn } from '@/lib/utils';
 
 export type SegmentedControlsDisplay = 'both' | 'text-only' | 'icon-only';
@@ -73,7 +74,7 @@ const SegmentedControls = ({
   }, [value]);
 
   // Reposition the indicator whenever the active value, options, or display mode change.
-  useLayoutEffect(() => {
+  useIsomorphicLayoutEffect(() => {
     updateIndicator();
   }, [updateIndicator, options, effectiveDisplay, size]);
 
@@ -84,7 +85,7 @@ const SegmentedControls = ({
   }, []);
 
   // Keep the indicator aligned when the control is resized.
-  useLayoutEffect(() => {
+  useIsomorphicLayoutEffect(() => {
     const container = containerRef.current;
     if (!container) return;
     const observer = new ResizeObserver(updateIndicator);

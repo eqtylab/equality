@@ -13,14 +13,21 @@
 }
 
 .tabs-list--filled {
-  @apply bg-background-sunken inset-shadow-xs;
-  @apply overflow-hidden rounded-md;
+  @apply control-track;
+  @apply bg-background-sunken;
+}
+
+/* Triggers must fill the list's height, or their hover fill and underline drift from the shared indicator */
+.tabs-trigger--filled,
+.tabs-trigger--transparent {
+  @apply self-stretch;
 }
 
 .tabs-trigger--filled {
   @apply w-full;
   @apply px-3 py-1.5;
   @apply text-text-secondary;
+  @apply control-segment-fill control-segment-focus-ring;
 }
 
 .tabs-icon {
@@ -35,18 +42,59 @@
   @apply data-[state=active]:text-text-primary;
 }
 
+.tabs-trigger--transparent::before {
+  content: '';
+  @apply z-behind pointer-events-none absolute;
+  @apply bottom-0 left-0 right-0 h-0.5;
+  @apply ease-control duration-250 transition-colors;
+  @apply motion-reduce:transition-none;
+}
+
+.tabs-trigger--filled[data-state='inactive'],
+.tabs-trigger--transparent[data-state='inactive'] {
+  @apply control-segment-hover;
+
+  @variant hover {
+    @apply text-text-primary;
+  }
+}
+
+/* The track's overflow-hidden clips the shared outset ring, so filled triggers draw theirs inside */
+.tabs-list .tabs-trigger--filled:focus-visible {
+  box-shadow: none;
+}
+
 .active-tab-indicator {
   @apply bg-button-primary-fill z-behind absolute w-full;
 }
 
 .active-tab-indicator--filled {
-  @apply inset-0;
-  @apply h-full rounded-sm;
+  @apply inset-[2px] w-auto;
+  @apply control-segment-indicator;
+  --mix-color: var(--color-button-primary-fill);
 }
 
 .active-tab-indicator--transparent {
   @apply h-0.5;
   @apply bottom-0 left-0 right-0;
+}
+
+/* Must stay below the triggers' z-above so it slides under their labels rather than over them */
+.active-tab-indicator--shared {
+  @apply right-auto z-auto;
+}
+
+.active-tab-indicator--filled.active-tab-indicator--shared {
+  @apply w-[calc(var(--indicator-width)-4px)];
+}
+
+.active-tab-indicator--transparent.active-tab-indicator--shared {
+  @apply w-(--indicator-width);
+}
+
+.active-tab-indicator--animated {
+  @apply ease-control duration-(--indicator-duration) transition-[transform,width];
+  @apply motion-reduce:transition-none;
 }
 
 .content {

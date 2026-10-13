@@ -8,7 +8,9 @@
 
 .tabs-trigger {
   @apply z-above relative;
-  @apply whitespace-nowrap transition-all;
+  @apply cursor-pointer whitespace-nowrap;
+  @apply ease-control duration-250 transition-colors;
+  @apply motion-reduce:transition-none;
   @apply px-3 py-1.5;
   @apply text-lg font-medium;
   @apply flex gap-2;
