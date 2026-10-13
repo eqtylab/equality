@@ -40,6 +40,14 @@ Basic usage requires an array of `items`:
 />
 ```
 
+To control the active tab from outside, such as from the URL, pass `value` and update it in `onValueChange`. The indicator slides whenever `value` changes, including on back and forward navigation. Don't remount `Tabs` with a `key` to change the tab: a remount places the indicator without sliding.
+
+```tsx
+const [tab, setTab] = useState("tab1");
+
+<Tabs value={tab} onValueChange={setTab} items={items} />;
+```
+
 ## Variants
 
 ### Default
@@ -231,6 +239,7 @@ Any props are spread onto the trigger before the component's own `value` and sty
 | -------------------- | ------------------------------------------------------ | ------------------------- | ------------- | -------- |
 | `id`                 | Deprecated and ignored. Kept so existing code compiles | `string`                  | -             | ❌       |
 | `items`              | Array of tab items (see TabItem structure below)       | `Array<TabItem>`          | -             | ✅       |
+| `value`              | The active tab, when controlled                        | `string`                  | -             | ❌       |
 | `defaultValue`       | The value of the tab that should be active by default  | `string`                  | First item    | ❌       |
 | `tabsListBackground` | Background style for the tabs list                     | `transparent`, `filled`   | `transparent` | ❌       |
 | `onValueChange`      | Callback fired when the active tab changes             | `(value: string) => void` | -             | ❌       |
