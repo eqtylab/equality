@@ -270,7 +270,7 @@ largest gap, because it starts the biggest change of topic.
 | The page header's rule and the content                      | 48px  |
 | Above any h2, title or label                                | 80px  |
 | A label and its first h3                                    | 24px  |
-| Above an h3                                                 | 48px  |
+| Above an h3 after text or a block                           | 64px  |
 | Above h4 to h6                                              | 24px  |
 | An h2 and its own text                                      | 16px  |
 | An h3 to h6 and its own text                                | 12px  |

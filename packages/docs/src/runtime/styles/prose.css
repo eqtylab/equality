@@ -33,8 +33,8 @@
     }
     /* An h2 with an h3 straight after it has no content of its own: it only groups the
      * h3s below (Variants, Examples, Props), so it becomes a label and the h3s lead.
-     * Any text in between makes it a title again. Keep the space above well clear of
-     * h3's 48px. */
+     * Any text in between makes it a title again. Keep the space above clear of
+     * h3's 64px. */
     &:is(h2) {
       @apply text-text-primary mb-4 mt-20 text-xl font-semibold tracking-tight;
       & > code {
@@ -51,7 +51,7 @@
       }
     }
     &:is(h3) {
-      @apply mb-3 mt-12 text-base font-semibold;
+      @apply mb-3 mt-16 text-base font-semibold;
       & > code {
         @apply text-sm;
       }
