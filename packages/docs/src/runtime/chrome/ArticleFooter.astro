@@ -26,10 +26,9 @@ const rowLink = 'text-text-link decoration-text-link font-medium underline decor
 ---
 
 {
-  /* 96px above, a step above the 80px before an h2, so the footer sits further out than
-     anything inside the prose. The 32px below adds to the app footer's 64px for the same
-     96px on that side. Capped to the prose width so it does not run under the table of
-     contents. */
+  /* `pb-8` pairs with AppFooter's `mt-16` for 96px below, matching the 96px above;
+     change them together. Capped to the prose width so it does not run under the table
+     of contents. */
 }
 {
   (hasPager || hasLinks) && (
@@ -66,8 +65,6 @@ const rowLink = 'text-text-link decoration-text-link font-medium underline decor
         </nav>
       )}
 
-      {/* 48px above the rule and 32px below it: inside the footer's own group, so
-          tighter than the 96px around it. */}
       {hasLinks && (
         <ul
           class={`border-border m-0 flex list-none flex-wrap justify-between w-full gap-x-8 gap-y-3 border-t p-0 pt-8 text-sm ${hasPager ? 'mt-12' : ''}`}
