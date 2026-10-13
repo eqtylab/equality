@@ -117,7 +117,7 @@ const Tabs = ({
     setTimeout(() => {
       requestedTab.current = null;
     });
-    setUncontrolledTab(newTab);
+    if (value === undefined) setUncontrolledTab(newTab);
     onValueChange?.(newTab);
   };
 
