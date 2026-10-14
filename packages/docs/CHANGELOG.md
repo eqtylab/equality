@@ -4,7 +4,7 @@ Notable changes to Equality's Docsite Generator are recorded here, following [Ke
 
 ## Unreleased
 
-## 0.14.1 - 2026-10-13
+## 0.14.1 - 2026-10-14
 
 ### Changed
 
