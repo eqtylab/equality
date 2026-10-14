@@ -283,7 +283,7 @@ separating it, so the first heading must not read as a section break. The headin
 header has its top margin zeroed in `runtime/styles/prose.css`; without that, its 80px wins over
 the header's own margin, which is how 0.12 shipped 80px there by accident.
 
-**A component that shows nothing goes below the first heading.** Something like
+**A component that shows nothing goes at the end of the page.** Something like
 `<ToastRoot client:only="react" />` renders no box, but it is still the element after the header,
 so it takes the zeroed margin and the first heading keeps its 80px. CSS cannot tell it from an
 island that does render, so put it at the end of the page.
