@@ -255,6 +255,39 @@ wins over a page's own `export const components`. The route map is therefore kep
 overrides (`a`, `pre`); everything richer is an explicit import from `@eqtylab/docs/components`, so
 per-page overrides stay possible.
 
+## Headings and spacing
+
+**An h2 is a title or a label, decided by what follows it.** With text after it, an h2 is a 20px
+title. With an h3 straight after it, it becomes a mono label that groups the h3s below (Variants,
+Props). Text between them is fine; the h2 simply stays a title. Tailwind's docs follow the same
+rule.
+
+**Space follows level, not size.** A label is the smallest heading on the page, yet it gets the
+largest gap, because it starts the biggest change of topic.
+
+| Between                                                     | Space |
+| ----------------------------------------------------------- | ----- |
+| The page header's rule and the content                      | 48px  |
+| Above any h2, title or label                                | 80px  |
+| A label and its first h3                                    | 24px  |
+| Above an h3 after text or a block                           | 48px  |
+| Above h4 to h6                                              | 24px  |
+| An h2 and its own text                                      | 16px  |
+| An h3 to h6 and its own text                                | 12px  |
+| Below paragraphs, lists, code blocks, tables, alerts, rules | 24px  |
+| List items                                                  | 8px   |
+| Above the article footer                                    | 96px  |
+
+**The header gap stays under the h2 gap.** The header introduces the content rather than
+separating it, so the first heading must not read as a section break. The heading right after the
+header has its top margin zeroed in `runtime/styles/prose.css`; without that, its 80px wins over
+the header's own margin, which is how 0.12 shipped 80px there by accident.
+
+**A component that shows nothing goes at the end of the page.** Something like
+`<ToastRoot client:only="react" />` renders no box, but it is still the element after the header,
+so it takes the zeroed margin and the first heading keeps its 80px. CSS cannot tell it from an
+island that does render, so put it at the end of the page.
+
 ## Code blocks
 
 Fenced code renders through Equality's `CodeBlock`, server-side, so docs match product surfaces with

@@ -26,12 +26,12 @@ const rowLink = 'text-text-link decoration-text-link font-medium underline decor
 ---
 
 {
-  /* Capped to the prose width so it does not run under the table of contents. */
+  /* pb-8 + AppFooter's mt-16 must total 96px; change both. Without max-w it runs under the TOC. */
 }
 {
   (hasPager || hasLinks) && (
     <footer
-      class="mt-12 pb-8 max-w-[var(--eq-docs-content-max)]"
+      class="mt-24 pb-8 max-w-[var(--eq-docs-content-max)]"
       data-eq-chrome
       data-pagefind-ignore
     >
@@ -65,7 +65,7 @@ const rowLink = 'text-text-link decoration-text-link font-medium underline decor
 
       {hasLinks && (
         <ul
-          class={`border-border m-0 flex list-none flex-wrap justify-between w-full gap-x-8 gap-y-3 border-t p-0 pt-8 text-sm ${hasPager ? 'mt-8' : ''}`}
+          class={`border-border m-0 flex list-none flex-wrap justify-between w-full gap-x-8 gap-y-3 border-t p-0 pt-8 text-sm ${hasPager ? 'mt-12' : ''}`}
         >
           {editHref && (
             <li class={row}>
