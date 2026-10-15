@@ -2,6 +2,16 @@
 
 Notable changes to Equality are recorded here, following [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## 4.13.1 - 2026-10-15
+
+### Fixed
+
+- A long `SelectItem` lines up with the others. Its check column used to shrink when the text was
+  too wide, by up to 14px, so an unselected long option sat left of the rest. Long text wraps
+  inside the row, and an unbreakable string such as a hash breaks onto more lines instead of
+  running past the list's edge. Content that can't shrink, such as an `inline-block` with a fixed
+  width, still overflows; give it `block truncate` to cut it to one line instead.
+
 ## 4.13.0 - 2026-10-13
 
 `Tabs` can be controlled with a `value` prop, so the indicator from 4.12.0 slides when the active

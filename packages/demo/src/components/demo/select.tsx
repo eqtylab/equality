@@ -52,6 +52,13 @@ const REGIONS = [
 
 const toValue = (country: string) => country.toLowerCase().replace(/\s+/g, "-");
 
+const POLICIES = [
+  "EU AI Act Alignment for Coding Agents",
+  "ODIS Safety",
+  "Clinical Evidence Platform Extended Review",
+  "sha256:9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08",
+];
+
 export function SelectDemo({
   variant = "default",
   elevation,
@@ -60,6 +67,8 @@ export function SelectDemo({
     | "default"
     | "disabled"
     | "pre-selected"
+    | "long-options"
+    | "long-options-truncated"
     | "with-search"
     | "with-search-reveal"
     | "with-search-persistent";
@@ -133,6 +142,29 @@ export function SelectDemo({
           <SelectItem value="option28">Option 28</SelectItem>
           <SelectItem value="option29">Option 29</SelectItem>
           <SelectItem value="option30">Option 30</SelectItem>
+        </SelectContent>
+      </Select>
+    );
+  }
+
+  if (variant === "long-options" || variant === "long-options-truncated") {
+    return (
+      <Select defaultValue="odis-safety">
+        <SelectTrigger id={`select-${variant}`} className="w-56!">
+          <SelectValue placeholder="Select a policy" />
+        </SelectTrigger>
+        <SelectContent elevation={elevation} className="w-56!">
+          {POLICIES.map((policy) => (
+            <SelectItem key={policy} value={toValue(policy)}>
+              {variant === "long-options" ? (
+                policy
+              ) : (
+                <span className="block truncate" title={policy}>
+                  {policy}
+                </span>
+              )}
+            </SelectItem>
+          ))}
         </SelectContent>
       </Select>
     );

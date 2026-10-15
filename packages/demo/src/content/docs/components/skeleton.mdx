@@ -41,10 +41,10 @@ Show a skeleton while data is loading, then swap in the real content:
 
 ### Shapes
 
-Use border-radius and sizing utilities to match different elements — a circle for an avatar, short bars for text.
+Use border-radius and sizing utilities to match different elements — a circle for an avatar, short bars for text. Skeleton sets its own radius, so a radius utility needs the `!` modifier, as in `rounded-full!`.
 
 <div className="flex items-center gap-4">
-  <Skeleton className="size-12 rounded-full" />
+  <Skeleton className="rounded-full! size-12" />
   <div className="flex flex-col gap-2">
     <Skeleton className="h-4 w-40" />
     <Skeleton className="h-4 w-24" />
@@ -56,7 +56,7 @@ Use border-radius and sizing utilities to match different elements — a circle 
 Compose several skeletons to stand in for a whole block of content.
 
 <div className="flex max-w-sm flex-col gap-3">
-  <Skeleton className="h-32 w-full rounded-lg" />
+  <Skeleton className="rounded-lg! h-32 w-full" />
   <Skeleton className="h-5 w-3/4" />
   <Skeleton className="h-4 w-full" />
   <Skeleton className="h-4 w-5/6" />
@@ -69,7 +69,7 @@ Compose several skeletons to stand in for a whole block of content.
   /* Avatar + text */
 }
 <div className="flex items-center gap-4">
-  <Skeleton className="size-12 rounded-full" />
+  <Skeleton className="rounded-full! size-12" />
   <div className="flex flex-col gap-2">
     <Skeleton className="h-4 w-40" />
     <Skeleton className="h-4 w-24" />
