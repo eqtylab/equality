@@ -62,7 +62,7 @@
 }
 
 .select-item-text {
-  @apply min-w-0 truncate;
+  @apply wrap-anywhere min-w-0;
 }
 
 .select-separator {

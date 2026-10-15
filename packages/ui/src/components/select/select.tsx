@@ -354,7 +354,7 @@ const SelectItem = React.forwardRef<
         </SelectPrimitive.ItemIndicator>
       </span>
 
-      {/* Radix drops className and style on ItemText, so the truncation lives on a wrapper */}
+      {/* Radix drops className and style on ItemText, so the wrapping lives on a wrapper */}
       <span className={styles['select-item-text']}>
         <SelectPrimitive.ItemText>{children}</SelectPrimitive.ItemText>
       </span>

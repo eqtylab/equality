@@ -6,9 +6,11 @@ Notable changes to Equality are recorded here, following [Keep a Changelog](http
 
 ### Fixed
 
-- A long `SelectItem` lines up with the others. Its check column used to shrink to nothing when
-  the text was too wide, so an unselected long option sat 14px left of the rest. The text now
-  ends in an ellipsis inside the row instead of running past the list's edge.
+- A long `SelectItem` lines up with the others. Its check column used to shrink when the text was
+  too wide, by up to 14px, so an unselected long option sat left of the rest. Long text wraps
+  inside the row, and an unbreakable string such as a hash breaks onto more lines instead of
+  running past the list's edge. Content that can't shrink, such as an `inline-block` with a fixed
+  width, still overflows; give it `block truncate` to cut it to one line instead.
 
 ## 4.13.0 - 2026-10-13
 

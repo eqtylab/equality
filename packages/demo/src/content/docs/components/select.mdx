@@ -63,6 +63,28 @@ Use `defaultValue` on the root to start with an option chosen. Long lists scroll
 
 <SelectDemo client:only="react" variant="pre-selected" />
 
+### Long options
+
+The list grows to fit its longest option, so long text only matters when `SelectContent` has a fixed width or reaches the edge of the window. Long text then wraps inside its row, and an unbroken string such as a hash breaks wherever it has to, so every option stays readable and lines up with the rest.
+
+<SelectDemo client:only="react" variant="long-options" />
+
+To keep every option on one line instead, wrap the text in a `block truncate` span and put the full text in its `title`, so it's still available on hover.
+
+<SelectDemo client:only="react" variant="long-options-truncated" />
+
+```tsx
+<SelectContent className="w-56!">
+  {policies.map((policy) => (
+    <SelectItem key={policy.value} value={policy.value}>
+      <span className="block truncate" title={policy.label}>
+        {policy.label}
+      </span>
+    </SelectItem>
+  ))}
+</SelectContent>
+```
+
 ## Search & filtering
 
 Add a `SelectSearch` inside `SelectContent` to filter options in place. It is opt-in per select — without it, the select behaves exactly as before and the built-in type-ahead still works. It works like [Dropdown Menu search](/components/dropdown-menu#search--filtering): options that don't match are hidden, and matching is a case-insensitive substring of each item's `textValue`, falling back to its rendered text.
