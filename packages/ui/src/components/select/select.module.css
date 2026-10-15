@@ -58,7 +58,11 @@
 
 .select-item-indicator {
   @apply flex-center;
-  @apply size-3.5;
+  @apply size-3.5 shrink-0;
+}
+
+.select-item-text {
+  @apply min-w-0 truncate;
 }
 
 .select-separator {

@@ -2,6 +2,14 @@
 
 Notable changes to Equality are recorded here, following [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## 4.13.1 - 2026-10-15
+
+### Fixed
+
+- A long `SelectItem` lines up with the others. Its check column used to shrink to nothing when
+  the text was too wide, so an unselected long option sat 14px left of the rest. The text now
+  ends in an ellipsis inside the row instead of running past the list's edge.
+
 ## 4.13.0 - 2026-10-13
 
 `Tabs` can be controlled with a `value` prop, so the indicator from 4.12.0 slides when the active
