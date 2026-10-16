@@ -11,6 +11,9 @@
  * focus only, leaving the keyboard ring intact. */
 @custom-variant pointer-focus (&:focus:not(:focus-visible));
 
+/* The `spacing: 'compact'` option, set on <html> by DocsShell. */
+@custom-variant compact (&:where(html[data-eq-docs-spacing=compact] *));
+
 :root {
   --eq-docs-header-height: 4.3125rem;
   --eq-docs-sidebar-width: 18rem;

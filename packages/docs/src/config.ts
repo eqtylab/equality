@@ -120,6 +120,18 @@ export const docsConfigSchema = z.object({
     .union([z.string().min(1), z.object({ name: z.string().min(1), href: z.url() })])
     .optional(),
 
+  /**
+   * Vertical rhythm. 'comfortable' is the README's "Headings and spacing" scale; 'compact'
+   * tightens the gaps around headings, blocks and the footers, for long prose pages.
+   */
+  spacing: z.enum(['comfortable', 'compact']).default('comfortable'),
+
+  /**
+   * An h2 with an h3 straight after it renders as a mono label over the h3s. `false` keeps every
+   * h2 a title, for sites whose h2s are sections rather than groups.
+   */
+  headingLabels: z.boolean().default(true),
+
   /** Content directory, relative to `src/`. */
   contentDir: z.string().default('content/docs'),
 
