@@ -172,11 +172,17 @@ sections:
     cards:
       - title: Install
         description: From PyPI or source.
+        icon: Download
         links:
           - [Package Managers, /install/package-managers/]
           - [Changelog, https://github.com/eqtylab/integrity-py/blob/main/CHANGELOG.md]
 ---
 ```
+
+A card's `icon` is optional: a Lucide name, as in the sidebar, shown beside the title. A name
+Lucide lacks fails the build. Each section lays its cards out by count: two split the width, three
+or more go three across, and one lays out sideways with its links beside the description. A
+newline in `description` is kept, so a two-sentence description can break between sentences.
 
 A `/` link is rewritten like a link in page text, so in an old version it stays in that version; a
 full URL opens a new tab. The build stops when a landing page has no `sections` or has a body, and

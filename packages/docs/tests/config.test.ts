@@ -3,7 +3,7 @@ import { test } from 'node:test';
 
 import { brandAssets, resolveConfig } from '../src/config.ts';
 import { repositoryLinks } from '../src/internal/repository.ts';
-import { landingError } from '../src/schema.ts';
+import { landingError, landingSectionSchema } from '../src/schema.ts';
 
 test('versions is on by default with tags and granularity filled in', () => {
   const cfg = resolveConfig({ title: 'x' });
@@ -159,6 +159,13 @@ test('a landing page needs sections and no body, and only a landing page takes s
   );
   assert.match(landingError('guide', { template: 'doc', sections }, '') ?? '', /only applies/);
   assert.equal(landingError('guide', { template: 'doc' }, 'Body.'), null);
+});
+
+test('a landing card takes an optional icon', () => {
+  const card = { title: 'Install', description: 'From PyPI.', links: [['Start', '/start/']] };
+  const parse = (c: object) => landingSectionSchema().parse({ heading: 'Start', cards: [c] });
+  assert.equal(parse(card).cards[0].icon, undefined);
+  assert.equal(parse({ ...card, icon: 'BookOpen' }).cards[0].icon, 'BookOpen');
 });
 
 test('a footer link row keeps prefix, label, href, icon and external', () => {
