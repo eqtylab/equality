@@ -10,10 +10,14 @@ Notable changes to Equality's Docsite Generator are recorded here, following [Ke
 
 - `spacing: 'compact'` tightens the vertical rhythm for long prose pages: 48px above an h2, 32px
   above an h3, 32px under the page header, 16px below paragraphs, lists and blocks, 64px around
-  the article footer, and a site footer as tall as the header. `'comfortable'`, the default, keeps
-  0.14.1's scale
+  the article footer, 32px between its previous/next and edit/report links, and, for a one-line
+  footer, a site footer as tall as the header. `'comfortable'`, the default, keeps 0.14.1's scale
 - `headingLabels: false` keeps every h2 a title, so sibling sections no longer switch between a
   title and a mono label depending on whether they open with a sentence. On by default
+
+### Changed
+
+- Tabs take the same 24px below as other blocks; they had 16px
 
 ## 0.14.1 - 2026-10-14
 

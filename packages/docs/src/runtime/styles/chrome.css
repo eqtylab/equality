@@ -11,8 +11,9 @@
  * focus only, leaving the keyboard ring intact. */
 @custom-variant pointer-focus (&:focus:not(:focus-visible));
 
-/* The `spacing: 'compact'` option, set on <html> by DocsShell. */
+/* The `spacing` and `headingLabels` options, set on <html> by DocsShell. */
 @custom-variant compact (&:where(html[data-eq-docs-spacing=compact] *));
+@custom-variant heading-labels (&:where(html:not([data-eq-docs-heading-labels=false]) *));
 
 :root {
   --eq-docs-header-height: 4.3125rem;
@@ -37,6 +38,28 @@
 
 body {
   @apply bg-background text-text-primary;
+}
+
+/* The landing page's brand wash. Drawn by DocsPage's column rather than by Landing, whose box
+ * stops short of the column on wide screens and would leave the wash off-centre. */
+[data-eq-docs-column]:has([data-eq-landing])::before {
+  content: '';
+  position: absolute;
+  inset: 0 0 auto;
+  z-index: -1;
+  height: 30rem;
+  pointer-events: none;
+  background:
+    radial-gradient(
+      55% 100% at 15% 0%,
+      color-mix(in oklab, var(--color-brand-primary) 22%, transparent),
+      transparent
+    ),
+    radial-gradient(
+      55% 90% at 85% 0%,
+      color-mix(in oklab, var(--color-brand-secondary) 14%, transparent),
+      transparent
+    );
 }
 
 /* The header and sidebar carry their own transition names, or they fade with the content. */

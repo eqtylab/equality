@@ -41,11 +41,9 @@
         @apply text-lg;
       }
       &:has(+ h3) {
-        :where(html:not([data-eq-docs-heading-labels='false'])) & {
-          @apply eq-docs-label;
-          & > code {
-            @apply text-xs;
-          }
+        @apply heading-labels:eq-docs-label;
+        & > code {
+          @apply heading-labels:text-xs;
         }
         & + h3 {
           @apply mt-6;

@@ -272,19 +272,33 @@ largest gap, because it starts the biggest change of topic.
 **`spacing: 'compact'` tightens the same scale** for long prose pages, where the comfortable gaps
 spread a section's text across more than a screen. Every relationship below still holds.
 
-| Between                                                     | Comfortable | Compact |
-| ----------------------------------------------------------- | ----------- | ------- |
-| The page header's rule and the content                      | 48px        | 32px    |
-| Above any h2, title or label                                | 80px        | 48px    |
-| A label and its first h3                                    | 24px        | 24px    |
-| Above an h3 after text or a block                           | 48px        | 32px    |
-| Above h4 to h6                                              | 24px        | 24px    |
-| An h2 and its own text                                      | 16px        | 16px    |
-| An h3 to h6 and its own text                                | 12px        | 12px    |
-| Below paragraphs, lists, code blocks, tables, alerts, rules | 24px        | 16px    |
-| List items                                                  | 8px         | 8px     |
-| Above the article footer, and from it to the site footer    | 96px        | 64px    |
-| The site footer's padding                                   | 40px        | 24px    |
+Both are top-level options:
+
+```js
+docs({
+  title: 'Guardian',
+  spacing: 'compact', // default 'comfortable'
+  headingLabels: false, // default true
+});
+```
+
+| Between                                                           | Comfortable | Compact |
+| ----------------------------------------------------------------- | ----------- | ------- |
+| The page header's rule and the content                            | 48px        | 32px    |
+| Above any h2, title or label                                      | 80px        | 48px    |
+| A label and its first h3                                          | 24px        | 24px    |
+| Above an h3 after text or a block                                 | 48px        | 32px    |
+| Above h4 to h6                                                    | 24px        | 24px    |
+| An h2 and its own text                                            | 16px        | 16px    |
+| An h3 to h6 and its own text                                      | 12px        | 12px    |
+| Below paragraphs, lists, code blocks, tables, tabs, alerts, rules | 24px        | 16px    |
+| List items                                                        | 8px         | 8px     |
+| Above the article footer, and from it to the site footer          | 96px        | 64px    |
+| The previous/next links and the edit and report links             | 48px        | 32px    |
+| The site footer's padding                                         | 40px        | 24px    |
+
+A compact one-line site footer is as tall as the header. That holds only while
+`--eq-docs-header-height` stays 4.3125rem; change the footer's padding with it.
 
 **The header gap stays under the h2 gap.** The header introduces the content rather than
 separating it, so the first heading must not read as a section break. The heading right after the
