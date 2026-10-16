@@ -32,6 +32,7 @@ export const landingSectionSchema = () =>
         z.object({
           title: z.string().min(1),
           description: z.string().min(1),
+          icon: z.string().optional(),
           links: z.array(z.tuple([z.string().min(1), z.string().min(1)])).min(1),
         })
       )

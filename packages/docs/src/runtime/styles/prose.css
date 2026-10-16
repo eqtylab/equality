@@ -33,16 +33,17 @@
     }
     /* An h2 with an h3 straight after it has no content of its own: it only groups the
      * h3s below (Variants, Examples, Props), so it becomes a label and the h3s lead.
-     * Any text in between makes it a title again. mt must stay above h3's 48px. */
+     * Any text in between makes it a title again, as does `headingLabels: false`.
+     * mt must stay above h3's in both spacings. */
     &:is(h2) {
-      @apply text-text-primary mb-4 mt-20 text-xl font-semibold tracking-tight;
+      @apply text-text-primary compact:mt-12 mb-4 mt-20 text-xl font-semibold tracking-tight;
       & > code {
         @apply text-lg;
       }
       &:has(+ h3) {
-        @apply eq-docs-label;
+        @apply heading-labels:eq-docs-label;
         & > code {
-          @apply text-xs;
+          @apply heading-labels:text-xs;
         }
         & + h3 {
           @apply mt-6;
@@ -50,7 +51,7 @@
       }
     }
     &:is(h3) {
-      @apply mb-3 mt-12 text-base font-semibold;
+      @apply compact:mt-8 mb-3 mt-12 text-base font-semibold;
       & > code {
         @apply text-sm;
       }
@@ -74,10 +75,10 @@
       }
     }
 
-    /* The 24px gap has to clearly beat the 12px of leading between lines in a
-     * paragraph, or consecutive blocks read as one. */
+    /* The gap (24px, 16px compact) has to clearly beat the 12px of leading between lines
+     * in a paragraph, or consecutive blocks read as one. */
     &:is(p) {
-      @apply text-text-secondary mb-6 text-base/7 font-normal;
+      @apply text-text-secondary compact:mb-4 mb-6 text-base/7 font-normal;
     }
 
     /* Weight carries the emphasis: light-mode secondary text is near black, so the
@@ -87,7 +88,7 @@
     }
 
     &:is(ul, ol) {
-      @apply text-text-secondary mb-6 pl-4;
+      @apply text-text-secondary compact:mb-4 mb-6 pl-4;
 
       /* Never `space-y-*` here: it unbalances against the `:not(:where(...))` above
        * and compiles to a rule the browser throws away, leaving items unspaced. */
@@ -121,7 +122,7 @@
     /* No table rules: markdown tables render through Equality's Table. */
 
     &:is(hr) {
-      @apply border-border mb-6;
+      @apply border-border compact:mb-4 mb-6;
     }
   }
 }

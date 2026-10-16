@@ -11,6 +11,10 @@
  * focus only, leaving the keyboard ring intact. */
 @custom-variant pointer-focus (&:focus:not(:focus-visible));
 
+/* The `spacing` and `headingLabels` options, set on <html> by DocsShell. */
+@custom-variant compact (&:where(html[data-eq-docs-spacing=compact] *));
+@custom-variant heading-labels (&:where(html:not([data-eq-docs-heading-labels=false]) *));
+
 :root {
   --eq-docs-header-height: 4.3125rem;
   --eq-docs-sidebar-width: 18rem;
@@ -34,6 +38,29 @@
 
 body {
   @apply bg-background text-text-primary;
+}
+
+/* The brand wash, dark only: on white the same tints read as a grey film. Drawn by DocsPage's
+ * column so it spans the column at any width. It fades out above a page's body text, so only
+ * the title and description sit on it. */
+html[data-equality-theme='dark'] [data-eq-docs-column]::before {
+  content: '';
+  position: absolute;
+  inset: 0 0 auto;
+  z-index: -1;
+  height: 16rem;
+  pointer-events: none;
+  background:
+    radial-gradient(
+      55% 100% at 15% 0%,
+      color-mix(in oklab, var(--color-brand-primary) 11%, transparent),
+      transparent
+    ),
+    radial-gradient(
+      55% 90% at 85% 0%,
+      color-mix(in oklab, var(--color-brand-secondary) 7%, transparent),
+      transparent
+    );
 }
 
 /* The header and sidebar carry their own transition names, or they fade with the content. */

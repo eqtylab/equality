@@ -69,7 +69,10 @@ const suggested = nav
   <div class="flex items-start">
     {!splash && <Sidebar nodes={nav} switcher={switcher} />}
     {/* At least a screen tall, so a short page still keeps the app footer at the bottom. */}
-    <div class="flex min-h-[calc(100vh-var(--eq-docs-header-height))] min-w-0 flex-1 flex-col">
+    <div
+      class="relative isolate flex min-h-[calc(100vh-var(--eq-docs-header-height))] min-w-0 flex-1 flex-col"
+      data-eq-docs-column
+    >
       <main
         class="mx-auto flex w-full flex-1 min-w-0 max-w-[calc(var(--eq-docs-content-max)+var(--eq-docs-toc-width)+8rem)] items-start gap-12 px-6 pt-10 data-[splash]:max-w-none xl:gap-16"
         data-splash={splash ? '' : undefined}

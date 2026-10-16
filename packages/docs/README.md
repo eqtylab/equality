@@ -172,11 +172,17 @@ sections:
     cards:
       - title: Install
         description: From PyPI or source.
+        icon: Download
         links:
           - [Package Managers, /install/package-managers/]
           - [Changelog, https://github.com/eqtylab/integrity-py/blob/main/CHANGELOG.md]
 ---
 ```
+
+A card's `icon` is optional: a Lucide name, as in the sidebar, shown beside the title. A name
+Lucide lacks fails the build. Each section lays its cards out by count: two split the width, three
+or more go three across, and one lays out sideways with its links beside the description. A
+newline in `description` is kept, so a two-sentence description can break between sentences.
 
 A `/` link is rewritten like a link in page text, so in an old version it stays in that version; a
 full URL opens a new tab. The build stops when a landing page has no `sections` or has a body, and
@@ -262,21 +268,43 @@ title. With an h3 straight after it, it becomes a mono label that groups the h3s
 Props). Text between them is fine; the h2 simply stays a title. Tailwind's docs follow the same
 rule.
 
+**A site whose h2s are sections turns labels off.** When an h2 is only sometimes followed straight
+by an h3, sibling sections render in two styles depending on whether they open with a sentence.
+`headingLabels: false` keeps every h2 a title; the h3 after it still sits 24px below.
+
 **Space follows level, not size.** A label is the smallest heading on the page, yet it gets the
 largest gap, because it starts the biggest change of topic.
 
-| Between                                                     | Space |
-| ----------------------------------------------------------- | ----- |
-| The page header's rule and the content                      | 48px  |
-| Above any h2, title or label                                | 80px  |
-| A label and its first h3                                    | 24px  |
-| Above an h3 after text or a block                           | 48px  |
-| Above h4 to h6                                              | 24px  |
-| An h2 and its own text                                      | 16px  |
-| An h3 to h6 and its own text                                | 12px  |
-| Below paragraphs, lists, code blocks, tables, alerts, rules | 24px  |
-| List items                                                  | 8px   |
-| Above the article footer                                    | 96px  |
+**`spacing: 'compact'` tightens the same scale** for long prose pages, where the comfortable gaps
+spread a section's text across more than a screen. Every relationship below still holds.
+
+Both are top-level options:
+
+```js
+docs({
+  title: 'Guardian',
+  spacing: 'compact', // default 'comfortable'
+  headingLabels: false, // default true
+});
+```
+
+| Between                                                           | Comfortable | Compact |
+| ----------------------------------------------------------------- | ----------- | ------- |
+| The page header's rule and the content                            | 48px        | 32px    |
+| Above any h2, title or label                                      | 80px        | 48px    |
+| A label and its first h3                                          | 24px        | 24px    |
+| Above an h3 after text or a block                                 | 48px        | 32px    |
+| Above h4 to h6                                                    | 24px        | 24px    |
+| An h2 and its own text                                            | 16px        | 16px    |
+| An h3 to h6 and its own text                                      | 12px        | 12px    |
+| Below paragraphs, lists, code blocks, tables, tabs, alerts, rules | 24px        | 16px    |
+| List items                                                        | 8px         | 8px     |
+| Above the article footer, and from it to the site footer          | 96px        | 64px    |
+| The previous/next links and the edit and report links             | 48px        | 32px    |
+| The site footer's padding                                         | 40px        | 24px    |
+
+A compact one-line site footer is as tall as the header. That holds only while
+`--eq-docs-header-height` stays 4.3125rem; change the footer's padding with it.
 
 **The header gap stays under the h2 gap.** The header introduces the content rather than
 separating it, so the first heading must not read as a section break. The heading right after the
