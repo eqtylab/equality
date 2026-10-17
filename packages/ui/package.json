@@ -7,7 +7,7 @@
     "url": "git+https://github.com/eqtylab/equality.git",
     "directory": "packages/ui"
   },
-  "version": "4.13.1",
+  "version": "4.14.0",
   "license": "Apache-2.0",
   "keywords": [
     "component library",
@@ -112,7 +112,7 @@
     "build:tokens": "node src/scripts/build-tokens.js && prettier --write ../tokens/equality-tokens.json",
     "build:preflight": "node src/scripts/build-preflight.js && prettier --write src/theme/theme-preflight-global.css",
     "check:grammars": "node src/scripts/check-grammars.js",
-    "build:lib": "pnpm run build:preflight && pnpm run check:grammars && tsup --config tsup.config.ts && cp src/theme/*.css dist/ && mkdir -p dist/generated && cp src/theme/generated/*.css dist/generated/",
+    "build:lib": "pnpm run build:preflight && pnpm run check:grammars && tsup --config tsup.config.ts && node src/scripts/document-props.js && cp src/theme/*.css dist/ && mkdir -p dist/generated && cp src/theme/generated/*.css dist/generated/",
     "watch": "tsup --config tsup.config.ts --watch",
     "test": "vitest run",
     "watch:tokens": "chokidar '../tokens/equality-tokens.json' --debounce 300 --initial=false -c 'pnpm run build:tokens'",
