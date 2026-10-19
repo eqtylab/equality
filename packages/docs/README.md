@@ -268,52 +268,35 @@ title. With an h3 straight after it, it becomes a mono label that groups the h3s
 Props). Text between them is fine; the h2 simply stays a title. Tailwind's docs follow the same
 rule.
 
-**A site whose h2s are sections turns labels off.** When an h2 is only sometimes followed straight
-by an h3, sibling sections render in two styles depending on whether they open with a sentence.
-`headingLabels: false` keeps every h2 a title; the h3 after it still sits 24px below.
-
 **Space follows level, not size.** A label is the smallest heading on the page, yet it gets the
 largest gap, because it starts the biggest change of topic.
 
-**`spacing: 'compact'` tightens the same scale** for long prose pages, where the comfortable gaps
-spread a section's text across more than a screen. Every relationship below still holds.
+| Between                                                           | Space |
+| ----------------------------------------------------------------- | ----- |
+| The page header's rule and the content                            | 32px  |
+| Above any h2, title or label                                      | 48px  |
+| A label and its first h3                                          | 24px  |
+| Above an h3 after text or a block                                 | 32px  |
+| Above h4 to h6                                                    | 24px  |
+| An h2 and its own text                                            | 16px  |
+| An h3 to h6 and its own text                                      | 12px  |
+| Below paragraphs, lists, code blocks, tables, tabs, alerts, rules | 16px  |
+| List items                                                        | 8px   |
+| Above the article footer, and from it to the site footer          | 64px  |
+| The previous/next links and the edit and report links             | 32px  |
+| The site footer's padding                                         | 24px  |
 
-Both are top-level options:
-
-```js
-docs({
-  title: 'Guardian',
-  spacing: 'compact', // default 'comfortable'
-  headingLabels: false, // default true
-});
-```
-
-| Between                                                           | Comfortable | Compact |
-| ----------------------------------------------------------------- | ----------- | ------- |
-| The page header's rule and the content                            | 48px        | 32px    |
-| Above any h2, title or label                                      | 80px        | 48px    |
-| A label and its first h3                                          | 24px        | 24px    |
-| Above an h3 after text or a block                                 | 48px        | 32px    |
-| Above h4 to h6                                                    | 24px        | 24px    |
-| An h2 and its own text                                            | 16px        | 16px    |
-| An h3 to h6 and its own text                                      | 12px        | 12px    |
-| Below paragraphs, lists, code blocks, tables, tabs, alerts, rules | 24px        | 16px    |
-| List items                                                        | 8px         | 8px     |
-| Above the article footer, and from it to the site footer          | 96px        | 64px    |
-| The previous/next links and the edit and report links             | 48px        | 32px    |
-| The site footer's padding                                         | 40px        | 24px    |
-
-A compact one-line site footer is as tall as the header. That holds only while
-`--eq-docs-header-height` stays 4.3125rem; change the footer's padding with it.
+A one-line site footer is as tall as the header. That holds only while `--eq-docs-header-height`
+stays 4.3125rem; change the footer's padding with it.
 
 **The header gap stays under the h2 gap.** The header introduces the content rather than
 separating it, so the first heading must not read as a section break. The heading right after the
-header has its top margin zeroed in `runtime/styles/prose.css`; without that, its 80px wins over
+header has its top margin zeroed in `runtime/styles/prose.css`; without that, its h2 gap wins over
 the header's own margin, which is how 0.12 shipped 80px there by accident.
 
 **A component that shows nothing goes at the end of the page.** Something like
 `<ToastRoot client:only="react" />` renders no box, but it is still the element after the header,
-so it takes the zeroed margin and the first heading keeps its 80px. CSS cannot tell it from an
+so it takes the zeroed margin and the first heading keeps its 48px. CSS cannot tell it from an
 island that does render, so put it at the end of the page.
 
 ## Code blocks

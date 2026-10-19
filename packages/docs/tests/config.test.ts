@@ -261,19 +261,3 @@ test('a footer row with an empty label, or an empty href, fails instead of rende
     /footer\.links\.0\.href: .*leave it out/
   );
 });
-
-test('spacing is comfortable and heading labels are on unless a site opts out', () => {
-  const cfg = resolveConfig({ title: 'x' });
-  assert.equal(cfg.spacing, 'comfortable');
-  assert.equal(cfg.headingLabels, true);
-});
-
-test('a site can choose compact spacing and plain h2 titles', () => {
-  const cfg = resolveConfig({ title: 'x', spacing: 'compact', headingLabels: false });
-  assert.equal(cfg.spacing, 'compact');
-  assert.equal(cfg.headingLabels, false);
-});
-
-test('an unknown spacing fails loudly', () => {
-  assert.throws(() => resolveConfig({ title: 'x', spacing: 'tight' as never }), /spacing/);
-});

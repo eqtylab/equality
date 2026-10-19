@@ -8,17 +8,14 @@ Notable changes to Equality's Docsite Generator are recorded here, following [Ke
 
 ### Added
 
-- `spacing: 'compact'` tightens the vertical rhythm for long prose pages: 48px above an h2, 32px
-  above an h3, 32px under the page header, 16px below paragraphs, lists and blocks, 64px around
-  the article footer, 32px between its previous/next and edit/report links, and, for a one-line
-  footer, a site footer as tall as the header. `'comfortable'`, the default, keeps 0.14.1's scale
-- `headingLabels: false` keeps every h2 a title, so sibling sections no longer switch between a
-  title and a mono label depending on whether they open with a sentence. On by default
 - A landing card takes an optional `icon`, a Lucide name shown beside its title
 
 ### Changed
 
-- Tabs take the same 24px below as other blocks; they had 16px
+- The vertical rhythm is tighter, in line with popular prose and component docs: 48px above an h2,
+  32px above an h3, 32px under the page header, 16px below paragraphs, lists and blocks, 64px
+  around the article footer, 32px between its previous/next and edit/report links, and a one-line
+  site footer as tall as the header. Labels and h4 to h6 keep their gaps
 - The landing page is redrawn: a larger title, mono section labels like the sidebar's, and cards
   with a 16px title, quiet link rows and a brand hover in place of the grey header panel and
   underlined links. Columns follow each section's card count, so every row spans the width; a lone
