@@ -367,6 +367,8 @@ const docsLink = (name, declaration) => {
   return `[${docsPageTitle(slug) ?? name} documentation](${DOCS_URL}/${slug})`;
 };
 
+const jsDocOf = (node) => ts.getJSDocCommentsAndTags(node).filter(ts.isJSDoc).at(-1);
+
 const describeComponent = (checker, name, symbol) => {
   const declaration = symbol.valueDeclaration ?? symbol.declarations?.[0];
   const signature = checker.getTypeOfSymbol(symbol).getCallSignatures()[0];
@@ -414,7 +416,10 @@ const describeComponent = (checker, name, symbol) => {
   const link = docsLink(name, declaration);
   if (link) sections.push(link);
 
-  return { markdown: sections.join('\n\n'), props };
+  return {
+    comment: mergeIntoComment(jsDocOf(declaration)?.getText(), sections.join('\n\n')),
+    props,
+  };
 };
 
 const cvaNameOf = (prop) => {
@@ -426,10 +431,7 @@ const cvaNameOf = (prop) => {
   return undefined;
 };
 
-const docCommentOf = (node) => {
-  const comment = ts.getJSDocCommentsAndTags(node).filter(ts.isJSDoc).at(-1);
-  return comment?.getText().replace(/\n\s*/g, '\n ');
-};
+const docCommentOf = (node) => jsDocOf(node)?.getText().replace(/\n\s*/g, '\n ');
 
 /**
  * Declaration emit drops the doc comments from a `cva` config, so `variant=` would hover blank
@@ -448,8 +450,9 @@ const collectVariantComments = (props, variants) => {
 };
 
 /**
- * `components` maps each exported component to the Markdown appended to its doc comment, and
- * `variants` maps each `cva` function to the doc comments of its documented variants.
+ * `components` maps each exported component to its whole doc comment, the one written in the
+ * source with its props appended, and `variants` maps each `cva` function to the doc comments of
+ * its documented variants.
  */
 export const collectDocs = (program = createSourceProgram()) => {
   const checker = program.getTypeChecker();
@@ -465,7 +468,7 @@ export const collectDocs = (program = createSourceProgram()) => {
 
     const described = describeComponent(checker, exported.name, symbol);
     if (!described) continue;
-    components.set(exported.name, described.markdown);
+    components.set(exported.name, described.comment);
     collectVariantComments(described.props, variants);
   }
   return { components, variants };
@@ -549,8 +552,9 @@ const variantCommentEdits = (text, sourceFile, statements, variants) => {
 };
 
 /**
- * Appends each component's Markdown to the doc comment above its declaration, and restores the
- * doc comments of documented `cva` variants.
+ * Replaces the doc comment above each component's declaration, and restores the doc comments of
+ * documented `cva` variants. The comment being replaced is never read: in a `dist` that has been
+ * annotated before it already holds a props list, and merging into it appends a second one.
  */
 export const annotateDeclarations = (text, { components, variants = new Map() }) => {
   const sourceFile = ts.createSourceFile('index.d.ts', text, ts.ScriptTarget.Latest, true);
@@ -559,7 +563,7 @@ export const annotateDeclarations = (text, { components, variants = new Map() })
   const edits = variantCommentEdits(text, sourceFile, statements, variants);
   const annotated = new Set();
 
-  for (const [exportedName, markdown] of components) {
+  for (const [exportedName, comment] of components) {
     const statement = statements.get(localNames.get(exportedName) ?? exportedName);
     if (!statement || annotated.has(statement)) continue;
     annotated.add(statement);
@@ -568,15 +572,10 @@ export const annotateDeclarations = (text, { components, variants = new Map() })
     const existing = comments.findLast((range) => text.startsWith('/**', range.pos));
 
     if (existing) {
-      const comment = text.slice(existing.pos, existing.end);
-      edits.push({
-        from: existing.pos,
-        to: existing.end,
-        insert: mergeIntoComment(comment, markdown),
-      });
+      edits.push({ from: existing.pos, to: existing.end, insert: comment });
     } else {
       const start = statement.getStart(sourceFile);
-      edits.push({ from: start, to: start, insert: `${mergeIntoComment(null, markdown)}\n` });
+      edits.push({ from: start, to: start, insert: `${comment}\n` });
     }
   }
 
