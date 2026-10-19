@@ -172,7 +172,10 @@ const declaredLiteralOrder = (checker, prop) => {
 
 const isLiteralType = (type) =>
   (type.flags &
-    (ts.TypeFlags.StringLiteral | ts.TypeFlags.NumberLiteral | ts.TypeFlags.BooleanLiteral)) !==
+    (ts.TypeFlags.StringLiteral |
+      ts.TypeFlags.NumberLiteral |
+      ts.TypeFlags.BooleanLiteral |
+      ts.TypeFlags.Null)) !==
   0;
 
 const formatLiterals = (checker, prop, members) => {
@@ -195,24 +198,42 @@ const shorten = (text) => {
   return flat.length > MAX_TYPE_LENGTH ? `${flat.slice(0, MAX_TYPE_LENGTH - 1).trimEnd()}…` : flat;
 };
 
-const withoutWrappingParentheses = (text) => {
-  if (!text.startsWith('(')) return text;
-  let depth = 0;
-  for (let index = 0; index < text.length; index += 1) {
-    if (text[index] === '(') depth += 1;
-    if (text[index] === ')') depth -= 1;
-    if (depth === 0) return index === text.length - 1 ? text.slice(1, -1) : text;
+const isOmittedTypeNode = (node, omitsNull) =>
+  node.kind === ts.SyntaxKind.UndefinedKeyword ||
+  (omitsNull && ts.isLiteralTypeNode(node) && node.literal.kind === ts.SyntaxKind.NullKeyword);
+
+/**
+ * Printed from the node rather than the type so an alias such as `React.ReactNode`, which
+ * itself includes `null` and `undefined`, keeps its name instead of expanding into its members.
+ */
+const printTypeWithout = (checker, type, omitsNull) => {
+  const flags =
+    ts.NodeBuilderFlags.NoTruncation |
+    ts.NodeBuilderFlags.UseAliasDefinedOutsideCurrentScope |
+    ts.NodeBuilderFlags.IgnoreErrors;
+  let node = checker.typeToTypeNode(type, undefined, flags);
+  if (node && ts.isUnionTypeNode(node)) {
+    const kept = node.types.filter((member) => !isOmittedTypeNode(member, omitsNull));
+    node = kept.length === 1 ? kept[0] : ts.factory.createUnionTypeNode(kept);
   }
-  return text;
+  if (node && ts.isParenthesizedTypeNode(node)) node = node.type;
+  return node ? printer.printNode(ts.EmitHint.Unspecified, node, undefined) : 'unknown';
 };
 
-/** Each type a prop can take, so the branches of a union of props can be merged. */
+/**
+ * Each type a prop can take, so the branches of a union of props can be merged. `undefined`
+ * only says a prop is optional, and `VariantProps` adds `null` to every `cva` variant, but any
+ * other `null` is a value worth passing, such as Progress's indeterminate `value`.
+ */
 const typesOf = (checker, prop) => {
   const type = checker.getTypeOfSymbol(prop);
-  const defined = checker.getNonNullableType(type);
-  if (defined.flags & ts.TypeFlags.Never) return [];
+  const omitsNull = Boolean(cvaVariantOf(prop));
+  const omitted = ts.TypeFlags.Undefined | ts.TypeFlags.Never | (omitsNull ? ts.TypeFlags.Null : 0);
+  const members = (type.isUnion() ? type.types : [type]).filter(
+    (member) => !(member.flags & omitted)
+  );
+  if (!members.length) return [];
 
-  const members = defined.isUnion() ? defined.types : [defined];
   if (members.length <= MAX_LISTED_LITERALS && members.every(isLiteralType)) {
     return formatLiterals(checker, prop, members);
   }
@@ -228,10 +249,7 @@ const typesOf = (checker, prop) => {
     ];
   }
 
-  const flags =
-    ts.TypeFormatFlags.NoTruncation | ts.TypeFormatFlags.UseAliasDefinedOutsideCurrentScope;
-  const text = checker.typeToString(type, undefined, flags).replace(/( \| undefined)+$/, '');
-  return [shorten(withoutWrappingParentheses(text))];
+  return [shorten(printTypeWithout(checker, type, omitsNull))];
 };
 
 /** A template literal type such as `--${string}` would otherwise close the code span early. */
