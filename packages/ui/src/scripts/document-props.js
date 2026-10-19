@@ -18,7 +18,7 @@ import ts from 'typescript';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const PACKAGE_ROOT = resolve(__dirname, '../..');
-const SOURCE_DIRECTORY = resolve(PACKAGE_ROOT, 'src');
+export const SOURCE_DIRECTORY = resolve(PACKAGE_ROOT, 'src');
 const DOCS_DIRECTORY = resolve(PACKAGE_ROOT, '../demo/src/content/docs/components');
 const DOCS_URL = 'https://equality.eqtylab.io/components';
 const DECLARATION_FILES = ['dist/index.d.ts', 'dist/index.d.cts'];
@@ -454,7 +454,7 @@ const collectVariantComments = (props, variants) => {
  * source with its props appended, and `variants` maps each `cva` function to the doc comments of
  * its documented variants.
  */
-const collectDocs = (program = createSourceProgram()) => {
+export const collectDocs = (program = createSourceProgram()) => {
   const checker = program.getTypeChecker();
   const entry = program.getSourceFile(resolve(SOURCE_DIRECTORY, 'index.ts'));
   const components = new Map();
@@ -556,7 +556,7 @@ const variantCommentEdits = (text, sourceFile, statements, variants) => {
  * documented `cva` variants. The comment being replaced is never read: in a `dist` that has been
  * annotated before it already holds a props list, and merging into it appends a second one.
  */
-const annotateDeclarations = (text, { components, variants = new Map() }) => {
+export const annotateDeclarations = (text, { components, variants = new Map() }) => {
   const sourceFile = ts.createSourceFile('index.d.ts', text, ts.ScriptTarget.Latest, true);
   const localNames = exportedLocalNames(sourceFile);
   const statements = declarationStatements(sourceFile);
