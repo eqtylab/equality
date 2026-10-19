@@ -1,9 +1,5 @@
 ---
-/**
- * Every page of an older copy opens with this strip, across the content column like Studio's
- * archived banner. `data-pagefind-ignore`: the words "latest" and the version must not match
- * every old page in search.
- */
+/** Every page of an older copy opens with this strip. `data-pagefind-ignore`: the words "latest" and the version must not match every old page in search. */
 import { Icon } from '@eqtylab/equality';
 
 interface Props {
@@ -15,11 +11,11 @@ interface Props {
 const { version, latestLabel, latestHref } = Astro.props;
 ---
 
-<div
+<aside
+  aria-label="Archived version"
   class="border-badge-background-warning from-badge-background-warning/40 to-badge-background-warning/15 border-b bg-linear-to-r"
   data-eq-chrome
   data-pagefind-ignore
-  role="status"
 >
   <div class="flex items-center justify-center gap-3 px-6 py-2">
     <span class="bg-badge-background-warning inline-flex shrink-0 items-center justify-center rounded-full p-1.5">
@@ -33,4 +29,4 @@ const { version, latestLabel, latestHref } = Astro.props;
       {'.'}
     </p>
   </div>
-</div>
+</aside>

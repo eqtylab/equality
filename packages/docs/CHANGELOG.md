@@ -14,20 +14,21 @@ Notable changes to Equality's Docsite Generator are recorded here, following [Ke
 
 - The vertical rhythm is tighter, in line with popular prose and component docs: 48px above an h2,
   32px above an h3, 32px under the page header, 16px below paragraphs, lists and blocks, 64px
-  around the article footer, 32px between its previous/next and edit/report links, and a one-line
-  site footer as tall as the header. Labels and h4 to h6 keep their gaps
-- The landing page is redrawn: a larger title, mono section labels like the sidebar's, and cards
-  with a 16px title, quiet link rows and a brand hover in place of the grey header panel and
-  underlined links. Columns follow each section's card count, so every row spans the width; a lone
-  card lays out sideways. A newline in the description is kept
+  around the article footer, 32px either side of the rule between its previous/next and
+  edit/report links, and a one-line site footer as tall as the header. A label's 24px to its first
+  h3, and h4 to h6, keep their gaps
+- The landing page is redrawn: a larger title that stays on one line with the sidebar open (36px
+  below 1280px, 48px above), mono section labels like the sidebar's, and cards with a 16px title,
+  quiet link rows and a brand hover in place of the grey header panel and underlined links.
+  Columns follow each section's card count so rows fill: two across for an even count, three for a
+  multiple of three, which lie sideways one per row until three fit; a lone card lays out sideways.
+  A newline in the page description is kept
 - Dark mode draws a faint brand wash behind every page's header. It fades out above the body text,
   so only the title and description sit on it, at 9.8:1 or better
 - An archived version's banner is a strip across the content column, like Studio's archived
   banner: an archive badge and one line, "You're viewing archived documentation for v1.2.0. See the
   latest version (v1.2.1)." The link still opens the same page in the latest version. It no longer
   says interactive examples are not shown, which held only for pages with live component examples
-- The landing title takes the full width, at 36px below 1280px and 48px above, so a long title
-  stays on one line with the sidebar open
 
 ## 0.14.1 - 2026-10-14
 

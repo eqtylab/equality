@@ -180,9 +180,11 @@ sections:
 ```
 
 A card's `icon` is optional: a Lucide name, as in the sidebar, shown beside the title. A name
-Lucide lacks fails the build. Each section lays its cards out by count: two split the width, three
-or more go three across, and one lays out sideways with its links beside the description. A
-newline in `description` is kept, so a two-sentence description can break between sentences.
+Lucide lacks fails the build. Each section picks its columns from its card count so rows fill: an
+even count goes two across, a multiple of three goes three across once there is room and lies
+sideways one per row until then, five or more go three across, and one lays out sideways with its links beside the
+description. The page's `description` keeps a newline (a `|` block in YAML), so a two-sentence
+description can break between sentences.
 
 A `/` link is rewritten like a link in page text, so in an old version it stays in that version; a
 full URL opens a new tab. The build stops when a landing page has no `sections` or has a body, and
@@ -283,7 +285,7 @@ largest gap, because it starts the biggest change of topic.
 | Below paragraphs, lists, code blocks, tables, tabs, alerts, rules | 16px  |
 | List items                                                        | 8px   |
 | Above the article footer, and from it to the site footer          | 64px  |
-| The previous/next links and the edit and report links             | 32px  |
+| The previous/next links and the edit and report links, each side  | 32px  |
 | The site footer's padding                                         | 24px  |
 
 A one-line site footer is as tall as the header. That holds only while `--eq-docs-header-height`

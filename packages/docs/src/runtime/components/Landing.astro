@@ -43,14 +43,15 @@ const linkRow =
     sections.map((section) => {
       const id = slugger.slug(section.heading);
       const count = section.cards.length;
-      // Columns follow the card count so every row spans the full width; a lone card lays out
-      // sideways rather than stretching one tall card across it.
+      // Two across for an even count and three for a multiple of three, so rows fill; five or more
+      // go three across regardless. A lone card, or an odd three stacked until they fit, lies sideways
       const wide = count === 1;
+      const stacked = count === 3 || count === 9;
       const columns = wide
         ? ''
-        : count % 3 === 0 || count > 4
-          ? '@2xl:grid-cols-2 @4xl:grid-cols-3'
-          : '@2xl:grid-cols-2';
+        : [count % 2 === 0 && '@2xl:grid-cols-2', (count % 3 === 0 || count > 4) && '@4xl:grid-cols-3']
+            .filter(Boolean)
+            .join(' ');
       return (
         <section class="mt-12 first-of-type:mt-0" aria-labelledby={id}>
           <h2 id={id} class="eq-docs-label mb-4">
@@ -62,6 +63,7 @@ const linkRow =
                 class:list={[
                   'group/card border-border bg-background-raised hover:border-brand-primary focus-within:border-brand-primary relative grid gap-0 overflow-hidden rounded-xl border p-5 transition-colors',
                   wide ? '@2xl:grid-cols-2 @2xl:gap-8' : 'row-span-2 grid-rows-subgrid',
+                  stacked && '@2xl:@max-4xl:row-span-1 @2xl:@max-4xl:grid-cols-2 @2xl:@max-4xl:grid-rows-none @2xl:@max-4xl:gap-8',
                 ]}
               >
                 <div
@@ -83,6 +85,8 @@ const linkRow =
                   class:list={[
                     'border-border relative m-0 mt-4 grid list-none content-start gap-0.5 border-t p-0 pt-3',
                     wide && '@2xl:mt-0 @2xl:border-t-0 @2xl:border-l @2xl:pt-0 @2xl:pl-8',
+                    stacked &&
+                      '@2xl:@max-4xl:mt-0 @2xl:@max-4xl:border-t-0 @2xl:@max-4xl:border-l @2xl:@max-4xl:pt-0 @2xl:@max-4xl:pl-8',
                   ]}
                 >
                   {card.links.map(([label, to]) => {
