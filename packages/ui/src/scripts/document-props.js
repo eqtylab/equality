@@ -454,7 +454,7 @@ const collectVariantComments = (props, variants) => {
  * source with its props appended, and `variants` maps each `cva` function to the doc comments of
  * its documented variants.
  */
-export const collectDocs = (program = createSourceProgram()) => {
+const collectDocs = (program = createSourceProgram()) => {
   const checker = program.getTypeChecker();
   const entry = program.getSourceFile(resolve(SOURCE_DIRECTORY, 'index.ts'));
   const components = new Map();
@@ -556,7 +556,7 @@ const variantCommentEdits = (text, sourceFile, statements, variants) => {
  * documented `cva` variants. The comment being replaced is never read: in a `dist` that has been
  * annotated before it already holds a props list, and merging into it appends a second one.
  */
-export const annotateDeclarations = (text, { components, variants = new Map() }) => {
+const annotateDeclarations = (text, { components, variants = new Map() }) => {
   const sourceFile = ts.createSourceFile('index.d.ts', text, ts.ScriptTarget.Latest, true);
   const localNames = exportedLocalNames(sourceFile);
   const statements = declarationStatements(sourceFile);
