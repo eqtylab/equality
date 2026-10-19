@@ -172,11 +172,19 @@ sections:
     cards:
       - title: Install
         description: From PyPI or source.
+        icon: Download
         links:
           - [Package Managers, /install/package-managers/]
           - [Changelog, https://github.com/eqtylab/integrity-py/blob/main/CHANGELOG.md]
 ---
 ```
+
+A card's `icon` is optional: a Lucide name, as in the sidebar, shown beside the title. A name
+Lucide lacks fails the build. Each section picks its columns from its card count so rows fill: an
+even count goes two across, a multiple of three goes three across once there is room and lies
+sideways one per row until then, five or more go three across, and one lays out sideways with its links beside the
+description. The page's `description` keeps a newline (a `|` block in YAML), so a two-sentence
+description can break between sentences.
 
 A `/` link is rewritten like a link in page text, so in an old version it stays in that version; a
 full URL opens a new tab. The build stops when a landing page has no `sections` or has a body, and
@@ -265,27 +273,32 @@ rule.
 **Space follows level, not size.** A label is the smallest heading on the page, yet it gets the
 largest gap, because it starts the biggest change of topic.
 
-| Between                                                     | Space |
-| ----------------------------------------------------------- | ----- |
-| The page header's rule and the content                      | 48px  |
-| Above any h2, title or label                                | 80px  |
-| A label and its first h3                                    | 24px  |
-| Above an h3 after text or a block                           | 48px  |
-| Above h4 to h6                                              | 24px  |
-| An h2 and its own text                                      | 16px  |
-| An h3 to h6 and its own text                                | 12px  |
-| Below paragraphs, lists, code blocks, tables, alerts, rules | 24px  |
-| List items                                                  | 8px   |
-| Above the article footer                                    | 96px  |
+| Between                                                           | Space |
+| ----------------------------------------------------------------- | ----- |
+| The page header's rule and the content                            | 32px  |
+| Above any h2, title or label                                      | 48px  |
+| A label and its first h3                                          | 24px  |
+| Above an h3 after text or a block                                 | 32px  |
+| Above h4 to h6                                                    | 24px  |
+| An h2 and its own text                                            | 16px  |
+| An h3 to h6 and its own text                                      | 12px  |
+| Below paragraphs, lists, code blocks, tables, tabs, alerts, rules | 16px  |
+| List items                                                        | 8px   |
+| Above the article footer, and from it to the site footer          | 64px  |
+| The previous/next links and the edit and report links, each side  | 32px  |
+| The site footer's padding                                         | 24px  |
+
+A one-line site footer is as tall as the header. That holds only while `--eq-docs-header-height`
+stays 4.3125rem; change the footer's padding with it.
 
 **The header gap stays under the h2 gap.** The header introduces the content rather than
 separating it, so the first heading must not read as a section break. The heading right after the
-header has its top margin zeroed in `runtime/styles/prose.css`; without that, its 80px wins over
+header has its top margin zeroed in `runtime/styles/prose.css`; without that, its h2 gap wins over
 the header's own margin, which is how 0.12 shipped 80px there by accident.
 
 **A component that shows nothing goes at the end of the page.** Something like
 `<ToastRoot client:only="react" />` renders no box, but it is still the element after the header,
-so it takes the zeroed margin and the first heading keeps its 80px. CSS cannot tell it from an
+so it takes the zeroed margin and the first heading keeps its 48px. CSS cannot tell it from an
 island that does render, so put it at the end of the page.
 
 ## Code blocks
@@ -529,7 +542,8 @@ releases keep coming from their tags.
   skipped with a warning naming the tag.
 - An archived page is a document, not an app. Prose, headings, tables and code samples are
   kept; live component examples are not rendered, because an old page's imports bind it to
-  today's library. The banner says so.
+  today's library. Every archived page opens with a strip naming its version and linking the
+  latest.
 - Old versions are read-only. A wrong page is fixed by a new release.
 - Moving `granularity` between `minor` and `patch` does not break published URLs: every grouping
   coarser than the one you set also resolves, so `/v3/` and `/v3.9/` both work at either setting.

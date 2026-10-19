@@ -1,6 +1,6 @@
 ---
-/** Every page of an older copy opens with this. `data-pagefind-ignore`: the words "latest" and the version must not match every old page in search. */
-import { Alert } from '@eqtylab/equality';
+/** Every page of an older copy opens with this strip. `data-pagefind-ignore`: the words "latest" and the version must not match every old page in search. */
+import { Icon } from '@eqtylab/equality';
 
 interface Props {
   version: string;
@@ -11,9 +11,22 @@ interface Props {
 const { version, latestLabel, latestHref } = Astro.props;
 ---
 
-<div class="mb-8" data-eq-chrome data-pagefind-ignore role="status">
-  <Alert variant="warning" title={`You are reading the ${version} docs.`}>
-    The latest is <a class="text-text-primary underline" href={latestHref}>{latestLabel}</a>.
-    Interactive examples are not shown in archived pages.
-  </Alert>
-</div>
+<aside
+  aria-label="Archived version"
+  class="border-badge-background-warning from-badge-background-warning/40 to-badge-background-warning/15 border-b bg-linear-to-r"
+  data-eq-chrome
+  data-pagefind-ignore
+>
+  <div class="flex items-center justify-center gap-3 px-6 py-2">
+    <span class="bg-badge-background-warning inline-flex shrink-0 items-center justify-center rounded-full p-1.5">
+      <Icon icon="Archive" size="sm" className="text-badge-text-warning!" />
+    </span>
+    <p class="text-badge-text-warning m-0 text-sm font-medium">
+      {`You're viewing archived documentation for ${version}. See the `}
+      <a class="text-badge-text-warning underline underline-offset-2" href={latestHref}>
+        {`latest version (${latestLabel})`}
+      </a>
+      {'.'}
+    </p>
+  </div>
+</aside>

@@ -3,18 +3,8 @@
 import { pathContext } from '@eqtylab/docs/lib/nav-data.ts';
 import { isExternalHref, siteHref } from '@eqtylab/docs/paths';
 import type { LandingSection } from '@eqtylab/docs/types';
-import {
-  Button,
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-  Heading,
-  Icon,
-} from '@eqtylab/equality';
+import { Icon } from '@eqtylab/equality';
 import GithubSlugger from 'github-slugger';
-import { createElement } from 'react';
 
 export type { LandingSection };
 
@@ -31,57 +21,97 @@ const { title, description, sections, version } = Astro.props;
 const paths = pathContext(version);
 const slugger = new GithubSlugger();
 
-// Button's suffix slot takes a React element, which an Astro component cannot pass as a prop.
-const arrowRight = createElement(Icon, { icon: 'ArrowRight', size: 'xs' });
-const arrowUpRight = createElement(Icon, { icon: 'ArrowUpRight', size: 'xs' });
+const target = (to: string) =>
+  isExternalHref(to)
+    ? { href: to, external: true }
+    : { href: siteHref(to, paths), external: false };
+
+const linkRow =
+  'group/link text-text-secondary hover:text-text-primary hover:bg-background focus-ring -mx-2 flex items-center justify-between gap-3 rounded-md px-2 py-1.5 text-sm font-medium no-underline transition-colors';
 ---
 
-{/* No outline on a landing page, so it owns its width: room for cards two or three across. */}
-<div class="w-full max-w-5xl" data-eq-chrome>
-  <header class="mb-6">
-    <h1 class="text-text-primary w-fit text-4xl font-bold">{title}</h1>
-    {description && <p class="text-text-secondary mt-3 text-lg/7">{description}</p>}
+{/* No outline on a landing page, so it owns its width: room for cards two or three across.
+    A container, not the viewport, sets the columns: the sidebar takes a third of a laptop screen. */}
+<div class="@container w-full max-w-5xl" data-eq-chrome>
+  <header class="mb-12">
+    <h1 class="text-text-primary text-4xl font-bold tracking-tight text-balance xl:text-5xl">
+      {title}
+    </h1>
+    {description && <p class="text-text-secondary mt-4 max-w-4xl text-lg/8 whitespace-pre-line">{description}</p>}
   </header>
   {
     sections.map((section) => {
       const id = slugger.slug(section.heading);
+      const count = section.cards.length;
+      // Two across for an even count and three for a multiple of three, so rows fill; five or more
+      // go three across regardless. A lone card, or an odd three stacked until they fit, lies sideways
+      const wide = count === 1;
+      const stacked = count === 3 || count === 9;
+      const columns = wide
+        ? ''
+        : [count % 2 === 0 && '@2xl:grid-cols-2', (count % 3 === 0 || count > 4) && '@4xl:grid-cols-3']
+            .filter(Boolean)
+            .join(' ');
       return (
-        <section class="grid gap-4 pt-8" aria-labelledby={id}>
-          <Heading as="h2" id={id}>
+        <section class="mt-12 first-of-type:mt-0" aria-labelledby={id}>
+          <h2 id={id} class="eq-docs-label mb-4">
             {section.heading}
-          </Heading>
-          <div class="grid grid-cols-[repeat(auto-fit,minmax(min(100%,17rem),1fr))] grid-rows-[auto_auto] gap-3">
+          </h2>
+          <div class={`grid gap-4 ${columns}`}>
             {section.cards.map((card) => (
-              <Card className="row-span-2! grid! h-full! grid-rows-subgrid!">
-                <CardHeader className="border-border border-b">
-                  <CardTitle role="heading" aria-level={3}>
-                    {card.title}
-                  </CardTitle>
-                  <CardDescription>{card.description}</CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <div class="grid justify-items-start gap-2">
-                    {card.links.map(([label, to]) =>
-                      isExternalHref(to) ? (
-                        <Button
-                          variant="link"
-                          suffix={arrowUpRight}
-                          href={to}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                        >
-                          {label}
-                          <span class="sr-only"> (opens in a new tab)</span>
-                        </Button>
-                      ) : (
-                        <Button variant="link" suffix={arrowRight} href={siteHref(to, paths)}>
-                          {label}
-                        </Button>
-                      )
+              <article
+                class:list={[
+                  'group/card border-border bg-background-raised hover:border-brand-primary focus-within:border-brand-primary relative grid gap-0 overflow-hidden rounded-xl border p-5 transition-colors',
+                  wide ? '@2xl:grid-cols-2 @2xl:gap-8' : 'row-span-2 grid-rows-subgrid',
+                  stacked && '@2xl:@max-4xl:row-span-1 @2xl:@max-4xl:grid-cols-2 @2xl:@max-4xl:grid-rows-none @2xl:@max-4xl:gap-8',
+                ]}
+              >
+                <div
+                  class="from-brand-primary/0 to-brand-primary/10 pointer-events-none absolute inset-0 bg-linear-to-br opacity-0 transition-opacity duration-500 group-focus-within/card:opacity-100 group-hover/card:opacity-100"
+                  aria-hidden="true"
+                />
+                <div class="relative">
+                  <div class="flex items-center gap-3">
+                    {card.icon && (
+                      <span class="border-brand-primary/40 bg-brand-primary/15 text-text-primary inline-flex size-8 shrink-0 items-center justify-center rounded-lg border">
+                        <Icon icon={card.icon} size="sm" />
+                      </span>
                     )}
+                    <h3 class="text-text-primary text-base font-semibold">{card.title}</h3>
                   </div>
-                </CardContent>
-              </Card>
+                  <p class="text-text-secondary mt-1.5 text-sm/6">{card.description}</p>
+                </div>
+                <ul
+                  class:list={[
+                    'border-border relative m-0 mt-4 grid list-none content-start gap-0.5 border-t p-0 pt-3',
+                    wide && '@2xl:mt-0 @2xl:border-t-0 @2xl:border-l @2xl:pt-0 @2xl:pl-8',
+                    stacked &&
+                      '@2xl:@max-4xl:mt-0 @2xl:@max-4xl:border-t-0 @2xl:@max-4xl:border-l @2xl:@max-4xl:pt-0 @2xl:@max-4xl:pl-8',
+                  ]}
+                >
+                  {card.links.map(([label, to]) => {
+                    const t = target(to);
+                    return (
+                      <li>
+                        <a
+                          class={linkRow}
+                          href={t.href}
+                          target={t.external ? '_blank' : undefined}
+                          rel={t.external ? 'noopener noreferrer' : undefined}
+                        >
+                          <span>
+                            {label}
+                            {t.external && <span class="sr-only"> (opens in a new tab)</span>}
+                          </span>
+                          <span class="text-text-tertiary group-hover/link:text-text-primary inline-flex transition-transform group-hover/link:translate-x-0.5">
+                            <Icon icon={t.external ? 'ArrowUpRight' : 'ArrowRight'} size="xs" />
+                          </span>
+                        </a>
+                      </li>
+                    );
+                  })}
+                </ul>
+              </article>
             ))}
           </div>
         </section>
