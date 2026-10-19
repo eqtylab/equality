@@ -25,6 +25,12 @@ Notable changes to Equality's Docsite Generator are recorded here, following [Ke
   card lays out sideways. A newline in the description is kept
 - Dark mode draws a faint brand wash behind every page's header. It fades out above the body text,
   so only the title and description sit on it, at 9.8:1 or better
+- An archived version's banner is a strip across the content column, like Studio's archived
+  banner: an archive badge and one line, "You're viewing archived documentation for v1.2.0. See the
+  latest version (v1.2.1)." The link still opens the same page in the latest version. It no longer
+  says interactive examples are not shown, which held only for pages with live component examples
+- The landing title takes the full width, at 36px below 1280px and 48px above, so a long title
+  stays on one line with the sidebar open
 
 ## 0.14.1 - 2026-10-14
 

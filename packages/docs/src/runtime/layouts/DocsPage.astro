@@ -73,6 +73,11 @@ const suggested = nav
       class="relative isolate flex min-h-[calc(100vh-var(--eq-docs-header-height))] min-w-0 flex-1 flex-col"
       data-eq-docs-column
     >
+      {
+        version && latestHref && latestLabel && (
+          <VersionBanner version={version} latestLabel={latestLabel} latestHref={latestHref} />
+        )
+      }
       <main
         class="mx-auto flex w-full flex-1 min-w-0 max-w-[calc(var(--eq-docs-content-max)+var(--eq-docs-toc-width)+8rem)] items-start gap-12 px-6 pt-10 data-[splash]:max-w-none xl:gap-16"
         data-splash={splash ? '' : undefined}
@@ -80,11 +85,6 @@ const suggested = nav
         <div class="min-w-0 flex-1 [&>.eq-prose]:max-w-[var(--eq-docs-content-max)]">
           {/* Taller than any offset, so the browser clamps #_top to the very top. */}
           <span id="_top" class="block scroll-mt-[100vh]" aria-hidden="true"></span>
-          {
-            version && latestHref && latestLabel && (
-              <VersionBanner version={version} latestLabel={latestLabel} latestHref={latestHref} />
-            )
-          }
           <slot />
         </div>
         {!splash && showToc && <TableOfContents items={outline} />}

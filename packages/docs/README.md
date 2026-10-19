@@ -557,7 +557,8 @@ releases keep coming from their tags.
   skipped with a warning naming the tag.
 - An archived page is a document, not an app. Prose, headings, tables and code samples are
   kept; live component examples are not rendered, because an old page's imports bind it to
-  today's library. The banner says so.
+  today's library. Every archived page opens with a strip naming its version and linking the
+  latest.
 - Old versions are read-only. A wrong page is fixed by a new release.
 - Moving `granularity` between `minor` and `patch` does not break published URLs: every grouping
   coarser than the one you set also resolves, so `/v3/` and `/v3.9/` both work at either setting.
