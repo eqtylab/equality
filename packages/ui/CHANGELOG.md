@@ -2,6 +2,12 @@
 
 Notable changes to Equality are recorded here, following [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## 4.14.0 - 2026-10-16
+
+### Added
+
+- The IDE hover on every component lists its props with their types and defaults, and links to the component's documentation page. The list is generated from the types when the package is built, so it always matches the release you have installed.
+
 ## 4.13.1 - 2026-10-15
 
 ### Fixed

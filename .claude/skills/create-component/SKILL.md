@@ -27,6 +27,12 @@ We commonly use the following states for components:
 
 Components like "Button" and "Input" have `prefix` and `suffix` slots to place icons or buttons before, or after the primary component content.
 
+### Documenting Props
+
+Give every prop a one-line doc comment where it is declared: on the props interface, or on its entry in the `cva` `variants` object. `build:lib` copies it into the props list shown when hovering the component (`src/scripts/document-props.js`). Hovering the prop itself may not show a `cva` variant's comment: for some components, such as `AlertDialogAction`, the bundled types contain a copy of the variant type instead of a reference to the `cva` function, and the comment is not written into that copy.
+
+Leave the default out of the comment. The build reads it from the destructured default or from `defaultVariants`, so a default written into the comment goes stale when the code changes. Add `@default` only when neither shows the real default.
+
 ## Documentation
 
 After creating the component in the "ui" package, always create a corresponding docs MDX under `packages/demo/src/content/docs/components`.
