@@ -2,6 +2,12 @@
 
 Notable changes to Equality are recorded here, following [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## 4.14.1 - 2026-10-20
+
+### Fixed
+
+- Code block line number gutters now fill full height of container
+
 ## 4.14.0 - 2026-10-16
 
 ### Added
