@@ -209,7 +209,7 @@
 }
 
 .body {
-  @apply flex min-w-0;
+  @apply flex h-full min-w-0;
   --code-line-height: 1.5;
 }
 
@@ -219,7 +219,7 @@
 }
 
 .gutter {
-  @apply border-r-border text-text-tertiary bg-card-background;
+  @apply border-r-border text-text-tertiary bg-card-background h-full;
   @apply sticky left-0 my-0 shrink-0 border-r p-3;
   @apply select-none text-right;
   font-family: var(--font-mono);
