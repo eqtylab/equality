@@ -4,6 +4,18 @@ Notable changes to Equality's Docsite Generator are recorded here, following [Ke
 
 ## Unreleased
 
+## 0.15.2 - 2026-10-22
+
+### Fixed
+
+- Inline code is shorter, with 2px above and below instead of 4px, so code on neighboring lines
+  no longer overlaps. It is sized relative to the text around it
+
+### Changed
+
+- Inline code sits on the neutral Badge background at 50% opacity, so code-heavy passages read as
+  prose first. It keeps the Badge text color
+
 ## 0.15.1 - 2026-10-22
 
 ### Fixed
