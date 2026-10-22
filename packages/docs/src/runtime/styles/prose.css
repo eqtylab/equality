@@ -115,7 +115,7 @@
       is what keeps code monospaced in a consumer that uses it nowhere else.
     */
     :not(pre) > &:is(code) {
-      @apply dark:bg-background-overlay bg-greyscale-200 text-text-secondary rounded-sm p-1 font-mono text-sm;
+      @apply bg-badge-background-neutral text-badge-text-neutral rounded-sm p-1 font-mono text-sm;
     }
 
     /* No table rules: markdown tables render through Equality's Table. */
