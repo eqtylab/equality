@@ -4,6 +4,13 @@ Notable changes to Equality's Docsite Generator are recorded here, following [Ke
 
 ## Unreleased
 
+## 0.15.1 - 2026-10-22
+
+### Fixed
+
+- Inline code in dark mode uses the neutral Badge colors, so it matches Equality badges instead
+  of sitting darker than them. Light mode is unchanged
+
 ## 0.15.0 - 2026-10-16
 
 ### Added
