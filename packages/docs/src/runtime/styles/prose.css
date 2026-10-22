@@ -115,7 +115,7 @@
       is what keeps code monospaced in a consumer that uses it nowhere else.
     */
     :not(pre) > &:is(code) {
-      @apply bg-badge-background-neutral text-badge-text-neutral rounded-sm p-1 font-mono text-sm;
+      @apply bg-badge-background-neutral/50 text-badge-text-neutral rounded-sm px-1 py-0.5 font-mono text-[0.875em];
     }
 
     /* No table rules: markdown tables render through Equality's Table. */
