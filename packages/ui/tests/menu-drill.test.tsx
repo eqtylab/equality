@@ -383,4 +383,48 @@ describe('MenuDrill', () => {
     fireEvent.click(screen.getByRole('button', { name: 'go:ben' }));
     expect(document.activeElement).toBe(document.body);
   });
+  it('drops a pending ‹ focus request when the user acts outside the drill', async () => {
+    let release!: () => void;
+    function LateRows() {
+      const [ready, setReady] = React.useState(false);
+      React.useEffect(() => {
+        release = () => setReady(true);
+      }, []);
+      return ready ? (
+        <MenuList>
+          <MenuItem label="Ben Project" href="#ben" drill="ben" current />
+        </MenuList>
+      ) : null;
+    }
+    render(
+      <>
+        <Menu>
+          <MenuDrill defaultView="ben">
+            <MenuDrillLevel value="projects">
+              <LateRows />
+            </MenuDrillLevel>
+            <MenuDrillLevel value="ben" parent="projects">
+              <MenuBackButton label="Ben Project" />
+            </MenuDrillLevel>
+          </MenuDrill>
+        </Menu>
+        <a href="#page">A page link</a>
+      </>
+    );
+    fireEvent.click(screen.getByRole('button', { name: 'Ben Project' }));
+    fireEvent.pointerDown(screen.getByRole('link', { name: 'A page link' }));
+    act(() => release());
+    await act(async () => {});
+    expect(document.activeElement).toBe(document.body);
+  });
+
+  it('drops a pending drill request when the user acts outside the drill', () => {
+    render(<Controlled follow={false} />);
+    fireEvent.click(screen.getByRole('link', { name: 'Ben Project' }));
+    fireEvent.pointerDown(screen.getByRole('button', { name: 'go:ben' }));
+    fireEvent.click(screen.getByRole('button', { name: 'go:ben' }));
+    expect(screen.getByRole('link', { name: 'Ben overview' })).toBeTruthy();
+    expect(animateCalls).toHaveLength(0);
+    expect(document.activeElement).toBe(document.body);
+  });
 });

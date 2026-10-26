@@ -3,6 +3,7 @@ import { ChevronLeft } from 'lucide-react';
 
 import { MenuDrillContext } from '@/components/menu/menu-drill-context';
 import styles from '@/components/menu/menu.module.css';
+import { useIsomorphicLayoutEffect } from '@/lib/use-isomorphic-layout-effect';
 import { cn } from '@/lib/utils';
 
 type MenuDrillRequest = 'drill' | 'back';
@@ -161,7 +162,7 @@ const MenuDrill = React.forwardRef<HTMLDivElement, MenuDrillProps>(
       onViewChange?.(target, direction);
     };
 
-    React.useLayoutEffect(() => {
+    useIsomorphicLayoutEffect(() => {
       if (previousView.current === view) return;
       previousView.current = view;
       const pending = focusRequest.current;
@@ -175,7 +176,7 @@ const MenuDrill = React.forwardRef<HTMLDivElement, MenuDrillProps>(
       if (scroller) scroller.scrollTop = 0;
     }, [view]);
 
-    React.useLayoutEffect(() => {
+    useIsomorphicLayoutEffect(() => {
       running.current.forEach((animation) => animation.cancel());
       running.current = [];
       const live = liveLevel();
@@ -201,13 +202,24 @@ const MenuDrill = React.forwardRef<HTMLDivElement, MenuDrillProps>(
       tryFocus();
     });
 
-    React.useEffect(
-      () => () => {
+    // MenuDrill cannot see the caller's routing. A page link or anything else the user does
+    // outside the drill is a different intent, so it drops what a drill row or ‹ asked for:
+    // neither the slide nor the focus may land on a later, unrelated change
+    React.useEffect(() => {
+      const dropOutside = (event: Event) => {
+        if (rootRef.current?.contains(event.target as Node)) return;
+        focusRequest.current = null;
+        observer.current?.disconnect();
+        setRequest((current) => (current ? null : current));
+      };
+      const events = ['pointerdown', 'keydown', 'focusin'] as const;
+      events.forEach((type) => document.addEventListener(type, dropOutside, true));
+      return () => {
+        events.forEach((type) => document.removeEventListener(type, dropOutside, true));
         running.current.forEach((animation) => animation.cancel());
         observer.current?.disconnect();
-      },
-      []
-    );
+      };
+    }, []);
 
     const setRootRef = (node: HTMLDivElement | null) => {
       rootRef.current = node;

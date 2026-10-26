@@ -139,6 +139,8 @@ After a drill, focus moves to ‹. After ‹, it moves to the row you came from,
 
 Levels must be direct children of `MenuDrill`. A level wrapped in another component is not found.
 
+The incoming level covers the leaving one with the background it inherits, so put `Menu` directly inside a painted surface, such as a popover, drawer or panel. A wrapper in between needs `background-color: inherit`, or both levels show through each other while they slide.
+
 #### In a popover
 
 <MenuDrillPopoverDemo client:only="react" />

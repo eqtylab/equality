@@ -240,16 +240,14 @@ export function MenuDrillDrawerDemo() {
         <DrawerHeader>
           <DrawerTitle>Projects</DrawerTitle>
         </DrawerHeader>
-        <div
+        <Menu
           style={{
             padding: "0 16px 24px",
             ["--touch-target" as string]: "2.75rem",
           }}
         >
-          <Menu>
-            <MenuDrill defaultView="projects">{projectLevels(link)}</MenuDrill>
-          </Menu>
-        </div>
+          <MenuDrill defaultView="projects">{projectLevels(link)}</MenuDrill>
+        </Menu>
       </DrawerContent>
     </Drawer>
   );
