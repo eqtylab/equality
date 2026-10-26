@@ -2,7 +2,7 @@
 
 Notable changes to Equality are recorded here, following [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
-## 4.15.0 - <merge date>
+## 4.15.0 - 2026-10-27
 
 Studio's sidebar moves into Equality as two sets of parts: `NavList` rows for going somewhere,
 anywhere on screen, and a `Nav` sidebar frame. Menus stay for actions: use `DropdownMenu` for those.
