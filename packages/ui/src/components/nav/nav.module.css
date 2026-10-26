@@ -1,0 +1,179 @@
+@reference '../../theme/theme.module.css';
+
+.rail,
+.panel {
+  @apply bg-background-raised border-border-raised flex shrink-0 flex-col border-r;
+  /* Without size containment a long list grows the row and stretches the page */
+  contain: size;
+}
+
+.rail {
+  @apply w-[72px];
+}
+
+.panel {
+  @apply w-[200px];
+}
+
+/* Inherited so a drill level sliding in covers the one leaving */
+.scroller {
+  @apply sticky top-0 flex flex-col overflow-y-auto;
+  max-height: min(100dvh, 100%);
+  background-color: inherit;
+}
+
+.rail .scroller {
+  @apply items-center py-4;
+}
+
+.panel .scroller {
+  @apply px-2 py-4;
+}
+
+/* In a drilled panel, ‹ sits 2px under the header, as one card. An inert ‹ is leaving */
+.scroller:has([data-slot='menu-back-button']:not([inert] *)) > .panel-header {
+  @apply pb-0;
+}
+
+.rail-list {
+  @apply m-0 flex list-none flex-col items-center gap-2 p-0;
+}
+
+.rail-item {
+  @apply size-(--control-height) min-h-(--touch-target) min-w-(--touch-target) flex items-center justify-center;
+  @apply text-text-primary rounded-md border border-transparent;
+  @apply transition-colors duration-150 motion-reduce:transition-none;
+}
+
+.rail-item svg {
+  @apply size-5;
+}
+
+/* Above the rows, which sit 2px under it in a drilled panel, so its focus ring stays whole */
+.panel-header {
+  @apply text-text-primary z-3 relative m-0 truncate px-2 pb-2 text-sm font-semibold;
+}
+
+/* The switcher is the header, so the header gives up its inset and clipping to it. The group
+   under it brings its own top padding, so the switcher sits 12px above it, as the site card did */
+.panel-header:has(> .switcher-heading) {
+  @apply overflow-visible px-0 pb-0;
+}
+
+/* One height whether it holds the switcher, a plain name or the loading bar: the site card's 32px,
+   a card rather than a 36px row */
+.switcher-heading {
+  @apply text-text-primary min-h-(--touch-target) m-0 flex h-8 min-w-0 items-center text-sm font-semibold;
+}
+
+.switcher-plain {
+  @apply min-w-0 truncate px-2;
+}
+
+.switcher-placeholder {
+  @apply px-2;
+}
+
+/* Under the heading, so it outranks the size, fill and border SelectTrigger sets at rest whatever
+   order the two modules load in */
+.switcher-heading .switcher {
+  @apply min-h-(--touch-target) flex h-8 w-full min-w-0 items-center gap-2 rounded-md border border-transparent px-2;
+  @apply text-text-primary bg-transparent text-left text-sm font-semibold transition-colors duration-150;
+  @apply motion-reduce:transition-none;
+}
+
+/* As wide as the name, so the fade spans the text, not the row. Outranks the trigger's one-line
+   clamp on its spans */
+.switcher-heading .switcher-label {
+  @apply block min-w-0 truncate;
+}
+
+/* The site card's name: the fade clipped to the text. Padding keeps descenders out of the clip.
+   It ends at secondary text, so the name is never dimmer than the rows */
+.switcher-name {
+  @apply py-[0.05em] text-sm font-semibold;
+  background-image: linear-gradient(
+    to right,
+    var(--color-text-primary),
+    var(--color-text-secondary)
+  );
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+
+  /* Forced colours drop the gradient but keep the transparent fill; put the paint back */
+  @media (forced-colors: active) {
+    background-image: none;
+    color: CanvasText;
+    -webkit-text-fill-color: currentColor;
+  }
+}
+
+.switcher-icon {
+  @apply text-text-tertiary ml-auto size-4 shrink-0;
+}
+
+/* The trigger draws ↕ itself, so SelectTrigger's ⌄ goes. SelectTrigger always renders lucide's
+   ChevronDown and has no prop to drop it; Studio's SW-017 fails if it comes back */
+.switcher > :global(.lucide-chevron-down) {
+  display: none;
+}
+
+.switcher-heading .switcher:hover:not(:disabled) {
+  @apply bg-list-item-hover border-transparent;
+}
+
+.switcher-heading .switcher[data-state='open']:not(:disabled) {
+  @apply bg-background border-brand-primary;
+}
+
+.switcher-heading .switcher:focus-visible {
+  box-shadow: none;
+  outline: 2px solid var(--color-focus-ring);
+  outline-offset: 2px;
+}
+
+.switcher-list {
+  width: 14rem;
+}
+
+.switcher-option {
+  @apply block truncate;
+}
+
+/* Sticks to the list's foot like the filter's Clear all, on the Select's own surface */
+.switcher-footer {
+  @apply sticky -bottom-1 pb-1;
+  background: var(--color-background-overlay);
+}
+
+/* Keeps the footer from covering the ticked item the list scrolls to on open */
+.switcher-list:has(.switcher-footer) {
+  scroll-padding-bottom: 2.5rem;
+}
+
+/* Two classes to outrank the Select's own item layout */
+.switcher-list .switcher-action {
+  @apply justify-center;
+}
+
+/* The action is never ticked, so its check column only pushes the label off centre. SelectItem
+   leaves that column an empty span; Studio's SW-019 fails if that changes */
+.switcher-action > span:empty {
+  @apply hidden;
+}
+
+.rail-item:hover {
+  @apply bg-list-item-hover text-text-primary;
+}
+
+.rail-item[aria-current='page'] {
+  @apply bg-list-item-current text-text-primary font-medium;
+}
+
+/* The offset keeps the ring visible against the current item's fill */
+.rail-item:focus-visible {
+  outline: 2px solid var(--color-focus-ring);
+  outline-offset: 2px;
+}
