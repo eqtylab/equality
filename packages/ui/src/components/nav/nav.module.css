@@ -60,8 +60,7 @@
   @apply overflow-visible px-0 pb-0;
 }
 
-/* One height whether it holds the switcher, a plain name or the loading bar: the site card's 32px,
-   a card rather than a 36px row */
+/* One height whether it holds the switcher, a plain name or the loading bar: the site card's 32px */
 .switcher-heading {
   @apply text-text-primary min-h-(--touch-target) m-0 flex h-8 min-w-0 items-center text-sm font-semibold;
 }
@@ -76,6 +75,10 @@
 
 .switcher-skeleton {
   @apply h-5 w-32;
+}
+
+.switcher-loading-label {
+  @apply sr-only;
 }
 
 /* Under the heading, so it outranks the size, fill and border SelectTrigger sets at rest whatever

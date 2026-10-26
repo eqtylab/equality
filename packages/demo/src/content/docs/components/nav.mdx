@@ -31,7 +31,7 @@ import {
 } from "@eqtylab/equality";
 ```
 
-Group the rows, each group with an optional label, and put a separator between groups:
+Group the rows, each group with an optional label, and put a separator between groups. Rows are 36px, and grow to 44px on touch screens:
 
 <NavListDemo client:only="react" />
 
@@ -58,6 +58,8 @@ Group the rows, each group with an optional label, and put a separator between g
   </NavListGroup>
 </NavList>
 ```
+
+Put a group inside another group to nest it one level, under a tree line. Nested rows take no `prefix` icon.
 
 `href` makes a plain link, which reloads the page. In an app with a router, such as React Router, put the router's link inside with `asChild` so it navigates without a reload:
 
@@ -89,16 +91,6 @@ Group the rows, each group with an optional label, and put a separator between g
   suffix={<Badge size="sm">12</Badge>}
   href="/controls"
 />
-```
-
-### Sizes
-
-`md` rows are 36px and `sm` rows 32px. Nothing else changes. On touch screens, every size grows to 44px rows.
-
-<NavListDemo client:only="react" variant="sizes" />
-
-```jsx
-<NavList size="sm">…</NavList>
 ```
 
 ## Drill-in
@@ -155,12 +147,11 @@ Your app sets the level with `value`, usually from the URL, so a bookmark or the
 const { policy } = useParams();
 const navigate = useNavigate();
 
-<NavDrill
-  value={policy ?? "project"}
-  onValueChange={(next) =>
-    navigate(next === "project" ? "/project" : `/policies/${next}`)
-  }
->
+function openLevel(level) {
+  navigate(level === "project" ? "/project" : `/policies/${level}`);
+}
+
+<NavDrill value={policy ?? "project"} onValueChange={openLevel}>
   …
 </NavDrill>;
 ```
@@ -227,7 +218,11 @@ On a phone, the sidebar comes in from the left in a [Sheet](/components/sheet). 
   <SheetTrigger asChild>
     <Button>Open navigation</Button>
   </SheetTrigger>
-  <SheetContainer side="left" style={{ minWidth: 0 }}>
+  <SheetContainer
+    side="left"
+    aria-describedby={undefined}
+    style={{ minWidth: 0 }}
+  >
     <SheetTitle className="sr-only">Navigation</SheetTitle>
     <NavList style={{ width: 264 }}>
       <NavDrill defaultValue="project">…</NavDrill>
@@ -244,7 +239,7 @@ On a phone, the sidebar comes in from the left in a [Sheet](/components/sheet). 
 | `NavRailItem`      | An icon link in the rail, with its label as a tooltip                               |
 | `NavPanel`         | The sidebar panel; its `header` holds a `NavSwitcher`, or `<NavSwitcher loading />` |
 | `NavSwitcher`      | Switches between items such as projects, in the panel's header                      |
-| `NavList`          | Root of the rows; sets their size                                                   |
+| `NavList`          | Root of the rows                                                                    |
 | `NavListGroup`     | A list of rows, with an optional label                                              |
 | `NavListItem`      | A row: a link, or a button when it has no `href`                                    |
 | `NavListSeparator` | Divider between groups                                                              |
@@ -293,12 +288,6 @@ On a phone, the sidebar comes in from the left in a [Sheet](/components/sheet). 
 
 With `loading`, the switcher takes no other props.
 
-### NavList
-
-| Name   | Description                       | Type       | Default | Required |
-| ------ | --------------------------------- | ---------- | ------- | -------- |
-| `size` | Row height for every group inside | `md`, `sm` | `md`    | ❌       |
-
 ### NavListGroup
 
 | Name    | Description            | Type     | Default | Required |
@@ -328,9 +317,9 @@ With `loading`, the switcher takes no other props.
 
 ### NavDrillLevel
 
-| Name        | Description                                          | Type     | Default | Required      |
-| ----------- | ---------------------------------------------------- | -------- | ------- | ------------- |
-| `value`     | The `NavDrill` value that shows it                   | `string` |         | ✅            |
-| `parent`    | The `value` ‹ returns to; adds the ‹ row             | `string` |         | ❌            |
-| `label`     | Names where you are, on the ‹ row                    | `string` |         | With `parent` |
-| `backLabel` | The ‹ row's accessible name; must start with `label` | `string` | `label` | ❌            |
+| Name        | Description                                          | Type     | Default         | Required      |
+| ----------- | ---------------------------------------------------- | -------- | --------------- | ------------- |
+| `value`     | The `NavDrill` value that shows it                   | `string` |                 | ✅            |
+| `parent`    | The `value` ‹ returns to; adds the ‹ row             | `string` |                 | ❌            |
+| `label`     | Names where you are, on the ‹ row                    | `string` |                 | With `parent` |
+| `backLabel` | The ‹ row's accessible name; must start with `label` | `string` | `{label}, back` | ❌            |

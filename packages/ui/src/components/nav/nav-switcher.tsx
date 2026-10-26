@@ -164,8 +164,12 @@ NavSwitcherSelect.displayName = 'NavSwitcherSelect';
 // Goes in NavPanel's header
 const NavSwitcher = React.forwardRef<HTMLButtonElement, NavSwitcherProps>((props, ref) =>
   props.loading ? (
-    <div className={cn(styles['switcher-heading'], styles['switcher-placeholder'])}>
+    <div
+      className={cn(styles['switcher-heading'], styles['switcher-placeholder'])}
+      aria-busy="true"
+    >
       <Skeleton className={styles['switcher-skeleton']} />
+      <span className={styles['switcher-loading-label']}>Loading</span>
     </div>
   ) : (
     <NavSwitcherSelect ref={ref} {...props} />

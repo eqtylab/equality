@@ -38,9 +38,8 @@ describe('theme/decisions.css', () => {
     expect(css).toMatch(/--touch-target:\s*0px/);
   });
 
-  it('makes sm one 4px step shorter and changes nothing else', () => {
-    const sm = css.match(/\[data-size=['"]?sm['"]?\]\s*\{([^}]*)\}/)![1];
-    expect(sm.trim()).toMatch(/^--list-item-height:\s*calc\(var\(--spacing\) \* 8\);?$/);
+  it('has one row size, with no size variants', () => {
+    expect(css).not.toMatch(/\[data-size/);
   });
 
   it('sets a 44px touch target under a coarse pointer', () => {

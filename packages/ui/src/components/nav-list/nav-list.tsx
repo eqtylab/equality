@@ -8,16 +8,11 @@ import { cn } from '@/lib/utils';
 
 const ListDepthContext = React.createContext(0);
 
-interface NavListProps extends React.HTMLAttributes<HTMLDivElement> {
-  /** Row height for every group inside: `sm` is one 4px step shorter */
-  size?: 'md' | 'sm';
-}
+type NavListProps = React.HTMLAttributes<HTMLDivElement>;
 
-const NavList = React.forwardRef<HTMLDivElement, NavListProps>(
-  ({ size = 'md', className, ...props }, ref) => (
-    <div ref={ref} data-size={size} className={cn(styles.root, className)} {...props} />
-  )
-);
+const NavList = React.forwardRef<HTMLDivElement, NavListProps>(({ className, ...props }, ref) => (
+  <div ref={ref} className={cn(styles.root, className)} {...props} />
+));
 NavList.displayName = 'NavList';
 
 interface NavListGroupProps extends React.HTMLAttributes<HTMLDivElement> {
@@ -30,7 +25,7 @@ const NavListGroup = React.forwardRef<HTMLDivElement, NavListGroupProps>(
     const labelId = React.useId();
     const depth = React.useContext(ListDepthContext);
 
-    return (
+    const group = (
       <div
         ref={ref}
         className={cn(styles.group, !label && styles['group-unlabelled'], className)}
@@ -50,6 +45,9 @@ const NavListGroup = React.forwardRef<HTMLDivElement, NavListGroupProps>(
         </ul>
       </div>
     );
+
+    // Inside another group's list, anything but an <li> is invalid HTML
+    return depth > 0 ? <li>{group}</li> : group;
   }
 );
 NavListGroup.displayName = 'NavListGroup';
@@ -137,9 +135,14 @@ const NavListItem = React.forwardRef<HTMLElement, NavListItemProps>(
 );
 NavListItem.displayName = 'NavListItem';
 
-const NavListSeparator = ({ className, ...props }: React.HTMLAttributes<HTMLHRElement>) => (
-  <hr className={cn(styles.separator, className)} {...props} />
-);
+const NavListSeparator = ({ className, ...props }: React.HTMLAttributes<HTMLElement>) => {
+  const depth = React.useContext(ListDepthContext);
+  return depth > 0 ? (
+    <li role="separator" className={cn(styles.separator, className)} {...props} />
+  ) : (
+    <hr className={cn(styles.separator, className)} {...props} />
+  );
+};
 
 export { NavList, NavListGroup, NavListItem, NavListSeparator };
 export type { NavListGroupProps, NavListItemProps, NavListProps };

@@ -105,7 +105,7 @@ describe('NavDrill', () => {
     fireEvent.click(screen.getByRole('link', { name: 'Ben Project' }));
     expect(screen.getByRole('link', { name: 'Ben overview' })).toBeTruthy();
     expect(screen.queryByRole('link', { name: 'Overview' })).toBeNull();
-    fireEvent.click(screen.getByRole('button', { name: 'Ben Project' }));
+    fireEvent.click(screen.getByRole('button', { name: 'Ben Project, back' }));
     expect(screen.getByRole('link', { name: 'Overview' })).toBeTruthy();
   });
 
@@ -121,14 +121,14 @@ describe('NavDrill', () => {
   it('controlled: ‹ calls onValueChange(parent, "back")', () => {
     const onValueChange = vi.fn();
     render(<Controlled initial="ben" follow={false} onValueChange={onValueChange} />);
-    fireEvent.click(screen.getByRole('button', { name: 'Ben Project' }));
+    fireEvent.click(screen.getByRole('button', { name: 'Ben Project, back' }));
     expect(onValueChange).toHaveBeenCalledWith('projects', 'back');
     expect(screen.getByRole('link', { name: 'Ben overview' })).toBeTruthy();
   });
 
   it('‹ goes to the named parent after a deep link', () => {
     render(<Uncontrolled defaultValue="ben-settings" animate={false} />);
-    fireEvent.click(screen.getByRole('button', { name: 'Settings' }));
+    fireEvent.click(screen.getByRole('button', { name: 'Settings, back' }));
     expect(screen.getByRole('link', { name: 'Ben overview' })).toBeTruthy();
   });
 
@@ -144,13 +144,47 @@ describe('NavDrill', () => {
     expect(document.querySelector('hr')).toBeNull();
   });
 
-  it('draws ‹ at the top of a level with a parent, named by its label', () => {
+  it('draws ‹ at the top of a level with a parent, named "{label}, back"', () => {
     render(<Uncontrolled defaultValue="ben" />);
     const level = liveLevels()[0];
-    const back = screen.getByRole('button', { name: 'Ben Project' });
+    const back = screen.getByRole('button', { name: 'Ben Project, back' });
     expect(level.firstElementChild).toBe(back);
     expect(back.getAttribute('data-slot')).toBe('nav-drill-back');
     expect(back.nextElementSibling?.tagName).toBe('HR');
+  });
+
+  it('warns when backLabel does not start with label', () => {
+    const warn = vi.spyOn(console, 'warn').mockImplementation(() => {});
+    render(
+      <NavList>
+        <NavDrill defaultValue="ben">
+          <NavDrillLevel value="ben" parent="projects" label="Ben Project" backLabel="Go back" />
+        </NavDrill>
+      </NavList>
+    );
+    expect(warn).toHaveBeenCalledTimes(1);
+    expect(warn.mock.calls[0][0]).toContain('Ben Project');
+  });
+
+  it('focuses the first row after a drill into a level with no parent', () => {
+    render(
+      <NavList>
+        <NavDrill defaultValue="a" animate={false}>
+          <NavDrillLevel value="a">
+            <NavListGroup>
+              <NavListItem label="Open B" drill="b" />
+            </NavListGroup>
+          </NavDrillLevel>
+          <NavDrillLevel value="b">
+            <NavListGroup>
+              <NavListItem label="B row" href="#b" />
+            </NavListGroup>
+          </NavDrillLevel>
+        </NavDrill>
+      </NavList>
+    );
+    fireEvent.click(screen.getByRole('button', { name: 'Open B' }));
+    expect(document.activeElement).toBe(screen.getByRole('link', { name: 'B row' }));
   });
 
   it('names ‹ with backLabel when given', () => {
@@ -194,7 +228,7 @@ describe('NavDrill', () => {
 
   it('slides back with the back keyframes and the leaving level above', () => {
     render(<Uncontrolled defaultValue="ben" />);
-    fireEvent.click(screen.getByRole('button', { name: 'Ben Project' }));
+    fireEvent.click(screen.getByRole('button', { name: 'Ben Project, back' }));
     const [current, previous] = animateCalls;
     expect(current.keyframes).toEqual([
       { transform: 'translateX(-15%)', opacity: 0.55 },
@@ -212,7 +246,7 @@ describe('NavDrill', () => {
   // React gets round to unmounting it
   it('hides the leaving level in the same microtask its animations finish', async () => {
     render(<Uncontrolled defaultValue="ben" />);
-    fireEvent.click(screen.getByRole('button', { name: 'Ben Project' }));
+    fireEvent.click(screen.getByRole('button', { name: 'Ben Project, back' }));
     const leaving = ghost()!;
     finishAll();
     for (let i = 0; i < 5; i++) await Promise.resolve();
@@ -292,7 +326,7 @@ describe('NavDrill', () => {
     render(<Uncontrolled />);
     fireEvent.click(screen.getByRole('link', { name: 'Ben Project' }));
     const first = animateCalls.slice(0, 2);
-    fireEvent.click(screen.getByRole('button', { name: 'Ben Project' }));
+    fireEvent.click(screen.getByRole('button', { name: 'Ben Project, back' }));
     expect(screen.getByRole('link', { name: 'Overview' })).toBeTruthy();
     expect(first.every((call) => call.cancel.mock.calls.length === 1)).toBe(true);
     expect(animateCalls).toHaveLength(4);
@@ -350,18 +384,18 @@ describe('NavDrill', () => {
   it('focuses ‹ after a drill it saw', () => {
     render(<Uncontrolled />);
     fireEvent.click(screen.getByRole('link', { name: 'Ben Project' }));
-    expect(document.activeElement).toBe(screen.getByRole('button', { name: 'Ben Project' }));
+    expect(document.activeElement).toBe(screen.getByRole('button', { name: 'Ben Project, back' }));
   });
 
   it('focuses the row you came from after ‹', () => {
     render(<Uncontrolled defaultValue="ben" />);
-    fireEvent.click(screen.getByRole('button', { name: 'Ben Project' }));
+    fireEvent.click(screen.getByRole('button', { name: 'Ben Project, back' }));
     expect(document.activeElement).toBe(screen.getByRole('link', { name: 'Ben Project' }));
   });
 
   it('focuses the current row after ‹ when no row leads back', () => {
     render(<Uncontrolled defaultValue="orphan" />);
-    fireEvent.click(screen.getByRole('button', { name: 'Orphan' }));
+    fireEvent.click(screen.getByRole('button', { name: 'Orphan, back' }));
     expect(document.activeElement).toBe(screen.getByRole('link', { name: 'Overview' }));
   });
 
@@ -388,7 +422,7 @@ describe('NavDrill', () => {
         </NavDrill>
       </NavList>
     );
-    fireEvent.click(screen.getByRole('button', { name: 'Ben Project' }));
+    fireEvent.click(screen.getByRole('button', { name: 'Ben Project, back' }));
     expect(document.activeElement).toBe(document.body);
     act(() => release());
     await waitFor(() =>
@@ -398,7 +432,7 @@ describe('NavDrill', () => {
 
   it('leaves focus alone after ‹ if focus moved outside the drill', () => {
     render(<Controlled initial="ben" follow={false} />);
-    fireEvent.click(screen.getByRole('button', { name: 'Ben Project' }));
+    fireEvent.click(screen.getByRole('button', { name: 'Ben Project, back' }));
     const outside = screen.getByRole('button', { name: 'go:projects' });
     outside.focus();
     fireEvent.click(outside);
@@ -437,7 +471,7 @@ describe('NavDrill', () => {
         <a href="#page">A page link</a>
       </>
     );
-    fireEvent.click(screen.getByRole('button', { name: 'Ben Project' }));
+    fireEvent.click(screen.getByRole('button', { name: 'Ben Project, back' }));
     fireEvent.pointerDown(screen.getByRole('link', { name: 'A page link' }));
     act(() => release());
     await act(async () => {});

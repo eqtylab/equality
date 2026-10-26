@@ -57,8 +57,7 @@ function rowHtml(label: string): string {
 }
 
 describe('DocsNavList', () => {
-  it('renders the docs tree on NavList parts at sm density', () => {
-    expect(html).toContain('data-size="sm"');
+  it('renders the docs tree on NavList parts', () => {
     expect(html).toMatch(
       /<a[^>]*aria-current="page"[^>]*href="\/components\/button"|<a[^>]*href="\/components\/button"[^>]*aria-current="page"/
     );

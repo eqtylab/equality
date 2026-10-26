@@ -16,7 +16,7 @@ export function DocsNavList({ nodes }: { nodes: NavNode[] }) {
   }
 
   return (
-    <NavList size="sm">
+    <NavList>
       {sections.map((section, index) => (
         <NavListGroup key={section.label ?? index} label={section.label}>
           <Rows nodes={section.nodes} depth={0} />
@@ -31,11 +31,9 @@ function Rows({ nodes, depth }: { nodes: NavNode[]; depth: number }) {
     <>
       {nodes.map((node) =>
         node.kind === 'group' && node.children?.length ? (
-          <li key={node.name}>
-            <NavListGroup label={node.label}>
-              <Rows nodes={node.children} depth={depth + 1} />
-            </NavListGroup>
-          </li>
+          <NavListGroup key={node.name} label={node.label}>
+            <Rows nodes={node.children} depth={depth + 1} />
+          </NavListGroup>
         ) : (
           <NavListItem
             key={node.name}

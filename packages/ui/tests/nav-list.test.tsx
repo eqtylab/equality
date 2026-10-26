@@ -112,27 +112,44 @@ describe('NavList rows', () => {
     expect(unlabelled.hasAttribute('aria-labelledby')).toBe(false);
   });
 
-  it('sets data-size from NavList and defaults to md', () => {
-    const { container, rerender } = render(<NavList />);
-    expect(container.firstElementChild!.getAttribute('data-size')).toBe('md');
-    rerender(<NavList size="sm" />);
-    expect(container.firstElementChild!.getAttribute('data-size')).toBe('sm');
+  it('takes no size', () => {
+    // @ts-expect-error NavList has one row size
+    const { container } = render(<NavList size="sm" />);
+    expect(container.firstElementChild!.hasAttribute('data-size')).toBe(false);
   });
 
-  it('marks a group inside a list item as nested', () => {
+  it('wraps a nested group in its own list item and marks it nested', () => {
     render(
       <NavList>
         <NavListGroup label="Docs">
-          <li>
-            <NavListGroup label="Components">
-              <NavListItem label="Button" href="/button" />
-            </NavListGroup>
-          </li>
+          <NavListItem label="Introduction" href="/" />
+          <NavListGroup label="Components">
+            <NavListItem label="Button" href="/button" />
+          </NavListGroup>
         </NavListGroup>
       </NavList>
     );
-    expect(screen.getByRole('list', { name: 'Docs' }).getAttribute('data-depth')).toBe('0');
-    expect(screen.getByRole('list', { name: 'Components' }).getAttribute('data-depth')).toBe('1');
+    const outer = screen.getByRole('list', { name: 'Docs' });
+    const inner = screen.getByRole('list', { name: 'Components' });
+    expect(outer.getAttribute('data-depth')).toBe('0');
+    expect(inner.getAttribute('data-depth')).toBe('1');
+    expect([...outer.children].every((child) => child.tagName === 'LI')).toBe(true);
+    expect(inner.closest('li')?.parentElement).toBe(outer);
+  });
+
+  it('puts a separator inside a group in its own list item', () => {
+    render(
+      <NavList>
+        <NavListGroup label="Pages">
+          <NavListItem label="Home" href="/" />
+          <NavListSeparator />
+          <NavListItem label="Settings" href="/settings" />
+        </NavListGroup>
+      </NavList>
+    );
+    const list = screen.getByRole('list', { name: 'Pages' });
+    expect([...list.children].every((child) => child.tagName === 'LI')).toBe(true);
+    expect(screen.getByRole('separator').tagName).toBe('LI');
   });
 
   it('drill-without-nav-drill: renders › and still runs onClick', () => {

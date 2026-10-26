@@ -31,6 +31,12 @@ describe('Nav shell', () => {
     expect(html).toContain('data-nav-scroller');
   });
 
+  it('marks the loading switcher busy and says so to screen readers', () => {
+    const { container } = render(<NavSwitcher loading />);
+    expect(container.querySelector('[aria-busy="true"]')).not.toBeNull();
+    expect(screen.getByText('Loading')).toBeTruthy();
+  });
+
   it('names the panel landmark and shows title as a heading', () => {
     render(<NavPanel aria-label="Settings" title="Organisation settings" />);
     expect(screen.getByRole('navigation', { name: 'Settings' })).toBeTruthy();

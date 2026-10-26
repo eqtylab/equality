@@ -127,33 +127,6 @@ function NavListPrefixSuffixDemo() {
   );
 }
 
-function NavListSizesDemo() {
-  const sizes = ["md", "sm"] as const;
-  return (
-    <div style={{ display: "flex", flexWrap: "wrap", gap: 16 }}>
-      {sizes.map((size) => (
-        <div key={size} style={frame}>
-          <NavList size={size}>
-            <NavListGroup label={size}>
-              <NavListItem
-                label="Dashboard"
-                prefix={<LayoutGrid />}
-                href="#size"
-                current
-              />
-              <NavListItem
-                label="Indicators"
-                prefix={<Activity />}
-                href="#size"
-              />
-            </NavListGroup>
-          </NavList>
-        </div>
-      ))}
-    </div>
-  );
-}
-
 const APPLIED_POLICIES = [
   ["eu-ai-act", "EU AI Act"],
   ["nist-ai-rmf", "NIST AI RMF"],
@@ -314,7 +287,6 @@ function NavListDrillControlledDemo() {
 const VARIANTS = {
   default: NavListGroupsDemo,
   "prefix-suffix": NavListPrefixSuffixDemo,
-  sizes: NavListSizesDemo,
   drill: NavListDrillDemo,
   "drill-sheet": NavListDrillSheetDemo,
   "drill-controlled": NavListDrillControlledDemo,

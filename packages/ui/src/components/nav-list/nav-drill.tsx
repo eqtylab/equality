@@ -137,7 +137,8 @@ const NavDrill = React.forwardRef<HTMLDivElement, NavDrillProps>(
       const live = liveLevel();
       const target =
         pending.direction === 'drill'
-          ? live?.querySelector<HTMLElement>('[data-slot="nav-drill-back"]')
+          ? (live?.querySelector<HTMLElement>('[data-slot="nav-drill-back"]') ??
+            live?.querySelector<HTMLElement>('[data-slot="nav-list-item"]'))
           : (live?.querySelector<HTMLElement>(`[data-drill="${CSS.escape(pending.from ?? '')}"]`) ??
             live?.querySelector<HTMLElement>('[aria-current="page"]'));
       if (!target) return;
@@ -290,10 +291,10 @@ interface NavDrillLevelBaseProps extends React.HTMLAttributes<HTMLDivElement> {
 
 interface NavDrillChildLevelProps extends NavDrillLevelBaseProps {
   /** The `value` ‹ returns to; draws the ‹ row at the top of the level */
-  parent: string;
+  parent?: string;
   /** Names where you are, on the ‹ row */
   label: string;
-  /** The ‹ row's accessible name, when it says more; must start with `label` (WCAG 2.5.3) */
+  /** The ‹ row's accessible name; must start with `label` (WCAG 2.5.3) */
   backLabel?: string;
 }
 
@@ -309,6 +310,14 @@ const NavDrillLevel = React.forwardRef<HTMLDivElement, NavDrillLevelProps>(
   ({ value, parent, label, backLabel, className, children, ...props }, ref) => {
     const requestBack = React.useContext(NavDrillBackContext);
 
+    React.useEffect(() => {
+      if (parent !== undefined && backLabel && label && !backLabel.startsWith(label)) {
+        console.warn(
+          `NavDrillLevel: backLabel "${backLabel}" must start with label "${label}", so voice users can say what they see (WCAG 2.5.3)`
+        );
+      }
+    }, [parent, label, backLabel]);
+
     return (
       <div
         ref={ref}
@@ -322,7 +331,7 @@ const NavDrillLevel = React.forwardRef<HTMLDivElement, NavDrillLevelProps>(
             <button
               type="button"
               data-slot="nav-drill-back"
-              aria-label={backLabel}
+              aria-label={backLabel ?? `${label}, back`}
               className={cn(styles.item, styles.back)}
               onClick={() => requestBack(parent)}
             >

@@ -20,7 +20,7 @@
 /* DECISIONS: Equality's names, --{thing}-{property}. Parts read only these: h-(--list-item-height). */
 :root {
   /* list-item: one selectable row (NavListItem; later DropdownMenuItem, SelectItem, CommandItem) */
-  --list-item-height: calc(var(--spacing) * 9); /* 36 (md) */
+  --list-item-height: calc(var(--spacing) * 9); /* 36 */
   --list-item-padding-x: calc(var(--spacing) * 2); /* 8 */
   --list-item-gap: calc(var(--spacing) * 2); /* 8, icon to text */
   --list-item-icon-size: calc(var(--spacing) * 4); /* 16 */
@@ -35,11 +35,6 @@
   --control-height: calc(var(--spacing) * 10); /* 40: rail item; later Button, Input */
   /* touch: the minimum tap target */
   --touch-target: 0px;
-}
-
-/* Density, as Material does it: one 4px step shorter. The only sm line. */
-[data-size='sm'] {
-  --list-item-height: calc(var(--spacing) * 8); /* 32 */
 }
 
 /* Touch is not a size. */

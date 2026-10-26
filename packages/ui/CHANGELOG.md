@@ -15,10 +15,10 @@ or count in a suffix is meaningful, so it is heard as part of the row.
 ### Added
 
 - `NavList`, `NavListGroup`, `NavListItem` and `NavListSeparator`: rows of links or buttons in
-  groups, at two sizes, `md` (36px rows) and `sm` (32px).
+  groups. Rows are 36px.
 - `NavDrill` and `NavDrillLevel`: levels that slide in and out, controlled or uncontrolled. A level
-  with a `parent` draws its own ‹ row. They slide only after a drill row or ‹ asked for them, and move focus after the
-  changes they asked for.
+  with a `parent` draws its own ‹ row. They slide only after a drill row or ‹ asked for them, and
+  move focus after the changes they asked for.
 - `NavRail`, `NavRailItem`, `NavPanel`, `NavSwitcher` (with `loading`) and `blockClosedTypeahead`:
   the sidebar frame from Studio.
 - `theme/decisions.css`: the list, control and touch sizes the parts read, such as
