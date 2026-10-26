@@ -1,0 +1,108 @@
+---
+title: "Nav"
+description: "An app's sidebar: an icon rail beside a panel with a switcher header and a Menu that drills in"
+---
+
+import { NavDemo } from "@demo/components/demo/nav";
+
+## Overview
+
+The `Nav` parts are an app's sidebar frame. `NavRail` is the column of icon links on the left; `NavPanel` is the panel beside it, a `<nav>` landmark with a header and a scrolling body. The rows inside are a [Menu](/components/menu), and a panel that drills in holds a `MenuDrill`.
+
+`NavSwitcher` goes in the panel's header to switch between items such as projects. With one option and no action it is a plain heading.
+
+<NavDemo client:only="react" />
+
+## Usage
+
+Import the parts:
+
+```tsx
+import {
+  Menu,
+  MenuDrill,
+  MenuDrillLevel,
+  NavPanel,
+  NavRail,
+  NavRailItem,
+  NavSwitcher,
+} from "@eqtylab/equality";
+```
+
+Compose a rail and a panel:
+
+```tsx
+<NavRail aria-label="Main">
+  <NavRailItem icon={<FolderKanban />} label="Projects" href="/projects" current />
+</NavRail>
+<NavPanel
+  aria-label={`Project: ${project.name}`}
+  header={
+    <NavSwitcher
+      label={project.name}
+      noun="project"
+      collection="projects"
+      options={projects}
+      value={project.id}
+      onValueChange={switchProject}
+    />
+  }
+>
+  <Menu>
+    <MenuDrill view={view} onViewChange={handleViewChange}>
+      <MenuDrillLevel value="project">…</MenuDrillLevel>
+    </MenuDrill>
+  </Menu>
+</NavPanel>
+```
+
+`NavPanel` marks its scroller with `data-menu-scroller`, so a `MenuDrill` inside scrolls it back to the top on every change of level. While ‹ is on show, the header sits 2px above it.
+
+The switcher's trigger stops a typed letter from picking an item while its list is closed: a switch navigates, and focus lands on the trigger afterwards. Use `blockClosedTypeahead` on any other `Select` trigger that navigates.
+
+## Slots
+
+| Name     | Description                                                                    |
+| -------- | ------------------------------------------------------------------------------ |
+| `header` | Above the rows in `NavPanel`, such as a `NavSwitcher` or a loading placeholder |
+
+## Props
+
+### NavRail
+
+| Name         | Description               | Type     | Default | Required |
+| ------------ | ------------------------- | -------- | ------- | -------- |
+| `aria-label` | Names the rail's landmark | `string` |         | ✅       |
+
+### NavRailItem
+
+| Name      | Description                                               | Type        | Default | Required |
+| --------- | --------------------------------------------------------- | ----------- | ------- | -------- |
+| `icon`    | The item's only visible content                           | `ReactNode` |         | ✅       |
+| `label`   | The item's accessible name and its tooltip                | `string`    |         | ✅       |
+| `current` | Marks the item as the section on show                     | `boolean`   | `false` | ❌       |
+| `asChild` | Renders the item as its only child, such as a router link | `boolean`   | `false` | ❌       |
+
+### NavPanel
+
+| Name         | Description                    | Type        | Default | Required |
+| ------------ | ------------------------------ | ----------- | ------- | -------- |
+| `aria-label` | Names the panel's landmark     | `string`    |         | ✅       |
+| `title`      | The panel's name, as a heading | `string`    |         | ❌       |
+| `header`     | Anything else above the rows   | `ReactNode` |         | ❌       |
+
+### NavSwitcher
+
+| Name             | Description                                                | Type                                      | Default | Required |
+| ---------------- | ---------------------------------------------------------- | ----------------------------------------- | ------- | -------- |
+| `label`          | The current item's name, shown as the panel's heading      | `string`                                  |         | ✅       |
+| `noun`           | Singular, for the trigger's name: `{label}, switch {noun}` | `string`                                  |         | ✅       |
+| `collection`     | Plural, for the search and empty copy                      | `string`                                  |         | ✅       |
+| `options`        | The items to switch between                                | `{ value, label, keywords? }[]`           |         | ✅       |
+| `value`          | The current item's value                                   | `string`                                  |         | ✅       |
+| `onValueChange`  | Called with the picked item's value                        | `(value: string) => void`                 |         | ✅       |
+| `onHighlight`    | Hover or focus on an option, to warm its destination       | `(value: string) => void`                 |         | ❌       |
+| `onHighlightEnd` | Hover or focus leaves an option                            | `() => void`                              |         | ❌       |
+| `action`         | Pinned to the list's foot, such as creating a new item     | `{ label: string; onSelect: () => void }` |         | ❌       |
+
+`NavSwitcherPlaceholder` holds the switcher's height while the current item loads.
