@@ -4,30 +4,33 @@ import { fireEvent, render, screen } from '@testing-library/react';
 import { describe, expect, it, vi } from 'vitest';
 
 import { Badge } from '@/components/badge/badge';
-import { Menu, MenuGroup, MenuItem, MenuList, MenuSeparator } from '@/components/menu/menu';
-import { MenuDrillContext } from '@/components/menu/menu-drill-context';
+import { NavDrillContext } from '@/components/nav-list/nav-drill-context';
+import {
+  NavList,
+  NavListGroup,
+  NavListItem,
+  NavListSeparator,
+} from '@/components/nav-list/nav-list';
 
 function withDrill(ui: React.ReactNode, requestDrill = vi.fn(), leaving = false) {
   return {
     requestDrill,
     ...render(
-      <MenuDrillContext.Provider value={{ requestDrill, leaving }}>{ui}</MenuDrillContext.Provider>
+      <NavDrillContext.Provider value={{ requestDrill, leaving }}>{ui}</NavDrillContext.Provider>
     ),
   };
 }
 
-describe('Menu rows', () => {
+describe('NavList rows', () => {
   it('server-renders every row part', () => {
     const html = renderToString(
-      <Menu>
-        <MenuGroup label="Pages">
-          <MenuList>
-            <MenuItem label="Home" href="/" prefix={<svg />} suffix={<Badge>3</Badge>} current />
-            <MenuItem label="Policies" drill="policies" />
-          </MenuList>
-        </MenuGroup>
-        <MenuSeparator />
-      </Menu>
+      <NavList>
+        <NavListGroup label="Pages">
+          <NavListItem label="Home" href="/" prefix={<svg />} suffix={<Badge>3</Badge>} current />
+          <NavListItem label="Policies" drill="policies" />
+        </NavListGroup>
+        <NavListSeparator />
+      </NavList>
     );
     expect(html).toContain('href="/"');
     expect(html).toContain('aria-current="page"');
@@ -37,20 +40,20 @@ describe('Menu rows', () => {
 
   it('renders a link with href, the child with asChild, and a button otherwise', () => {
     render(
-      <Menu>
-        <MenuList>
-          <MenuItem label="Home" href="/home" />
-          <MenuItem label="Docs" asChild>
+      <NavList>
+        <NavListGroup>
+          <NavListItem label="Home" href="/home" />
+          <NavListItem label="Docs" asChild>
             <a href="/docs" data-router-link="" />
-          </MenuItem>
-          <MenuItem label="Settings" />
-        </MenuList>
-      </Menu>
+          </NavListItem>
+          <NavListItem label="Settings" />
+        </NavListGroup>
+      </NavList>
     );
     expect(screen.getByRole('link', { name: 'Home' }).getAttribute('href')).toBe('/home');
     const docs = screen.getByRole('link', { name: 'Docs' });
     expect(docs.hasAttribute('data-router-link')).toBe(true);
-    expect(docs.getAttribute('data-slot')).toBe('menu-item');
+    expect(docs.getAttribute('data-slot')).toBe('nav-list-item');
     const settings = screen.getByRole('button', { name: 'Settings' });
     expect(settings.getAttribute('type')).toBe('button');
     expect(screen.getAllByRole('listitem')).toHaveLength(3);
@@ -58,12 +61,12 @@ describe('Menu rows', () => {
 
   it('marks the current row with aria-current="page" and no other', () => {
     render(
-      <Menu>
-        <MenuList>
-          <MenuItem label="Home" href="/" />
-          <MenuItem label="Docs" href="/docs" current />
-        </MenuList>
-      </Menu>
+      <NavList>
+        <NavListGroup>
+          <NavListItem label="Home" href="/" />
+          <NavListItem label="Docs" href="/docs" current />
+        </NavListGroup>
+      </NavList>
     );
     expect(screen.getByRole('link', { name: 'Docs' }).getAttribute('aria-current')).toBe('page');
     expect(screen.getByRole('link', { name: 'Home' }).hasAttribute('aria-current')).toBe(false);
@@ -72,16 +75,16 @@ describe('Menu rows', () => {
 
   it('reads the suffix out and hides the drill caret', () => {
     render(
-      <Menu>
-        <MenuList>
-          <MenuItem
+      <NavList>
+        <NavListGroup>
+          <NavListItem
             label="Policies"
             prefix={<svg data-testid="prefix" />}
             suffix={<Badge>3</Badge>}
             drill="p"
           />
-        </MenuList>
-      </Menu>
+        </NavListGroup>
+      </NavList>
     );
     const row = screen.getByRole('button', { name: /^Policies\s*3$/ });
     expect(row).toBeTruthy();
@@ -93,18 +96,14 @@ describe('Menu rows', () => {
 
   it('names a list by its group label', () => {
     render(
-      <Menu>
-        <MenuGroup label="Applied Policies">
-          <MenuList>
-            <MenuItem label="AI Baseline" />
-          </MenuList>
-        </MenuGroup>
-        <MenuGroup>
-          <MenuList>
-            <MenuItem label="Settings" />
-          </MenuList>
-        </MenuGroup>
-      </Menu>
+      <NavList>
+        <NavListGroup label="Applied Policies">
+          <NavListItem label="AI Baseline" />
+        </NavListGroup>
+        <NavListGroup>
+          <NavListItem label="Settings" />
+        </NavListGroup>
+      </NavList>
     );
     const [labelled, unlabelled] = screen.getAllByRole('list');
     const id = labelled.getAttribute('aria-labelledby')!;
@@ -113,39 +112,37 @@ describe('Menu rows', () => {
     expect(unlabelled.hasAttribute('aria-labelledby')).toBe(false);
   });
 
-  it('sets data-size from Menu and defaults to md', () => {
-    const { container, rerender } = render(<Menu />);
+  it('sets data-size from NavList and defaults to md', () => {
+    const { container, rerender } = render(<NavList />);
     expect(container.firstElementChild!.getAttribute('data-size')).toBe('md');
-    rerender(<Menu size="sm" />);
+    rerender(<NavList size="sm" />);
     expect(container.firstElementChild!.getAttribute('data-size')).toBe('sm');
   });
 
-  it('marks a list inside a list item as nested', () => {
+  it('marks a group inside a list item as nested', () => {
     render(
-      <Menu>
-        <MenuList data-testid="outer">
+      <NavList>
+        <NavListGroup label="Docs">
           <li>
-            <MenuGroup label="Components">
-              <MenuList data-testid="inner">
-                <MenuItem label="Button" href="/button" />
-              </MenuList>
-            </MenuGroup>
+            <NavListGroup label="Components">
+              <NavListItem label="Button" href="/button" />
+            </NavListGroup>
           </li>
-        </MenuList>
-      </Menu>
+        </NavListGroup>
+      </NavList>
     );
-    expect(screen.getByTestId('outer').getAttribute('data-depth')).toBe('0');
-    expect(screen.getByTestId('inner').getAttribute('data-depth')).toBe('1');
+    expect(screen.getByRole('list', { name: 'Docs' }).getAttribute('data-depth')).toBe('0');
+    expect(screen.getByRole('list', { name: 'Components' }).getAttribute('data-depth')).toBe('1');
   });
 
-  it('drill-without-menu-drill: renders › and still runs onClick', () => {
+  it('drill-without-nav-drill: renders › and still runs onClick', () => {
     const onClick = vi.fn();
     render(
-      <Menu>
-        <MenuList>
-          <MenuItem label="Policies" drill="p" onClick={onClick} />
-        </MenuList>
-      </Menu>
+      <NavList>
+        <NavListGroup>
+          <NavListItem label="Policies" drill="p" onClick={onClick} />
+        </NavListGroup>
+      </NavList>
     );
     const row = screen.getByRole('button', { name: 'Policies' });
     expect(row.querySelector('.lucide-chevron-right')).not.toBeNull();
@@ -155,9 +152,9 @@ describe('Menu rows', () => {
 
   it('requests a drill on a plain click', () => {
     const { requestDrill } = withDrill(
-      <MenuList>
-        <MenuItem label="Policies" drill="p" />
-      </MenuList>
+      <NavListGroup>
+        <NavListItem label="Policies" drill="p" />
+      </NavListGroup>
     );
     fireEvent.click(screen.getByRole('button', { name: 'Policies' }));
     expect(requestDrill).toHaveBeenCalledWith('p');
@@ -165,11 +162,11 @@ describe('Menu rows', () => {
 
   it('requests-drill-after-child-prevents-default', () => {
     const { requestDrill } = withDrill(
-      <MenuList>
-        <MenuItem label="Policies" asChild drill="p">
+      <NavListGroup>
+        <NavListItem label="Policies" asChild drill="p">
           <a href="/p" onClick={(e) => e.preventDefault()} />
-        </MenuItem>
-      </MenuList>
+        </NavListItem>
+      </NavListGroup>
     );
     fireEvent.click(screen.getByRole('link', { name: 'Policies' }));
     expect(requestDrill).toHaveBeenCalledWith('p');
@@ -177,9 +174,9 @@ describe('Menu rows', () => {
 
   it('makes no request on a ctrl, meta, shift, alt or middle click', () => {
     const { requestDrill } = withDrill(
-      <MenuList>
-        <MenuItem label="Policies" href="/p" drill="p" />
-      </MenuList>
+      <NavListGroup>
+        <NavListItem label="Policies" href="/p" drill="p" />
+      </NavListGroup>
     );
     const row = screen.getByRole('link', { name: 'Policies' });
     fireEvent.click(row, { ctrlKey: true });
@@ -192,9 +189,9 @@ describe('Menu rows', () => {
 
   it('marks the current row with data-current inside a leaving level', () => {
     withDrill(
-      <MenuList>
-        <MenuItem label="Docs" href="/docs" current />
-      </MenuList>,
+      <NavListGroup>
+        <NavListItem label="Docs" href="/docs" current />
+      </NavListGroup>,
       vi.fn(),
       true
     );
@@ -206,11 +203,11 @@ describe('Menu rows', () => {
   it('truncates a long label and keeps the full text in title', () => {
     const long = 'A very long policy name that will not fit in two hundred pixels';
     render(
-      <Menu>
-        <MenuList>
-          <MenuItem label={long} href="/p" />
-        </MenuList>
-      </Menu>
+      <NavList>
+        <NavListGroup>
+          <NavListItem label={long} href="/p" />
+        </NavListGroup>
+      </NavList>
     );
     const label = screen.getByText(long);
     expect(label.getAttribute('title')).toBe(long);

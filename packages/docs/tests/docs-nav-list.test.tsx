@@ -1,7 +1,7 @@
 import { renderToString } from 'react-dom/server';
 import { describe, expect, it } from 'vitest';
 
-import { DocsNavMenu } from '../src/runtime/chrome/DocsNavMenu.tsx';
+import { DocsNavList } from '../src/runtime/chrome/DocsNavList.tsx';
 import type { NavNode } from '../src/types.ts';
 
 const nodes: NavNode[] = [
@@ -48,7 +48,7 @@ const nodes: NavNode[] = [
   },
 ];
 
-const html = renderToString(<DocsNavMenu nodes={nodes} />);
+const html = renderToString(<DocsNavList nodes={nodes} />);
 
 function rowHtml(label: string): string {
   const end = html.indexOf(`>${label}</span>`);
@@ -56,8 +56,8 @@ function rowHtml(label: string): string {
   return html.slice(start, html.indexOf('</li>', end));
 }
 
-describe('DocsNavMenu', () => {
-  it('renders the docs tree on Menu parts at sm density', () => {
+describe('DocsNavList', () => {
+  it('renders the docs tree on NavList parts at sm density', () => {
     expect(html).toContain('data-size="sm"');
     expect(html).toMatch(
       /<a[^>]*aria-current="page"[^>]*href="\/components\/button"|<a[^>]*href="\/components\/button"[^>]*aria-current="page"/

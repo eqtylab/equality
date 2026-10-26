@@ -1,9 +1,9 @@
 import type { NavNode } from '@eqtylab/docs/types';
-import { Badge, Icon, Menu, MenuGroup, MenuItem, MenuList } from '@eqtylab/equality';
+import { Badge, Icon, NavList, NavListGroup, NavListItem } from '@eqtylab/equality';
 
-/** The sidebar on Equality's Menu parts. A draft that tests the names before 4.15.0 freezes them;
+/** The sidebar on Equality's NavList parts. A draft that tests the names before 4.15.0 freezes them;
  *  GRD-193 wires it into NavTree.astro and adds folding. */
-export function DocsNavMenu({ nodes }: { nodes: NavNode[] }) {
+export function DocsNavList({ nodes }: { nodes: NavNode[] }) {
   const sections: { label?: string; nodes: NavNode[] }[] = [];
   for (const node of nodes) {
     if (node.kind === 'group' && node.children?.length) {
@@ -16,28 +16,28 @@ export function DocsNavMenu({ nodes }: { nodes: NavNode[] }) {
   }
 
   return (
-    <Menu size="sm">
+    <NavList size="sm">
       {sections.map((section, index) => (
-        <MenuGroup key={section.label ?? index} label={section.label}>
+        <NavListGroup key={section.label ?? index} label={section.label}>
           <Rows nodes={section.nodes} depth={0} />
-        </MenuGroup>
+        </NavListGroup>
       ))}
-    </Menu>
+    </NavList>
   );
 }
 
 function Rows({ nodes, depth }: { nodes: NavNode[]; depth: number }) {
   return (
-    <MenuList>
+    <>
       {nodes.map((node) =>
         node.kind === 'group' && node.children?.length ? (
           <li key={node.name}>
-            <MenuGroup label={node.label}>
+            <NavListGroup label={node.label}>
               <Rows nodes={node.children} depth={depth + 1} />
-            </MenuGroup>
+            </NavListGroup>
           </li>
         ) : (
-          <MenuItem
+          <NavListItem
             key={node.name}
             label={node.label}
             href={node.href}
@@ -50,7 +50,7 @@ function Rows({ nodes, depth }: { nodes: NavNode[]; depth: number }) {
           />
         )
       )}
-    </MenuList>
+    </>
   );
 }
 

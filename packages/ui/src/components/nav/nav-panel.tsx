@@ -12,12 +12,12 @@ interface NavPanelProps extends Omit<React.HTMLAttributes<HTMLElement>, 'title'>
   header?: React.ReactNode;
 }
 
-// The sidebar's frame. A panel that drills puts a MenuDrill inside; the scroller is marked so the
+// The sidebar's frame. A panel that drills puts a NavDrill inside; the scroller is marked so the
 // drill can reset it without importing this part
 const NavPanel = React.forwardRef<HTMLElement, NavPanelProps>(
   ({ title, header, className, children, ...props }, ref) => (
     <nav ref={ref} className={cn(styles.panel, className)} {...props}>
-      <div className={styles.scroller} data-menu-scroller="">
+      <div className={styles.scroller} data-nav-scroller="">
         {title && (
           <h2 className={styles['panel-header']} title={title}>
             {title}

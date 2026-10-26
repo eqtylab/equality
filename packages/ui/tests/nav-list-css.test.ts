@@ -5,7 +5,7 @@ import { compileCss } from './compile-css';
 let css: string;
 
 beforeAll(async () => {
-  css = await compileCss('src/components/menu/menu.module.css');
+  css = await compileCss('src/components/nav-list/nav-list.module.css');
 }, 30_000);
 
 function rule(selector: RegExp): string {
@@ -13,7 +13,7 @@ function rule(selector: RegExp): string {
   return match?.[1] ?? '';
 }
 
-describe('menu.module.css', () => {
+describe('nav-list.module.css', () => {
   it('sizes the row from the decisions', () => {
     const item = rule(/\n\.item/);
     expect(item).toMatch(/height:\s*var\(--list-item-height\)/);

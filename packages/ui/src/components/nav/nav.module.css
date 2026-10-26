@@ -31,7 +31,7 @@
 }
 
 /* In a drilled panel, ‹ sits 2px under the header, as one card. An inert ‹ is leaving */
-.scroller:has([data-slot='menu-back-button']:not([inert] *)) > .panel-header {
+.scroller:has([data-slot='nav-drill-back']:not([inert] *)) > .panel-header {
   @apply pb-0;
 }
 
@@ -72,6 +72,10 @@
 
 .switcher-placeholder {
   @apply px-2;
+}
+
+.switcher-skeleton {
+  @apply h-5 w-32;
 }
 
 /* Under the heading, so it outranks the size, fill and border SelectTrigger sets at rest whatever

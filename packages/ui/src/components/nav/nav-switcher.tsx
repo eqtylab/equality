@@ -13,6 +13,7 @@ import {
   SelectSeparator,
   SelectTrigger,
 } from '@/components/select/select';
+import { Skeleton } from '@/components/skeleton/skeleton';
 import { cn } from '@/lib/utils';
 
 interface NavSwitcherOption {
@@ -31,7 +32,9 @@ interface NavSwitcherAction {
   onSelect: () => void;
 }
 
-interface NavSwitcherProps {
+interface NavSwitcherLoadedProps {
+  /** Shows a placeholder at the switcher's height while the current item loads */
+  loading?: false;
   /** The current item's name, shown as the panel's heading */
   label: string;
   /** Singular and lowercase, for the trigger's name: "{label}, switch {noun}" */
@@ -52,14 +55,15 @@ interface NavSwitcherProps {
   action?: NavSwitcherAction;
 }
 
-// Holds the switcher's height in NavPanel's header while the current item loads
-const NavSwitcherPlaceholder = ({ children }: { children: React.ReactNode }) => (
-  <div className={cn(styles['switcher-heading'], styles['switcher-placeholder'])}>{children}</div>
-);
+interface NavSwitcherLoadingProps {
+  loading: true;
+}
 
-// Goes in NavPanel's header. The heading is named by the label alone; the trigger's name starts
-// with it and says what the control does (WCAG 2.5.3)
-const NavSwitcher = React.forwardRef<HTMLButtonElement, NavSwitcherProps>(
+type NavSwitcherProps = NavSwitcherLoadedProps | NavSwitcherLoadingProps;
+
+// The heading is named by the label alone; the trigger's name starts with it and says what the
+// control does (WCAG 2.5.3)
+const NavSwitcherSelect = React.forwardRef<HTMLButtonElement, NavSwitcherLoadedProps>(
   (
     { label, noun, collection, options, value, onValueChange, onHighlight, onHighlightEnd, action },
     ref
@@ -155,7 +159,19 @@ const NavSwitcher = React.forwardRef<HTMLButtonElement, NavSwitcherProps>(
     );
   }
 );
+NavSwitcherSelect.displayName = 'NavSwitcherSelect';
+
+// Goes in NavPanel's header
+const NavSwitcher = React.forwardRef<HTMLButtonElement, NavSwitcherProps>((props, ref) =>
+  props.loading ? (
+    <div className={cn(styles['switcher-heading'], styles['switcher-placeholder'])}>
+      <Skeleton className={styles['switcher-skeleton']} />
+    </div>
+  ) : (
+    <NavSwitcherSelect ref={ref} {...props} />
+  )
+);
 NavSwitcher.displayName = 'NavSwitcher';
 
-export { NavSwitcher, NavSwitcherPlaceholder };
+export { NavSwitcher };
 export type { NavSwitcherAction, NavSwitcherOption, NavSwitcherProps };

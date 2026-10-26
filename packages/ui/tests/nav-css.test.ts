@@ -28,7 +28,7 @@ describe('nav.module.css', () => {
 
   it('tightens the header over a live ‹ only', () => {
     const drilled = rule(
-      /\.scroller:has\(\[data-slot=['"]menu-back-button['"]\]:not\(\[inert\] \*\)\) > \.panel-header/
+      /\.scroller:has\(\[data-slot=['"]nav-drill-back['"]\]:not\(\[inert\] \*\)\) > \.panel-header/
     );
     expect(drilled).toMatch(/padding-bottom:\s*calc\(0\.25rem \* 0\)/);
   });

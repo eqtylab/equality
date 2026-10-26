@@ -2,35 +2,33 @@ import * as React from 'react';
 import { Slot, Slottable } from '@radix-ui/react-slot';
 import { ChevronRight } from 'lucide-react';
 
-import { MenuDrillContext } from '@/components/menu/menu-drill-context';
-import styles from '@/components/menu/menu.module.css';
+import { NavDrillContext } from '@/components/nav-list/nav-drill-context';
+import styles from '@/components/nav-list/nav-list.module.css';
 import { cn } from '@/lib/utils';
 
-type MenuSize = 'md' | 'sm';
-
 const ListDepthContext = React.createContext(0);
-const GroupLabelContext = React.createContext<string | undefined>(undefined);
 
-interface MenuProps extends React.HTMLAttributes<HTMLDivElement> {
-  /** Row height for every list inside: `sm` is one 4px step shorter */
-  size?: MenuSize;
+interface NavListProps extends React.HTMLAttributes<HTMLDivElement> {
+  /** Row height for every group inside: `sm` is one 4px step shorter */
+  size?: 'md' | 'sm';
 }
 
-const Menu = React.forwardRef<HTMLDivElement, MenuProps>(
+const NavList = React.forwardRef<HTMLDivElement, NavListProps>(
   ({ size = 'md', className, ...props }, ref) => (
-    <div ref={ref} data-size={size} className={cn(styles.menu, className)} {...props} />
+    <div ref={ref} data-size={size} className={cn(styles.root, className)} {...props} />
   )
 );
-Menu.displayName = 'Menu';
+NavList.displayName = 'NavList';
 
-interface MenuGroupProps extends React.HTMLAttributes<HTMLDivElement> {
+interface NavListGroupProps extends React.HTMLAttributes<HTMLDivElement> {
   /** Names the group's list; leave it out where a ‹ row already names what the rows belong to */
   label?: string;
 }
 
-const MenuGroup = React.forwardRef<HTMLDivElement, MenuGroupProps>(
+const NavListGroup = React.forwardRef<HTMLDivElement, NavListGroupProps>(
   ({ label, className, children, ...props }, ref) => {
     const labelId = React.useId();
+    const depth = React.useContext(ListDepthContext);
 
     return (
       <div
@@ -43,40 +41,20 @@ const MenuGroup = React.forwardRef<HTMLDivElement, MenuGroupProps>(
             {label}
           </div>
         )}
-        <GroupLabelContext.Provider value={label ? labelId : undefined}>
-          {children}
-        </GroupLabelContext.Provider>
+        <ul
+          data-depth={depth}
+          aria-labelledby={label ? labelId : undefined}
+          className={styles.list}
+        >
+          <ListDepthContext.Provider value={depth + 1}>{children}</ListDepthContext.Provider>
+        </ul>
       </div>
     );
   }
 );
-MenuGroup.displayName = 'MenuGroup';
+NavListGroup.displayName = 'NavListGroup';
 
-type MenuListProps = React.HTMLAttributes<HTMLUListElement>;
-
-const MenuList = React.forwardRef<HTMLUListElement, MenuListProps>(
-  ({ className, children, ...props }, ref) => {
-    const depth = React.useContext(ListDepthContext);
-    const labelId = React.useContext(GroupLabelContext);
-
-    return (
-      <ul
-        ref={ref}
-        data-depth={depth}
-        aria-labelledby={labelId}
-        className={cn(styles.list, className)}
-        {...props}
-      >
-        <ListDepthContext.Provider value={depth + 1}>
-          <GroupLabelContext.Provider value={undefined}>{children}</GroupLabelContext.Provider>
-        </ListDepthContext.Provider>
-      </ul>
-    );
-  }
-);
-MenuList.displayName = 'MenuList';
-
-interface MenuItemProps
+interface NavListItemProps
   extends
     Omit<React.HTMLAttributes<HTMLElement>, 'prefix'>,
     Pick<React.AnchorHTMLAttributes<HTMLAnchorElement>, 'href' | 'target' | 'rel' | 'download'> {
@@ -88,13 +66,13 @@ interface MenuItemProps
   suffix?: React.ReactNode;
   /** Marks the row as the page on show */
   current?: boolean;
-  /** The view of the `MenuDrill` level this row opens; adds the › caret */
+  /** The `value` of the `NavDrillLevel` this row opens; adds the › caret */
   drill?: string;
   /** Renders the row as its only child, such as a router link */
   asChild?: boolean;
 }
 
-const MenuItem = React.forwardRef<HTMLElement, MenuItemProps>(
+const NavListItem = React.forwardRef<HTMLElement, NavListItemProps>(
   (
     {
       label,
@@ -110,7 +88,7 @@ const MenuItem = React.forwardRef<HTMLElement, MenuItemProps>(
     },
     ref
   ) => {
-    const drillContext = React.useContext(MenuDrillContext);
+    const drillContext = React.useContext(NavDrillContext);
     const Comp: React.ElementType = asChild ? Slot : props.href ? 'a' : 'button';
     const leaving = drillContext?.leaving ?? false;
 
@@ -129,7 +107,7 @@ const MenuItem = React.forwardRef<HTMLElement, MenuItemProps>(
         <Comp
           ref={ref}
           type={Comp === 'button' ? 'button' : undefined}
-          data-slot="menu-item"
+          data-slot="nav-list-item"
           data-drill={drill}
           aria-current={current && !leaving ? 'page' : undefined}
           data-current={current && leaving ? 'page' : undefined}
@@ -157,11 +135,11 @@ const MenuItem = React.forwardRef<HTMLElement, MenuItemProps>(
     );
   }
 );
-MenuItem.displayName = 'MenuItem';
+NavListItem.displayName = 'NavListItem';
 
-const MenuSeparator = ({ className, ...props }: React.HTMLAttributes<HTMLHRElement>) => (
+const NavListSeparator = ({ className, ...props }: React.HTMLAttributes<HTMLHRElement>) => (
   <hr className={cn(styles.separator, className)} {...props} />
 );
 
-export { Menu, MenuGroup, MenuItem, MenuList, MenuSeparator };
-export type { MenuGroupProps, MenuItemProps, MenuListProps, MenuProps, MenuSize };
+export { NavList, NavListGroup, NavListItem, NavListSeparator };
+export type { NavListGroupProps, NavListItemProps, NavListProps };

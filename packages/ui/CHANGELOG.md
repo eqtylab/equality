@@ -4,8 +4,9 @@ Notable changes to Equality are recorded here, following [Keep a Changelog](http
 
 ## 4.15.0 - <merge date>
 
-Studio's sidebar moves into Equality as two sets of parts: `Menu` rows that work anywhere, and a
-`Nav` sidebar frame. No existing component changes, so no code needs to change.
+Studio's sidebar moves into Equality as two sets of parts: `NavList` rows for going somewhere,
+anywhere on screen, and a `Nav` sidebar frame. Menus stay for actions: use `DropdownMenu` for those.
+No existing component changes, so no code needs to change.
 
 A row's `suffix` is now read by screen readers, and the › caret comes from `drill`, never from
 `suffix`. This changes the rule in GRD-81, where a suffix held only the nested-page caret: a badge
@@ -13,13 +14,13 @@ or count in a suffix is meaningful, so it is heard as part of the row.
 
 ### Added
 
-- `Menu`, `MenuGroup`, `MenuList`, `MenuItem` and `MenuSeparator`: rows of links or buttons in
-  groups and nested lists, at two sizes, `md` (36px rows) and `sm` (32px).
-- `MenuDrill`, `MenuDrillLevel` and `MenuBackButton`: levels that slide in and out, controlled or
-  uncontrolled. They slide only after a drill row or ‹ asked for them, and move focus after the
+- `NavList`, `NavListGroup`, `NavListItem` and `NavListSeparator`: rows of links or buttons in
+  groups, at two sizes, `md` (36px rows) and `sm` (32px).
+- `NavDrill` and `NavDrillLevel`: levels that slide in and out, controlled or uncontrolled. A level
+  with a `parent` draws its own ‹ row. They slide only after a drill row or ‹ asked for them, and move focus after the
   changes they asked for.
-- `NavRail`, `NavRailItem`, `NavPanel`, `NavSwitcher`, `NavSwitcherPlaceholder` and
-  `blockClosedTypeahead`: the sidebar frame from Studio.
+- `NavRail`, `NavRailItem`, `NavPanel`, `NavSwitcher` (with `loading`) and `blockClosedTypeahead`:
+  the sidebar frame from Studio.
 - `theme/decisions.css`: the list, control and touch sizes the parts read, such as
   `--list-item-height` and `--touch-target`, which is 44px under a coarse pointer.
 - Two colour tokens, `--color-list-item-current` and `--color-list-item-hover`, with the

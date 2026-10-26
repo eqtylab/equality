@@ -5,7 +5,7 @@ import { describe, expect, it, vi } from 'vitest';
 
 import { NavPanel } from '@/components/nav/nav-panel';
 import { NavRail, NavRailItem } from '@/components/nav/nav-rail';
-import { NavSwitcher, NavSwitcherPlaceholder } from '@/components/nav/nav-switcher';
+import { NavSwitcher } from '@/components/nav/nav-switcher';
 import { blockClosedTypeahead } from '@/components/nav/select-typeahead';
 
 const OPTIONS = [
@@ -20,18 +20,15 @@ describe('Nav shell', () => {
         <NavRail aria-label="Main">
           <NavRailItem icon={<svg />} label="Projects" href="/projects" current />
         </NavRail>
-        <NavPanel
-          aria-label="Project"
-          header={<NavSwitcherPlaceholder>Loading</NavSwitcherPlaceholder>}
-        >
+        <NavPanel aria-label="Project" header={<NavSwitcher loading />}>
           <p>rows</p>
         </NavPanel>
       </>
     );
     expect(html).toContain('aria-label="Main"');
     expect(html).toContain('href="/projects"');
-    expect(html).toContain('Loading');
-    expect(html).toContain('data-menu-scroller');
+    expect(html).toMatch(/skeleton/);
+    expect(html).toContain('data-nav-scroller');
   });
 
   it('names the panel landmark and shows title as a heading', () => {
@@ -68,14 +65,14 @@ describe('Nav shell', () => {
     );
   });
 
-  it('marks its scroller with data-menu-scroller', () => {
+  it('marks its scroller with data-nav-scroller', () => {
     render(
       <NavPanel aria-label="Project">
         <p>rows</p>
       </NavPanel>
     );
     const scroller = screen.getByText('rows').parentElement!;
-    expect(scroller.hasAttribute('data-menu-scroller')).toBe(true);
+    expect(scroller.hasAttribute('data-nav-scroller')).toBe(true);
     expect(screen.getByRole('navigation').contains(scroller)).toBe(true);
   });
 

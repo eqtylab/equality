@@ -4,13 +4,8 @@ import { act, fireEvent, render, screen, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 
-import { Menu, MenuItem, MenuList } from '@/components/menu/menu';
-import {
-  MenuBackButton,
-  MenuDrill,
-  MenuDrillLevel,
-  type MenuDrillProps,
-} from '@/components/menu/menu-drill';
+import { NavDrill, NavDrillLevel, type NavDrillProps } from '@/components/nav-list/nav-drill';
+import { NavList, NavListGroup, NavListItem } from '@/components/nav-list/nav-list';
 
 import { animateCalls, finishAll, setReducedMotion } from './animation-stub';
 
@@ -19,65 +14,61 @@ const NO_SHADOW = '-8px 0 16px transparent';
 
 function levels() {
   return [
-    <MenuDrillLevel key="projects" value="projects">
-      <MenuList>
-        <MenuItem label="Ben Project" href="#ben" drill="ben" />
-        <MenuItem label="Overview" href="#overview" current />
-      </MenuList>
-    </MenuDrillLevel>,
-    <MenuDrillLevel key="ben" value="ben" parent="projects">
-      <MenuBackButton label="Ben Project" />
-      <MenuList>
-        <MenuItem label="Settings" drill="ben-settings" />
-        <MenuItem label="Ben overview" href="#ben-overview" current />
-      </MenuList>
-    </MenuDrillLevel>,
-    <MenuDrillLevel key="ben-settings" value="ben-settings" parent="ben">
-      <MenuBackButton label="Settings" />
-      <MenuList>
-        <MenuItem label="General" href="#general" current />
-      </MenuList>
-    </MenuDrillLevel>,
-    <MenuDrillLevel key="orphan" value="orphan" parent="projects">
-      <MenuBackButton label="Orphan" />
-    </MenuDrillLevel>,
+    <NavDrillLevel key="projects" value="projects">
+      <NavListGroup>
+        <NavListItem label="Ben Project" href="#ben" drill="ben" />
+        <NavListItem label="Overview" href="#overview" current />
+      </NavListGroup>
+    </NavDrillLevel>,
+    <NavDrillLevel key="ben" value="ben" parent="projects" label="Ben Project">
+      <NavListGroup>
+        <NavListItem label="Settings" drill="ben-settings" />
+        <NavListItem label="Ben overview" href="#ben-overview" current />
+      </NavListGroup>
+    </NavDrillLevel>,
+    <NavDrillLevel key="ben-settings" value="ben-settings" parent="ben" label="Settings">
+      <NavListGroup>
+        <NavListItem label="General" href="#general" current />
+      </NavListGroup>
+    </NavDrillLevel>,
+    <NavDrillLevel key="orphan" value="orphan" parent="projects" label="Orphan"></NavDrillLevel>,
   ];
 }
 
-function Uncontrolled(props: Omit<MenuDrillProps, 'view'>) {
+function Uncontrolled(props: Omit<NavDrillProps, 'value'>) {
   return (
-    <Menu>
-      <MenuDrill defaultView="projects" {...props}>
+    <NavList>
+      <NavDrill defaultValue="projects" {...props}>
         {levels()}
-      </MenuDrill>
-    </Menu>
+      </NavDrill>
+    </NavList>
   );
 }
 
-// Holds `view` in state. `follow` decides whether a request changes it; the "go" buttons change it
+// Holds `value` in state. `follow` decides whether a request changes it; the "go" buttons change it
 // with no request, as a route change would
 function Controlled({
   initial = 'projects',
   follow = true,
-  onViewChange,
+  onValueChange,
   children = levels(),
   ...props
-}: Omit<MenuDrillProps, 'view'> & { initial?: string; follow?: boolean }) {
+}: Omit<NavDrillProps, 'value'> & { initial?: string; follow?: boolean }) {
   const [view, setView] = React.useState(initial);
   return (
     <>
-      <Menu>
-        <MenuDrill
-          view={view}
-          onViewChange={(next, request) => {
-            onViewChange?.(next, request);
+      <NavList>
+        <NavDrill
+          value={view}
+          onValueChange={(next, request) => {
+            onValueChange?.(next, request);
             if (follow) setView(next);
           }}
           {...props}
         >
           {children}
-        </MenuDrill>
-      </Menu>
+        </NavDrill>
+      </NavList>
       {['projects', 'ben', 'x'].map((target) => (
         <button key={target} type="button" onClick={() => setView(target)}>
           go:{target}
@@ -87,22 +78,22 @@ function Controlled({
   );
 }
 
-const ghost = () => document.querySelector<HTMLElement>('[data-slot="menu-drill-ghost"]');
+const ghost = () => document.querySelector<HTMLElement>('[data-slot="nav-drill-ghost"]');
 const liveLevels = () =>
-  [...document.querySelectorAll<HTMLElement>('[data-slot="menu-drill-level"]')].filter(
+  [...document.querySelectorAll<HTMLElement>('[data-slot="nav-drill-level"]')].filter(
     (el) => !ghost()?.contains(el)
   );
 
-describe('MenuDrill', () => {
+describe('NavDrill', () => {
   afterEach(() => {
     vi.restoreAllMocks();
   });
 
   it('server-renders the current level only', () => {
     const html = renderToString(
-      <Menu>
-        <MenuDrill defaultView="ben">{levels()}</MenuDrill>
-      </Menu>
+      <NavList>
+        <NavDrill defaultValue="ben">{levels()}</NavDrill>
+      </NavList>
     );
     expect(html).toContain('title="Ben overview"');
     expect(html).not.toContain('title="Overview"');
@@ -118,41 +109,66 @@ describe('MenuDrill', () => {
     expect(screen.getByRole('link', { name: 'Overview' })).toBeTruthy();
   });
 
-  it('controlled: a drill row calls onViewChange(view, "drill") and does not change level by itself', () => {
-    const onViewChange = vi.fn();
-    render(<Controlled follow={false} onViewChange={onViewChange} />);
+  it('controlled: a drill row calls onValueChange(value, "drill") and does not change level by itself', () => {
+    const onValueChange = vi.fn();
+    render(<Controlled follow={false} onValueChange={onValueChange} />);
     fireEvent.click(screen.getByRole('link', { name: 'Ben Project' }));
-    expect(onViewChange).toHaveBeenCalledWith('ben', 'drill');
+    expect(onValueChange).toHaveBeenCalledWith('ben', 'drill');
     expect(screen.getByRole('link', { name: 'Overview' })).toBeTruthy();
     expect(screen.queryByRole('link', { name: 'Ben overview' })).toBeNull();
   });
 
-  it('controlled: ‹ calls onViewChange(parent, "back")', () => {
-    const onViewChange = vi.fn();
-    render(<Controlled initial="ben" follow={false} onViewChange={onViewChange} />);
+  it('controlled: ‹ calls onValueChange(parent, "back")', () => {
+    const onValueChange = vi.fn();
+    render(<Controlled initial="ben" follow={false} onValueChange={onValueChange} />);
     fireEvent.click(screen.getByRole('button', { name: 'Ben Project' }));
-    expect(onViewChange).toHaveBeenCalledWith('projects', 'back');
+    expect(onValueChange).toHaveBeenCalledWith('projects', 'back');
     expect(screen.getByRole('link', { name: 'Ben overview' })).toBeTruthy();
   });
 
   it('‹ goes to the named parent after a deep link', () => {
-    render(<Uncontrolled defaultView="ben-settings" animate={false} />);
+    render(<Uncontrolled defaultValue="ben-settings" animate={false} />);
     fireEvent.click(screen.getByRole('button', { name: 'Settings' }));
     expect(screen.getByRole('link', { name: 'Ben overview' })).toBeTruthy();
   });
 
   it('renders no ‹ on a level without a parent', () => {
     render(
-      <Menu>
-        <MenuDrill defaultView="top">
-          <MenuDrillLevel value="top">
-            <MenuBackButton label="Nowhere" />
-          </MenuDrillLevel>
-        </MenuDrill>
-      </Menu>
+      <NavList>
+        <NavDrill defaultValue="top">
+          <NavDrillLevel value="top" label="Nowhere"></NavDrillLevel>
+        </NavDrill>
+      </NavList>
     );
     expect(screen.queryByRole('button')).toBeNull();
     expect(document.querySelector('hr')).toBeNull();
+  });
+
+  it('draws ‹ at the top of a level with a parent, named by its label', () => {
+    render(<Uncontrolled defaultValue="ben" />);
+    const level = liveLevels()[0];
+    const back = screen.getByRole('button', { name: 'Ben Project' });
+    expect(level.firstElementChild).toBe(back);
+    expect(back.getAttribute('data-slot')).toBe('nav-drill-back');
+    expect(back.nextElementSibling?.tagName).toBe('HR');
+  });
+
+  it('names ‹ with backLabel when given', () => {
+    render(
+      <NavList>
+        <NavDrill defaultValue="ben">
+          <NavDrillLevel value="projects" />
+          <NavDrillLevel
+            value="ben"
+            parent="projects"
+            label="Ben Project"
+            backLabel="Ben Project, back to Projects"
+          />
+        </NavDrill>
+      </NavList>
+    );
+    const back = screen.getByRole('button', { name: 'Ben Project, back to Projects' });
+    expect(back.textContent).toBe('Ben Project');
   });
 
   it('slides with exactly two animate calls carrying Studio’s keyframes and 330ms', () => {
@@ -177,7 +193,7 @@ describe('MenuDrill', () => {
   });
 
   it('slides back with the back keyframes and the leaving level above', () => {
-    render(<Uncontrolled defaultView="ben" />);
+    render(<Uncontrolled defaultValue="ben" />);
     fireEvent.click(screen.getByRole('button', { name: 'Ben Project' }));
     const [current, previous] = animateCalls;
     expect(current.keyframes).toEqual([
@@ -191,11 +207,25 @@ describe('MenuDrill', () => {
     expect(ghost()!.getAttribute('data-motion')).toBe('back');
   });
 
+  // A finished animation drops its effect, so the leaving level jumps back to full opacity in
+  // place. Going back it sits on top, so it must be hidden before the next paint, not when
+  // React gets round to unmounting it
+  it('hides the leaving level in the same microtask its animations finish', async () => {
+    render(<Uncontrolled defaultValue="ben" />);
+    fireEvent.click(screen.getByRole('button', { name: 'Ben Project' }));
+    const leaving = ghost()!;
+    finishAll();
+    for (let i = 0; i < 5; i++) await Promise.resolve();
+    expect(leaving.isConnected && leaving.style.visibility !== 'hidden').toBe(false);
+    await act(async () => {});
+    expect(ghost()).toBeNull();
+  });
+
   it('removes the leaving level once both animations finish', async () => {
     render(<Uncontrolled />);
     fireEvent.click(screen.getByRole('link', { name: 'Ben Project' }));
     expect(ghost()?.textContent).toContain('Overview');
-    const root = document.querySelector('[data-slot="menu-drill"]')!;
+    const root = document.querySelector('[data-slot="nav-drill"]')!;
     expect(root.getAttribute('data-motion')).toBe('drill');
     animateCalls[0].finish();
     await act(async () => {});
@@ -225,11 +255,11 @@ describe('MenuDrill', () => {
 
   it('enter-on-drill-row-requests', async () => {
     const user = userEvent.setup();
-    const onViewChange = vi.fn();
-    render(<Uncontrolled onViewChange={onViewChange} />);
+    const onValueChange = vi.fn();
+    render(<Uncontrolled onValueChange={onValueChange} />);
     screen.getByRole('link', { name: 'Ben Project' }).focus();
     await user.keyboard('{Enter}');
-    expect(onViewChange).toHaveBeenCalledWith('ben', 'drill');
+    expect(onValueChange).toHaveBeenCalledWith('ben', 'drill');
     expect(animateCalls).toHaveLength(2);
   });
 
@@ -274,14 +304,14 @@ describe('MenuDrill', () => {
   it('view-without-level-renders-empty', () => {
     render(<Controlled />);
     fireEvent.click(screen.getByRole('button', { name: 'go:x' }));
-    expect(document.querySelectorAll('[data-slot="menu-drill-level"]')).toHaveLength(0);
+    expect(document.querySelectorAll('[data-slot="nav-drill-level"]')).toHaveLength(0);
     fireEvent.click(screen.getByRole('button', { name: 'go:ben' }));
     expect(screen.getByRole('link', { name: 'Ben overview' })).toBeTruthy();
   });
 
-  it('resets the nearest [data-menu-scroller] on every view change', () => {
+  it('resets the nearest [data-nav-scroller] on every view change', () => {
     render(
-      <div data-menu-scroller="" data-testid="scroller">
+      <div data-nav-scroller="" data-testid="scroller">
         <Controlled />
       </div>
     );
@@ -313,7 +343,7 @@ describe('MenuDrill', () => {
     });
     render(<Uncontrolled />);
     fireEvent.click(screen.getByRole('link', { name: 'Ben Project' }));
-    const leavingLevel = ghost()!.querySelector<HTMLElement>('[data-slot="menu-drill-level"]')!;
+    const leavingLevel = ghost()!.querySelector<HTMLElement>('[data-slot="nav-drill-level"]')!;
     expect(leavingLevel.style.marginTop).toBe('60px');
   });
 
@@ -324,13 +354,13 @@ describe('MenuDrill', () => {
   });
 
   it('focuses the row you came from after ‹', () => {
-    render(<Uncontrolled defaultView="ben" />);
+    render(<Uncontrolled defaultValue="ben" />);
     fireEvent.click(screen.getByRole('button', { name: 'Ben Project' }));
     expect(document.activeElement).toBe(screen.getByRole('link', { name: 'Ben Project' }));
   });
 
   it('focuses the current row after ‹ when no row leads back', () => {
-    render(<Uncontrolled defaultView="orphan" />);
+    render(<Uncontrolled defaultValue="orphan" />);
     fireEvent.click(screen.getByRole('button', { name: 'Orphan' }));
     expect(document.activeElement).toBe(screen.getByRole('link', { name: 'Overview' }));
   });
@@ -343,22 +373,20 @@ describe('MenuDrill', () => {
         release = () => setReady(true);
       }, []);
       return ready ? (
-        <MenuList>
-          <MenuItem label="Ben Project" href="#ben" drill="ben" />
-        </MenuList>
+        <NavListGroup>
+          <NavListItem label="Ben Project" href="#ben" drill="ben" />
+        </NavListGroup>
       ) : null;
     }
     render(
-      <Menu>
-        <MenuDrill defaultView="ben">
-          <MenuDrillLevel value="projects">
+      <NavList>
+        <NavDrill defaultValue="ben">
+          <NavDrillLevel value="projects">
             <LateRows />
-          </MenuDrillLevel>
-          <MenuDrillLevel value="ben" parent="projects">
-            <MenuBackButton label="Ben Project" />
-          </MenuDrillLevel>
-        </MenuDrill>
-      </Menu>
+          </NavDrillLevel>
+          <NavDrillLevel value="ben" parent="projects" label="Ben Project"></NavDrillLevel>
+        </NavDrill>
+      </NavList>
     );
     fireEvent.click(screen.getByRole('button', { name: 'Ben Project' }));
     expect(document.activeElement).toBe(document.body);
@@ -391,23 +419,21 @@ describe('MenuDrill', () => {
         release = () => setReady(true);
       }, []);
       return ready ? (
-        <MenuList>
-          <MenuItem label="Ben Project" href="#ben" drill="ben" current />
-        </MenuList>
+        <NavListGroup>
+          <NavListItem label="Ben Project" href="#ben" drill="ben" current />
+        </NavListGroup>
       ) : null;
     }
     render(
       <>
-        <Menu>
-          <MenuDrill defaultView="ben">
-            <MenuDrillLevel value="projects">
+        <NavList>
+          <NavDrill defaultValue="ben">
+            <NavDrillLevel value="projects">
               <LateRows />
-            </MenuDrillLevel>
-            <MenuDrillLevel value="ben" parent="projects">
-              <MenuBackButton label="Ben Project" />
-            </MenuDrillLevel>
-          </MenuDrill>
-        </Menu>
+            </NavDrillLevel>
+            <NavDrillLevel value="ben" parent="projects" label="Ben Project"></NavDrillLevel>
+          </NavDrill>
+        </NavList>
         <a href="#page">A page link</a>
       </>
     );

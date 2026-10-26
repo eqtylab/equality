@@ -50,6 +50,8 @@ describe('theme/decisions.css', () => {
   });
 });
 
+const flat = (css?: string) => css?.replace(/\s+/g, ' ').replace(/\( /g, '(').replace(/ \)/g, ')');
+
 describe('list item colours', () => {
   it('declares the colours on html and .root, light and dark', () => {
     const current = rulesDeclaring('--color-list-item-current');
@@ -58,10 +60,10 @@ describe('list item colours', () => {
     const light = current.find(
       (r) => /\bhtml\b/.test(r.selector) && /\.root\b/.test(r.selector) && !/dark/.test(r.selector)
     );
-    expect(light?.body).toMatch(
+    expect(flat(light?.body)).toMatch(
       /--color-list-item-current:\s*color-mix\(in oklab, var\(--color-text-primary\) 10%, transparent\)/
     );
-    expect(light?.body).toMatch(
+    expect(flat(light?.body)).toMatch(
       /--color-list-item-hover:\s*color-mix\(in oklab, var\(--color-text-primary\) 6%, transparent\)/
     );
 
@@ -70,10 +72,10 @@ describe('list item colours', () => {
         r.selector.includes("html[data-equality-theme='dark']") &&
         r.selector.includes("[data-equality-theme='dark'] .root")
     );
-    expect(dark?.body).toMatch(
+    expect(flat(dark?.body)).toMatch(
       /--color-list-item-current:\s*color-mix\(in oklab, var\(--color-text-primary\) 14%, transparent\)/
     );
-    expect(dark?.body).toMatch(
+    expect(flat(dark?.body)).toMatch(
       /--color-list-item-hover:\s*color-mix\(in oklab, var\(--color-text-primary\) 8%, transparent\)/
     );
     expect(hover).toHaveLength(2);

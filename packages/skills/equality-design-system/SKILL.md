@@ -42,23 +42,23 @@ If you have no network access or web fetching fails, tell your user that you cou
 
 ### Name translation
 
-| If you're thinking of…                                     | Use in Equality                        | Don't hand-roll it from            |
-| ---------------------------------------------------------- | -------------------------------------- | ---------------------------------- |
-| Combobox, searchable select, filterable single-select      | `Select` with `SelectSearch`           | `Popover` + `Command`              |
-| Command palette, ⌘K launcher                               | `Command`                              | `Dialog` + `Input` + a list        |
-| Modal, lightbox                                            | `Dialog`                               | A fixed-position `div`             |
-| Confirmation or destructive-action prompt                  | `AlertDialog`                          | `Dialog` with two buttons          |
-| Drawer, side panel, slide-over                             | `Sheet`                                | `Dialog` with custom styles        |
-| Snackbar, notification                                     | `Toast`                                | A timed, positioned `div`          |
-| Toggle                                                     | `Switch`                               | A styled checkbox                  |
-| Chip, pill, tag, status label                              | `Badge`                                | A rounded `span`                   |
-| Loader, activity indicator                                 | `Spinner`                              | An animated SVG                    |
-| Button group or toggle group for mutually exclusive values | `SegmentedControls`                    | A row of `Button`s                 |
-| Multi-select filter                                        | `FilterDropdown`                       | `DropdownMenu` with checkboxes     |
-| Footer action, "Select all" or "Other" while searching     | `persistent` items                     | Buttons outside the list items     |
-| Sidebar rows, settings list, `NavItem`/`NavSection`        | `MenuItem` in `MenuGroup` + `MenuList` | Styled links in a `ul`             |
-| App sidebar, icon rail                                     | `NavPanel` + `NavRail`                 | A fixed `aside` with links         |
-| Sliding sub-panel, drill-in menu                           | `MenuDrill`                            | Swapped lists with CSS transitions |
+| If you're thinking of…                                     | Use in Equality                 | Don't hand-roll it from            |
+| ---------------------------------------------------------- | ------------------------------- | ---------------------------------- |
+| Combobox, searchable select, filterable single-select      | `Select` with `SelectSearch`    | `Popover` + `Command`              |
+| Command palette, ⌘K launcher                               | `Command`                       | `Dialog` + `Input` + a list        |
+| Modal, lightbox                                            | `Dialog`                        | A fixed-position `div`             |
+| Confirmation or destructive-action prompt                  | `AlertDialog`                   | `Dialog` with two buttons          |
+| Drawer, side panel, slide-over                             | `Sheet`                         | `Dialog` with custom styles        |
+| Snackbar, notification                                     | `Toast`                         | A timed, positioned `div`          |
+| Toggle                                                     | `Switch`                        | A styled checkbox                  |
+| Chip, pill, tag, status label                              | `Badge`                         | A rounded `span`                   |
+| Loader, activity indicator                                 | `Spinner`                       | An animated SVG                    |
+| Button group or toggle group for mutually exclusive values | `SegmentedControls`             | A row of `Button`s                 |
+| Multi-select filter                                        | `FilterDropdown`                | `DropdownMenu` with checkboxes     |
+| Footer action, "Select all" or "Other" while searching     | `persistent` items              | Buttons outside the list items     |
+| Sidebar rows, settings list, `NavItem`/`NavSection`        | `NavListItem` in `NavListGroup` | Styled links in a `ul`             |
+| App sidebar, icon rail                                     | `NavPanel` + `NavRail`          | A fixed `aside` with links         |
+| Sliding sub-panel, drill-in nav                            | `NavDrill`                      | Swapped lists with CSS transitions |
 
 ## Common Mistakes
 

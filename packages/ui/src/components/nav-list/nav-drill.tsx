@@ -1,18 +1,18 @@
 import * as React from 'react';
 import { ChevronLeft } from 'lucide-react';
 
-import { MenuDrillContext } from '@/components/menu/menu-drill-context';
-import styles from '@/components/menu/menu.module.css';
+import { NavDrillContext } from '@/components/nav-list/nav-drill-context';
+import styles from '@/components/nav-list/nav-list.module.css';
 import { useIsomorphicLayoutEffect } from '@/lib/use-isomorphic-layout-effect';
 import { cn } from '@/lib/utils';
 
-type MenuDrillRequest = 'drill' | 'back';
+type NavDrillRequest = 'drill' | 'back';
 
 // Push, half travel: the new rows slide in over the old, which move back and dim. Back reverses it
 // and fades the leaving rows, which would otherwise stop short of the edge and cover the panel
 const SHADOW = '-8px 0 16px rgb(0 0 0 / 0.18)';
 const NO_SHADOW = '-8px 0 16px transparent';
-const MOTION: Record<MenuDrillRequest, { current: Keyframe[]; previous: Keyframe[] }> = {
+const MOTION: Record<NavDrillRequest, { current: Keyframe[]; previous: Keyframe[] }> = {
   drill: {
     current: [
       { transform: 'translateX(50%)', boxShadow: SHADOW },
@@ -36,11 +36,11 @@ const MOTION: Record<MenuDrillRequest, { current: Keyframe[]; previous: Keyframe
 };
 const TIMING: KeyframeAnimationOptions = { duration: 330, easing: 'cubic-bezier(.2, .8, .2, 1)' };
 
-const LEVEL = '[data-slot="menu-drill-level"]';
+const LEVEL = '[data-slot="nav-drill-level"]';
 
 interface PendingRequest {
   view: string;
-  direction: MenuDrillRequest;
+  direction: NavDrillRequest;
   // The level on show when the request was made, which slides away if the request lands
   element: React.ReactElement | null;
   top: number;
@@ -49,39 +49,46 @@ interface PendingRequest {
 
 interface Leaving {
   element: React.ReactElement;
-  direction: MenuDrillRequest;
+  direction: NavDrillRequest;
   top: number;
   id: number;
 }
 
 interface FocusRequest {
-  direction: MenuDrillRequest;
+  direction: NavDrillRequest;
   view: string;
   from: string | undefined;
   landed: boolean;
 }
 
-const MenuDrillBackContext = React.createContext<(parent: string) => void>(() => {});
-const MenuDrillLevelContext = React.createContext<string | undefined>(undefined);
+const NavDrillBackContext = React.createContext<(parent: string) => void>(() => {});
 
-interface MenuDrillProps extends React.HTMLAttributes<HTMLDivElement> {
+interface NavDrillProps extends React.HTMLAttributes<HTMLDivElement> {
   /** The `value` of the level on show, when the caller holds it */
-  view?: string;
-  /** The level shown first, when `MenuDrill` holds the view itself */
-  defaultView?: string;
-  /** Called when a drill row or ‹ asks for a level; a controlled caller sets `view` from it */
-  onViewChange?: (view: string, request: MenuDrillRequest) => void;
+  value?: string;
+  /** The level shown first, when `NavDrill` holds the value itself */
+  defaultValue?: string;
+  /** Called when a drill row or ‹ asks for a level; a controlled caller sets `value` from it */
+  onValueChange?: (value: string, request: NavDrillRequest) => void;
   /** Slides levels in and out after a drill row or ‹; off swaps them at once */
   animate?: boolean;
 }
 
-const MenuDrill = React.forwardRef<HTMLDivElement, MenuDrillProps>(
+const NavDrill = React.forwardRef<HTMLDivElement, NavDrillProps>(
   (
-    { view: viewProp, defaultView, onViewChange, animate = true, className, children, ...props },
+    {
+      value: valueProp,
+      defaultValue,
+      onValueChange,
+      animate = true,
+      className,
+      children,
+      ...props
+    },
     ref
   ) => {
-    const [ownView, setOwnView] = React.useState(defaultView);
-    const view = viewProp ?? ownView;
+    const [ownView, setOwnView] = React.useState(defaultValue);
+    const view = valueProp ?? ownView;
     const [shownView, setShownView] = React.useState(view);
     const [request, setRequest] = React.useState<PendingRequest | null>(null);
     const [leaving, setLeaving] = React.useState<Leaving | null>(null);
@@ -94,8 +101,8 @@ const MenuDrill = React.forwardRef<HTMLDivElement, MenuDrillProps>(
 
     const level =
       React.Children.toArray(children).find(
-        (child): child is React.ReactElement<MenuDrillLevelProps> =>
-          React.isValidElement<MenuDrillLevelProps>(child) && child.props.value === view
+        (child): child is React.ReactElement<NavDrillLevelProps> =>
+          React.isValidElement<NavDrillLevelProps>(child) && child.props.value === view
       ) ?? null;
 
     // Only a change that lands on the level the last request asked for slides; any change
@@ -130,7 +137,7 @@ const MenuDrill = React.forwardRef<HTMLDivElement, MenuDrillProps>(
       const live = liveLevel();
       const target =
         pending.direction === 'drill'
-          ? live?.querySelector<HTMLElement>('[data-slot="menu-back-button"]')
+          ? live?.querySelector<HTMLElement>('[data-slot="nav-drill-back"]')
           : (live?.querySelector<HTMLElement>(`[data-drill="${CSS.escape(pending.from ?? '')}"]`) ??
             live?.querySelector<HTMLElement>('[aria-current="page"]'));
       if (!target) return;
@@ -141,7 +148,7 @@ const MenuDrill = React.forwardRef<HTMLDivElement, MenuDrillProps>(
       target.scrollIntoView({ block: 'nearest' });
     };
 
-    const makeRequest = (target: string, direction: MenuDrillRequest) => {
+    const makeRequest = (target: string, direction: NavDrillRequest) => {
       const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
       setRequest({
         view: target,
@@ -153,13 +160,13 @@ const MenuDrill = React.forwardRef<HTMLDivElement, MenuDrillProps>(
       focusRequest.current = { direction, view: target, from: view, landed: false };
       observer.current?.disconnect();
       // ‹ may land before the parent's rows exist, and a child component can mount them later
-      // without MenuDrill rendering again
+      // without NavDrill rendering again
       if (direction === 'back' && rootRef.current) {
         observer.current ??= new MutationObserver(() => tryFocus());
         observer.current.observe(rootRef.current, { childList: true, subtree: true });
       }
-      if (viewProp === undefined) setOwnView(target);
-      onViewChange?.(target, direction);
+      if (valueProp === undefined) setOwnView(target);
+      onValueChange?.(target, direction);
     };
 
     useIsomorphicLayoutEffect(() => {
@@ -172,7 +179,7 @@ const MenuDrill = React.forwardRef<HTMLDivElement, MenuDrillProps>(
         observer.current?.disconnect();
       }
       // As a fresh panel would: a drill-in from far down a list shows the new rows' top
-      const scroller = rootRef.current?.closest<HTMLElement>('[data-menu-scroller]');
+      const scroller = rootRef.current?.closest<HTMLElement>('[data-nav-scroller]');
       if (scroller) scroller.scrollTop = 0;
     }, [view]);
 
@@ -192,7 +199,13 @@ const MenuDrill = React.forwardRef<HTMLDivElement, MenuDrillProps>(
       ];
       running.current = animations;
       Promise.all(animations.map((animation) => animation.finished)).then(
-        () => setLeaving((current) => (current === leaving ? null : current)),
+        () => {
+          // A finished animation drops its effect, so the leaving level is back at full opacity
+          // in place. Going back it is on top: hide it now, before the next paint, or it
+          // flashes for a frame until React unmounts it
+          ghost.style.visibility = 'hidden';
+          setLeaving((current) => (current === leaving ? null : current));
+        },
         // Cancelled by a later change, which owns the ghost now
         () => {}
       );
@@ -202,7 +215,7 @@ const MenuDrill = React.forwardRef<HTMLDivElement, MenuDrillProps>(
       tryFocus();
     });
 
-    // MenuDrill cannot see the caller's routing. A page link or anything else the user does
+    // NavDrill cannot see the caller's routing. A page link or anything else the user does
     // outside the drill is a different intent, so it drops what a drill row or ‹ asked for:
     // neither the slide nor the focus may land on a later, unrelated change
     React.useEffect(() => {
@@ -236,99 +249,99 @@ const MenuDrill = React.forwardRef<HTMLDivElement, MenuDrillProps>(
     return (
       <div
         ref={setRootRef}
-        data-slot="menu-drill"
+        data-slot="nav-drill"
         data-motion={leaving?.direction}
         className={cn(styles.drill, className)}
         {...props}
       >
-        <MenuDrillContext.Provider
+        <NavDrillContext.Provider
           value={{ requestDrill: (target) => makeRequest(target, 'drill'), leaving: false }}
         >
-          <MenuDrillBackContext.Provider value={(parent) => makeRequest(parent, 'back')}>
+          <NavDrillBackContext.Provider value={(parent) => makeRequest(parent, 'back')}>
             {level && <React.Fragment key={view}>{level}</React.Fragment>}
-          </MenuDrillBackContext.Provider>
-        </MenuDrillContext.Provider>
+          </NavDrillBackContext.Provider>
+        </NavDrillContext.Provider>
         {leaving && (
           <div
             key={leaving.id}
             ref={setGhostRef}
-            data-slot="menu-drill-ghost"
+            data-slot="nav-drill-ghost"
             data-motion={leaving.direction}
             aria-hidden="true"
             className={styles.ghost}
           >
-            <MenuDrillContext.Provider value={{ requestDrill: () => {}, leaving: true }}>
-              <MenuDrillBackContext.Provider value={() => {}}>
+            <NavDrillContext.Provider value={{ requestDrill: () => {}, leaving: true }}>
+              <NavDrillBackContext.Provider value={() => {}}>
                 {leaving.element}
-              </MenuDrillBackContext.Provider>
-            </MenuDrillContext.Provider>
+              </NavDrillBackContext.Provider>
+            </NavDrillContext.Provider>
           </div>
         )}
       </div>
     );
   }
 );
-MenuDrill.displayName = 'MenuDrill';
+NavDrill.displayName = 'NavDrill';
 
-interface MenuDrillLevelProps extends React.HTMLAttributes<HTMLDivElement> {
-  /** The view that shows this level; must be a direct child of `MenuDrill` */
+interface NavDrillLevelBaseProps extends React.HTMLAttributes<HTMLDivElement> {
+  /** The `NavDrill` value that shows this level; must be a direct child of `NavDrill` */
   value: string;
-  /** The view ‹ returns to */
-  parent?: string;
 }
 
-const MenuDrillLevel = React.forwardRef<HTMLDivElement, MenuDrillLevelProps>(
-  ({ value, parent, className, ...props }, ref) => (
-    <MenuDrillLevelContext.Provider value={parent}>
+interface NavDrillChildLevelProps extends NavDrillLevelBaseProps {
+  /** The `value` ‹ returns to; draws the ‹ row at the top of the level */
+  parent: string;
+  /** Names where you are, on the ‹ row */
+  label: string;
+  /** The ‹ row's accessible name, when it says more; must start with `label` (WCAG 2.5.3) */
+  backLabel?: string;
+}
+
+interface NavDrillTopLevelProps extends NavDrillLevelBaseProps {
+  parent?: undefined;
+  label?: undefined;
+  backLabel?: undefined;
+}
+
+type NavDrillLevelProps = NavDrillChildLevelProps | NavDrillTopLevelProps;
+
+const NavDrillLevel = React.forwardRef<HTMLDivElement, NavDrillLevelProps>(
+  ({ value, parent, label, backLabel, className, children, ...props }, ref) => {
+    const requestBack = React.useContext(NavDrillBackContext);
+
+    return (
       <div
         ref={ref}
-        data-slot="menu-drill-level"
+        data-slot="nav-drill-level"
         data-value={value}
         className={cn(styles.level, className)}
         {...props}
-      />
-    </MenuDrillLevelContext.Provider>
-  )
-);
-MenuDrillLevel.displayName = 'MenuDrillLevel';
-
-interface MenuBackButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  /** Names where you are; the accessible name must start with it (WCAG 2.5.3) */
-  label: string;
-}
-
-const MenuBackButton = React.forwardRef<HTMLButtonElement, MenuBackButtonProps>(
-  ({ label, className, onClick, ...props }, ref) => {
-    const parent = React.useContext(MenuDrillLevelContext);
-    const requestBack = React.useContext(MenuDrillBackContext);
-    if (!parent) return null;
-
-    return (
-      <>
-        <button
-          ref={ref}
-          type="button"
-          data-slot="menu-back-button"
-          className={cn(styles.item, styles.back, className)}
-          onClick={(event) => {
-            onClick?.(event);
-            requestBack(parent);
-          }}
-          {...props}
-        >
-          <span className={styles['item-prefix']} aria-hidden="true">
-            <ChevronLeft />
-          </span>
-          <span className={styles['item-label']} title={label}>
-            {label}
-          </span>
-        </button>
-        <hr className={styles.rule} />
-      </>
+      >
+        {parent !== undefined && (
+          <>
+            <button
+              type="button"
+              data-slot="nav-drill-back"
+              aria-label={backLabel}
+              className={cn(styles.item, styles.back)}
+              onClick={() => requestBack(parent)}
+            >
+              <span className={styles['item-prefix']} aria-hidden="true">
+                <ChevronLeft />
+              </span>
+              <span className={styles['item-label']} title={label}>
+                {label}
+              </span>
+            </button>
+            <hr className={styles.rule} />
+          </>
+        )}
+        {children}
+      </div>
     );
   }
 );
-MenuBackButton.displayName = 'MenuBackButton';
+NavDrillLevel.displayName = 'NavDrillLevel';
 
-export { MenuBackButton, MenuDrill, MenuDrillLevel };
-export type { MenuBackButtonProps, MenuDrillLevelProps, MenuDrillProps, MenuDrillRequest };
+export { NavDrill, NavDrillLevel };
+export type { NavDrillLevelProps, NavDrillProps, NavDrillRequest };

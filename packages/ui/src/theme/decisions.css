@@ -19,7 +19,7 @@
 
 /* DECISIONS: Equality's names, --{thing}-{property}. Parts read only these: h-(--list-item-height). */
 :root {
-  /* list-item: one selectable row (MenuItem; later DropdownMenuItem, SelectItem, CommandItem) */
+  /* list-item: one selectable row (NavListItem; later DropdownMenuItem, SelectItem, CommandItem) */
   --list-item-height: calc(var(--spacing) * 9); /* 36 (md) */
   --list-item-padding-x: calc(var(--spacing) * 2); /* 8 */
   --list-item-gap: calc(var(--spacing) * 2); /* 8, icon to text */
