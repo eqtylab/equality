@@ -28,6 +28,7 @@ export * from './info-card/info-card';
 export * from './input/input';
 export * from './label/label';
 export * from './list-or-grid-view-toggle/list-or-grid-view-toggle';
+export * from './menu/menu';
 export * from './loading-overlay/loading-overlay';
 export * from './metric-card/metric-card';
 export * from './motion-collapsible/motion-collapsible';
