@@ -1,12 +1,10 @@
 import { useState, type MouseEvent } from "react";
 import {
-  Menu,
-  MenuBackButton,
-  MenuDrill,
-  MenuDrillLevel,
-  MenuGroup,
-  MenuItem,
-  MenuList,
+  NavDrill,
+  NavDrillLevel,
+  NavList,
+  NavListGroup,
+  NavListItem,
   NavPanel,
   NavRail,
   NavRailItem,
@@ -14,11 +12,18 @@ import {
 } from "@eqtylab/equality";
 import {
   Activity,
+  Award,
+  Blocks,
   BookOpen,
-  FileText,
-  FolderKanban,
+  Bot,
+  ChartLine,
+  ClipboardCheck,
+  Folder,
+  Layers,
   LayoutGrid,
-  ShieldCheck,
+  LibraryBig,
+  Logs,
+  Network,
   Settings,
 } from "lucide-react";
 
@@ -28,8 +33,24 @@ const PROJECTS = [
 ];
 
 const POLICIES = [
-  { slug: "ai-baseline", name: "AI Baseline" },
   { slug: "eu-ai-act", name: "EU AI Act" },
+  { slug: "nist-ai-rmf", name: "NIST AI RMF" },
+];
+
+const PROJECT_ITEMS = [
+  { id: "dashboard", label: "Dashboard", icon: <LayoutGrid /> },
+  { id: "indicators", label: "Indicators", icon: <Activity /> },
+  { id: "lineage", label: "Lineage Graphs", icon: <Network /> },
+  { id: "agents", label: "Associated Agents", icon: <Bot /> },
+  { id: "plugins", label: "Plugin Configurations", icon: <Blocks /> },
+  { id: "settings", label: "Project Settings", icon: <Settings /> },
+];
+
+const POLICY_ITEMS = [
+  { id: "controls", label: "Controls", icon: <Layers /> },
+  { id: "monitoring", label: "Monitoring", icon: <Activity /> },
+  { id: "evaluations", label: "Indicator Evaluations", icon: <ChartLine /> },
+  { id: "certification", label: "Certification", icon: <Award /> },
 ];
 
 export function NavDemo() {
@@ -55,7 +76,7 @@ export function NavDemo() {
     <div
       style={{
         display: "flex",
-        height: 440,
+        height: 560,
         overflow: "hidden",
         borderRadius: 8,
         border: "1px solid var(--color-border-raised)",
@@ -63,12 +84,19 @@ export function NavDemo() {
     >
       <NavRail aria-label="Main">
         <NavRailItem
-          icon={<FolderKanban />}
+          icon={<Folder />}
           label="Projects"
           href="#projects"
           current
         />
-        <NavRailItem icon={<ShieldCheck />} label="Policies" href="#policies" />
+        <NavRailItem icon={<Bot />} label="Agents" href="#agents" />
+        <NavRailItem icon={<LibraryBig />} label="Library" href="#library" />
+        <NavRailItem
+          icon={<ClipboardCheck />}
+          label="Assessments"
+          href="#assessments"
+        />
+        <NavRailItem icon={<Logs />} label="Activity Logs" href="#logs" />
       </NavRail>
       <NavPanel
         aria-label={
@@ -88,68 +116,52 @@ export function NavDemo() {
           />
         }
       >
-        <Menu>
-          <MenuDrill view={view} onViewChange={(next) => setView(next)}>
-            <MenuDrillLevel value="project">
-              <MenuGroup>
-                <MenuList>
-                  <MenuItem
-                    label="Dashboard"
-                    prefix={<LayoutGrid />}
-                    {...link("dashboard")}
+        <NavList>
+          <NavDrill value={view} onValueChange={(next) => setView(next)}>
+            <NavDrillLevel value="project">
+              <NavListGroup label="Project">
+                {PROJECT_ITEMS.map((item) => (
+                  <NavListItem
+                    key={item.id}
+                    label={item.label}
+                    prefix={item.icon}
+                    {...link(item.id)}
                   />
-                  <MenuItem
-                    label="Indicators"
-                    prefix={<Activity />}
-                    {...link("indicators")}
+                ))}
+              </NavListGroup>
+              <NavListGroup label="Applied Policies">
+                {POLICIES.map((item) => (
+                  <NavListItem
+                    key={item.slug}
+                    label={item.name}
+                    prefix={<BookOpen />}
+                    drill={`policy:${item.slug}`}
+                    {...link(item.slug)}
                   />
-                </MenuList>
-              </MenuGroup>
-              <MenuGroup label="Applied Policies">
-                <MenuList>
-                  {POLICIES.map((item) => (
-                    <MenuItem
-                      key={item.slug}
-                      label={item.name}
-                      prefix={<BookOpen />}
-                      drill={`policy:${item.slug}`}
-                      {...link(item.slug)}
+                ))}
+              </NavListGroup>
+            </NavDrillLevel>
+            {policy && (
+              <NavDrillLevel
+                value={`policy:${policy.slug}`}
+                parent="project"
+                label={policy.name}
+                backLabel={`${policy.name}, back to ${projectName}`}
+              >
+                <NavListGroup>
+                  {POLICY_ITEMS.map((item) => (
+                    <NavListItem
+                      key={item.id}
+                      label={item.label}
+                      prefix={item.icon}
+                      {...link(`${policy.slug}-${item.id}`)}
                     />
                   ))}
-                </MenuList>
-              </MenuGroup>
-              <MenuGroup>
-                <MenuList>
-                  <MenuItem
-                    label="Settings"
-                    prefix={<Settings />}
-                    {...link("settings")}
-                  />
-                </MenuList>
-              </MenuGroup>
-            </MenuDrillLevel>
-            {policy && (
-              <MenuDrillLevel value={`policy:${policy.slug}`} parent="project">
-                <MenuBackButton
-                  label={policy.name}
-                  aria-label={`${policy.name}, back to ${projectName}`}
-                />
-                <MenuList>
-                  <MenuItem
-                    label="Overview"
-                    prefix={<FileText />}
-                    {...link(`${policy.slug}-overview`)}
-                  />
-                  <MenuItem
-                    label="Controls"
-                    prefix={<ShieldCheck />}
-                    {...link(`${policy.slug}-controls`)}
-                  />
-                </MenuList>
-              </MenuDrillLevel>
+                </NavListGroup>
+              </NavDrillLevel>
             )}
-          </MenuDrill>
-        </Menu>
+          </NavDrill>
+        </NavList>
       </NavPanel>
       <div style={{ flex: 1, padding: 24 }}>
         <p style={{ margin: 0 }}>Page content</p>
