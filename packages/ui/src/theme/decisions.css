@@ -1,0 +1,50 @@
+/* FIRST DRAFT for Equality's scale debate.
+   OPTIONS: Tailwind's own scale. Equality sets the values; the names stay Tailwind's.
+
+   Kept as a comment: a live `@theme { --spacing }` rewrites every existing utility to
+   `var(--spacing, …)`, which changes the compiled CSS of every component.
+
+   @theme {
+     --spacing: 0.25rem;                                        the size unit: 4px
+
+     --text-xs … --text-4xl: Tailwind's defaults, unchanged.
+
+     PROPOSALS for the debate, off:
+     --spacing: calc(var(--text-base) / 4);                     size unit from body text
+     --ratio: 1.125;                                            text on a ratio:
+     --text-sm: calc(var(--text-base) / var(--ratio));          each name from its neighbour
+     --text-lg: calc(var(--text-base) * var(--ratio));          … through --text-4xl
+   }
+*/
+
+/* DECISIONS: Equality's names, --{thing}-{property}. Parts read only these: h-(--list-item-height). */
+:root {
+  /* list-item: one selectable row (MenuItem; later DropdownMenuItem, SelectItem, CommandItem) */
+  --list-item-height: calc(var(--spacing) * 9); /* 36 (md) */
+  --list-item-padding-x: calc(var(--spacing) * 2); /* 8 */
+  --list-item-gap: calc(var(--spacing) * 2); /* 8, icon to text */
+  --list-item-icon-size: calc(var(--spacing) * 4); /* 16 */
+  --list-item-font-size: var(--text-sm); /* 14 */
+  /* list: the rows together */
+  --list-gap: calc(var(--spacing) * 0.5); /* 2, between items */
+  --list-group-gap: calc(var(--spacing) * 3); /* 12, above a group label */
+  --list-label-gap: calc(var(--spacing) * 1); /* 4, label to its first item */
+  --list-label-font-size: var(--text-xs); /* 12 */
+  --list-indent: calc(var(--spacing) * 3); /* 12, child indent when items have no icons */
+  /* control: a stand-alone element */
+  --control-height: calc(var(--spacing) * 10); /* 40: rail item; later Button, Input */
+  /* touch: the minimum tap target */
+  --touch-target: 0px;
+}
+
+/* Density, as Material does it: one 4px step shorter. The only sm line. */
+[data-size='sm'] {
+  --list-item-height: calc(var(--spacing) * 8); /* 32 */
+}
+
+/* Touch is not a size. */
+@media (pointer: coarse) {
+  :root {
+    --touch-target: 2.75rem; /* 44, WCAG 2.5.8 */
+  }
+}
