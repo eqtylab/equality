@@ -1,0 +1,322 @@
+import * as React from 'react';
+import { ChevronLeft } from 'lucide-react';
+
+import { MenuDrillContext } from '@/components/menu/menu-drill-context';
+import styles from '@/components/menu/menu.module.css';
+import { cn } from '@/lib/utils';
+
+type MenuDrillRequest = 'drill' | 'back';
+
+// Push, half travel: the new rows slide in over the old, which move back and dim. Back reverses it
+// and fades the leaving rows, which would otherwise stop short of the edge and cover the panel
+const SHADOW = '-8px 0 16px rgb(0 0 0 / 0.18)';
+const NO_SHADOW = '-8px 0 16px transparent';
+const MOTION: Record<MenuDrillRequest, { current: Keyframe[]; previous: Keyframe[] }> = {
+  drill: {
+    current: [
+      { transform: 'translateX(50%)', boxShadow: SHADOW },
+      { transform: 'translateX(0)', boxShadow: NO_SHADOW },
+    ],
+    previous: [
+      { transform: 'translateX(0)', opacity: 1 },
+      { transform: 'translateX(-15%)', opacity: 0.55 },
+    ],
+  },
+  back: {
+    current: [
+      { transform: 'translateX(-15%)', opacity: 0.55 },
+      { transform: 'translateX(0)', opacity: 1 },
+    ],
+    previous: [
+      { transform: 'translateX(0)', opacity: 1, boxShadow: SHADOW },
+      { transform: 'translateX(50%)', opacity: 0, boxShadow: NO_SHADOW },
+    ],
+  },
+};
+const TIMING: KeyframeAnimationOptions = { duration: 330, easing: 'cubic-bezier(.2, .8, .2, 1)' };
+
+const LEVEL = '[data-slot="menu-drill-level"]';
+
+interface PendingRequest {
+  view: string;
+  direction: MenuDrillRequest;
+  // The level on show when the request was made, which slides away if the request lands
+  element: React.ReactElement | null;
+  top: number;
+  slide: boolean;
+}
+
+interface Leaving {
+  element: React.ReactElement;
+  direction: MenuDrillRequest;
+  top: number;
+  id: number;
+}
+
+interface FocusRequest {
+  direction: MenuDrillRequest;
+  view: string;
+  from: string | undefined;
+  landed: boolean;
+}
+
+const MenuDrillBackContext = React.createContext<(parent: string) => void>(() => {});
+const MenuDrillLevelContext = React.createContext<string | undefined>(undefined);
+
+interface MenuDrillProps extends React.HTMLAttributes<HTMLDivElement> {
+  /** The `value` of the level on show, when the caller holds it */
+  view?: string;
+  /** The level shown first, when `MenuDrill` holds the view itself */
+  defaultView?: string;
+  /** Called when a drill row or ‹ asks for a level; a controlled caller sets `view` from it */
+  onViewChange?: (view: string, request: MenuDrillRequest) => void;
+  /** Slides levels in and out after a drill row or ‹; off swaps them at once */
+  animate?: boolean;
+}
+
+const MenuDrill = React.forwardRef<HTMLDivElement, MenuDrillProps>(
+  (
+    { view: viewProp, defaultView, onViewChange, animate = true, className, children, ...props },
+    ref
+  ) => {
+    const [ownView, setOwnView] = React.useState(defaultView);
+    const view = viewProp ?? ownView;
+    const [shownView, setShownView] = React.useState(view);
+    const [request, setRequest] = React.useState<PendingRequest | null>(null);
+    const [leaving, setLeaving] = React.useState<Leaving | null>(null);
+    const rootRef = React.useRef<HTMLDivElement | null>(null);
+    const ghostRef = React.useRef<HTMLDivElement | null>(null);
+    const running = React.useRef<Animation[]>([]);
+    const focusRequest = React.useRef<FocusRequest | null>(null);
+    const observer = React.useRef<MutationObserver | null>(null);
+    const previousView = React.useRef(view);
+
+    const level =
+      React.Children.toArray(children).find(
+        (child): child is React.ReactElement<MenuDrillLevelProps> =>
+          React.isValidElement<MenuDrillLevelProps>(child) && child.props.value === view
+      ) ?? null;
+
+    // Only a change that lands on the level the last request asked for slides; any change
+    // clears the request, so Back, Forward, deep links and redirects swap at once
+    if (view !== shownView) {
+      setShownView(view);
+      setRequest(null);
+      setLeaving(
+        request?.slide && request.view === view && request.element && level
+          ? {
+              element: request.element,
+              direction: request.direction,
+              top: request.top,
+              id: (leaving?.id ?? 0) + 1,
+            }
+          : null
+      );
+    }
+
+    const liveLevel = () =>
+      rootRef.current?.querySelector<HTMLElement>(`:scope > ${LEVEL}`) ?? null;
+
+    const tryFocus = () => {
+      const pending = focusRequest.current;
+      const root = rootRef.current;
+      if (!pending?.landed || !root) return;
+      const active = document.activeElement;
+      if (active && active !== document.body && !root.contains(active)) {
+        focusRequest.current = null;
+        return;
+      }
+      const live = liveLevel();
+      const target =
+        pending.direction === 'drill'
+          ? live?.querySelector<HTMLElement>('[data-slot="menu-back-button"]')
+          : (live?.querySelector<HTMLElement>(`[data-drill="${CSS.escape(pending.from ?? '')}"]`) ??
+            live?.querySelector<HTMLElement>('[aria-current="page"]'));
+      if (!target) return;
+      focusRequest.current = null;
+      observer.current?.disconnect();
+      // focus() alone centres the row in the window; "nearest" moves the list first
+      target.focus({ preventScroll: true });
+      target.scrollIntoView({ block: 'nearest' });
+    };
+
+    const makeRequest = (target: string, direction: MenuDrillRequest) => {
+      const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      setRequest({
+        view: target,
+        direction,
+        element: level,
+        top: liveLevel()?.getBoundingClientRect().top ?? 0,
+        slide: animate && !reduced,
+      });
+      focusRequest.current = { direction, view: target, from: view, landed: false };
+      observer.current?.disconnect();
+      // ‹ may land before the parent's rows exist, and a child component can mount them later
+      // without MenuDrill rendering again
+      if (direction === 'back' && rootRef.current) {
+        observer.current ??= new MutationObserver(() => tryFocus());
+        observer.current.observe(rootRef.current, { childList: true, subtree: true });
+      }
+      if (viewProp === undefined) setOwnView(target);
+      onViewChange?.(target, direction);
+    };
+
+    React.useLayoutEffect(() => {
+      if (previousView.current === view) return;
+      previousView.current = view;
+      const pending = focusRequest.current;
+      if (pending && !pending.landed && pending.view === view) pending.landed = true;
+      else {
+        focusRequest.current = null;
+        observer.current?.disconnect();
+      }
+      // As a fresh panel would: a drill-in from far down a list shows the new rows' top
+      const scroller = rootRef.current?.closest<HTMLElement>('[data-menu-scroller]');
+      if (scroller) scroller.scrollTop = 0;
+    }, [view]);
+
+    React.useLayoutEffect(() => {
+      running.current.forEach((animation) => animation.cancel());
+      running.current = [];
+      const live = liveLevel();
+      const ghost = ghostRef.current;
+      const ghostLevel = ghost?.querySelector<HTMLElement>(LEVEL);
+      if (!leaving || !live || !ghost || !ghostLevel) return;
+      // The old rows leave from where the user saw them: neither the scroll reset nor a tighter
+      // header moves them. A margin, because the slide owns transform
+      ghostLevel.style.marginTop = `${leaving.top - live.getBoundingClientRect().top}px`;
+      const animations = [
+        live.animate(MOTION[leaving.direction].current, TIMING),
+        ghost.animate(MOTION[leaving.direction].previous, TIMING),
+      ];
+      running.current = animations;
+      Promise.all(animations.map((animation) => animation.finished)).then(
+        () => setLeaving((current) => (current === leaving ? null : current)),
+        // Cancelled by a later change, which owns the ghost now
+        () => {}
+      );
+    }, [leaving]);
+
+    React.useEffect(() => {
+      tryFocus();
+    });
+
+    React.useEffect(
+      () => () => {
+        running.current.forEach((animation) => animation.cancel());
+        observer.current?.disconnect();
+      },
+      []
+    );
+
+    const setRootRef = (node: HTMLDivElement | null) => {
+      rootRef.current = node;
+      if (typeof ref === 'function') ref(node);
+      else if (ref) ref.current = node;
+    };
+
+    const setGhostRef = (node: HTMLDivElement | null) => {
+      ghostRef.current = node;
+      // Through the DOM so it works in React 18, which drops an `inert` prop
+      if (node) node.inert = true;
+    };
+
+    return (
+      <div
+        ref={setRootRef}
+        data-slot="menu-drill"
+        data-motion={leaving?.direction}
+        className={cn(styles.drill, className)}
+        {...props}
+      >
+        <MenuDrillContext.Provider
+          value={{ requestDrill: (target) => makeRequest(target, 'drill'), leaving: false }}
+        >
+          <MenuDrillBackContext.Provider value={(parent) => makeRequest(parent, 'back')}>
+            {level && <React.Fragment key={view}>{level}</React.Fragment>}
+          </MenuDrillBackContext.Provider>
+        </MenuDrillContext.Provider>
+        {leaving && (
+          <div
+            key={leaving.id}
+            ref={setGhostRef}
+            data-slot="menu-drill-ghost"
+            data-motion={leaving.direction}
+            aria-hidden="true"
+            className={styles.ghost}
+          >
+            <MenuDrillContext.Provider value={{ requestDrill: () => {}, leaving: true }}>
+              <MenuDrillBackContext.Provider value={() => {}}>
+                {leaving.element}
+              </MenuDrillBackContext.Provider>
+            </MenuDrillContext.Provider>
+          </div>
+        )}
+      </div>
+    );
+  }
+);
+MenuDrill.displayName = 'MenuDrill';
+
+interface MenuDrillLevelProps extends React.HTMLAttributes<HTMLDivElement> {
+  /** The view that shows this level; must be a direct child of `MenuDrill` */
+  value: string;
+  /** The view ‹ returns to */
+  parent?: string;
+}
+
+const MenuDrillLevel = React.forwardRef<HTMLDivElement, MenuDrillLevelProps>(
+  ({ value, parent, className, ...props }, ref) => (
+    <MenuDrillLevelContext.Provider value={parent}>
+      <div
+        ref={ref}
+        data-slot="menu-drill-level"
+        data-value={value}
+        className={cn(styles.level, className)}
+        {...props}
+      />
+    </MenuDrillLevelContext.Provider>
+  )
+);
+MenuDrillLevel.displayName = 'MenuDrillLevel';
+
+interface MenuBackButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+  /** Names where you are; the accessible name must start with it (WCAG 2.5.3) */
+  label: string;
+}
+
+const MenuBackButton = React.forwardRef<HTMLButtonElement, MenuBackButtonProps>(
+  ({ label, className, onClick, ...props }, ref) => {
+    const parent = React.useContext(MenuDrillLevelContext);
+    const requestBack = React.useContext(MenuDrillBackContext);
+    if (!parent) return null;
+
+    return (
+      <>
+        <button
+          ref={ref}
+          type="button"
+          data-slot="menu-back-button"
+          className={cn(styles.item, styles.back, className)}
+          onClick={(event) => {
+            onClick?.(event);
+            requestBack(parent);
+          }}
+          {...props}
+        >
+          <span className={styles['item-prefix']} aria-hidden="true">
+            <ChevronLeft />
+          </span>
+          <span className={styles['item-label']} title={label}>
+            {label}
+          </span>
+        </button>
+        <hr className={styles.rule} />
+      </>
+    );
+  }
+);
+MenuBackButton.displayName = 'MenuBackButton';
+
+export { MenuBackButton, MenuDrill, MenuDrillLevel };
+export type { MenuBackButtonProps, MenuDrillLevelProps, MenuDrillProps, MenuDrillRequest };

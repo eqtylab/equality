@@ -87,3 +87,46 @@
   outline: 2px solid var(--color-focus-ring);
   outline-offset: 2px;
 }
+
+/* The live level and, while it slides, the leaving one share one grid cell. The padding leaves
+   room for a row's focus ring inside the clip that hides the half-travel slide */
+.drill {
+  @apply -mx-1 grid px-1;
+  overflow-x: clip;
+  background-color: inherit;
+}
+
+.level {
+  @apply flex min-w-0 flex-col;
+  grid-area: 1 / 1;
+  z-index: 1;
+  background-color: inherit;
+}
+
+/* Its own stacking context, under the live level going in and above it going back. The clip
+   stops a level moved up by the old scroll from showing behind a header */
+.ghost {
+  @apply grid;
+  grid-area: 1 / 1;
+  z-index: 0;
+  overflow: clip;
+  background-color: inherit;
+}
+
+.ghost[data-motion='back'] {
+  z-index: 2;
+}
+
+/* A row in layout and states, quieter: it names where you are, not a page */
+.back {
+  @apply text-text-secondary mt-0.5 font-normal;
+}
+
+.back .item-prefix {
+  @apply text-text-tertiary;
+}
+
+/* 8px under ‹ and 4px above the first row. A border, not a fill, so forced colours keep it */
+.rule {
+  @apply border-border-raised m-0 mb-1 mt-2 h-0 shrink-0 border-0 border-t;
+}
