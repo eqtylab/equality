@@ -93,7 +93,7 @@
     "build:types": "tsc -p tsconfig.build.json",
     "dev": "node scripts/dev.mjs",
     "check:source": "node scripts/check-tailwind-source.mjs",
-    "test": "node --test tests/*.test.ts",
+    "test": "node --test tests/*.test.ts && vitest run",
     "release": "pnpm run build && pnpm publish --access public --no-git-checks"
   },
   "dependencies": {
@@ -133,6 +133,7 @@
     "react-dom": "^19.2.0",
     "tsup": "^8.5.0",
     "typescript": ">=5.4.x",
-    "vite": "^8.3.1"
+    "vite": "^8.3.1",
+    "vitest": "^5.0.1"
   }
 }
