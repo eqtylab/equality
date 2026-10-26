@@ -40,54 +40,62 @@ export interface IconButtonProps
   download?: string | boolean;
 }
 
-function IconButton({
-  className,
-  size = 'sm',
-  variant = 'primary',
-  name,
-  label,
-  href,
-  target,
-  download,
-  disabled,
-  ...props
-}: IconButtonProps) {
-  const Icon = LucideIcons[name] as LucideIcons.LucideIcon;
-  const iconSize = iconSizeMap[size || 'sm'];
-  const IconComponent = Icon as React.ComponentType<{ size?: number }>;
+const IconButton = React.forwardRef<HTMLButtonElement | HTMLAnchorElement, IconButtonProps>(
+  function IconButton(
+    {
+      className,
+      size = 'sm',
+      variant = 'primary',
+      name,
+      label,
+      href,
+      target,
+      download,
+      disabled,
+      ...props
+    },
+    ref
+  ) {
+    const Icon = LucideIcons[name] as LucideIcons.LucideIcon;
+    const iconSize = iconSizeMap[size || 'sm'];
+    const IconComponent = Icon as React.ComponentType<{ size?: number }>;
 
-  if (!Icon) {
-    throw new Error(`Icon "${name}" not found in lucide-react`);
-  }
+    if (!Icon) {
+      throw new Error(`Icon "${name}" not found in lucide-react`);
+    }
 
-  const content = <IconComponent size={iconSize} />;
+    const content = <IconComponent size={iconSize} />;
 
-  if (href && !disabled) {
+    if (href && !disabled) {
+      return (
+        <a
+          ref={ref as React.Ref<HTMLAnchorElement>}
+          href={href}
+          target={target}
+          download={download}
+          aria-label={label}
+          rel={target === '_blank' ? 'noopener noreferrer' : undefined}
+          className={cn(iconButtonVariants({ size, variant }), className)}
+        >
+          {content}
+        </a>
+      );
+    }
+
     return (
-      <a
-        href={href}
-        target={target}
-        download={download}
+      <button
+        ref={ref as React.Ref<HTMLButtonElement>}
+        type="button"
         aria-label={label}
-        rel={target === '_blank' ? 'noopener noreferrer' : undefined}
+        disabled={disabled}
         className={cn(iconButtonVariants({ size, variant }), className)}
+        {...props}
       >
         {content}
-      </a>
+      </button>
     );
   }
-
-  return (
-    <button
-      type="button"
-      aria-label={label}
-      disabled={disabled}
-      className={cn(iconButtonVariants({ size, variant }), className)}
-      {...props}
-    >
-      {content}
-    </button>
-  );
-}
+);
+IconButton.displayName = 'IconButton';
 
 export { IconButton };
