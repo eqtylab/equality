@@ -161,7 +161,6 @@ const NavSwitcherSelect = React.forwardRef<HTMLButtonElement, NavSwitcherLoadedP
 );
 NavSwitcherSelect.displayName = 'NavSwitcherSelect';
 
-// Goes in NavPanel's header
 const NavSwitcher = React.forwardRef<HTMLButtonElement, NavSwitcherProps>((props, ref) =>
   props.loading ? (
     <div

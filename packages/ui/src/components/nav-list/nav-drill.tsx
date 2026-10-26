@@ -8,8 +8,8 @@ import { cn } from '@/lib/utils';
 
 type NavDrillRequest = 'drill' | 'back';
 
-// Push, half travel: the new rows slide in over the old, which move back and dim. Back reverses it
-// and fades the leaving rows, which would otherwise stop short of the edge and cover the panel
+// Going back, the leaving rows must fade: at half travel they stop short of the edge and would
+// cover the panel
 const SHADOW = '-8px 0 16px rgb(0 0 0 / 0.18)';
 const NO_SHADOW = '-8px 0 16px transparent';
 const MOTION: Record<NavDrillRequest, { current: Keyframe[]; previous: Keyframe[] }> = {
@@ -64,9 +64,9 @@ interface FocusRequest {
 const NavDrillBackContext = React.createContext<(parent: string) => void>(() => {});
 
 interface NavDrillProps extends React.HTMLAttributes<HTMLDivElement> {
-  /** The `value` of the level on show, when the caller holds it */
+  /** Controlled: the `value` of the level on show */
   value?: string;
-  /** The level shown first, when `NavDrill` holds the value itself */
+  /** Uncontrolled: the `value` of the first level */
   defaultValue?: string;
   /** Called when a drill row or ‹ asks for a level; a controlled caller sets `value` from it */
   onValueChange?: (value: string, request: NavDrillRequest) => void;
@@ -294,7 +294,7 @@ interface NavDrillChildLevelProps extends NavDrillLevelBaseProps {
   parent?: string;
   /** Names where you are, on the ‹ row */
   label: string;
-  /** The ‹ row's accessible name; must start with `label` (WCAG 2.5.3) */
+  /** The ‹ row's accessible name; must start with `label` (WCAG 2.5.3). @default "{label}, back" */
   backLabel?: string;
 }
 

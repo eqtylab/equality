@@ -30,7 +30,7 @@
   @apply px-2 py-4;
 }
 
-/* In a drilled panel, ‹ sits 2px under the header, as one card. An inert ‹ is leaving */
+/* An inert ‹ belongs to the leaving level and must not tighten the header */
 .scroller:has([data-slot='nav-drill-back']:not([inert] *)) > .panel-header {
   @apply pb-0;
 }
@@ -54,8 +54,7 @@
   @apply text-text-primary z-3 relative m-0 truncate px-2 pb-2 text-sm font-semibold;
 }
 
-/* The switcher is the header, so the header gives up its inset and clipping to it. The group
-   under it brings its own top padding, so the switcher sits 12px above it, as the site card did */
+/* The group below brings its own top padding; the header's would double it */
 .panel-header:has(> .switcher-heading) {
   @apply overflow-visible px-0 pb-0;
 }
@@ -149,7 +148,6 @@
   @apply block truncate;
 }
 
-/* Sticks to the list's foot like the filter's Clear all, on the Select's own surface */
 .switcher-footer {
   @apply sticky -bottom-1 pb-1;
   background: var(--color-background-overlay);

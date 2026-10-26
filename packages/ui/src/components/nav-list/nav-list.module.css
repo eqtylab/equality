@@ -117,7 +117,6 @@
   z-index: 2;
 }
 
-/* A row in layout and states, quieter: it names where you are, not a page */
 .back {
   @apply text-text-secondary mt-0.5 font-normal;
 }
@@ -126,7 +125,7 @@
   @apply text-text-tertiary;
 }
 
-/* 8px under ‹ and 4px above the first row. A border, not a fill, so forced colours keep it */
+/* A border, not a fill: forced colours drop fills */
 .rule {
   @apply border-border-raised m-0 mb-1 mt-2 h-0 shrink-0 border-0 border-t;
 }
