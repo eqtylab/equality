@@ -280,7 +280,7 @@ On a phone, the sidebar comes in from the left in a [Sheet](/components/sheet). 
 | `options`       | The items to switch between                                                                                                | `{ value, label, keywords? }[]`           |         | ✅       |
 | `value`         | The current item's value                                                                                                   | `string`                                  |         | ✅       |
 | `onValueChange` | Called with the picked item's value                                                                                        | `(value: string) => void`                 |         | ✅       |
-| `onHighlight`   | Hover or focus on an option, to warm its destination                                                                       | `(value: string) => void`                 |         | ❌       |
+| `onHighlight`   | Hover or focus on an option, to preload its destination                                                                    | `(value: string) => void`                 |         | ❌       |
 | `action`        | A command at the bottom of the list, kept while searching, such as "Create Project"; `onSelect` runs after the list closes | `{ label: string; onSelect: () => void }` |         | ❌       |
 | `loading`       | Holds the switcher's height while the current item loads                                                                   | `boolean`                                 | `false` | ❌       |
 
