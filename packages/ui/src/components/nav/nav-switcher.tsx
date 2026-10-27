@@ -49,8 +49,6 @@ interface NavSwitcherLoadedProps {
   onValueChange: (value: string) => void;
   /** Hover or focus on an option, for a caller that warms its destination */
   onHighlight?: (value: string) => void;
-  /** Hover or focus leaves an option */
-  onHighlightEnd?: () => void;
   /** A command at the bottom of the list, kept while searching, such as "Create Project" */
   action?: NavSwitcherAction;
 }
@@ -64,10 +62,7 @@ type NavSwitcherProps = NavSwitcherLoadedProps | NavSwitcherLoadingProps;
 // The heading is named by the label alone; the trigger's name starts with it and says what the
 // control does (WCAG 2.5.3)
 const NavSwitcherSelect = React.forwardRef<HTMLButtonElement, NavSwitcherLoadedProps>(
-  (
-    { label, noun, collection, options, value, onValueChange, onHighlight, onHighlightEnd, action },
-    ref
-  ) => {
+  ({ label, noun, collection, options, value, onValueChange, onHighlight, action }, ref) => {
     const labelId = React.useId();
     const actionValue = React.useId();
     const actionPending = React.useRef(false);
@@ -132,9 +127,7 @@ const NavSwitcherSelect = React.forwardRef<HTMLButtonElement, NavSwitcherLoadedP
                 value={option.value}
                 textValue={[option.label, ...(option.keywords ?? [])].join(' ')}
                 onPointerEnter={() => onHighlight?.(option.value)}
-                onPointerLeave={onHighlightEnd}
                 onFocus={() => onHighlight?.(option.value)}
-                onBlur={onHighlightEnd}
               >
                 <span className={styles['nav-switcher-option']} title={option.label}>
                   {option.label}
