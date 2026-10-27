@@ -62,6 +62,9 @@ interface FocusRequest {
 
 const NavDrillBackContext = React.createContext<(parent: string) => void>(() => {});
 
+const LEAVING_DRILL_CONTEXT = { requestDrill: () => {}, leaving: true };
+const NO_BACK = () => {};
+
 interface NavDrillProps extends React.HTMLAttributes<HTMLDivElement> {
   /** Controlled: the `value` of the level on show */
   value?: string;
@@ -169,6 +172,22 @@ const NavDrill = React.forwardRef<HTMLDivElement, NavDrillProps>(
       onValueChange?.(target, direction);
     };
 
+    const makeRequestRef = React.useRef(makeRequest);
+    useIsomorphicLayoutEffect(() => {
+      makeRequestRef.current = makeRequest;
+    });
+    const drillContext = React.useMemo(
+      () => ({
+        requestDrill: (target: string) => makeRequestRef.current(target, 'drill'),
+        leaving: false,
+      }),
+      []
+    );
+    const requestBack = React.useCallback(
+      (parent: string) => makeRequestRef.current(parent, 'back'),
+      []
+    );
+
     useIsomorphicLayoutEffect(() => {
       if (previousView.current === view) return;
       previousView.current = view;
@@ -234,17 +253,20 @@ const NavDrill = React.forwardRef<HTMLDivElement, NavDrillProps>(
       };
     }, []);
 
-    const setRootRef = (node: HTMLDivElement | null) => {
-      rootRef.current = node;
-      if (typeof ref === 'function') ref(node);
-      else if (ref) ref.current = node;
-    };
+    const setRootRef = React.useCallback(
+      (node: HTMLDivElement | null) => {
+        rootRef.current = node;
+        if (typeof ref === 'function') ref(node);
+        else if (ref) ref.current = node;
+      },
+      [ref]
+    );
 
-    const setGhostRef = (node: HTMLDivElement | null) => {
+    const setGhostRef = React.useCallback((node: HTMLDivElement | null) => {
       ghostRef.current = node;
       // Through the DOM so it works in React 18, which drops an `inert` prop
       if (node) node.inert = true;
-    };
+    }, []);
 
     return (
       <div
@@ -254,10 +276,8 @@ const NavDrill = React.forwardRef<HTMLDivElement, NavDrillProps>(
         className={cn(styles['nav-drill'], className)}
         {...props}
       >
-        <NavDrillContext.Provider
-          value={{ requestDrill: (target) => makeRequest(target, 'drill'), leaving: false }}
-        >
-          <NavDrillBackContext.Provider value={(parent) => makeRequest(parent, 'back')}>
+        <NavDrillContext.Provider value={drillContext}>
+          <NavDrillBackContext.Provider value={requestBack}>
             {level && <React.Fragment key={view}>{level}</React.Fragment>}
           </NavDrillBackContext.Provider>
         </NavDrillContext.Provider>
@@ -270,8 +290,8 @@ const NavDrill = React.forwardRef<HTMLDivElement, NavDrillProps>(
             aria-hidden="true"
             className={styles['nav-drill-ghost']}
           >
-            <NavDrillContext.Provider value={{ requestDrill: () => {}, leaving: true }}>
-              <NavDrillBackContext.Provider value={() => {}}>
+            <NavDrillContext.Provider value={LEAVING_DRILL_CONTEXT}>
+              <NavDrillBackContext.Provider value={NO_BACK}>
                 {leaving.element}
               </NavDrillBackContext.Provider>
             </NavDrillContext.Provider>
@@ -310,7 +330,14 @@ const NavDrillLevel = React.forwardRef<HTMLDivElement, NavDrillLevelProps>(
     const requestBack = React.useContext(NavDrillBackContext);
 
     React.useEffect(() => {
-      if (parent !== undefined && backLabel && label && !backLabel.startsWith(label)) {
+      if (
+        typeof process !== 'undefined' &&
+        process.env.NODE_ENV !== 'production' &&
+        parent !== undefined &&
+        backLabel &&
+        label &&
+        !backLabel.startsWith(label)
+      ) {
         console.warn(
           `NavDrillLevel: backLabel "${backLabel}" must start with label "${label}", so voice users can say what they see (WCAG 2.5.3)`
         );

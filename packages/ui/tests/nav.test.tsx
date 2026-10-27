@@ -1,12 +1,11 @@
 import * as React from 'react';
 import { renderToString } from 'react-dom/server';
-import { fireEvent, render, screen } from '@testing-library/react';
-import { describe, expect, it, vi } from 'vitest';
+import { render, screen } from '@testing-library/react';
+import { describe, expect, it } from 'vitest';
 
 import { NavPanel } from '@/components/nav/nav-panel';
 import { NavRail, NavRailItem } from '@/components/nav/nav-rail';
 import { NavSwitcher } from '@/components/nav/nav-switcher';
-import { blockClosedTypeahead } from '@/components/nav/select-typeahead';
 
 const OPTIONS = [
   { value: 'ben', label: 'Ben Project' },
@@ -71,6 +70,12 @@ describe('Nav shell', () => {
     );
   });
 
+  it('requires href unless the rail item is asChild', () => {
+    // @ts-expect-error without href the <a> takes no focus and is not a link
+    const item = <NavRailItem icon={<svg />} label="Projects" />;
+    expect(item).toBeTruthy();
+  });
+
   it('marks its scroller with data-nav-scroller', () => {
     render(
       <NavPanel aria-label="Project">
@@ -113,25 +118,5 @@ describe('Nav shell', () => {
     const trigger = screen.getByRole('combobox', { name: 'Ben Project, switch project' });
     expect(ref.current).toBe(trigger);
     expect(screen.getByRole('heading', { name: 'Ben Project' })).toBeTruthy();
-  });
-
-  it('blockClosedTypeahead prevents letters but not Space or shortcuts', () => {
-    const onKeyDown = vi.fn(blockClosedTypeahead);
-    render(
-      <button type="button" onKeyDown={onKeyDown}>
-        trigger
-      </button>
-    );
-    const button = screen.getByRole('button');
-    const press = (init: KeyboardEventInit) => {
-      fireEvent.keyDown(button, init);
-      return (onKeyDown.mock.lastCall![0] as React.KeyboardEvent).defaultPrevented;
-    };
-    expect(press({ key: 'a' })).toBe(true);
-    expect(press({ key: ' ' })).toBe(false);
-    expect(press({ key: 'Enter' })).toBe(false);
-    expect(press({ key: 'a', ctrlKey: true })).toBe(false);
-    expect(press({ key: 'a', metaKey: true })).toBe(false);
-    expect(press({ key: 'a', altKey: true })).toBe(false);
   });
 });

@@ -111,11 +111,6 @@ function NavListPrefixSuffixDemo() {
             current
           />
           <NavListItem
-            label="EU AI Act"
-            prefix={<BookOpen />}
-            drill="eu-ai-act"
-          />
-          <NavListItem
             label="Controls"
             prefix={<Layers />}
             suffix={<Badge size="sm">12</Badge>}

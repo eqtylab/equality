@@ -40,7 +40,7 @@
 }
 
 .nav-rail-item {
-  @apply size-(--control-height) min-h-(--touch-target) min-w-(--touch-target) flex items-center justify-center;
+  @apply size-(--eq-control-height) min-h-(--eq-touch-target) min-w-(--eq-touch-target) flex items-center justify-center;
   @apply text-text-primary rounded-md border border-transparent;
   @apply transition-colors duration-150 motion-reduce:transition-none;
 }
@@ -61,7 +61,7 @@
 
 /* One height whether it holds the switcher, a plain name or the loading bar: the site card's 32px */
 .nav-switcher-heading {
-  @apply text-text-primary min-h-(--touch-target) m-0 flex h-8 min-w-0 items-center text-sm font-semibold;
+  @apply text-text-primary min-h-(--eq-touch-target) m-0 flex h-8 min-w-0 items-center text-sm font-semibold;
 }
 
 .nav-switcher-plain {
@@ -83,7 +83,7 @@
 /* Under the heading, so it outranks the size, fill and border SelectTrigger sets at rest whatever
    order the two modules load in */
 .nav-switcher-heading .nav-switcher {
-  @apply min-h-(--touch-target) flex h-8 w-full min-w-0 items-center gap-2 rounded-md border border-transparent px-2;
+  @apply min-h-(--eq-touch-target) flex h-8 w-full min-w-0 items-center gap-2 rounded-md border border-transparent px-2;
   @apply text-text-primary bg-transparent text-left text-sm font-semibold transition-colors duration-150;
   @apply motion-reduce:transition-none;
 }

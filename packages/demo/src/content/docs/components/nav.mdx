@@ -73,7 +73,7 @@ Put a group inside another group to nest it one level, under a tree line. Nested
 
 ### Prefix and Suffix
 
-`prefix` holds an icon, hidden from screen readers. `suffix` holds badges and marks, which screen readers read with the label. The › comes from `drill`, never from `suffix`.
+`prefix` holds an icon, hidden from screen readers. `suffix` holds badges and marks, which screen readers read with the label. The › comes from `drill`, never from `suffix`; see [Drill-in](#drill-in).
 
 <NavListDemo client:only="react" variant="prefix-suffix" />
 
@@ -84,7 +84,6 @@ Put a group inside another group to nest it one level, under a tree line. Nested
   suffix={<Badge size="sm">2</Badge>}
   href="/policies"
 />
-<NavListItem label="EU AI Act" prefix={<BookOpen />} drill="eu-ai-act" />
 <NavListItem
   label="Controls"
   prefix={<Layers />}
@@ -205,7 +204,7 @@ A rail of sections beside a panel, with a switcher in the panel's header and a n
 
 A `NavDrill` inside a `NavPanel` scrolls the panel back to the top on every change of level.
 
-The switcher's trigger stops a typed letter from picking an item while its list is closed: a switch navigates, and focus lands on the trigger afterwards. Use `blockClosedTypeahead` on any other `Select` trigger that navigates.
+The switcher's trigger stops a typed letter from picking an item while its list is closed: a switch navigates, and focus lands on the trigger afterwards. To do the same on your own `Select`, see [A select that navigates](/components/select#a-select-that-navigates).
 
 ### Navigation in a Sheet
 
@@ -260,6 +259,7 @@ On a phone, the sidebar comes in from the left in a [Sheet](/components/sheet). 
 | --------- | --------------------------------------------------------- | ----------- | ------- | -------- |
 | `icon`    | The item's only visible content                           | `ReactNode` |         | ✅       |
 | `label`   | The item's accessible name and its tooltip                | `string`    |         | ✅       |
+| `href`    | Where the item goes; not needed with `asChild`            | `string`    |         | ✅       |
 | `current` | Marks the item as the section on show                     | `boolean`   | `false` | ❌       |
 | `asChild` | Renders the item as its only child, such as a router link | `boolean`   | `false` | ❌       |
 
@@ -316,9 +316,9 @@ With `loading`, the switcher takes no other props.
 
 ### NavDrillLevel
 
-| Name        | Description                                          | Type     | Default         | Required      |
-| ----------- | ---------------------------------------------------- | -------- | --------------- | ------------- |
-| `value`     | The `NavDrill` value that shows it                   | `string` |                 | ✅            |
-| `parent`    | The `value` ‹ returns to; adds the ‹ row             | `string` |                 | ❌            |
-| `label`     | Names where you are, on the ‹ row                    | `string` |                 | With `parent` |
-| `backLabel` | The ‹ row's accessible name; must start with `label` | `string` | `{label}, back` | ❌            |
+| Name        | Description                                               | Type     | Default         | Required |
+| ----------- | --------------------------------------------------------- | -------- | --------------- | -------- |
+| `value`     | The `NavDrill` value that shows it                        | `string` |                 | ✅       |
+| `parent`    | The `value` ‹ returns to; adds the ‹ row                  | `string` |                 | ❌       |
+| `label`     | Names where you are, on the ‹ row; required with `parent` | `string` |                 | ❌       |
+| `backLabel` | The ‹ row's accessible name; must start with `label`      | `string` | `{label}, back` | ❌       |

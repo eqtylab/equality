@@ -139,14 +139,21 @@ const NavListItem = React.forwardRef<HTMLElement, NavListItemProps>(
 );
 NavListItem.displayName = 'NavListItem';
 
-const NavListSeparator = ({ className, ...props }: React.HTMLAttributes<HTMLElement>) => {
-  const depth = React.useContext(ListDepthContext);
-  return depth > 0 ? (
-    <li role="separator" className={cn(styles['nav-list-separator'], className)} {...props} />
-  ) : (
-    <hr className={cn(styles['nav-list-separator'], className)} {...props} />
-  );
-};
+const NavListSeparator = React.forwardRef<HTMLElement, React.HTMLAttributes<HTMLElement>>(
+  ({ className, ...props }, ref) => {
+    const nested = React.useContext(ListDepthContext) > 0;
+    const Comp = (nested ? 'li' : 'hr') as React.ElementType;
+    return (
+      <Comp
+        ref={ref}
+        role={nested ? 'separator' : undefined}
+        className={cn(styles['nav-list-separator'], className)}
+        {...props}
+      />
+    );
+  }
+);
+NavListSeparator.displayName = 'NavListSeparator';
 
 export { NavList, NavListGroup, NavListItem, NavListSeparator };
 export type { NavListGroupProps, NavListItemProps, NavListProps };

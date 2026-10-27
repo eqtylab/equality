@@ -7,7 +7,7 @@
 }
 
 .nav-list-group {
-  @apply gap-(--list-label-gap) pt-(--list-group-gap) flex flex-col;
+  @apply gap-(--eq-list-label-gap) pt-(--eq-list-group-gap) flex flex-col;
 }
 
 .nav-list-group--unlabelled {
@@ -15,8 +15,8 @@
 }
 
 .nav-list-group-label {
-  @apply px-(--list-item-padding-x) flex items-center gap-2;
-  @apply text-(length:--list-label-font-size) text-text-secondary font-medium;
+  @apply px-(--eq-list-item-padding-x) flex items-center gap-2;
+  @apply text-(length:--eq-list-label-font-size) text-text-secondary font-medium;
 }
 
 .nav-list-group-label::after {
@@ -25,23 +25,23 @@
 }
 
 .nav-list-items {
-  @apply gap-(--list-gap) m-0 flex list-none flex-col p-0;
+  @apply gap-(--eq-list-gap) m-0 flex list-none flex-col p-0;
 }
 
 /* The tree line is the list's edge and its rows start right of it, so the line never crosses a
    highlight. Inset to the parent's text: past the icon when the parent rows have one */
 .nav-list-items[data-depth='1'] {
-  @apply border-border-raised ml-(--list-indent) border-l;
+  @apply border-border-raised ml-(--eq-list-indent) border-l;
 }
 
 .nav-list-items:has(> li > [data-slot='nav-list-item'] > .nav-list-item-prefix)
   > li
   .nav-list-items[data-depth='1'] {
-  margin-left: calc(var(--list-item-icon-size) + var(--list-item-gap));
+  margin-left: calc(var(--eq-list-item-icon-size) + var(--eq-list-item-gap));
 }
 
 .nav-list-separator {
-  @apply border-border-raised mt-(--list-group-gap) m-0 h-0 shrink-0 border-0 border-t;
+  @apply border-border-raised mt-(--eq-list-group-gap) m-0 h-0 shrink-0 border-0 border-t;
 }
 
 .nav-list-separator:first-child,
@@ -50,20 +50,20 @@
 }
 
 .nav-list-item {
-  @apply h-(--list-item-height) min-h-(--touch-target) gap-(--list-item-gap) flex w-full min-w-0 items-center;
-  @apply px-(--list-item-padding-x) rounded-md border border-transparent bg-transparent text-left no-underline;
-  @apply text-(length:--list-item-font-size) text-text-secondary;
+  @apply h-(--eq-list-item-height) min-h-(--eq-touch-target) gap-(--eq-list-item-gap) flex w-full min-w-0 items-center;
+  @apply px-(--eq-list-item-padding-x) rounded-md border border-transparent bg-transparent text-left no-underline;
+  @apply text-(length:--eq-list-item-font-size) text-text-secondary;
   @apply transition-colors duration-150 motion-reduce:transition-none;
 }
 
 .nav-list-item-prefix {
-  @apply size-(--list-item-icon-size) flex shrink-0 items-center justify-center;
+  @apply size-(--eq-list-item-icon-size) flex shrink-0 items-center justify-center;
 }
 
 .nav-list-item-prefix svg,
 .nav-list-item-suffix svg,
 .nav-list-item-caret svg {
-  @apply size-(--list-item-icon-size);
+  @apply size-(--eq-list-item-icon-size);
 }
 
 .nav-list-item-label {

@@ -76,6 +76,7 @@ const IconButton = React.forwardRef<HTMLButtonElement | HTMLAnchorElement, IconB
           aria-label={label}
           rel={target === '_blank' ? 'noopener noreferrer' : undefined}
           className={cn(iconButtonVariants({ size, variant }), className)}
+          {...(props as React.AnchorHTMLAttributes<HTMLAnchorElement>)}
         >
           {content}
         </a>

@@ -1,0 +1,40 @@
+/* Never declare @theme { --spacing } here: it rewrites every utility to var(--spacing, …) and
+   changes every component's compiled CSS. */
+
+/* DECISIONS: Equality's names, --eq-{thing}-{property}. Parts read only these: h-(--eq-list-item-height).
+   theme-decisions-scoped.css is generated from this file: run `pnpm build:decisions` after
+   changing it, or tests/theme-css.test.ts fails. */
+html {
+  /* list-item: one selectable row (NavListItem; later DropdownMenuItem, SelectItem, CommandItem) */
+  --eq-list-item-height: calc(var(--spacing) * 9); /* 36 */
+  --eq-list-item-padding-x: calc(var(--spacing) * 2); /* 8 */
+  --eq-list-item-gap: calc(var(--spacing) * 2); /* 8, icon to text */
+  --eq-list-item-icon-size: calc(var(--spacing) * 4); /* 16 */
+  --eq-list-item-font-size: var(--text-sm); /* 14 */
+  /* list: the rows together */
+  --eq-list-gap: calc(var(--spacing) * 0.5); /* 2, between items */
+  --eq-list-group-gap: calc(var(--spacing) * 3); /* 12, above a group label */
+  --eq-list-label-gap: calc(var(--spacing) * 1); /* 4, label to its first item */
+  --eq-list-label-font-size: var(--text-xs); /* 12 */
+  --eq-list-indent: calc(var(--spacing) * 3); /* 12, child indent when items have no icons */
+  /* control: a stand-alone element */
+  --eq-control-height: calc(var(--spacing) * 10); /* 40: rail item; later Button, Input */
+  /* touch: the minimum tap target */
+  --eq-touch-target: 0px;
+
+  /* The current fill must stay stronger than the hover fill: Studio checks the pair with APCA */
+  --color-list-item-current: color-mix(in oklch, var(--color-text-primary) 10%, transparent);
+  --color-list-item-hover: color-mix(in oklch, var(--color-text-primary) 6%, transparent);
+}
+
+html[data-equality-theme='dark'] {
+  --color-list-item-current: color-mix(in oklch, var(--color-text-primary) 14%, transparent);
+  --color-list-item-hover: color-mix(in oklch, var(--color-text-primary) 8%, transparent);
+}
+
+/* Touch is not a size. */
+@media (pointer: coarse) {
+  html {
+    --eq-touch-target: 2.75rem; /* 44, WCAG 2.5.8 */
+  }
+}

@@ -1,8 +1,6 @@
 import { cleanup } from '@testing-library/react';
 import { afterEach } from 'vitest';
 
-import './animation-stub';
-
 // jsdom lacks the layout and pointer APIs Radix's popper and select rely on
 class ResizeObserverStub {
   observe() {}

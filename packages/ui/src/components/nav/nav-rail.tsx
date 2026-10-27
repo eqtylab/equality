@@ -15,26 +15,41 @@ interface NavRailProps extends React.HTMLAttributes<HTMLElement> {
   'aria-label': string;
 }
 
-const NavRail = ({ className, children, ...props }: NavRailProps) => (
-  <nav className={cn(styles['nav-rail'], className)} {...props}>
-    <div className={styles['nav-scroller']}>
-      <TooltipProvider delayDuration={300}>
-        <ul className={styles['nav-rail-list']}>{children}</ul>
-      </TooltipProvider>
-    </div>
-  </nav>
+const NavRail = React.forwardRef<HTMLElement, NavRailProps>(
+  ({ className, children, ...props }, ref) => (
+    <nav ref={ref} className={cn(styles['nav-rail'], className)} {...props}>
+      <div className={styles['nav-scroller']}>
+        <TooltipProvider delayDuration={300}>
+          <ul className={styles['nav-rail-list']}>{children}</ul>
+        </TooltipProvider>
+      </div>
+    </nav>
+  )
 );
+NavRail.displayName = 'NavRail';
 
-interface NavRailItemProps extends React.AnchorHTMLAttributes<HTMLAnchorElement> {
+interface NavRailItemBaseProps extends Omit<React.AnchorHTMLAttributes<HTMLAnchorElement>, 'href'> {
   /** The item's only visible content; hidden from screen readers */
   icon: React.ReactNode;
   /** The item's accessible name and its tooltip */
   label: string;
   /** Marks the item as the section on show */
   current?: boolean;
-  /** Renders the item as its only child, such as a router link */
-  asChild?: boolean;
 }
+
+interface NavRailItemLinkProps extends NavRailItemBaseProps {
+  /** Where the item goes */
+  href: string;
+  asChild?: false;
+}
+
+interface NavRailItemSlotProps extends NavRailItemBaseProps {
+  href?: string;
+  /** Renders the item as its only child, such as a router link */
+  asChild: true;
+}
+
+type NavRailItemProps = NavRailItemLinkProps | NavRailItemSlotProps;
 
 const NavRailItem = React.forwardRef<HTMLAnchorElement, NavRailItemProps>(
   ({ icon, label, current = false, asChild = false, className, children, ...props }, ref) => {

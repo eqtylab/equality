@@ -3,7 +3,6 @@ import { ChevronsUpDown } from 'lucide-react';
 
 import { buttonVariants } from '@/components/button/button';
 import styles from '@/components/nav/nav.module.css';
-import { blockClosedTypeahead } from '@/components/nav/select-typeahead';
 import {
   Select,
   SelectContent,
@@ -13,6 +12,7 @@ import {
   SelectSeparator,
   SelectTrigger,
 } from '@/components/select/select';
+import { blockClosedTypeahead } from '@/components/select/select-typeahead';
 import { Skeleton } from '@/components/skeleton/skeleton';
 import { cn } from '@/lib/utils';
 
