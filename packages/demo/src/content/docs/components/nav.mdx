@@ -8,9 +8,11 @@ import { NavListDemo } from "@demo/components/demo/nav-list";
 
 ## Overview
 
-Nav builds an app's sidebar. `NavRail` is the column of icon links on the left, and `NavPanel` is the panel beside it, with a header and a scrolling body. `NavSwitcher` sits in the panel's header to switch between items such as projects; with one option and no action it is a plain heading.
+Nav builds an app's sidebar. `NavRail` composes the largest sections of an application as icons with tooltips, and `NavPanel` sits beside it containing each page within the section, a header, and a scrolling body. `NavSwitcher` sits in the panel's header to allow users to quickly switch between the parent item of a section such as projects in Guardian.
 
-Inside the panel, `NavList` holds the links, one per row, in groups. A row can open a deeper level, which slides in with a ‹ to go back. A nav list also works on its own, such as in a popover, a sheet or a settings list. For actions in a pop-up, use a [Dropdown Menu](/components/dropdown-menu): menus are for actions, nav lists are for going places.
+Our Nav component progressively displays a tree of navigation options. In addition to navigating between pages, `NavListItem` can also open a deeper level. Users can navigate back within the nav tree hierarchy using.
+
+Nav should not be used for actions, for these use a [Dropdown Menu](/components/dropdown-menu) instead. Always Put `NavList` inside an element with a background colour, such as a popover, sheet or panel: the sliding levels inherit the background colour to cover each other.
 
 ## Usage
 
@@ -31,7 +33,7 @@ import {
 } from "@eqtylab/equality";
 ```
 
-Group the rows, each group with an optional label, and put a separator between groups. Rows are 36px, and grow to 44px on touch screens:
+Group the rows, each group with an optional label, and add a separator between groups.
 
 <NavListDemo client:only="react" />
 
@@ -94,7 +96,7 @@ Put a group inside another group to nest it one level, under a tree line. Nested
 
 ## Drill-in
 
-A row with `drill="eu-ai-act"` opens the level whose `value` is `"eu-ai-act"`. A level with a `parent` gets a ‹ row at the top, named by its `label`, that returns to the parent. Levels must be direct children of `NavDrill`. Put `NavList` inside an element with a background colour, such as a popover, sheet or panel: the sliding levels borrow it to cover each other.
+A `NavListItem` with `drill="eu-ai-act"` opens a level whose `value` is `"eu-ai-act"`. A `NavDrillLevel` with a `parent` attribute gets a ‹ row at the top, named by its `label`, that returns the user to the parent level of the tree. Levels must be direct children of `NavDrill`.
 
 After a drill row, focus moves to the new level's ‹; after ‹, back to the row you came from. Any other change of level leaves focus alone, and levels swap without sliding under reduced motion.
 
