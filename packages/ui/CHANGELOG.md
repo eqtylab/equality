@@ -13,7 +13,6 @@ change before upgrading.
   draw theme-aware scrollbars of their own.
 - `ListOrGridViewToggle`. Use `SegmentedControls` instead.
 - `Drawer` and its parts. Use `Sheet` instead.
-- `NavSwitcher`'s `onHighlightEnd` prop.
 - `Pagination` no longer scrolls a `ScrollArea` viewport to the top when the page changes. Pass
   `scrollTargetRef` to choose what scrolls into view.
 - The `vaul` and `@radix-ui/react-scroll-area` dependencies.
