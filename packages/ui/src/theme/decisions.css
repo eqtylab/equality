@@ -1,21 +1,5 @@
-/* FIRST DRAFT for Equality's scale debate.
-   OPTIONS: Tailwind's own scale. Equality sets the values; the names stay Tailwind's.
-
-   Kept as a comment: a live `@theme { --spacing }` rewrites every existing utility to
-   `var(--spacing, …)`, which changes the compiled CSS of every component.
-
-   @theme {
-     --spacing: 0.25rem;                                        the size unit: 4px
-
-     --text-xs … --text-4xl: Tailwind's defaults, unchanged.
-
-     PROPOSALS for the debate, off:
-     --spacing: calc(var(--text-base) / 4);                     size unit from body text
-     --ratio: 1.125;                                            text on a ratio:
-     --text-sm: calc(var(--text-base) / var(--ratio));          each name from its neighbour
-     --text-lg: calc(var(--text-base) * var(--ratio));          … through --text-4xl
-   }
-*/
+/* Never declare @theme { --spacing } here: it rewrites every utility to var(--spacing, …) and
+   changes every component's compiled CSS. */
 
 /* DECISIONS: Equality's names, --{thing}-{property}. Parts read only these: h-(--list-item-height). */
 :root {
