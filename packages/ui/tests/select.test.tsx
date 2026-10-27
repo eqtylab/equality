@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { render, screen, waitFor } from '@testing-library/react';
+import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { describe, expect, it, vi } from 'vitest';
 
@@ -16,6 +16,7 @@ import {
   SelectValue,
   useSelectSearchQuery,
 } from '@/components/select/select';
+import { blockClosedTypeahead } from '@/components/select/select-typeahead';
 
 const REGIONS = [
   { label: 'Americas', countries: ['Brazil', 'Canada'] },
@@ -350,5 +351,27 @@ describe('Select', () => {
       );
       vi.restoreAllMocks();
     });
+  });
+});
+
+describe('blockClosedTypeahead', () => {
+  it('prevents letters but not Space or shortcuts', () => {
+    const onKeyDown = vi.fn(blockClosedTypeahead);
+    render(
+      <button type="button" onKeyDown={onKeyDown}>
+        trigger
+      </button>
+    );
+    const button = screen.getByRole('button');
+    const press = (init: KeyboardEventInit) => {
+      fireEvent.keyDown(button, init);
+      return (onKeyDown.mock.lastCall![0] as React.KeyboardEvent).defaultPrevented;
+    };
+    expect(press({ key: 'a' })).toBe(true);
+    expect(press({ key: ' ' })).toBe(false);
+    expect(press({ key: 'Enter' })).toBe(false);
+    expect(press({ key: 'a', ctrlKey: true })).toBe(false);
+    expect(press({ key: 'a', metaKey: true })).toBe(false);
+    expect(press({ key: 'a', altKey: true })).toBe(false);
   });
 });

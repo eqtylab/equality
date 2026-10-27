@@ -2,6 +2,39 @@
 
 Notable changes to Equality are recorded here, following [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## 4.15.0 - 2026-10-27
+
+Sidebar navigation comes to Equality as two sets of parts: `NavList` rows for going somewhere,
+anywhere on screen, and a `Nav` sidebar frame. Menus stay for actions: use `DropdownMenu` for those.
+Existing code needs no changes.
+
+### Added
+
+- `NavList`, `NavListGroup`, `NavListItem` and `NavListSeparator`: rows of links or buttons in
+  groups. Rows are 36px, and 44px under a coarse pointer such as a touch screen. A row's `suffix`,
+  such as a badge or count, is read by screen readers; the › caret comes from `drill`.
+- `NavDrill` and `NavDrillLevel`: levels that slide in and out, controlled or uncontrolled. A level
+  with a `parent` draws its own ‹ row. They slide only after a drill row or ‹ asked for them, and
+  move focus after the changes they asked for.
+- `NavRail`, `NavRailItem`, `NavPanel` and `NavSwitcher` (with `loading`): the sidebar frame. Rail
+  items and the switcher also grow to 44px under a coarse pointer.
+- `blockClosedTypeahead`: stops a typed letter from picking an option while a `Select` is closed,
+  for a select that navigates.
+- `theme/theme-decisions.css`: the list, control and touch sizes the parts read, such as
+  `--eq-list-item-height` and `--eq-touch-target`, which is 44px under a coarse pointer.
+- Two colours mixed from `--color-text-primary`, `--color-list-item-current` and
+  `--color-list-item-hover`, with the `bg-list-item-current` and `bg-list-item-hover` utilities.
+  They switch for dark mode on their own.
+
+### Changed
+
+- `IconButton` forwards its ref to the button or link it renders.
+
+### Fixed
+
+- `IconButton` with `href` passes its other props to the link, so it works as a tooltip trigger and
+  keeps `onClick` and `data-*` attributes.
+
 ## 4.14.1 - 2026-10-20
 
 ### Fixed

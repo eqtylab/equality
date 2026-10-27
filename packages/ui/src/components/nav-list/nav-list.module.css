@@ -1,0 +1,133 @@
+@reference '../../theme/theme.module.css';
+
+/* Inherited so a level sliding in covers the one leaving */
+.nav-list {
+  @apply flex flex-col;
+  background-color: inherit;
+}
+
+.nav-list-group {
+  @apply gap-(--eq-list-label-gap) pt-(--eq-list-group-gap) flex flex-col;
+}
+
+.nav-list-group--unlabelled {
+  @apply pt-0;
+}
+
+.nav-list-group-label {
+  @apply px-(--eq-list-item-padding-x) flex items-center gap-2;
+  @apply text-(length:--eq-list-label-font-size) text-text-secondary font-medium;
+}
+
+.nav-list-group-label::after {
+  content: '';
+  @apply bg-border-raised h-px flex-1;
+}
+
+.nav-list-items {
+  @apply gap-(--eq-list-gap) m-0 flex list-none flex-col p-0;
+}
+
+/* The tree line is the list's edge and its rows start right of it, so the line never crosses a
+   highlight. Inset to the parent's text: past the icon when the parent rows have one */
+.nav-list-items[data-depth='1'] {
+  @apply border-border-raised ml-(--eq-list-indent) border-l;
+}
+
+.nav-list-items:has(> li > [data-slot='nav-list-item'] > .nav-list-item-prefix)
+  > li
+  .nav-list-items[data-depth='1'] {
+  margin-left: calc(var(--eq-list-item-icon-size) + var(--eq-list-item-gap));
+}
+
+.nav-list-separator {
+  @apply border-border-raised mt-(--eq-list-group-gap) m-0 h-0 shrink-0 border-0 border-t;
+}
+
+.nav-list-separator:first-child,
+.nav-list-separator:last-child {
+  @apply hidden;
+}
+
+.nav-list-item {
+  @apply h-(--eq-list-item-height) min-h-(--eq-touch-target) gap-(--eq-list-item-gap) flex w-full min-w-0 items-center;
+  @apply px-(--eq-list-item-padding-x) rounded-md border border-transparent bg-transparent text-left no-underline;
+  @apply text-(length:--eq-list-item-font-size) text-text-secondary;
+  @apply transition-colors duration-150 motion-reduce:transition-none;
+}
+
+.nav-list-item-prefix {
+  @apply size-(--eq-list-item-icon-size) flex shrink-0 items-center justify-center;
+}
+
+.nav-list-item-prefix svg,
+.nav-list-item-suffix svg,
+.nav-list-item-caret svg {
+  @apply size-(--eq-list-item-icon-size);
+}
+
+.nav-list-item-label {
+  @apply min-w-0 flex-1 truncate;
+}
+
+.nav-list-item-suffix,
+.nav-list-item-caret {
+  @apply flex shrink-0 items-center;
+}
+
+.nav-list-item:hover {
+  @apply bg-list-item-hover text-text-primary;
+}
+
+.nav-list-item[aria-current='page'],
+.nav-list-item[data-current='page'] {
+  @apply bg-list-item-current text-text-primary font-medium;
+}
+
+/* The offset keeps the ring visible against the current row's fill */
+.nav-list-item:focus-visible {
+  outline: 2px solid var(--color-focus-ring);
+  outline-offset: 2px;
+}
+
+/* The live level and, while it slides, the leaving one share one grid cell. The padding leaves
+   room for a row's focus ring inside the clip that hides the nudge */
+.nav-drill {
+  @apply -mx-1 grid px-1;
+  overflow-x: clip;
+  background-color: inherit;
+}
+
+.nav-drill-level {
+  @apply flex min-w-0 flex-col;
+  grid-area: 1 / 1;
+  z-index: 1;
+  background-color: inherit;
+}
+
+/* Its own stacking context, under the live level going in and above it going back. The clip
+   stops a level moved up by the old scroll from showing behind a header */
+.nav-drill-ghost {
+  @apply grid;
+  grid-area: 1 / 1;
+  z-index: 0;
+  overflow: clip;
+  background-color: inherit;
+}
+
+.nav-drill-ghost[data-motion='back'] {
+  z-index: 2;
+}
+
+.nav-list-item--back {
+  @apply text-text-secondary mt-0.5 font-normal;
+}
+
+.nav-list-item--back .nav-list-item-prefix {
+  @apply text-text-tertiary;
+}
+
+/* A border, not a fill: forced colours drop fills */
+.nav-drill-rule {
+  @apply border-border-raised m-0 mb-1 mt-2 h-0 shrink-0 border-0 border-t;
+}

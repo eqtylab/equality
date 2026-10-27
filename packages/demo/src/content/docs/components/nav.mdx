@@ -1,0 +1,324 @@
+---
+title: "Nav"
+description: "Sidebar navigation with an icon rail, a switcher and links that drill in and out"
+---
+
+import { NavDemo } from "@demo/components/demo/nav";
+import { NavListDemo } from "@demo/components/demo/nav-list";
+
+## Overview
+
+Nav builds an app's sidebar. `NavRail` is the column of icon links on the left, and `NavPanel` is the panel beside it, with a header and a scrolling body. `NavSwitcher` sits in the panel's header to switch between items such as projects; with one option and no action it is a plain heading.
+
+Inside the panel, `NavList` holds the links, one per row, in groups. A row can open a deeper level, which slides in with a ‹ to go back. A nav list also works on its own, such as in a popover, a sheet or a settings list. For actions in a pop-up, use a [Dropdown Menu](/components/dropdown-menu): menus are for actions, nav lists are for going places.
+
+## Usage
+
+Import the parts:
+
+```tsx
+import {
+  NavDrill,
+  NavDrillLevel,
+  NavList,
+  NavListGroup,
+  NavListItem,
+  NavListSeparator,
+  NavPanel,
+  NavRail,
+  NavRailItem,
+  NavSwitcher,
+} from "@eqtylab/equality";
+```
+
+Group the rows, each group with an optional label, and put a separator between groups. Rows are 36px, and grow to 44px on touch screens:
+
+<NavListDemo client:only="react" />
+
+```jsx
+<NavList>
+  <NavListGroup label="Project">
+    <NavListItem label="Dashboard" prefix={<LayoutGrid />} href="/" current />
+    <NavListItem label="Indicators" prefix={<Activity />} href="/indicators" />
+  </NavListGroup>
+  <NavListGroup label="Applied Policies">
+    <NavListItem
+      label="EU AI Act"
+      prefix={<BookOpen />}
+      href="/policies/eu-ai-act"
+    />
+  </NavListGroup>
+  <NavListSeparator />
+  <NavListGroup>
+    <NavListItem
+      label="Project Settings"
+      prefix={<Settings />}
+      href="/settings"
+    />
+  </NavListGroup>
+</NavList>
+```
+
+Put a group inside another group to nest it one level, under a tree line. Nested rows take no `prefix` icon.
+
+`href` makes a plain link, which reloads the page. In an app with a router, such as React Router, put the router's link inside with `asChild` so it navigates without a reload:
+
+```jsx
+<NavListItem label="Indicators" asChild>
+  <Link to="/indicators" />
+</NavListItem>
+```
+
+## Variants
+
+### Prefix and Suffix
+
+`prefix` holds an icon, hidden from screen readers. `suffix` holds badges and marks, which screen readers read with the label. The › comes from `drill`, never from `suffix`; see [Drill-in](#drill-in).
+
+<NavListDemo client:only="react" variant="prefix-suffix" />
+
+```jsx
+<NavListItem
+  label="Applied Policies"
+  prefix={<BookOpen />}
+  suffix={<Badge size="sm">2</Badge>}
+  href="/policies"
+/>
+<NavListItem
+  label="Controls"
+  prefix={<Layers />}
+  suffix={<Badge size="sm">12</Badge>}
+  href="/controls"
+/>
+```
+
+## Drill-in
+
+A row with `drill="eu-ai-act"` opens the level whose `value` is `"eu-ai-act"`. A level with a `parent` gets a ‹ row at the top, named by its `label`, that returns to the parent. Levels must be direct children of `NavDrill`. Put `NavList` inside an element with a background colour, such as a popover, sheet or panel: the sliding levels borrow it to cover each other.
+
+After a drill row, focus moves to the new level's ‹; after ‹, back to the row you came from. Any other change of level leaves focus alone, and levels swap without sliding under reduced motion.
+
+### Uncontrolled: on its own
+
+`NavDrill` changes level when someone clicks a drill row or ‹. Set the first level with `defaultValue`.
+
+<NavListDemo client:only="react" variant="drill" />
+
+```jsx
+<NavList>
+  <NavDrill defaultValue="project">
+    <NavDrillLevel value="project">
+      <NavListGroup>
+        <NavListItem
+          label="Dashboard"
+          prefix={<LayoutGrid />}
+          href="/dashboard"
+        />
+      </NavListGroup>
+      <NavListGroup label="Applied Policies">
+        <NavListItem
+          label="EU AI Act"
+          prefix={<BookOpen />}
+          drill="eu-ai-act"
+        />
+      </NavListGroup>
+    </NavDrillLevel>
+    <NavDrillLevel value="eu-ai-act" parent="project" label="EU AI Act">
+      <NavListGroup>
+        <NavListItem
+          label="Controls"
+          prefix={<Layers />}
+          href="/policies/eu-ai-act/controls"
+        />
+      </NavListGroup>
+    </NavDrillLevel>
+  </NavDrill>
+</NavList>
+```
+
+### Controlled: follows the URL
+
+Your app sets the level with `value`, usually from the URL, so a bookmark or the Back button opens the right level. A click on a drill row or ‹ calls `onValueChange` with the level it wants: navigate there, and the new URL gives the new `value`.
+
+<NavListDemo client:only="react" variant="drill-controlled" />
+
+```jsx
+const { policy } = useParams();
+const navigate = useNavigate();
+
+function openLevel(level) {
+  navigate(level === "project" ? "/project" : `/policies/${level}`);
+}
+
+<NavDrill value={policy ?? "project"} onValueChange={openLevel}>
+  …
+</NavDrill>;
+```
+
+## Examples
+
+### App Sidebar
+
+A rail of sections beside a panel, with a switcher in the panel's header and a nav list that drills into a policy.
+
+<NavDemo client:only="react" />
+
+```tsx
+<div style={{ display: "flex", height: "100vh" }}>
+  <NavRail aria-label="Main">
+    <NavRailItem icon={<Folder />} label="Projects" href="/projects" current />
+    <NavRailItem icon={<Bot />} label="Agents" href="/agents" />
+  </NavRail>
+  <NavPanel
+    aria-label={`Project: ${project.name}`}
+    header={
+      <NavSwitcher
+        label={project.name}
+        noun="project"
+        collection="projects"
+        options={projects}
+        value={project.id}
+        onValueChange={switchProject}
+      />
+    }
+  >
+    <NavList>
+      <NavDrill value={level} onValueChange={goToLevel}>
+        <NavDrillLevel value="project">…</NavDrillLevel>
+        {policy && (
+          <NavDrillLevel
+            value={policy.slug}
+            parent="project"
+            label={policy.name}
+            backLabel={`${policy.name}, back to ${project.name}`}
+          >
+            …
+          </NavDrillLevel>
+        )}
+      </NavDrill>
+    </NavList>
+  </NavPanel>
+  <main>…</main>
+</div>
+```
+
+A `NavDrill` inside a `NavPanel` scrolls the panel back to the top on every change of level.
+
+The switcher's trigger stops a typed letter from picking an item while its list is closed: a switch navigates, and focus lands on the trigger afterwards. To do the same on your own `Select`, see [A select that navigates](/components/select#a-select-that-navigates).
+
+### Navigation in a Sheet
+
+On a phone, the sidebar comes in from the left in a [Sheet](/components/sheet). Give the sheet a title for screen readers. A sheet is at least a third of the screen wide, so set `minWidth: 0` to fit it to the list.
+
+<NavListDemo client:only="react" variant="drill-sheet" />
+
+```jsx
+<Sheet>
+  <SheetTrigger asChild>
+    <Button>Open navigation</Button>
+  </SheetTrigger>
+  <SheetContainer
+    side="left"
+    aria-describedby={undefined}
+    style={{ minWidth: 0 }}
+  >
+    <SheetTitle className="sr-only">Navigation</SheetTitle>
+    <NavList style={{ width: 264 }}>
+      <NavDrill defaultValue="project">…</NavDrill>
+    </NavList>
+  </SheetContainer>
+</Sheet>
+```
+
+## Slots
+
+| Name               | Description                                                                         |
+| ------------------ | ----------------------------------------------------------------------------------- |
+| `NavRail`          | The column of icon links                                                            |
+| `NavRailItem`      | An icon link in the rail, with its label as a tooltip                               |
+| `NavPanel`         | The sidebar panel; its `header` holds a `NavSwitcher`, or `<NavSwitcher loading />` |
+| `NavSwitcher`      | Switches between items such as projects, in the panel's header                      |
+| `NavList`          | Root of the rows                                                                    |
+| `NavListGroup`     | A list of rows, with an optional label                                              |
+| `NavListItem`      | A row: a link, or a button when it has no `href`                                    |
+| `NavListSeparator` | Divider between groups                                                              |
+| `NavDrill`         | Shows one level at a time and slides between them                                   |
+| `NavDrillLevel`    | One level of a drill-in, with its ‹ row                                             |
+
+## Props
+
+### NavRail
+
+| Name         | Description               | Type     | Default | Required |
+| ------------ | ------------------------- | -------- | ------- | -------- |
+| `aria-label` | Names the rail's landmark | `string` |         | ✅       |
+
+### NavRailItem
+
+| Name      | Description                                               | Type        | Default | Required |
+| --------- | --------------------------------------------------------- | ----------- | ------- | -------- |
+| `icon`    | The item's only visible content                           | `ReactNode` |         | ✅       |
+| `label`   | The item's accessible name and its tooltip                | `string`    |         | ✅       |
+| `href`    | Where the item goes; not needed with `asChild`            | `string`    |         | ✅       |
+| `current` | Marks the item as the section on show                     | `boolean`   | `false` | ❌       |
+| `asChild` | Renders the item as its only child, such as a router link | `boolean`   | `false` | ❌       |
+
+### NavPanel
+
+| Name         | Description                                          | Type        | Default | Required |
+| ------------ | ---------------------------------------------------- | ----------- | ------- | -------- |
+| `aria-label` | Names the panel's landmark                           | `string`    |         | ✅       |
+| `header`     | Above the rows, such as a `NavSwitcher` or a heading | `ReactNode` |         | ❌       |
+
+### NavSwitcher
+
+| Name             | Description                                                                                                                | Type                                      | Default | Required |
+| ---------------- | -------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------- | ------- | -------- |
+| `label`          | The current item's name, shown as the panel's heading                                                                      | `string`                                  |         | ✅       |
+| `noun`           | Singular, for the trigger's name: `{label}, switch {noun}`                                                                 | `string`                                  |         | ✅       |
+| `collection`     | Plural, for the search and empty copy                                                                                      | `string`                                  |         | ✅       |
+| `options`        | The items to switch between                                                                                                | `{ value, label, keywords? }[]`           |         | ✅       |
+| `value`          | The current item's value                                                                                                   | `string`                                  |         | ✅       |
+| `onValueChange`  | Called with the picked item's value                                                                                        | `(value: string) => void`                 |         | ✅       |
+| `onHighlight`    | Hover or focus on an option, to warm its destination                                                                       | `(value: string) => void`                 |         | ❌       |
+| `onHighlightEnd` | Hover or focus leaves an option                                                                                            | `() => void`                              |         | ❌       |
+| `action`         | A command at the bottom of the list, kept while searching, such as "Create Project"; `onSelect` runs after the list closes | `{ label: string; onSelect: () => void }` |         | ❌       |
+| `loading`        | Holds the switcher's height while the current item loads                                                                   | `boolean`                                 | `false` | ❌       |
+
+With `loading`, the switcher takes no other props.
+
+### NavListGroup
+
+| Name    | Description            | Type     | Default | Required |
+| ------- | ---------------------- | -------- | ------- | -------- |
+| `label` | Names the group's list | `string` |         | ❌       |
+
+### NavListItem
+
+| Name      | Description                                         | Type        | Default | Required |
+| --------- | --------------------------------------------------- | ----------- | ------- | -------- |
+| `label`   | The row's text                                      | `string`    |         | ✅       |
+| `href`    | Makes the row a link                                | `string`    |         | ❌       |
+| `current` | Marks the row as the page on show                   | `boolean`   | `false` | ❌       |
+| `prefix`  | An icon before the label; not on nested rows        | `ReactNode` |         | ❌       |
+| `suffix`  | Badges or marks after the label                     | `ReactNode` |         | ❌       |
+| `drill`   | The level this row opens; adds ›                    | `string`    |         | ❌       |
+| `asChild` | Renders the row as its child, such as a router link | `boolean`   | `false` | ❌       |
+
+### NavDrill
+
+| Name            | Description                                                         | Type                                                  | Default | Required |
+| --------------- | ------------------------------------------------------------------- | ----------------------------------------------------- | ------- | -------- |
+| `value`         | Controlled: the level on show                                       | `string`                                              |         | ❌       |
+| `defaultValue`  | Uncontrolled: the first level                                       | `string`                                              |         | ❌       |
+| `onValueChange` | Called when a drill row or ‹ asks for a level; `request` says which | `(value: string, request: "drill" \| "back") => void` |         | ❌       |
+| `animate`       | Slides between levels                                               | `boolean`                                             | `true`  | ❌       |
+
+### NavDrillLevel
+
+| Name        | Description                                               | Type     | Default         | Required |
+| ----------- | --------------------------------------------------------- | -------- | --------------- | -------- |
+| `value`     | The `NavDrill` value that shows it                        | `string` |                 | ✅       |
+| `parent`    | The `value` ‹ returns to; adds the ‹ row                  | `string` |                 | ❌       |
+| `label`     | Names where you are, on the ‹ row; required with `parent` | `string` |                 | ❌       |
+| `backLabel` | The ‹ row's accessible name; must start with `label`      | `string` | `{label}, back` | ❌       |
