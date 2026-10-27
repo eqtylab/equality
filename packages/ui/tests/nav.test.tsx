@@ -37,11 +37,11 @@ describe('Nav shell', () => {
     expect(screen.getByText('Loading')).toBeTruthy();
   });
 
-  it('names the panel landmark and shows title as a heading', () => {
+  it('names the panel landmark and draws no heading of its own', () => {
+    // @ts-expect-error NavPanel takes no title; a heading goes in header
     render(<NavPanel aria-label="Settings" title="Organisation settings" />);
     expect(screen.getByRole('navigation', { name: 'Settings' })).toBeTruthy();
-    const heading = screen.getByRole('heading', { name: 'Organisation settings' });
-    expect(heading.getAttribute('title')).toBe('Organisation settings');
+    expect(screen.queryByRole('heading')).toBeNull();
   });
 
   it('marks the current rail item and names it by label', () => {

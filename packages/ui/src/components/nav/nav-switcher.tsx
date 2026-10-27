@@ -51,7 +51,7 @@ interface NavSwitcherLoadedProps {
   onHighlight?: (value: string) => void;
   /** Hover or focus leaves an option */
   onHighlightEnd?: () => void;
-  /** Pinned to the list's foot as a link and kept through a search, such as creating a new item */
+  /** A command at the bottom of the list, kept while searching, such as "Create Project" */
   action?: NavSwitcherAction;
 }
 

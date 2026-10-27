@@ -265,26 +265,25 @@ On a phone, the sidebar comes in from the left in a [Sheet](/components/sheet). 
 
 ### NavPanel
 
-| Name         | Description                    | Type        | Default | Required |
-| ------------ | ------------------------------ | ----------- | ------- | -------- |
-| `aria-label` | Names the panel's landmark     | `string`    |         | ✅       |
-| `title`      | The panel's name, as a heading | `string`    |         | ❌       |
-| `header`     | Anything else above the rows   | `ReactNode` |         | ❌       |
+| Name         | Description                                          | Type        | Default | Required |
+| ------------ | ---------------------------------------------------- | ----------- | ------- | -------- |
+| `aria-label` | Names the panel's landmark                           | `string`    |         | ✅       |
+| `header`     | Above the rows, such as a `NavSwitcher` or a heading | `ReactNode` |         | ❌       |
 
 ### NavSwitcher
 
-| Name             | Description                                                | Type                                      | Default | Required |
-| ---------------- | ---------------------------------------------------------- | ----------------------------------------- | ------- | -------- |
-| `label`          | The current item's name, shown as the panel's heading      | `string`                                  |         | ✅       |
-| `noun`           | Singular, for the trigger's name: `{label}, switch {noun}` | `string`                                  |         | ✅       |
-| `collection`     | Plural, for the search and empty copy                      | `string`                                  |         | ✅       |
-| `options`        | The items to switch between                                | `{ value, label, keywords? }[]`           |         | ✅       |
-| `value`          | The current item's value                                   | `string`                                  |         | ✅       |
-| `onValueChange`  | Called with the picked item's value                        | `(value: string) => void`                 |         | ✅       |
-| `onHighlight`    | Hover or focus on an option, to warm its destination       | `(value: string) => void`                 |         | ❌       |
-| `onHighlightEnd` | Hover or focus leaves an option                            | `() => void`                              |         | ❌       |
-| `action`         | Pinned to the list's foot, such as creating a new item     | `{ label: string; onSelect: () => void }` |         | ❌       |
-| `loading`        | Holds the switcher's height while the current item loads   | `boolean`                                 | `false` | ❌       |
+| Name             | Description                                                                                                                | Type                                      | Default | Required |
+| ---------------- | -------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------- | ------- | -------- |
+| `label`          | The current item's name, shown as the panel's heading                                                                      | `string`                                  |         | ✅       |
+| `noun`           | Singular, for the trigger's name: `{label}, switch {noun}`                                                                 | `string`                                  |         | ✅       |
+| `collection`     | Plural, for the search and empty copy                                                                                      | `string`                                  |         | ✅       |
+| `options`        | The items to switch between                                                                                                | `{ value, label, keywords? }[]`           |         | ✅       |
+| `value`          | The current item's value                                                                                                   | `string`                                  |         | ✅       |
+| `onValueChange`  | Called with the picked item's value                                                                                        | `(value: string) => void`                 |         | ✅       |
+| `onHighlight`    | Hover or focus on an option, to warm its destination                                                                       | `(value: string) => void`                 |         | ❌       |
+| `onHighlightEnd` | Hover or focus leaves an option                                                                                            | `() => void`                              |         | ❌       |
+| `action`         | A command at the bottom of the list, kept while searching, such as "Create Project"; `onSelect` runs after the list closes | `{ label: string; onSelect: () => void }` |         | ❌       |
+| `loading`        | Holds the switcher's height while the current item loads                                                                   | `boolean`                                 | `false` | ❌       |
 
 With `loading`, the switcher takes no other props.
 
