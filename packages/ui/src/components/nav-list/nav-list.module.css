@@ -1,102 +1,104 @@
 @reference '../../theme/theme.module.css';
 
 /* Inherited so a level sliding in covers the one leaving */
-.root {
+.nav-list {
   @apply flex flex-col;
   background-color: inherit;
 }
 
-.group {
+.nav-list-group {
   @apply gap-(--list-label-gap) pt-(--list-group-gap) flex flex-col;
 }
 
-.group-unlabelled {
+.nav-list-group--unlabelled {
   @apply pt-0;
 }
 
-.group-label {
+.nav-list-group-label {
   @apply px-(--list-item-padding-x) flex items-center gap-2;
   @apply text-(length:--list-label-font-size) text-text-secondary font-medium;
 }
 
-.group-label::after {
+.nav-list-group-label::after {
   content: '';
   @apply bg-border-raised h-px flex-1;
 }
 
-.list {
+.nav-list-items {
   @apply gap-(--list-gap) m-0 flex list-none flex-col p-0;
 }
 
 /* The tree line is the list's edge and its rows start right of it, so the line never crosses a
    highlight. Inset to the parent's text: past the icon when the parent rows have one */
-.list[data-depth='1'] {
+.nav-list-items[data-depth='1'] {
   @apply border-border-raised ml-(--list-indent) border-l;
 }
 
-.list:has(> li > [data-slot='nav-list-item'] > .item-prefix) > li .list[data-depth='1'] {
+.nav-list-items:has(> li > [data-slot='nav-list-item'] > .nav-list-item-prefix)
+  > li
+  .nav-list-items[data-depth='1'] {
   margin-left: calc(var(--list-item-icon-size) + var(--list-item-gap));
 }
 
-.separator {
+.nav-list-separator {
   @apply border-border-raised mt-(--list-group-gap) m-0 h-0 shrink-0 border-0 border-t;
 }
 
-.separator:first-child,
-.separator:last-child {
+.nav-list-separator:first-child,
+.nav-list-separator:last-child {
   @apply hidden;
 }
 
-.item {
+.nav-list-item {
   @apply h-(--list-item-height) min-h-(--touch-target) gap-(--list-item-gap) flex w-full min-w-0 items-center;
   @apply px-(--list-item-padding-x) rounded-md border border-transparent bg-transparent text-left no-underline;
   @apply text-(length:--list-item-font-size) text-text-secondary;
   @apply transition-colors duration-150 motion-reduce:transition-none;
 }
 
-.item-prefix {
+.nav-list-item-prefix {
   @apply size-(--list-item-icon-size) flex shrink-0 items-center justify-center;
 }
 
-.item-prefix svg,
-.item-suffix svg,
-.item-caret svg {
+.nav-list-item-prefix svg,
+.nav-list-item-suffix svg,
+.nav-list-item-caret svg {
   @apply size-(--list-item-icon-size);
 }
 
-.item-label {
+.nav-list-item-label {
   @apply min-w-0 flex-1 truncate;
 }
 
-.item-suffix,
-.item-caret {
+.nav-list-item-suffix,
+.nav-list-item-caret {
   @apply flex shrink-0 items-center;
 }
 
-.item:hover {
+.nav-list-item:hover {
   @apply bg-list-item-hover text-text-primary;
 }
 
-.item[aria-current='page'],
-.item[data-current='page'] {
+.nav-list-item[aria-current='page'],
+.nav-list-item[data-current='page'] {
   @apply bg-list-item-current text-text-primary font-medium;
 }
 
 /* The offset keeps the ring visible against the current row's fill */
-.item:focus-visible {
+.nav-list-item:focus-visible {
   outline: 2px solid var(--color-focus-ring);
   outline-offset: 2px;
 }
 
 /* The live level and, while it slides, the leaving one share one grid cell. The padding leaves
    room for a row's focus ring inside the clip that hides the half-travel slide */
-.drill {
+.nav-drill {
   @apply -mx-1 grid px-1;
   overflow-x: clip;
   background-color: inherit;
 }
 
-.level {
+.nav-drill-level {
   @apply flex min-w-0 flex-col;
   grid-area: 1 / 1;
   z-index: 1;
@@ -105,7 +107,7 @@
 
 /* Its own stacking context, under the live level going in and above it going back. The clip
    stops a level moved up by the old scroll from showing behind a header */
-.ghost {
+.nav-drill-ghost {
   @apply grid;
   grid-area: 1 / 1;
   z-index: 0;
@@ -113,19 +115,19 @@
   background-color: inherit;
 }
 
-.ghost[data-motion='back'] {
+.nav-drill-ghost[data-motion='back'] {
   z-index: 2;
 }
 
-.back {
+.nav-list-item--back {
   @apply text-text-secondary mt-0.5 font-normal;
 }
 
-.back .item-prefix {
+.nav-list-item--back .nav-list-item-prefix {
   @apply text-text-tertiary;
 }
 
 /* A border, not a fill: forced colours drop fills */
-.rule {
+.nav-drill-rule {
   @apply border-border-raised m-0 mb-1 mt-2 h-0 shrink-0 border-0 border-t;
 }

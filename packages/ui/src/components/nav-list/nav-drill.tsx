@@ -252,7 +252,7 @@ const NavDrill = React.forwardRef<HTMLDivElement, NavDrillProps>(
         ref={setRootRef}
         data-slot="nav-drill"
         data-motion={leaving?.direction}
-        className={cn(styles.drill, className)}
+        className={cn(styles['nav-drill'], className)}
         {...props}
       >
         <NavDrillContext.Provider
@@ -269,7 +269,7 @@ const NavDrill = React.forwardRef<HTMLDivElement, NavDrillProps>(
             data-slot="nav-drill-ghost"
             data-motion={leaving.direction}
             aria-hidden="true"
-            className={styles.ghost}
+            className={styles['nav-drill-ghost']}
           >
             <NavDrillContext.Provider value={{ requestDrill: () => {}, leaving: true }}>
               <NavDrillBackContext.Provider value={() => {}}>
@@ -323,7 +323,7 @@ const NavDrillLevel = React.forwardRef<HTMLDivElement, NavDrillLevelProps>(
         ref={ref}
         data-slot="nav-drill-level"
         data-value={value}
-        className={cn(styles.level, className)}
+        className={cn(styles['nav-drill-level'], className)}
         {...props}
       >
         {parent !== undefined && (
@@ -332,17 +332,17 @@ const NavDrillLevel = React.forwardRef<HTMLDivElement, NavDrillLevelProps>(
               type="button"
               data-slot="nav-drill-back"
               aria-label={backLabel ?? `${label}, back`}
-              className={cn(styles.item, styles.back)}
+              className={cn(styles['nav-list-item'], styles['nav-list-item--back'])}
               onClick={() => requestBack(parent)}
             >
-              <span className={styles['item-prefix']} aria-hidden="true">
+              <span className={styles['nav-list-item-prefix']} aria-hidden="true">
                 <ChevronLeft />
               </span>
-              <span className={styles['item-label']} title={label}>
+              <span className={styles['nav-list-item-label']} title={label}>
                 {label}
               </span>
             </button>
-            <hr className={styles.rule} />
+            <hr className={styles['nav-drill-rule']} />
           </>
         )}
         {children}

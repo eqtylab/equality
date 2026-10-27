@@ -11,7 +11,7 @@ const ListDepthContext = React.createContext(0);
 type NavListProps = React.HTMLAttributes<HTMLDivElement>;
 
 const NavList = React.forwardRef<HTMLDivElement, NavListProps>(({ className, ...props }, ref) => (
-  <div ref={ref} className={cn(styles.root, className)} {...props} />
+  <div ref={ref} className={cn(styles['nav-list'], className)} {...props} />
 ));
 NavList.displayName = 'NavList';
 
@@ -28,18 +28,22 @@ const NavListGroup = React.forwardRef<HTMLDivElement, NavListGroupProps>(
     const group = (
       <div
         ref={ref}
-        className={cn(styles.group, !label && styles['group-unlabelled'], className)}
+        className={cn(
+          styles['nav-list-group'],
+          !label && styles['nav-list-group--unlabelled'],
+          className
+        )}
         {...props}
       >
         {label && (
-          <div id={labelId} className={styles['group-label']}>
+          <div id={labelId} className={styles['nav-list-group-label']}>
             {label}
           </div>
         )}
         <ul
           data-depth={depth}
           aria-labelledby={label ? labelId : undefined}
-          className={styles.list}
+          className={styles['nav-list-items']}
         >
           <ListDepthContext.Provider value={depth + 1}>{children}</ListDepthContext.Provider>
         </ul>
@@ -109,22 +113,22 @@ const NavListItem = React.forwardRef<HTMLElement, NavListItemProps>(
           data-drill={drill}
           aria-current={current && !leaving ? 'page' : undefined}
           data-current={current && leaving ? 'page' : undefined}
-          className={cn(styles.item, className)}
+          className={cn(styles['nav-list-item'], className)}
           onClick={handleClick}
           {...props}
         >
           {prefix && (
-            <span className={styles['item-prefix']} aria-hidden="true">
+            <span className={styles['nav-list-item-prefix']} aria-hidden="true">
               {prefix}
             </span>
           )}
-          <span className={styles['item-label']} title={label}>
+          <span className={styles['nav-list-item-label']} title={label}>
             {label}
           </span>
           <Slottable>{children}</Slottable>
-          {suffix && <span className={styles['item-suffix']}>{suffix}</span>}
+          {suffix && <span className={styles['nav-list-item-suffix']}>{suffix}</span>}
           {drill && (
-            <span className={styles['item-caret']} aria-hidden="true">
+            <span className={styles['nav-list-item-caret']} aria-hidden="true">
               <ChevronRight />
             </span>
           )}
@@ -138,9 +142,9 @@ NavListItem.displayName = 'NavListItem';
 const NavListSeparator = ({ className, ...props }: React.HTMLAttributes<HTMLElement>) => {
   const depth = React.useContext(ListDepthContext);
   return depth > 0 ? (
-    <li role="separator" className={cn(styles.separator, className)} {...props} />
+    <li role="separator" className={cn(styles['nav-list-separator'], className)} {...props} />
   ) : (
-    <hr className={cn(styles.separator, className)} {...props} />
+    <hr className={cn(styles['nav-list-separator'], className)} {...props} />
   );
 };
 

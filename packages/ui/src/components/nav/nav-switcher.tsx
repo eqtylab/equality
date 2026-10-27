@@ -74,8 +74,11 @@ const NavSwitcherSelect = React.forwardRef<HTMLButtonElement, NavSwitcherLoadedP
 
     if (options.length <= 1 && !action) {
       return (
-        <h2 className={styles['switcher-heading']}>
-          <span className={cn(styles['switcher-plain'], styles['switcher-name'])} title={label}>
+        <h2 className={styles['nav-switcher-heading']}>
+          <span
+            className={cn(styles['nav-switcher-plain'], styles['nav-switcher-name'])}
+            title={label}
+          >
             {label}
           </span>
         </h2>
@@ -83,7 +86,7 @@ const NavSwitcherSelect = React.forwardRef<HTMLButtonElement, NavSwitcherLoadedP
     }
 
     return (
-      <h2 aria-labelledby={labelId} className={styles['switcher-heading']}>
+      <h2 aria-labelledby={labelId} className={styles['nav-switcher-heading']}>
         <Select
           value={value}
           onValueChange={(next) => {
@@ -94,22 +97,22 @@ const NavSwitcherSelect = React.forwardRef<HTMLButtonElement, NavSwitcherLoadedP
           <SelectTrigger
             ref={ref}
             aria-label={`${label}, switch ${noun}`}
-            className={styles.switcher}
+            className={styles['nav-switcher']}
             onKeyDown={blockClosedTypeahead}
           >
             <span
               id={labelId}
-              className={cn(styles['switcher-label'], styles['switcher-name'])}
+              className={cn(styles['nav-switcher-label'], styles['nav-switcher-name'])}
               title={label}
             >
               {label}
             </span>
-            <ChevronsUpDown className={styles['switcher-icon']} aria-hidden="true" />
+            <ChevronsUpDown className={styles['nav-switcher-icon']} aria-hidden="true" />
           </SelectTrigger>
 
           {/* Fixed so the list keeps its width as a search hides wider options */}
           <SelectContent
-            className={styles['switcher-list']}
+            className={styles['nav-switcher-list']}
             // Runs once the list has closed, so the Enter that picked the action can't reach a
             // dialog it opens
             onCloseAutoFocus={() => {
@@ -133,19 +136,19 @@ const NavSwitcherSelect = React.forwardRef<HTMLButtonElement, NavSwitcherLoadedP
                 onFocus={() => onHighlight?.(option.value)}
                 onBlur={onHighlightEnd}
               >
-                <span className={styles['switcher-option']} title={option.label}>
+                <span className={styles['nav-switcher-option']} title={option.label}>
                   {option.label}
                 </span>
               </SelectItem>
             ))}
             {action && (
-              <div className={styles['switcher-footer']}>
+              <div className={styles['nav-switcher-footer']}>
                 <SelectSeparator persistent />
                 <SelectItem
                   value={actionValue}
                   textValue={action.label}
                   persistent
-                  className={styles['switcher-action']}
+                  className={styles['nav-switcher-action']}
                 >
                   <span className={buttonVariants({ variant: 'link', size: 'sm' })}>
                     {action.label}
@@ -164,11 +167,11 @@ NavSwitcherSelect.displayName = 'NavSwitcherSelect';
 const NavSwitcher = React.forwardRef<HTMLButtonElement, NavSwitcherProps>((props, ref) =>
   props.loading ? (
     <div
-      className={cn(styles['switcher-heading'], styles['switcher-placeholder'])}
+      className={cn(styles['nav-switcher-heading'], styles['nav-switcher-placeholder'])}
       aria-busy="true"
     >
-      <Skeleton className={styles['switcher-skeleton']} />
-      <span className={styles['switcher-loading-label']}>Loading</span>
+      <Skeleton className={styles['nav-switcher-skeleton']} />
+      <span className={styles['nav-switcher-loading-label']}>Loading</span>
     </div>
   ) : (
     <NavSwitcherSelect ref={ref} {...props} />

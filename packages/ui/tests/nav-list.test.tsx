@@ -228,6 +228,6 @@ describe('NavList rows', () => {
     );
     const label = screen.getByText(long);
     expect(label.getAttribute('title')).toBe(long);
-    expect(label.className).toMatch(/item-label/);
+    expect(label.className).toMatch(/nav-list-item-label/);
   });
 });

@@ -14,9 +14,9 @@ interface NavPanelProps extends Omit<React.HTMLAttributes<HTMLElement>, 'title'>
 // without an error
 const NavPanel = React.forwardRef<HTMLElement, NavPanelProps>(
   ({ header, className, children, ...props }, ref) => (
-    <nav ref={ref} className={cn(styles.panel, className)} {...props}>
-      <div className={styles.scroller} data-nav-scroller="">
-        {header && <div className={styles['panel-header']}>{header}</div>}
+    <nav ref={ref} className={cn(styles['nav-panel'], className)} {...props}>
+      <div className={styles['nav-scroller']} data-nav-scroller="">
+        {header && <div className={styles['nav-panel-header']}>{header}</div>}
         {children}
       </div>
     </nav>

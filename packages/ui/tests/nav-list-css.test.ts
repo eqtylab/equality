@@ -15,7 +15,7 @@ function rule(selector: RegExp): string {
 
 describe('nav-list.module.css', () => {
   it('sizes the row from the decisions', () => {
-    const item = rule(/\n\.item/);
+    const item = rule(/\n\.nav-list-item/);
     expect(item).toMatch(/height:\s*var\(--list-item-height\)/);
     expect(item).toMatch(/min-height:\s*var\(--touch-target\)/);
   });
@@ -27,12 +27,14 @@ describe('nav-list.module.css', () => {
 
   it('fills the current row, live or leaving, with the current colour', () => {
     const current = rule(
-      /\.item\[aria-current=['"]page['"]\],\s*\.item\[data-current=['"]page['"]\]/
+      /\.nav-list-item\[aria-current=['"]page['"]\],\s*\.nav-list-item\[data-current=['"]page['"]\]/
     );
     expect(current).toMatch(/background-color:\s*var\(--color-list-item-current\)/);
   });
 
   it('fills a hovered row with the hover colour', () => {
-    expect(rule(/\.item:hover/)).toMatch(/background-color:\s*var\(--color-list-item-hover\)/);
+    expect(rule(/\.nav-list-item:hover/)).toMatch(
+      /background-color:\s*var\(--color-list-item-hover\)/
+    );
   });
 });

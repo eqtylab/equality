@@ -16,10 +16,10 @@ interface NavRailProps extends React.HTMLAttributes<HTMLElement> {
 }
 
 const NavRail = ({ className, children, ...props }: NavRailProps) => (
-  <nav className={cn(styles.rail, className)} {...props}>
-    <div className={styles.scroller}>
+  <nav className={cn(styles['nav-rail'], className)} {...props}>
+    <div className={styles['nav-scroller']}>
       <TooltipProvider delayDuration={300}>
-        <ul className={styles['rail-list']}>{children}</ul>
+        <ul className={styles['nav-rail-list']}>{children}</ul>
       </TooltipProvider>
     </div>
   </nav>
@@ -48,7 +48,7 @@ const NavRailItem = React.forwardRef<HTMLAnchorElement, NavRailItemProps>(
               ref={ref}
               aria-label={label}
               aria-current={current ? 'page' : undefined}
-              className={cn(styles['rail-item'], className)}
+              className={cn(styles['nav-rail-item'], className)}
               {...props}
             >
               <span aria-hidden="true">{icon}</span>
