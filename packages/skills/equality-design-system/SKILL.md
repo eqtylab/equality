@@ -91,7 +91,6 @@ Verified absent — do not go hunting:
 - Standalone Calendar or single date picker (only `DateRangePicker`)
 - Free-text or async autocomplete (`Select` with `SelectSearch` only filters fixed options)
 - Carousel
-- Sidebar/Navigation/Menubar primitives
 - Rating
 - Timeline
 - Resizable panels
