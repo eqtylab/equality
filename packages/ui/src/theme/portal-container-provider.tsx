@@ -10,7 +10,7 @@ interface PortalContainerProviderProps {
 
 /**
  * Supplies the container for portalled surfaces — tooltips, popovers, selects, dialogs,
- * sheets, drawers, dropdown menus.
+ * sheets, dropdown menus.
  *
  * `ThemeProvider` renders one of these automatically, so most consumers never need it
  * directly. Reach for it when the container has to be an element you own:

@@ -12,7 +12,7 @@ export const PortalContainerContext = React.createContext<HTMLElement | null | u
 
 /**
  * Container for portalled surfaces — tooltips, popovers, selects, dialogs, sheets,
- * drawers, dropdown menus.
+ * dropdown menus.
  *
  * Resolves to whatever the nearest `PortalContainerProvider` supplies, falling back to
  * looking up `#equality-theme-provider-root-portal` in the document so consumers

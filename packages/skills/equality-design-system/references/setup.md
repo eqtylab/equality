@@ -53,7 +53,7 @@ Components each ship their own scoped CSS Module, so there is no global componen
 
 ## Portalled surfaces
 
-Tooltips, popovers, selects, dialogs, sheets, drawers, and dropdown menus render into a portal. `ThemeProvider` creates and supplies that container, which keeps those surfaces inside the themed subtree.
+Tooltips, popovers, selects, dialogs, sheets, and dropdown menus render into a portal. `ThemeProvider` creates and supplies that container, which keeps those surfaces inside the themed subtree.
 
 **If a dropdown or dialog renders unstyled, you almost certainly have no `ThemeProvider`.** That is the single most common setup failure.
 
