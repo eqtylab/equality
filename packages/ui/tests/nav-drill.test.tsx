@@ -9,9 +9,6 @@ import { NavList, NavListGroup, NavListItem } from '@/components/nav-list/nav-li
 
 import { animateCalls, finishAll, setReducedMotion } from './animation-stub';
 
-const SHADOW = '-8px 0 16px rgb(0 0 0 / 0.18)';
-const NO_SHADOW = '-8px 0 16px transparent';
-
 function levels() {
   return [
     <NavDrillLevel key="projects" value="projects">
@@ -205,7 +202,7 @@ describe('NavDrill', () => {
     expect(back.textContent).toBe('Ben Project');
   });
 
-  it('slides with exactly two animate calls carrying Studio’s keyframes and 330ms', () => {
+  it('drills in with two animate calls: a 12px nudge, the old level gone in the first third, 300ms with push easing', () => {
     render(<Uncontrolled />);
     fireEvent.click(screen.getByRole('link', { name: 'Ben Project' }));
     expect(animateCalls).toHaveLength(2);
@@ -213,30 +210,32 @@ describe('NavDrill', () => {
     expect(current.target).toBe(liveLevels()[0]);
     expect(current.target.textContent).toContain('Ben overview');
     expect(current.keyframes).toEqual([
-      { transform: 'translateX(50%)', boxShadow: SHADOW },
-      { transform: 'translateX(0)', boxShadow: NO_SHADOW },
+      { transform: 'translateX(12px)', opacity: 0 },
+      { transform: 'translateX(0)', opacity: 1 },
     ]);
     expect(previous.target).toBe(ghost());
     expect(previous.keyframes).toEqual([
       { transform: 'translateX(0)', opacity: 1 },
-      { transform: 'translateX(-15%)', opacity: 0.55 },
+      { opacity: 0, offset: 0.35 },
+      { transform: 'translateX(-12px)', opacity: 0 },
     ]);
     for (const call of animateCalls) {
-      expect(call.options).toEqual({ duration: 330, easing: 'cubic-bezier(.2, .8, .2, 1)' });
+      expect(call.options).toEqual({ duration: 300, easing: 'cubic-bezier(.2, .8, .2, 1)' });
     }
   });
 
-  it('slides back with the back keyframes and the leaving level above', () => {
+  it('goes back with the mirrored nudge and the leaving level above', () => {
     render(<Uncontrolled defaultValue="ben" />);
     fireEvent.click(screen.getByRole('button', { name: 'Ben Project, back' }));
     const [current, previous] = animateCalls;
     expect(current.keyframes).toEqual([
-      { transform: 'translateX(-15%)', opacity: 0.55 },
+      { transform: 'translateX(-12px)', opacity: 0 },
       { transform: 'translateX(0)', opacity: 1 },
     ]);
     expect(previous.keyframes).toEqual([
-      { transform: 'translateX(0)', opacity: 1, boxShadow: SHADOW },
-      { transform: 'translateX(50%)', opacity: 0, boxShadow: NO_SHADOW },
+      { transform: 'translateX(0)', opacity: 1 },
+      { opacity: 0, offset: 0.35 },
+      { transform: 'translateX(12px)', opacity: 0 },
     ]);
     expect(ghost()!.getAttribute('data-motion')).toBe('back');
   });

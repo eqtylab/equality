@@ -91,7 +91,7 @@
 }
 
 /* The live level and, while it slides, the leaving one share one grid cell. The padding leaves
-   room for a row's focus ring inside the clip that hides the half-travel slide */
+   room for a row's focus ring inside the clip that hides the nudge */
 .nav-drill {
   @apply -mx-1 grid px-1;
   overflow-x: clip;

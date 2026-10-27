@@ -8,33 +8,32 @@ import { cn } from '@/lib/utils';
 
 type NavDrillRequest = 'drill' | 'back';
 
-// Going back, the leaving rows must fade: at half travel they stop short of the edge and would
-// cover the panel
-const SHADOW = '-8px 0 16px rgb(0 0 0 / 0.18)';
-const NO_SHADOW = '-8px 0 16px transparent';
+// The leaving level is gone in the first third, so the two levels' rows never read as doubled text
 const MOTION: Record<NavDrillRequest, { current: Keyframe[]; previous: Keyframe[] }> = {
   drill: {
     current: [
-      { transform: 'translateX(50%)', boxShadow: SHADOW },
-      { transform: 'translateX(0)', boxShadow: NO_SHADOW },
+      { transform: 'translateX(12px)', opacity: 0 },
+      { transform: 'translateX(0)', opacity: 1 },
     ],
     previous: [
       { transform: 'translateX(0)', opacity: 1 },
-      { transform: 'translateX(-15%)', opacity: 0.55 },
+      { opacity: 0, offset: 0.35 },
+      { transform: 'translateX(-12px)', opacity: 0 },
     ],
   },
   back: {
     current: [
-      { transform: 'translateX(-15%)', opacity: 0.55 },
+      { transform: 'translateX(-12px)', opacity: 0 },
       { transform: 'translateX(0)', opacity: 1 },
     ],
     previous: [
-      { transform: 'translateX(0)', opacity: 1, boxShadow: SHADOW },
-      { transform: 'translateX(50%)', opacity: 0, boxShadow: NO_SHADOW },
+      { transform: 'translateX(0)', opacity: 1 },
+      { opacity: 0, offset: 0.35 },
+      { transform: 'translateX(12px)', opacity: 0 },
     ],
   },
 };
-const TIMING: KeyframeAnimationOptions = { duration: 330, easing: 'cubic-bezier(.2, .8, .2, 1)' };
+const TIMING: KeyframeAnimationOptions = { duration: 300, easing: 'cubic-bezier(.2, .8, .2, 1)' };
 
 const LEVEL = '[data-slot="nav-drill-level"]';
 
