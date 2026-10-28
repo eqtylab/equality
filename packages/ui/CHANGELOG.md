@@ -2,6 +2,23 @@
 
 Notable changes to Equality are recorded here, following [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## 5.0.2 - 2026-10-28
+
+### Added
+
+- `NavSwitcher` takes `error`, `retrying` and `onRetry`, and `error` needs `onRetry`. With `error`,
+  the list shows "Couldn't load {collection}." with a Retry row above any options it already has.
+  Picking Retry calls `onRetry` and keeps the list open; with `retrying` the row reads
+  "Retrying...". Screen readers hear the failure, the retry and its result, but not a refetch of a
+  list that never failed.
+
+### Changed
+
+- A `NavSwitcher` with one option is now a switcher where it was a plain heading, so a user with a
+  single project sees the switcher they will get with more. Apps showing one item will see a
+  dropdown appear. It is a plain heading only when it has no options, no `action` and no `error`.
+- `Spinner` renders spans, not divs, so it can sit inside text such as a select option.
+
 ## 5.0.1 - 2026-10-28
 
 ### Fixed

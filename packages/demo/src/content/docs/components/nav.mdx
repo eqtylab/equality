@@ -3,7 +3,7 @@ title: "Nav"
 description: "Sidebar navigation with an icon rail, a switcher and links that drill in and out"
 ---
 
-import { NavDemo } from "@demo/components/demo/nav";
+import { NavDemo, NavSwitcherErrorDemo } from "@demo/components/demo/nav";
 import { NavListDemo } from "@demo/components/demo/nav-list";
 
 ## Overview
@@ -206,6 +206,26 @@ A rail of top-level app sections in `NavRail` beside a `NavPanel`, with a switch
 
 The switcher's trigger stops a typed letter from picking an item while its list is closed: a switch navigates, and focus lands on the trigger afterwards. To do the same on your own `Select`, see [A select that navigates](/components/select#a-select-that-navigates).
 
+### When the List Fails to Load
+
+Pass `error` with `onRetry` when the list of items couldn't be read. The switcher stays a dropdown, and its list says so with a Retry row above any options it already has. Picking Retry calls `onRetry` and keeps the list open; pass `retrying` while that read runs, and the row reads "Retrying...". `error` stays true while the read runs, so `retrying` is what tells the switcher it has started.
+
+<NavSwitcherErrorDemo client:only="react" />
+
+```tsx
+<NavSwitcher
+  label={project.name}
+  noun="project"
+  collection="projects"
+  options={projects ?? []}
+  value={project.id}
+  onValueChange={switchProject}
+  error={projectsQuery.isError}
+  retrying={projectsQuery.isFetching}
+  onRetry={() => projectsQuery.refetch()}
+/>
+```
+
 ### Navigation in a Sheet
 
 On a phone, the sidebar comes in from the left in a [Sheet](/components/sheet). Give the sheet a title for screen readers. A sheet is at least a third of the screen wide, so set `minWidth: 0` to fit it to the list.
@@ -272,20 +292,23 @@ On a phone, the sidebar comes in from the left in a [Sheet](/components/sheet). 
 
 ### NavSwitcher
 
-| Name             | Description                                                                                                                | Type                                      | Default | Required |
-| ---------------- | -------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------- | ------- | -------- |
-| `label`          | The current item's name, shown as the panel's heading                                                                      | `string`                                  |         | ✅       |
-| `noun`           | Singular, for the trigger's name: `{label}, switch {noun}`                                                                 | `string`                                  |         | ✅       |
-| `collection`     | Plural, for the search and empty copy                                                                                      | `string`                                  |         | ✅       |
-| `options`        | The items to switch between                                                                                                | `{ value, label, keywords? }[]`           |         | ✅       |
-| `value`          | The current item's value                                                                                                   | `string`                                  |         | ✅       |
-| `onValueChange`  | Called with the picked item's value                                                                                        | `(value: string) => void`                 |         | ✅       |
-| `onHighlight`    | Hover or focus on an option, to preload its destination                                                                    | `(value: string) => void`                 |         | ❌       |
-| `onHighlightEnd` | Hover or focus leaves an option, to cancel its preload                                                                     | `() => void`                              |         | ❌       |
-| `action`         | A command at the bottom of the list, kept while searching, such as "Create Project"; `onSelect` runs after the list closes | `{ label: string; onSelect: () => void }` |         | ❌       |
-| `loading`        | Holds the switcher's height while the current item loads                                                                   | `boolean`                                 | `false` | ❌       |
+| Name             | Description                                                                                                                | Type                                      | Default | Required     |
+| ---------------- | -------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------- | ------- | ------------ |
+| `label`          | The current item's name, shown as the panel's heading                                                                      | `string`                                  |         | ✅           |
+| `noun`           | Singular, for the trigger's name: `{label}, switch {noun}`                                                                 | `string`                                  |         | ✅           |
+| `collection`     | Plural, for the search and empty copy                                                                                      | `string`                                  |         | ✅           |
+| `options`        | The items to switch between                                                                                                | `{ value, label, keywords? }[]`           |         | ✅           |
+| `value`          | The current item's value                                                                                                   | `string`                                  |         | ✅           |
+| `onValueChange`  | Called with the picked item's value                                                                                        | `(value: string) => void`                 |         | ✅           |
+| `onHighlight`    | Hover or focus on an option, to preload its destination                                                                    | `(value: string) => void`                 |         | ❌           |
+| `onHighlightEnd` | Hover or focus leaves an option, to cancel its preload                                                                     | `() => void`                              |         | ❌           |
+| `action`         | A command at the bottom of the list, kept while searching, such as "Create Project"; `onSelect` runs after the list closes | `{ label: string; onSelect: () => void }` |         | ❌           |
+| `error`          | The list failed to load: the list says so and offers Retry; needs `onRetry`                                                | `boolean`                                 | `false` | ❌           |
+| `retrying`       | A retry is in flight: the Retry row reads "Retrying..."                                                                    | `boolean`                                 | `false` | ❌           |
+| `onRetry`        | Called when Retry is picked; the list stays open                                                                           | `() => void`                              |         | With `error` |
+| `loading`        | Holds the switcher's height while the current item loads                                                                   | `boolean`                                 | `false` | ❌           |
 
-With `loading`, the switcher takes no other props.
+With `loading`, the switcher takes no other props. With no `options`, no `action` and no `error`, it is a plain heading. One option is still a switcher, so the list shows it is the only one.
 
 ### NavListGroup
 

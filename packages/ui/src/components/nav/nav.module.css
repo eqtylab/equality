@@ -159,14 +159,36 @@
 }
 
 /* Two classes to outrank the Select's own item layout */
-.nav-switcher-list .nav-switcher-action {
+.nav-switcher-list .nav-switcher-action,
+.nav-switcher-list .nav-switcher-retry {
   @apply justify-center;
 }
 
-/* The action is never ticked, so its check column only pushes the label off centre. SelectItem
-   leaves that column an empty span; Studio's SW-019 fails if that changes */
-.nav-switcher-action > span:empty {
+/* The action and Retry are never ticked, so their check column only pushes them off centre.
+   SelectItem leaves that column an empty span; Studio's SW-019 fails if that changes */
+.nav-switcher-action > span:empty,
+.nav-switcher-retry > span:empty {
   @apply hidden;
+}
+
+.nav-switcher-error {
+  @apply text-text-secondary flex items-center gap-2 text-xs;
+}
+
+.nav-switcher-error-message {
+  @apply flex items-center gap-1.5;
+}
+
+.nav-switcher-error-icon {
+  @apply text-text-warning size-3.5 shrink-0;
+}
+
+.nav-switcher-status {
+  @apply sr-only;
+}
+
+.nav-switcher-empty {
+  @apply dropdown-empty;
 }
 
 .nav-rail-item:hover {

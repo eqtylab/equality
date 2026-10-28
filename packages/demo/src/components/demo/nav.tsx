@@ -1,5 +1,6 @@
-import { useState, type MouseEvent } from "react";
+import { useEffect, useState, type MouseEvent } from "react";
 import {
+  Button,
   NavDrill,
   NavDrillLevel,
   NavList,
@@ -166,6 +167,69 @@ export function NavDemo() {
       <div style={{ flex: 1, padding: 24 }}>
         <p style={{ margin: 0 }}>Page content</p>
       </div>
+    </div>
+  );
+}
+
+export function NavSwitcherErrorDemo() {
+  const [attempts, setAttempts] = useState(0);
+  const [retrying, setRetrying] = useState(false);
+  // The first retry fails too, so both outcomes show
+  const loaded = attempts >= 2;
+
+  useEffect(() => {
+    if (!retrying) return;
+    const timer = setTimeout(() => {
+      setRetrying(false);
+      setAttempts((count) => count + 1);
+    }, 1500);
+    return () => clearTimeout(timer);
+  }, [retrying]);
+
+  return (
+    <div
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "start",
+        gap: 12,
+      }}
+    >
+      <div
+        style={{
+          width: 280,
+          borderRadius: 8,
+          border: "1px solid var(--color-border-raised)",
+        }}
+      >
+        <NavPanel
+          aria-label="Project: Ben Project"
+          header={
+            <NavSwitcher
+              label="Ben Project"
+              noun="project"
+              collection="projects"
+              options={loaded ? PROJECTS : []}
+              value="ben"
+              onValueChange={() => {}}
+              error={!loaded}
+              retrying={retrying}
+              onRetry={() => setRetrying(true)}
+            />
+          }
+        />
+      </div>
+      <Button
+        variant="secondary"
+        size="sm"
+        disabled={attempts === 0}
+        onClick={() => {
+          setRetrying(false);
+          setAttempts(0);
+        }}
+      >
+        Reset
+      </Button>
     </div>
   );
 }
