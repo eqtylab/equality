@@ -2,6 +2,13 @@
 
 Notable changes to Equality are recorded here, following [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## 5.0.1 - 2026-10-28
+
+### Fixed
+
+- `Skeleton` is a light grey in light mode, where it was near-black. Dark mode is unchanged. This
+  includes the loading placeholder in `NavSwitcher`.
+
 ## 5.0.0 - 2026-10-27
 
 Removes components that were deprecated or never used. Code that imports any of them needs a
