@@ -25,7 +25,7 @@ export const eqtyDocsSites: DocsSite[] = [
   {
     title: 'Guardian Agent SDK',
     href: 'https://guardian-agent-sdk.docs.eqtylab.io/',
-    description: 'Give each AI agent its own identity and signed configuration',
+    description: 'Give AI agents their own identity and signed configuration',
   },
   {
     title: 'Integrity Python SDK',
