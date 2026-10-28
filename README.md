@@ -14,7 +14,7 @@ The library is published to npm as [`@eqtylab/equality`](https://www.npmjs.com/p
 ## Prerequisites
 
 - Node 22.12+ (Astro 6 requires Node ≥ 22.12.0)
-- pnpm 9.x (workspace uses `packageManager: pnpm@9.12.3`)
+- pnpm 12.x (workspace uses `packageManager: pnpm@12.5.1`)
 
 Verify versions:
 

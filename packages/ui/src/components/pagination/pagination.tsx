@@ -78,11 +78,6 @@ const Pagination = ({
           scrollTargetRef.current.scrollIntoView({ behavior: 'smooth' });
         }
       }
-
-      const viewport = document.querySelector('[data-radix-scroll-area-viewport]');
-      if (viewport) {
-        viewport.scrollTop = 0;
-      }
     }
   };
 

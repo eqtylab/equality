@@ -2,6 +2,21 @@
 
 Notable changes to Equality are recorded here, following [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## 5.0.0 - 2026-10-27
+
+Removes components that were deprecated or never used. Code that imports any of them needs a
+change before upgrading.
+
+### Removed
+
+- `ScrollArea` and `ScrollBar`. Set an overflow and a height on your own element instead; browsers
+  draw theme-aware scrollbars of their own.
+- `ListOrGridViewToggle`. Use `SegmentedControls` instead.
+- `Drawer` and its parts. Use `Sheet` instead.
+- `Pagination` no longer scrolls a `ScrollArea` viewport to the top when the page changes. Pass
+  `scrollTargetRef` to choose what scrolls into view.
+- The `vaul` and `@radix-ui/react-scroll-area` dependencies.
+
 ## 4.15.0 - 2026-10-27
 
 Sidebar navigation comes to Equality as two sets of parts: `NavList` rows for going somewhere,

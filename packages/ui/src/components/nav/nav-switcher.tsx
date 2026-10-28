@@ -47,9 +47,9 @@ interface NavSwitcherLoadedProps {
   value: string;
   /** Called with the picked item's value */
   onValueChange: (value: string) => void;
-  /** Hover or focus on an option, for a caller that warms its destination */
+  /** Hover or focus on an option, for a caller that preloads its destination */
   onHighlight?: (value: string) => void;
-  /** Hover or focus leaves an option */
+  /** Hover or focus leaves an option, for a caller that cancels its preload */
   onHighlightEnd?: () => void;
   /** A command at the bottom of the list, kept while searching, such as "Create Project" */
   action?: NavSwitcherAction;
