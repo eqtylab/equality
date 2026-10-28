@@ -4,6 +4,13 @@ Notable changes to Equality's Docsite Generator are recorded here, following [Ke
 
 ## Unreleased
 
+## 0.15.3 - 2026-10-28
+
+### Added
+
+- The Guardian Agent SDK docs (`guardian-agent-sdk.docs.eqtylab.io`) in the site switcher, after
+  Guardian
+
 ## 0.15.2 - 2026-10-22
 
 ### Fixed
