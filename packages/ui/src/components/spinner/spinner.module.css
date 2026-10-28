@@ -1,10 +1,11 @@
 @reference '../../theme/theme.module.css';
 
 .spinner-container {
-  @apply relative;
+  @apply relative block;
 }
 
 .spinner {
+  @apply block;
   @apply border-t-transparent;
   @apply rounded-full;
   @apply animate-spin;

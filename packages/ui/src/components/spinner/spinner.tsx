@@ -8,9 +8,9 @@ interface SpinnerProps {
 
 export const Spinner = ({ size = 'md', variant = 'primary' }: SpinnerProps) => {
   return (
-    <div className={styles['spinner-container']}>
-      <div className={cn(styles['spinner'], styles[size], styles[variant])} />
-      <div className={cn(styles['spinner-background'], styles[size])} />
-    </div>
+    <span className={styles['spinner-container']}>
+      <span className={cn(styles['spinner'], styles[size], styles[variant])} />
+      <span className={cn(styles['spinner-background'], styles[size])} />
+    </span>
   );
 };
