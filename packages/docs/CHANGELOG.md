@@ -29,6 +29,11 @@ our docs sites use the components 5.0 removed.
 
 - `scripts/eq-nav-group.ts`, which animated the old `<details>` groups.
 
+### Fixed
+
+- Links and inline code inside tables and alerts look like links and code again. Both had lost
+  their styling, so a link in a table read as plain text.
+
 ## 0.15.3 - 2026-10-28
 
 ### Added
