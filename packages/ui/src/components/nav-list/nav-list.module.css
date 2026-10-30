@@ -155,7 +155,6 @@
     translate var(--eq-nav-motion-duration) var(--eq-nav-motion-ease);
 }
 
-/* Set for the frame a folder opens as it mounts */
 .nav-list-expandable[data-instant] > .nav-list-expandable-panel,
 .nav-list-expandable[data-instant]
   > .nav-list-expandable-panel
@@ -166,7 +165,9 @@
   transition: none;
 }
 
+/* The build hoists this block above the chevron's rule: keep its selector two classes deep */
 @media (prefers-reduced-motion: reduce) {
+  .nav-list-expandable-trigger .nav-list-expandable-chevron,
   .nav-list-expandable-panel,
   .nav-list-expandable[data-state='closed'] > .nav-list-expandable-panel,
   .nav-list-expandable-content > .nav-list-items,
@@ -238,7 +239,7 @@
 }
 
 .nav-list-expandable-chevron {
-  @apply flex shrink-0 items-center motion-reduce:transition-none;
+  @apply flex shrink-0 items-center;
   /* rotate-180 sets the rotate property, not transform: a transform transition never runs */
   transition:
     rotate var(--eq-nav-motion-duration) var(--eq-nav-motion-ease),
@@ -299,4 +300,18 @@
 
 .nav-list-item-new-tab {
   @apply sr-only;
+}
+
+/* Forced colours paint transparent borders, boxing every row; only the current row keeps one */
+@media (forced-colors: active) {
+  .nav-list-item {
+    border-color: Canvas;
+  }
+
+  .nav-list-item[aria-current='page'],
+  .nav-list-item[data-current='page'],
+  .nav-list-expandable[data-state='closed']:has([aria-current='page'])
+    > .nav-list-expandable-trigger {
+    border-color: Highlight;
+  }
 }

@@ -66,6 +66,12 @@
   + [data-slot='nav-list']
   > [data-slot='nav-drill']
   > [data-slot='nav-drill-level']
+  > [data-slot='nav-list-group']:first-child,
+.nav-panel-header:has(> .nav-switcher-heading)
+  + [data-slot='nav-list']
+  > [data-slot='nav-drill']
+  > [data-slot='nav-drill-ghost']
+  > [data-slot='nav-drill-level']
   > [data-slot='nav-list-group']:first-child {
   padding-top: 0;
 }
@@ -215,4 +221,15 @@
 .nav-rail-item:focus-visible {
   outline: 2px solid var(--color-focus-ring);
   outline-offset: 2px;
+}
+
+/* Forced colours paint transparent borders and drop fills: only the current area keeps a border */
+@media (forced-colors: active) {
+  .nav-rail-item {
+    border-color: Canvas;
+  }
+
+  .nav-rail-item[aria-current='page'] {
+    border-color: Highlight;
+  }
 }
