@@ -16,3 +16,17 @@ const { nodes } = Astro.props;
 ---
 
 <DocsNavList nodes={nodes} client:idle={{ timeout: 500 }} />
+
+{/* Without JavaScript a folder's header never opens it, so every folder shows open */}
+<noscript>
+  <style is:inline>
+    [data-slot='nav-list'] li[data-state='closed'] > div {
+      grid-template-rows: 1fr !important;
+      visibility: visible !important;
+    }
+    [data-slot='nav-list'] li[data-state='closed'] > div > div > ul {
+      opacity: 1 !important;
+      translate: none !important;
+    }
+  </style>
+</noscript>

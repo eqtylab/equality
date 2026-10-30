@@ -17,8 +17,10 @@ our docs sites use the components 5.0 removed.
 - The current page's row is grey instead of lilac, and search's selected result matches it.
 - A group's header works once the sidebar's script has loaded. The sidebar starts it at the page's
   first idle moment, or half a second after the page is ready at most; before that, a click does
-  nothing. Groups that hold the current page still render open.
-- A sidebar link's `attrs` pass only `data-*`, `aria-*` and `id`; anything else is dropped.
+  nothing. Groups that hold the current page still render open. With JavaScript off, every group
+  shows open.
+- A sidebar link's `attrs` pass only `data-*`, `aria-*` and `id`; anything else is dropped. An
+  `aria-*` set to `true` renders as `"true"`.
 - A sidebar link to another site shows Equality's ↗ and tells screen readers it opens in a new
   tab.
 - The site card's rows, the header's links and the landing page's links hover with the same tint
