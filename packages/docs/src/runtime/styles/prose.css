@@ -124,4 +124,16 @@
       @apply border-border mb-4;
     }
   }
+
+  /* Tables and alerts render through Equality, so the guard above skips them. Their cells are
+     still the page's own markdown: a link there must read as a link. */
+  & :where(table[data-eq-chrome], aside[data-eq-chrome]) :where([data-eq-md]) {
+    &:is(a) {
+      @apply text-text-primary hover:text-text-link decoration-text-link font-semibold underline decoration-1 underline-offset-4 transition-all;
+    }
+
+    :not(pre) > &:is(code) {
+      @apply bg-badge-background-neutral/50 text-badge-text-neutral rounded-sm px-1 py-0.5 font-mono text-[0.875em];
+    }
+  }
 }
