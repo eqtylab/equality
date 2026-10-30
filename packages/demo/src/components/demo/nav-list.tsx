@@ -6,27 +6,31 @@ import {
 } from "react";
 import {
   Badge,
-  Button,
   NavDrill,
   NavDrillLevel,
   NavList,
+  NavListExpandable,
+  NavListExpandableContent,
+  NavListExpandableTrigger,
   NavListGroup,
   NavListItem,
   NavListSeparator,
-  Sheet,
-  SheetContainer,
-  SheetTitle,
-  SheetTrigger,
 } from "@eqtylab/equality";
 import {
   Activity,
   Award,
   BookOpen,
+  Blocks,
   Bot,
+  Globe,
   ChartLine,
   Layers,
   LayoutGrid,
+  Plus,
+  Rocket,
   Settings,
+  Trash2,
+  Users,
 } from "lucide-react";
 
 const frame: CSSProperties = {
@@ -67,22 +71,12 @@ function NavListGroupsDemo() {
             prefix={<Activity />}
             {...link("indicators")}
           />
-          <NavListItem
-            label="Associated Agents"
-            prefix={<Bot />}
-            {...link("agents")}
-          />
         </NavListGroup>
         <NavListGroup label="Applied Policies">
           <NavListItem
             label="EU AI Act"
             prefix={<BookOpen />}
             {...link("eu-ai-act")}
-          />
-          <NavListItem
-            label="NIST AI RMF"
-            prefix={<BookOpen />}
-            {...link("nist-ai-rmf")}
           />
         </NavListGroup>
         <NavListSeparator />
@@ -205,76 +199,362 @@ function NavListDrillDemo() {
   );
 }
 
-const visuallyHidden: CSSProperties = {
-  position: "absolute",
-  width: 1,
-  height: 1,
-  overflow: "hidden",
-  clip: "rect(0 0 0 0)",
-  whiteSpace: "nowrap",
-};
+// Stands in for the browser: a drill row or ‹ pushes a page, Back pops one without a request
 
-function NavListDrillSheetDemo() {
-  const link = useCurrent("dashboard");
+function NavListExpandableBasicDemo() {
+  const link = useCurrent("installation");
   return (
-    <Sheet>
-      <SheetTrigger asChild>
-        <Button size="sm" variant="tertiary">
-          Open navigation
-        </Button>
-      </SheetTrigger>
-      <SheetContainer
-        side="left"
-        aria-describedby={undefined}
-        style={{ minWidth: 0 }}
-      >
-        <SheetTitle style={visuallyHidden}>Navigation</SheetTitle>
-        <NavList style={{ width: 264, padding: "16px 8px" }}>
-          <NavDrill defaultValue="project">{policyLevels(link)}</NavDrill>
-        </NavList>
-      </SheetContainer>
-    </Sheet>
+    <div style={frame}>
+      <NavList>
+        <NavListGroup>
+          <NavListExpandable defaultOpen>
+            <NavListExpandableTrigger label="Getting Started" />
+            <NavListExpandableContent>
+              <NavListItem label="Installation" {...link("installation")} />
+              <NavListItem label="Theming" {...link("theming")} />
+            </NavListExpandableContent>
+          </NavListExpandable>
+        </NavListGroup>
+      </NavList>
+    </div>
   );
 }
 
-// Stands in for the browser: a drill row or ‹ pushes a page, Back pops one without a request
-function NavListDrillControlledDemo() {
-  const link = useCurrent("dashboard");
-  const [history, setHistory] = useState(["project"]);
-  const level = history[history.length - 1];
-  const url = level === "project" ? "/project" : `/policies/${level}`;
+function NavListExpandableNestedDemo() {
+  const link = useCurrent("k3s-coco");
+  return (
+    <div style={frame}>
+      <NavList>
+        <NavListGroup>
+          <NavListExpandable defaultOpen>
+            <NavListExpandableTrigger label="Confidential Containers" />
+            <NavListExpandableContent>
+              <NavListItem label="Overview" {...link("overview")} />
+              <NavListExpandable defaultOpen>
+                <NavListExpandableTrigger label="Deployment" />
+                <NavListExpandableContent>
+                  <NavListItem label="Quick Start" {...link("quick-start")} />
+                  <NavListExpandable defaultOpen>
+                    <NavListExpandableTrigger label="Baremetal" />
+                    <NavListExpandableContent>
+                      <NavListItem label="BIOS Platform" {...link("bios")} />
+                      <NavListItem label="K3s CoCo" {...link("k3s-coco")} />
+                    </NavListExpandableContent>
+                  </NavListExpandable>
+                </NavListExpandableContent>
+              </NavListExpandable>
+            </NavListExpandableContent>
+          </NavListExpandable>
+        </NavListGroup>
+      </NavList>
+    </div>
+  );
+}
+
+function NavListDocsSidebarDemo() {
+  const link = useCurrent("installation");
+  return (
+    <div style={frame}>
+      <NavList>
+        <NavListGroup>
+          <NavListExpandable defaultOpen>
+            <NavListExpandableTrigger
+              label="Getting Started"
+              prefix={<Rocket />}
+            />
+            <NavListExpandableContent>
+              <NavListItem label="Installation" {...link("installation")} />
+              <NavListItem label="Theming" {...link("theming")} />
+            </NavListExpandableContent>
+          </NavListExpandable>
+          <NavListExpandable>
+            <NavListExpandableTrigger
+              label="Guides"
+              prefix={<BookOpen />}
+              suffix={<Badge size="sm">Beta</Badge>}
+            />
+            <NavListExpandableContent>
+              <NavListItem label="Quick Start" {...link("quick-start")} />
+              <NavListExpandable>
+                <NavListExpandableTrigger label="Deployment" />
+                <NavListExpandableContent>
+                  <NavListItem label="Baremetal" {...link("baremetal")} />
+                  <NavListItem label="Cloud" {...link("cloud")} />
+                </NavListExpandableContent>
+              </NavListExpandable>
+            </NavListExpandableContent>
+          </NavListExpandable>
+          <NavListExpandable>
+            <NavListExpandableTrigger label="Components" prefix={<Blocks />} />
+            <NavListExpandableContent>
+              <NavListItem label="Button" {...link("button")} />
+              <NavListItem label="Nav" {...link("nav")} />
+            </NavListExpandableContent>
+          </NavListExpandable>
+          <NavListItem
+            label="Status Page"
+            prefix={<Globe />}
+            href="https://status.eqtylab.io"
+            target="_blank"
+            rel="noopener noreferrer"
+          />
+        </NavListGroup>
+      </NavList>
+    </div>
+  );
+}
+
+function DoDont({
+  verdict,
+  caption,
+  children,
+}: {
+  verdict: "do" | "dont";
+  caption: string;
+  children: ReactNode;
+}) {
+  return (
+    <figure style={{ display: "grid", gap: 8, margin: 0, width: 240 }}>
+      <div style={frame}>{children}</div>
+      <figcaption
+        style={{
+          display: "grid",
+          gap: 4,
+          fontSize: 13,
+          color: "var(--color-text-secondary)",
+        }}
+      >
+        <span>
+          <Badge size="sm" variant={verdict === "do" ? "success" : "danger"}>
+            {verdict === "do" ? "Do" : "Don't"}
+          </Badge>
+        </span>
+        {caption}
+      </figcaption>
+    </figure>
+  );
+}
+
+function NavListDoDontIconsDemo() {
+  const link = useCurrent("installation");
+  const folders = (icons: [ReactNode, ReactNode]) => (
+    <NavList>
+      <NavListGroup>
+        <NavListExpandable defaultOpen>
+          <NavListExpandableTrigger label="Getting Started" prefix={icons[0]} />
+          <NavListExpandableContent>
+            <NavListItem label="Installation" {...link("installation")} />
+            <NavListItem label="Themes" {...link("themes")} />
+          </NavListExpandableContent>
+        </NavListExpandable>
+        <NavListExpandable defaultOpen>
+          <NavListExpandableTrigger label="Components" prefix={icons[1]} />
+          <NavListExpandableContent>
+            <NavListItem label="Button" {...link("button")} />
+          </NavListExpandableContent>
+        </NavListExpandable>
+      </NavListGroup>
+    </NavList>
+  );
   return (
     <div
       style={{
         display: "flex",
         flexWrap: "wrap",
-        alignItems: "start",
         gap: 16,
+        alignItems: "start",
       }}
     >
-      <div style={frame}>
+      <DoDont
+        verdict="do"
+        caption="Icons on every top-level row. The rows inside have none, and line up under the label."
+      >
+        {folders([<Rocket />, <Blocks />])}
+      </DoDont>
+      <DoDont
+        verdict="do"
+        caption="No icons at all. The rows inside indent one step."
+      >
+        {folders([undefined, undefined])}
+      </DoDont>
+      <DoDont
+        verdict="dont"
+        caption="Icons on some top-level rows only, so the labels zigzag."
+      >
+        {folders([<Rocket />, undefined])}
+      </DoDont>
+    </div>
+  );
+}
+
+function NavListDoDontStatusDemo() {
+  const link = useCurrent("policies");
+  return (
+    <div
+      style={{
+        display: "flex",
+        flexWrap: "wrap",
+        gap: 16,
+        alignItems: "start",
+      }}
+    >
+      <DoDont
+        verdict="do"
+        caption="The status sits in suffix, and screen readers read it with the label."
+      >
         <NavList>
-          <NavDrill
-            value={level}
-            onValueChange={(next) => setHistory([...history, next])}
-          >
-            {policyLevels(link)}
-          </NavDrill>
+          <NavListGroup>
+            <NavListItem
+              label="Policies"
+              prefix={<BookOpen />}
+              suffix={<Badge size="sm">New</Badge>}
+              {...link("policies")}
+            />
+            <NavListItem
+              label="Controls"
+              prefix={<Layers />}
+              {...link("controls")}
+            />
+          </NavListGroup>
         </NavList>
-      </div>
-      <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
-        <p style={{ margin: 0 }}>
-          URL: <code>{url}</code>
-        </p>
-        <Button
-          size="sm"
-          variant="tertiary"
-          disabled={history.length === 1}
-          onClick={() => setHistory(history.slice(0, -1))}
-        >
-          Browser Back
-        </Button>
-      </div>
+      </DoDont>
+      <DoDont
+        verdict="dont"
+        caption="The status sits in prefix. Screen readers skip it, and the label moves out of line."
+      >
+        <NavList>
+          <NavListGroup>
+            <NavListItem
+              label="Policies"
+              prefix={<Badge size="sm">New</Badge>}
+              {...link("policies")}
+            />
+            <NavListItem
+              label="Controls"
+              prefix={<Layers />}
+              {...link("controls")}
+            />
+          </NavListGroup>
+        </NavList>
+      </DoDont>
+    </div>
+  );
+}
+
+function NavListDoDontActionsDemo() {
+  const link = useCurrent("overview");
+  const pages = (
+    <>
+      <NavListItem
+        label="Overview"
+        prefix={<LayoutGrid />}
+        {...link("overview")}
+      />
+      <NavListItem label="Members" prefix={<Users />} {...link("members")} />
+      <NavListItem
+        label="Settings"
+        prefix={<Settings />}
+        {...link("settings")}
+      />
+    </>
+  );
+  return (
+    <div
+      style={{
+        display: "flex",
+        flexWrap: "wrap",
+        gap: 16,
+        alignItems: "start",
+      }}
+    >
+      <DoDont
+        verdict="do"
+        caption="Every row goes to a page. Actions live in a Dropdown Menu."
+      >
+        <NavList>
+          <NavListGroup>{pages}</NavListGroup>
+        </NavList>
+      </DoDont>
+      <DoDont
+        verdict="dont"
+        caption="Actions sit among the pages, so a click might create or delete something."
+      >
+        <NavList>
+          <NavListGroup>
+            {pages}
+            <NavListItem
+              label="New Project"
+              prefix={<Plus />}
+              onClick={() => {}}
+            />
+            <NavListItem
+              label="Delete Project"
+              prefix={<Trash2 />}
+              onClick={() => {}}
+            />
+          </NavListGroup>
+        </NavList>
+      </DoDont>
+    </div>
+  );
+}
+
+function NavListDoDontStylingDemo() {
+  const link = useCurrent("activity");
+  return (
+    <div
+      style={{
+        display: "flex",
+        flexWrap: "wrap",
+        gap: 16,
+        alignItems: "start",
+      }}
+    >
+      <DoDont
+        verdict="do"
+        caption="Rows take their colour and size from Equality."
+      >
+        <NavList>
+          <NavListGroup>
+            <NavListItem
+              label="Activity"
+              prefix={<Activity />}
+              {...link("activity")}
+            />
+            <NavListItem label="Agents" prefix={<Bot />} {...link("agents")} />
+            <NavListItem
+              label="Alerts"
+              prefix={<ChartLine />}
+              {...link("alerts")}
+            />
+          </NavListGroup>
+        </NavList>
+      </DoDont>
+      <DoDont
+        verdict="dont"
+        caption="One row is restyled to stand out, so it looks like an error or a different control."
+      >
+        <NavList>
+          <NavListGroup>
+            <NavListItem
+              label="Activity"
+              prefix={<Activity />}
+              {...link("activity")}
+            />
+            <NavListItem label="Agents" prefix={<Bot />} {...link("agents")} />
+            <NavListItem
+              label="Alerts"
+              prefix={<ChartLine />}
+              style={{
+                color: "var(--color-text-danger)",
+                fontSize: 16,
+                fontWeight: 600,
+              }}
+              {...link("alerts")}
+            />
+          </NavListGroup>
+        </NavList>
+      </DoDont>
     </div>
   );
 }
@@ -283,8 +563,13 @@ const VARIANTS = {
   default: NavListGroupsDemo,
   "prefix-suffix": NavListPrefixSuffixDemo,
   drill: NavListDrillDemo,
-  "drill-sheet": NavListDrillSheetDemo,
-  "drill-controlled": NavListDrillControlledDemo,
+  "expandable-basic": NavListExpandableBasicDemo,
+  "expandable-nested": NavListExpandableNestedDemo,
+  "docs-sidebar": NavListDocsSidebarDemo,
+  "do-dont-icons": NavListDoDontIconsDemo,
+  "do-dont-status": NavListDoDontStatusDemo,
+  "do-dont-actions": NavListDoDontActionsDemo,
+  "do-dont-styling": NavListDoDontStylingDemo,
 };
 
 export function NavListDemo({
