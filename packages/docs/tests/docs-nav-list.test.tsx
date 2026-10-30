@@ -116,6 +116,8 @@ describe('DocsNavList', () => {
               class: 'loud',
               'data-track': 'status',
               'data-off': false,
+              'aria-describedby': 'status-note',
+              'aria-disabled': true,
               id: 'status',
             },
           },
@@ -124,6 +126,8 @@ describe('DocsNavList', () => {
     );
     expect(link).toContain('data-track="status"');
     expect(link).toContain('id="status"');
+    expect(link).toContain('aria-describedby="status-note"');
+    expect(link).toContain('aria-disabled="true"');
     expect(link).not.toContain('data-off');
     expect(link).not.toContain('loud');
     expect(link).not.toContain('color:red');

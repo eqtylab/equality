@@ -10,8 +10,6 @@ import {
   NavListItem,
 } from '@eqtylab/equality';
 
-/** The docs sidebar on Equality's NavList parts. Every folder is a group that opens and closes;
- *  `nav.ts` opens the ones that hold the current page. */
 export function DocsNavList({ nodes }: { nodes: NavNode[] }) {
   return (
     <NavList>
@@ -25,7 +23,7 @@ export function DocsNavList({ nodes }: { nodes: NavNode[] }) {
 function Rows({ nodes, depth }: { nodes: NavNode[]; depth: number }) {
   return (
     <>
-      {nodes.map((node) => {
+      {nodes.map((node, index) => {
         const prefix = depth === 0 && node.icon ? <Icon icon={node.icon} size="sm" /> : undefined;
         const suffix = node.badge && (
           <Badge variant={node.badge.variant} size="sm">
@@ -34,7 +32,7 @@ function Rows({ nodes, depth }: { nodes: NavNode[]; depth: number }) {
         );
 
         return node.kind === 'group' && node.children?.length ? (
-          <NavListExpandable key={`${node.kind}:${node.name}`} defaultOpen={node.open}>
+          <NavListExpandable key={`${index}:${node.kind}:${node.name}`} defaultOpen={node.open}>
             <NavListExpandableTrigger label={node.label} prefix={prefix} suffix={suffix} />
             <NavListExpandableContent>
               <Rows nodes={node.children} depth={depth + 1} />
@@ -42,7 +40,7 @@ function Rows({ nodes, depth }: { nodes: NavNode[]; depth: number }) {
           </NavListExpandable>
         ) : (
           <NavListItem
-            key={`${node.kind}:${node.name}`}
+            key={`${index}:${node.kind}:${node.name}`}
             label={node.label}
             href={node.href}
             current={node.current}
@@ -64,6 +62,6 @@ function linkAttrs(attrs: NavNode['attrs']) {
     Object.entries(attrs ?? {})
       .filter(([key]) => key === 'id' || key.startsWith('data-') || key.startsWith('aria-'))
       .filter(([, value]) => value !== false)
-      .map(([key, value]) => [key, value === true ? '' : value])
+      .map(([key, value]) => [key, value === true && !key.startsWith('aria-') ? '' : String(value)])
   );
 }
