@@ -11,12 +11,26 @@ html {
   --eq-list-item-gap: calc(var(--spacing) * 2); /* 8, icon to text */
   --eq-list-item-icon-size: calc(var(--spacing) * 4); /* 16 */
   --eq-list-item-font-size: var(--text-sm); /* 14 */
+  --eq-list-item-muted-color: var(--color-text-tertiary);
   /* list: the rows together */
   --eq-list-gap: calc(var(--spacing) * 0.5); /* 2, between items */
   --eq-list-group-gap: calc(var(--spacing) * 3); /* 12, above a group label */
   --eq-list-label-gap: calc(var(--spacing) * 1); /* 4, label to its first item */
   --eq-list-label-font-size: var(--text-xs); /* 12 */
   --eq-list-indent: calc(var(--spacing) * 3); /* 12, child indent when items have no icons */
+  /* nav-motion: a drill-in and a folder opening share one motion. NavDrill reads these in
+     JavaScript, folder groups in CSS */
+  --eq-nav-motion-duration: 300ms;
+  --eq-nav-motion-ease: cubic-bezier(0.2, 0.8, 0.2, 1);
+  /* A plain length, not --spacing: NavDrill parses it, and an unresolved calc() reads as nothing */
+  --eq-nav-motion-nudge: 12px;
+  /* switcher: the fade on its name. It ends at secondary text, so the name is never dimmer than the
+     rows below it. A site can set its own: the docs do */
+  --eq-switcher-name-fade: linear-gradient(
+    to right,
+    var(--color-text-primary),
+    var(--color-text-secondary)
+  );
   /* control: a stand-alone element */
   --eq-control-height: calc(var(--spacing) * 10); /* 40: rail item; later Button, Input */
   /* touch: the minimum tap target */

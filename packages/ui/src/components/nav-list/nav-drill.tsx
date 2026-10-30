@@ -9,31 +9,35 @@ import { cn } from '@/lib/utils';
 type NavDrillRequest = 'drill' | 'back';
 
 // The leaving level is gone in the first third, so the two levels' rows never read as doubled text
-const MOTION: Record<NavDrillRequest, { current: Keyframe[]; previous: Keyframe[] }> = {
-  drill: {
+const motion = (direction: NavDrillRequest, nudge: number) => {
+  const sign = direction === 'drill' ? 1 : -1;
+  return {
     current: [
-      { transform: 'translateX(12px)', opacity: 0 },
+      { transform: `translateX(${sign * nudge}px)`, opacity: 0 },
       { transform: 'translateX(0)', opacity: 1 },
     ],
     previous: [
       { transform: 'translateX(0)', opacity: 1 },
       { opacity: 0, offset: 0.35 },
-      { transform: 'translateX(-12px)', opacity: 0 },
+      { transform: `translateX(${-sign * nudge}px)`, opacity: 0 },
     ],
-  },
-  back: {
-    current: [
-      { transform: 'translateX(-12px)', opacity: 0 },
-      { transform: 'translateX(0)', opacity: 1 },
-    ],
-    previous: [
-      { transform: 'translateX(0)', opacity: 1 },
-      { opacity: 0, offset: 0.35 },
-      { transform: 'translateX(12px)', opacity: 0 },
-    ],
-  },
+  };
 };
-const TIMING: KeyframeAnimationOptions = { duration: 300, easing: 'cubic-bezier(.2, .8, .2, 1)' };
+
+// Folder groups animate in CSS from the same variables; reading them here keeps the two in step
+function navMotion(element: Element) {
+  const style = getComputedStyle(element);
+  const read = (name: string) => style.getPropertyValue(name).trim();
+  const duration = read('--eq-nav-motion-duration');
+  const ms = duration.endsWith('ms') ? parseFloat(duration) : parseFloat(duration) * 1000;
+  return {
+    nudge: parseFloat(read('--eq-nav-motion-nudge')) || 12,
+    timing: {
+      duration: Number.isFinite(ms) ? ms : 300,
+      easing: read('--eq-nav-motion-ease') || 'cubic-bezier(.2, .8, .2, 1)',
+    },
+  };
+}
 
 const LEVEL = '[data-slot="nav-drill-level"]';
 
@@ -212,9 +216,11 @@ const NavDrill = React.forwardRef<HTMLDivElement, NavDrillProps>(
       // The old rows leave from where the user saw them: neither the scroll reset nor a tighter
       // header moves them. A margin, because the slide owns transform
       ghostLevel.style.marginTop = `${leaving.top - live.getBoundingClientRect().top}px`;
+      const { nudge, timing } = navMotion(live);
+      const frames = motion(leaving.direction, nudge);
       const animations = [
-        live.animate(MOTION[leaving.direction].current, TIMING),
-        ghost.animate(MOTION[leaving.direction].previous, TIMING),
+        live.animate(frames.current, timing),
+        ghost.animate(frames.previous, timing),
       ];
       running.current = animations;
       Promise.all(animations.map((animation) => animation.finished)).then(
@@ -361,7 +367,10 @@ const NavDrillLevel = React.forwardRef<HTMLDivElement, NavDrillLevelProps>(
               className={cn(styles['nav-list-item'], styles['nav-list-item--back'])}
               onClick={() => requestBack(parent)}
             >
-              <span className={styles['nav-list-item-prefix']} aria-hidden="true">
+              <span
+                className={cn(styles['nav-list-item-prefix'], styles['nav-list-item-muted'])}
+                aria-hidden="true"
+              >
                 <ChevronLeft />
               </span>
               <span className={styles['nav-list-item-label']} title={label}>

@@ -224,6 +224,27 @@ describe('NavDrill', () => {
     }
   });
 
+  // Folder groups read the same variables in CSS, so the two motions cannot drift apart
+  it('takes its duration, curve and nudge from the nav motion variables', () => {
+    const root = document.documentElement.style;
+    root.setProperty('--eq-nav-motion-duration', '600ms');
+    root.setProperty('--eq-nav-motion-ease', 'linear');
+    root.setProperty('--eq-nav-motion-nudge', '20px');
+    try {
+      render(<Uncontrolled />);
+      fireEvent.click(screen.getByRole('link', { name: 'Ben Project' }));
+      const [current, previous] = animateCalls;
+      expect(current.keyframes[0]).toEqual({ transform: 'translateX(20px)', opacity: 0 });
+      expect(previous.keyframes[2]).toEqual({ transform: 'translateX(-20px)', opacity: 0 });
+      for (const call of animateCalls)
+        expect(call.options).toEqual({ duration: 600, easing: 'linear' });
+    } finally {
+      root.removeProperty('--eq-nav-motion-duration');
+      root.removeProperty('--eq-nav-motion-ease');
+      root.removeProperty('--eq-nav-motion-nudge');
+    }
+  });
+
   it('goes back with the mirrored nudge and the leaving level above', () => {
     render(<Uncontrolled defaultValue="ben" />);
     fireEvent.click(screen.getByRole('button', { name: 'Ben Project, back' }));

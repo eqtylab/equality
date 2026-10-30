@@ -34,9 +34,13 @@
   @apply border-border-raised ml-(--eq-list-indent) border-l;
 }
 
-.nav-list-items:has(> li > [data-slot='nav-list-item'] > .nav-list-item-prefix)
+.nav-list-items:has(
+    > li
+      > :is([data-slot='nav-list-item'], [data-slot='nav-list-expandable-trigger'])
+      > .nav-list-item-prefix
+  )
   > li
-  .nav-list-items[data-depth='1'] {
+  .nav-list-items[data-depth='1']:not(.nav-list-expandable-items) {
   margin-left: calc(var(--eq-list-item-icon-size) + var(--eq-list-item-gap));
 }
 
@@ -75,8 +79,19 @@
   @apply flex shrink-0 items-center;
 }
 
-.nav-list-item:hover {
-  @apply bg-list-item-hover text-text-primary;
+.nav-list-item-muted {
+  @apply text-(color:--eq-list-item-muted-color);
+}
+
+/* Touch screens keep :hover after a tap, which would leave a tapped row lit */
+@media (hover: hover) {
+  .nav-list-item:hover {
+    @apply bg-list-item-hover text-text-primary;
+  }
+
+  .nav-list-item:hover .nav-list-item-muted {
+    color: currentColor;
+  }
 }
 
 .nav-list-item[aria-current='page'],
@@ -84,10 +99,164 @@
   @apply bg-list-item-current text-text-primary font-medium;
 }
 
+/* Tertiary falls below 3:1 on the current fill in light */
+.nav-list-item[aria-current='page'] .nav-list-item-muted,
+.nav-list-item[data-current='page'] .nav-list-item-muted,
+.nav-list-expandable[data-state='closed']:has([aria-current='page'])
+  > .nav-list-expandable-trigger
+  .nav-list-item-muted {
+  color: currentColor;
+}
+
 /* The offset keeps the ring visible against the current row's fill */
 .nav-list-item:focus-visible {
   outline: 2px solid var(--color-focus-ring);
   outline-offset: 2px;
+}
+
+/* Grid rows animate to the content's height without measuring it, and a transition never runs
+   on first render, so a group that loads open does not grow.
+   The clip belongs here, not on the content: a part-open track (0.6fr) gives the content only
+   0.6 of the panel's own 0.6, so a clip there lags the opening and cuts rows in half. The padding
+   leaves room for a row's focus ring inside the clip */
+.nav-list-expandable-panel {
+  @apply -m-1 grid overflow-hidden p-1;
+  grid-template-rows: 1fr;
+  transition:
+    grid-template-rows var(--eq-nav-motion-duration) var(--eq-nav-motion-ease),
+    visibility 0s;
+}
+
+/* Hidden only once the close has played, so its rows leave the tab order and the tree */
+.nav-list-expandable[data-state='closed'] > .nav-list-expandable-panel {
+  grid-template-rows: 0fr;
+  visibility: hidden;
+  transition:
+    grid-template-rows var(--eq-nav-motion-duration) var(--eq-nav-motion-ease),
+    visibility 0s var(--eq-nav-motion-duration);
+}
+
+/* The rows move as a drill-in's level does: they nudge in as they fade, and on the way out are
+   gone by a third of the timeline, so they never smear across the closing edge */
+.nav-list-expandable-content > .nav-list-items {
+  transition:
+    opacity var(--eq-nav-motion-duration) var(--eq-nav-motion-ease),
+    translate var(--eq-nav-motion-duration) var(--eq-nav-motion-ease);
+}
+
+.nav-list-expandable[data-state='closed']
+  > .nav-list-expandable-panel
+  > .nav-list-expandable-content
+  > .nav-list-items {
+  opacity: 0;
+  translate: 0 calc(var(--eq-nav-motion-nudge) * -1);
+  transition:
+    opacity calc(var(--eq-nav-motion-duration) * 0.35) linear,
+    translate var(--eq-nav-motion-duration) var(--eq-nav-motion-ease);
+}
+
+/* Set for the frame a folder opens as it mounts */
+.nav-list-expandable[data-instant] > .nav-list-expandable-panel,
+.nav-list-expandable[data-instant]
+  > .nav-list-expandable-panel
+  > .nav-list-expandable-content
+  > .nav-list-items,
+.nav-list-expandable[data-instant] > .nav-list-expandable-trigger,
+.nav-list-expandable[data-instant] > .nav-list-expandable-trigger .nav-list-expandable-chevron {
+  transition: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nav-list-expandable-panel,
+  .nav-list-expandable[data-state='closed'] > .nav-list-expandable-panel,
+  .nav-list-expandable-content > .nav-list-items,
+  .nav-list-expandable[data-state='closed']
+    > .nav-list-expandable-panel
+    > .nav-list-expandable-content
+    > .nav-list-items {
+    transition: none;
+  }
+}
+
+.nav-list-expandable-content {
+  @apply min-h-0;
+}
+
+.nav-list-expandable-content > .nav-list-items {
+  @apply mt-(--eq-list-gap);
+}
+
+/* The indent a group's rows take: past the icon when the top-level rows have one, so child text
+   lines up under the parent's label, otherwise one step */
+.nav-list-items[data-depth='0'] {
+  --nav-list-child-indent: var(--eq-list-indent);
+}
+
+.nav-list-items[data-depth='0']:has(
+    > li
+      > :is([data-slot='nav-list-item'], [data-slot='nav-list-expandable-trigger'])
+      > .nav-list-item-prefix
+  ) {
+  --nav-list-child-indent: calc(var(--eq-list-item-icon-size) + var(--eq-list-item-gap));
+}
+
+/* A group's own rows indent their text, not the row, so the highlight stays full width. No tree
+   line: the indent alone shows them (GRD-81 3.2) */
+.nav-list-items.nav-list-expandable-items {
+  @apply ml-0 border-l-0;
+}
+
+.nav-list-expandable-items > li > .nav-list-item {
+  padding-left: calc(var(--eq-list-item-padding-x) + var(--nav-list-child-indent));
+}
+
+/* A group inside a group: the tree line runs half an icon's width inside the parent's text, and
+   the rows, highlight included, start right of it, so the line never crosses a highlight */
+.nav-list-expandable-items .nav-list-items.nav-list-expandable-items {
+  @apply border-border-raised border-l;
+  margin-left: calc(
+    var(--eq-list-item-padding-x) + var(--nav-list-child-indent) + var(--eq-list-item-icon-size) / 2
+  );
+}
+
+.nav-list-expandable-items .nav-list-expandable-items .nav-list-items.nav-list-expandable-items {
+  margin-left: calc(var(--eq-list-item-padding-x) + var(--eq-list-item-icon-size) / 2);
+}
+
+.nav-list-expandable-items .nav-list-expandable-items > li > .nav-list-item {
+  @apply pl-(--eq-list-item-padding-x);
+}
+
+/* Only top-level headings lead; a group inside one reads as a row */
+.nav-list-items[data-depth='0'] > .nav-list-expandable > .nav-list-expandable-trigger {
+  @apply text-text-primary font-medium;
+}
+
+/* Colour only: weight is the current row's one cue in forced colours, which drop fills */
+.nav-list-items[data-depth='0']:has(> .nav-list-expandable) > li > .nav-list-item {
+  @apply text-text-primary;
+}
+
+.nav-list-expandable-chevron {
+  @apply flex shrink-0 items-center motion-reduce:transition-none;
+  /* rotate-180 sets the rotate property, not transform: a transform transition never runs */
+  transition:
+    rotate var(--eq-nav-motion-duration) var(--eq-nav-motion-ease),
+    color 150ms;
+}
+
+.nav-list-expandable-chevron svg {
+  @apply size-(--eq-list-item-icon-size);
+}
+
+.nav-list-expandable-trigger[data-state='open'] .nav-list-expandable-chevron {
+  @apply rotate-180;
+}
+
+/* A closed group holding the page on show stands in for its row */
+.nav-list-expandable[data-state='closed']:has([aria-current='page'])
+  > .nav-list-expandable-trigger {
+  @apply bg-list-item-current text-text-primary font-medium;
 }
 
 /* The live level and, while it slides, the leaving one share one grid cell. The padding leaves
@@ -123,11 +292,11 @@
   @apply text-text-secondary mt-0.5 font-normal;
 }
 
-.nav-list-item--back .nav-list-item-prefix {
-  @apply text-text-tertiary;
-}
-
 /* A border, not a fill: forced colours drop fills */
 .nav-drill-rule {
   @apply border-border-raised m-0 mb-1 mt-2 h-0 shrink-0 border-0 border-t;
+}
+
+.nav-list-item-new-tab {
+  @apply sr-only;
 }
