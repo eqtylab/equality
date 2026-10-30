@@ -44,7 +44,7 @@ const { nodes, switcher } = Astro.props;
       } catch {}
     });
 
-    const current = sidebar.querySelector('[data-current]');
+    const current = sidebar.querySelector('[aria-current="page"]');
     if (!current) return;
     let saved = null;
     try {

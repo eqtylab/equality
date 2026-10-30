@@ -1,108 +1,32 @@
 ---
 /**
- * Recursive sidebar list. Groups are <details>, so they open with no script and
- * nothing remounts on a page load. `eq-nav-group.ts` adds the animation.
- *
- * Every value here comes from Equality: the dropdown item's geometry and hover, and
- * the Separator's colour for the rails.
+ * The sidebar's rows, one React island on Equality's NavList parts. Groups render open or closed
+ * from the server, and closed groups keep their links in the HTML. Until the island hydrates,
+ * a group's header does nothing, so the timeout caps that wait on a busy page.
  */
 import type { NavNode } from '@eqtylab/docs/types';
-import { Badge, Icon } from '@eqtylab/equality';
+
+import { DocsNavList } from './DocsNavList.tsx';
 
 interface Props {
   nodes: NavNode[];
-  depth?: number;
 }
 
-const { nodes, depth = 0 } = Astro.props;
-const NavTree = Astro.self;
-
-// 25px per level. A Tailwind default, not a token: Equality has no nesting value.
-const list =
-  depth === 0 ? 'space-y-1' : 'border-border ml-3 mt-1 space-y-0.5 border-l pl-3';
-
-// Equality's dropdown item, minus its `outline-hidden`: a link list needs keyboard
-// focus visible, so `focus-ring` stands in.
-const row =
-  'dropdown-item-hover focus-ring flex cursor-pointer select-none items-center gap-2 rounded-sm px-2 py-1.5 no-underline transition-colors';
-
-// `eq-docs-label` sets its own size and colour, so top-level groups must not also get
-// `text-sm` or `text-text-primary`.
-const groupText = depth === 0 ? 'eq-docs-label' : 'text-sm text-text-primary';
-const groupPointerFocus =
-  depth === 0 ? 'pointer-focus:text-text-secondary!' : 'pointer-focus:text-text-primary!';
-
-// Equality has no selected-row colour, so the current page borrows the hover one.
-// Search's selected row must keep matching it. The idle colour is left off a current
-// row rather than overridden: two unvariated colour utilities on one element resolve
-// by Tailwind's own order, not by the order they are written.
-const current =
-  'bg-lilac-300/50 text-lilac-700 dark:bg-lilac-600/50 dark:text-lilac-100 font-medium shadow-sm';
+const { nodes } = Astro.props;
 ---
 
-<ul class={list} data-depth={depth}>
-  {
-    nodes.map((node) => (
-      <li class="list-none">
-        {node.kind === 'group' && node.children?.length ? (
-          <details class="block" data-eq-nav-group open={node.open}>
-            {/* pointer-focus undoes Equality's hover firing on plain `:focus`, which
-                left a clicked header filled as if it were the current page. */}
-            <summary
-              class={`${row} ${groupText} justify-between [&::-webkit-details-marker]:hidden pointer-focus:bg-transparent! ${groupPointerFocus} pointer-focus:shadow-none!`}
-            >
-              <span class="flex min-w-0 flex-1 items-center gap-2">
-                {node.icon && <Icon icon={node.icon} size="sm" />}
-                <span>{node.label}</span>
-                {node.badge && (
-                  <Badge variant={node.badge.variant} size="sm" className="shrink-0">
-                    {node.badge.text}
-                  </Badge>
-                )}
-              </span>
-              {/* The direct-child selector is load-bearing: a plain `group-open`
-                  would also rotate a closed child's chevron inside an open parent. */}
-              <span
-                class="text-text-secondary shrink-0 transition-transform duration-200 [details[open]>summary_&]:rotate-90"
-                aria-hidden="true"
-              >
-                <Icon icon="ChevronRight" size="xs" />
-              </span>
-            </summary>
-            <NavTree nodes={node.children} depth={depth + 1} />
-          </details>
-        ) : (
-          <a
-            class={`${row} text-sm ${node.current ? current : 'text-text-secondary'}`}
-            href={node.href}
-            aria-current={node.current ? 'page' : undefined}
-            data-current={node.current ? '' : undefined}
-            target={node.external ? '_blank' : undefined}
-            rel={node.external ? 'noopener noreferrer' : undefined}
-            {...(node.attrs ?? {})}
-          >
-            {node.icon && <Icon icon={node.icon} size="sm" />}
-            <span class="min-w-0 flex-1">{node.label}</span>
-            {node.badge && (
-              <Badge variant={node.badge.variant} size="sm" className="shrink-0">
-                {node.badge.text}
-              </Badge>
-            )}
-            {node.external && (
-              <span class="text-text-secondary shrink-0 opacity-60" aria-hidden="true">
-                <Icon icon="ArrowUpRight" size="xs" />
-              </span>
-            )}
-          </a>
-        )}
-      </li>
-    ))
-  }
-</ul>
+<DocsNavList nodes={nodes} client:idle={{ timeout: 500 }} />
 
-{
-  /** Imported here, so one import covers both the sidebar and the drawer. */
-}
-<script>
-  import '@eqtylab/docs/scripts/eq-nav-group.ts';
-</script>
+{/* Without JavaScript a folder's header never opens it, so every folder shows open */}
+<noscript>
+  <style is:inline>
+    [data-slot='nav-list'] li[data-state='closed'] > div {
+      grid-template-rows: 1fr !important;
+      visibility: visible !important;
+    }
+    [data-slot='nav-list'] li[data-state='closed'] > div > div > ul {
+      opacity: 1 !important;
+      translate: none !important;
+    }
+  </style>
+</noscript>
