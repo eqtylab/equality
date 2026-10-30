@@ -7,7 +7,7 @@ import { MotionCollapsibleContentDemo } from "@demo/components/demo/motion-colla
 
 ## Overview
 
-Motion Collapsible Content smoothly expands and collapses a region of content, animating both its height and opacity. It measures its children (and re-measures them as they change) so the open animation always transitions to the correct height, even for dynamic content.
+Motion Collapsible Content smoothly expands and collapses a region of content, animating both its height and opacity. It animates to the content's natural height, so content that changes size is always shown in full, and content that is open when the page loads does not grow into place.
 
 Its open state is fully controlled through the `isOpen` prop — pair it with your own trigger (such as a [Button](/components/button)) that toggles the state. Use it for show/more panels, expandable rows, and inline disclosure sections. It is built on [Motion](https://motion.dev/), so the animation respects the transition timing defined by the component.
 

@@ -59,6 +59,7 @@ If you have no network access or web fetching fails, tell your user that you cou
 | Sidebar rows, settings list, `NavItem`/`NavSection`        | `NavListItem` in `NavListGroup` | Styled links in a `ul`             |
 | App sidebar, icon rail                                     | `NavPanel` + `NavRail`          | A fixed `aside` with links         |
 | Sliding sub-panel, drill-in nav                            | `NavDrill`                      | Swapped lists with CSS transitions |
+| Collapsible nav group, tree sidebar, folder rows           | `NavListExpandable`             | `<details>` or a toggled `ul`      |
 
 ## Common Mistakes
 
@@ -68,6 +69,7 @@ If you have no network access or web fetching fails, tell your user that you cou
   - Use `ResourceBadge` when referencing integrity-backed resources and `ControlStatusBadge` when referencing control statuses.
   - Avoid using badge `size="sm"` except for specific scenarios where space is at a premium like within tables. Most badges should be the default `size="md"`
 - Icons should be used sparingly. Ensure consistency when using them, try not to conflate multiple concepts with the same icon
+- Nav: decide between drill in, expand and `NavSwitcher` with "Which One to Use" on the Nav docs page, and follow its "Best Practices". Statuses go in a row's `suffix`, never its `prefix`.
 - No custom hex codes, no `bg-{color}-{number}` palette classes.
 - Keep interactive and status colours apart. They are two different purples, and they clash side by side:
   - `button-*` tokens and the `primary` variants of controls are lilac, for things you can click, select or toggle and their states. Never use them to colour a non-interactive surface, label or decoration.
