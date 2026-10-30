@@ -26,14 +26,13 @@ import styles from './GlobalSearch.module.css';
  * shrinks. Utilities setting a property Equality leaves alone need nothing.
  */
 
-/** Equality styles the hover but not cmdk's selected row. */
-const ITEM =
-  'cursor-pointer data-[selected=true]:bg-lilac-300/50 dark:data-[selected=true]:bg-lilac-600/50';
+/** Equality styles the hover but not cmdk's selected row. It takes the sidebar's current-row fill,
+ *  so the row a reader lands on looks the same in both places. */
+const ITEM = 'cursor-pointer data-[selected=true]:bg-list-item-current';
 
 /**
- * Equality has no highlight token, so these name steps off the option scale directly. Not
- * `brand-primary`: it is the selected row's colour, so a mark painted with it vanishes exactly
- * when a row is selected. Each theme names its own step because `lilac-*` carries no dark values.
+ * Equality has no highlight token, so these name steps off the option scale directly. Each theme
+ * names its own step because `lilac-*` carries no dark values.
  */
 const MARK = 'rounded bg-lilac-200 px-0.5 text-lilac-800 dark:bg-lilac-700 dark:text-lilac-200';
 

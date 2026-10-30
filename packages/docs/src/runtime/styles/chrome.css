@@ -32,6 +32,12 @@
   );
 }
 
+/* Overrides Equality's switcher fade in the docs' own frame, so the site card matches the page
+   title. Demos in the page keep Equality's, or they would document the wrong default */
+[data-eq-chrome] {
+  --eq-switcher-name-fade: var(--eq-docs-display-gradient-sm);
+}
+
 body {
   @apply bg-background text-text-primary;
 }
