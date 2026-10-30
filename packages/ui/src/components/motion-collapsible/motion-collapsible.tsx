@@ -1,4 +1,4 @@
-import { ReactNode, useEffect, useRef, useState } from 'react';
+import { ReactNode, useState } from 'react';
 import { AnimatePresence, motion } from 'motion/react';
 
 import styles from '@/components/motion-collapsible/motion-collapsible.module.css';
@@ -15,33 +15,17 @@ const MotionCollapsibleContent = ({
   children,
   className,
 }: MotionCollapsibleContentProps) => {
-  const [contentHeight, setContentHeight] = useState<number>(0);
-  const [isSettled, setIsSettled] = useState(false);
+  const [isSettled, setIsSettled] = useState(isOpen);
 
-  const contentRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    if (contentRef.current) {
-      const resizeObserver = new ResizeObserver(() => {
-        if (contentRef.current) {
-          setContentHeight(contentRef.current.scrollHeight);
-        }
-      });
-
-      resizeObserver.observe(contentRef.current);
-      setContentHeight(contentRef.current.scrollHeight);
-
-      return () => resizeObserver.disconnect();
-    }
-  }, [children]);
-
+  // Animates to `auto`, not a measured height: a measurement starts at 0, so content that
+  // mounts open would grow on every page load
   return (
     <AnimatePresence initial={false} mode="wait">
       {isOpen && (
         <motion.div
           key="motion-content"
           initial={{ height: 0, opacity: 0 }}
-          animate={{ height: contentHeight, opacity: 1 }}
+          animate={{ height: 'auto', opacity: 1 }}
           exit={{ height: 0, opacity: 0 }}
           transition={{ duration: 0.3, ease: 'easeInOut' }}
           onAnimationStart={() => setIsSettled(false)}
@@ -52,7 +36,7 @@ const MotionCollapsibleContent = ({
             className
           )}
         >
-          <div ref={contentRef}>{children}</div>
+          <div>{children}</div>
         </motion.div>
       )}
     </AnimatePresence>
