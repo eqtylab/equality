@@ -58,7 +58,13 @@ const POLICY_ITEMS = [
   { id: "certification", label: "Certification", icon: <Award /> },
 ];
 
-function ProjectSidebar({ onNavigate }: { onNavigate?: () => void }) {
+function ProjectSidebar({
+  onNavigate,
+  example,
+}: {
+  onNavigate?: () => void;
+  example?: string;
+}) {
   const [project, setProject] = useState("ben");
   const [view, setView] = useState("project");
   const [current, setCurrent] = useState("dashboard");
@@ -66,6 +72,7 @@ function ProjectSidebar({ onNavigate }: { onNavigate?: () => void }) {
     (option) => option.value === project,
   )!.label;
   const policy = POLICIES.find((item) => view === `policy:${item.slug}`);
+  const named = (label: string) => (example ? `${label}, ${example}` : label);
 
   // Rows are links; the demo keeps you on the page and moves the current row instead
   const link = (id: string) => ({
@@ -80,7 +87,7 @@ function ProjectSidebar({ onNavigate }: { onNavigate?: () => void }) {
 
   return (
     <>
-      <NavRail aria-label="Main">
+      <NavRail aria-label={named("Main")}>
         <NavRailItem
           icon={<Folder />}
           label="Projects"
@@ -97,9 +104,9 @@ function ProjectSidebar({ onNavigate }: { onNavigate?: () => void }) {
         <NavRailItem icon={<Logs />} label="Activity Logs" href="#logs" />
       </NavRail>
       <NavPanel
-        aria-label={
-          policy ? `Applied Policy: ${policy.name}` : `Project: ${projectName}`
-        }
+        aria-label={named(
+          policy ? `Applied Policy: ${policy.name}` : `Project: ${projectName}`,
+        )}
         header={
           <NavSwitcher
             label={projectName}
@@ -165,7 +172,7 @@ function ProjectSidebar({ onNavigate }: { onNavigate?: () => void }) {
   );
 }
 
-export function NavDemo() {
+export function NavDemo({ example }: { example?: string }) {
   return (
     <div
       style={{
@@ -176,7 +183,7 @@ export function NavDemo() {
         border: "1px solid var(--color-border-raised)",
       }}
     >
-      <ProjectSidebar />
+      <ProjectSidebar example={example} />
       <div style={{ flex: 1, minWidth: 0, padding: 24 }}>
         <p style={{ margin: 0 }}>Page content</p>
       </div>
@@ -247,7 +254,7 @@ export function NavSwitcherDemo() {
       }}
     >
       <NavPanel
-        aria-label={`Project: ${projectName}`}
+        aria-label={`Project: ${projectName}, Switcher example`}
         header={
           <NavSwitcher
             label={projectName}
