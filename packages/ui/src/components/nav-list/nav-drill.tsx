@@ -30,8 +30,9 @@ function navMotion(element: Element) {
   const read = (name: string) => style.getPropertyValue(name).trim();
   const duration = read('--eq-nav-motion-duration');
   const ms = duration.endsWith('ms') ? parseFloat(duration) : parseFloat(duration) * 1000;
+  const nudge = parseFloat(read('--eq-nav-motion-nudge'));
   return {
-    nudge: parseFloat(read('--eq-nav-motion-nudge')) || 12,
+    nudge: Number.isFinite(nudge) ? nudge : 12,
     timing: {
       duration: Number.isFinite(ms) ? ms : 300,
       easing: read('--eq-nav-motion-ease') || 'cubic-bezier(.2, .8, .2, 1)',

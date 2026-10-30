@@ -42,6 +42,8 @@ Notable changes to Equality are recorded here, following [Keep a Changelog](http
   `Input` that loads with an error.
 - A `NavSwitcher` in `NavPanel`'s header keeps the group gap, 12px, above the rows below it. An
   unlabelled first group sat right under it. A ‹ row below it is unchanged.
+- In forced colours, only the current nav row and rail item keep a border. Every row was boxed, and
+  the current rail item had no mark at all.
 
 ## 5.0.2 - 2026-10-28
 
