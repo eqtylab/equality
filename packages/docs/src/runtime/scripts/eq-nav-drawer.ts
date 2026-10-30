@@ -23,7 +23,7 @@ if (drawer && trigger) {
     trigger.setAttribute('aria-expanded', String(open));
 
     // The same centring as the sidebar's inline script in Sidebar.astro; keep the two in sync.
-    const current = drawer.querySelector<HTMLElement>('[data-current]');
+    const current = drawer.querySelector<HTMLElement>('[aria-current="page"]');
     if (open && current) {
       const top = current.getBoundingClientRect().top - drawer.getBoundingClientRect().top;
       if (top < 0 || top + current.offsetHeight > drawer.clientHeight) {
