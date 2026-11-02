@@ -1,4 +1,9 @@
-import { useEffect, useState, type MouseEvent } from "react";
+import {
+  useEffect,
+  useState,
+  type CSSProperties,
+  type MouseEvent,
+} from "react";
 import {
   Button,
   NavDrill,
@@ -10,6 +15,10 @@ import {
   NavRail,
   NavRailItem,
   NavSwitcher,
+  Sheet,
+  SheetContainer,
+  SheetTitle,
+  SheetTrigger,
 } from "@eqtylab/equality";
 import {
   Activity,
@@ -54,7 +63,13 @@ const POLICY_ITEMS = [
   { id: "certification", label: "Certification", icon: <Award /> },
 ];
 
-export function NavDemo() {
+function ProjectSidebar({
+  onNavigate,
+  example,
+}: {
+  onNavigate?: () => void;
+  example?: string;
+}) {
   const [project, setProject] = useState("ben");
   const [view, setView] = useState("project");
   const [current, setCurrent] = useState("dashboard");
@@ -62,6 +77,7 @@ export function NavDemo() {
     (option) => option.value === project,
   )!.label;
   const policy = POLICIES.find((item) => view === `policy:${item.slug}`);
+  const named = (label: string) => (example ? `${label}, ${example}` : label);
 
   // Rows are links; the demo keeps you on the page and moves the current row instead
   const link = (id: string) => ({
@@ -70,20 +86,13 @@ export function NavDemo() {
     onClick: (event: MouseEvent<HTMLElement>) => {
       event.preventDefault();
       setCurrent(id);
+      onNavigate?.();
     },
   });
 
   return (
-    <div
-      style={{
-        display: "flex",
-        height: 560,
-        overflow: "hidden",
-        borderRadius: 8,
-        border: "1px solid var(--color-border-raised)",
-      }}
-    >
-      <NavRail aria-label="Main">
+    <>
+      <NavRail aria-label={named("Main")}>
         <NavRailItem
           icon={<Folder />}
           label="Projects"
@@ -100,9 +109,9 @@ export function NavDemo() {
         <NavRailItem icon={<Logs />} label="Activity Logs" href="#logs" />
       </NavRail>
       <NavPanel
-        aria-label={
-          policy ? `Applied Policy: ${policy.name}` : `Project: ${projectName}`
-        }
+        aria-label={named(
+          policy ? `Applied Policy: ${policy.name}` : `Project: ${projectName}`,
+        )}
         header={
           <NavSwitcher
             label={projectName}
@@ -164,7 +173,122 @@ export function NavDemo() {
           </NavDrill>
         </NavList>
       </NavPanel>
-      <div style={{ flex: 1, padding: 24 }}>
+    </>
+  );
+}
+
+export function NavDemo({ example }: { example?: string }) {
+  return (
+    <div
+      style={{
+        display: "flex",
+        height: 560,
+        overflow: "hidden",
+        borderRadius: 8,
+        border: "1px solid var(--color-border-raised)",
+      }}
+    >
+      <ProjectSidebar example={example} />
+      <div style={{ flex: 1, minWidth: 0, padding: 24 }}>
+        <p style={{ margin: 0 }}>Page content</p>
+      </div>
+    </div>
+  );
+}
+
+const visuallyHidden: CSSProperties = {
+  position: "absolute",
+  width: 1,
+  height: 1,
+  overflow: "hidden",
+  clip: "rect(0 0 0 0)",
+  whiteSpace: "nowrap",
+};
+
+export function NavSheetDemo() {
+  const [open, setOpen] = useState(false);
+  return (
+    <div style={{ margin: "1rem 0" }}>
+      <Sheet open={open} onOpenChange={setOpen}>
+        <SheetTrigger asChild>
+          <Button size="sm" variant="tertiary">
+            Open navigation
+          </Button>
+        </SheetTrigger>
+        <SheetContainer
+          side="left"
+          aria-describedby={undefined}
+          style={{ minWidth: 0 }}
+        >
+          <SheetTitle style={visuallyHidden}>Navigation</SheetTitle>
+          <div style={{ display: "flex", height: "100%" }}>
+            <ProjectSidebar onNavigate={() => setOpen(false)} />
+          </div>
+        </SheetContainer>
+      </Sheet>
+    </div>
+  );
+}
+
+export function NavSwitcherDemo() {
+  const [project, setProject] = useState("ben");
+  const [current, setCurrent] = useState("dashboard");
+  const projectName = PROJECTS.find(
+    (option) => option.value === project,
+  )!.label;
+
+  // Rows are links; the demo keeps you on the page and moves the current row instead
+  const link = (id: string) => ({
+    href: `#${id}`,
+    current: current === id,
+    onClick: (event: MouseEvent<HTMLElement>) => {
+      event.preventDefault();
+      setCurrent(id);
+    },
+  });
+
+  return (
+    <div
+      style={{
+        display: "flex",
+        height: 200,
+        margin: "1rem 0",
+        overflow: "hidden",
+        borderRadius: 8,
+        border: "1px solid var(--color-border-raised)",
+      }}
+    >
+      <NavPanel
+        aria-label={`Project: ${projectName}, Switcher example`}
+        header={
+          <NavSwitcher
+            label={projectName}
+            noun="project"
+            collection="projects"
+            options={PROJECTS}
+            value={project}
+            onValueChange={(next) => {
+              setProject(next);
+              setCurrent("dashboard");
+            }}
+            action={{ label: "Create Project", onSelect: () => {} }}
+          />
+        }
+      >
+        <NavList>
+          <NavListGroup>
+            {PROJECT_ITEMS.slice(0, 3).map((item) => (
+              <NavListItem
+                key={item.id}
+                label={item.label}
+                prefix={item.icon}
+                {...link(item.id)}
+              />
+            ))}
+          </NavListGroup>
+        </NavList>
+      </NavPanel>
+      <div style={{ flex: 1, minWidth: 0, padding: 24 }}>
         <p style={{ margin: 0 }}>Page content</p>
       </div>
     </div>
@@ -197,13 +321,15 @@ export function NavSwitcherErrorDemo() {
     >
       <div
         style={{
-          width: 280,
+          display: "flex",
+          height: 200,
+          overflow: "hidden",
           borderRadius: 8,
           border: "1px solid var(--color-border-raised)",
         }}
       >
         <NavPanel
-          aria-label="Project: Ben Project"
+          aria-label="Project: Ben Project, Retry example"
           header={
             <NavSwitcher
               label="Ben Project"
