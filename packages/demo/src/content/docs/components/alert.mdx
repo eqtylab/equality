@@ -4,6 +4,7 @@ description: "Message for communicating status, warnings, or errors"
 ---
 
 import { Alert } from "@eqtylab/equality";
+import { AlertActionDemo } from "@demo/components/demo/alert";
 
 ## Overview
 
@@ -100,6 +101,28 @@ The `success`, `warning`, and `danger` variants apply a default icon automatical
 <Alert variant="danger" icon={null} title="No icon" description="A danger alert with its default icon removed." />
 ```
 
+### Action
+
+Pass a control in `action` to place it at the end of the title row, such as a Retry button. The description or body stays under the title.
+
+<div className="my-4 flex w-full flex-col gap-4">
+  <AlertActionDemo client:only="react" />
+</div>
+
+```tsx
+<Alert
+  as="aside"
+  variant="warning"
+  title="Some agents couldn't be loaded."
+  description="Results may be incomplete."
+  action={
+    <Button variant="tertiary" size="sm" prefix={<RefreshCw />}>
+      Retry
+    </Button>
+  }
+/>
+```
+
 ### Longer bodies and standing callouts
 
 `description` renders in a `<p>`, so it suits a sentence. For a body with paragraphs,
@@ -138,3 +161,4 @@ page. For a standing callout, render an `aside` instead — this drops the live 
 | `icon`        | Overrides the variant's default icon. Lucide name, element, or `null` to hide                      | `string`, `ReactElement`, `null`                     | Variant default | ❌       |
 | `children`    | Body content, as an alternative to `description`. Rendered in a `<div>`, so block content is valid | `ReactNode`                                          | —               | ❌       |
 | `as`          | Element to render. `aside` or `section` drop the `role="alert"` live region                        | `div`, `aside`, `section`                            | `div`           | ❌       |
+| `action`      | Control at the end of the title row, such as a Retry button                                        | `ReactNode`                                          | —               | ❌       |

@@ -1,0 +1,70 @@
+@reference '../../theme/theme.module.css';
+
+.banner {
+  @apply backdrop-blur-xs w-full;
+  border-color: var(--banner-bg-color);
+  background-image: linear-gradient(
+    to right,
+    color-mix(in oklab, var(--banner-bg-color) 40%, transparent),
+    color-mix(in oklab, var(--banner-bg-color) 15%, transparent)
+  );
+}
+
+.banner--border-bottom {
+  @apply border-b;
+}
+
+.banner--border-top {
+  @apply border-t;
+}
+
+/* Color Variants */
+
+.banner--primary {
+  --banner-bg-color: var(--color-badge-background-primary);
+  --banner-fg-color: var(--color-badge-text-primary);
+}
+
+.banner--neutral {
+  --banner-bg-color: var(--color-badge-background-neutral);
+  --banner-fg-color: var(--color-badge-text-neutral);
+}
+
+.banner--success {
+  --banner-bg-color: var(--color-badge-background-success);
+  --banner-fg-color: var(--color-badge-text-success);
+}
+
+.banner--warning {
+  --banner-bg-color: var(--color-badge-background-warning);
+  --banner-fg-color: var(--color-badge-text-warning);
+}
+
+.banner--danger {
+  --banner-bg-color: var(--color-badge-background-danger);
+  --banner-fg-color: var(--color-badge-text-danger);
+}
+
+.banner-content {
+  @apply flex items-center justify-center gap-3;
+  @apply px-1 py-1.5 sm:px-8;
+}
+
+.banner-icon {
+  @apply flex shrink-0 items-center justify-center rounded-full p-1.5;
+  background-color: var(--banner-bg-color);
+  color: var(--banner-fg-color);
+}
+
+.banner-icon .banner-glyph {
+  @apply text-inherit;
+}
+
+.banner-message {
+  @apply text-sm font-medium;
+  color: var(--banner-fg-color);
+}
+
+.banner-action {
+  @apply shrink-0;
+}

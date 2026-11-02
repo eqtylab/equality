@@ -1,0 +1,112 @@
+---
+title: "Banner"
+description: "Full-width strip stating the status of the page it tops"
+---
+
+import { Banner } from "@eqtylab/equality";
+import { BannerActionDemo } from "@demo/components/demo/banner";
+
+## Overview
+
+A Banner is a full-width strip across the top of a page or pane, saying in one sentence what state that whole view is in: archived and read-only, revoked, waiting on someone else. It stays for as long as the state does.
+
+Use an [Alert](/components/alert) for a message about one part of a page, or anything with a title and a body. Use a [Toast](/components/toast) for the result of something the user just did.
+
+## Usage
+
+Import the component:
+
+```tsx
+import { Banner } from "@eqtylab/equality";
+```
+
+Basic usage with an icon and a message:
+
+```tsx
+<Banner variant="warning" icon="Archive">
+  This project has been archived. It is now read-only.
+</Banner>
+```
+
+## Variants
+
+<div className="mt-4 flex w-full flex-col gap-4">
+  <Banner variant="primary" icon="Info">
+    This page shows the published version.
+  </Banner>
+  <Banner variant="neutral" icon="Clock">
+    Waiting for a reviewer to accept.
+  </Banner>
+  <Banner variant="success" icon="BadgeCheck">
+    This agent is certified until Dec 1, 2026.
+  </Banner>
+  <Banner variant="warning" icon="Archive">
+    This project has been archived. It is now read-only.
+  </Banner>
+  <Banner variant="danger" icon="Ban">
+    This certification was revoked.
+  </Banner>
+</div>
+
+### Usage
+
+```tsx
+<Banner variant="primary" icon="Info">This page shows the published version.</Banner>
+<Banner variant="neutral" icon="Clock">Waiting for a reviewer to accept.</Banner>
+<Banner variant="success" icon="BadgeCheck">This agent is certified until Dec 1, 2026.</Banner>
+<Banner variant="warning" icon="Archive">This project has been archived. It is now read-only.</Banner>
+<Banner variant="danger" icon="Ban">This certification was revoked.</Banner>
+```
+
+### Action
+
+Pass a control in `action` to place it after the message, on the same line. Keep it to one, usually a link button to where the state can be changed or explained.
+
+<div className="my-4 flex w-full flex-col gap-4">
+  <BannerActionDemo client:only="react" />
+</div>
+
+```tsx
+<Banner
+  variant="danger"
+  icon="Ban"
+  action={
+    <Button variant="link" size="sm">
+      View Certification
+    </Button>
+  }
+>
+  This certification was revoked.
+</Banner>
+```
+
+### Border
+
+A banner draws its rule along its bottom edge, between it and the page below. Use `border="top"` when it sits at the foot of a page header instead, so the rule separates it from the header.
+
+<div className="my-4 flex w-full flex-col gap-4">
+  <Banner variant="warning" icon="Archive" border="top">
+    This policy has been archived. It is now read-only.
+  </Banner>
+</div>
+
+```tsx
+<Banner variant="warning" icon="Archive" border="top">
+  This policy has been archived. It is now read-only.
+</Banner>
+```
+
+### Landmarks and announcements
+
+A banner renders a `<div>` with no live region, since it describes the page rather than reacting to an action. Render it `as="aside"` when it stands apart from the page it tops, and give it an `aria-label` so the landmark has a name.
+
+## Props
+
+| Name       | Description                                                           | Type                                                 | Default   | Required |
+| ---------- | --------------------------------------------------------------------- | ---------------------------------------------------- | --------- | -------- |
+| `icon`     | Lucide icon name or element, drawn in a round chip before the message | `string`, `ReactElement`                             | —         | ✅       |
+| `children` | The message, a sentence                                               | `ReactNode`                                          | —         | ✅       |
+| `variant`  | The status the strip's colour reports                                 | `primary`, `neutral`, `success`, `warning`, `danger` | `neutral` | ❌       |
+| `action`   | Control after the message, on its line, such as a link button         | `ReactNode`                                          | —         | ❌       |
+| `border`   | The edge that draws a rule                                            | `bottom`, `top`                                      | `bottom`  | ❌       |
+| `as`       | Element to render. `aside` makes the banner a landmark                | `div`, `aside`                                       | `div`     | ❌       |

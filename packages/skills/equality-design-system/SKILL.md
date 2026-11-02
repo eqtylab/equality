@@ -50,6 +50,7 @@ If you have no network access or web fetching fails, tell your user that you cou
 | Confirmation or destructive-action prompt                  | `AlertDialog`                   | `Dialog` with two buttons          |
 | Drawer, side panel, slide-over                             | `Sheet`                         | `Dialog` with custom styles        |
 | Snackbar, notification                                     | `Toast`                         | A timed, positioned `div`          |
+| Page status strip, archived or read-only banner            | `Banner`                        | A gradient `div` under the header  |
 | Toggle                                                     | `Switch`                        | A styled checkbox                  |
 | Chip, pill, tag, status label                              | `Badge`                         | A rounded `span`                   |
 | Loader, activity indicator                                 | `Spinner`                       | An animated SVG                    |
