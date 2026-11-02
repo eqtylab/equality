@@ -45,11 +45,23 @@ interface AlertProps
    * standing callout; it drops the live region unless you set `role` yourself.
    */
   as?: 'div' | 'aside' | 'section';
+  /** Control at the end of the title row, such as a Retry button */
+  action?: React.ReactNode;
 }
 
 const Alert = React.forwardRef<HTMLDivElement, AlertProps>(
   (
-    { className, variant, title, description, icon, children, as: Component = 'div', ...props },
+    {
+      className,
+      variant,
+      title,
+      description,
+      icon,
+      children,
+      action,
+      as: Component = 'div',
+      ...props
+    },
     ref
   ) => {
     // Use the provided icon, otherwise fall back to the variant's default icon.
@@ -68,6 +80,7 @@ const Alert = React.forwardRef<HTMLDivElement, AlertProps>(
         className={cn(
           alertVariants({ variant }),
           effectiveIcon ? styles['alert--with-icon'] : '',
+          action ? styles['alert--with-action'] : '',
           className
         )}
         {...props}
@@ -83,6 +96,7 @@ const Alert = React.forwardRef<HTMLDivElement, AlertProps>(
         <h4 className={styles['alert-title']}>{title}</h4>
         {description ? <p className={styles['alert-description']}>{description}</p> : null}
         {children ? <div className={styles['alert-body']}>{children}</div> : null}
+        {action ? <div className={styles['alert-action']}>{action}</div> : null}
       </Component>
     );
   }

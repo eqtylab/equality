@@ -70,3 +70,34 @@
 .alert--with-icon .alert-body {
   @apply col-start-2;
 }
+
+.alert--with-action {
+  @apply grid-cols-[1fr_auto] gap-x-2;
+}
+
+.alert--with-action .alert-title {
+  @apply self-center;
+}
+
+/* Pinned to column 1 so auto-placement can't put them beside the title, in the action's column */
+.alert--with-action .alert-description,
+.alert--with-action .alert-body {
+  @apply col-start-1;
+}
+
+.alert-action {
+  @apply col-start-2 row-start-1 self-center;
+}
+
+.alert--with-icon.alert--with-action {
+  @apply grid-cols-[auto_1fr_auto];
+}
+
+.alert--with-icon.alert--with-action .alert-description,
+.alert--with-icon.alert--with-action .alert-body {
+  @apply col-start-2;
+}
+
+.alert--with-icon .alert-action {
+  @apply col-start-3;
+}

@@ -50,6 +50,7 @@ If you have no network access or web fetching fails, tell your user that you cou
 | Confirmation or destructive-action prompt                  | `AlertDialog`                   | `Dialog` with two buttons          |
 | Drawer, side panel, slide-over                             | `Sheet`                         | `Dialog` with custom styles        |
 | Snackbar, notification                                     | `Toast`                         | A timed, positioned `div`          |
+| Page status strip, archived or read-only banner            | `Banner`                        | A gradient `div` under the header  |
 | Toggle                                                     | `Switch`                        | A styled checkbox                  |
 | Chip, pill, tag, status label                              | `Badge`                         | A rounded `span`                   |
 | Loader, activity indicator                                 | `Spinner`                       | An animated SVG                    |
@@ -72,7 +73,7 @@ If you have no network access or web fetching fails, tell your user that you cou
 - Keep interactive and status colours apart. They are two different purples, and they clash side by side:
   - `button-*` tokens and the `primary` variants of controls are lilac, for things you can click, select or toggle and their states. Never use them to colour a non-interactive surface, label or decoration.
   - `brand-primary` is the same lilac family as a brand accent. Equality uses it for progress, loading and charts; that's fine.
-  - `badge-*` tokens and `Badge`, `Alert` and `Toast` colours are for non-interactive status. Their `primary` is the `purple` palette, not the brand lilac, despite the name. Never use them for a hover, selected, active, checked, in-range or current-step state.
+  - `badge-*` tokens and `Badge`, `Alert`, `Banner` and `Toast` colours are for non-interactive status. Their `primary` is the `purple` palette, not the brand lilac, despite the name. Never use them for a hover, selected, active, checked, in-range or current-step state.
   - Get interactive states from the component that owns them (`Button`, `IconButton`, `SegmentedControls`, `Tabs`, `Checkbox`). If you need an interactive tint no component gives you, that's a gap: say so, as in rung 3 below, instead of borrowing a badge colour.
 
 ## Non-negotiables
