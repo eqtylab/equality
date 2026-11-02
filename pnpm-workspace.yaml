@@ -7,6 +7,7 @@ allowBuilds:
 overrides:
   '@types/react': ^19.2.2
   '@types/react-dom': ^19.2.2
+  yaml-language-server>yaml: 2.8.3
 publicHoistPattern:
   - '@types/react'
   - '@types/react-dom'
