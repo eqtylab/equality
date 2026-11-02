@@ -71,17 +71,21 @@ Pass a control in `action` to place it after the message, on the same line. Keep
 ```tsx
 import { Banner, Button } from "@eqtylab/equality";
 
-<Banner
-  variant="danger"
-  icon="Ban"
-  action={
-    <Button variant="link" size="sm">
-      View Certification
-    </Button>
-  }
->
-  This certification was revoked.
-</Banner>;
+export function RevokedBanner() {
+  return (
+    <Banner
+      variant="danger"
+      icon="Ban"
+      action={
+        <Button variant="link" size="sm">
+          View Certification
+        </Button>
+      }
+    >
+      This certification was revoked.
+    </Banner>
+  );
+}
 ```
 
 ### Border

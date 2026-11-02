@@ -113,17 +113,21 @@ Pass a control in `action` to place it at the end of the title row, such as a Re
 import { Alert, Button } from "@eqtylab/equality";
 import { RefreshCw } from "lucide-react";
 
-<Alert
-  as="aside"
-  variant="warning"
-  title="Some agents couldn't be loaded."
-  description="Results may be incomplete."
-  action={
-    <Button variant="tertiary" size="sm" prefix={<RefreshCw />}>
-      Retry
-    </Button>
-  }
-/>;
+export function PartialResultsAlert() {
+  return (
+    <Alert
+      as="aside"
+      variant="warning"
+      title="Some agents couldn't be loaded."
+      description="Results may be incomplete."
+      action={
+        <Button variant="tertiary" size="sm" prefix={<RefreshCw />}>
+          Retry
+        </Button>
+      }
+    />
+  );
+}
 ```
 
 ### Longer bodies and standing callouts
