@@ -52,21 +52,20 @@
 
 .dropdown-menu-item-indicator-checkbox,
 .dropdown-menu-item-indicator-radio {
-  @apply absolute left-2 size-3.5;
+  @apply absolute left-2;
   @apply flex-center;
-  @apply border-text-secondary border;
 }
 
 .dropdown-menu-item-indicator-checkbox {
-  @apply rounded-sm;
+  @apply size-3.5;
+  @apply border-text-secondary rounded-sm border;
 }
 
 .dropdown-menu-item-indicator-radio {
-  @apply rounded-full;
+  @apply top-1.5 h-5 w-4;
 }
 
-.dropdown-menu-checkbox-item[data-state='checked'] .dropdown-menu-item-indicator-checkbox,
-.dropdown-menu-radio-item[data-state='checked'] .dropdown-menu-item-indicator-radio {
+.dropdown-menu-checkbox-item[data-state='checked'] .dropdown-menu-item-indicator-checkbox {
   @apply bg-button-primary-fill border-button-primary-border text-button-primary-text;
 }
 
@@ -75,7 +74,7 @@
 }
 
 .radio-icon {
-  @apply size-2 fill-current;
+  @apply size-4;
 }
 
 .dropdown-menu-label {
