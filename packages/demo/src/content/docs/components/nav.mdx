@@ -286,6 +286,21 @@ Folders nest to any depth. Each level indents, so long labels cut off sooner.
 </NavListExpandable>
 ```
 
+### Folders in a Drill-in
+
+Inside `NavDrill`, give each folder a `value`, unique within its level. The folder then stays open or closed when the reader drills away and comes back. Without a `value`, it forgets when its level rebuilds.
+
+```jsx
+<NavDrillLevel value="project">
+  <NavListGroup>
+    <NavListExpandable value="reports">
+      <NavListExpandableTrigger label="Reports" />
+      <NavListExpandableContent>…</NavListExpandableContent>
+    </NavListExpandable>
+  </NavListGroup>
+</NavDrillLevel>
+```
+
 ## Examples
 
 ### App Sidebar
@@ -578,11 +593,12 @@ With `loading`, pass no other props. With no `options`, `action` or `error`, it'
 
 ### NavListExpandable
 
-| Name           | Description                                                                                 | Type                      | Default | Required |
-| -------------- | ------------------------------------------------------------------------------------------- | ------------------------- | ------- | -------- |
-| `defaultOpen`  | Uncontrolled: opens the folder on first render                                              | `boolean`                 | `false` | ❌       |
-| `open`         | Controlled: whether the folder is open                                                      | `boolean`                 |         | ❌       |
-| `onOpenChange` | Called with the new state when the header is pressed, or when the current page moves inside | `(open: boolean) => void` |         | ❌       |
+| Name           | Description                                                                                                      | Type                      | Default | Required |
+| -------------- | ---------------------------------------------------------------------------------------------------------------- | ------------------------- | ------- | -------- |
+| `defaultOpen`  | Uncontrolled: opens the folder on first render                                                                   | `boolean`                 | `false` | ❌       |
+| `open`         | Controlled: whether the folder is open                                                                           | `boolean`                 |         | ❌       |
+| `onOpenChange` | Called with the new state when the header is pressed, or when the current page moves inside                      | `(open: boolean) => void` |         | ❌       |
+| `value`        | Inside `NavDrill`, keeps the folder open or closed when the reader drills away and back; unique within its level | `string`                  |         | ❌       |
 
 ### NavListExpandableTrigger
 
