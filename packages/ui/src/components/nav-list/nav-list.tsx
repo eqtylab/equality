@@ -278,30 +278,37 @@ interface NavListExpandableTriggerProps extends Omit<
 }
 
 const NavListExpandableTrigger = React.forwardRef<HTMLButtonElement, NavListExpandableTriggerProps>(
-  ({ label, prefix, suffix, className, ...props }, ref) => (
-    <CollapsiblePrimitive.Trigger
-      ref={ref}
-      data-slot="nav-list-expandable-trigger"
-      className={cn(styles['nav-list-item'], styles['nav-list-expandable-trigger'], className)}
-      {...props}
-    >
-      {prefix && (
-        <span className={styles['nav-list-item-prefix']} aria-hidden="true">
-          {prefix}
-        </span>
-      )}
-      <span className={styles['nav-list-item-label']} title={label}>
-        {label}
-      </span>
-      {suffix && <span className={styles['nav-list-item-suffix']}>{suffix}</span>}
-      <span
-        className={cn(styles['nav-list-expandable-chevron'], styles['nav-list-item-muted'])}
-        aria-hidden="true"
+  ({ label, prefix, suffix, className, ...props }, ref) => {
+    const [mounted, setMounted] = React.useState(false);
+    React.useEffect(() => setMounted(true), []);
+
+    // Without JavaScript the CSS shows every folder open, so server HTML must not say collapsed
+    return (
+      <CollapsiblePrimitive.Trigger
+        ref={ref}
+        data-slot="nav-list-expandable-trigger"
+        className={cn(styles['nav-list-item'], styles['nav-list-expandable-trigger'], className)}
+        {...(mounted ? {} : { 'aria-expanded': undefined })}
+        {...props}
       >
-        <ChevronDown />
-      </span>
-    </CollapsiblePrimitive.Trigger>
-  )
+        {prefix && (
+          <span className={styles['nav-list-item-prefix']} aria-hidden="true">
+            {prefix}
+          </span>
+        )}
+        <span className={styles['nav-list-item-label']} title={label}>
+          {label}
+        </span>
+        {suffix && <span className={styles['nav-list-item-suffix']}>{suffix}</span>}
+        <span
+          className={cn(styles['nav-list-expandable-chevron'], styles['nav-list-item-muted'])}
+          aria-hidden="true"
+        >
+          <ChevronDown />
+        </span>
+      </CollapsiblePrimitive.Trigger>
+    );
+  }
 );
 NavListExpandableTrigger.displayName = 'NavListExpandableTrigger';
 

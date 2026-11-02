@@ -313,3 +313,50 @@
     border-color: Highlight;
   }
 }
+
+/* One class above each closed rule: the build may hoist this block, so source order can't win */
+@media (scripting: none) {
+  .nav-list-items > .nav-list-expandable[data-state='closed'] > .nav-list-expandable-panel {
+    grid-template-rows: 1fr;
+    visibility: visible;
+  }
+
+  .nav-list-items
+    > .nav-list-expandable[data-state='closed']
+    > .nav-list-expandable-panel
+    > .nav-list-expandable-content
+    > .nav-list-items {
+    opacity: 1;
+    translate: none;
+  }
+
+  .nav-list-expandable-trigger .nav-list-expandable-chevron {
+    display: none;
+  }
+
+  .nav-list-items
+    > .nav-list-expandable[data-state='closed']:has(
+      :is([aria-current='page'], [data-current='page'])
+    )
+    > .nav-list-expandable-trigger {
+    background-color: transparent;
+  }
+
+  .nav-list-items:not([data-depth='0'])
+    > .nav-list-expandable[data-state='closed']:has(
+      :is([aria-current='page'], [data-current='page'])
+    )
+    > .nav-list-expandable-trigger {
+    @apply text-text-secondary font-normal;
+  }
+}
+
+@media (scripting: none) and (forced-colors: active) {
+  .nav-list-items
+    > .nav-list-expandable[data-state='closed']:has(
+      :is([aria-current='page'], [data-current='page'])
+    )
+    > .nav-list-expandable-trigger {
+    border-color: Canvas;
+  }
+}

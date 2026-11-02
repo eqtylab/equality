@@ -44,14 +44,15 @@ describe('NavListExpandable', () => {
     const html = renderToString(<Sidebar />);
     expect(html).toContain('href="/components/button"');
     expect(html).toContain('href="/components/forms/input"');
-    expect(html).toContain('aria-expanded="false"');
+    expect(html).toMatch(/<button[^>]*data-state="closed"/);
+    expect(html).not.toContain('aria-expanded');
     expect(html).not.toContain(' hidden');
   });
 
   it('renders a group that starts open as open from the server', () => {
     const html = renderToString(<Sidebar open />);
     expect(html).toMatch(/<li[^>]*data-state="open"/);
-    expect(html).toContain('aria-expanded="true"');
+    expect(html).not.toContain('aria-expanded');
   });
 
   it('names the content it controls and toggles it', async () => {

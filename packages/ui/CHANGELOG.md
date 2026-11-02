@@ -17,7 +17,9 @@ Notable changes to Equality are recorded here, following [Keep a Changelog](http
   it, when the current page moves inside, such as after a link that changes the page without a
   reload. A reader can still close it; it opens again at their next page inside it. Inside
   `NavDrill`, give a group a `value`, unique within its level, so it stays as the reader left it
-  after they drill away and come back.
+  after they drill away and come back. With JavaScript off, every group shows open without its
+  arrow, and its header leaves `aria-expanded` out until it loads, so it never reads as collapsed
+  over visible links. Browsers from before 2023 keep closed groups closed.
 - `--eq-nav-motion-duration`, `--eq-nav-motion-ease` and `--eq-nav-motion-nudge`: the nav's motion,
   named once. `NavDrill` reads them, and a folder group opens with the same motion: its rows nudge
   12px down as they fade in, and on the way out are gone within the first third.
