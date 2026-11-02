@@ -118,6 +118,7 @@ describe('DocsNavList', () => {
               'data-off': false,
               'aria-describedby': 'status-note',
               'aria-disabled': true,
+              'aria-hidden': false,
               id: 'status',
             },
           },
@@ -128,9 +129,36 @@ describe('DocsNavList', () => {
     expect(link).toContain('id="status"');
     expect(link).toContain('aria-describedby="status-note"');
     expect(link).toContain('aria-disabled="true"');
+    expect(link).toContain('aria-hidden="false"');
     expect(link).not.toContain('data-off');
     expect(link).not.toContain('loud');
     expect(link).not.toContain('color:red');
+  });
+
+  it('keeps the attributes the row sets itself out of config', () => {
+    const link = renderToString(
+      <DocsNavList
+        nodes={[
+          {
+            kind: 'page',
+            name: 'status',
+            label: 'Status',
+            href: '/status',
+            attrs: {
+              'aria-current': 'page',
+              'data-slot': 'custom',
+              'data-current': 'page',
+              'data-drill': 'more',
+            },
+          },
+        ]}
+      />
+    );
+    expect(link).toContain('data-slot="nav-list-item"');
+    expect(link).not.toContain('custom');
+    expect(link).not.toContain('aria-current');
+    expect(link).not.toContain('data-current');
+    expect(link).not.toContain('data-drill');
   });
 
   it('marks an external link once, for sight and for screen readers', () => {

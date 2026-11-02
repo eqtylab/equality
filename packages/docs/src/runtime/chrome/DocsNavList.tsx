@@ -55,13 +55,17 @@ function Rows({ nodes, depth }: { nodes: NavNode[]; depth: number }) {
   );
 }
 
+/** NavListItem spreads these over its own, so passing one would override the row's state */
+const ROW_OWNED = new Set(['data-slot', 'data-drill', 'data-current', 'aria-current']);
+
 /** Only data-, aria- and id pass. React renders the row: a `style` string from config throws and
  *  fails the site's build, and a `class` would replace the row's own. */
 function linkAttrs(attrs: NavNode['attrs']) {
   return Object.fromEntries(
     Object.entries(attrs ?? {})
       .filter(([key]) => key === 'id' || key.startsWith('data-') || key.startsWith('aria-'))
-      .filter(([, value]) => value !== false)
+      .filter(([key]) => !ROW_OWNED.has(key))
+      .filter(([key, value]) => value !== false || key.startsWith('aria-'))
       .map(([key, value]) => [key, value === true && !key.startsWith('aria-') ? '' : String(value)])
   );
 }
