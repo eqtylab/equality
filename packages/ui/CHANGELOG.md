@@ -2,6 +2,12 @@
 
 Notable changes to Equality are recorded here, following [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## 5.2.0 - 2026-11-02
+
+### Added
+
+- `Button` takes `variant="success"`, a filled green button for actions that approve or confirm, such as approving a review.
+
 ## 5.1.1 - 2026-11-02
 
 ### Fixed
