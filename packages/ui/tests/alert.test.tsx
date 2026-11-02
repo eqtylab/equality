@@ -4,7 +4,7 @@ import { describe, expect, it } from 'vitest';
 import { Alert } from '@/components/alert/alert';
 
 describe('Alert action', () => {
-  it('renders the action right after the title, before the body', () => {
+  it('renders the action after the body, so the message is read first', () => {
     render(
       <Alert
         as="aside"
@@ -16,10 +16,8 @@ describe('Alert action', () => {
       </Alert>
     );
 
-    const title = screen.getByRole('heading', { name: "Some agents couldn't be loaded." });
     const retry = screen.getByRole('button', { name: 'Retry' });
-    expect(title.nextElementSibling?.contains(retry)).toBe(true);
-    expect(retry.compareDocumentPosition(screen.getByText('Results may be incomplete.'))).toBe(
+    expect(screen.getByText('Results may be incomplete.').compareDocumentPosition(retry)).toBe(
       Node.DOCUMENT_POSITION_FOLLOWING
     );
   });

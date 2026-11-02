@@ -10,6 +10,8 @@ import { BannerActionDemo } from "@demo/components/demo/banner";
 
 A Banner is a full-width strip across the top of a page or pane, saying in one sentence what state that whole view is in: archived and read-only, revoked, waiting on someone else. It stays for as long as the state does.
 
+The icon is required, with no default per variant as an Alert has: it names the state (Archive for archived, Ban for revoked), which the colour alone doesn't.
+
 Use an [Alert](/components/alert) for a message about one part of a page, or anything with a title and a body. Use a [Toast](/components/toast) for the result of something the user just did.
 
 ## Usage
@@ -67,6 +69,8 @@ Pass a control in `action` to place it after the message, on the same line. Keep
 </div>
 
 ```tsx
+import { Banner, Button } from "@eqtylab/equality";
+
 <Banner
   variant="danger"
   icon="Ban"
@@ -77,7 +81,7 @@ Pass a control in `action` to place it after the message, on the same line. Keep
   }
 >
   This certification was revoked.
-</Banner>
+</Banner>;
 ```
 
 ### Border
@@ -99,6 +103,17 @@ A banner draws its rule along its bottom edge, between it and the page below. Us
 ### Landmarks and announcements
 
 A banner renders a `<div>` with no live region, since it describes the page rather than reacting to an action. Render it `as="aside"` when it stands apart from the page it tops, and give it an `aria-label` so the landmark has a name.
+
+```tsx
+<Banner
+  as="aside"
+  aria-label="Certification status"
+  variant="danger"
+  icon="Ban"
+>
+  This certification was revoked.
+</Banner>
+```
 
 ## Props
 

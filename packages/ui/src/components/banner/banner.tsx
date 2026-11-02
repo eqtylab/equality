@@ -46,10 +46,17 @@ const Banner = React.forwardRef<HTMLDivElement, BannerProps>(
   ) => (
     <Component ref={ref} className={cn(bannerVariants({ variant, border }), className)} {...props}>
       <div className={styles['banner-content']}>
-        <div className={styles['banner-icon']}>
-          <Icon icon={icon} size="sm" background="transparent" className={styles['banner-glyph']} />
+        <div className={styles['banner-lead']}>
+          <div className={styles['banner-icon']}>
+            <Icon
+              icon={icon}
+              size="sm"
+              background="transparent"
+              className={styles['banner-glyph']}
+            />
+          </div>
+          <p className={styles['banner-message']}>{children}</p>
         </div>
-        <p className={styles['banner-message']}>{children}</p>
         {action ? <div className={styles['banner-action']}>{action}</div> : null}
       </div>
     </Component>

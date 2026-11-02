@@ -7,13 +7,14 @@ Notable changes to Equality are recorded here, following [Keep a Changelog](http
 ### Added
 
 - `Banner`, a full-width strip stating the status of the page it tops (archived, revoked, waiting
-  on someone), with an icon chip, a one-sentence message and an optional `action`. It takes
-  `Alert`'s variants, defaulting to `neutral`. `border="top"` moves its rule above it, for a
-  banner at the foot of a page header, and `as="aside"` makes it a landmark. It has no live
-  region.
+  on someone), with an icon chip, a one-sentence message and an optional `action`, which drops to
+  its own line on a narrow screen. It has the same five variants as `Alert`, defaulting to
+  `neutral`, but no default icons: `icon` is required, since it names the state. `border="top"`
+  moves its rule above it, for a banner at the foot of a page header, and `as="aside"` makes it a
+  landmark. It has no live region.
 - `Alert` takes `action`, a control at the end of the title row such as a Retry button. The
-  description or body stays under the title. Apps that placed a control there by overriding the
-  grid can drop the override.
+  description or body stays under the title, and screen readers reach the action after them. Apps
+  that placed a control there by overriding the grid can drop the override.
 
 ## 5.0.2 - 2026-10-28
 

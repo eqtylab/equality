@@ -94,9 +94,10 @@ const Alert = React.forwardRef<HTMLDivElement, AlertProps>(
           />
         ) : null}
         <h4 className={styles['alert-title']}>{title}</h4>
-        {action ? <div className={styles['alert-action']}>{action}</div> : null}
         {description ? <p className={styles['alert-description']}>{description}</p> : null}
         {children ? <div className={styles['alert-body']}>{children}</div> : null}
+        {/* Last so screen readers reach the message before the control; CSS still puts it in the title row */}
+        {action ? <div className={styles['alert-action']}>{action}</div> : null}
       </Component>
     );
   }
