@@ -6,7 +6,7 @@ Notable changes to Equality's Docsite Generator are recorded here, following [Ke
 
 ## 0.16.0 - 2026-10-29
 
-Needs `@eqtylab/equality` 5.1.0 or later. Sites on Equality 4 bump it with this release; none of
+Needs `@eqtylab/equality` 5.2.0 or later. Sites on Equality 4 bump it with this release; none of
 our docs sites use the components 5.0 removed.
 
 ### Changed

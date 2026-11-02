@@ -79,9 +79,10 @@ describe('DocsNavList', () => {
   });
 
   it('makes every folder a group that opens and closes, as far down as it goes', () => {
-    expect(triggerHtml('Components')).toContain('aria-expanded="true"');
-    expect(triggerHtml('Forms')).toContain('aria-expanded="true"');
-    expect(triggerHtml('Guides')).toContain('aria-expanded="false"');
+    expect(triggerHtml('Components')).toContain('data-state="open"');
+    expect(triggerHtml('Forms')).toContain('data-state="open"');
+    expect(triggerHtml('Guides')).toContain('data-state="closed"');
+    expect(triggerHtml('Guides')).not.toContain('aria-expanded');
     expect(html).toContain('data-depth="2"');
   });
 
