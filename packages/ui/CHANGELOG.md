@@ -6,9 +6,7 @@ Notable changes to Equality are recorded here, following [Keep a Changelog](http
 
 ### Added
 
-- `Button` takes `variant="success"`, a filled green button for actions that approve or confirm,
-  such as approving a review. It uses the same green as the `success` variant of
-  `SegmentedControls`, so the two always match.
+- `Button` takes `variant="success"`, a filled green button for actions that approve or confirm, such as approving a review.
 
 ## 5.0.2 - 2026-10-28
 
