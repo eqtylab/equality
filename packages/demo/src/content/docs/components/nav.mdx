@@ -7,22 +7,23 @@ import {
   NavDemo,
   NavSheetDemo,
   NavSwitcherDemo,
+  NavSwitcherErrorDemo,
 } from "@demo/components/demo/nav";
 import { NavListDemo } from "@demo/components/demo/nav-list";
 
 ## Overview
 
-Nav builds sidebars. `NavRail` holds an app's largest areas as icons, and `NavPanel` beside it holds the current area's pages, with a `NavSwitcher` in its header. Every row goes to a page. When one list can't hold them all, a row drills in or expands.
+Nav builds sidebars. `NavRail` holds an app's largest sections as icons, and `NavPanel` beside it holds the current section's pages, with a `NavSwitcher` in its header. Every row goes to a page. When one list can't hold them all, a row drills in or expands.
 
 ### Which One to Use
 
-| You want to                                                           | Use                          | For example                                       | Not for                                                                    |
-| --------------------------------------------------------------------- | ---------------------------- | ------------------------------------------------- | -------------------------------------------------------------------------- |
-| Go to a page                                                          | [A row in a group](#groups)  | Dashboard, Indicators                             | Actions, such as Log out: use a [Dropdown Menu](/components/dropdown-menu) |
-| Change to another one of the thing you're in                          | [`NavSwitcher`](#switcher)   | Another project                                   | Filtering a page: use a [Select](/components/select)                       |
-| Go into something with its own pages, where other rows stop mattering | [Drill in](#drill-in)        | A policy, an agent's run, an app's Settings pages | A few views of one screen: use [Tabs](/components/tabs)                    |
-| Browse pages grouped by topic                                         | [Expand](#expandable-groups) | A docs site's folders, at any depth               | An area people work inside: [drill in](#drill-in)                          |
-| Move between an app's largest areas                                   | [`NavRail`](#usage)          | Projects, Agents, Library                         | An app with one area                                                       |
+| You want to                                                                                            | Use                          | For example                                       | Not for                                                                    |
+| ------------------------------------------------------------------------------------------------------ | ---------------------------- | ------------------------------------------------- | -------------------------------------------------------------------------- |
+| Go to a page                                                                                           | [A row in a group](#groups)  | Dashboard, Indicators                             | Actions, such as Log out: use a [Dropdown Menu](/components/dropdown-menu) |
+| Switch to another object, like a project, that the current section belongs to                          | [`NavSwitcher`](#switcher)   | Another project                                   | Filtering a page: use a [Select](/components/select)                       |
+| Navigate into a sub-section with its own pages, where other rows in the current section stop mattering | [Drill in](#drill-in)        | A policy, an agent's run, an app's Settings pages | A few views of one screen: use [Tabs](/components/tabs)                    |
+| Browse pages grouped by topic                                                                          | [Expand](#expandable-groups) | A docs site's folders, at any depth               | A sub-section people work inside: [drill in](#drill-in)                    |
+| Move between an app's largest sections                                                                 | [`NavRail`](#usage)          | Projects, Agents, Library                         | An app with one section                                                    |
 
 ## Usage
 
@@ -153,7 +154,7 @@ Give each group an optional label. A separator sets off a different kind of grou
 
 ## Switcher
 
-`NavSwitcher` goes in the panel's `header` and shows the current item's name. Picking another item calls `onValueChange`, and your app goes to that item's top level. A level drilled into, such as a policy, belonged to the old item, so don't carry it across. `action` adds a command at the foot of the list.
+`NavSwitcher` goes in the panel's `header` and shows the current item's name. Picking another item calls `onValueChange`. Keep the reader on the same page in the new item, such as Indicators. If they were inside a policy, take them to the new item's top level instead: that policy belongs to the old item. `action` adds a command at the foot of the list.
 
 <NavSwitcherDemo client:only="react" />
 
@@ -174,6 +175,8 @@ const projectOptions = projects.map((p) => ({ value: p.id, label: p.name }));
 ### When the List Fails to Load
 
 Pass `error` and `onRetry`, and the list offers Retry: `Couldn't load {collection}.` with no options, or `Some {collection} couldn't be loaded.` over a partial list. Pass `retrying` while it reloads.
+
+<NavSwitcherErrorDemo client:only="react" />
 
 ```tsx
 const projects = projectsQuery.data ?? [];
@@ -449,7 +452,7 @@ useEffect(() => setOpen(false), [pathname]);
 
 ## Best Practices
 
-### Pages, Not Actions
+### Use Nav for Pages, Not Actions
 
 Every row takes the reader somewhere. Put actions elsewhere: Log Out in a [Dropdown Menu](/components/dropdown-menu), Create Project in the switcher's `action`. A reader who clicks a row expects to go somewhere, not to change something.
 
@@ -469,7 +472,7 @@ Mixed icons make the labels zigzag.
 
 ### Don't Restyle Rows
 
-A row with its own colours or sizes reads as an error, or as a different control. To change every row on a site, set the `--eq-list-item-*` variables.
+A row with its own colours or sizes reads as an error, or as a different control.
 
 <NavListDemo client:only="react" variant="do-dont-styling" />
 
@@ -524,7 +527,7 @@ Screen readers list `NavRail` and `NavPanel` as navigation landmarks by their `a
 | `icon`    | The item's only visible content                   | `ReactNode` |         | ✅                |
 | `label`   | The item's accessible name and its tooltip        | `string`    |         | ✅                |
 | `href`    | Where the item goes                               | `string`    |         | Without `asChild` |
-| `current` | Marks the current area                            | `boolean`   | `false` | ❌                |
+| `current` | Marks the current section                         | `boolean`   | `false` | ❌                |
 | `asChild` | Renders the item as its child, like a router link | `boolean`   | `false` | ❌                |
 
 ### NavPanel

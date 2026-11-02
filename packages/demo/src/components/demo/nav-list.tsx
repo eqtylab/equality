@@ -199,8 +199,6 @@ function NavListDrillDemo() {
   );
 }
 
-// Stands in for the browser: a drill row or ‹ pushes a page, Back pops one without a request
-
 function NavListExpandableBasicDemo() {
   const link = useCurrent("installation");
   return (
