@@ -2,13 +2,36 @@
 
 Notable changes to Equality are recorded here, following [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
-## 5.1.0 - 2026-11-02
+## 5.2.0 - 2026-11-02
 
 ### Added
 
 - `Button` takes `variant="success"`, a filled green button for actions that approve or confirm,
   such as approving a review. It uses the same green as the `success` variant of
   `SegmentedControls`, so the two always match.
+
+## 5.1.1 - 2026-11-02
+
+### Fixed
+
+- A `Banner` message breaks a long unbroken token, such as a URL in an error, where it ran out of
+  the strip.
+- A `NavSwitcher` with `error` and options already loaded reads "Some {collection} couldn't be
+  loaded." where it read "Couldn't load {collection}." above the options it had.
+
+## 5.1.0 - 2026-11-02
+
+### Added
+
+- `Banner`, a full-width strip stating the status of the page it tops (archived, revoked, waiting
+  on someone), with an icon chip, a one-sentence message and an optional `action`, which drops to
+  its own line on a narrow screen. It has the same five variants as `Alert`, defaulting to
+  `neutral`, but no default icons: `icon` is required, since it names the state. `border="top"`
+  moves its rule above it, for a banner at the foot of a page header, and `as="aside"` makes it a
+  landmark. It has no live region.
+- `Alert` takes `action`, a control at the end of the title row such as a Retry button. The
+  description or body stays under the title, and screen readers reach the action after them. Apps
+  that placed a control there by overriding the grid can drop the override.
 
 ## 5.0.2 - 2026-10-28
 

@@ -2,7 +2,7 @@
   "source": ["../tokens/equality-tokens.json"],
   "platforms": {
     "css": {
-      "transforms": ["attribute/cti", "name/kebab", "color/css"],
+      "transforms": ["attribute/cti", "name/kebab"],
       "buildPath": "src/theme/generated/",
       "files": [
         {

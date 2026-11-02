@@ -104,6 +104,11 @@ const NavSwitcherSelect = React.forwardRef<HTMLButtonElement, NavSwitcherLoadedP
     const keepOpen = React.useRef(false);
     const [announcement, setAnnouncement] = React.useState('');
     const [listState, setListState] = React.useState({ error, retrying });
+    // With options, the read stopped partway and the list shows what it got
+    const errorMessage =
+      options.length > 0
+        ? `Some ${collection} couldn't be loaded.`
+        : `Couldn't load ${collection}.`;
 
     if (listState.error !== error || listState.retrying !== retrying) {
       setListState({ error, retrying });
@@ -113,7 +118,7 @@ const NavSwitcherSelect = React.forwardRef<HTMLButtonElement, NavSwitcherLoadedP
           error
             ? retrying
               ? 'Retrying...'
-              : `Couldn't load ${collection}.`
+              : errorMessage
             : options.length > 0
               ? `Loaded ${collection}.`
               : `No ${collection} found.`
@@ -203,7 +208,7 @@ const NavSwitcherSelect = React.forwardRef<HTMLButtonElement, NavSwitcherLoadedP
             {error && (
               <SelectItem
                 value={retryValue}
-                textValue={`Couldn't load ${collection}. ${retrying ? 'Retrying' : 'Retry'}`}
+                textValue={`${errorMessage} ${retrying ? 'Retrying' : 'Retry'}`}
                 persistent
                 aria-disabled={retrying || undefined}
                 className={styles['nav-switcher-retry']}
@@ -214,7 +219,7 @@ const NavSwitcherSelect = React.forwardRef<HTMLButtonElement, NavSwitcherLoadedP
                       className={styles['nav-switcher-error-icon']}
                       aria-hidden="true"
                     />
-                    Couldn&apos;t load {collection}.
+                    {errorMessage}
                   </span>
                   {retrying ? (
                     <span className={styles['nav-switcher-error-message']}>

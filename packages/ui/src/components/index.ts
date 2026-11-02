@@ -2,6 +2,7 @@ export * from './alert-dialog/alert-dialog';
 export * from './alert/alert';
 export * from './avatar/avatar';
 export * from './badge/badge';
+export * from './banner/banner';
 export * from './bar-graph/bar-graph';
 export * from './bg-gradient/bg-gradient';
 export * from './button/button';
