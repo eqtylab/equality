@@ -15,12 +15,12 @@ our docs sites use the components 5.0 removed.
   group that opens and closes, and only top-level rows show their icon. Top-level folders lead in
   primary text; folders inside them read as rows.
 - The current page's row is grey instead of lilac, and search's selected result matches it.
-- A group's header works once the sidebar's script has loaded. The sidebar starts it at the page's
-  first idle moment, or half a second after the page is ready at most; before that, a click does
-  nothing. Groups that hold the current page still render open. With JavaScript off, every group
-  shows open.
-- A sidebar link's `attrs` pass only `data-*`, `aria-*` and `id`; anything else is dropped. An
-  `aria-*` set to `true` renders as `"true"`.
+- A group's header works once the sidebar's script has loaded; before that, a click does nothing.
+  Only the copy on screen loads it: the sidebar from `lg` up, the drawer below. Groups that hold the
+  current page still render open. With JavaScript off, every group shows open.
+- A sidebar link's `attrs` pass only `data-*`, `aria-*` and `id`; anything else is dropped, as are
+  `aria-current`, `data-current`, `data-slot` and `data-drill`, which the row sets itself. An
+  `aria-*` set to `true` or `false` renders as `"true"` or `"false"`.
 - A sidebar link to another site shows Equality's ↗ and tells screen readers it opens in a new
   tab.
 - The site card's rows, the header's links and the landing page's links hover with the same tint

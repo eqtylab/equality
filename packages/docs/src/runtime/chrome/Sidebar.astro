@@ -22,7 +22,7 @@ const { nodes, switcher } = Astro.props;
 >
   <nav class="px-4 py-6" aria-label="Documentation">
     <SiteCard switcher={switcher} />
-    <NavTree nodes={nodes} />
+    <NavTree nodes={nodes} media="(width >= 64rem)" />
   </nav>
 </aside>
 

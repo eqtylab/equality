@@ -2,7 +2,7 @@
 /**
  * The sidebar's rows, one React island on Equality's NavList parts. Groups render open or closed
  * from the server, and closed groups keep their links in the HTML. Until the island hydrates,
- * a group's header does nothing, so the timeout caps that wait on a busy page.
+ * a group's header does nothing.
  */
 import type { NavNode } from '@eqtylab/docs/types';
 
@@ -10,12 +10,14 @@ import { DocsNavList } from './DocsNavList.tsx';
 
 interface Props {
   nodes: NavNode[];
+  /** Must match the `lg` that hides this copy's container, or the visible copy never loads */
+  media: string;
 }
 
-const { nodes } = Astro.props;
+const { nodes, media } = Astro.props;
 ---
 
-<DocsNavList nodes={nodes} client:idle={{ timeout: 500 }} />
+<DocsNavList nodes={nodes} client:media={media} />
 
 {/* Without JavaScript a folder's header never opens it, so every folder shows open */}
 <noscript>

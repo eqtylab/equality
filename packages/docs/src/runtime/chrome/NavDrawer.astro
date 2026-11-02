@@ -64,7 +64,7 @@ const { nodes, switcher } = Astro.props;
         );
       })
     }
-    <NavTree nodes={nodes} />
+    <NavTree nodes={nodes} media="(width < 64rem)" />
   </nav>
 </div>
 
