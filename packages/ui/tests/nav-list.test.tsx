@@ -94,6 +94,40 @@ describe('NavList rows', () => {
     expect(screen.getByText('3').closest('[aria-hidden="true"]')).toBeNull();
   });
 
+  it('marks a link that opens in a new tab, and reads it out', () => {
+    render(
+      <NavList>
+        <NavListGroup>
+          <NavListItem label="Status" href="https://status.example.com" target="_blank" />
+          <NavListItem label="Home" href="/" />
+        </NavListGroup>
+      </NavList>
+    );
+    const row = screen.getByRole('link', { name: /^Status\s*\(opens in a new tab\)$/ });
+    expect(
+      row.querySelector('.lucide-arrow-up-right')?.closest('[aria-hidden="true"]')
+    ).not.toBeNull();
+    expect(row.getAttribute('rel')).toBe('noopener noreferrer');
+    const home = screen.getByRole('link', { name: 'Home' });
+    expect(home.querySelector('.lucide-arrow-up-right')).toBeNull();
+    expect(home.hasAttribute('rel')).toBe(false);
+  });
+
+  it('marks a new-tab link passed as its child', () => {
+    render(
+      <NavList>
+        <NavListGroup>
+          <NavListItem asChild label="Status">
+            <a href="https://status.example.com" target="_blank" rel="external" />
+          </NavListItem>
+        </NavListGroup>
+      </NavList>
+    );
+    const row = screen.getByRole('link', { name: /^Status\s*\(opens in a new tab\)$/ });
+    expect(row.querySelector('.lucide-arrow-up-right')).not.toBeNull();
+    expect(row.getAttribute('rel')).toBe('external');
+  });
+
   it('names a list by its group label', () => {
     render(
       <NavList>

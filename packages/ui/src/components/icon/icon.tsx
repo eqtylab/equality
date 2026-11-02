@@ -31,7 +31,7 @@ const iconElevationVariants = generateElevationVariants(styles, 'icon-container'
 
 export interface IconProps
   extends
-    React.HTMLAttributes<HTMLDivElement>,
+    React.HTMLAttributes<HTMLSpanElement>,
     VariantProps<typeof iconVariants>,
     VariantProps<typeof iconElevationVariants> {
   icon: React.ReactElement | string;
@@ -39,7 +39,7 @@ export interface IconProps
   background?: 'square' | 'circle' | 'transparent';
 }
 
-const Icon = forwardRef<HTMLDivElement, IconProps>(
+const Icon = forwardRef<HTMLSpanElement, IconProps>(
   ({ className, size, background, icon, elevation = ELEVATION.RAISED, ...props }, ref) => {
     let renderedIcon;
 
@@ -69,7 +69,7 @@ const Icon = forwardRef<HTMLDivElement, IconProps>(
     }
 
     return (
-      <div
+      <span
         ref={ref}
         className={cn(
           iconVariants({ size, background }),
@@ -79,7 +79,7 @@ const Icon = forwardRef<HTMLDivElement, IconProps>(
         {...props}
       >
         {renderedIcon}
-      </div>
+      </span>
     );
   }
 );

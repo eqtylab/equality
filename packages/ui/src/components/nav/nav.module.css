@@ -27,12 +27,7 @@
 }
 
 .nav-panel .nav-scroller {
-  @apply px-2 py-4;
-}
-
-/* An inert ‹ belongs to the leaving level and must not tighten the header */
-.nav-scroller:has([data-slot='nav-drill-back']:not([inert] *)) > .nav-panel-header {
-  @apply pb-0;
+  @apply gap-(--eq-list-gap) px-2 py-4;
 }
 
 .nav-rail-list {
@@ -51,12 +46,11 @@
 
 /* Above the rows, which sit 2px under it in a drilled panel, so its focus ring stays whole */
 .nav-panel-header {
-  @apply text-text-primary z-3 relative m-0 truncate px-2 pb-2 text-sm font-semibold;
+  @apply text-text-primary z-3 relative m-0 truncate px-2 py-1.5 text-sm font-semibold;
 }
 
-/* The group below brings its own top padding; the header's would double it */
 .nav-panel-header:has(> .nav-switcher-heading) {
-  @apply overflow-visible px-0 pb-0;
+  @apply overflow-visible p-0;
 }
 
 /* One height whether it holds the switcher, a plain name or the loading bar: the site card's 32px */
@@ -94,15 +88,10 @@
   @apply block min-w-0 truncate;
 }
 
-/* The site card's name: the fade clipped to the text. Padding keeps descenders out of the clip.
-   It ends at secondary text, so the name is never dimmer than the rows */
+/* The switcher's name: the fade clipped to the text. Padding keeps descenders out of the clip */
 .nav-switcher-name {
   @apply py-[0.05em] text-sm font-semibold;
-  background-image: linear-gradient(
-    to right,
-    var(--color-text-primary),
-    var(--color-text-secondary)
-  );
+  background-image: var(--eq-switcher-name-fade);
   background-clip: text;
   -webkit-background-clip: text;
   color: transparent;
@@ -117,7 +106,7 @@
 }
 
 .nav-switcher-icon {
-  @apply text-text-tertiary ml-auto size-4 shrink-0;
+  @apply text-(color:--eq-list-item-muted-color) ml-auto size-4 shrink-0;
 }
 
 /* The trigger draws ↕ itself, so SelectTrigger's ⌄ goes. SelectTrigger always renders lucide's
@@ -128,6 +117,12 @@
 
 .nav-switcher-heading .nav-switcher:hover:not(:disabled) {
   @apply bg-list-item-hover border-transparent;
+}
+
+@media (hover: hover) {
+  .nav-switcher-heading .nav-switcher:hover:not(:disabled) .nav-switcher-icon {
+    color: currentColor;
+  }
 }
 
 .nav-switcher-heading .nav-switcher[data-state='open']:not(:disabled) {
@@ -203,4 +198,15 @@
 .nav-rail-item:focus-visible {
   outline: 2px solid var(--color-focus-ring);
   outline-offset: 2px;
+}
+
+/* Forced colours paint transparent borders and drop fills: only the current area keeps a border */
+@media (forced-colors: active) {
+  .nav-rail-item {
+    border-color: Canvas;
+  }
+
+  .nav-rail-item[aria-current='page'] {
+    border-color: Highlight;
+  }
 }

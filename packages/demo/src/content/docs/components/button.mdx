@@ -103,6 +103,25 @@ Use the `danger` variant for destructive actions like delete or remove.
 </div>
 }
 
+### Success
+
+Use the `success` variant for actions that approve or confirm the validity of something, such as approving a control's implementation. Do not use them for standard "next step" or "submit" type buttons where we typically use `primary` instead.
+
+{
+
+<div className="flex gap-2">
+  <Button variant="success" size="lg">
+    Success LG
+  </Button>
+  <Button variant="success" size="md">
+    Success MD
+  </Button>
+  <Button variant="success" size="sm">
+    Success SM
+  </Button>
+</div>
+}
+
 ### Warning
 
 Use the `warning` variant for actions the user should pause over but that are not destructive, such as archiving something that can be restored later. Reserve `danger` for actions that cannot be undone.
@@ -230,7 +249,7 @@ Buttons tagged with the `disabled` property are non-interactive and visually mut
 
 {
 
-<div className="flex gap-2">
+<div className="flex flex-wrap gap-2">
   <Button variant="primary" size="sm" disabled>
     Disabled Primary
   </Button>
@@ -242,6 +261,9 @@ Buttons tagged with the `disabled` property are non-interactive and visually mut
   </Button>
   <Button variant="danger" size="sm" disabled>
     Disabled Danger
+  </Button>
+  <Button variant="success" size="sm" disabled>
+    Disabled Success
   </Button>
   <Button variant="warning" size="sm" disabled>
     Disabled Warning
@@ -265,15 +287,15 @@ Buttons tagged with the `disabled` property are non-interactive and visually mut
 
 ## Props
 
-| Name       | Description                                      | Type                                                                          | Default   | Required |
-| ---------- | ------------------------------------------------ | ----------------------------------------------------------------------------- | --------- | -------- |
-| `variant`  | The visual style of the button                   | `primary`, `secondary`, `tertiary`, `danger`, `warning`, `link`, `navigation` | `primary` | ❌       |
-| `size`     | The size of the button                           | `sm`, `md`, `lg`                                                              | `md`      | ❌       |
-| `prefix`   | Content to display before the button label       | `ReactNode`                                                                   | -         | ❌       |
-| `suffix`   | Content to display after the button label        | `ReactNode`                                                                   | -         | ❌       |
-| `href`     | URL for link buttons (renders as anchor element) | `string`                                                                      | -         | ❌       |
-| `target`   | Link target (when href is provided)              | `string`                                                                      | -         | ❌       |
-| `rel`      | Link rel attribute (when href is provided)       | `string`                                                                      | -         | ❌       |
-| `download` | Makes link downloadable (when href is provided)  | `string`, `boolean`                                                           | -         | ❌       |
-| `asChild`  | Merge props onto child element                   | `boolean`                                                                     | `false`   | ❌       |
-| `disabled` | Disables the button                              | `boolean`                                                                     | `false`   | ❌       |
+| Name       | Description                                      | Type                                                                                     | Default   | Required |
+| ---------- | ------------------------------------------------ | ---------------------------------------------------------------------------------------- | --------- | -------- |
+| `variant`  | The visual style of the button                   | `primary`, `secondary`, `tertiary`, `danger`, `success`, `warning`, `link`, `navigation` | `primary` | ❌       |
+| `size`     | The size of the button                           | `sm`, `md`, `lg`                                                                         | `md`      | ❌       |
+| `prefix`   | Content to display before the button label       | `ReactNode`                                                                              | -         | ❌       |
+| `suffix`   | Content to display after the button label        | `ReactNode`                                                                              | -         | ❌       |
+| `href`     | URL for link buttons (renders as anchor element) | `string`                                                                                 | -         | ❌       |
+| `target`   | Link target (when href is provided)              | `string`                                                                                 | -         | ❌       |
+| `rel`      | Link rel attribute (when href is provided)       | `string`                                                                                 | -         | ❌       |
+| `download` | Makes link downloadable (when href is provided)  | `string`, `boolean`                                                                      | -         | ❌       |
+| `asChild`  | Merge props onto child element                   | `boolean`                                                                                | `false`   | ❌       |
+| `disabled` | Disables the button                              | `boolean`                                                                                | `false`   | ❌       |

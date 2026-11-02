@@ -2,6 +2,69 @@
 
 Notable changes to Equality are recorded here, following [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## 5.3.0 - 2026-11-02
+
+### Added
+
+- `NavListExpandable`, `NavListExpandableTrigger` and `NavListExpandableContent`: a nav group the
+  user opens and closes with its header row. A closed group keeps its links in the page, hidden,
+  so they are in server-rendered HTML. Its arrow points down when closed and up when open, and a
+  closed group holding the current page lights its header row. A top-level group's header leads
+  in primary text, and a link beside it takes the same colour; its rows indent their text. A
+  group inside a group reads as a row, and its rows are inset behind a tree line, highlight
+  included. The header takes `prefix` and `suffix` like a row, so a status badge sits after its
+  label and screen readers read it out. A folder opens itself, and every folder around
+  it, when the current page moves inside, such as after a link that changes the page without a
+  reload. A reader can still close it; it opens again at their next page inside it. Inside
+  `NavDrill`, give a group a `value`, unique within its level, so it stays as the reader left it
+  after they drill away and come back. With JavaScript off, every group shows open without its
+  arrow, and its header leaves `aria-expanded` out until it loads, so it never reads as collapsed
+  over visible links. Browsers from before 2023 keep closed groups closed.
+- `--eq-nav-motion-duration`, `--eq-nav-motion-ease` and `--eq-nav-motion-nudge`: the nav's motion,
+  named once. `NavDrill` reads them, and a folder group opens with the same motion: its rows nudge
+  12px down as they fade in, and on the way out are gone within the first third.
+- `--eq-switcher-name-fade`: the fade on `NavSwitcher`'s name, from primary to secondary text, as
+  before. It is now a variable, so a site can set its own.
+- `--eq-list-item-muted-color`: the colour of a row's quiet marks, tertiary text. The drill ›, a
+  group's arrow, the back row's ‹, `NavSwitcher`'s ↕ and the new-tab ↗ all read it, so a site
+  sets them in one place.
+- `NavListItem` marks a link with `target="_blank"`, set on it or on its `asChild` link: a muted ↗
+  after the label, "(opens in a new tab)" for screen readers, and `rel="noopener noreferrer"`
+  unless you pass your own. Remove any ↗ or "(opens in a new tab)" you put in `suffix`.
+
+### Changed
+
+- Nav spacing comes from one gap. Items in `NavPanel`, `NavList` and a `NavDrill` level sit
+  `--eq-list-gap` (2px) apart, and a group label carries the group gap above it as its own top
+  padding, so it sits 12px below whatever comes before it. A string `header` in `NavPanel` is now
+  32px tall, like the switcher, so its text and the rows below sit 6px lower. Anything else an app
+  puts straight into the panel or list, such as a search field, gets the 2px gap.
+- Nav chevrons, the drill › and a group's arrow, are muted, as quiet as a switcher's. Every muted
+  mark takes its row's colour on hover and on the current row, the back row's ‹ and the
+  switcher's ↕ included. Studio's › gets quieter.
+- A nav row's hover fill shows only with a mouse or trackpad, so a row tapped on a touch screen
+  no longer stays lit.
+- `Badge` and `Icon` render spans, not divs, so they are valid inside a button, such as a folder
+  header's `prefix` or `suffix`. They look the same. A ref or props typed `HTMLDivElement` on
+  either now needs `HTMLSpanElement`.
+
+### Fixed
+
+- `MotionCollapsibleContent` no longer grows from nothing when it first renders open, such as an
+  `Input` that loads with an error.
+- `MotionCollapsibleContent` clips its content while it opens again after a close. It mounted
+  unclipped for a frame and could paint over what follows.
+- Rows under a `NavSwitcher` in `NavPanel`'s header sit 2px below it, as rows sit below each other.
+  Without a group label, they touched it.
+- In forced colours, only the current nav row and rail item keep a border. Every row was boxed, and
+  the current rail item had no mark at all.
+
+## 5.2.0 - 2026-11-02
+
+### Added
+
+- `Button` takes `variant="success"`, a filled green button for actions that approve or confirm, such as approving a review.
+
 ## 5.1.1 - 2026-11-02
 
 ### Fixed
