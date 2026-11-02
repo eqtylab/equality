@@ -2,6 +2,15 @@
 
 Notable changes to Equality are recorded here, following [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## 5.1.1 - 2026-11-02
+
+### Fixed
+
+- A `Banner` message breaks a long unbroken token, such as a URL in an error, where it ran out of
+  the strip.
+- A `NavSwitcher` with `error` and options already loaded reads "Some {collection} couldn't be
+  loaded." where it read "Couldn't load {collection}." above the options it had.
+
 ## 5.1.0 - 2026-11-02
 
 ### Added
