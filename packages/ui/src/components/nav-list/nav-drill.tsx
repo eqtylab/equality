@@ -1,7 +1,11 @@
 import * as React from 'react';
 import { ChevronLeft } from 'lucide-react';
 
-import { NavDrillContext } from '@/components/nav-list/nav-drill-context';
+import {
+  FolderMemoryContext,
+  NavDrillContext,
+  type FolderMemory,
+} from '@/components/nav-list/nav-drill-context';
 import styles from '@/components/nav-list/nav-list.module.css';
 import { useIsomorphicLayoutEffect } from '@/lib/use-isomorphic-layout-effect';
 import { cn } from '@/lib/utils';
@@ -9,31 +13,46 @@ import { cn } from '@/lib/utils';
 type NavDrillRequest = 'drill' | 'back';
 
 // The leaving level is gone in the first third, so the two levels' rows never read as doubled text
-const MOTION: Record<NavDrillRequest, { current: Keyframe[]; previous: Keyframe[] }> = {
-  drill: {
+const motion = (direction: NavDrillRequest, nudge: number) => {
+  const sign = direction === 'drill' ? 1 : -1;
+  return {
     current: [
-      { transform: 'translateX(12px)', opacity: 0 },
+      { transform: `translateX(${sign * nudge}px)`, opacity: 0 },
       { transform: 'translateX(0)', opacity: 1 },
     ],
     previous: [
       { transform: 'translateX(0)', opacity: 1 },
       { opacity: 0, offset: 0.35 },
-      { transform: 'translateX(-12px)', opacity: 0 },
+      { transform: `translateX(${-sign * nudge}px)`, opacity: 0 },
     ],
-  },
-  back: {
-    current: [
-      { transform: 'translateX(-12px)', opacity: 0 },
-      { transform: 'translateX(0)', opacity: 1 },
-    ],
-    previous: [
-      { transform: 'translateX(0)', opacity: 1 },
-      { opacity: 0, offset: 0.35 },
-      { transform: 'translateX(12px)', opacity: 0 },
-    ],
-  },
+  };
 };
-const TIMING: KeyframeAnimationOptions = { duration: 300, easing: 'cubic-bezier(.2, .8, .2, 1)' };
+
+// Folder groups animate in CSS from the same variables; reading them here keeps the two in step
+function navMotion(element: HTMLElement) {
+  const style = getComputedStyle(element);
+  const read = (name: string) => style.getPropertyValue(name).trim();
+  const duration = read('--eq-nav-motion-duration');
+  const ms = duration.endsWith('ms') ? parseFloat(duration) : parseFloat(duration) * 1000;
+  const raw = read('--eq-nav-motion-nudge');
+  const nudge = /^-?[\d.]+px$/.test(raw) ? parseFloat(raw) : resolveNudge(element);
+  return {
+    nudge: Number.isFinite(nudge) ? nudge : 12,
+    timing: {
+      duration: Number.isFinite(ms) ? ms : 300,
+      easing: read('--eq-nav-motion-ease') || 'cubic-bezier(.2, .8, .2, 1)',
+    },
+  };
+}
+
+// parseFloat would drop a rem or calc() unit, and a probe element would trip the focus observer
+function resolveNudge(element: HTMLElement) {
+  const previous = element.style.outlineOffset;
+  element.style.outlineOffset = 'var(--eq-nav-motion-nudge, 12px)';
+  const nudge = parseFloat(getComputedStyle(element).outlineOffset);
+  element.style.outlineOffset = previous;
+  return nudge;
+}
 
 const LEVEL = '[data-slot="nav-drill-level"]';
 
@@ -61,6 +80,9 @@ interface FocusRequest {
 }
 
 const NavDrillBackContext = React.createContext<(parent: string) => void>(() => {});
+const LevelFoldersContext = React.createContext<Map<string, Map<string, FolderMemory>> | null>(
+  null
+);
 
 const LEAVING_DRILL_CONTEXT = { requestDrill: () => {}, leaving: true };
 const NO_BACK = () => {};
@@ -100,6 +122,7 @@ const NavDrill = React.forwardRef<HTMLDivElement, NavDrillProps>(
     const focusRequest = React.useRef<FocusRequest | null>(null);
     const observer = React.useRef<MutationObserver | null>(null);
     const previousView = React.useRef(view);
+    const [levelFolders] = React.useState(() => new Map<string, Map<string, FolderMemory>>());
 
     const level =
       React.Children.toArray(children).find(
@@ -212,9 +235,11 @@ const NavDrill = React.forwardRef<HTMLDivElement, NavDrillProps>(
       // The old rows leave from where the user saw them: neither the scroll reset nor a tighter
       // header moves them. A margin, because the slide owns transform
       ghostLevel.style.marginTop = `${leaving.top - live.getBoundingClientRect().top}px`;
+      const { nudge, timing } = navMotion(live);
+      const frames = motion(leaving.direction, nudge);
       const animations = [
-        live.animate(MOTION[leaving.direction].current, TIMING),
-        ghost.animate(MOTION[leaving.direction].previous, TIMING),
+        live.animate(frames.current, timing),
+        ghost.animate(frames.previous, timing),
       ];
       running.current = animations;
       Promise.all(animations.map((animation) => animation.finished)).then(
@@ -276,27 +301,29 @@ const NavDrill = React.forwardRef<HTMLDivElement, NavDrillProps>(
         className={cn(styles['nav-drill'], className)}
         {...props}
       >
-        <NavDrillContext.Provider value={drillContext}>
-          <NavDrillBackContext.Provider value={requestBack}>
-            {level && <React.Fragment key={view}>{level}</React.Fragment>}
-          </NavDrillBackContext.Provider>
-        </NavDrillContext.Provider>
-        {leaving && (
-          <div
-            key={leaving.id}
-            ref={setGhostRef}
-            data-slot="nav-drill-ghost"
-            data-motion={leaving.direction}
-            aria-hidden="true"
-            className={styles['nav-drill-ghost']}
-          >
-            <NavDrillContext.Provider value={LEAVING_DRILL_CONTEXT}>
-              <NavDrillBackContext.Provider value={NO_BACK}>
-                {leaving.element}
-              </NavDrillBackContext.Provider>
-            </NavDrillContext.Provider>
-          </div>
-        )}
+        <LevelFoldersContext.Provider value={levelFolders}>
+          <NavDrillContext.Provider value={drillContext}>
+            <NavDrillBackContext.Provider value={requestBack}>
+              {level && <React.Fragment key={view}>{level}</React.Fragment>}
+            </NavDrillBackContext.Provider>
+          </NavDrillContext.Provider>
+          {leaving && (
+            <div
+              key={leaving.id}
+              ref={setGhostRef}
+              data-slot="nav-drill-ghost"
+              data-motion={leaving.direction}
+              aria-hidden="true"
+              className={styles['nav-drill-ghost']}
+            >
+              <NavDrillContext.Provider value={LEAVING_DRILL_CONTEXT}>
+                <NavDrillBackContext.Provider value={NO_BACK}>
+                  {leaving.element}
+                </NavDrillBackContext.Provider>
+              </NavDrillContext.Provider>
+            </div>
+          )}
+        </LevelFoldersContext.Provider>
       </div>
     );
   }
@@ -328,6 +355,12 @@ type NavDrillLevelProps = NavDrillChildLevelProps | NavDrillTopLevelProps;
 const NavDrillLevel = React.forwardRef<HTMLDivElement, NavDrillLevelProps>(
   ({ value, parent, label, backLabel, className, children, ...props }, ref) => {
     const requestBack = React.useContext(NavDrillBackContext);
+    const levelFolders = React.useContext(LevelFoldersContext);
+    let folders = levelFolders?.get(value) ?? null;
+    if (levelFolders && !folders) {
+      folders = new Map();
+      levelFolders.set(value, folders);
+    }
 
     React.useEffect(() => {
       if (
@@ -361,7 +394,10 @@ const NavDrillLevel = React.forwardRef<HTMLDivElement, NavDrillLevelProps>(
               className={cn(styles['nav-list-item'], styles['nav-list-item--back'])}
               onClick={() => requestBack(parent)}
             >
-              <span className={styles['nav-list-item-prefix']} aria-hidden="true">
+              <span
+                className={cn(styles['nav-list-item-prefix'], styles['nav-list-item-muted'])}
+                aria-hidden="true"
+              >
                 <ChevronLeft />
               </span>
               <span className={styles['nav-list-item-label']} title={label}>
@@ -371,7 +407,7 @@ const NavDrillLevel = React.forwardRef<HTMLDivElement, NavDrillLevelProps>(
             <hr className={styles['nav-drill-rule']} />
           </>
         )}
-        {children}
+        <FolderMemoryContext.Provider value={folders}>{children}</FolderMemoryContext.Provider>
       </div>
     );
   }
