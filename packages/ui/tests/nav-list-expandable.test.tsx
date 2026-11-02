@@ -5,6 +5,8 @@ import userEvent from '@testing-library/user-event';
 import { describe, expect, it, vi } from 'vitest';
 
 import { Badge } from '@/components/badge/badge';
+import { Icon } from '@/components/icon/icon';
+import { NavDrill, NavDrillLevel } from '@/components/nav-list/nav-drill';
 import {
   NavList,
   NavListExpandable,
@@ -13,6 +15,8 @@ import {
   NavListGroup,
   NavListItem,
 } from '@/components/nav-list/nav-list';
+
+import './animation-stub';
 
 function Sidebar({ open }: { open?: boolean }) {
   return (
@@ -88,6 +92,26 @@ describe('NavListExpandable', () => {
       </NavList>
     );
     expect(screen.getByRole('button', { name: /^Forms\s*Beta$/ })).toBeTruthy();
+  });
+
+  it('keeps an Icon prefix and a Badge suffix valid inside the header button', () => {
+    render(
+      <NavList>
+        <NavListGroup>
+          <NavListExpandable>
+            <NavListExpandableTrigger
+              label="Forms"
+              prefix={<Icon icon="Folder" size="xs" />}
+              suffix={<Badge>Beta</Badge>}
+            />
+            <NavListExpandableContent>
+              <NavListItem label="Input" href="#input" />
+            </NavListExpandableContent>
+          </NavListExpandable>
+        </NavListGroup>
+      </NavList>
+    );
+    expect(screen.getByRole('button', { name: /^Forms/ }).querySelector('div')).toBeNull();
   });
 
   it('nests each group’s rows one level deeper', () => {
@@ -266,5 +290,65 @@ describe('NavListExpandable when the current page changes without a reload', () 
     rerender(<Controlled current={false} />);
     rerender(<Controlled current />);
     expect(onOpenChange).toHaveBeenCalledTimes(2);
+  });
+});
+
+function DrillSidebar({ value }: { value?: string }) {
+  return (
+    <NavList>
+      <NavDrill defaultValue="docs" animate={false}>
+        <NavDrillLevel value="docs">
+          <NavListGroup>
+            <NavListItem label="Settings" drill="settings" />
+            <NavListExpandable value={value}>
+              <NavListExpandableTrigger label="Components" />
+              <NavListExpandableContent>
+                <NavListItem label="Button" href="/button" current />
+              </NavListExpandableContent>
+            </NavListExpandable>
+            <NavListExpandable value={value && 'guides'}>
+              <NavListExpandableTrigger label="Guides" />
+              <NavListExpandableContent>
+                <NavListItem label="Theming" href="/theming" />
+              </NavListExpandableContent>
+            </NavListExpandable>
+          </NavListGroup>
+        </NavDrillLevel>
+        <NavDrillLevel value="settings" parent="docs" label="Settings">
+          <NavListGroup>
+            <NavListItem label="General" href="/general" />
+          </NavListGroup>
+        </NavDrillLevel>
+      </NavDrill>
+    </NavList>
+  );
+}
+
+async function drillAwayAndBack() {
+  await userEvent.click(screen.getByRole('button', { name: 'Settings' }));
+  await userEvent.click(screen.getByRole('button', { name: 'Settings, back' }));
+}
+
+describe('NavListExpandable with a value inside NavDrill', () => {
+  it('stays closed after the reader closes it, drills away and comes back', async () => {
+    render(<DrillSidebar value="components" />);
+    expect(expanded('Components')).toBe('true');
+    await userEvent.click(screen.getByRole('button', { name: 'Components' }));
+    await drillAwayAndBack();
+    expect(expanded('Components')).toBe('false');
+  });
+
+  it('stays open after the reader opens it, drills away and comes back', async () => {
+    render(<DrillSidebar value="components" />);
+    await userEvent.click(screen.getByRole('button', { name: 'Guides' }));
+    await drillAwayAndBack();
+    expect(expanded('Guides')).toBe('true');
+  });
+
+  it('forgets without a value, as before', async () => {
+    render(<DrillSidebar />);
+    await userEvent.click(screen.getByRole('button', { name: 'Components' }));
+    await drillAwayAndBack();
+    expect(expanded('Components')).toBe('true');
   });
 });

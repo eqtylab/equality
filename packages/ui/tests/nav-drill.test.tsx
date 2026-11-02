@@ -245,6 +245,36 @@ describe('NavDrill', () => {
     }
   });
 
+  it('resolves a nudge in rem or calc() to px, as the folder CSS does', () => {
+    const root = document.documentElement.style;
+    root.setProperty('--eq-nav-motion-nudge', '0.75rem');
+    const resolve = window.getComputedStyle;
+    const spy = vi.spyOn(window, 'getComputedStyle').mockImplementation((element, pseudo) => {
+      const style = resolve(element, pseudo);
+      const probed = (element as HTMLElement).style
+        .getPropertyValue('outline-offset')
+        .includes('--eq-nav-motion-nudge');
+      return new Proxy(style, {
+        get: (target, key) => {
+          if (key === 'outlineOffset' && probed) return '12px';
+          const value = Reflect.get(target, key);
+          return typeof value === 'function' ? value.bind(target) : value;
+        },
+      });
+    });
+    try {
+      render(<Uncontrolled />);
+      fireEvent.click(screen.getByRole('link', { name: 'Ben Project' }));
+      const [current, previous] = animateCalls;
+      expect(current.keyframes[0]).toEqual({ transform: 'translateX(12px)', opacity: 0 });
+      expect(previous.keyframes[2]).toEqual({ transform: 'translateX(-12px)', opacity: 0 });
+      expect((current.target as HTMLElement).style.outlineOffset).toBe('');
+    } finally {
+      spy.mockRestore();
+      root.removeProperty('--eq-nav-motion-nudge');
+    }
+  });
+
   it('goes back with the mirrored nudge and the leaving level above', () => {
     render(<Uncontrolled defaultValue="ben" />);
     fireEvent.click(screen.getByRole('button', { name: 'Ben Project, back' }));

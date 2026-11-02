@@ -29,7 +29,9 @@ const MotionCollapsibleContent = ({
           exit={{ height: 0, opacity: 0 }}
           transition={{ duration: 0.3, ease: 'easeInOut' }}
           onAnimationStart={() => setIsSettled(false)}
-          onAnimationComplete={() => setIsSettled(isOpen)}
+          onAnimationComplete={(definition) =>
+            setIsSettled((definition as { height?: unknown }).height === 'auto')
+          }
           className={cn(
             styles['motion-collapsible'],
             isSettled && styles['motion-collapsible--settled'],

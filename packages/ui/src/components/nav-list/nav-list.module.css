@@ -2,20 +2,17 @@
 
 /* Inherited so a level sliding in covers the one leaving */
 .nav-list {
-  @apply flex flex-col;
+  @apply gap-(--eq-list-gap) flex flex-col;
   background-color: inherit;
 }
 
 .nav-list-group {
-  @apply gap-(--eq-list-label-gap) pt-(--eq-list-group-gap) flex flex-col;
-}
-
-.nav-list-group--unlabelled {
-  @apply pt-0;
+  @apply gap-(--eq-list-label-gap) flex flex-col;
 }
 
 .nav-list-group-label {
   @apply px-(--eq-list-item-padding-x) flex items-center gap-2;
+  padding-top: calc(var(--eq-list-group-gap) - var(--eq-list-gap));
   @apply text-(length:--eq-list-label-font-size) text-text-secondary font-medium;
 }
 
@@ -45,7 +42,8 @@
 }
 
 .nav-list-separator {
-  @apply border-border-raised mt-(--eq-list-group-gap) m-0 h-0 shrink-0 border-0 border-t;
+  @apply border-border-raised m-0 h-0 shrink-0 border-0 border-t;
+  margin-top: calc(var(--eq-list-group-gap) - var(--eq-list-gap));
 }
 
 .nav-list-separator:first-child,
@@ -102,7 +100,7 @@
 /* Tertiary falls below 3:1 on the current fill in light */
 .nav-list-item[aria-current='page'] .nav-list-item-muted,
 .nav-list-item[data-current='page'] .nav-list-item-muted,
-.nav-list-expandable[data-state='closed']:has([aria-current='page'])
+.nav-list-expandable[data-state='closed']:has(:is([aria-current='page'], [data-current='page']))
   > .nav-list-expandable-trigger
   .nav-list-item-muted {
   color: currentColor;
@@ -255,7 +253,7 @@
 }
 
 /* A closed group holding the page on show stands in for its row */
-.nav-list-expandable[data-state='closed']:has([aria-current='page'])
+.nav-list-expandable[data-state='closed']:has(:is([aria-current='page'], [data-current='page']))
   > .nav-list-expandable-trigger {
   @apply bg-list-item-current text-text-primary font-medium;
 }
@@ -269,7 +267,7 @@
 }
 
 .nav-drill-level {
-  @apply flex min-w-0 flex-col;
+  @apply gap-(--eq-list-gap) flex min-w-0 flex-col;
   grid-area: 1 / 1;
   z-index: 1;
   background-color: inherit;
@@ -290,12 +288,12 @@
 }
 
 .nav-list-item--back {
-  @apply text-text-secondary mt-0.5 font-normal;
+  @apply text-text-secondary font-normal;
 }
 
 /* A border, not a fill: forced colours drop fills */
 .nav-drill-rule {
-  @apply border-border-raised m-0 mb-1 mt-2 h-0 shrink-0 border-0 border-t;
+  @apply border-border-raised m-0 mb-0.5 mt-1.5 h-0 shrink-0 border-0 border-t;
 }
 
 .nav-list-item-new-tab {
@@ -310,7 +308,7 @@
 
   .nav-list-item[aria-current='page'],
   .nav-list-item[data-current='page'],
-  .nav-list-expandable[data-state='closed']:has([aria-current='page'])
+  .nav-list-expandable[data-state='closed']:has(:is([aria-current='page'], [data-current='page']))
     > .nav-list-expandable-trigger {
     border-color: Highlight;
   }

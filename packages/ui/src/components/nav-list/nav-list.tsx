@@ -3,7 +3,7 @@ import * as CollapsiblePrimitive from '@radix-ui/react-collapsible';
 import { Slot, Slottable } from '@radix-ui/react-slot';
 import { ArrowUpRight, ChevronDown, ChevronRight } from 'lucide-react';
 
-import { NavDrillContext } from '@/components/nav-list/nav-drill-context';
+import { FolderMemoryContext, NavDrillContext } from '@/components/nav-list/nav-drill-context';
 import styles from '@/components/nav-list/nav-list.module.css';
 import { useIsomorphicLayoutEffect } from '@/lib/use-isomorphic-layout-effect';
 import { cn } from '@/lib/utils';
@@ -35,11 +35,7 @@ const NavListGroup = React.forwardRef<HTMLDivElement, NavListGroupProps>(
       <div
         ref={ref}
         data-slot="nav-list-group"
-        className={cn(
-          styles['nav-list-group'],
-          !label && styles['nav-list-group--unlabelled'],
-          className
-        )}
+        className={cn(styles['nav-list-group'], className)}
         {...props}
       >
         {label && (
@@ -196,16 +192,20 @@ interface NavListExpandableProps extends React.LiHTMLAttributes<HTMLLIElement> {
   defaultOpen?: boolean;
   /** Called with the new state when the trigger is pressed or the current page moves inside */
   onOpenChange?: (open: boolean) => void;
+  /** Keeps the reader's open or close when a `NavDrill` level rebuilds; unique within its level */
+  value?: string;
 }
 
 const NavListExpandable = React.forwardRef<HTMLLIElement, NavListExpandableProps>(
-  ({ open, defaultOpen = false, onOpenChange, className, ...props }, ref) => {
+  ({ open, defaultOpen = false, onOpenChange, value, className, ...props }, ref) => {
     const revealParent = React.useContext(RevealFolderContext);
-    const [ownOpen, setOwnOpen] = React.useState(defaultOpen);
+    const folders = React.useContext(FolderMemoryContext);
+    const memory = value === undefined ? undefined : folders?.get(value);
+    const [ownOpen, setOwnOpen] = React.useState(memory?.open ?? defaultOpen);
     const [instant, setInstant] = React.useState(false);
     const isOpen = open ?? ownOpen;
     const mounting = React.useRef(true);
-    const closedByReader = React.useRef(false);
+    const closedByReader = React.useRef(memory?.closedByReader ?? false);
     const askedToOpen = React.useRef(false);
 
     const handleOpenChange = (next: boolean) => {
@@ -219,6 +219,8 @@ const NavListExpandable = React.forwardRef<HTMLLIElement, NavListExpandableProps
     useIsomorphicLayoutEffect(() => {
       latest.current = { isOpen, handleOpenChange, revealParent };
       if (isOpen) askedToOpen.current = false;
+      if (value !== undefined)
+        folders?.set(value, { open: isOpen, closedByReader: closedByReader.current });
     });
 
     // Radix measures the content before the open lands, so without `data-instant` a folder

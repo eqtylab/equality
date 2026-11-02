@@ -27,12 +27,7 @@
 }
 
 .nav-panel .nav-scroller {
-  @apply px-2 py-4;
-}
-
-/* An inert ‹ belongs to the leaving level and must not tighten the header */
-.nav-scroller:has([data-slot='nav-drill-back']:not([inert] *)) > .nav-panel-header {
-  @apply pb-0;
+  @apply gap-(--eq-list-gap) px-2 py-4;
 }
 
 .nav-rail-list {
@@ -51,29 +46,11 @@
 
 /* Above the rows, which sit 2px under it in a drilled panel, so its focus ring stays whole */
 .nav-panel-header {
-  @apply text-text-primary z-3 relative m-0 truncate px-2 pb-2 text-sm font-semibold;
+  @apply text-text-primary z-3 relative m-0 truncate px-2 py-1.5 text-sm font-semibold;
 }
 
 .nav-panel-header:has(> .nav-switcher-heading) {
-  @apply pb-(--eq-list-group-gap) overflow-visible px-0;
-}
-
-/* The header's gap replaces the first group's own, or a labelled group sits twice as far down */
-.nav-panel-header:has(> .nav-switcher-heading)
-  + [data-slot='nav-list']
-  > [data-slot='nav-list-group']:first-child,
-.nav-panel-header:has(> .nav-switcher-heading)
-  + [data-slot='nav-list']
-  > [data-slot='nav-drill']
-  > [data-slot='nav-drill-level']
-  > [data-slot='nav-list-group']:first-child,
-.nav-panel-header:has(> .nav-switcher-heading)
-  + [data-slot='nav-list']
-  > [data-slot='nav-drill']
-  > [data-slot='nav-drill-ghost']
-  > [data-slot='nav-drill-level']
-  > [data-slot='nav-list-group']:first-child {
-  padding-top: 0;
+  @apply overflow-visible p-0;
 }
 
 /* One height whether it holds the switcher, a plain name or the loading bar: the site card's 32px */

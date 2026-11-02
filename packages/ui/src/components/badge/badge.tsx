@@ -39,7 +39,7 @@ const badgeVariants = cva(styles['badge'], {
 export type BadgeDisplayMode = 'both' | 'text-only' | 'icon-only';
 
 export interface BadgeProps
-  extends React.HTMLAttributes<HTMLDivElement>, VariantProps<typeof badgeVariants> {
+  extends React.HTMLAttributes<HTMLSpanElement>, VariantProps<typeof badgeVariants> {
   closeable?: boolean;
   handleClosable?: () => void;
   closeLabel?: string;
@@ -130,7 +130,7 @@ function Badge({
   const isIconOnly = effectiveDisplay === 'icon-only' && effectiveIcon;
 
   return (
-    <div
+    <span
       className={cn(
         variant !== null && badgeVariants({ variant, size }),
         variant === null && styles['badge'],
@@ -145,7 +145,7 @@ function Badge({
       {renderIcon()}
       {shouldShowChildren && renderChildren()}
       {renderClosable()}
-    </div>
+    </span>
   );
 }
 

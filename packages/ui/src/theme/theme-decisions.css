@@ -22,7 +22,6 @@ html {
      JavaScript, folder groups in CSS */
   --eq-nav-motion-duration: 300ms;
   --eq-nav-motion-ease: cubic-bezier(0.2, 0.8, 0.2, 1);
-  /* A plain length, not --spacing: NavDrill parses it, and an unresolved calc() reads as nothing */
   --eq-nav-motion-nudge: 12px;
   /* switcher: the fade on its name. It ends at secondary text, so the name is never dimmer than the
      rows below it. A site can set its own: the docs do */
