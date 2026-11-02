@@ -26,4 +26,33 @@ describe('Banner', () => {
 
     expect(screen.getByRole('complementary', { name: 'Certification revoked' })).toBeTruthy();
   });
+
+  it('renders no action wrapper without an action', () => {
+    render(
+      <Banner variant="warning" icon="Archive">
+        This project has been archived.
+      </Banner>
+    );
+
+    const lead = screen.getByText('This project has been archived.').parentElement;
+    expect(lead?.nextElementSibling).toBeNull();
+  });
+
+  it('draws its rule on the bottom by default and on the top with border="top"', () => {
+    const { rerender } = render(
+      <Banner data-testid="banner" icon="Archive">
+        This project has been archived.
+      </Banner>
+    );
+    expect(screen.getByTestId('banner').className).toMatch(/banner--border-bottom/);
+
+    rerender(
+      <Banner data-testid="banner" icon="Archive" border="top">
+        This project has been archived.
+      </Banner>
+    );
+    const banner = screen.getByTestId('banner');
+    expect(banner.className).toMatch(/banner--border-top/);
+    expect(banner.className).not.toMatch(/banner--border-bottom/);
+  });
 });
