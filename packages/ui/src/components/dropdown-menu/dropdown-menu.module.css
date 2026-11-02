@@ -57,7 +57,7 @@
 }
 
 .dropdown-menu-item-indicator-checkbox {
-  @apply size-3.5;
+  @apply top-2.25 size-3.5;
   @apply border-text-secondary rounded-sm border;
 }
 

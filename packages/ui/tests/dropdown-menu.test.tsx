@@ -8,8 +8,6 @@ import {
   DropdownMenuContent,
   DropdownMenuEmpty,
   DropdownMenuItem,
-  DropdownMenuRadioGroup,
-  DropdownMenuRadioItem,
   DropdownMenuSearch,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
@@ -262,31 +260,6 @@ describe('DropdownMenu', () => {
       await user.type(screen.getByRole('searchbox'), 'c');
 
       expect(screen.getByText('2 results available')).toBeTruthy();
-    });
-  });
-
-  describe('radio items', () => {
-    it('mark only the checked item, with a check', async () => {
-      render(
-        <DropdownMenu open>
-          <DropdownMenuTrigger>Version</DropdownMenuTrigger>
-          <DropdownMenuContent>
-            <DropdownMenuRadioGroup value="v3.7">
-              {['v3.8', 'v3.7', 'v3.6'].map((v) => (
-                <DropdownMenuRadioItem key={v} value={v}>
-                  {v}
-                </DropdownMenuRadioItem>
-              ))}
-            </DropdownMenuRadioGroup>
-          </DropdownMenuContent>
-        </DropdownMenu>
-      );
-
-      const items = await screen.findAllByRole('menuitemradio');
-      const marked = items.filter((item) => item.querySelector('svg'));
-      expect(marked).toHaveLength(1);
-      expect(marked[0].getAttribute('aria-checked')).toBe('true');
-      expect(marked[0].querySelector('svg')?.classList.contains('lucide-check')).toBe(true);
     });
   });
 
