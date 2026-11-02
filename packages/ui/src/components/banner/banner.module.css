@@ -65,8 +65,9 @@
   @apply text-inherit;
 }
 
+/* Breaks a long unbroken token, such as a URL in an error, rather than overflowing the strip */
 .banner-message {
-  @apply text-balance text-sm font-medium;
+  @apply wrap-anywhere text-balance text-sm font-medium;
   color: var(--banner-fg-color);
 }
 

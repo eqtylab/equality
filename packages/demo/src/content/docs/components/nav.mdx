@@ -208,7 +208,7 @@ The switcher's trigger stops a typed letter from picking an item while its list 
 
 ### When the List Fails to Load
 
-Pass `error` with `onRetry` when the list of items couldn't be read. The switcher stays a dropdown, and its list says so with a Retry row above any options it already has. Picking Retry calls `onRetry` and keeps the list open; pass `retrying` while that read runs, and the row reads "Retrying...". `error` stays true while the read runs, so `retrying` is what tells the switcher it has started.
+Pass `error` with `onRetry` when the list of items couldn't be read. The switcher stays a dropdown, and its list says so with a Retry row above any options it already has: `Couldn't load {collection}.` with none, or `Some {collection} couldn't be loaded.` over a partial list. Picking Retry calls `onRetry` and keeps the list open; pass `retrying` while that read runs, and the row reads "Retrying...". `error` stays true while the read runs, so `retrying` is what tells the switcher it has started.
 
 <NavSwitcherErrorDemo client:only="react" />
 
