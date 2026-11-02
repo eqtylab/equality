@@ -31,6 +31,7 @@
 
 .button--primary,
 .button--danger,
+.button--success,
 .button--warning {
   --button-hover-fill: color-mix(in oklch, var(--mix-color), black 16%);
 
@@ -47,6 +48,11 @@
 .button--danger {
   --mix-color: var(--color-button-danger-fill);
   @apply text-button-danger-text;
+}
+
+.button--success {
+  --mix-color: var(--color-button-success-fill);
+  @apply text-button-success-text;
 }
 
 /* Yellow is too light to carry white text, so this is the one filled variant with dark text */
