@@ -2,12 +2,22 @@
 
 Notable changes to Equality are recorded here, following [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
-## 5.3.2 - 2026-11-02
+## 5.3.2 - 2026-11-03
 
 ### Fixed
 
 - A long label inside a `NavListExpandable` group ends in "…" at the panel's edge, where it was cut
   off and pushed the group's tree line past the panel.
+
+## 5.3.1 - 2026-11-02
+
+### Fixed
+
+- A `DropdownMenuRadioItem` marks the chosen option with a tick level with its first line, where
+  every row drew a radio ring. This changes `RadioDropdown`, `SortSelector` and the docs site's
+  version and site menus.
+- A `DropdownMenuCheckboxItem`'s box sits level with the first line of a two-line item, where it
+  was centred on the whole item.
 
 ## 5.3.0 - 2026-11-02
 

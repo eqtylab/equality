@@ -1,6 +1,6 @@
 import * as React from 'react';
 import * as DropdownMenuPrimitive from '@radix-ui/react-dropdown-menu';
-import { Check, ChevronRight, Circle, Search } from 'lucide-react';
+import { Check, ChevronRight, Search } from 'lucide-react';
 
 import styles from '@/components/dropdown-menu/dropdown-menu.module.css';
 import {
@@ -22,7 +22,6 @@ import { usePortalContainer } from '@/theme/portal-container';
 
 const CheckIcon = Check as React.ComponentType<{ className?: string }>;
 const ChevronRightIcon = ChevronRight as React.ComponentType<{ className?: string }>;
-const CircleIcon = Circle as React.ComponentType<{ className?: string }>;
 const SearchIcon = Search as React.ComponentType<{ className?: string }>;
 
 const DropdownMenuSearchContext = React.createContext<ListSearchState | null>(null);
@@ -505,7 +504,7 @@ const DropdownMenuRadioItem = React.forwardRef<
     >
       <span className={styles['dropdown-menu-item-indicator-radio']}>
         <DropdownMenuPrimitive.ItemIndicator>
-          <CircleIcon className={styles['radio-icon']} />
+          <CheckIcon className={styles['radio-icon']} />
         </DropdownMenuPrimitive.ItemIndicator>
       </span>
       <ItemBreadcrumb />
