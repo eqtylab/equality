@@ -108,7 +108,7 @@ const [showStatusBar, setShowStatusBar] = useState(true);
 
 ### With Radio Items
 
-Use `DropdownMenuRadioGroup` with `DropdownMenuRadioItem` to select a single option from a set. The group is controlled with `value` and `onValueChange`.
+Use `DropdownMenuRadioGroup` with `DropdownMenuRadioItem` to select a single option from a set. A check marks the chosen item; the others show nothing. The group is controlled with `value` and `onValueChange`.
 
 <DropdownMenuDemo client:only="react" variant="with-radio" />
 
@@ -394,7 +394,7 @@ To pick a value in a form rather than run an action, use a [Select with search](
 | `DropdownMenuItem`         | A single actionable menu item                     |
 | `DropdownMenuCheckboxItem` | A toggleable item with a checkmark indicator      |
 | `DropdownMenuRadioGroup`   | Groups radio items into a single-select set       |
-| `DropdownMenuRadioItem`    | A single-select item within a radio group         |
+| `DropdownMenuRadioItem`    | A single-select item, checked when chosen         |
 | `DropdownMenuLabel`        | Non-interactive section title                     |
 | `DropdownMenuSeparator`    | Divider between groups of items                   |
 | `DropdownMenuShortcut`     | Keyboard shortcut hint aligned to the item's end  |

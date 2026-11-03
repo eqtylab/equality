@@ -2,6 +2,16 @@
 
 Notable changes to Equality are recorded here, following [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## 5.3.1 - 2026-11-02
+
+### Fixed
+
+- A `DropdownMenuRadioItem` marks the chosen option with a tick level with its first line, where
+  every row drew a radio ring. This changes `RadioDropdown`, `SortSelector` and the docs site's
+  version and site menus.
+- A `DropdownMenuCheckboxItem`'s box sits level with the first line of a two-line item, where it
+  was centred on the whole item.
+
 ## 5.3.0 - 2026-11-02
 
 ### Added
