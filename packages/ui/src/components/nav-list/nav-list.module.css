@@ -178,7 +178,7 @@
 }
 
 .nav-list-expandable-content {
-  @apply min-h-0;
+  @apply min-h-0 min-w-0;
 }
 
 .nav-list-expandable-content > .nav-list-items {
