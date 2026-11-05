@@ -26,13 +26,14 @@ const NAME =
   'eq-display-gradient-sm -my-[0.05em] block w-fit text-base leading-tight font-semibold text-balance forced-colors:text-inherit';
 
 /* Equality's Icon colours and sizes itself in unlayered CSS, which beats any utility; hence `!`. */
-const QUIET_ICON = 'text-text-tertiary! [&_svg]:size-3.5!';
+const QUIET_ICON =
+  'text-(color:--eq-list-item-muted-color)! group-hover:text-current! [&_svg]:size-3.5!';
 const TAG_ICON = 'text-text-secondary! [&_svg]:size-3.5!';
 
-/* Side padding must match NavTree's row `px-2` (7px + 1px border), or the text drifts off the
-   nav labels' left edge. */
-const BOX = 'rounded-lg border border-transparent px-[7px] py-[5px]';
-const ROW = `${BOX} focus-ring hover:bg-background data-[state=open]:border-brand-primary data-[state=open]:bg-background flex w-full items-center text-left transition-colors`;
+/* Side padding and border must match NavListItem's, or the text drifts off the nav labels' left
+   edge. */
+const BOX = 'rounded-lg border border-transparent px-(--eq-list-item-padding-x) py-[5px]';
+const ROW = `${BOX} group focus-ring hover:bg-list-item-hover data-[state=open]:border-brand-primary data-[state=open]:bg-background flex w-full items-center text-left transition-colors`;
 
 /* Trigger width, not a 16rem floor: the sidebar's border leaves each row 255px on desktop, and a
    16rem menu overhangs its row by a pixel. */

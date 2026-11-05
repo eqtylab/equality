@@ -218,6 +218,14 @@ collapsed: false
   The content root's `index.mdx` is the site landing page and stays out of the sidebar.
 - A typo in `order` produces a build **warning naming the file and the token** rather than silently
   reordering, and the schema is `.strict()` so an unknown key fails the build.
+- `icon` on a top-level folder (`_group.yaml`) or page (frontmatter) shows in front of its label.
+  Icons show on top-level rows only. Give every top-level folder and page one, or none: a mix
+  leaves the rows' text out of line.
+- `badge` marks a folder or page with a status, such as `{ text: Beta, variant: warning }`. It
+  shows after the label at any depth, and screen readers read it with the label. `deprecated: true`
+  adds one for you.
+- A link in a folder's `links` can carry `attrs`, such as `{ data-track: status }`. Only `data-*`,
+  `aria-*` and `id` reach the page; anything else is dropped.
 
 ## Linking between pages
 

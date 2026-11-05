@@ -4,6 +4,38 @@ Notable changes to Equality's Docsite Generator are recorded here, following [Ke
 
 ## Unreleased
 
+## 0.16.0 - 2026-10-29
+
+Needs `@eqtylab/equality` 5.3.0 or later. Sites on Equality 4 bump it with this release; none of
+our docs sites use the components 5.0 removed.
+
+### Changed
+
+- The sidebar is built from Equality's Nav parts. Rows are 36px tall (were 32px), every folder is a
+  group that opens and closes, and only top-level rows show their icon. Top-level folders lead in
+  primary text; folders inside them read as rows.
+- The current page's row is grey instead of lilac, and search's selected result matches it.
+- A group's header works once the sidebar's script has loaded; before that, a click does nothing.
+  Only the copy on screen loads it: the sidebar from `lg` up, the drawer below. Groups that hold the
+  current page still render open. With JavaScript off, every group shows open.
+- A sidebar link's `attrs` pass only `data-*`, `aria-*` and `id`; anything else is dropped, as are
+  `aria-current`, `data-current`, `data-slot` and `data-drill`, which the row sets itself. An
+  `aria-*` set to `true` or `false` renders as `"true"` or `"false"`.
+- A sidebar link to another site shows Equality's ↗ and tells screen readers it opens in a new
+  tab.
+- The site card's rows, the header's links and the landing page's links hover with the same tint
+  as the sidebar's rows, and the card's arrows darken with them. They used the page colour, which
+  was darker than its surface in dark mode.
+
+### Removed
+
+- `scripts/eq-nav-group.ts`, which animated the old `<details>` groups.
+
+### Fixed
+
+- Links and inline code inside tables and alerts look like links and code again. Both had lost
+  their styling, so a link in a table read as plain text.
+
 ## 0.15.3 - 2026-10-28
 
 ### Added
