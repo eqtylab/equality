@@ -2,6 +2,19 @@
 
 Notable changes to Equality are recorded here, following [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## 5.3.3 - 2026-11-05
+
+### Changed
+
+- A clickable `Table` row lights grey on hover and when selected, like a Nav row, where it turned
+  purple.
+
+### Fixed
+
+- Every other `Table` row is a faint grey step from its neighbours, where Chrome tinted it brown,
+  most visibly in dark mode. In light mode the step is easier to see than before, where it had
+  almost disappeared, and in dark mode it is a little stronger.
+
 ## 5.3.2 - 2026-11-03
 
 ### Fixed
