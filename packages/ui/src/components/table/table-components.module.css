@@ -68,16 +68,17 @@
   @apply px-4 py-2;
 }
 
+/* Keep at half the row hover in --color-list-item-hover or less, or a hovered row stops standing out */
 .table-body .table-row:nth-child(even) {
-  background-color: var(--table-stripe-bg);
+  background-color: color-mix(in oklch, var(--color-text-primary) 3%, transparent);
+  @variant dark {
+    background-color: color-mix(in oklch, var(--color-text-primary) 4%, transparent);
+  }
 }
 
 /* Clickable Variant */
 
 .table-row--clickable:not([data-state='selected']) {
-  --mix-color: var(--color-brand-primary);
-  --hover-darken: 55%;
-  --hover-lighten: 55%;
   @apply cursor-pointer;
 }
 
@@ -85,7 +86,7 @@
 .table-row--clickable:not([data-state='selected']):hover:not(
     :has(button:hover, a:not(.table-row-link):hover)
   ) {
-  @apply dark:bg-mixed-dark! bg-mixed-light!;
+  @apply bg-list-item-hover!;
 }
 
 /* Linked Row (stretched link pattern) */
@@ -115,10 +116,7 @@
 }
 
 .table-body .table-row--clickable[data-state='selected'] {
-  background-color: light-dark(
-    color-mix(in oklch, var(--color-brand-primary), white 40%),
-    color-mix(in oklch, var(--color-brand-primary), black 40%)
-  );
+  @apply bg-list-item-current;
 }
 
 .table-caption {
@@ -139,10 +137,6 @@
 }
 .table--sunken .table-body {
   @apply bg-background-sunken;
-  --table-stripe-bg: light-dark(
-    color-mix(in oklch, var(--color-background-sunken), black 2%),
-    color-mix(in oklch, var(--color-background-sunken), white 4%)
-  );
 }
 
 .table--base .table-header,
@@ -151,10 +145,6 @@
 }
 .table--base .table-body {
   @apply bg-background-base;
-  --table-stripe-bg: light-dark(
-    color-mix(in oklch, var(--color-background-base), black 2%),
-    color-mix(in oklch, var(--color-background-base), white 4%)
-  );
 }
 
 .table--raised .table-header,
@@ -163,10 +153,6 @@
 }
 .table--raised .table-body {
   @apply bg-background-raised;
-  --table-stripe-bg: light-dark(
-    color-mix(in oklch, var(--color-background-raised), black 2%),
-    color-mix(in oklch, var(--color-background-raised), white 4%)
-  );
 }
 
 .table--overlay .table-header,
@@ -175,10 +161,6 @@
 }
 .table--overlay .table-body {
   @apply bg-background-overlay;
-  --table-stripe-bg: light-dark(
-    color-mix(in oklch, var(--color-background-overlay), black 2%),
-    color-mix(in oklch, var(--color-background-overlay), white 4%)
-  );
 }
 
 .table--sunken.table-border {
