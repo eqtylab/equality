@@ -5,9 +5,13 @@ import { scopeDecisions } from '../src/scripts/build-decisions.js';
 import { compileCss } from './compile-css';
 
 let scoped: string;
+let global: string;
 
 beforeAll(async () => {
-  scoped = await compileCss('src/theme/theme.module.css');
+  [scoped, global] = await Promise.all([
+    compileCss('src/theme/theme.module.css'),
+    compileCss('src/theme/global-theme-config.css'),
+  ]);
 }, 30_000);
 
 // Top-level rules with their nested blocks: Tailwind adds `@supports` fallbacks inside each colour rule
@@ -37,6 +41,15 @@ describe('scoped build', () => {
       (r) => /\bhtml\b|:root/.test(`${r.selector} ${r.body}`)
     );
     expect(leaks.map((r) => r.selector)).toEqual([]);
+  });
+});
+
+describe('global build', () => {
+  it('reads no theme variable in its decisions, since a consumer build never defines them', () => {
+    const reads = rulesDeclaring(global, '--eq-[\\w-]+').flatMap(
+      (r) => r.body.match(/var\(--(spacing|text-[\w-]+)\)/g) ?? []
+    );
+    expect(reads).toEqual([]);
   });
 });
 
