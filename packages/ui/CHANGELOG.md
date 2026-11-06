@@ -2,6 +2,14 @@
 
 Notable changes to Equality are recorded here, following [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## 5.3.4 - 2026-11-06
+
+### Fixed
+
+- `Nav` rows and rail items keep their height, padding and text size in a site built against the
+  published package, where they shrank to bare text. Only production builds of sites using
+  `@eqtylab/equality/theme-config.css` were affected; dev servers looked right.
+
 ## 5.3.3 - 2026-11-05
 
 ### Changed
