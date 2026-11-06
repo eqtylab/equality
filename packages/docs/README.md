@@ -216,6 +216,9 @@ collapsed: false
   section has an index, and a header that navigates only sometimes teaches the wrong habit.
   Rename that row with `indexLabel` on the group, or globally with `sidebar.indexLabel`.
   The content root's `index.mdx` is the site landing page and stays out of the sidebar.
+- Folders start closed, except those holding the current page. Set `collapsed: false` on a folder
+  to start it open, or `sidebar: { collapsed: false }` to start every folder open. With JavaScript
+  off, every folder shows open.
 - A typo in `order` produces a build **warning naming the file and the token** rather than silently
   reordering, and the schema is `.strict()` so an unknown key fails the build.
 - `icon` on a top-level folder (`_group.yaml`) or page (frontmatter) shows in front of its label.

@@ -4,6 +4,14 @@ Notable changes to Equality's Docsite Generator are recorded here, following [Ke
 
 ## Unreleased
 
+## 0.17.0 - 2026-11-06
+
+### Changed
+
+- Sidebar folders start closed, except those holding the current page, where every folder started
+  open. Set `sidebar: { collapsed: false }` to keep the old behaviour, or `collapsed: false` on one
+  folder's `_group.yaml`.
+
 ## 0.16.0 - 2026-10-29
 
 Needs `@eqtylab/equality` 5.3.0 or later. Sites on Equality 4 bump it with this release; none of

@@ -35,6 +35,7 @@ export default defineConfig({
       title: "Equality",
       description: "A theme-driven component library for EQTY Lab projects",
       versions: { current: ui.version, granularity: "minor" },
+      sidebar: { collapsed: false },
       // No `repository`: reports go to the support portal, the same as the other EQTY Lab docs sites
       feedback: "https://support.eqtylab.io",
       license: {
