@@ -129,7 +129,7 @@ export const docsConfigSchema = z.object({
   sidebar: z
     .object({
       /** Default collapse state for groups with no explicit `collapsed`. */
-      collapsed: z.boolean().default(false),
+      collapsed: z.boolean().default(true),
       /** Default append order for children absent from a group's `order`. */
       sort: z.enum(['alpha', 'filename', 'manual']).default('alpha'),
       /**
