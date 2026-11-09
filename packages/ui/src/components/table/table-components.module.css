@@ -95,8 +95,9 @@
   @apply relative;
 }
 
+/* The row draws the focus line, so the link must not draw its own */
 .table-row-link {
-  @apply absolute inset-0 z-10;
+  @apply absolute inset-0 z-10 outline-none;
 }
 
 /* Screen-reader-only label. Applied via @apply rather than a literal `sr-only`

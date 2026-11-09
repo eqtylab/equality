@@ -22,6 +22,8 @@ Notable changes to Equality are recorded here, following [Keep a Changelog](http
 
 - A `NavSwitcher` in a `NavPanel` beside a `NavRail` centres on the rail's first item, where it sat
   4px high.
+- A focused linked `Table` row draws one focus line, where the row's link drew the browser's own
+  outline just outside it as well.
 
 ## 5.3.4 - 2026-11-06
 
