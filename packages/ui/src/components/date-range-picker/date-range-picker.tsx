@@ -7,6 +7,7 @@ import styles from '@/components/date-range-picker/date-range-picker.module.css'
 import { IconButton } from '@/components/icon-button/icon-button';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/popover/popover';
 import { cn } from '@/lib/utils';
+import { dayKey, dayOf, endOfDay, startOfDay, type Day } from '@/lib/zoned-day';
 
 const CalendarDaysIcon = CalendarDays as React.ComponentType<{ className?: string }>;
 const ChevronLeftIcon = ChevronLeft as React.ComponentType<{ className?: string }>;
@@ -18,25 +19,36 @@ interface DateRange {
 }
 
 interface DateRangePickerProps {
+  /** The selected range; either end may be unset */
   dateRange: DateRange;
+  /** Called with the new range when a day is picked or the range is cleared */
   onSelect: (range: DateRange) => void;
+  /** Additional classes on the trigger button */
   className?: string;
+  /** IANA time zone the days follow, such as `Europe/Paris`. @default the browser's zone */
+  timeZone?: string;
 }
 
-const DateRangePicker = ({ dateRange, onSelect, className }: DateRangePickerProps) => {
-  const [selecting, setSelecting] = useState<'from' | 'to' | null>(null);
-  const [displayedMonth, setDisplayedMonth] = useState(new Date().getMonth());
-  const [displayedYear, setDisplayedYear] = useState(new Date().getFullYear());
+const validDate = (date?: Date) => (date && !Number.isNaN(date.getTime()) ? date : undefined);
 
-  // Create a grid of dates for the displayed month
-  const daysInMonth = new Date(displayedYear, displayedMonth + 1, 0).getDate();
-  const firstDayOfMonth = new Date(displayedYear, displayedMonth, 1).getDay();
+const DateRangePicker = ({ dateRange, onSelect, className, timeZone }: DateRangePickerProps) => {
+  const today = dayOf(new Date(), timeZone);
+  const [selecting, setSelecting] = useState<'from' | 'to' | null>(null);
+  const [displayedMonth, setDisplayedMonth] = useState(today.month);
+  const [displayedYear, setDisplayedYear] = useState(today.year);
+  const from = validDate(dateRange.from);
+  const to = validDate(dateRange.to);
+
+  const daysInMonth = new Date(Date.UTC(displayedYear, displayedMonth + 1, 0)).getUTCDate();
+  const firstDayOfMonth = new Date(Date.UTC(displayedYear, displayedMonth, 1)).getUTCDay();
   const days = Array.from(
     { length: daysInMonth },
-    (_, i) => new Date(displayedYear, displayedMonth, i + 1)
+    (_, i): Day => ({ year: displayedYear, month: displayedMonth, day: i + 1 })
   );
+  const fromKey = from && dayKey(dayOf(from, timeZone));
+  const toKey = to && dayKey(dayOf(to, timeZone));
   const paddingDays = Array.from({ length: firstDayOfMonth }, (_, _i) => null);
-  const hasSelection = dateRange.from || dateRange.to;
+  const hasSelection = from || to;
 
   const MONTHS = [
     'January',
@@ -57,11 +69,8 @@ const DateRangePicker = ({ dateRange, onSelect, className }: DateRangePickerProp
 
   // Format date to readable string
   const formatDate = (date: Date): string => {
-    return date.toLocaleDateString('en-US', {
-      year: 'numeric',
-      month: '2-digit',
-      day: '2-digit',
-    });
+    const { year, month, day } = dayOf(date, timeZone);
+    return `${String(month + 1).padStart(2, '0')}/${String(day).padStart(2, '0')}/${year}`;
   };
 
   // Format range for display
@@ -72,30 +81,10 @@ const DateRangePicker = ({ dateRange, onSelect, className }: DateRangePickerProp
     return `${formatDate(range.from)} - ${formatDate(range.to)}`;
   };
 
-  const isDateSelected = (day: Date, dateRange: DateRange): boolean => {
-    const matchesFrom =
-      dateRange.from &&
-      day.getDate() === dateRange.from.getDate() &&
-      day.getMonth() === dateRange.from.getMonth() &&
-      day.getFullYear() === dateRange.from.getFullYear();
+  const isDateSelected = (day: Day): boolean => dayKey(day) === fromKey || dayKey(day) === toKey;
 
-    const matchesTo =
-      dateRange.to &&
-      day.getDate() === dateRange.to.getDate() &&
-      day.getMonth() === dateRange.to.getMonth() &&
-      day.getFullYear() === dateRange.to.getFullYear();
-
-    return !!matchesFrom || !!matchesTo;
-  };
-
-  const checkIsToday = (day: Date): boolean => {
-    const today = new Date();
-    return (
-      day.getDate() === today.getDate() &&
-      day.getMonth() === today.getMonth() &&
-      day.getFullYear() === today.getFullYear()
-    );
-  };
+  const todayKey = dayKey(today);
+  const checkIsToday = (day: Day): boolean => dayKey(day) === todayKey;
 
   const goToPreviousMonth = () => {
     if (displayedMonth === 0) {
@@ -115,40 +104,27 @@ const DateRangePicker = ({ dateRange, onSelect, className }: DateRangePickerProp
     }
   };
 
-  const isInRange = (date: Date) => {
-    if (!dateRange.from || !dateRange.to) return false;
-    return date >= dateRange.from && date <= dateRange.to;
+  const isInRange = (day: Day) => {
+    if (fromKey === undefined || toKey === undefined) return false;
+    return dayKey(day) >= fromKey && dayKey(day) <= toKey;
   };
 
-  const handleDateSelect = (selectedDate: Date) => {
-    const startOfDay = (date: Date) => {
-      const d = new Date(date);
-      d.setHours(0, 0, 0, 0);
-      return d;
-    };
-
-    const endOfDay = (date: Date) => {
-      const d = new Date(date);
-      d.setHours(23, 59, 59, 999);
-      return d;
-    };
-
-    if (!selecting || !dateRange) {
+  const handleDateSelect = (selectedDay: Day) => {
+    if (!selecting || !from) {
       // Start new selection from 'from' date
-      onSelect({ from: startOfDay(selectedDate), to: undefined });
+      onSelect({ from: startOfDay(selectedDay, timeZone), to: undefined });
       setSelecting('to');
       return;
     }
 
-    if (selecting === 'to') {
-      if (dateRange.from && selectedDate < dateRange.from) {
-        // Swap if selected date is before 'from'
-        onSelect({ from: startOfDay(selectedDate), to: endOfDay(dateRange.from) });
-      } else {
-        onSelect({ from: startOfDay(dateRange.from!), to: endOfDay(selectedDate) });
-      }
-      setSelecting(null);
+    const fromDay = dayOf(from, timeZone);
+    if (dayKey(selectedDay) < dayKey(fromDay)) {
+      // Swap if selected date is before 'from'
+      onSelect({ from: startOfDay(selectedDay, timeZone), to: endOfDay(fromDay, timeZone) });
+    } else {
+      onSelect({ from: startOfDay(fromDay, timeZone), to: endOfDay(selectedDay, timeZone) });
     }
+    setSelecting(null);
   };
 
   const clearSelection = () => {
@@ -180,7 +156,7 @@ const DateRangePicker = ({ dateRange, onSelect, className }: DateRangePickerProp
             }
             className={className}
           >
-            <span className={styles['date-range']}>{formatRange(dateRange)}</span>
+            <span className={styles['date-range']}>{formatRange({ from, to })}</span>
           </Button>
         </PopoverTrigger>
       </div>
@@ -232,7 +208,7 @@ const DateRangePicker = ({ dateRange, onSelect, className }: DateRangePickerProp
             <div key={`padding-${index}`} />
           ))}
           {days.map((day, index) => {
-            const isSelected = isDateSelected(day, dateRange);
+            const isSelected = isDateSelected(day);
             const isToday = checkIsToday(day);
             const inRange = isInRange(day);
 
@@ -246,9 +222,10 @@ const DateRangePicker = ({ dateRange, onSelect, className }: DateRangePickerProp
                   isToday && !isSelected && styles['calendar-day-btn--today'],
                   inRange && !isSelected && styles['calendar-day-btn--in-range']
                 )}
+                aria-current={isToday ? 'date' : undefined}
                 onClick={() => handleDateSelect(day)}
               >
-                {day.getDate()}
+                {day.day}
               </Button>
             );
           })}

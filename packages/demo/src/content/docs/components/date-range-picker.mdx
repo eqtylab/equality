@@ -27,7 +27,19 @@ const [dateRange, setDateRange] = useState<{ from?: Date; to?: Date }>({});
 <DateRangePicker dateRange={dateRange} onSelect={setDateRange} />;
 ```
 
-Both `from` and `to` are optional `Date` objects. `from` is normalized to the start of the day (`00:00:00`) and `to` to the end of the day (`23:59:59`), so a completed range covers both selected days in full.
+Both `from` and `to` are optional `Date` objects. `from` is the first moment of its day and `to` the last (`23:59:59.999`), so a completed range covers both selected days in full.
+
+### Time Zone
+
+Days follow the browser's time zone. When your app lets people pick their own, pass it as `timeZone`, an IANA name. The calendar's today, the selected days, the trigger's label and the `from` and `to` you get back then all follow that zone, so the range matches dates shown elsewhere in your app. An unknown zone name throws a `RangeError`, as `Intl` does, so check a stored preference before passing it.
+
+```tsx
+<DateRangePicker
+  dateRange={dateRange}
+  onSelect={setDateRange}
+  timeZone="Europe/Paris"
+/>
+```
 
 ## Default
 
@@ -35,8 +47,9 @@ Both `from` and `to` are optional `Date` objects. `from` is normalized to the st
 
 ## Props
 
-| Name        | Description                                                                           | Type                                          | Default | Required |
-| ----------- | ------------------------------------------------------------------------------------- | --------------------------------------------- | ------- | -------- |
-| `dateRange` | The currently selected range. `{ from, to }` — both optional `Date` values.           | `{ from?: Date; to?: Date }`                  | —       | ✅       |
-| `onSelect`  | Called with the updated range whenever the user picks a date or clears the selection. | `(range: { from?: Date; to?: Date }) => void` | —       | ✅       |
-| `className` | Additional CSS classes applied to the trigger button.                                 | `string`                                      | —       | ❌       |
+| Name        | Description                                                                           | Type                                          | Default        | Required |
+| ----------- | ------------------------------------------------------------------------------------- | --------------------------------------------- | -------------- | -------- |
+| `dateRange` | The currently selected range. `{ from, to }` — both optional `Date` values.           | `{ from?: Date; to?: Date }`                  | —              | ✅       |
+| `onSelect`  | Called with the updated range whenever the user picks a date or clears the selection. | `(range: { from?: Date; to?: Date }) => void` | —              | ✅       |
+| `className` | Additional CSS classes applied to the trigger button.                                 | `string`                                      | —              | ❌       |
+| `timeZone`  | IANA time zone the days follow, such as `Europe/Paris`.                               | `string`                                      | Browser's zone | ❌       |
