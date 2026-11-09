@@ -2,6 +2,15 @@
 
 Notable changes to Equality are recorded here, following [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## 5.4.1 - 2026-11-09
+
+### Added
+
+- `DateRangePicker` takes `timeZone`, an IANA name. Its today, selected days, label and the
+  `from` and `to` it hands back follow that zone, so a range picked under a user's zone
+  preference starts and ends at that zone's midnights. Without it, days follow the browser's zone
+  as before.
+
 ## 5.4.0 - 2026-11-09
 
 ### Added
