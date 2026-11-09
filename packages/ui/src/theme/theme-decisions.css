@@ -24,8 +24,6 @@ html {
   --eq-nav-motion-duration: 300ms;
   --eq-nav-motion-ease: cubic-bezier(0.2, 0.8, 0.2, 1);
   --eq-nav-motion-nudge: 12px;
-  /* nav: how far below the viewport's top the rail and panel pin, such as under a sticky header */
-  --eq-nav-offset: 0px;
   /* switcher: the fade on its name. It ends at secondary text, so the name is never dimmer than the
      rows below it. A site can set its own: the docs do */
   --eq-switcher-name-fade: linear-gradient(

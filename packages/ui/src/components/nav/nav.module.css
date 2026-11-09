@@ -1,5 +1,12 @@
 @reference '../../theme/theme.module.css';
 
+/* Keep it registered: unregistered, a bare 0 makes the scroller's calc() invalid and drops its max-height */
+@property --eq-nav-offset {
+  syntax: '<length>';
+  inherits: true;
+  initial-value: 0px;
+}
+
 .nav-rail,
 .nav-panel {
   @apply bg-background-raised border-border-raised flex shrink-0 flex-col border-r;
@@ -54,9 +61,16 @@
   @apply overflow-visible p-0;
 }
 
-/* Beside a rail, the 32px heading needs 4px more to centre on the rail's 40px first item */
+/* Beside a rail, half the difference between the rail's first item and the heading, each at least
+   a touch target, centres the heading on the item */
 .nav-rail + .nav-panel .nav-panel-header:has(> .nav-switcher-heading) {
-  @apply pt-1;
+  padding-top: calc(
+    (
+        max(var(--eq-control-height), var(--eq-touch-target)) -
+          max(--spacing(8), var(--eq-touch-target))
+      ) /
+      2
+  );
 }
 
 /* One height whether it holds the switcher, a plain name or the loading bar: the site card's 32px */
