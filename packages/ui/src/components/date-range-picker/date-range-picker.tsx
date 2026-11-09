@@ -19,29 +19,36 @@ interface DateRange {
 }
 
 interface DateRangePickerProps {
+  /** The selected range; either end may be unset */
   dateRange: DateRange;
+  /** Called with the new range when a day is picked or the range is cleared */
   onSelect: (range: DateRange) => void;
+  /** Additional classes on the trigger button */
   className?: string;
-  /** IANA time zone the days are cut in, such as `Europe/Paris`; the browser's zone when left out */
+  /** IANA time zone the days follow, such as `Europe/Paris`. @default the browser's zone */
   timeZone?: string;
 }
 
-const DateRangePicker = ({ dateRange, onSelect, className, timeZone }: DateRangePickerProps) => {
-  const [selecting, setSelecting] = useState<'from' | 'to' | null>(null);
-  const [displayedMonth, setDisplayedMonth] = useState(() => dayOf(new Date(), timeZone).month);
-  const [displayedYear, setDisplayedYear] = useState(() => dayOf(new Date(), timeZone).year);
+const validDate = (date?: Date) => (date && !Number.isNaN(date.getTime()) ? date : undefined);
 
-  // Create a grid of dates for the displayed month
+const DateRangePicker = ({ dateRange, onSelect, className, timeZone }: DateRangePickerProps) => {
+  const today = dayOf(new Date(), timeZone);
+  const [selecting, setSelecting] = useState<'from' | 'to' | null>(null);
+  const [displayedMonth, setDisplayedMonth] = useState(today.month);
+  const [displayedYear, setDisplayedYear] = useState(today.year);
+  const from = validDate(dateRange.from);
+  const to = validDate(dateRange.to);
+
   const daysInMonth = new Date(Date.UTC(displayedYear, displayedMonth + 1, 0)).getUTCDate();
   const firstDayOfMonth = new Date(Date.UTC(displayedYear, displayedMonth, 1)).getUTCDay();
   const days = Array.from(
     { length: daysInMonth },
     (_, i): Day => ({ year: displayedYear, month: displayedMonth, day: i + 1 })
   );
-  const fromKey = dateRange.from && dayKey(dayOf(dateRange.from, timeZone));
-  const toKey = dateRange.to && dayKey(dayOf(dateRange.to, timeZone));
+  const fromKey = from && dayKey(dayOf(from, timeZone));
+  const toKey = to && dayKey(dayOf(to, timeZone));
   const paddingDays = Array.from({ length: firstDayOfMonth }, (_, _i) => null);
-  const hasSelection = dateRange.from || dateRange.to;
+  const hasSelection = from || to;
 
   const MONTHS = [
     'January',
@@ -80,7 +87,7 @@ const DateRangePicker = ({ dateRange, onSelect, className, timeZone }: DateRange
 
   const isDateSelected = (day: Day): boolean => dayKey(day) === fromKey || dayKey(day) === toKey;
 
-  const todayKey = dayKey(dayOf(new Date(), timeZone));
+  const todayKey = dayKey(today);
   const checkIsToday = (day: Day): boolean => dayKey(day) === todayKey;
 
   const goToPreviousMonth = () => {
@@ -107,14 +114,14 @@ const DateRangePicker = ({ dateRange, onSelect, className, timeZone }: DateRange
   };
 
   const handleDateSelect = (selectedDay: Day) => {
-    if (!selecting || !dateRange.from) {
+    if (!selecting || !from) {
       // Start new selection from 'from' date
       onSelect({ from: startOfDay(selectedDay, timeZone), to: undefined });
       setSelecting('to');
       return;
     }
 
-    const fromDay = dayOf(dateRange.from, timeZone);
+    const fromDay = dayOf(from, timeZone);
     if (dayKey(selectedDay) < dayKey(fromDay)) {
       // Swap if selected date is before 'from'
       onSelect({ from: startOfDay(selectedDay, timeZone), to: endOfDay(fromDay, timeZone) });
@@ -153,7 +160,7 @@ const DateRangePicker = ({ dateRange, onSelect, className, timeZone }: DateRange
             }
             className={className}
           >
-            <span className={styles['date-range']}>{formatRange(dateRange)}</span>
+            <span className={styles['date-range']}>{formatRange({ from, to })}</span>
           </Button>
         </PopoverTrigger>
       </div>

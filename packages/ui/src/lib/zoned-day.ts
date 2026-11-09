@@ -1,9 +1,3 @@
-/**
- * Calendar days cut in an IANA time zone, for pickers that hand back instants. A day is the
- * wall-clock date a reader sees, so it never goes through the browser's own zone, whose clock
- * changes would move midnight under the reader.
- */
-
 export type Day = { year: number; month: number; day: number };
 
 const formatters = new Map<string, Intl.DateTimeFormat>();
@@ -23,7 +17,6 @@ const formatterFor = (timeZone: string | undefined) => {
   return formatter;
 };
 
-// The day an instant falls on in timeZone, or in the browser's zone when none is given
 export const dayOf = (instant: Date, timeZone?: string): Day => {
   const parts = formatterFor(timeZone).formatToParts(instant);
   const part = (type: Intl.DateTimeFormatPartTypes) =>
@@ -33,7 +26,6 @@ export const dayOf = (instant: Date, timeZone?: string): Day => {
 
 export const dayKey = ({ year, month, day }: Day) => year * 10000 + month * 100 + day;
 
-// Calendar arithmetic in UTC, which has no clock changes
 export const addDays = ({ year, month, day }: Day, count: number): Day => {
   const date = new Date(Date.UTC(year, month, day + count));
   return { year: date.getUTCFullYear(), month: date.getUTCMonth(), day: date.getUTCDate() };
