@@ -72,11 +72,7 @@
 }
 
 @utility dropdown-item-hover {
-  @apply hover:not-disabled:text-lilac-700! focus:text-lilac-700!;
-  @apply hover:not-disabled:bg-lilac-300/50! focus:bg-lilac-300/50!;
-  @apply hover:not-disabled:shadow-sm;
-  @apply dark:hover:not-disabled:bg-lilac-600/50! dark:focus:bg-lilac-600/50!;
-  @apply dark:hover:not-disabled:text-lilac-100! dark:focus:text-lilac-100!;
+  @apply hover:not-disabled:bg-list-item-hover! focus:bg-list-item-hover!;
 }
 
 @utility dropdown-item {
