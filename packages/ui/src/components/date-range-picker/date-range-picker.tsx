@@ -69,12 +69,8 @@ const DateRangePicker = ({ dateRange, onSelect, className, timeZone }: DateRange
 
   // Format date to readable string
   const formatDate = (date: Date): string => {
-    return date.toLocaleDateString('en-US', {
-      timeZone,
-      year: 'numeric',
-      month: '2-digit',
-      day: '2-digit',
-    });
+    const { year, month, day } = dayOf(date, timeZone);
+    return `${String(month + 1).padStart(2, '0')}/${String(day).padStart(2, '0')}/${year}`;
   };
 
   // Format range for display
@@ -226,6 +222,7 @@ const DateRangePicker = ({ dateRange, onSelect, className, timeZone }: DateRange
                   isToday && !isSelected && styles['calendar-day-btn--today'],
                   inRange && !isSelected && styles['calendar-day-btn--in-range']
                 )}
+                aria-current={isToday ? 'date' : undefined}
                 onClick={() => handleDateSelect(day)}
               >
                 {day.day}

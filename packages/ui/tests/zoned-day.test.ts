@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 
-import { dayOf, endOfDay, startOfDay } from '@/lib/zoned-day';
+import { addDays, dayOf, endOfDay, startOfDay } from '@/lib/zoned-day';
 
 describe('zoned days', () => {
   it('reads the day an instant falls on in the zone, not the runner’s', () => {
@@ -29,6 +29,19 @@ describe('zoned days', () => {
     expect(startOfDay({ year: 2026, month: 2, day: 8 }, 'America/Havana').toISOString()).toBe(
       '2026-03-08T05:00:00.000Z'
     );
+  });
+
+  it('adds days across a month and a year', () => {
+    expect(addDays({ year: 2026, month: 11, day: 31 }, 1)).toEqual({
+      year: 2027,
+      month: 0,
+      day: 1,
+    });
+    expect(addDays({ year: 2026, month: 2, day: 1 }, -1)).toEqual({
+      year: 2026,
+      month: 1,
+      day: 28,
+    });
   });
 
   it('ends a day a millisecond before the next one starts', () => {

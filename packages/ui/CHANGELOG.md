@@ -10,6 +10,12 @@ Notable changes to Equality are recorded here, following [Keep a Changelog](http
   `from` and `to` it hands back follow that zone, so a range picked under a user's zone
   preference starts and ends at that zone's midnights. Without it, days follow the browser's zone
   as before.
+- `DateRangePicker` marks today with `aria-current="date"`.
+
+### Fixed
+
+- `DateRangePicker` treats an invalid `from` or `to` as unset. It had labelled the range
+  "Invalid Date".
 
 ## 5.4.0 - 2026-11-09
 

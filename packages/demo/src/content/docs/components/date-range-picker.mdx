@@ -31,7 +31,7 @@ Both `from` and `to` are optional `Date` objects. `from` is the first moment of 
 
 ### Time Zone
 
-Days follow the browser's time zone. When your app lets people pick their own, pass it as `timeZone`, an IANA name. The calendar's today, the selected days, the trigger's label and the `from` and `to` you get back then all follow that zone, so the range matches dates shown elsewhere in your app.
+Days follow the browser's time zone. When your app lets people pick their own, pass it as `timeZone`, an IANA name. The calendar's today, the selected days, the trigger's label and the `from` and `to` you get back then all follow that zone, so the range matches dates shown elsewhere in your app. An unknown zone name throws a `RangeError`, as `Intl` does, so check a stored preference before passing it.
 
 ```tsx
 <DateRangePicker
