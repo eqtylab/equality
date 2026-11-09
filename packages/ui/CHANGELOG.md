@@ -2,6 +2,27 @@
 
 Notable changes to Equality are recorded here, following [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## 5.4.0 - 2026-11-09
+
+### Added
+
+- `--eq-nav-offset` pins `NavRail` and `NavPanel` that far below the top of the viewport, such as
+  under a sticky header. It defaults to 0.
+
+### Changed
+
+- `DropdownMenu`, `Select` and `Command` items light grey on hover and keyboard focus, like a Nav
+  row, where they turned purple. Danger and warning items keep their own colours.
+- A `CommandItem` lights when it is selected, from the keyboard or the pointer, where it lit only
+  under the pointer, so arrowing through a list showed nothing.
+- A linked `Table` row draws keyboard focus in the focus-ring colour, like every other control,
+  where it used the paler brand purple.
+
+### Fixed
+
+- A `NavSwitcher` in a `NavPanel` beside a `NavRail` centres on the rail's first item, where it sat
+  4px high.
+
 ## 5.3.4 - 2026-11-06
 
 ### Fixed

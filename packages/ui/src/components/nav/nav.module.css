@@ -17,8 +17,9 @@
 
 /* Inherited so a drill level sliding in covers the one leaving */
 .nav-scroller {
-  @apply sticky top-0 flex flex-col overflow-y-auto;
-  max-height: min(100dvh, 100%);
+  @apply sticky flex flex-col overflow-y-auto;
+  top: var(--eq-nav-offset);
+  max-height: min(calc(100dvh - var(--eq-nav-offset)), 100%);
   background-color: inherit;
 }
 
@@ -51,6 +52,11 @@
 
 .nav-panel-header:has(> .nav-switcher-heading) {
   @apply overflow-visible p-0;
+}
+
+/* Beside a rail, the 32px heading needs 4px more to centre on the rail's 40px first item */
+.nav-rail + .nav-panel .nav-panel-header:has(> .nav-switcher-heading) {
+  @apply pt-1;
 }
 
 /* One height whether it holds the switcher, a plain name or the loading bar: the site card's 32px */

@@ -112,7 +112,7 @@
 }
 
 .table-row--linked:has(.table-row-link:focus-visible) {
-  @apply outline-brand-primary outline-2 outline-offset-[-2px];
+  @apply outline-focus-ring outline-2 outline-offset-[-2px];
 }
 
 .table-body .table-row--clickable[data-state='selected'] {

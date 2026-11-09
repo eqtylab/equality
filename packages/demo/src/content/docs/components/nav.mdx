@@ -433,6 +433,16 @@ function Rows({ nodes, top = false }) {
 </NavList>;
 ```
 
+### Under a Sticky Header
+
+The rail and panel pin to the top of the viewport as the page scrolls. Under a sticky header, set `--eq-nav-offset` to the header's height on any element around them, and they pin below it instead.
+
+```css
+.app-shell {
+  --eq-nav-offset: 64px;
+}
+```
+
 ### Navigation in a Sheet
 
 On a phone, put the whole sidebar in a [Sheet](/components/sheet) from the left: the rail and panel side by side, the switcher in the panel's header. Close the sheet when the route changes. Give it a hidden title. Set `minWidth: 0` so the sheet fits the list.
