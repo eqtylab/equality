@@ -15,6 +15,7 @@ describe('DateRangePicker', () => {
   afterEach(() => {
     vi.useRealTimers();
     vi.unstubAllEnvs();
+    vi.restoreAllMocks();
   });
 
   it('hands back a range cut at the zone’s midnights', async () => {
@@ -85,7 +86,10 @@ describe('DateRangePicker', () => {
 
     await user.click(screen.getByRole('button', { name: 'Select Date Range' }));
     await user.click(await screen.findByRole('button', { name: '10' }));
-    expect(onSelect).toHaveBeenLastCalledWith({ from: new Date(2026, 2, 10), to: undefined });
+    expect(onSelect).toHaveBeenLastCalledWith({
+      from: new Date('2026-03-09T18:30:00.000Z'),
+      to: undefined,
+    });
   });
 
   it('throws on an unknown zone, as Intl does', () => {
