@@ -31,25 +31,27 @@ describe('pagination.module.css', () => {
     );
   });
 
-  it('shows the narrow count only below 42rem, ahead of the page-size select', () => {
-    const body = ruleBody(css, '.narrow-only');
-    expect(body).toMatch(/^\s*display:\s*none;/);
-    expect(body).toMatch(/@container pagination \(width < 42rem\)\s*\{\s*display:\s*inline;/);
-    expect(body).toMatch(/@container pagination \(width < 42rem\)\s*\{\s*order:\s*-9999;/);
-  });
-
-  it('hides "per page" by default', () => {
-    expect(ruleBody(css, '.page-size-label')).toMatch(/^\s*display:\s*none;/);
+  it('hides "per page" below 42rem', () => {
+    expect(ruleBody(css, '.page-size-label')).toMatch(
+      /^\s*@container pagination \(width < 42rem\)\s*\{\s*display:\s*none;/
+    );
   });
 
   it.each([
     ['.page-size-label--short', '21rem'],
     ['.page-size-label--medium', '23rem'],
-  ])('shows %s only in a narrow row of at least %s, where it fits', (selector, min) => {
+  ])('shows %s again from %s, where it fits', (selector, min) => {
     expect(ruleBody(css, selector)).toMatch(
-      new RegExp(
-        `^\\s*@container pagination \\(width >= ${min}\\)\\s*\\{\\s*@container pagination \\(width < 42rem\\)\\s*\\{\\s*display:\\s*inline;`
-      )
+      new RegExp(`^\\s*@container pagination \\(width >= ${min}\\)\\s*\\{\\s*display:\\s*inline;`)
+    );
+  });
+
+  it('declares the label tiers after the base rule, so they win where both match', () => {
+    expect(css.indexOf('.page-size-label {')).toBeLessThan(
+      css.indexOf('.page-size-label--short {')
+    );
+    expect(css.indexOf('.page-size-label {')).toBeLessThan(
+      css.indexOf('.page-size-label--medium {')
     );
   });
 });

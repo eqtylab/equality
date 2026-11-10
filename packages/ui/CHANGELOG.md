@@ -9,15 +9,19 @@ Notable changes to Equality are recorded here, following [Keep a Changelog](http
 - `Pagination` fills its container's width, as it measures its own width to choose a layout. In a
   parent that sizes to its content, such as `w-fit`, `inline-flex` or a right-aligned flex row, give
   it a width; side margins on it now overflow its parent.
+- `Pagination`'s info reads "51–75 of 146 agents", then the items-per-page dropdown labelled "per
+  page". It read "Showing 51 to [25] of 146 agents", with the page size where the range's end
+  belongs, so past page 1 it read as "51 to 25". Screen readers hear "51 to 75 of 146 agents".
 
 ### Fixed
 
-- `Pagination` fits a phone, where its row ran off the screen. Below 42rem it keeps one line: a short
-  count ("41–50 of 95"), the items-per-page dropdown, labelled "per page" where it fits, and previous,
-  current page and next. When even that doesn't fit, the page buttons wrap below the count and
+- `Pagination` fits a phone, where its row ran off the screen. Below 42rem it keeps one line: the
+  count without its noun, the items-per-page dropdown, labelled "per page" where it fits, and
+  previous, current page and next. When even that doesn't fit, the page buttons wrap below the count and
   stay on the right.
-- `Pagination` shows a `currentPage` past the last page, such as after a filter shrinks the list,
-  as the last page. It had shown no current page and a count such as "95–95 of 95".
+- `Pagination` shows a `currentPage` outside 1 to the last page, such as after a filter shrinks
+  the list, as the nearest page. It had shown no current page and a count such as "95–95 of 95".
+  Clamp your own page state too, or the list shows an empty page.
 
 ## 5.4.1 - 2026-11-09
 

@@ -18,7 +18,7 @@ const ChevronsLeftIcon = ChevronsLeft as React.ComponentType<{ className?: strin
 const ChevronsRightIcon = ChevronsRight as React.ComponentType<{ className?: string }>;
 
 interface PaginationProps {
-  /** The active page, 1-based; one past the last page shows as the last page */
+  /** The active page, 1-based; one outside 1 to the last page shows as the nearest, so clamp your own state too */
   currentPage: number;
   /** Full dataset size; the controls render only when it exceeds the smallest page size */
   totalItems: number;
@@ -32,7 +32,7 @@ interface PaginationProps {
   onItemsPerPageChange?: (itemsPerPage: number) => void;
   /** Choices in the items-per-page dropdown */
   itemsPerPageOptions?: number[];
-  /** Whether to show the "Showing X to Y of Z" info text */
+  /** Whether to show the "X–Y of Z" info text and the items-per-page dropdown */
   showInfo?: boolean;
   /** Whether to show jump-to-first and jump-to-last buttons once there are more pages than `maxVisiblePages` */
   showFirstLast?: boolean;
@@ -164,50 +164,42 @@ const Pagination = ({
       {/* Left side: Info text with inline dropdown */}
       <div className={styles['info-container']}>
         {showInfo && hasFilteredItems && (
-          <>
-            <span className={styles['wide-only']}>Showing {startItem} to</span>
-            {onItemsPerPageChange ? (
-              <Select value={itemsPerPage.toString()} onValueChange={handleItemsPerPageChange}>
-                <SelectTrigger
-                  className={styles['items-per-page-trigger']}
-                  aria-label="Items per page"
-                >
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent>
-                  {itemsPerPageOptions.map((option) => (
-                    <SelectItem key={option} value={option.toString()}>
-                      {option}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            ) : (
-              <span className={styles['wide-only']}>{endItem}</span>
-            )}
-            {onItemsPerPageChange && filteredItems < 1000 && (
-              <span
-                className={cn(
-                  styles['page-size-label'],
-                  filteredItems < 100
-                    ? styles['page-size-label--short']
-                    : styles['page-size-label--medium']
-                )}
-                aria-hidden="true"
-              >
-                per page
-              </span>
-            )}
-            <span className={styles['wide-only']}>
-              of {filteredItems} {type}
+          <span>
+            <span aria-hidden="true">
+              {startItem}–{endItem} of {filteredItems}
+              {type && <span className={styles['wide-only']}> {type}</span>}
             </span>
-            <span className={styles['narrow-only']}>
-              <span aria-hidden="true">
-                {startItem}–{endItem} of {filteredItems}
-              </span>
-              <span className={styles['spoken-count']}>
-                {startItem} to {endItem} of {filteredItems}
-              </span>
+            <span className={styles['spoken-count']}>
+              {startItem} to {endItem} of {filteredItems} {type}
+            </span>
+          </span>
+        )}
+        {showInfo && hasFilteredItems && onItemsPerPageChange && (
+          <>
+            <Select value={itemsPerPage.toString()} onValueChange={handleItemsPerPageChange}>
+              <SelectTrigger
+                className={styles['items-per-page-trigger']}
+                aria-label="Items per page"
+              >
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent>
+                {itemsPerPageOptions.map((option) => (
+                  <SelectItem key={option} value={option.toString()}>
+                    {option}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+            <span
+              className={cn(
+                styles['page-size-label'],
+                filteredItems < 100 && styles['page-size-label--short'],
+                filteredItems >= 100 && filteredItems < 1000 && styles['page-size-label--medium']
+              )}
+              aria-hidden="true"
+            >
+              per page
             </span>
           </>
         )}

@@ -29,21 +29,17 @@
   @apply @max-2xl/pagination:hidden;
 }
 
-.narrow-only {
-  @apply @max-2xl/pagination:inline @max-2xl/pagination:order-first hidden;
-}
-
 .page-size-label {
-  @apply hidden;
+  @apply @max-2xl/pagination:hidden;
 }
 
 /* Each threshold fits the label beside the longest count and page number of its length; lower it and the row wraps */
 .page-size-label--short {
-  @apply @min-[21rem]/pagination:@max-2xl/pagination:inline;
+  @apply @min-[21rem]/pagination:inline;
 }
 
 .page-size-label--medium {
-  @apply @min-[23rem]/pagination:@max-2xl/pagination:inline;
+  @apply @min-[23rem]/pagination:inline;
 }
 
 .spoken-count {
