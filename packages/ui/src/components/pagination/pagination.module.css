@@ -25,9 +25,9 @@
 }
 
 .wide-only.wide-only {
-  @apply @max-lg/pagination:hidden;
+  @apply @max-2xl/pagination:hidden;
 }
 
 .narrow-only {
-  @apply @max-lg/pagination:inline hidden;
+  @apply @max-2xl/pagination:inline hidden;
 }

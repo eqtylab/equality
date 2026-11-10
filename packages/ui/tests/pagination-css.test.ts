@@ -20,15 +20,15 @@ describe('pagination.module.css', () => {
     expect(ruleBody(css, '.pagination')).toMatch(/flex-wrap:\s*wrap;/);
   });
 
-  it("hides the wide-only parts below 32rem, over a Button's own display", () => {
+  it("hides the wide-only parts below 42rem, over a Button's own display", () => {
     expect(ruleBody(css, '.wide-only.wide-only')).toMatch(
-      /@container pagination \(width < 32rem\)\s*\{\s*display:\s*none;/
+      /@container pagination \(width < 42rem\)\s*\{\s*display:\s*none;/
     );
   });
 
-  it('shows the narrow-only parts only below 32rem', () => {
+  it('shows the narrow-only parts only below 42rem', () => {
     const body = ruleBody(css, '.narrow-only');
     expect(body).toMatch(/^\s*display:\s*none;/);
-    expect(body).toMatch(/@container pagination \(width < 32rem\)\s*\{\s*display:\s*inline;/);
+    expect(body).toMatch(/@container pagination \(width < 42rem\)\s*\{\s*display:\s*inline;/);
   });
 });

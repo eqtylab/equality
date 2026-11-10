@@ -62,7 +62,7 @@ Changing the page size resets to page 1 automatically.
 - **Info line** — set `showInfo={false}` to hide the "showing X to Y of Z" text. Use `type` to append a noun (e.g. `type="items"` → "of 100 items").
 - **First/last jumps** — double-chevron buttons bookend the navigation so users can jump straight to the first or last page. They appear only once there are more pages than `maxVisiblePages`; while every page still has its own numbered button, they would duplicate it. Set `showFirstLast={false}` to render only previous/next.
 - **Windowing** — `maxVisiblePages` controls how many numbered buttons appear at once; the window slides to keep the current page centered.
-- **Narrow widths** — below 32rem the component keeps one line: the items-per-page dropdown, a short count ("41–50 of 95") and previous, current page and next. When even that doesn't fit, the page buttons wrap below the count.
+- **Narrow widths** — below 42rem the component keeps one line: the items-per-page dropdown, a short count ("41–50 of 95") and previous, current page and next. When even that doesn't fit, the page buttons wrap below the count.
 - **Scroll on change** — pass `scrollTargetRef` (a ref or an element `id` string) to smooth-scroll that element into view whenever the page changes.
 
 ## Props
