@@ -2,6 +2,14 @@
 
 Notable changes to Equality are recorded here, following [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## 5.4.2 - 2026-11-10
+
+### Fixed
+
+- `Pagination` fits a phone, where its row ran off the screen. Below 32rem it keeps one line: the
+  items-per-page select, a short count ("41–50 of 95") and previous, current page and next. When
+  even that doesn't fit, the page buttons wrap below the count.
+
 ## 5.4.1 - 2026-11-09
 
 ### Added

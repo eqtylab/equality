@@ -1,8 +1,8 @@
 @reference '../../theme/theme.module.css';
 
 .pagination {
-  @apply relative mt-4;
-  @apply flex-center-between;
+  @apply @container/pagination relative mt-4 w-full;
+  @apply flex-center-between flex-wrap gap-x-4 gap-y-2;
 }
 
 .info-container {
@@ -22,4 +22,12 @@
 
 .page-navigation-container {
   @apply flex gap-1;
+}
+
+.wide-only.wide-only {
+  @apply @max-lg/pagination:hidden;
+}
+
+.narrow-only {
+  @apply @max-lg/pagination:inline hidden;
 }

@@ -135,6 +135,7 @@ const Pagination = ({
           onClick={() => handlePageChange(i)}
           aria-label={`Page ${i} of ${totalPages}`}
           aria-current={currentPage === i ? 'page' : undefined}
+          className={cn(currentPage !== i && styles['wide-only'])}
         >
           {i}
         </Button>
@@ -150,7 +151,7 @@ const Pagination = ({
       <div className={styles['info-container']}>
         {showInfo && hasFilteredItems && (
           <>
-            <span>Showing {startItem} to</span>
+            <span className={styles['wide-only']}>Showing {startItem} to</span>
             {onItemsPerPageChange ? (
               <Select value={itemsPerPage.toString()} onValueChange={handleItemsPerPageChange}>
                 <SelectTrigger
@@ -168,10 +169,13 @@ const Pagination = ({
                 </SelectContent>
               </Select>
             ) : (
-              <span>{endItem}</span>
+              <span className={styles['wide-only']}>{endItem}</span>
             )}
-            <span>
+            <span className={styles['wide-only']}>
               of {filteredItems} {type}
+            </span>
+            <span className={styles['narrow-only']}>
+              {startItem}–{endItem} of {filteredItems}
             </span>
           </>
         )}
@@ -186,6 +190,7 @@ const Pagination = ({
             onClick={handleFirstPage}
             disabled={isFirstPage}
             aria-label="First page"
+            className={styles['wide-only']}
           >
             <ChevronsLeftIcon />
           </Button>
@@ -220,6 +225,7 @@ const Pagination = ({
             onClick={handleLastPage}
             disabled={isLastPage}
             aria-label={`Last page (${totalPages})`}
+            className={styles['wide-only']}
           >
             <ChevronsRightIcon />
           </Button>
