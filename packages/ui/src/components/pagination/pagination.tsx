@@ -18,23 +18,36 @@ const ChevronsLeftIcon = ChevronsLeft as React.ComponentType<{ className?: strin
 const ChevronsRightIcon = ChevronsRight as React.ComponentType<{ className?: string }>;
 
 interface PaginationProps {
+  /** The active page, 1-based; one outside 1 to the last page shows as the nearest, so clamp your own state too */
   currentPage: number;
+  /** Full dataset size; the controls render only when it exceeds the smallest page size */
   totalItems: number;
+  /** Item count after filtering, which drives the page count and the info text */
   filteredItems: number;
+  /** Number of items shown per page */
   itemsPerPage: number;
+  /** Called with the new page when the user navigates */
   onPageChange: (page: number) => void;
+  /** Called with the new page size; when set, the items-per-page dropdown shows */
   onItemsPerPageChange?: (itemsPerPage: number) => void;
+  /** Choices in the items-per-page dropdown */
   itemsPerPageOptions?: number[];
+  /** Whether to show the "X–Y of Z" info text and the items-per-page dropdown */
   showInfo?: boolean;
+  /** Whether to show jump-to-first and jump-to-last buttons once there are more pages than `maxVisiblePages` */
   showFirstLast?: boolean;
+  /** Most numbered page buttons shown at once */
   maxVisiblePages?: number;
+  /** Additional classes on the root */
   className?: string;
+  /** Noun after the total in the info text, such as `items` */
   type?: string;
+  /** Element, or an element `id`, scrolled into view when the page changes */
   scrollTargetRef?: React.RefObject<HTMLElement | null> | string;
 }
 
 const Pagination = ({
-  currentPage,
+  currentPage: requestedPage,
   totalItems,
   filteredItems,
   itemsPerPage,
@@ -49,6 +62,7 @@ const Pagination = ({
   scrollTargetRef,
 }: PaginationProps) => {
   const totalPages = Math.ceil(filteredItems / itemsPerPage);
+  const currentPage = Math.min(Math.max(requestedPage, 1), Math.max(totalPages, 1));
   const startItem = Math.min(filteredItems, 1 + (currentPage - 1) * itemsPerPage);
   const endItem = Math.min(currentPage * itemsPerPage, filteredItems);
   const hasFilteredItems = filteredItems > 0;
@@ -135,6 +149,7 @@ const Pagination = ({
           onClick={() => handlePageChange(i)}
           aria-label={`Page ${i} of ${totalPages}`}
           aria-current={currentPage === i ? 'page' : undefined}
+          className={cn(currentPage !== i && styles['wide-only'])}
         >
           {i}
         </Button>
@@ -146,38 +161,49 @@ const Pagination = ({
 
   return (
     <div className={cn(styles['pagination'], className)}>
-      {/* Left side: Info text with inline dropdown */}
       <div className={styles['info-container']}>
         {showInfo && hasFilteredItems && (
+          <span>
+            <span aria-hidden="true">
+              {startItem}–{endItem} of {filteredItems}
+              {type && <span className={styles['wide-only']}> {type}</span>}
+            </span>
+            <span className={styles['spoken-count']}>
+              {startItem} to {endItem} of {filteredItems} {type}
+            </span>
+          </span>
+        )}
+        {showInfo && hasFilteredItems && onItemsPerPageChange && (
           <>
-            <span>Showing {startItem} to</span>
-            {onItemsPerPageChange ? (
-              <Select value={itemsPerPage.toString()} onValueChange={handleItemsPerPageChange}>
-                <SelectTrigger
-                  className={styles['items-per-page-trigger']}
-                  aria-label="Items per page"
-                >
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent>
-                  {itemsPerPageOptions.map((option) => (
-                    <SelectItem key={option} value={option.toString()}>
-                      {option}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            ) : (
-              <span>{endItem}</span>
-            )}
-            <span>
-              of {filteredItems} {type}
+            <Select value={itemsPerPage.toString()} onValueChange={handleItemsPerPageChange}>
+              <SelectTrigger
+                className={styles['items-per-page-trigger']}
+                aria-label="Items per page"
+              >
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent>
+                {itemsPerPageOptions.map((option) => (
+                  <SelectItem key={option} value={option.toString()}>
+                    {option}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+            <span
+              className={cn(
+                styles['page-size-label'],
+                filteredItems < 100 && styles['page-size-label--short'],
+                filteredItems >= 100 && filteredItems < 1000 && styles['page-size-label--medium']
+              )}
+              aria-hidden="true"
+            >
+              per page
             </span>
           </>
         )}
       </div>
 
-      {/* Right side: Page navigation */}
       <nav className={styles['page-navigation-container']} aria-label="Pagination">
         {showFirstLastButtons && (
           <Button
@@ -186,6 +212,7 @@ const Pagination = ({
             onClick={handleFirstPage}
             disabled={isFirstPage}
             aria-label="First page"
+            className={styles['wide-only']}
           >
             <ChevronsLeftIcon />
           </Button>
@@ -220,6 +247,7 @@ const Pagination = ({
             onClick={handleLastPage}
             disabled={isLastPage}
             aria-label={`Last page (${totalPages})`}
+            className={styles['wide-only']}
           >
             <ChevronsRightIcon />
           </Button>

@@ -55,7 +55,6 @@ export const PaginationDemo = () => {
         itemsPerPageOptions={[5, 10, 25, 50, 100]}
         showInfo={true}
         maxVisiblePages={5}
-        className="w-full"
         type="items"
         scrollTargetRef={itemsGridRef as React.RefObject<HTMLElement>}
       />

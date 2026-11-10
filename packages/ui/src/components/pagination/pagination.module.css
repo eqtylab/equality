@@ -1,8 +1,8 @@
 @reference '../../theme/theme.module.css';
 
 .pagination {
-  @apply relative mt-4;
-  @apply flex-center-between;
+  @apply @container/pagination relative mt-4 w-full;
+  @apply flex-center-between flex-wrap gap-x-4 gap-y-2;
 }
 
 .info-container {
@@ -21,5 +21,27 @@
 }
 
 .page-navigation-container {
-  @apply flex gap-1;
+  @apply ml-auto flex gap-1;
+}
+
+/* Doubled to outrank Button's own display; a single class loses or wins by CSS load order */
+.wide-only.wide-only {
+  @apply @max-2xl/pagination:hidden;
+}
+
+.page-size-label {
+  @apply @max-2xl/pagination:hidden;
+}
+
+/* Each threshold fits the label beside the longest count and page number of its length; lower it and the row wraps */
+.page-size-label--short {
+  @apply @min-[21rem]/pagination:inline;
+}
+
+.page-size-label--medium {
+  @apply @min-[23rem]/pagination:inline;
+}
+
+.spoken-count {
+  @apply sr-only;
 }
