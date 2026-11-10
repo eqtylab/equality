@@ -103,4 +103,14 @@ describe('Pagination', () => {
     expect(info().getByText('91–95 of 95')).toBeTruthy();
     expect(narrowButtons()).toEqual(['Previous page', 'Page 10 of 10', 'Next page']);
   });
+
+  it('shows a page below 1 as the first page', () => {
+    render(<Pagination {...defaults} currentPage={0} />);
+
+    expect(screen.getByRole('button', { name: 'Page 1 of 10' }).getAttribute('aria-current')).toBe(
+      'page'
+    );
+    expect(info().getByText('1–10 of 95')).toBeTruthy();
+    expect(narrowButtons()).toEqual(['Previous page', 'Page 1 of 10', 'Next page']);
+  });
 });

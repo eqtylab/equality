@@ -17,8 +17,8 @@ Notable changes to Equality are recorded here, following [Keep a Changelog](http
 
 - `Pagination` fits a phone, where its row ran off the screen. Below 42rem it keeps one line: the
   count without its noun, the items-per-page dropdown, labelled "per page" where it fits, and
-  previous, current page and next. When even that doesn't fit, the page buttons wrap below the count and
-  stay on the right.
+  previous, current page and next. When even that doesn't fit, the page buttons wrap below the
+  count and stay on the right.
 - `Pagination` shows a `currentPage` outside 1 to the last page, such as after a filter shrinks
   the list, as the nearest page. It had shown no current page and a count such as "95–95 of 95".
   Clamp your own page state too, or the list shows an empty page.

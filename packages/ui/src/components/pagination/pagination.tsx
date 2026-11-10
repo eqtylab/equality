@@ -161,7 +161,6 @@ const Pagination = ({
 
   return (
     <div className={cn(styles['pagination'], className)}>
-      {/* Left side: Info text with inline dropdown */}
       <div className={styles['info-container']}>
         {showInfo && hasFilteredItems && (
           <span>
@@ -205,7 +204,6 @@ const Pagination = ({
         )}
       </div>
 
-      {/* Right side: Page navigation */}
       <nav className={styles['page-navigation-container']} aria-label="Pagination">
         {showFirstLastButtons && (
           <Button
