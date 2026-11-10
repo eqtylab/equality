@@ -16,8 +16,13 @@ describe('pagination.module.css', () => {
     expect(body).toMatch(/width:\s*100%;/);
   });
 
-  it('wraps the page buttons under the info line when the two do not fit', () => {
+  it('wraps the page buttons under the info line when the two do not fit, still on the right', () => {
     expect(ruleBody(css, '.pagination')).toMatch(/flex-wrap:\s*wrap;/);
+    expect(ruleBody(css, '.page-navigation-container')).toMatch(/margin-left:\s*auto;/);
+  });
+
+  it('hides the spoken count visually', () => {
+    expect(ruleBody(css, '.spoken-count')).toMatch(/clip-path:\s*inset\(50%\);|clip:\s*rect/);
   });
 
   it("hides the wide-only parts below 42rem, over a Button's own display", () => {

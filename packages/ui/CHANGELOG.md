@@ -4,11 +4,19 @@ Notable changes to Equality are recorded here, following [Keep a Changelog](http
 
 ## 5.4.2 - 2026-11-10
 
+### Changed
+
+- `Pagination` fills its container's width, as it measures its own width to choose a layout. In a
+  parent that sizes to its content, such as `w-fit`, `inline-flex` or a right-aligned flex row, give
+  it a width; side margins on it now overflow its parent.
+
 ### Fixed
 
 - `Pagination` fits a phone, where its row ran off the screen. Below 42rem it keeps one line: the
-  items-per-page select, a short count ("41–50 of 95") and previous, current page and next. When
-  even that doesn't fit, the page buttons wrap below the count.
+  items-per-page dropdown, a short count ("41–50 of 95") and previous, current page and next. When
+  even that doesn't fit, the page buttons wrap below the count and stay on the right.
+- `Pagination` shows a `currentPage` past the last page, such as after a filter shrinks the list,
+  as the last page. It had shown no current page and a count such as "95–95 of 95".
 
 ## 5.4.1 - 2026-11-09
 

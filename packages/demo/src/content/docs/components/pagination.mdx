@@ -62,14 +62,15 @@ Changing the page size resets to page 1 automatically.
 - **Info line** — set `showInfo={false}` to hide the "showing X to Y of Z" text. Use `type` to append a noun (e.g. `type="items"` → "of 100 items").
 - **First/last jumps** — double-chevron buttons bookend the navigation so users can jump straight to the first or last page. They appear only once there are more pages than `maxVisiblePages`; while every page still has its own numbered button, they would duplicate it. Set `showFirstLast={false}` to render only previous/next.
 - **Windowing** — `maxVisiblePages` controls how many numbered buttons appear at once; the window slides to keep the current page centered.
-- **Narrow widths** — below 42rem the component keeps one line: the items-per-page dropdown, a short count ("41–50 of 95") and previous, current page and next. When even that doesn't fit, the page buttons wrap below the count.
+- **Narrow widths** — below 42rem the component keeps one line: the items-per-page dropdown, a short count ("41–50 of 95") and previous, current page and next. When even that doesn't fit, the page buttons wrap below the count and stay on the right.
+- **Width** — the component fills its container's width, as it measures its own width to choose a layout. In a parent that sizes to its content, such as `w-fit` or `inline-flex`, give it a width.
 - **Scroll on change** — pass `scrollTargetRef` (a ref or an element `id` string) to smooth-scroll that element into view whenever the page changes.
 
 ## Props
 
 | Name                   | Description                                                                                                  | Type                               | Default             | Required |
 | ---------------------- | ------------------------------------------------------------------------------------------------------------ | ---------------------------------- | ------------------- | -------- |
-| `currentPage`          | The active page (1-based).                                                                                   | `number`                           | —                   | ✅       |
+| `currentPage`          | The active page (1-based); one past the last page shows as the last page.                                    | `number`                           | —                   | ✅       |
 | `totalItems`           | Full dataset size. Controls whether the component renders.                                                   | `number`                           | —                   | ✅       |
 | `filteredItems`        | Item count after filtering. Drives page count and info text.                                                 | `number`                           | —                   | ✅       |
 | `itemsPerPage`         | Number of items shown per page.                                                                              | `number`                           | —                   | ✅       |

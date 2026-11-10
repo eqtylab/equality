@@ -18,23 +18,36 @@ const ChevronsLeftIcon = ChevronsLeft as React.ComponentType<{ className?: strin
 const ChevronsRightIcon = ChevronsRight as React.ComponentType<{ className?: string }>;
 
 interface PaginationProps {
+  /** The active page, 1-based; one past the last page shows as the last page */
   currentPage: number;
+  /** Full dataset size; the controls render only when it exceeds the smallest page size */
   totalItems: number;
+  /** Item count after filtering, which drives the page count and the info text */
   filteredItems: number;
+  /** Number of items shown per page */
   itemsPerPage: number;
+  /** Called with the new page when the user navigates */
   onPageChange: (page: number) => void;
+  /** Called with the new page size; when set, the items-per-page dropdown shows */
   onItemsPerPageChange?: (itemsPerPage: number) => void;
+  /** Choices in the items-per-page dropdown */
   itemsPerPageOptions?: number[];
+  /** Whether to show the "Showing X to Y of Z" info text */
   showInfo?: boolean;
+  /** Whether to show jump-to-first and jump-to-last buttons once there are more pages than `maxVisiblePages` */
   showFirstLast?: boolean;
+  /** Most numbered page buttons shown at once */
   maxVisiblePages?: number;
+  /** Additional classes on the root */
   className?: string;
+  /** Noun after the total in the info text, such as `items` */
   type?: string;
+  /** Element, or an element `id`, scrolled into view when the page changes */
   scrollTargetRef?: React.RefObject<HTMLElement | null> | string;
 }
 
 const Pagination = ({
-  currentPage,
+  currentPage: requestedPage,
   totalItems,
   filteredItems,
   itemsPerPage,
@@ -49,6 +62,7 @@ const Pagination = ({
   scrollTargetRef,
 }: PaginationProps) => {
   const totalPages = Math.ceil(filteredItems / itemsPerPage);
+  const currentPage = Math.min(Math.max(requestedPage, 1), Math.max(totalPages, 1));
   const startItem = Math.min(filteredItems, 1 + (currentPage - 1) * itemsPerPage);
   const endItem = Math.min(currentPage * itemsPerPage, filteredItems);
   const hasFilteredItems = filteredItems > 0;
@@ -175,7 +189,12 @@ const Pagination = ({
               of {filteredItems} {type}
             </span>
             <span className={styles['narrow-only']}>
-              {startItem}–{endItem} of {filteredItems}
+              <span aria-hidden="true">
+                {startItem}–{endItem} of {filteredItems}
+              </span>
+              <span className={styles['spoken-count']}>
+                {startItem} to {endItem} of {filteredItems}
+              </span>
             </span>
           </>
         )}

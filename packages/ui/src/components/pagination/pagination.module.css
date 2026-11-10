@@ -21,13 +21,18 @@
 }
 
 .page-navigation-container {
-  @apply flex gap-1;
+  @apply ml-auto flex gap-1;
 }
 
+/* Doubled to outrank Button's own display; a single class loses or wins by CSS load order */
 .wide-only.wide-only {
   @apply @max-2xl/pagination:hidden;
 }
 
 .narrow-only {
   @apply @max-2xl/pagination:inline hidden;
+}
+
+.spoken-count {
+  @apply sr-only;
 }
