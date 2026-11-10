@@ -31,9 +31,25 @@ describe('pagination.module.css', () => {
     );
   });
 
-  it('shows the narrow-only parts only below 42rem', () => {
+  it('shows the narrow count only below 42rem, ahead of the page-size select', () => {
     const body = ruleBody(css, '.narrow-only');
     expect(body).toMatch(/^\s*display:\s*none;/);
     expect(body).toMatch(/@container pagination \(width < 42rem\)\s*\{\s*display:\s*inline;/);
+    expect(body).toMatch(/@container pagination \(width < 42rem\)\s*\{\s*order:\s*-9999;/);
+  });
+
+  it('hides "per page" by default', () => {
+    expect(ruleBody(css, '.page-size-label')).toMatch(/^\s*display:\s*none;/);
+  });
+
+  it.each([
+    ['.page-size-label--short', '21rem'],
+    ['.page-size-label--medium', '23rem'],
+  ])('shows %s only in a narrow row of at least %s, where it fits', (selector, min) => {
+    expect(ruleBody(css, selector)).toMatch(
+      new RegExp(
+        `^\\s*@container pagination \\(width >= ${min}\\)\\s*\\{\\s*@container pagination \\(width < 42rem\\)\\s*\\{\\s*display:\\s*inline;`
+      )
+    );
   });
 });

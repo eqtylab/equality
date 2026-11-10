@@ -37,6 +37,46 @@ describe('Pagination', () => {
     expect(isWideOnly(info().getByText('Showing 41 to'))).toBe(true);
   });
 
+  it('labels the page-size select "per page" for sighted users only', () => {
+    render(<Pagination {...defaults} onItemsPerPageChange={() => {}} />);
+
+    const label = info().getByText('per page');
+    expect(label.className).toContain('page-size-label--short');
+    expect(label.getAttribute('aria-hidden')).toBe('true');
+  });
+
+  it('needs more room for "per page" beside a three-digit count', () => {
+    render(
+      <Pagination
+        {...defaults}
+        totalItems={146}
+        filteredItems={146}
+        onItemsPerPageChange={() => {}}
+      />
+    );
+
+    expect(info().getByText('per page').className).toContain('page-size-label--medium');
+  });
+
+  it('has no "per page" label beside a four-digit count, as it never fits', () => {
+    render(
+      <Pagination
+        {...defaults}
+        totalItems={1450}
+        filteredItems={1450}
+        onItemsPerPageChange={() => {}}
+      />
+    );
+
+    expect(info().queryByText('per page')).toBeNull();
+  });
+
+  it('has no "per page" label without a page-size select', () => {
+    render(<Pagination {...defaults} />);
+
+    expect(info().queryByText('per page')).toBeNull();
+  });
+
   it('keeps only the short count for a narrow width without a page-size select', () => {
     render(<Pagination {...defaults} />);
 

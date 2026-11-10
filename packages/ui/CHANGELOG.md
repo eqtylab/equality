@@ -12,9 +12,10 @@ Notable changes to Equality are recorded here, following [Keep a Changelog](http
 
 ### Fixed
 
-- `Pagination` fits a phone, where its row ran off the screen. Below 42rem it keeps one line: the
-  items-per-page dropdown, a short count ("41–50 of 95") and previous, current page and next. When
-  even that doesn't fit, the page buttons wrap below the count and stay on the right.
+- `Pagination` fits a phone, where its row ran off the screen. Below 42rem it keeps one line: a short
+  count ("41–50 of 95"), the items-per-page dropdown, labelled "per page" where it fits, and previous,
+  current page and next. When even that doesn't fit, the page buttons wrap below the count and
+  stay on the right.
 - `Pagination` shows a `currentPage` past the last page, such as after a filter shrinks the list,
   as the last page. It had shown no current page and a count such as "95–95 of 95".
 

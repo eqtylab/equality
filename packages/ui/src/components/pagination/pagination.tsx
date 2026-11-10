@@ -185,6 +185,19 @@ const Pagination = ({
             ) : (
               <span className={styles['wide-only']}>{endItem}</span>
             )}
+            {onItemsPerPageChange && filteredItems < 1000 && (
+              <span
+                className={cn(
+                  styles['page-size-label'],
+                  filteredItems < 100
+                    ? styles['page-size-label--short']
+                    : styles['page-size-label--medium']
+                )}
+                aria-hidden="true"
+              >
+                per page
+              </span>
+            )}
             <span className={styles['wide-only']}>
               of {filteredItems} {type}
             </span>
