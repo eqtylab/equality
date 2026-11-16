@@ -2,6 +2,16 @@
 
 Notable changes to Equality are recorded here, following [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## 5.5.0 - 2026-11-16
+
+### Changed
+
+- `NavPanel`'s `header` is styled as a heading only when it's a string: padded, truncated and
+  semibold. Anything else, such as a `NavSwitcher`, a segmented control or a site card, sits in the
+  header unpadded and unclipped, so its own spacing, wrapping and focus rings show as designed. A
+  heading passed as an element, such as `<span>Settings</span>`, loses that styling; pass the
+  string instead.
+
 ## 5.4.5 - 2026-11-16
 
 ### Fixed

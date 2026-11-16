@@ -35,8 +35,8 @@ const TAG_ICON = 'text-text-secondary! [&_svg]:size-3.5!';
 const BOX = 'rounded-lg border border-transparent px-(--eq-list-item-padding-x) py-[5px]';
 const ROW = `${BOX} group focus-ring hover:bg-list-item-hover data-[state=open]:border-brand-primary data-[state=open]:bg-background flex w-full items-center text-left transition-colors`;
 
-/* Trigger width, not a 16rem floor: the sidebar's border leaves each row 255px on desktop, and a
-   16rem menu overhangs its row by a pixel. */
+/* Trigger width, not a fixed floor: the sidebar's border and NavPanel's padding set each row's
+   width, and a fixed menu overhangs its row once either changes. */
 const MENU = {
   align: 'start',
   sideOffset: 8,

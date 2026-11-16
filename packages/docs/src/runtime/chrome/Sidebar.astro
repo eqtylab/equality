@@ -1,5 +1,6 @@
 ---
 import type { NavNode } from '@eqtylab/docs/types';
+import { NavPanel } from '@eqtylab/equality';
 
 import type { SwitcherData } from '../lib/versions-ui.ts';
 import NavTree from './NavTree.astro';
@@ -13,24 +14,28 @@ interface Props {
 const { nodes, switcher } = Astro.props;
 ---
 
-{/* border-raised pairs with the raised fill, as Gov Studio does. */}
-<aside
-  id="eq-sidebar"
-  class="bg-background-raised border-border-raised [view-transition-name:eq-docs-sidebar] top-[var(--eq-docs-header-height)] hidden w-[var(--eq-docs-sidebar-width)] shrink-0 border-r lg:sticky lg:block lg:h-[calc(100vh-var(--eq-docs-header-height))] lg:overflow-y-auto"
+{
+  /* Equality's NavPanel pins its own scroller below the header, so the wrapper only stretches to
+     the page's height: the panel has size containment and in DocsPage's items-start row it would
+     otherwise be 0px tall. Its width is set in unlayered CSS, which beats any utility; hence `!`. */
+}
+<div
+  class="[view-transition-name:eq-docs-sidebar] [--eq-nav-offset:var(--eq-docs-header-height)] hidden shrink-0 self-stretch lg:flex"
   data-eq-chrome
   data-pagefind-ignore
 >
-  <nav class="px-4 py-6" aria-label="Documentation">
-    <SiteCard switcher={switcher} />
+  <NavPanel id="eq-sidebar" aria-label="Documentation" className="w-(--eq-docs-sidebar-width)!">
+    <SiteCard slot="header" switcher={switcher} />
     <NavTree nodes={nodes} media="(width >= 64rem)" />
-  </nav>
-</aside>
+  </NavPanel>
+</div>
 
 {/* Inline and straight after the sidebar, or the restored scroll lands after first paint. */}
 <script is:inline>
   (() => {
     const KEY = 'eqty-docs-sidebar';
-    const sidebar = document.getElementById('eq-sidebar');
+    // NavPanel's scroller, not the panel: the panel is as tall as the page and never scrolls
+    const sidebar = document.querySelector('#eq-sidebar [data-nav-scroller]');
     if (!sidebar) return;
     const offset = (link) => link.getBoundingClientRect().top - sidebar.getBoundingClientRect().top;
 
