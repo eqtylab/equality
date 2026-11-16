@@ -2,6 +2,12 @@
 
 Notable changes to Equality are recorded here, following [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## 5.4.3 - 2026-11-16
+
+### Changed
+
+- Improve nav list group label contrast
+
 ## 5.4.2 - 2026-11-10
 
 ### Changed

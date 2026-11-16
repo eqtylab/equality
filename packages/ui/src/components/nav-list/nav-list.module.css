@@ -13,7 +13,7 @@
 .nav-list-group-label {
   @apply px-(--eq-list-item-padding-x) flex items-center gap-2;
   padding-top: calc(var(--eq-list-group-gap) - var(--eq-list-gap));
-  @apply text-(length:--eq-list-label-font-size) text-text-secondary font-medium;
+  @apply text-(length:--eq-list-label-font-size) text-text-primary font-medium;
 }
 
 .nav-list-group-label::after {
