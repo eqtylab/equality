@@ -4,6 +4,14 @@ Notable changes to Equality's Docsite Generator are recorded here, following [Ke
 
 ## Unreleased
 
+Needs `@eqtylab/equality` 5.5.0 or later.
+
+### Changed
+
+- The desktop sidebar is Equality's `NavPanel`, with the site card as its header. Its padding
+  follows the panel's: rows sit 8px from the edges (were 16px) and the list starts 16px down (was
+  24px). The site card still scrolls away with the rows. The phone drawer is unchanged.
+
 ## 0.17.0 - 2026-11-06
 
 ### Changed

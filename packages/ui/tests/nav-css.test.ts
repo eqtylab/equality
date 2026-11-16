@@ -38,23 +38,16 @@ describe('nav.module.css', () => {
     expect(body).toMatch(/max-height:\s*min\(calc\(100dvh - var\(--eq-nav-offset\)\), 100%\);/);
   });
 
-  // The header carries the scroller's 16px top padding, which the rail keeps
   it("centres the switcher on the rail's first item with a mouse and on touch", () => {
-    expect(switcherPadding(40, 0)).toBe(20);
-    expect(switcherPadding(40, 44)).toBe(16);
+    expect(switcherPadding(40, 0)).toBe(4);
+    expect(switcherPadding(40, 44)).toBe(0);
   });
 
-  it('pins the panel header and keeps a long list from squashing it', () => {
-    const body = ruleBody(css, '.nav-panel-header');
-    expect(body).toMatch(/position:\s*sticky;/);
-    expect(body).toMatch(/top:\s*calc\(0\.25rem \* 0\);/);
-    expect(body).toMatch(/flex-shrink:\s*0;/);
-    expect(body).toMatch(/background-color:\s*inherit;/);
+  it('keeps the panel header from shrinking under a long list', () => {
+    expect(ruleBody(css, '.nav-panel-header')).toMatch(/flex-shrink:\s*0;/);
   });
 
-  it('moves the scroller top padding into the header, so nothing shows above it once pinned', () => {
-    expect(ruleBody(css, '.nav-panel .nav-scroller:has(> .nav-panel-header)')).toMatch(
-      /padding-top:/
-    );
+  it('scrolls the panel header away with the rows', () => {
+    expect(ruleBody(css, '.nav-panel-header')).not.toMatch(/position:\s*sticky/);
   });
 });
