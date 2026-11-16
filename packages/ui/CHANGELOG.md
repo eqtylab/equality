@@ -2,6 +2,16 @@
 
 Notable changes to Equality are recorded here, following [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## 5.4.5 - 2026-11-16
+
+### Fixed
+
+- `NavPanel`'s `header` scrolls away with the rows again, as it did before 5.4.4. 5.4.4 pinned it
+  to the top of the panel by mistake.
+- `NavPanel`'s `header` keeps its height when the list is longer than the panel. Any header other
+  than a `NavSwitcher`, such as a plain heading, had shrunk to a sliver. 5.4.4's entry said this
+  affected a `NavSwitcher` too, but it never did.
+
 ## 5.4.4 - 2026-11-16
 
 ### Fixed

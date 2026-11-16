@@ -52,30 +52,21 @@
   @apply size-5;
 }
 
-/* The header takes the scroller's top padding, so it pins flush to the panel's top and its fill
-   covers that gap too */
-.nav-panel .nav-scroller:has(> .nav-panel-header) {
-  @apply pt-0;
-}
-
 /* Above the rows, which sit 2px under it in a drilled panel, so its focus ring stays whole. It
-   must not shrink: in the scroller's column a long list squashes it to nothing. Its fill hides
-   the rows scrolling under it */
+   clips its overflow, so without shrink-0 a list longer than the panel squashes it to nothing */
 .nav-panel-header {
-  @apply text-text-primary z-3 pt-5.5 sticky top-0 m-0 shrink-0 truncate px-2 pb-1.5 text-sm font-semibold;
-  background-color: inherit;
+  @apply text-text-primary z-3 relative m-0 shrink-0 truncate px-2 py-1.5 text-sm font-semibold;
 }
 
 .nav-panel-header:has(> .nav-switcher-heading) {
-  @apply overflow-visible px-0 pb-0 pt-4;
+  @apply overflow-visible p-0;
 }
 
 /* Beside a rail, half the difference between the rail's first item and the heading, each at least
    a touch target, centres the heading on the item */
 .nav-rail + .nav-panel .nav-panel-header:has(> .nav-switcher-heading) {
   padding-top: calc(
-    --spacing(4) +
-      (
+    (
         max(var(--eq-control-height), var(--eq-touch-target)) -
           max(--spacing(8), var(--eq-touch-target))
       ) /
