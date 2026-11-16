@@ -6,7 +6,7 @@ import { cn } from '@/lib/utils';
 interface NavPanelProps extends Omit<React.HTMLAttributes<HTMLElement>, 'title'> {
   /** Names the panel's landmark */
   'aria-label': string;
-  /** Above the rows, such as a `NavSwitcher` or a heading */
+  /** Above the rows, pinned as they scroll, such as a `NavSwitcher` or a heading */
   header?: React.ReactNode;
 }
 
