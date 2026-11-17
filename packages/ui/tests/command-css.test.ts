@@ -16,4 +16,11 @@ describe('command.module.css', () => {
     );
     expect(body).not.toMatch(/:hover/);
   });
+
+  it('sets the input in 16px text below md, ending text that does not fit in an ellipsis', () => {
+    const body = ruleBody(css, '.command-input-input');
+    expect(body).toMatch(/^\s*font-size:\s*1rem;/);
+    expect(body).toMatch(/text-overflow:\s*ellipsis;/);
+    expect(body).toMatch(/@media \(width >= 48rem\)\s*\{\s*font-size:\s*0\.875rem;/);
+  });
 });

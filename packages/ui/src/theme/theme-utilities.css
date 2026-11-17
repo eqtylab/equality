@@ -96,7 +96,7 @@
 @utility dropdown-search-input {
   @apply min-w-0 flex-1;
   @apply border-none bg-transparent outline-none;
-  @apply text-text-primary text-sm;
+  @apply text-text-primary text-ellipsis text-base md:text-sm;
   @apply placeholder:text-text-secondary;
 }
 

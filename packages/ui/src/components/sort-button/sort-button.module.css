@@ -5,6 +5,7 @@
   @apply flex items-center gap-2;
   @apply hover:text-text-link;
   @apply [&>svg]:size-4;
+  @apply focus-ring rounded-sm;
 }
 
 .sort-button:hover .arrow-up-down-icon {
