@@ -61,6 +61,10 @@
   @apply [&:has([role=checkbox])]:pr-0;
 }
 
+.table-cell [data-icon-button='sm'] {
+  @apply -my-1;
+}
+
 .table-row {
   @apply grid items-center gap-4;
   grid-template-columns: subgrid;

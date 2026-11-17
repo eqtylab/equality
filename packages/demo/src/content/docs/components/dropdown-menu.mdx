@@ -216,7 +216,7 @@ import { DropdownMenuSearch, DropdownMenuEmpty } from "@eqtylab/equality";
 
 ### Default
 
-The search box shows, focused, the moment the menu opens. Filtering works across every item type, including checkbox and radio items. Labels and separators hide while a search is active so results stay compact, and submenu items are flattened into the main list (see below). Add a `DropdownMenuEmpty` to show a "no results" row when nothing matches.
+The search box shows, focused, the moment the menu opens. On a touch screen it waits for a tap or a typed key instead, so the phone's keyboard doesn't cover the list. Filtering works across every item type, including checkbox and radio items. Labels and separators hide while a search is active so results stay compact, and submenu items are flattened into the main list (see below). Add a `DropdownMenuEmpty` to show a "no results" row when nothing matches.
 
 <DropdownMenuDemo client:only="react" variant="with-search" />
 

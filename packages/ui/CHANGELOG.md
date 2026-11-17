@@ -20,6 +20,44 @@ Notable changes to Equality are recorded here, following [Keep a Changelog](http
   than a `NavSwitcher`, such as a plain heading, had shrunk to a sliver. 5.4.4's entry said this
   affected a `NavSwitcher` too, but it never did.
 
+## 5.5.0 - 2026-11-17
+
+### Added
+
+- `Timeline`, a record of what happened to one thing, in order: entries down a rail, in sections
+  marked by the state they happened under. It is three parts: `Timeline`, `TimelineSection` and
+  `TimelineItem`. A section draws a marker for its state, joined to the next by a connector, and
+  the marker stays pinned beside its entries as they scroll. A section takes an `icon`, a Lucide
+  element such as `<Clock />`, an optional `label` that says its state to a screen reader, and one
+  of the five status variants, defaulting to `neutral`. `success`, `warning` and `danger` sections
+  default to `Badge`'s icons for those variants; `neutral` and `primary` sections need an `icon`. `size` is `sm` (a 20px marker, an
+  icon-only `Badge`) or `md` (40px, an `md` `Button`'s height, the default).
+- `--eq-timeline-offset`, a length, pins a `Timeline`'s markers that far below the top of the
+  scrolling area, such as under a sticky header. It defaults to `0px`.
+- `--eq-timeline-marker-background` and `--eq-timeline-marker-color` colour a `TimelineSection`'s
+  marker and connector for a state no variant covers, such as a control status.
+
+## 5.4.5 - 2026-11-17
+
+### Changed
+
+- On a touch screen, a searchable `Select`, `DropdownMenu`, `FilterDropdown` or `RadioDropdown`
+  leaves its search unfocused when it opens, and `FilterDropdown`'s "Clear all" returns focus to
+  the menu, so the phone's keyboard doesn't cover the list. A tap on the search box, or a typed
+  key, focuses it.
+
+### Fixed
+
+- A table row with an `sm` `IconButton`, the default size, such as an actions menu or a
+  `CopyButton`, is as tall as a row of text. The button overhangs the row's padding instead of
+  setting the row's height.
+- `SortButton` draws Equality's focus ring. Chromium drew its own rounded ring, and Firefox a
+  square one.
+- `Input`, `SearchBar`, `CommandInput`, `SelectSearch` and `DropdownMenuSearch` set 16px text
+  below `md`, as `Textarea` does. Under 16px, iOS Safari zooms into a focused field and stays zoomed.
+- The same fields end a placeholder, or an unfocused value, that doesn't fit in "…". It was cut off
+  mid-word.
+
 ## 5.4.4 - 2026-11-16
 
 ### Fixed

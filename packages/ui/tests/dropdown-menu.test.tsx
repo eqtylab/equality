@@ -14,6 +14,8 @@ import {
   useDropdownMenuSearchQuery,
 } from '@/components/dropdown-menu/dropdown-menu';
 
+import { setMatchingMediaQueries } from './media-query-stub';
+
 type Props = {
   onSelect?: (item: string) => void;
   open?: boolean;
@@ -80,6 +82,36 @@ describe('DropdownMenu', () => {
       await open(user);
 
       await waitFor(() => expect(document.activeElement).toBe(screen.getByRole('searchbox')));
+    });
+
+    it('leaves focus on the items for a coarse pointer, until a key is typed', async () => {
+      setMatchingMediaQueries('(pointer: coarse)');
+      const user = userEvent.setup();
+      render(<Menu />);
+      await open(user);
+      const copy = screen.getByRole('menuitem', { name: 'Copy' });
+
+      await waitFor(() => expect(document.activeElement).toBe(copy));
+      await act(async () => {});
+      expect(document.activeElement).toBe(copy);
+
+      await user.keyboard('c');
+      const search = screen.getByRole('searchbox') as HTMLInputElement;
+      await waitFor(() => expect(document.activeElement).toBe(search));
+      expect(search.value).toBe('c');
+    });
+
+    it('focuses the search for a coarse pointer when it is tapped', async () => {
+      setMatchingMediaQueries('(pointer: coarse)');
+      const user = userEvent.setup();
+      render(<Menu />);
+      await open(user);
+      const copy = screen.getByRole('menuitem', { name: 'Copy' });
+      await waitFor(() => expect(document.activeElement).toBe(copy));
+
+      const search = screen.getByRole('searchbox');
+      await user.pointer({ keys: '[TouchA]', target: search });
+      expect(document.activeElement).toBe(search);
     });
 
     it('reveals the search input on the first keystroke and seeds the query', async () => {

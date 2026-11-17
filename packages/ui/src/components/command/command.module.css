@@ -37,7 +37,7 @@
 }
 
 .command-input-input {
-  @apply placeholder:text-text-secondary text-sm;
+  @apply placeholder:text-text-secondary text-ellipsis text-base md:text-sm;
   @apply outline-hidden rounded-md bg-transparent;
   @apply flex h-10 w-full py-3;
   @apply disabled:cursor-not-allowed disabled:opacity-50;

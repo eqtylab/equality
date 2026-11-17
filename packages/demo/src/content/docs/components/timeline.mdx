@@ -1,0 +1,212 @@
+---
+title: "Timeline"
+description: "A vertical list of ordered items separated by marked sections"
+---
+
+import {
+  TimelineCustomColorDemo,
+  TimelineDemo,
+  TimelineVariantsDemo,
+} from "@demo/components/demo/timeline";
+
+## Overview
+
+Timeline lists what happened to one object, in order. Examples include a control's declarations and reviews, and a user's activity logs. Timeline entries are grouped by section according to their state, denoted by a marker on the rail to the left of the timeline items. The rail inherits the color of each section and the marker stays pinned beside its entries as the section scrolls. It pins to the nearest scrolling ancestor, or the page; under a sticky header, set `--eq-timeline-offset` to the header's height to ensure the markers correctly pin below it.
+
+It is composed of three components: `Timeline` (the list), `TimelineSection` (a run of entries under one state, with its marker) and `TimelineItem` (one entry). Each entry is developer defined, eg a [Card](/components/card), a line of text, a form, etc.
+
+The markers are decorative. [Accessibility](#accessibility) covers how to name the timeline and its sections so a screen reader hears each state once.
+
+Do not use Timeline to display the steps of a process that is currently underway. use [Progress Indicator](/components/progress-indicator) instead.
+
+## Usage
+
+Import the components:
+
+```tsx
+import { Timeline, TimelineItem, TimelineSection } from "@eqtylab/equality";
+import { Clock } from "lucide-react";
+```
+
+Basic usage with required properties:
+
+```tsx
+<Timeline aria-label="Control timeline">
+  <TimelineSection label="Events while in progress" icon={<Clock />}>
+    <TimelineItem>Evidence attached</TimelineItem>
+    <TimelineItem>Declaration submitted</TimelineItem>
+  </TimelineSection>
+</Timeline>
+```
+
+## Variants
+
+### Sizes
+
+`size` sets the markers' size, and associated spacing. The default `md` size suits a page's main column, a card or a drawer. Use `md` when the timeline is the focus of a page.
+
+<div className="my-4">
+  <TimelineDemo size="md" />
+</div>
+
+Use `sm` when displaying a timeline as a _part_ of a page where the timeline is helpful in a supplemental context.
+
+<div className="my-4">
+  <TimelineDemo size="sm" />
+</div>
+
+#### Usage
+
+```tsx
+<Timeline aria-label="Control timeline" size="sm">
+  <TimelineSection label="Events while not started" icon={<CircleDashed />}>
+    <TimelineItem>Control added</TimelineItem>
+  </TimelineSection>
+  <TimelineSection
+    label="Events while in progress"
+    icon={<Clock />}
+    variant="primary"
+  >
+    <TimelineItem>Evidence attached</TimelineItem>
+    <TimelineItem>Declaration submitted</TimelineItem>
+  </TimelineSection>
+  <TimelineSection label="Events while compliant" variant="success">
+    <TimelineItem>Declaration accepted</TimelineItem>
+  </TimelineSection>
+</Timeline>
+```
+
+### Section Variants
+
+A section's `variant` controls its marker and connecting line color. `success`, `warning` and `danger` sections default to the same standard status icons, so `icon` is only needed to replace them. `neutral` and `primary` sections have no default icons, and require one to be set.
+
+<div className="my-4">
+  <TimelineVariantsDemo />
+</div>
+
+```tsx
+<Timeline aria-label="Timeline variants">
+  <TimelineSection
+    label="Neutral section"
+    icon={<CircleDashed />}
+    variant="neutral"
+  >
+    …
+  </TimelineSection>
+  <TimelineSection label="Primary section" icon={<Clock />} variant="primary">
+    …
+  </TimelineSection>
+  <TimelineSection label="Success section" variant="success">
+    …
+  </TimelineSection>
+  <TimelineSection label="Warning section" variant="warning">
+    …
+  </TimelineSection>
+  <TimelineSection label="Danger section" variant="danger">
+    …
+  </TimelineSection>
+</Timeline>
+```
+
+### Custom Colors
+
+For states that aren't covered by variants, such as a control status', set `--eq-timeline-marker-background` and `--eq-timeline-marker-color` on the section to a pair of tokens. Only reach for custom colors if none of the variants apply to your use case.
+
+<div className="my-4">
+  <TimelineCustomColorDemo />
+</div>
+
+```tsx
+<TimelineSection
+  label="Events while in review"
+  icon={<Eye />}
+  style={
+    {
+      "--eq-timeline-marker-background":
+        "var(--color-badge-background-in-review)",
+      "--eq-timeline-marker-color": "var(--color-badge-text-in-review)",
+    } as React.CSSProperties
+  }
+>
+  …
+</TimelineSection>
+```
+
+### Linking to an Entry
+
+Give a `TimelineItem` an `id` to allow items to deeplink into it on a page.
+
+```tsx
+<TimelineItem id="event-12">…</TimelineItem>
+```
+
+## Accessibility
+
+Timeline comprises an ordered list of sections, and each section an ordered list of its entries, so a screen reader announces how many entries there are and where the current item is among them. Markers are hidden from screen readers. Name a section only when the name says something its surroundings don't, or screen reader users will hear the same thing twice.
+
+### Naming the Timeline
+
+When a visible heading titles the timeline section, point `aria-labelledby` at it. Everyone gets the same name, and it can't drift from the heading.
+
+```tsx
+<h2 id="control-history">History</h2>
+<Timeline aria-labelledby="control-history">…</Timeline>
+```
+
+With no visible heading, give it an `aria-label` when the name tells it apart, such as with more than one timeline on a page. Leave it unnamed when it is the only list in a region that is already named, such as a drawer titled "History".
+
+### Naming a Section
+
+A section's `label` is the only way a screen reader learns its state, since the marker is hidden. Give a section a `label` when its state shows only in the marker.
+
+```tsx
+<TimelineSection label="Events while in review" icon={<Eye />}>
+  <TimelineItem>Evidence attached</TimelineItem>
+</TimelineSection>
+```
+
+Leave `label` out when every entry already says the state, such as in a title or a status badge on each one. With both, a screen reader says the state as it enters the section and again on every entry.
+
+```tsx
+<TimelineSection icon={<Eye />}>
+  <TimelineItem>
+    <Card>
+      <CardContent>In review: evidence attached</CardContent>
+    </Card>
+  </TimelineItem>
+</TimelineSection>
+```
+
+## Slots
+
+| Name              | Description                                       |
+| ----------------- | ------------------------------------------------- |
+| `Timeline`        | The list of sections                              |
+| `TimelineSection` | A run of entries under one state, with its marker |
+| `TimelineItem`    | One entry, holding whatever the entry shows       |
+
+## Props
+
+### Timeline
+
+| Name         | Description                                                         | Type        | Default | Required |
+| ------------ | ------------------------------------------------------------------- | ----------- | ------- | -------- |
+| `aria-label` | Names the timeline for a screen reader when no visible heading does | `string`    |         | ❌       |
+| `children`   | The sections, in the order they happened                            | `ReactNode` |         | ✅       |
+| `size`       | The markers' size, and the spacing with it                          | `sm`, `md`  | `md`    | ❌       |
+
+### TimelineSection
+
+| Name       | Description                                                                                    | Type                                                 | Default                                            | Required |
+| ---------- | ---------------------------------------------------------------------------------------------- | ---------------------------------------------------- | -------------------------------------------------- | -------- |
+| `label`    | Names the section's entries for a screen reader; leave it out when every entry says the state  | `string`                                             |                                                    | ❌       |
+| `icon`     | A Lucide icon element, drawn in the marker and sized by it; needed for `neutral` and `primary` | `ReactElement`                                       | Badge's icon for `success`, `warning` and `danger` | ❌       |
+| `children` | The section's `TimelineItem`s                                                                  | `ReactNode`                                          |                                                    | ✅       |
+| `variant`  | The status the marker and its connector report                                                 | `neutral`, `primary`, `success`, `warning`, `danger` | `neutral`                                          | ❌       |
+
+### TimelineItem
+
+| Name       | Description                                 | Type        | Default | Required |
+| ---------- | ------------------------------------------- | ----------- | ------- | -------- |
+| `children` | The entry: a card, a line of text, anything | `ReactNode` |         | ✅       |
+| `id`       | Makes the entry a link's target             | `string`    |         | ❌       |

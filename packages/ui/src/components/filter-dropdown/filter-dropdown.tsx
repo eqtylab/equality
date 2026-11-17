@@ -15,6 +15,7 @@ import {
   DropdownMenuTrigger,
 } from '@/components/dropdown-menu/dropdown-menu';
 import styles from '@/components/filter-dropdown/filter-dropdown.module.css';
+import { hasCoarsePointer } from '@/lib/list-search';
 import { cn } from '@/lib/utils';
 
 const ChevronDownIcon = ChevronDown as React.ComponentType<{ className?: string }>;
@@ -62,7 +63,10 @@ const FilterDropdown = ({
   const handleClearAll = (event: Event) => {
     event.preventDefault();
     const menu = (event.currentTarget as HTMLElement).closest<HTMLElement>('[role="menu"]');
-    (menu?.querySelector<HTMLElement>('[data-dropdown-search]') ?? menu)?.focus();
+    const search = hasCoarsePointer()
+      ? null
+      : menu?.querySelector<HTMLElement>('[data-dropdown-search]');
+    (search ?? menu)?.focus();
     onClearAll();
   };
 
