@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { cva, type VariantProps } from 'class-variance-authority';
+import { Check, OctagonAlert, TriangleAlert } from 'lucide-react';
 
 import styles from '@/components/timeline/timeline.module.css';
 import { cn } from '@/lib/utils';
@@ -50,12 +51,19 @@ const Timeline = React.forwardRef<HTMLOListElement, TimelineProps>(
 );
 Timeline.displayName = 'Timeline';
 
+// Badge's icons for the same variants
+const defaultVariantIcons: Record<string, React.ReactElement> = {
+  success: <Check />,
+  warning: <OctagonAlert />,
+  danger: <TriangleAlert />,
+};
+
 export interface TimelineSectionProps
   extends React.LiHTMLAttributes<HTMLLIElement>, VariantProps<typeof timelineSectionVariants> {
   /** Names the section's entries for assistive technology, such as "Events while in review". The marker is decorative, so leave it out only when every entry already says the state */
   label?: string;
-  /** A Lucide icon element, such as `<Clock />`, drawn in the marker. The timeline sizes it */
-  icon: React.ReactElement;
+  /** A Lucide icon element, such as `<Clock />`, drawn in the marker. The timeline sizes it. `neutral` and `primary` sections need one */
+  icon?: React.ReactElement;
   /** The section's `TimelineItem`s */
   children: React.ReactNode;
 }
@@ -65,7 +73,9 @@ const TimelineSection = React.forwardRef<HTMLLIElement, TimelineSectionProps>(
     <li ref={ref} className={cn(timelineSectionVariants({ variant }), className)} {...props}>
       <div className={styles['timeline-rail']} aria-hidden="true">
         <div className={styles['timeline-connector']} />
-        <div className={styles['timeline-marker']}>{icon}</div>
+        <div className={styles['timeline-marker']}>
+          {icon ?? (variant ? defaultVariantIcons[variant] : undefined)}
+        </div>
       </div>
       <ol className={styles['timeline-items']} aria-label={label}>
         {children}

@@ -60,6 +60,33 @@ describe('Timeline', () => {
     );
   });
 
+  it("draws Badge's icon for success, warning and danger unless given one", () => {
+    render(
+      <Timeline>
+        <TimelineSection label="Success" variant="success">
+          <TimelineItem>Accepted</TimelineItem>
+        </TimelineSection>
+        <TimelineSection label="Warning" variant="warning">
+          <TimelineItem>Flagged</TimelineItem>
+        </TimelineSection>
+        <TimelineSection label="Danger" variant="danger">
+          <TimelineItem>Rejected</TimelineItem>
+        </TimelineSection>
+        <TimelineSection label="Overridden" variant="success" icon={<Clock />}>
+          <TimelineItem>Pending</TimelineItem>
+        </TimelineSection>
+      </Timeline>
+    );
+
+    const marker = (name: string) =>
+      screen.getByRole('list', { name }).parentElement?.firstElementChild;
+    expect(marker('Success')?.querySelector('.lucide-check')).toBeTruthy();
+    expect(marker('Warning')?.querySelector('.lucide-octagon-alert')).toBeTruthy();
+    expect(marker('Danger')?.querySelector('.lucide-triangle-alert')).toBeTruthy();
+    expect(marker('Overridden')?.querySelector('.lucide-clock')).toBeTruthy();
+    expect(marker('Overridden')?.querySelector('.lucide-check')).toBeNull();
+  });
+
   it("passes an entry's id through, so a link can lead to it", () => {
     renderTimeline();
 

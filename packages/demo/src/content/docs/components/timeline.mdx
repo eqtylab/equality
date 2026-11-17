@@ -70,11 +70,7 @@ Basic usage with required properties:
     <TimelineItem>Evidence attached</TimelineItem>
     <TimelineItem>Declaration submitted</TimelineItem>
   </TimelineSection>
-  <TimelineSection
-    label="Events while compliant"
-    icon={<Check />}
-    variant="success"
-  >
+  <TimelineSection label="Events while compliant" variant="success">
     <TimelineItem>Declaration accepted</TimelineItem>
   </TimelineSection>
 </Timeline>
@@ -82,7 +78,7 @@ Basic usage with required properties:
 
 ### Section Variants
 
-A section's `variant` colours its marker and the connector below it, in the same colours as a [Badge](/components/badge). The `icon`, a Lucide element, is required, with no default per variant: it names the state, which the colour alone doesn't. Scroll the pane to see each marker stay beside its section's entries.
+A section's `variant` colours its marker and the connector below it, in the same colours as a [Badge](/components/badge). The `icon`, a Lucide element, names the state, which the colour alone doesn't. `success`, `warning` and `danger` sections default to the same icons as a [Badge](/components/badge) of that variant, so `icon` is only needed to replace them. `neutral` and `primary` sections have no default, so give them an `icon`. Scroll the pane to see each marker stay beside its section's entries.
 
 <div className="my-4">
   <TimelineVariantsDemo />
@@ -100,21 +96,13 @@ A section's `variant` colours its marker and the connector below it, in the same
   <TimelineSection label="Primary section" icon={<Clock />} variant="primary">
     …
   </TimelineSection>
-  <TimelineSection label="Success section" icon={<Check />} variant="success">
+  <TimelineSection label="Success section" variant="success">
     …
   </TimelineSection>
-  <TimelineSection
-    label="Warning section"
-    icon={<OctagonAlert />}
-    variant="warning"
-  >
+  <TimelineSection label="Warning section" variant="warning">
     …
   </TimelineSection>
-  <TimelineSection
-    label="Danger section"
-    icon={<TriangleAlert />}
-    variant="danger"
-  >
+  <TimelineSection label="Danger section" variant="danger">
     …
   </TimelineSection>
 </Timeline>
@@ -209,12 +197,12 @@ Leave `label` out when every entry already says the state, such as in a title or
 
 ### TimelineSection
 
-| Name       | Description                                                                                   | Type                                                 | Default   | Required |
-| ---------- | --------------------------------------------------------------------------------------------- | ---------------------------------------------------- | --------- | -------- |
-| `label`    | Names the section's entries for a screen reader; leave it out when every entry says the state | `string`                                             |           | ❌       |
-| `icon`     | A Lucide icon element, drawn in the marker and sized by it                                    | `ReactElement`                                       |           | ✅       |
-| `children` | The section's `TimelineItem`s                                                                 | `ReactNode`                                          |           | ✅       |
-| `variant`  | The status the marker and its connector report                                                | `neutral`, `primary`, `success`, `warning`, `danger` | `neutral` | ❌       |
+| Name       | Description                                                                                    | Type                                                 | Default                                            | Required |
+| ---------- | ---------------------------------------------------------------------------------------------- | ---------------------------------------------------- | -------------------------------------------------- | -------- |
+| `label`    | Names the section's entries for a screen reader; leave it out when every entry says the state  | `string`                                             |                                                    | ❌       |
+| `icon`     | A Lucide icon element, drawn in the marker and sized by it; needed for `neutral` and `primary` | `ReactElement`                                       | Badge's icon for `success`, `warning` and `danger` | ❌       |
+| `children` | The section's `TimelineItem`s                                                                  | `ReactNode`                                          |                                                    | ✅       |
+| `variant`  | The status the marker and its connector report                                                 | `neutral`, `primary`, `success`, `warning`, `danger` | `neutral`                                          | ❌       |
 
 ### TimelineItem
 

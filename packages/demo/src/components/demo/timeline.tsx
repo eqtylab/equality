@@ -1,19 +1,12 @@
-import type { CSSProperties } from "react";
-import {
-  Check,
-  CircleDashed,
-  ClipboardCheck,
-  Clock,
-  Eye,
-  OctagonAlert,
-  TriangleAlert,
-} from "lucide-react";
+import type { CSSProperties, ReactElement } from "react";
+import { CircleDashed, ClipboardCheck, Clock, Eye } from "lucide-react";
 import {
   Card,
   CardContent,
   Timeline,
   TimelineItem,
   TimelineSection,
+  type TimelineSectionProps,
 } from "@eqtylab/equality";
 
 type TimelineSize = "sm" | "md";
@@ -82,11 +75,7 @@ export function TimelineDemo({ size = "md" }: { size?: TimelineSize }) {
           />
         </TimelineItem>
       </TimelineSection>
-      <TimelineSection
-        label="Events while compliant"
-        icon={<Check />}
-        variant="success"
-      >
+      <TimelineSection label="Events while compliant" variant="success">
         <TimelineItem>
           <Entry
             title="Declaration accepted"
@@ -98,13 +87,17 @@ export function TimelineDemo({ size = "md" }: { size?: TimelineSize }) {
   );
 }
 
-const VARIANTS = [
+const VARIANTS: {
+  variant: TimelineSectionProps["variant"];
+  icon?: ReactElement;
+  title: string;
+}[] = [
   { variant: "neutral", icon: <CircleDashed />, title: "Neutral" },
   { variant: "primary", icon: <Clock />, title: "Primary" },
-  { variant: "success", icon: <Check />, title: "Success" },
-  { variant: "warning", icon: <OctagonAlert />, title: "Warning" },
-  { variant: "danger", icon: <TriangleAlert />, title: "Danger" },
-] as const;
+  { variant: "success", title: "Success" },
+  { variant: "warning", title: "Warning" },
+  { variant: "danger", title: "Danger" },
+];
 
 const EVENTS = ["First event", "Second event"];
 
@@ -115,7 +108,7 @@ export function TimelineVariantsDemo() {
       <Timeline aria-label="Timeline variants">
         {VARIANTS.map(({ variant, icon, title }) => (
           <TimelineSection
-            key={variant}
+            key={title}
             label={`${title} section`}
             icon={icon}
             variant={variant}
