@@ -1,6 +1,8 @@
 import { afterEach, vi } from 'vitest';
 
-// jsdom has neither the Web Animations API nor matchMedia. Each animate call is recorded with a
+import { setMatchingMediaQueries } from './media-query-stub';
+
+// jsdom has no Web Animations API. Each animate call is recorded with a
 // `finished` promise the test resolves, as the browser would after the duration
 export interface RecordedAnimation {
   target: Element;
@@ -12,10 +14,8 @@ export interface RecordedAnimation {
 
 export const animateCalls: RecordedAnimation[] = [];
 
-let reducedMotion = false;
-
 export function setReducedMotion(value: boolean) {
-  reducedMotion = value;
+  setMatchingMediaQueries(...(value ? ['(prefers-reduced-motion: reduce)'] : []));
 }
 
 export function finishAll() {
@@ -41,19 +41,6 @@ Element.prototype.animate = function (this: Element, keyframes, options) {
   return { finished, cancel } as unknown as Animation;
 };
 
-window.matchMedia = (query: string) =>
-  ({
-    matches: query.includes('prefers-reduced-motion: reduce') ? reducedMotion : false,
-    media: query,
-    onchange: null,
-    addEventListener() {},
-    removeEventListener() {},
-    addListener() {},
-    removeListener() {},
-    dispatchEvent: () => false,
-  }) as MediaQueryList;
-
 afterEach(() => {
   animateCalls.length = 0;
-  reducedMotion = false;
 });

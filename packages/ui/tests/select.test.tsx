@@ -131,7 +131,7 @@ describe('Select', () => {
       await waitFor(() => expect(document.activeElement).toBe(option('Japan')));
 
       const search = screen.getByRole('searchbox');
-      await user.click(search);
+      await user.pointer({ keys: '[TouchA]', target: search });
       expect(document.activeElement).toBe(search);
     });
 

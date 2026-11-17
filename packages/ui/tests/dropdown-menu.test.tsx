@@ -110,7 +110,7 @@ describe('DropdownMenu', () => {
       await waitFor(() => expect(document.activeElement).toBe(copy));
 
       const search = screen.getByRole('searchbox');
-      await user.click(search);
+      await user.pointer({ keys: '[TouchA]', target: search });
       expect(document.activeElement).toBe(search);
     });
 
