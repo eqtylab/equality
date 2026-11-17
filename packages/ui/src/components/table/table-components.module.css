@@ -61,6 +61,11 @@
   @apply [&:has([role=checkbox])]:pr-0;
 }
 
+/* Overhangs the row's padding, so a row with a menu is as tall as one without */
+.table-cell [data-icon-button] {
+  @apply -my-1;
+}
+
 .table-row {
   @apply grid items-center gap-4;
   grid-template-columns: subgrid;

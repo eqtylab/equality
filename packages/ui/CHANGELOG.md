@@ -2,6 +2,22 @@
 
 Notable changes to Equality are recorded here, following [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## 5.4.5 - 2026-11-17
+
+### Fixed
+
+- A row with an `IconButton`, such as an actions menu, is as tall as a row of text. The button
+  overhangs the row's padding instead of setting the row's height.
+- `SortButton` draws Equality's focus ring. Chromium drew its own rounded ring, and Firefox a
+  square one.
+- `Input`, `SearchBar`, `CommandInput`, `SelectSearch` and `DropdownMenuSearch` set 16px text
+  below `md`, as `Textarea` does. Under 16px, iOS Safari zooms into a focused field and stays zoomed.
+- The same fields end a placeholder, or an unfocused value, that doesn't fit in "…". It was cut off
+  mid-word.
+- On a touch screen, a searchable `Select`, `DropdownMenu`, `FilterDropdown` or `RadioDropdown`
+  leaves its search unfocused when it opens, so the phone's keyboard doesn't cover the list. A tap
+  on the search box, or a typed key, focuses it.
+
 ## 5.4.4 - 2026-11-16
 
 ### Fixed

@@ -105,7 +105,7 @@ import {
 
 ### Default
 
-The search box is shown, focused, the moment the select opens, so mouse and screen reader users can see that search exists. Labels, separators and groups with no matches hide while a search is active so results stay compact, and the chosen value stays in the trigger even when a query hides its option. Add a `SelectEmpty` to show a "no results" row when nothing matches.
+The search box is shown, focused, the moment the select opens, so mouse and screen reader users can see that search exists. On a touch screen it waits for a tap or a typed key instead, so the phone's keyboard doesn't cover the list. Labels, separators and groups with no matches hide while a search is active so results stay compact, and the chosen value stays in the trigger even when a query hides its option. Add a `SelectEmpty` to show a "no results" row when nothing matches.
 
 <SelectDemo client:only="react" variant="with-search" />
 

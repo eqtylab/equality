@@ -236,7 +236,7 @@ export function useSearchInput(
   alwaysVisible: boolean,
   forwardedRef: React.Ref<HTMLInputElement>
 ) {
-  const { setEnabled, reveal, visible, focusSignal } = state;
+  const { setEnabled, reveal, visible, focusSignal, interactedSinceOpen } = state;
   const inputRef = React.useRef<HTMLInputElement>(null);
 
   // Stable, or React detaches and reattaches the consumer's ref on every keystroke
@@ -254,9 +254,11 @@ export function useSearchInput(
     if (!visible) return;
     const input = inputRef.current;
     if (!input) return;
+    // A coarse pointer leaves focus on the list when it opens
+    if (!interactedSinceOpen() && hasCoarsePointer()) return;
     input.focus();
     input.setSelectionRange(input.value.length, input.value.length);
-  }, [visible, focusSignal]);
+  }, [visible, focusSignal, interactedSinceOpen]);
 
   React.useEffect(() => {
     if (alwaysVisible && !visible) reveal('');
@@ -328,6 +330,8 @@ export function handleListKeyDown(
     state.requestFocus();
   }
 }
+
+const hasCoarsePointer = () => window.matchMedia?.('(pointer: coarse)').matches ?? false;
 
 export const isPrintableKey = (
   event: Pick<KeyboardEvent, 'key' | 'metaKey' | 'ctrlKey' | 'altKey'>

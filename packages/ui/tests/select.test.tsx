@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { describe, expect, it, vi } from 'vitest';
+import { describe, expect, it, onTestFinished, vi } from 'vitest';
 
 import {
   Select,
@@ -103,6 +103,22 @@ describe('Select', () => {
       await open(user);
 
       await waitFor(() => expect(document.activeElement).toBe(screen.getByRole('searchbox')));
+    });
+
+    it('leaves focus on the list for a coarse pointer, until a key is typed', async () => {
+      vi.stubGlobal('matchMedia', (query: string) => ({ matches: query === '(pointer: coarse)' }));
+      onTestFinished(() => vi.unstubAllGlobals());
+      const user = userEvent.setup();
+      render(<CountrySelect />);
+      const listbox = await open(user);
+
+      const search = screen.getByRole('searchbox') as HTMLInputElement;
+      await waitFor(() => expect(listbox.contains(document.activeElement)).toBe(true));
+      expect(document.activeElement).not.toBe(search);
+
+      await user.keyboard('j');
+      await waitFor(() => expect(document.activeElement).toBe(search));
+      expect(search.value).toBe('j');
     });
 
     it('hides non-matching options, their empty groups, labels and separators', async () => {

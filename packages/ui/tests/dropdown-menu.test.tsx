@@ -1,6 +1,6 @@
 import { act, render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { describe, expect, it, vi } from 'vitest';
+import { describe, expect, it, onTestFinished, vi } from 'vitest';
 
 import { Dialog, DialogContainer, DialogTitle } from '@/components/dialog/dialog';
 import {
@@ -80,6 +80,22 @@ describe('DropdownMenu', () => {
       await open(user);
 
       await waitFor(() => expect(document.activeElement).toBe(screen.getByRole('searchbox')));
+    });
+
+    it('leaves focus on the menu for a coarse pointer, until a key is typed', async () => {
+      vi.stubGlobal('matchMedia', (query: string) => ({ matches: query === '(pointer: coarse)' }));
+      onTestFinished(() => vi.unstubAllGlobals());
+      const user = userEvent.setup();
+      render(<Menu />);
+      const menu = await open(user);
+
+      const search = screen.getByRole('searchbox') as HTMLInputElement;
+      await waitFor(() => expect(menu.contains(document.activeElement)).toBe(true));
+      expect(document.activeElement).not.toBe(search);
+
+      await user.keyboard('c');
+      await waitFor(() => expect(document.activeElement).toBe(search));
+      expect(search.value).toBe('c');
     });
 
     it('reveals the search input on the first keystroke and seeds the query', async () => {
