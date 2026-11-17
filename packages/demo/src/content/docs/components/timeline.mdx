@@ -6,13 +6,12 @@ description: "Entries in order down a rail, in sections marked by the state they
 import {
   TimelineCustomColorDemo,
   TimelineDemo,
-  TimelinePinnedDemo,
   TimelineVariantsDemo,
 } from "@demo/components/demo/timeline";
 
 ## Overview
 
-A Timeline lists what happened to one thing, in order: a control's declarations and reviews, an indicator's evaluations, an order's events. Its entries sit in sections, one for each state the thing passed through, and each section draws a marker for its state on a rail down the left. A connector joins each marker to the next, and a marker stays pinned beside its entries as a long section scrolls.
+A Timeline lists what happened to one thing, in order: a control's declarations and reviews, an indicator's evaluations, an order's events. Its entries sit in sections, one for each state the thing passed through, and each section draws a marker for its state on a rail down the left. A connector joins each marker to the next, and a marker stays pinned beside its entries as a long section scrolls. It pins to the nearest scrolling ancestor, or the page; under a sticky header, set `--eq-timeline-offset` to the header's height, such as `64px`, and the markers pin below it.
 
 It is composed of three components: `Timeline` (the list), `TimelineSection` (a run of entries under one state, with its marker) and `TimelineItem` (one entry). What an entry shows is yours: a [Card](/components/card), a line of text, a form.
 
@@ -83,7 +82,7 @@ Basic usage with required properties:
 
 ### Section Variants
 
-A section's `variant` colours its marker and the connector below it, in the same colours as a [Badge](/components/badge). The `icon`, a Lucide element, is required, with no default per variant: it names the state, which the colour alone doesn't.
+A section's `variant` colours its marker and the connector below it, in the same colours as a [Badge](/components/badge). The `icon`, a Lucide element, is required, with no default per variant: it names the state, which the colour alone doesn't. Scroll the pane to see each marker stay beside its section's entries.
 
 <div className="my-4">
   <TimelineVariantsDemo />
@@ -143,25 +142,6 @@ For a state no variant covers, such as a control status, set `--eq-timeline-mark
 >
   …
 </TimelineSection>
-```
-
-### Pinned Markers
-
-A section's marker stays at the top of the scrolling area for as long as any of its entries are in view, so a long section never loses its state. Scroll the pane below.
-
-<div className="my-4">
-  <TimelinePinnedDemo />
-</div>
-
-The marker pins to the nearest scrolling ancestor, or the page. Under a sticky header, set `--eq-timeline-offset` to the header's height, a length such as `64px`, on the timeline or an element around it, and the markers pin below the header instead, as the other timelines on this page do.
-
-```tsx
-<>
-  <header style={{ position: "sticky", top: 0, height: 64 }}>…</header>
-  <main style={{ "--eq-timeline-offset": "64px" } as React.CSSProperties}>
-    <Timeline aria-label="Control timeline">…</Timeline>
-  </main>
-</>
 ```
 
 ### Linking to an Entry

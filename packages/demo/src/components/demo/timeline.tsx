@@ -106,23 +106,29 @@ const VARIANTS = [
   { variant: "danger", icon: <TriangleAlert />, title: "Danger" },
 ] as const;
 
-/* One section for each variant. */
+const EVENTS = ["First event", "Second event", "Third event"];
+
+/* One section for each variant, in a scrolling pane so each marker can be seen staying beside its entries. */
 export function TimelineVariantsDemo() {
   return (
-    <Timeline aria-label="Timeline variants" style={underDocsHeader}>
-      {VARIANTS.map(({ variant, icon, title }) => (
-        <TimelineSection
-          key={variant}
-          label={`${title} section`}
-          icon={icon}
-          variant={variant}
-        >
-          <TimelineItem>
-            <EntryCard title={title} detail={`variant="${variant}"`} />
-          </TimelineItem>
-        </TimelineSection>
-      ))}
-    </Timeline>
+    <div className="border-border h-96 overflow-y-auto rounded-md border p-4">
+      <Timeline aria-label="Timeline variants">
+        {VARIANTS.map(({ variant, icon, title }) => (
+          <TimelineSection
+            key={variant}
+            label={`${title} section`}
+            icon={icon}
+            variant={variant}
+          >
+            {EVENTS.map((event) => (
+              <TimelineItem key={event}>
+                <EntryCard title={event} detail={`variant="${variant}"`} />
+              </TimelineItem>
+            ))}
+          </TimelineSection>
+        ))}
+      </Timeline>
+    </div>
   );
 }
 
@@ -161,53 +167,5 @@ export function TimelineCustomColorDemo() {
         </TimelineItem>
       </TimelineSection>
     </Timeline>
-  );
-}
-
-const DAYS = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"];
-
-/* A scrolling pane, so each marker can be seen staying beside its entries. */
-export function TimelinePinnedDemo() {
-  return (
-    <div className="border-border h-72 overflow-y-auto rounded-md border p-4">
-      <Timeline aria-label="Evaluation timeline" size="sm">
-        <TimelineSection
-          label="Evaluations while passing"
-          icon={<Check />}
-          variant="success"
-        >
-          {DAYS.map((day) => (
-            <TimelineItem key={day}>
-              <EntryLine title={`${day}'s evaluation`} detail="Passed." />
-            </TimelineItem>
-          ))}
-        </TimelineSection>
-        <TimelineSection
-          label="Evaluations while failing"
-          icon={<TriangleAlert />}
-          variant="danger"
-        >
-          {DAYS.map((day) => (
-            <TimelineItem key={day}>
-              <EntryLine
-                title={`${day}'s evaluation`}
-                detail="Failed: the bucket is not encrypted."
-              />
-            </TimelineItem>
-          ))}
-        </TimelineSection>
-        <TimelineSection
-          label="Evaluations since the fix"
-          icon={<Check />}
-          variant="success"
-        >
-          {DAYS.map((day) => (
-            <TimelineItem key={day}>
-              <EntryLine title={`${day}'s evaluation`} detail="Passed." />
-            </TimelineItem>
-          ))}
-        </TimelineSection>
-      </Timeline>
-    </div>
   );
 }
