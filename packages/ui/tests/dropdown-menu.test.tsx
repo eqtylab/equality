@@ -1,6 +1,6 @@
 import { act, render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { describe, expect, it, onTestFinished, vi } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
 
 import { Dialog, DialogContainer, DialogTitle } from '@/components/dialog/dialog';
 import {
@@ -13,6 +13,8 @@ import {
   DropdownMenuTrigger,
   useDropdownMenuSearchQuery,
 } from '@/components/dropdown-menu/dropdown-menu';
+
+import { setMatchingMediaQueries } from './media-query-stub';
 
 type Props = {
   onSelect?: (item: string) => void;
@@ -82,20 +84,34 @@ describe('DropdownMenu', () => {
       await waitFor(() => expect(document.activeElement).toBe(screen.getByRole('searchbox')));
     });
 
-    it('leaves focus on the menu for a coarse pointer, until a key is typed', async () => {
-      vi.stubGlobal('matchMedia', (query: string) => ({ matches: query === '(pointer: coarse)' }));
-      onTestFinished(() => vi.unstubAllGlobals());
+    it('leaves focus on the items for a coarse pointer, until a key is typed', async () => {
+      setMatchingMediaQueries('(pointer: coarse)');
       const user = userEvent.setup();
       render(<Menu />);
-      const menu = await open(user);
+      await open(user);
+      const copy = screen.getByRole('menuitem', { name: 'Copy' });
 
-      const search = screen.getByRole('searchbox') as HTMLInputElement;
-      await waitFor(() => expect(menu.contains(document.activeElement)).toBe(true));
-      expect(document.activeElement).not.toBe(search);
+      await waitFor(() => expect(document.activeElement).toBe(copy));
+      await act(async () => {});
+      expect(document.activeElement).toBe(copy);
 
       await user.keyboard('c');
+      const search = screen.getByRole('searchbox') as HTMLInputElement;
       await waitFor(() => expect(document.activeElement).toBe(search));
       expect(search.value).toBe('c');
+    });
+
+    it('focuses the search for a coarse pointer when it is tapped', async () => {
+      setMatchingMediaQueries('(pointer: coarse)');
+      const user = userEvent.setup();
+      render(<Menu />);
+      await open(user);
+      const copy = screen.getByRole('menuitem', { name: 'Copy' });
+      await waitFor(() => expect(document.activeElement).toBe(copy));
+
+      const search = screen.getByRole('searchbox');
+      await user.click(search);
+      expect(document.activeElement).toBe(search);
     });
 
     it('reveals the search input on the first keystroke and seeds the query', async () => {

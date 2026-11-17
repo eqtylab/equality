@@ -254,7 +254,7 @@ export function useSearchInput(
     if (!visible) return;
     const input = inputRef.current;
     if (!input) return;
-    // A coarse pointer leaves focus on the list when it opens
+    // Focusing on a touch screen raises the phone's keyboard over the list
     if (!interactedSinceOpen() && hasCoarsePointer()) return;
     input.focus();
     input.setSelectionRange(input.value.length, input.value.length);
@@ -331,7 +331,7 @@ export function handleListKeyDown(
   }
 }
 
-const hasCoarsePointer = () => window.matchMedia?.('(pointer: coarse)').matches ?? false;
+export const hasCoarsePointer = () => window.matchMedia('(pointer: coarse)').matches;
 
 export const isPrintableKey = (
   event: Pick<KeyboardEvent, 'key' | 'metaKey' | 'ctrlKey' | 'altKey'>

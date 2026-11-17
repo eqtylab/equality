@@ -1,7 +1,7 @@
 import * as React from 'react';
-import { fireEvent, render, screen, waitFor } from '@testing-library/react';
+import { act, fireEvent, render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { describe, expect, it, onTestFinished, vi } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
 
 import {
   Select,
@@ -17,6 +17,8 @@ import {
   useSelectSearchQuery,
 } from '@/components/select/select';
 import { blockClosedTypeahead } from '@/components/select/select-typeahead';
+
+import { setMatchingMediaQueries } from './media-query-stub';
 
 const REGIONS = [
   { label: 'Americas', countries: ['Brazil', 'Canada'] },
@@ -105,20 +107,32 @@ describe('Select', () => {
       await waitFor(() => expect(document.activeElement).toBe(screen.getByRole('searchbox')));
     });
 
-    it('leaves focus on the list for a coarse pointer, until a key is typed', async () => {
-      vi.stubGlobal('matchMedia', (query: string) => ({ matches: query === '(pointer: coarse)' }));
-      onTestFinished(() => vi.unstubAllGlobals());
+    it('leaves focus on the options for a coarse pointer, until a key is typed', async () => {
+      setMatchingMediaQueries('(pointer: coarse)');
       const user = userEvent.setup();
-      render(<CountrySelect />);
-      const listbox = await open(user);
+      render(<CountrySelect defaultValue="japan" />);
+      await open(user);
 
-      const search = screen.getByRole('searchbox') as HTMLInputElement;
-      await waitFor(() => expect(listbox.contains(document.activeElement)).toBe(true));
-      expect(document.activeElement).not.toBe(search);
+      await waitFor(() => expect(document.activeElement).toBe(option('Japan')));
+      await act(async () => {});
+      expect(document.activeElement).toBe(option('Japan'));
 
       await user.keyboard('j');
+      const search = screen.getByRole('searchbox') as HTMLInputElement;
       await waitFor(() => expect(document.activeElement).toBe(search));
       expect(search.value).toBe('j');
+    });
+
+    it('focuses the search for a coarse pointer when it is tapped', async () => {
+      setMatchingMediaQueries('(pointer: coarse)');
+      const user = userEvent.setup();
+      render(<CountrySelect defaultValue="japan" />);
+      await open(user);
+      await waitFor(() => expect(document.activeElement).toBe(option('Japan')));
+
+      const search = screen.getByRole('searchbox');
+      await user.click(search);
+      expect(document.activeElement).toBe(search);
     });
 
     it('hides non-matching options, their empty groups, labels and separators', async () => {

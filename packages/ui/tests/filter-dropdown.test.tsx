@@ -5,6 +5,8 @@ import { describe, expect, it, vi } from 'vitest';
 
 import { FilterDropdown } from '@/components/filter-dropdown/filter-dropdown';
 
+import { setMatchingMediaQueries } from './media-query-stub';
+
 const OPTIONS = [
   { value: 'open', label: 'Open' },
   { value: 'closed', label: 'Closed' },
@@ -119,6 +121,18 @@ describe('FilterDropdown', () => {
       expect(screen.queryByRole('menuitem', { name: 'Clear all' })).toBeNull();
       expect(screen.getByRole('menu')).toBeTruthy();
       expect(document.activeElement).toBe(screen.getByRole('searchbox', { name: 'Status' }));
+    });
+
+    it('focuses the menu, not the search box, once it clears for a coarse pointer', async () => {
+      setMatchingMediaQueries('(pointer: coarse)');
+      const user = userEvent.setup();
+      render(<StatefulFilterDropdown searchable />);
+      await openMenu(user);
+
+      await user.click(screen.getByRole('menuitem', { name: 'Clear all' }));
+
+      expect(screen.queryByRole('menuitem', { name: 'Clear all' })).toBeNull();
+      expect(document.activeElement).toBe(screen.getByRole('menu'));
     });
 
     it('keeps the menu open and focuses the menu once it clears when not searchable', async () => {

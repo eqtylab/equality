@@ -19,8 +19,8 @@ describe('table-components.module.css', () => {
     expect(ruleBody(css, '.table-row-link')).toMatch(/outline-style:\s*none;/);
   });
 
-  it('overhangs an icon button into the row padding', () => {
-    expect(ruleBody(css, '.table-cell [data-icon-button]')).toMatch(
+  it('overhangs a small icon button into the row padding', () => {
+    expect(ruleBody(css, ".table-cell [data-icon-button='sm']")).toMatch(
       /margin-block:\s*calc\(0\.25rem \* -1\);/
     );
   });
