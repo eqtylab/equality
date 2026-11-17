@@ -52,16 +52,20 @@
   @apply size-5;
 }
 
-/* Above the rows, which sit 2px under it in a drilled panel, so its focus ring stays whole. Bare,
-   so a switcher or other controls keep their own padding, wrapping and focus rings */
+/* Above the rows, which sit 2px under it in a drilled panel, so its focus ring stays whole */
 .nav-panel-header {
   @apply z-3 relative m-0 shrink-0;
 }
 
-/* A string header. Truncating clips, which lets a long list squash it; the header's shrink-0
-   stops that */
+/* Every header but a bare one. Truncating clips, which lets a long list squash it; the header's
+   shrink-0 stops that */
 .nav-panel-heading {
   @apply text-text-primary truncate px-2 py-1.5 text-sm font-semibold;
+}
+
+/* The switcher brings its own padding and focus ring, which the heading's would double and clip */
+.nav-panel-heading:has(> .nav-switcher-heading) {
+  @apply overflow-visible p-0;
 }
 
 /* Beside a rail, half the difference between the rail's first item and the heading, each at least

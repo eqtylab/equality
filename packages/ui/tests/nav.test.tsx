@@ -44,6 +44,23 @@ describe('Nav shell', () => {
     expect(screen.queryByRole('heading')).toBeNull();
   });
 
+  it('styles any header as a heading unless it is bare', () => {
+    const header = (node: React.ReactNode, bare = false) => {
+      const { container, unmount } = render(
+        <NavPanel aria-label="Panel" header={node} bareHeader={bare} />
+      );
+      const el = container.querySelector('[data-nav-scroller] > div');
+      const result = { text: el?.textContent ?? null, className: el?.className ?? null };
+      unmount();
+      return result;
+    };
+    expect(header('Settings').className).toMatch(/nav-panel-heading/);
+    expect(header(<span>Settings</span>).className).toMatch(/nav-panel-heading/);
+    expect(header(<span>Site card</span>, true).className).not.toMatch(/nav-panel-heading/);
+    expect(header(null).className).toBeNull();
+    expect(header(false).className).toBeNull();
+  });
+
   it('marks the current rail item and names it by label', () => {
     render(
       <NavRail aria-label="Main">

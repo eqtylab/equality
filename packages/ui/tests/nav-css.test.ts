@@ -47,6 +47,12 @@ describe('nav.module.css', () => {
     expect(ruleBody(css, '.nav-panel-header')).toMatch(/flex-shrink:\s*0;/);
   });
 
+  it("leaves a switcher's own padding and focus ring to it", () => {
+    const body = ruleBody(css, '.nav-panel-heading:has(> .nav-switcher-heading)');
+    expect(body).toMatch(/overflow:\s*visible;/);
+    expect(body).toMatch(/padding:\s*(0|calc\(0\.25rem \* 0\));/);
+  });
+
   it('scrolls the panel header away with the rows', () => {
     expect(ruleBody(css, '.nav-panel-header')).not.toMatch(/position:\s*sticky/);
   });

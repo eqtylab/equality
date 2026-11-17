@@ -26,7 +26,12 @@ const { nodes, switcher } = Astro.props;
   data-eq-chrome
   data-pagefind-ignore
 >
-  <NavPanel id="eq-sidebar" aria-label="Documentation" className="w-(--eq-docs-sidebar-width)!">
+  <NavPanel
+    id="eq-sidebar"
+    aria-label="Documentation"
+    className="w-(--eq-docs-sidebar-width)!"
+    bareHeader
+  >
     <SiteCard slot="header" switcher={switcher} />
     <NavTree nodes={nodes} media="(width >= 64rem)" />
   </NavPanel>
