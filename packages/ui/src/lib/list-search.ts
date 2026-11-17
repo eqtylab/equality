@@ -331,7 +331,8 @@ export function handleListKeyDown(
   }
 }
 
-export const hasCoarsePointer = () => window.matchMedia('(pointer: coarse)').matches;
+// A window without matchMedia, such as jsdom's, reads as a fine pointer
+export const hasCoarsePointer = () => window.matchMedia?.('(pointer: coarse)').matches ?? false;
 
 export const isPrintableKey = (
   event: Pick<KeyboardEvent, 'key' | 'metaKey' | 'ctrlKey' | 'altKey'>

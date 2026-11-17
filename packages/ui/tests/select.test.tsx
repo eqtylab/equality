@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { act, fireEvent, render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { describe, expect, it, vi } from 'vitest';
+import { describe, expect, it, onTestFinished, vi } from 'vitest';
 
 import {
   Select,
@@ -100,6 +100,16 @@ const option = (name: string) => {
 describe('Select', () => {
   describe('search', () => {
     it('shows and focuses the search input on open by default', async () => {
+      const user = userEvent.setup();
+      render(<CountrySelect />);
+      await open(user);
+
+      await waitFor(() => expect(document.activeElement).toBe(screen.getByRole('searchbox')));
+    });
+
+    it('focuses the search on open in a window without matchMedia', async () => {
+      vi.stubGlobal('matchMedia', undefined);
+      onTestFinished(() => vi.unstubAllGlobals());
       const user = userEvent.setup();
       render(<CountrySelect />);
       await open(user);
