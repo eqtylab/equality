@@ -10,8 +10,8 @@ interface NavPanelProps extends Omit<React.HTMLAttributes<HTMLElement>, 'title'>
   header?: React.ReactNode;
 }
 
-// NavDrill finds this scroller by data-nav-scroller to reset it; renaming the attribute breaks that
-// without an error
+// NavDrill and @eqtylab/docs' Sidebar.astro find this scroller by data-nav-scroller; renaming the
+// attribute breaks both without an error
 const NavPanel = React.forwardRef<HTMLElement, NavPanelProps>(
   ({ header, className, children, ...props }, ref) => (
     <nav ref={ref} className={cn(styles['nav-panel'], className)} {...props}>
