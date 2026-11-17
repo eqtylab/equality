@@ -26,13 +26,14 @@ Import the components:
 
 ```tsx
 import { Timeline, TimelineItem, TimelineSection } from "@eqtylab/equality";
+import { Clock } from "lucide-react";
 ```
 
 Basic usage with required properties:
 
 ```tsx
 <Timeline aria-label="Control timeline">
-  <TimelineSection label="Events while in progress" icon="Clock">
+  <TimelineSection label="Events while in progress" icon={<Clock />}>
     <TimelineItem>Evidence attached</TimelineItem>
     <TimelineItem>Declaration submitted</TimelineItem>
   </TimelineSection>
@@ -43,16 +44,10 @@ Basic usage with required properties:
 
 ### Sizes
 
-`size` sets the markers' size, and the spacing with it. The default `md` marker is 40px, the height of an `md` [Button](/components/button), and suits a card or drawer.
+`size` sets the markers' size, and the spacing with it. The default `md` marker is 40px, the height of an `md` [Button](/components/button), and suits a page's main column, a card or a drawer.
 
 <div className="my-4">
   <TimelineDemo size="md" />
-</div>
-
-`lg` draws a 48px marker, for a timeline that is a page's main column.
-
-<div className="my-4">
-  <TimelineDemo size="lg" />
 </div>
 
 `sm` draws a 20px marker, the size of an icon-only [Badge](/components/badge), for a narrow pane or entries that are lines of text.
@@ -64,47 +59,31 @@ Basic usage with required properties:
 #### Usage
 
 ```tsx
-<Timeline aria-label="Control timeline" size="lg">
-  <TimelineSection label="Events while not started" icon="CircleDashed">
-    <TimelineItem>
-      <Card>
-        <CardContent>Control added</CardContent>
-      </Card>
-    </TimelineItem>
+<Timeline aria-label="Control timeline" size="sm">
+  <TimelineSection label="Events while not started" icon={<CircleDashed />}>
+    <TimelineItem>Control added</TimelineItem>
   </TimelineSection>
   <TimelineSection
     label="Events while in progress"
-    icon="Clock"
+    icon={<Clock />}
     variant="primary"
   >
-    <TimelineItem>
-      <Card>
-        <CardContent>Evidence attached</CardContent>
-      </Card>
-    </TimelineItem>
-    <TimelineItem>
-      <Card>
-        <CardContent>Declaration submitted</CardContent>
-      </Card>
-    </TimelineItem>
+    <TimelineItem>Evidence attached</TimelineItem>
+    <TimelineItem>Declaration submitted</TimelineItem>
   </TimelineSection>
   <TimelineSection
     label="Events while compliant"
-    icon="Check"
+    icon={<Check />}
     variant="success"
   >
-    <TimelineItem>
-      <Card>
-        <CardContent>Declaration accepted</CardContent>
-      </Card>
-    </TimelineItem>
+    <TimelineItem>Declaration accepted</TimelineItem>
   </TimelineSection>
 </Timeline>
 ```
 
 ### Section Variants
 
-A section's `variant` colours its marker and the connector below it, in the same colours as a [Badge](/components/badge). The `icon` is required, with no default per variant: it names the state, which the colour alone doesn't.
+A section's `variant` colours its marker and the connector below it, in the same colours as a [Badge](/components/badge). The `icon`, a Lucide element, is required, with no default per variant: it names the state, which the colour alone doesn't.
 
 <div className="my-4">
   <TimelineVariantsDemo />
@@ -114,25 +93,29 @@ A section's `variant` colours its marker and the connector below it, in the same
 <Timeline aria-label="Timeline variants">
   <TimelineSection
     label="Neutral section"
-    icon="CircleDashed"
+    icon={<CircleDashed />}
     variant="neutral"
   >
     …
   </TimelineSection>
-  <TimelineSection label="Primary section" icon="Clock" variant="primary">
+  <TimelineSection label="Primary section" icon={<Clock />} variant="primary">
     …
   </TimelineSection>
-  <TimelineSection label="Success section" icon="Check" variant="success">
+  <TimelineSection label="Success section" icon={<Check />} variant="success">
     …
   </TimelineSection>
   <TimelineSection
     label="Warning section"
-    icon="OctagonAlert"
+    icon={<OctagonAlert />}
     variant="warning"
   >
     …
   </TimelineSection>
-  <TimelineSection label="Danger section" icon="TriangleAlert" variant="danger">
+  <TimelineSection
+    label="Danger section"
+    icon={<TriangleAlert />}
+    variant="danger"
+  >
     …
   </TimelineSection>
 </Timeline>
@@ -149,7 +132,7 @@ For a state no variant covers, such as a control status, set `--eq-timeline-mark
 ```tsx
 <TimelineSection
   label="Events while in review"
-  icon="Eye"
+  icon={<Eye />}
   style={
     {
       "--eq-timeline-marker-background":
@@ -176,9 +159,7 @@ The marker pins to the nearest scrolling ancestor, or the page. Under a sticky h
 <>
   <header style={{ position: "sticky", top: 0, height: 64 }}>…</header>
   <main style={{ "--eq-timeline-offset": "64px" } as React.CSSProperties}>
-    <Timeline aria-label="Control timeline" size="lg">
-      …
-    </Timeline>
+    <Timeline aria-label="Control timeline">…</Timeline>
   </main>
 </>
 ```
@@ -203,20 +184,20 @@ Give a `TimelineItem` an `id` and a link ending in `#` and that id leads to it.
 
 ### Timeline
 
-| Name         | Description                                | Type             | Default | Required |
-| ------------ | ------------------------------------------ | ---------------- | ------- | -------- |
-| `aria-label` | Names the timeline for a screen reader     | `string`         |         | ✅       |
-| `children`   | The sections, in the order they happened   | `ReactNode`      |         | ✅       |
-| `size`       | The markers' size, and the spacing with it | `sm`, `md`, `lg` | `md`    | ❌       |
+| Name         | Description                                | Type        | Default | Required |
+| ------------ | ------------------------------------------ | ----------- | ------- | -------- |
+| `aria-label` | Names the timeline for a screen reader     | `string`    |         | ✅       |
+| `children`   | The sections, in the order they happened   | `ReactNode` |         | ✅       |
+| `size`       | The markers' size, and the spacing with it | `sm`, `md`  | `md`    | ❌       |
 
 ### TimelineSection
 
-| Name       | Description                                                      | Type                                                 | Default   | Required |
-| ---------- | ---------------------------------------------------------------- | ---------------------------------------------------- | --------- | -------- |
-| `label`    | Names the section's entries for a screen reader                  | `string`                                             |           | ✅       |
-| `icon`     | Lucide icon name or element, drawn in the marker and sized by it | `string`, `ReactElement`                             |           | ✅       |
-| `children` | The section's `TimelineItem`s                                    | `ReactNode`                                          |           | ✅       |
-| `variant`  | The status the marker and its connector report                   | `neutral`, `primary`, `success`, `warning`, `danger` | `neutral` | ❌       |
+| Name       | Description                                                | Type                                                 | Default   | Required |
+| ---------- | ---------------------------------------------------------- | ---------------------------------------------------- | --------- | -------- |
+| `label`    | Names the section's entries for a screen reader            | `string`                                             |           | ✅       |
+| `icon`     | A Lucide icon element, drawn in the marker and sized by it | `ReactElement`                                       |           | ✅       |
+| `children` | The section's `TimelineItem`s                              | `ReactNode`                                          |           | ✅       |
+| `variant`  | The status the marker and its connector report             | `neutral`, `primary`, `success`, `warning`, `danger` | `neutral` | ❌       |
 
 ### TimelineItem
 

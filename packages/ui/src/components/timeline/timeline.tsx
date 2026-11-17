@@ -1,17 +1,15 @@
 import * as React from 'react';
 import { cva, type VariantProps } from 'class-variance-authority';
 
-import { Icon } from '@/components/icon/icon';
 import styles from '@/components/timeline/timeline.module.css';
 import { cn } from '@/lib/utils';
 
 const timelineVariants = cva(styles['timeline'], {
   variants: {
-    /** The markers' size: `sm` an icon-only Badge, `md` as tall as a Button, `lg` for a page's main column */
+    /** The markers' size: `sm` an icon-only Badge, `md` as tall as a Button */
     size: {
       sm: styles['timeline--sm'],
       md: styles['timeline--md'],
-      lg: styles['timeline--lg'],
     },
   },
   defaultVariants: {
@@ -56,8 +54,8 @@ export interface TimelineSectionProps
   extends React.LiHTMLAttributes<HTMLLIElement>, VariantProps<typeof timelineSectionVariants> {
   /** Names the section's entries for assistive technology, such as "Events while in review". The marker is decorative, so this is what says the state */
   label: string;
-  /** Lucide icon name or element, drawn in the marker. The timeline sizes it */
-  icon: React.ReactElement | string;
+  /** A Lucide icon element, such as `<Clock />`, drawn in the marker. The timeline sizes it */
+  icon: React.ReactElement;
   /** The section's `TimelineItem`s */
   children: React.ReactNode;
 }
@@ -67,14 +65,7 @@ const TimelineSection = React.forwardRef<HTMLLIElement, TimelineSectionProps>(
     <li ref={ref} className={cn(timelineSectionVariants({ variant }), className)} {...props}>
       <div className={styles['timeline-rail']} aria-hidden="true">
         <div className={styles['timeline-connector']} />
-        <div className={styles['timeline-marker']}>
-          <Icon
-            icon={icon}
-            size="xs"
-            background="transparent"
-            className={styles['timeline-glyph']}
-          />
-        </div>
+        <div className={styles['timeline-marker']}>{icon}</div>
       </div>
       <ol className={styles['timeline-items']} aria-label={label}>
         {children}

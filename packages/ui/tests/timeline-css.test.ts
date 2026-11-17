@@ -38,17 +38,8 @@ describe('timeline.module.css', () => {
     expect(declared(marker, 'height')).toBe(height);
     expect(declared(marker, 'width')).toBe(height);
 
-    const glyph = ruleBody(timeline, '.timeline--sm .timeline-marker .timeline-glyph > *');
+    const glyph = ruleBody(timeline, '.timeline--sm .timeline-marker > *');
     expect(declared(glyph, 'height')).toBe(declared(ruleBody(icon, '.size--xs .icon'), 'height'));
-  });
-
-  it('keeps an lg marker at 3rem with a 1.5rem glyph', () => {
-    expect(declared(ruleBody(timeline, '.timeline--lg .timeline-marker'), 'height')).toBe(
-      'calc(0.25rem * 12)'
-    );
-    expect(
-      declared(ruleBody(timeline, '.timeline--lg .timeline-marker .timeline-glyph > *'), 'height')
-    ).toBe('calc(0.25rem * 6)');
   });
 
   it('pins the marker below --eq-timeline-offset, registered as a length that defaults to 0px', () => {

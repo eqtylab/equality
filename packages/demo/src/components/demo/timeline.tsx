@@ -1,5 +1,14 @@
 import type { CSSProperties } from "react";
 import {
+  Check,
+  CircleDashed,
+  ClipboardCheck,
+  Clock,
+  Eye,
+  OctagonAlert,
+  TriangleAlert,
+} from "lucide-react";
+import {
   Card,
   CardContent,
   Timeline,
@@ -7,7 +16,7 @@ import {
   TimelineSection,
 } from "@eqtylab/equality";
 
-type TimelineSize = "sm" | "md" | "lg";
+type TimelineSize = "sm" | "md";
 
 interface EntryProps {
   title: string;
@@ -37,7 +46,7 @@ const underDocsHeader = {
   "--eq-timeline-offset": "var(--eq-docs-header-height)",
 } as CSSProperties;
 
-/* A control's history. Cards at md and lg, lines of text at sm. */
+/* A control's history. Cards at md, lines of text at sm. */
 export function TimelineDemo({ size = "md" }: { size?: TimelineSize }) {
   const Entry = size === "sm" ? EntryLine : EntryCard;
 
@@ -47,7 +56,7 @@ export function TimelineDemo({ size = "md" }: { size?: TimelineSize }) {
       size={size}
       style={underDocsHeader}
     >
-      <TimelineSection label="Events while not started" icon="CircleDashed">
+      <TimelineSection label="Events while not started" icon={<CircleDashed />}>
         <TimelineItem>
           <Entry
             title="Control added"
@@ -57,7 +66,7 @@ export function TimelineDemo({ size = "md" }: { size?: TimelineSize }) {
       </TimelineSection>
       <TimelineSection
         label="Events while in progress"
-        icon="Clock"
+        icon={<Clock />}
         variant="primary"
       >
         <TimelineItem>
@@ -75,7 +84,7 @@ export function TimelineDemo({ size = "md" }: { size?: TimelineSize }) {
       </TimelineSection>
       <TimelineSection
         label="Events while compliant"
-        icon="Check"
+        icon={<Check />}
         variant="success"
       >
         <TimelineItem>
@@ -90,11 +99,11 @@ export function TimelineDemo({ size = "md" }: { size?: TimelineSize }) {
 }
 
 const VARIANTS = [
-  { variant: "neutral", icon: "CircleDashed", title: "Neutral" },
-  { variant: "primary", icon: "Clock", title: "Primary" },
-  { variant: "success", icon: "Check", title: "Success" },
-  { variant: "warning", icon: "OctagonAlert", title: "Warning" },
-  { variant: "danger", icon: "TriangleAlert", title: "Danger" },
+  { variant: "neutral", icon: <CircleDashed />, title: "Neutral" },
+  { variant: "primary", icon: <Clock />, title: "Primary" },
+  { variant: "success", icon: <Check />, title: "Success" },
+  { variant: "warning", icon: <OctagonAlert />, title: "Warning" },
+  { variant: "danger", icon: <TriangleAlert />, title: "Danger" },
 ] as const;
 
 /* One section for each variant. */
@@ -129,7 +138,7 @@ export function TimelineCustomColorDemo() {
     <Timeline aria-label="Review timeline" style={underDocsHeader}>
       <TimelineSection
         label="Events while ready for review"
-        icon="ClipboardCheck"
+        icon={<ClipboardCheck />}
         style={markerColors("ready-for-review")}
       >
         <TimelineItem>
@@ -141,7 +150,7 @@ export function TimelineCustomColorDemo() {
       </TimelineSection>
       <TimelineSection
         label="Events while in review"
-        icon="Eye"
+        icon={<Eye />}
         style={markerColors("in-review")}
       >
         <TimelineItem>
@@ -164,7 +173,7 @@ export function TimelinePinnedDemo() {
       <Timeline aria-label="Evaluation timeline" size="sm">
         <TimelineSection
           label="Evaluations while passing"
-          icon="Check"
+          icon={<Check />}
           variant="success"
         >
           {DAYS.map((day) => (
@@ -175,7 +184,7 @@ export function TimelinePinnedDemo() {
         </TimelineSection>
         <TimelineSection
           label="Evaluations while failing"
-          icon="TriangleAlert"
+          icon={<TriangleAlert />}
           variant="danger"
         >
           {DAYS.map((day) => (
@@ -189,7 +198,7 @@ export function TimelinePinnedDemo() {
         </TimelineSection>
         <TimelineSection
           label="Evaluations since the fix"
-          icon="Check"
+          icon={<Check />}
           variant="success"
         >
           {DAYS.map((day) => (

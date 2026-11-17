@@ -23,11 +23,6 @@
   --timeline-pin-inset: 0.5rem;
 }
 
-.timeline--lg {
-  --timeline-gap: 0.75rem;
-  --timeline-pin-inset: 0.5rem;
-}
-
 .timeline--sm .timeline-section {
   @apply gap-x-2.5;
 }
@@ -36,16 +31,12 @@
   @apply gap-x-3;
 }
 
-.timeline--lg .timeline-section {
-  @apply gap-x-4;
-}
-
 /* An icon-only Badge: its height, and its glyph */
 .timeline--sm .timeline-marker {
   @apply size-5;
 }
 
-.timeline--sm .timeline-marker .timeline-glyph > * {
+.timeline--sm .timeline-marker > * {
   @apply size-3;
 }
 
@@ -54,16 +45,8 @@
   @apply size-10;
 }
 
-.timeline--md .timeline-marker .timeline-glyph > * {
+.timeline--md .timeline-marker > * {
   @apply size-5;
-}
-
-.timeline--lg .timeline-marker {
-  @apply size-12;
-}
-
-.timeline--lg .timeline-marker .timeline-glyph > * {
-  @apply size-6;
 }
 
 /* SECTION */
@@ -110,10 +93,6 @@
   top: calc(var(--eq-timeline-offset) + var(--timeline-pin-inset));
   background-color: var(--eq-timeline-marker-background, var(--timeline-marker-bg));
   color: var(--eq-timeline-marker-color, var(--timeline-marker-fg));
-}
-
-.timeline-marker .timeline-glyph {
-  @apply text-inherit;
 }
 
 /* ITEMS */

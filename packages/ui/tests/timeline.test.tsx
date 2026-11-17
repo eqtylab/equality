@@ -1,4 +1,5 @@
 import { render, screen, within } from '@testing-library/react';
+import { Check, Clock } from 'lucide-react';
 import { describe, expect, it } from 'vitest';
 
 import { Timeline, TimelineItem, TimelineSection } from '@/components/timeline/timeline';
@@ -6,11 +7,11 @@ import { Timeline, TimelineItem, TimelineSection } from '@/components/timeline/t
 const renderTimeline = () =>
   render(
     <Timeline aria-label="Control timeline">
-      <TimelineSection label="Events while in progress" icon="Clock">
+      <TimelineSection label="Events while in progress" icon={<Clock />}>
         <TimelineItem id="event-1">Declared</TimelineItem>
         <TimelineItem>Evidence attached</TimelineItem>
       </TimelineSection>
-      <TimelineSection label="Events while compliant" icon="Check" variant="success">
+      <TimelineSection label="Events while compliant" icon={<Check />} variant="success">
         <TimelineItem>Accepted</TimelineItem>
       </TimelineSection>
     </Timeline>
@@ -58,7 +59,7 @@ describe('Timeline', () => {
 
     rerender(
       <Timeline aria-label="Control timeline" size="sm">
-        <TimelineSection label="Events while in progress" icon="Clock">
+        <TimelineSection label="Events while in progress" icon={<Clock />}>
           <TimelineItem>Declared</TimelineItem>
         </TimelineSection>
       </Timeline>
