@@ -2,20 +2,18 @@
 
 Notable changes to Equality are recorded here, following [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
-## 5.5.0 - 2026-11-16
+## 5.6.0 - 2026-11-17
 
-### Changed
+### Added
 
-- `NavPanel`'s `header` is styled as a heading only when it's a string: padded, truncated and
-  semibold. Anything else, such as a `NavSwitcher`, a segmented control or a site card, sits in the
-  header unpadded and unclipped, so its own spacing, wrapping and focus rings show as designed. A
-  heading passed as an element, such as `<span>Settings</span>`, loses that styling; pass the
-  string instead.
-
-## 5.4.5 - 2026-11-16
+- `NavPanel`'s `bareHeader` leaves the header unpadded and unclipped, for controls of your own,
+  such as a segmented control or a site card, so their own spacing, wrapping and focus rings show
+  as designed. Every other header is styled as a heading, as before, and a `NavSwitcher` keeps
+  its own padding.
 
 ### Fixed
 
+- `header={0}` shows 0 as the panel's heading. It showed a bare, unstyled 0 above the rows.
 - `NavPanel`'s `header` scrolls away with the rows again, as it did before 5.4.4. 5.4.4 pinned it
   to the top of the panel by mistake.
 - `NavPanel`'s `header` keeps its height when the list is longer than the panel. Any header other
