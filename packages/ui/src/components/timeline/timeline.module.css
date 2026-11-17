@@ -1,0 +1,113 @@
+@reference '../../theme/theme.module.css';
+
+/* Keep it registered: unregistered, a bare 0 makes the marker's calc() invalid and it stops pinning */
+@property --eq-timeline-offset {
+  syntax: '<length>';
+  inherits: true;
+  initial-value: 0px;
+}
+
+.timeline {
+  @apply m-0 flex list-none flex-col p-0;
+}
+
+/* SIZES */
+
+.timeline--sm {
+  --timeline-gap: 0.625rem;
+  --timeline-pin-inset: 0.25rem;
+}
+
+.timeline--md {
+  --timeline-gap: 0.75rem;
+  --timeline-pin-inset: 0.5rem;
+}
+
+.timeline--sm .timeline-section {
+  @apply gap-x-2.5;
+}
+
+.timeline--md .timeline-section {
+  @apply gap-x-3;
+}
+
+/* An icon-only Badge: its height, and its glyph */
+.timeline--sm .timeline-marker {
+  @apply size-5;
+}
+
+.timeline--sm .timeline-marker > * {
+  @apply size-3;
+}
+
+/* An md Button's height */
+.timeline--md .timeline-marker {
+  @apply size-10;
+}
+
+.timeline--md .timeline-marker > * {
+  @apply size-5;
+}
+
+/* SECTION */
+
+.timeline-section {
+  --timeline-marker-bg: var(--color-badge-background-neutral);
+  --timeline-marker-fg: var(--color-badge-text-neutral);
+  @apply grid grid-cols-[auto_minmax(0,1fr)];
+}
+
+.timeline-section--primary {
+  --timeline-marker-bg: var(--color-badge-background-primary);
+  --timeline-marker-fg: var(--color-badge-text-primary);
+}
+
+.timeline-section--success {
+  --timeline-marker-bg: var(--color-badge-background-success);
+  --timeline-marker-fg: var(--color-badge-text-success);
+}
+
+.timeline-section--warning {
+  --timeline-marker-bg: var(--color-badge-background-warning);
+  --timeline-marker-fg: var(--color-badge-text-warning);
+}
+
+.timeline-section--danger {
+  --timeline-marker-bg: var(--color-badge-background-danger);
+  --timeline-marker-fg: var(--color-badge-text-danger);
+}
+
+/* RAIL */
+
+.timeline-rail {
+  @apply relative;
+}
+
+.timeline-connector {
+  @apply absolute inset-y-0 left-1/2 w-px -translate-x-1/2;
+  background-color: var(--eq-timeline-marker-background, var(--timeline-marker-bg));
+}
+
+.timeline-marker {
+  @apply sticky flex items-center justify-center rounded-full;
+  top: calc(var(--eq-timeline-offset) + var(--timeline-pin-inset));
+  background-color: var(--eq-timeline-marker-background, var(--timeline-marker-bg));
+  color: var(--eq-timeline-marker-color, var(--timeline-marker-fg));
+}
+
+/* ITEMS */
+
+.timeline-items {
+  @apply m-0 flex min-w-0 list-none flex-col p-0;
+  gap: var(--timeline-gap);
+}
+
+/* Padding, not a gap between sections: the rail's carries its connector on to the next marker */
+.timeline-section:not(:last-child) > .timeline-rail,
+.timeline-section:not(:last-child) > .timeline-items {
+  padding-bottom: var(--timeline-gap);
+}
+
+.timeline-item {
+  @apply min-w-0;
+}
