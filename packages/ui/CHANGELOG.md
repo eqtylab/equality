@@ -2,6 +2,22 @@
 
 Notable changes to Equality are recorded here, following [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## 5.5.0 - 2026-11-17
+
+### Added
+
+- `Timeline`, a record of what happened to one thing, in order: entries down a rail, in sections
+  marked by the state they happened under. It is three parts: `Timeline`, `TimelineSection` and
+  `TimelineItem`. A section draws a marker for its state, joined to the next by a connector, and
+  the marker stays pinned beside its entries as they scroll. A section takes an `icon`, a `label`
+  that says its state to a screen reader, and one of the five status variants, defaulting to
+  `neutral`. `size` is `sm` (a 20px marker, an icon-only `Badge`), `md` (40px, an `md` `Button`'s
+  height, the default) or `lg` (48px).
+- `--eq-timeline-offset`, a length, pins a `Timeline`'s markers that far below the top of the
+  scrolling area, such as under a sticky header. It defaults to `0px`.
+- `--eq-timeline-marker-background` and `--eq-timeline-marker-color` colour a `TimelineSection`'s
+  marker and connector for a state no variant covers, such as a control status.
+
 ## 5.4.4 - 2026-11-16
 
 ### Fixed
