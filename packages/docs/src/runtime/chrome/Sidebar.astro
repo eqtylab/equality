@@ -17,10 +17,12 @@ const { nodes, switcher } = Astro.props;
 {
   /* Equality's NavPanel pins its own scroller below the header, so the wrapper only stretches to
      the page's height: the panel has size containment and in DocsPage's items-start row it would
-     otherwise be 0px tall. Its width is set in unlayered CSS, which beats any utility; hence `!`. */
+     otherwise be 0px tall. The min-height gives it a height before the content column is parsed,
+     or the inline script below measures a 32px scroller and scrolls the current row to the top.
+     Its width is set in unlayered CSS, which beats any utility; hence `!`. */
 }
 <div
-  class="[view-transition-name:eq-docs-sidebar] [--eq-nav-offset:var(--eq-docs-header-height)] hidden shrink-0 self-stretch lg:flex"
+  class="[view-transition-name:eq-docs-sidebar] [--eq-nav-offset:var(--eq-docs-header-height)] hidden shrink-0 self-stretch lg:flex lg:min-h-[calc(100vh-var(--eq-docs-header-height))]"
   data-eq-chrome
   data-pagefind-ignore
 >
