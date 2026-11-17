@@ -44,7 +44,7 @@ The menu widens to fit its longest option, up to `max-w-80`. Each option stays o
 
 Pass `searchable` to add the [Dropdown Menu](/components/dropdown-menu)'s in-place search. It is off by default. Reach for it once the list is long enough.
 
-The search box sits at the top of the menu and is focused as soon as it opens. It replaces the "Filters" heading and takes `label` as its accessible name, and "Clear all" moves to a footer pinned to the bottom of the menu, shown while something is selected. Options that don't match hide themselves, matching against each option's `label`. <kbd>Enter</kbd> toggles the first match and keeps the menu open.
+The search box sits at the top of the menu and is focused as soon as it opens. On a touch screen it waits for a tap or a typed key instead, so the phone's keyboard doesn't cover the list. It replaces the "Filters" heading and takes `label` as its accessible name, and "Clear all" moves to a footer pinned to the bottom of the menu, shown while something is selected. Options that don't match hide themselves, matching against each option's `label`. <kbd>Enter</kbd> toggles the first match and keeps the menu open.
 
 <FilterDropdownDemo client:only="react" variant="searchable" />
 
@@ -65,7 +65,7 @@ Use `searchPlaceholder` to describe what is being searched, and `emptyPlaceholde
 
 The empty message only appears while a query is active — an empty `options` array renders an empty menu rather than this message.
 
-The "Clear all" footer stays visible while a query is typed, but it is never a search result, so <kbd>Enter</kbd> toggles the first match and can't clear every filter by accident. Choosing it keeps the menu open and returns focus to the search box.
+The "Clear all" footer stays visible while a query is typed, but it is never a search result, so <kbd>Enter</kbd> toggles the first match and can't clear every filter by accident. Choosing it keeps the menu open and returns focus to the search box, or to the menu on a touch screen.
 
 ## Props
 

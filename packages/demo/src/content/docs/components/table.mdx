@@ -211,7 +211,7 @@ Mix `fr` units for flexible columns with fixed pixel values for predictable sizi
 
 ### Content-Sized Columns
 
-Use `auto` for columns that should shrink to fit their content. This is useful for action columns or icon-only columns.
+Use `auto` for columns that should shrink to fit their content. This is useful for action columns or icon-only columns. An `IconButton` at its default `sm` size overhangs the row's padding, so a row with an actions menu or a `CopyButton` is as tall as one without.
 
 ```tsx
 <TableContainer columns="1fr 1fr auto auto auto">

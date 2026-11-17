@@ -45,7 +45,7 @@ The `label` is shown on the trigger before anything is selected, and as the head
 
 Pass `searchable` to add the [Dropdown Menu](/components/dropdown-menu)'s in-place search. It is off by default. Reach for it once the list is long enough.
 
-The search box sits at the top of the menu and is focused as soon as it opens. Options that don't match hide themselves, matching against each option's `label`. <kbd>Enter</kbd> chooses the first match.
+The search box sits at the top of the menu and is focused as soon as it opens. On a touch screen it waits for a tap or a typed key instead, so the phone's keyboard doesn't cover the list. Options that don't match hide themselves, matching against each option's `label`. <kbd>Enter</kbd> chooses the first match.
 
 <RadioDropdownDemo client:only="react" variant="searchable" />
 

@@ -18,4 +18,10 @@ describe('table-components.module.css', () => {
   it("draws no outline on the row's stretched link, so focus shows as one line", () => {
     expect(ruleBody(css, '.table-row-link')).toMatch(/outline-style:\s*none;/);
   });
+
+  it('overhangs a small icon button into the row padding', () => {
+    expect(ruleBody(css, ".table-cell [data-icon-button='sm']")).toMatch(
+      /margin-block:\s*calc\(0\.25rem \* -1\);/
+    );
+  });
 });
