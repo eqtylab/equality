@@ -56,6 +56,7 @@ describe('Nav shell', () => {
     };
     expect(header('Settings').className).toMatch(/nav-panel-heading/);
     expect(header(<span>Settings</span>).className).toMatch(/nav-panel-heading/);
+    expect(header(0)).toMatchObject({ text: '0', className: expect.stringMatching(/heading/) });
     expect(header(<span>Site card</span>, true).className).not.toMatch(/nav-panel-heading/);
     expect(header(null).className).toBeNull();
     expect(header(false).className).toBeNull();

@@ -18,7 +18,7 @@ const NavPanel = React.forwardRef<HTMLElement, NavPanelProps>(
   ({ header, bareHeader = false, className, children, ...props }, ref) => (
     <nav ref={ref} className={cn(styles['nav-panel'], className)} {...props}>
       <div className={styles['nav-scroller']} data-nav-scroller="">
-        {header && (
+        {header != null && header !== false && (
           <div
             className={cn(styles['nav-panel-header'], !bareHeader && styles['nav-panel-heading'])}
           >
