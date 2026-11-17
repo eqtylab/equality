@@ -1,6 +1,6 @@
 ---
 title: "Timeline"
-description: "Entries in order down a rail, in sections marked by the state they happened under"
+description: "A vertical list of ordered items separated by marked sections"
 ---
 
 import {
@@ -11,13 +11,13 @@ import {
 
 ## Overview
 
-A Timeline lists what happened to one thing, in order: a control's declarations and reviews, an indicator's evaluations, an order's events. Its entries sit in sections, one for each state the thing passed through, and each section draws a marker for its state on a rail down the left. A connector joins each marker to the next, and a marker stays pinned beside its entries as a long section scrolls. It pins to the nearest scrolling ancestor, or the page; under a sticky header, set `--eq-timeline-offset` to the header's height, such as `64px`, and the markers pin below it.
+Timeline lists what happened to one object, in order. Examples include a control's declarations and reviews, and a user's activity logs. Timeline entries are grouped by section according to their state, denoted by a marker on the rail to the left of the timeline items. The rail inherits the color of each section and the marker stays pinned beside its entries as the section scrolls. It pins to the nearest scrolling ancestor, or the page; under a sticky header, set `--eq-timeline-offset` to the header's height to ensure the markers correctly pin below it.
 
-It is composed of three components: `Timeline` (the list), `TimelineSection` (a run of entries under one state, with its marker) and `TimelineItem` (one entry). What an entry shows is yours: a [Card](/components/card), a line of text, a form.
+It is composed of three components: `Timeline` (the list), `TimelineSection` (a run of entries under one state, with its marker) and `TimelineItem` (one entry). Each entry is developer defined, eg a [Card](/components/card), a line of text, a form, etc.
 
 The markers are decorative. [Accessibility](#accessibility) covers how to name the timeline and its sections so a screen reader hears each state once.
 
-Use a [Progress Indicator](/components/progress-indicator) for the steps of a process someone is working through. A Timeline is a record of what has already happened.
+Do not use Timeline to display the steps of a process that is currently underway. use [Progress Indicator](/components/progress-indicator) instead.
 
 ## Usage
 
@@ -43,13 +43,13 @@ Basic usage with required properties:
 
 ### Sizes
 
-`size` sets the markers' size, and the spacing with it. The default `md` marker is 40px, the height of an `md` [Button](/components/button), and suits a page's main column, a card or a drawer.
+`size` sets the markers' size, and associated spacing. The default `md` size suits a page's main column, a card or a drawer. Use `md` when the timeline is the focus of a page.
 
 <div className="my-4">
   <TimelineDemo size="md" />
 </div>
 
-`sm` draws a 20px marker, the size of an icon-only [Badge](/components/badge), for a narrow pane or entries that are lines of text.
+Use `sm` when displaying a timeline as a _part_ of a page where the timeline is helpful in a supplemental context.
 
 <div className="my-4">
   <TimelineDemo size="sm" />
@@ -78,7 +78,7 @@ Basic usage with required properties:
 
 ### Section Variants
 
-A section's `variant` colours its marker and the connector below it, in the same colours as a [Badge](/components/badge). The `icon`, a Lucide element, names the state, which the colour alone doesn't. `success`, `warning` and `danger` sections default to the same icons as a [Badge](/components/badge) of that variant, so `icon` is only needed to replace them. `neutral` and `primary` sections have no default, so give them an `icon`. Scroll the pane to see each marker stay beside its section's entries.
+A section's `variant` controls its marker and connecting line color. `success`, `warning` and `danger` sections default to the same standard status icons, so `icon` is only needed to replace them. `neutral` and `primary` sections have no default icons, and require one to be set.
 
 <div className="my-4">
   <TimelineVariantsDemo />
@@ -110,7 +110,7 @@ A section's `variant` colours its marker and the connector below it, in the same
 
 ### Custom Colors
 
-For a state no variant covers, such as a control status, set `--eq-timeline-marker-background` and `--eq-timeline-marker-color` on the section to a pair of tokens. The connector follows the marker's background. Reach for a variant first.
+For states that aren't covered by variants, such as a control status', set `--eq-timeline-marker-background` and `--eq-timeline-marker-color` on the section to a pair of tokens. Only reach for custom colors if none of the variants apply to your use case.
 
 <div className="my-4">
   <TimelineCustomColorDemo />
@@ -134,7 +134,7 @@ For a state no variant covers, such as a control status, set `--eq-timeline-mark
 
 ### Linking to an Entry
 
-Give a `TimelineItem` an `id` and a link ending in `#` and that id leads to it.
+Give a `TimelineItem` an `id` to allow items to deeplink into it on a page.
 
 ```tsx
 <TimelineItem id="event-12">…</TimelineItem>
@@ -142,11 +142,11 @@ Give a `TimelineItem` an `id` and a link ending in `#` and that id leads to it.
 
 ## Accessibility
 
-A Timeline is an ordered list of sections, and each section an ordered list of its entries, so a screen reader says how many there are and where it is among them. The markers are hidden from it. Name a list only when the name says something its surroundings don't, or a screen reader hears the same thing twice.
+Timeline comprises an ordered list of sections, and each section an ordered list of its entries, so a screen reader announces how many entries there are and where the current item is among them. Markers are hidden from screen readers. Name a section only when the name says something its surroundings don't, or screen reader users will hear the same thing twice.
 
 ### Naming the Timeline
 
-When a visible heading titles the timeline, point `aria-labelledby` at it. Everyone gets the same name, and it can't drift from the heading.
+When a visible heading titles the timeline section, point `aria-labelledby` at it. Everyone gets the same name, and it can't drift from the heading.
 
 ```tsx
 <h2 id="control-history">History</h2>
