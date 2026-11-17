@@ -106,7 +106,7 @@ const VARIANTS = [
   { variant: "danger", icon: <TriangleAlert />, title: "Danger" },
 ] as const;
 
-const EVENTS = ["First event", "Second event", "Third event"];
+const EVENTS = ["First event", "Second event"];
 
 /* One section for each variant, in a scrolling pane so each marker can be seen staying beside its entries. */
 export function TimelineVariantsDemo() {

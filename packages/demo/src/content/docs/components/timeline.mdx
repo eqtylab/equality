@@ -15,7 +15,7 @@ A Timeline lists what happened to one thing, in order: a control's declarations 
 
 It is composed of three components: `Timeline` (the list), `TimelineSection` (a run of entries under one state, with its marker) and `TimelineItem` (one entry). What an entry shows is yours: a [Card](/components/card), a line of text, a form.
 
-The marker is decorative, so each section takes a `label` that says its state to a screen reader, and the timeline takes an `aria-label`.
+The markers are decorative. [Accessibility](#accessibility) covers how to name the timeline and its sections so a screen reader hears each state once.
 
 Use a [Progress Indicator](/components/progress-indicator) for the steps of a process someone is working through. A Timeline is a record of what has already happened.
 
@@ -152,6 +152,43 @@ Give a `TimelineItem` an `id` and a link ending in `#` and that id leads to it.
 <TimelineItem id="event-12">…</TimelineItem>
 ```
 
+## Accessibility
+
+A Timeline is an ordered list of sections, and each section an ordered list of its entries, so a screen reader says how many there are and where it is among them. The markers are hidden from it. Name a list only when the name says something its surroundings don't, or a screen reader hears the same thing twice.
+
+### Naming the Timeline
+
+When a visible heading titles the timeline, point `aria-labelledby` at it. Everyone gets the same name, and it can't drift from the heading.
+
+```tsx
+<h2 id="control-history">History</h2>
+<Timeline aria-labelledby="control-history">…</Timeline>
+```
+
+With no visible heading, give it an `aria-label` when the name tells it apart, such as with more than one timeline on a page. Leave it unnamed when it is the only list in a region that is already named, such as a drawer titled "History".
+
+### Naming a Section
+
+A section's `label` is the only way a screen reader learns its state, since the marker is hidden. Give a section a `label` when its state shows only in the marker.
+
+```tsx
+<TimelineSection label="Events while in review" icon={<Eye />}>
+  <TimelineItem>Evidence attached</TimelineItem>
+</TimelineSection>
+```
+
+Leave `label` out when every entry already says the state, such as in a title or a status badge on each one. With both, a screen reader says the state as it enters the section and again on every entry.
+
+```tsx
+<TimelineSection icon={<Eye />}>
+  <TimelineItem>
+    <Card>
+      <CardContent>In review: evidence attached</CardContent>
+    </Card>
+  </TimelineItem>
+</TimelineSection>
+```
+
 ## Slots
 
 | Name              | Description                                       |
@@ -164,20 +201,20 @@ Give a `TimelineItem` an `id` and a link ending in `#` and that id leads to it.
 
 ### Timeline
 
-| Name         | Description                                | Type        | Default | Required |
-| ------------ | ------------------------------------------ | ----------- | ------- | -------- |
-| `aria-label` | Names the timeline for a screen reader     | `string`    |         | ✅       |
-| `children`   | The sections, in the order they happened   | `ReactNode` |         | ✅       |
-| `size`       | The markers' size, and the spacing with it | `sm`, `md`  | `md`    | ❌       |
+| Name         | Description                                                         | Type        | Default | Required |
+| ------------ | ------------------------------------------------------------------- | ----------- | ------- | -------- |
+| `aria-label` | Names the timeline for a screen reader when no visible heading does | `string`    |         | ❌       |
+| `children`   | The sections, in the order they happened                            | `ReactNode` |         | ✅       |
+| `size`       | The markers' size, and the spacing with it                          | `sm`, `md`  | `md`    | ❌       |
 
 ### TimelineSection
 
-| Name       | Description                                                | Type                                                 | Default   | Required |
-| ---------- | ---------------------------------------------------------- | ---------------------------------------------------- | --------- | -------- |
-| `label`    | Names the section's entries for a screen reader            | `string`                                             |           | ✅       |
-| `icon`     | A Lucide icon element, drawn in the marker and sized by it | `ReactElement`                                       |           | ✅       |
-| `children` | The section's `TimelineItem`s                              | `ReactNode`                                          |           | ✅       |
-| `variant`  | The status the marker and its connector report             | `neutral`, `primary`, `success`, `warning`, `danger` | `neutral` | ❌       |
+| Name       | Description                                                                                   | Type                                                 | Default   | Required |
+| ---------- | --------------------------------------------------------------------------------------------- | ---------------------------------------------------- | --------- | -------- |
+| `label`    | Names the section's entries for a screen reader; leave it out when every entry says the state | `string`                                             |           | ❌       |
+| `icon`     | A Lucide icon element, drawn in the marker and sized by it                                    | `ReactElement`                                       |           | ✅       |
+| `children` | The section's `TimelineItem`s                                                                 | `ReactNode`                                          |           | ✅       |
+| `variant`  | The status the marker and its connector report                                                | `neutral`, `primary`, `success`, `warning`, `danger` | `neutral` | ❌       |
 
 ### TimelineItem
 

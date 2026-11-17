@@ -10,8 +10,8 @@ Notable changes to Equality are recorded here, following [Keep a Changelog](http
   marked by the state they happened under. It is three parts: `Timeline`, `TimelineSection` and
   `TimelineItem`. A section draws a marker for its state, joined to the next by a connector, and
   the marker stays pinned beside its entries as they scroll. A section takes an `icon`, a Lucide
-  element such as `<Clock />`, a `label` that says its state to a screen reader, and one of the five
-  status variants, defaulting to `neutral`. `size` is `sm` (a 20px marker, an icon-only `Badge`) or
+  element such as `<Clock />`, an optional `label` that says its state to a screen reader, and one
+  of the five status variants, defaulting to `neutral`. `size` is `sm` (a 20px marker, an icon-only `Badge`) or
   `md` (40px, an `md` `Button`'s height, the default).
 - `--eq-timeline-offset`, a length, pins a `Timeline`'s markers that far below the top of the
   scrolling area, such as under a sticky header. It defaults to `0px`.

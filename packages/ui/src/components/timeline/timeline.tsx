@@ -35,8 +35,8 @@ const timelineSectionVariants = cva(styles['timeline-section'], {
 
 export interface TimelineProps
   extends React.OlHTMLAttributes<HTMLOListElement>, VariantProps<typeof timelineVariants> {
-  /** Names the timeline for assistive technology, such as "Control timeline" */
-  'aria-label': string;
+  /** Names the timeline for assistive technology, such as "Control timeline". Point `aria-labelledby` at a visible heading instead when there is one */
+  'aria-label'?: string;
   /** The `TimelineSection`s, in the order they happened */
   children: React.ReactNode;
 }
@@ -52,8 +52,8 @@ Timeline.displayName = 'Timeline';
 
 export interface TimelineSectionProps
   extends React.LiHTMLAttributes<HTMLLIElement>, VariantProps<typeof timelineSectionVariants> {
-  /** Names the section's entries for assistive technology, such as "Events while in review". The marker is decorative, so this is what says the state */
-  label: string;
+  /** Names the section's entries for assistive technology, such as "Events while in review". The marker is decorative, so leave it out only when every entry already says the state */
+  label?: string;
   /** A Lucide icon element, such as `<Clock />`, drawn in the marker. The timeline sizes it */
   icon: React.ReactElement;
   /** The section's `TimelineItem`s */

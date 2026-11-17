@@ -40,6 +40,26 @@ describe('Timeline', () => {
     expect(rail?.querySelector('svg')).toBeTruthy();
   });
 
+  it('takes its name from a visible heading, and leaves a section unnamed without a label', () => {
+    render(
+      <>
+        <h2 id="history">History</h2>
+        <Timeline aria-labelledby="history">
+          <TimelineSection icon={<Clock />}>
+            <TimelineItem>In progress: evidence attached</TimelineItem>
+          </TimelineSection>
+        </Timeline>
+      </>
+    );
+
+    const timeline = screen.getByRole('list', { name: 'History' });
+    const [section] = within(timeline).getAllByRole('list');
+    expect(section.hasAttribute('aria-label')).toBe(false);
+    expect(within(section).getByRole('listitem').textContent).toBe(
+      'In progress: evidence attached'
+    );
+  });
+
   it("passes an entry's id through, so a link can lead to it", () => {
     renderTimeline();
 
