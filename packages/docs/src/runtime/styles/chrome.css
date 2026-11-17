@@ -70,6 +70,12 @@ html[data-equality-theme='dark'] [data-eq-docs-column]::before {
   navigation: auto;
 }
 
+/* On the sticky scroller, not the panel: the panel is as tall as the page, so a name on it slides
+   the sidebar in from wherever the old page was scrolled. */
+#eq-sidebar [data-nav-scroller] {
+  view-transition-name: eq-docs-sidebar;
+}
+
 ::view-transition-group(root) {
   animation-duration: 150ms;
 }
