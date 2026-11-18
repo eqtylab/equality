@@ -1,5 +1,12 @@
 @reference '../../theme/theme.module.css';
 
+/* Keep it registered: unregistered, a choice card's hover tint can't transition */
+@property --card-tint {
+  syntax: '<color>';
+  inherits: false;
+  initial-value: transparent;
+}
+
 .card {
   @apply @container/card relative;
   @apply text-text-primary;
@@ -60,4 +67,51 @@
 
 .card--overlay {
   @apply bg-background-overlay shadow-shadow-overlay border-border-overlay;
+}
+
+/* TINTS: drawn over the elevation's background, never in place of it. After the elevations so they win */
+
+.card--choice,
+.card--selected,
+.card--success,
+.card--warning,
+.card--danger {
+  background-image: linear-gradient(var(--card-tint), var(--card-tint));
+}
+
+.card--choice {
+  @apply cursor-pointer transition-colors;
+  transition-property: color, background-color, border-color, --card-tint;
+
+  @variant hover {
+    --card-tint: var(--color-list-item-hover);
+  }
+
+  @variant active {
+    --card-tint: var(--color-list-item-hover);
+  }
+}
+
+/* Repeats hover and active, which would otherwise outrank it */
+.card--selected,
+.card--selected:hover,
+.card--selected:active {
+  --card-tint: var(--color-list-item-current);
+  @apply border-text-primary;
+  @apply forced-colors:outline-2 forced-colors:-outline-offset-2 forced-colors:outline-[color:Highlight];
+}
+
+.card--success {
+  --card-tint: color-mix(in oklab, var(--color-badge-background-success) 20%, transparent);
+  @apply border-badge-background-success;
+}
+
+.card--warning {
+  --card-tint: color-mix(in oklab, var(--color-badge-background-warning) 20%, transparent);
+  @apply border-badge-background-warning;
+}
+
+.card--danger {
+  --card-tint: color-mix(in oklab, var(--color-badge-background-danger) 20%, transparent);
+  @apply border-badge-background-danger;
 }

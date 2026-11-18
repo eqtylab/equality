@@ -5,7 +5,13 @@ description: "Interactive element for triggering actions"
 
 import React from "react";
 import { Button } from "@eqtylab/equality";
-import { ArrowUp, Grid3X3, ArrowRight } from "lucide-react";
+import {
+  ArrowUp,
+  Grid3X3,
+  ArrowRight,
+  CalendarDays,
+  ChevronDown,
+} from "lucide-react";
 
 ## Overview
 
@@ -83,6 +89,39 @@ Use the `tertiary` variant for most other lower-emphasis actions.
   </Button>
 </div>
 }
+
+### Field
+
+Use the `field` variant for a button that opens a picker in a form, such as a date or people picker. It draws as a `Select` trigger does, with the input's border and background, full width, and spreads its content across that width: the label sits at the start, and a `suffix` at the end. Always wrap the label in `<span className="flex-1 truncate">`: a button doesn't wrap its text, so a bare label can't shrink, and a long value would push a `suffix` out of sight instead of cutting off. Until a value is chosen, give the label `text-text-secondary`, as a `Select` greys its placeholder.
+
+{(() => {
+const calendar = React.createElement(CalendarDays);
+const chevron = React.createElement(ChevronDown);
+return (
+
+<div className="flex max-w-sm flex-col gap-2">
+  <Button variant="field" size="lg" prefix={calendar}>
+    <span className="text-text-secondary flex-1 truncate">Field LG</span>
+  </Button>
+  <Button variant="field" size="md" prefix={calendar}>
+    <span className="text-text-secondary flex-1 truncate">Field MD</span>
+  </Button>
+  <Button variant="field" size="sm" suffix={chevron}>
+    <span className="flex-1 truncate">Field SM</span>
+  </Button>
+</div>
+);
+})()}
+
+#### Usage
+
+```tsx
+<Button variant="field" prefix={<CalendarDays />}>
+  <span className={cn("flex-1 truncate", !date && "text-text-secondary")}>
+    {date ? formatDate(date) : "Pick a date"}
+  </span>
+</Button>
+```
 
 ### Danger
 
@@ -259,6 +298,9 @@ Buttons tagged with the `disabled` property are non-interactive and visually mut
   <Button variant="tertiary" size="sm" disabled>
     Disabled Tertiary
   </Button>
+  <Button variant="field" size="sm" disabled>
+    Disabled Field
+  </Button>
   <Button variant="danger" size="sm" disabled>
     Disabled Danger
   </Button>
@@ -287,15 +329,15 @@ Buttons tagged with the `disabled` property are non-interactive and visually mut
 
 ## Props
 
-| Name       | Description                                      | Type                                                                                     | Default   | Required |
-| ---------- | ------------------------------------------------ | ---------------------------------------------------------------------------------------- | --------- | -------- |
-| `variant`  | The visual style of the button                   | `primary`, `secondary`, `tertiary`, `danger`, `success`, `warning`, `link`, `navigation` | `primary` | ❌       |
-| `size`     | The size of the button                           | `sm`, `md`, `lg`                                                                         | `md`      | ❌       |
-| `prefix`   | Content to display before the button label       | `ReactNode`                                                                              | -         | ❌       |
-| `suffix`   | Content to display after the button label        | `ReactNode`                                                                              | -         | ❌       |
-| `href`     | URL for link buttons (renders as anchor element) | `string`                                                                                 | -         | ❌       |
-| `target`   | Link target (when href is provided)              | `string`                                                                                 | -         | ❌       |
-| `rel`      | Link rel attribute (when href is provided)       | `string`                                                                                 | -         | ❌       |
-| `download` | Makes link downloadable (when href is provided)  | `string`, `boolean`                                                                      | -         | ❌       |
-| `asChild`  | Merge props onto child element                   | `boolean`                                                                                | `false`   | ❌       |
-| `disabled` | Disables the button                              | `boolean`                                                                                | `false`   | ❌       |
+| Name       | Description                                      | Type                                                                                              | Default   | Required |
+| ---------- | ------------------------------------------------ | ------------------------------------------------------------------------------------------------- | --------- | -------- |
+| `variant`  | The visual style of the button                   | `primary`, `secondary`, `tertiary`, `field`, `danger`, `success`, `warning`, `link`, `navigation` | `primary` | ❌       |
+| `size`     | The size of the button                           | `sm`, `md`, `lg`                                                                                  | `md`      | ❌       |
+| `prefix`   | Content to display before the button label       | `ReactNode`                                                                                       | -         | ❌       |
+| `suffix`   | Content to display after the button label        | `ReactNode`                                                                                       | -         | ❌       |
+| `href`     | URL for link buttons (renders as anchor element) | `string`                                                                                          | -         | ❌       |
+| `target`   | Link target (when href is provided)              | `string`                                                                                          | -         | ❌       |
+| `rel`      | Link rel attribute (when href is provided)       | `string`                                                                                          | -         | ❌       |
+| `download` | Makes link downloadable (when href is provided)  | `string`, `boolean`                                                                               | -         | ❌       |
+| `asChild`  | Merge props onto child element                   | `boolean`                                                                                         | `false`   | ❌       |
+| `disabled` | Disables the button                              | `boolean`                                                                                         | `false`   | ❌       |

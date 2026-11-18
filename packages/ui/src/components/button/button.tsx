@@ -14,6 +14,7 @@ const buttonVariants = cva(styles['button'], {
       warning: [styles['button--filled'], styles['button--warning']],
       secondary: [styles['button--filled'], styles['button--secondary']],
       tertiary: styles['button--tertiary'],
+      field: styles['button--field'],
       link: styles['button--link'],
       navigation: styles['button--navigation'],
     },

@@ -8,6 +8,7 @@ import { cn } from '@/lib/utils';
 const iconButtonVariants = cva(styles['icon-btn'], {
   variants: {
     size: {
+      xs: styles['size--xs'],
       sm: styles['size--sm'],
       md: styles['size--md'],
       lg: styles['size--lg'],
@@ -24,6 +25,7 @@ const iconButtonVariants = cva(styles['icon-btn'], {
 });
 
 const iconSizeMap = {
+  xs: 14,
   sm: 16,
   md: 22,
   lg: 26,
