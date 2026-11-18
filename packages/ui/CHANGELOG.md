@@ -2,6 +2,13 @@
 
 Notable changes to Equality are recorded here, following [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## 5.5.2 - 2026-11-18
+
+### Fixed
+
+- An inline `SelectTrigger`'s chevron no longer shrinks below the default trigger's 16px beside
+  small text. It still grows with larger text, at 0.75em.
+
 ## 5.5.1 - 2026-11-18
 
 ### Added
