@@ -2,6 +2,14 @@
 
 Notable changes to Equality are recorded here, following [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## 5.5.3 - 2026-11-18
+
+### Changed
+
+- `SheetHeader`'s background is a soft light from beyond its top-left corner, in place of the
+  brand purple fade across it. It takes the link purple at 8% in light mode and the brand purple at
+  13% in dark mode.
+
 ## 5.5.2 - 2026-11-18
 
 ### Fixed
