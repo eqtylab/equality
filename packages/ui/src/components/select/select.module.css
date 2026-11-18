@@ -17,8 +17,20 @@
   @apply [&>span]:line-clamp-1;
 }
 
+.select-trigger--inline {
+  @apply inline-flex h-auto w-auto justify-start gap-1 border-0 bg-transparent p-0;
+  font-size: inherit;
+  line-height: inherit;
+  /* Padding keeps descenders out of the one-line clamp; the margin keeps the line's height */
+  @apply [&>span]:-my-[0.05em] [&>span]:py-[0.05em];
+}
+
 .select-icon {
   @apply size-4;
+}
+
+.select-trigger--inline .select-icon {
+  @apply size-[0.75em];
 }
 
 .select-icon--sm {
@@ -38,6 +50,10 @@
 .select-content--popper {
   @apply min-w-(--radix-select-trigger-width);
   @apply data-[side=bottom]:translate-y-1 data-[side=left]:-translate-x-1 data-[side=right]:translate-x-1 data-[side=top]:-translate-y-1;
+}
+
+.select-content--trigger-width {
+  @apply w-(--radix-select-trigger-width);
 }
 
 .select-viewport--popper {

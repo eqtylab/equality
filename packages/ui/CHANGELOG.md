@@ -2,6 +2,20 @@
 
 Notable changes to Equality are recorded here, following [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## 5.5.1 - 2026-11-18
+
+### Added
+
+- `SelectTrigger` takes `variant="inline"`, for a select set into a heading or a line of text,
+  such as a title that switches between items or a version picker beside its label. It flows
+  with the text around it, has no border, background, padding or fixed height, takes the
+  surrounding font size and line height, and shows its chevron at full opacity, sized to the
+  font. Name it with its current value, such as `` `${policy}, switch policy` ``. `variant`
+  defaults to `default`, the boxed trigger.
+- `SelectContent` takes `matchTriggerWidth`, which makes the list exactly as wide as its trigger,
+  wrapping longer options, rather than at least as wide. It applies to the default `popper`
+  position and defaults to `false`.
+
 ## 5.5.0 - 2026-11-17
 
 ### Added

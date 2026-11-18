@@ -69,12 +69,15 @@ export function SelectDemo({
     | "pre-selected"
     | "long-options"
     | "long-options-truncated"
+    | "inline"
+    | "trigger-width"
     | "with-search"
     | "with-search-reveal"
     | "with-search-persistent";
   elevation?: Elevation;
 }) {
   const [selectValue, setSelectValue] = useState<string>("");
+  const [inlinePolicy, setInlinePolicy] = useState(POLICIES[1]);
 
   if (variant === "default") {
     return (
@@ -163,6 +166,64 @@ export function SelectDemo({
                   {policy}
                 </span>
               )}
+            </SelectItem>
+          ))}
+        </SelectContent>
+      </Select>
+    );
+  }
+
+  if (variant === "inline") {
+    return (
+      <div className="flex flex-col gap-4">
+        <h3 className="text-2xl font-semibold">
+          <Select value={inlinePolicy} onValueChange={setInlinePolicy}>
+            <SelectTrigger
+              variant="inline"
+              aria-label={`${inlinePolicy}, switch policy`}
+            >
+              <SelectValue />
+            </SelectTrigger>
+            <SelectContent elevation={elevation}>
+              {POLICIES.slice(0, 3).map((name) => (
+                <SelectItem key={name} value={name}>
+                  {name}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </h3>
+        <p className="text-sm">
+          <span id="select-inline-version-label">Version</span>{" "}
+          <Select defaultValue="2.1.0">
+            <SelectTrigger
+              id="select-inline-version"
+              variant="inline"
+              aria-labelledby="select-inline-version-label select-inline-version"
+            >
+              <SelectValue />
+            </SelectTrigger>
+            <SelectContent elevation={elevation}>
+              <SelectItem value="1.0.0">v1.0.0</SelectItem>
+              <SelectItem value="2.0.0">v2.0.0</SelectItem>
+              <SelectItem value="2.1.0">v2.1.0</SelectItem>
+            </SelectContent>
+          </Select>
+        </p>
+      </div>
+    );
+  }
+
+  if (variant === "trigger-width") {
+    return (
+      <Select defaultValue="odis-safety">
+        <SelectTrigger id={`select-${variant}`} className="w-56!">
+          <SelectValue placeholder="Select a policy" />
+        </SelectTrigger>
+        <SelectContent elevation={elevation} matchTriggerWidth>
+          {POLICIES.map((policy) => (
+            <SelectItem key={policy} value={toValue(policy)}>
+              {policy}
             </SelectItem>
           ))}
         </SelectContent>

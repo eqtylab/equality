@@ -65,7 +65,7 @@ Use `defaultValue` on the root to start with an option chosen. Long lists scroll
 
 ### Long options
 
-The list grows to fit its longest option, so long text only matters when `SelectContent` has a fixed width or reaches the edge of the window. Long text then wraps inside its row, and an unbroken string such as a hash breaks wherever it has to, so every option stays readable and lines up with the rest.
+The list grows to fit its longest option, so long text only matters when `SelectContent` has a fixed width, [matches its trigger's](#trigger-width), or reaches the edge of the window. Long text then wraps inside its row, and an unbroken string such as a hash breaks wherever it has to, so every option stays readable and lines up with the rest.
 
 <SelectDemo client:only="react" variant="long-options" />
 
@@ -83,6 +83,35 @@ To keep every option on one line instead, wrap the text in a `block truncate` sp
     </SelectItem>
   ))}
 </SelectContent>
+```
+
+### Inline
+
+`variant="inline"` sets the trigger into a heading or a line of text, such as a title that switches between items or a version picker beside its label. It flows with the text around it, drops the border, background, padding and fixed height, takes the surrounding font size and line height, and shows its chevron at full opacity, sized to the font.
+
+<SelectDemo client:only="react" variant="inline" />
+
+```tsx
+<h3 className="text-2xl font-semibold">
+  <Select value={policy} onValueChange={setPolicy}>
+    <SelectTrigger variant="inline" aria-label={`${policy}, switch policy`}>
+      <SelectValue />
+    </SelectTrigger>
+    <SelectContent>{/* SelectItems */}</SelectContent>
+  </Select>
+</h3>
+```
+
+Name the trigger with its current value, so its name holds the text people see. Use an `aria-label` such as `` `${policy}, switch policy` ``, or beside a visible label such as "Version", an `aria-labelledby` naming the label and then the trigger.
+
+### Trigger width
+
+The list is at least as wide as its trigger, and grows for longer options. `matchTriggerWidth` pins it to exactly the trigger's width instead, so longer options wrap inside it. It applies to the default `popper` position.
+
+<SelectDemo client:only="react" variant="trigger-width" />
+
+```tsx
+<SelectContent matchTriggerWidth>{/* SelectItems */}</SelectContent>
 ```
 
 ## Search & filtering
@@ -229,18 +258,18 @@ import { ELEVATION } from "@eqtylab/equality";
 
 ## Slots
 
-| Name              | Description                                                            |
-| ----------------- | ---------------------------------------------------------------------- |
-| `Select`          | The root that manages selection state. Owns `value`/`onValueChange`.   |
-| `SelectTrigger`   | The button that opens the dropdown and displays the value.             |
-| `SelectValue`     | Renders the selected value, or a `placeholder` when nothing is chosen. |
-| `SelectContent`   | The dropdown popover holding the options. Owns `elevation`.            |
-| `SelectItem`      | A selectable option. Requires a `value`.                               |
-| `SelectGroup`     | Groups related items.                                                  |
-| `SelectLabel`     | A heading for a group of items.                                        |
-| `SelectSeparator` | A divider between items or groups.                                     |
-| `SelectSearch`    | Optional search input that filters items in place.                     |
-| `SelectEmpty`     | "No results" row shown only when a search matches nothing.             |
+| Name              | Description                                                                         |
+| ----------------- | ----------------------------------------------------------------------------------- |
+| `Select`          | The root that manages selection state. Owns `value`/`onValueChange`.                |
+| `SelectTrigger`   | The button that opens the dropdown and displays the value. Owns `variant`.          |
+| `SelectValue`     | Renders the selected value, or a `placeholder` when nothing is chosen.              |
+| `SelectContent`   | The dropdown popover holding the options. Owns `elevation` and `matchTriggerWidth`. |
+| `SelectItem`      | A selectable option. Requires a `value`.                                            |
+| `SelectGroup`     | Groups related items.                                                               |
+| `SelectLabel`     | A heading for a group of items.                                                     |
+| `SelectSeparator` | A divider between items or groups.                                                  |
+| `SelectSearch`    | Optional search input that filters items in place.                                  |
+| `SelectEmpty`     | "No results" row shown only when a search matches nothing.                          |
 
 ## Props
 
@@ -262,11 +291,18 @@ The parts forward their [Radix Select](https://www.radix-ui.com/primitives/docs/
 | ------------- | ------------------------------------- | -------- | ------- | -------- |
 | `placeholder` | Text shown before a value is selected | `string` | —       | ❌       |
 
+### SelectTrigger
+
+| Name      | Description                                                      | Type                | Default   | Required |
+| --------- | ---------------------------------------------------------------- | ------------------- | --------- | -------- |
+| `variant` | `inline` sits in a heading or text, in the surrounding font size | `default`, `inline` | `default` | ❌       |
+
 ### SelectContent
 
-| Name        | Description                                     | Type                                  | Default   | Required |
-| ----------- | ----------------------------------------------- | ------------------------------------- | --------- | -------- |
-| `elevation` | Position of the dropdown on the elevation scale | `sunken`, `base`, `raised`, `overlay` | `overlay` | ❌       |
+| Name                | Description                                                      | Type                                  | Default   | Required |
+| ------------------- | ---------------------------------------------------------------- | ------------------------------------- | --------- | -------- |
+| `elevation`         | Position of the dropdown on the elevation scale                  | `sunken`, `base`, `raised`, `overlay` | `overlay` | ❌       |
+| `matchTriggerWidth` | Makes the list exactly as wide as its trigger, not at least that | `boolean`                             | `false`   | ❌       |
 
 ### SelectItem
 
