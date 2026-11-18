@@ -16,6 +16,12 @@ describe('textarea.module.css', () => {
     expect(body).toMatch(/border-radius:\s*0;/);
   });
 
+  it('drops the focus ring and its offset, which would otherwise still draw a 2px ring', () => {
+    const body = ruleBody(css, '.textarea--bare');
+    expect(body).toMatch(/&:focus-visible\s*\{\s*--tw-ring-shadow:[^;]*calc\(0px \+/);
+    expect(body).toMatch(/&:focus-visible\s*\{\s*--tw-ring-offset-width:\s*0px;/);
+  });
+
   it('comes after the base rule, so it wins at the same specificity', () => {
     expect(css.indexOf('.textarea--bare {')).toBeGreaterThan(css.indexOf('.textarea {'));
   });

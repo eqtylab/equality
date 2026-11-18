@@ -9,7 +9,7 @@
 }
 
 .size--xs {
-  @apply size-5 rounded-md;
+  @apply size-6 rounded-md;
 }
 
 .size--sm {

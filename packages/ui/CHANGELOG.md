@@ -6,20 +6,22 @@ Notable changes to Equality are recorded here, following [Keep a Changelog](http
 
 ### Added
 
-- `Card` takes `selected`, which makes it a choice in a set, such as a radio card. A clickable
+- `Card` takes `selected`, which makes it a choice in a set, such as a radio card. With `onClick`, a
   choice takes the grey list hover in place of the brand border and gradient; while `selected` is
   `true` it takes the current-item fill, a primary border and, in forced colours, an outline. Pass
   `false` for the unchosen cards so they hover the same way.
 - `Card` takes `variant`, `success`, `warning` or `danger`, which tints its border and background
-  with that badge colour. It defaults to `default`, untinted.
+  with that badge colour. It defaults to `default`, untinted, and isn't combined with `selected`.
+  Both tints sit over the elevation's background rather than replacing it.
 - `Textarea` takes `variant="bare"`, for a textarea inside a frame that draws its own edge, such as
-  an editor with a toolbar: no border, background, radius or focus ring. `variant` defaults to
-  `default`.
+  an editor with a toolbar: no border, background, radius or focus ring, so the frame must show
+  focus. `variant` defaults to `default`.
 - `Button` takes `variant="field"`, for a button that opens a picker in a form. It draws as
   `Select`'s trigger does, with the input's border, background and hover, full width, spreading its
-  content across it. A label used with a `prefix` takes `flex-1` to stay beside it.
-- `IconButton` takes `size="xs"`: 20px, with a 14px icon, for an action inside a field such as a
-  clear button.
+  content across it and clipping what overflows. With a `prefix`, wrap the label in a
+  `flex-1 truncate` span.
+- `IconButton` takes `size="xs"`: 24px, the smallest WCAG 2.2 AA target, with a 14px icon, for an
+  action inside a picker field such as a clear button.
 
 ## 5.5.3 - 2026-11-18
 

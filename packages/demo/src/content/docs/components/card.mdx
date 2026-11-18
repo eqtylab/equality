@@ -1,8 +1,9 @@
 ---
 title: "Card"
-description: "Compound card container with elevations and hover states"
+description: "Compound card container with elevations, hover states, selectable choices and status tints"
 ---
 
+import { CardSelectedDemo } from "@demo/components/demo/card";
 import {
   Card,
   CardContent,
@@ -18,7 +19,7 @@ import {
 
 Card is a compound component for grouping related content into a surfaced container. It is built from a set of composable parts — `Card` (the wrapper) plus `CardHeader`, `CardTitle`, `CardDescription`, `CardContent`, and `CardFooter` — so you only include the sections you need. A content-only card is the most common usage.
 
-Cards sit on the elevation scale via the `elevation` prop (defaulting to `raised`). Passing an `onClick` handler makes the card clickable and adds a hover gradient.
+Cards sit on the elevation scale via the `elevation` prop (defaulting to `raised`). Passing an `onClick` handler makes the card clickable and adds a hover gradient. `selected` makes it a choice in a set, such as a radio card, and `variant` tints it with a status colour.
 
 ## Usage
 
@@ -161,43 +162,32 @@ The hover gradient can be restyled with the `hoverGradientClassName` prop.
 
 ### Selected
 
-`selected` makes the card a choice in a set, such as a radio card. A clickable choice takes the grey list hover in place of the brand border and gradient; the chosen one (`selected`) takes the current-item fill and a primary border, and an outline in forced colours. Pass `false` for the others, not `undefined`, so they hover the same way. Give the card a radio or similar control inside it, as the card itself isn't focusable.
+`selected` makes the card a choice in a set, such as a radio card. With `onClick`, a choice takes the grey list hover in place of the brand border and gradient; the chosen one (`selected`) takes the current-item fill and a primary border, and an outline in forced colours. Both tints sit over the elevation's background. Pass `false` for the others, not `undefined`, so they hover the same way. Give the card a radio or similar control inside it, as the card itself isn't focusable.
 
-{
-
-<div className="grid gap-3 sm:grid-cols-2">
-  <Card selected onClick={() => {}}>
-    <CardContent>
-      <p className="text-sm font-medium">Selected</p>
-    </CardContent>
-  </Card>
-  <Card selected={false} onClick={() => {}}>
-    <CardContent>
-      <p className="text-sm font-medium">Not selected</p>
-    </CardContent>
-  </Card>
-</div>
-}
+<CardSelectedDemo client:only="react" />
 
 #### Usage
 
 ```tsx
-{
-  options.map((option) => (
+<RadioGroup value={chosenId} onValueChange={setChosenId}>
+  {options.map((option) => (
     <Card
       key={option.id}
       selected={option.id === chosenId}
       onClick={() => setChosenId(option.id)}
     >
-      <CardContent>{/* a RadioGroupItem and the option's label */}</CardContent>
+      <CardContent className="flex items-start gap-3">
+        <RadioGroupItem value={option.id} id={option.id} />
+        <Label htmlFor={option.id}>{option.label}</Label>
+      </CardContent>
     </Card>
-  ));
-}
+  ))}
+</RadioGroup>
 ```
 
 ### Status
 
-`variant` tints the border and background with a status colour, such as a criterion that passed or failed.
+`variant` tints the border and background with a status colour, such as a criterion that passed or failed. Colour alone doesn't carry the status, and forced colours drop the tint, so state it in the card too, with a badge or text. A status card isn't a choice: don't combine `variant` with `selected`.
 
 {
 
@@ -323,10 +313,10 @@ Compose a card from the following parts. All are optional except that content ge
 
 These props apply to the top-level `Card`. The subcomponents accept standard `div` attributes (including `className`).
 
-| Name                     | Description                                                                                                             | Type                                      | Default   | Required |
-| ------------------------ | ----------------------------------------------------------------------------------------------------------------------- | ----------------------------------------- | --------- | -------- |
-| `elevation`              | Position on the elevation scale. Use the `ELEVATION` constant.                                                          | `sunken`, `base`, `raised`, `overlay`     | `raised`  | ❌       |
-| `onClick`                | Click handler. Providing it makes the card interactive and enables the hover gradient automatically.                    | `(e: MouseEvent) => void`                 | —         | ❌       |
-| `hoverGradientClassName` | Additional classes applied to the hover gradient element (only rendered when the card is interactive and not a choice). | `string`                                  | —         | ❌       |
-| `selected`               | Makes the card a choice in a set: a grey hover, and the current-item fill and a primary border while `true`.            | `boolean`                                 | —         | ❌       |
-| `variant`                | Tints the border and background with a status colour.                                                                   | `default`, `success`, `warning`, `danger` | `default` | ❌       |
+| Name                     | Description                                                                                                                 | Type                                      | Default   | Required |
+| ------------------------ | --------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------- | --------- | -------- |
+| `elevation`              | Position on the elevation scale. Use the `ELEVATION` constant.                                                              | `sunken`, `base`, `raised`, `overlay`     | `raised`  | ❌       |
+| `onClick`                | Click handler. Providing it makes the card interactive and enables the hover gradient automatically.                        | `(e: MouseEvent) => void`                 | —         | ❌       |
+| `hoverGradientClassName` | Additional classes applied to the hover gradient element (only rendered when the card is interactive and not a choice).     | `string`                                  | —         | ❌       |
+| `selected`               | Makes the card a choice in a set: a grey hover with `onClick`, and the current-item fill and a primary border while `true`. | `boolean`                                 | —         | ❌       |
+| `variant`                | Tints the border and background with a status colour. State the status in text too; not combined with `selected`.           | `default`, `success`, `warning`, `danger` | `default` | ❌       |

@@ -18,6 +18,10 @@ describe('button.module.css', () => {
     expect(body).toMatch(/font-weight:\s*400;/);
   });
 
+  it('clips a field button’s content, so a long value stays inside its border', () => {
+    expect(ruleBody(css, '.button--field')).toMatch(/overflow:\s*hidden;/);
+  });
+
   it('comes after the base rule, so it wins at the same specificity', () => {
     expect(css.indexOf('.button--field {')).toBeGreaterThan(css.indexOf('.button {'));
   });

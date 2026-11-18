@@ -37,7 +37,7 @@ describe('IconButton', () => {
     expect(screen.getByRole('link', { name: 'Open' }).getAttribute('data-state')).toBe('closed');
   });
 
-  it('draws an extra-small button at 20px with a 14px icon', () => {
+  it('draws an extra-small button with a 14px icon', () => {
     render(<IconButton name="X" label="Clear" size="xs" />);
     const button = screen.getByRole('button', { name: 'Clear' });
 

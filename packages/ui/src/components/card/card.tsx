@@ -11,9 +11,9 @@ export interface CardProps
   extends React.HTMLAttributes<HTMLDivElement>, VariantProps<typeof cardElevationVariants> {
   /** Classes for the hover gradient, which renders on a clickable card that isn't a choice */
   hoverGradientClassName?: string;
-  /** Makes the card a choice in a set, such as a radio card: a grey hover, and the current-item fill and a primary border while `true` */
+  /** Makes the card a choice in a set, such as a radio card: a grey hover with `onClick`, and the current-item fill and a primary border while `true` */
   selected?: boolean;
-  /** Tints the border and background with a status colour */
+  /** Tints the border and background with a status colour. State the status in text too, and don't combine it with `selected` */
   variant?: 'default' | 'success' | 'warning' | 'danger';
 }
 
@@ -31,7 +31,6 @@ const Card = React.forwardRef<HTMLDivElement, CardProps>(
   ) => {
     const isClickable = props.onClick !== undefined;
     const isChoice = selected !== undefined;
-    // If the card should have a hover style
     const shouldHaveHoverStyle = isClickable && !isChoice;
     return (
       <div

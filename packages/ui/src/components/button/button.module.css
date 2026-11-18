@@ -97,13 +97,12 @@
   }
 }
 
-/* A field that opens a picker, drawn as Select's trigger draws: the input's border and background */
 .button--field {
   --mix-color: var(--color-border);
   --hover-darken: 12%;
   --hover-lighten: 12%;
   @apply bg-background border-border text-text-primary border;
-  @apply w-full justify-between text-left font-normal;
+  @apply w-full justify-between overflow-hidden text-left font-normal;
   @apply hover:not-disabled:border-mixed-dark dark:hover:not-disabled:border-mixed-light;
 }
 

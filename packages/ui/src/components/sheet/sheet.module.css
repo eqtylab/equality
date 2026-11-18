@@ -48,7 +48,6 @@
   @apply shrink-0;
 }
 
-/* A soft light from beyond the top-left corner: link purple in light mode, brand purple in dark */
 .sheet-header {
   @apply flex w-fit w-full shrink-0 items-center;
   @apply gap-4 p-4;

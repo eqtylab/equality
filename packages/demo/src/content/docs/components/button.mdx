@@ -5,7 +5,13 @@ description: "Interactive element for triggering actions"
 
 import React from "react";
 import { Button } from "@eqtylab/equality";
-import { ArrowUp, Grid3X3, ArrowRight } from "lucide-react";
+import {
+  ArrowUp,
+  Grid3X3,
+  ArrowRight,
+  CalendarDays,
+  ChevronDown,
+} from "lucide-react";
 
 ## Overview
 
@@ -86,14 +92,36 @@ Use the `tertiary` variant for most other lower-emphasis actions.
 
 ### Field
 
-Use the `field` variant for a button that opens a picker in a form, such as a date or people picker. It draws as a `Select` trigger does, with the input's border and background, full width, and spreads its content across that width: a label alone sits at the start, and a `suffix` at the end. With a `prefix`, give the label `flex-1` so it stays beside the prefix.
+Use the `field` variant for a button that opens a picker in a form, such as a date or people picker. It draws as a `Select` trigger does, with the input's border and background, full width, and spreads its content across that width: a label alone sits at the start, and a `suffix` at the end. With a `prefix`, wrap the label in `<span className="flex-1 truncate">` so it stays beside the prefix and cuts off a long value. Until a value is chosen, give the label `text-text-secondary`, as a `Select` greys its placeholder.
 
-{
+{(() => {
+const calendar = React.createElement(CalendarDays);
+const chevron = React.createElement(ChevronDown);
+return (
 
 <div className="flex max-w-sm flex-col gap-2">
-  <Button variant="field">Choose a date</Button>
+  <Button variant="field" size="lg" prefix={calendar}>
+    <span className="text-text-secondary flex-1 truncate">Field LG</span>
+  </Button>
+  <Button variant="field" size="md" prefix={calendar}>
+    <span className="text-text-secondary flex-1 truncate">Field MD</span>
+  </Button>
+  <Button variant="field" size="sm" suffix={chevron}>
+    Field SM
+  </Button>
 </div>
-}
+);
+})()}
+
+#### Usage
+
+```tsx
+<Button variant="field" prefix={<CalendarDays />}>
+  <span className={cn("flex-1 truncate", !date && "text-text-secondary")}>
+    {date ? formatDate(date) : "Pick a date"}
+  </span>
+</Button>
+```
 
 ### Danger
 
@@ -269,6 +297,9 @@ Buttons tagged with the `disabled` property are non-interactive and visually mut
   </Button>
   <Button variant="tertiary" size="sm" disabled>
     Disabled Tertiary
+  </Button>
+  <Button variant="field" size="sm" disabled>
+    Disabled Field
   </Button>
   <Button variant="danger" size="sm" disabled>
     Disabled Danger

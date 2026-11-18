@@ -63,7 +63,7 @@ If you have no network access or web fetching fails, tell your user that you cou
 | Pass/fail or status-tinted card                            | `Card variant="success"`         | `Card` with `!` overrides          |
 | Textarea inside an editor frame                            | `Textarea variant="bare"`        | `Textarea` with `!` overrides      |
 | Field-like trigger for a date or people picker             | `Button variant="field"`         | A tertiary `Button` with overrides |
-| Clear button inside an input                               | `IconButton size="xs"`           | `IconButton` with a size override  |
+| Clear button inside a picker field                         | `IconButton size="xs"`           | `IconButton` with a size override  |
 | Sidebar rows, settings list, `NavItem`/`NavSection`        | `NavListItem` in `NavListGroup`  | Styled links in a `ul`             |
 | App sidebar, icon rail                                     | `NavPanel` + `NavRail`           | A fixed `aside` with links         |
 | Sliding sub-panel, drill-in nav                            | `NavDrill`                       | Swapped lists with CSS transitions |
