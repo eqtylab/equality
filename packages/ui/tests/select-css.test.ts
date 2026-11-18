@@ -27,7 +27,9 @@ describe('select.module.css', () => {
 
   it('pads an inline value so descenders clear its one-line clamp, at the line height', () => {
     const body = ruleBody(css, '.select-trigger--inline');
-    expect(body).toMatch(/&\s*>\s*span\s*\{[^}]*margin-block:\s*calc\(0\.05em \* -1\);/);
+    expect(body).toMatch(
+      /&\s*>\s*span\s*\{[^}]*margin-block:\s*(?:-0\.05em|calc\(0\.05em \* -1\));/
+    );
     expect(body).toMatch(/&\s*>\s*span\s*\{[^}]*padding-block:\s*0\.05em;/);
   });
 
