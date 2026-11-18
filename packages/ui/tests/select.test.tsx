@@ -397,16 +397,18 @@ describe('Select', () => {
     function VersionSelect({
       variant,
       matchTriggerWidth,
+      position,
     }: {
       variant?: 'default' | 'inline';
       matchTriggerWidth?: boolean;
+      position?: 'popper' | 'item-aligned';
     }) {
       return (
         <Select defaultValue="2.0.0">
           <SelectTrigger aria-label="Version" variant={variant}>
             <SelectValue />
           </SelectTrigger>
-          <SelectContent matchTriggerWidth={matchTriggerWidth}>
+          <SelectContent matchTriggerWidth={matchTriggerWidth} position={position}>
             <SelectItem value="1.0.0">v1.0.0</SelectItem>
             <SelectItem value="2.0.0">v2.0.0</SelectItem>
           </SelectContent>
@@ -416,9 +418,10 @@ describe('Select', () => {
 
     const chevron = () => screen.getByRole('combobox').querySelector('svg')!;
 
-    it('draws an inline trigger, its chevron at full opacity', () => {
+    it('draws an inline trigger over the base trigger, its chevron at full opacity', () => {
       render(<VersionSelect variant="inline" />);
 
+      expect(screen.getByRole('combobox').className).toMatch(/select-trigger(?!-)/);
       expect(screen.getByRole('combobox').className).toMatch(/select-trigger--inline/);
       expect(chevron().getAttribute('class')).not.toMatch(/select-icon--low-opacity/);
     });
@@ -437,6 +440,13 @@ describe('Select', () => {
       unmount();
 
       render(<VersionSelect />);
+      expect((await open(user, 'Version')).className).not.toMatch(/select-content--trigger-width/);
+    });
+
+    it('ignores matchTriggerWidth in item-aligned position', async () => {
+      const user = userEvent.setup();
+      render(<VersionSelect matchTriggerWidth position="item-aligned" />);
+
       expect((await open(user, 'Version')).className).not.toMatch(/select-content--trigger-width/);
     });
   });

@@ -77,6 +77,7 @@ export function SelectDemo({
   elevation?: Elevation;
 }) {
   const [selectValue, setSelectValue] = useState<string>("");
+  const [inlinePolicy, setInlinePolicy] = useState(POLICIES[1]);
 
   if (variant === "default") {
     return (
@@ -175,24 +176,31 @@ export function SelectDemo({
   if (variant === "inline") {
     return (
       <div className="flex flex-col gap-4">
-        <div className="text-2xl font-semibold">
-          <Select defaultValue="odis-safety">
-            <SelectTrigger variant="inline" aria-label="Switch policy">
+        <h3 className="text-2xl font-semibold">
+          <Select value={inlinePolicy} onValueChange={setInlinePolicy}>
+            <SelectTrigger
+              variant="inline"
+              aria-label={`${inlinePolicy}, switch policy`}
+            >
               <SelectValue />
             </SelectTrigger>
             <SelectContent elevation={elevation}>
-              {POLICIES.slice(0, 3).map((policy) => (
-                <SelectItem key={policy} value={toValue(policy)}>
-                  {policy}
+              {POLICIES.slice(0, 3).map((name) => (
+                <SelectItem key={name} value={name}>
+                  {name}
                 </SelectItem>
               ))}
             </SelectContent>
           </Select>
-        </div>
+        </h3>
         <p className="text-sm">
-          Version{" "}
+          <span id="select-inline-version-label">Version</span>{" "}
           <Select defaultValue="2.1.0">
-            <SelectTrigger variant="inline" aria-label="Select policy version">
+            <SelectTrigger
+              id="select-inline-version"
+              variant="inline"
+              aria-labelledby="select-inline-version-label select-inline-version"
+            >
               <SelectValue />
             </SelectTrigger>
             <SelectContent elevation={elevation}>

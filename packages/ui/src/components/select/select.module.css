@@ -21,10 +21,16 @@
   @apply inline-flex h-auto w-auto justify-start gap-1 border-0 bg-transparent p-0;
   font-size: inherit;
   line-height: inherit;
+  /* Padding keeps descenders out of the one-line clamp */
+  @apply [&>span]:py-[0.05em];
 }
 
 .select-icon {
   @apply size-4;
+}
+
+.select-trigger--inline .select-icon {
+  @apply size-[0.75em];
 }
 
 .select-icon--sm {
