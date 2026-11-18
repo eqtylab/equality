@@ -18,9 +18,9 @@ Notable changes to Equality are recorded here, following [Keep a Changelog](http
   focus. `variant` defaults to `default`.
 - `Button` takes `variant="field"`, for a button that opens a picker in a form. It draws as
   `Select`'s trigger does, with the input's border, background and hover, full width, spreading its
-  content across it and clipping what overflows. With a `prefix`, wrap the label in a
-  `flex-1 truncate` span.
-- `IconButton` takes `size="xs"`: 24px, the smallest WCAG 2.2 AA target, with a 14px icon, for an
+  content across it and clipping what overflows. Wrap the label in a `flex-1 truncate` span, so a
+  long value cuts off rather than pushing a `suffix` out.
+- `IconButton` takes `size="xs"`: 24px, the WCAG 2.2 AA minimum target size, with a 14px icon, for an
   action inside a picker field such as a clear button.
 
 ## 5.5.3 - 2026-11-18
