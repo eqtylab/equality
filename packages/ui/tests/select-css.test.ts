@@ -25,10 +25,10 @@ describe('select.module.css', () => {
     expect(body).toMatch(/line-height:\s*inherit;/);
   });
 
-  it('pads an inline value so descenders clear its one-line clamp', () => {
-    expect(ruleBody(css, '.select-trigger--inline')).toMatch(
-      /&\s*>\s*span\s*\{\s*padding-block:\s*0\.05em;/
-    );
+  it('pads an inline value so descenders clear its one-line clamp, at the line height', () => {
+    const body = ruleBody(css, '.select-trigger--inline');
+    expect(body).toMatch(/&\s*>\s*span\s*\{[^}]*margin-block:\s*calc\(0\.05em \* -1\);/);
+    expect(body).toMatch(/&\s*>\s*span\s*\{[^}]*padding-block:\s*0\.05em;/);
   });
 
   it('sizes an inline chevron to the surrounding font', () => {

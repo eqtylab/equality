@@ -21,8 +21,8 @@
   @apply inline-flex h-auto w-auto justify-start gap-1 border-0 bg-transparent p-0;
   font-size: inherit;
   line-height: inherit;
-  /* Padding keeps descenders out of the one-line clamp */
-  @apply [&>span]:py-[0.05em];
+  /* Padding keeps descenders out of the one-line clamp; the margin keeps the line's height */
+  @apply [&>span]:-my-[0.05em] [&>span]:py-[0.05em];
 }
 
 .select-icon {
