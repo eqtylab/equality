@@ -58,6 +58,7 @@ If you have no network access or web fetching fails, tell your user that you cou
 | Button group or toggle group for mutually exclusive values | `SegmentedControls`             | A row of `Button`s                 |
 | Multi-select filter                                        | `FilterDropdown`                | `DropdownMenu` with checkboxes     |
 | Footer action, "Select all" or "Other" while searching     | `persistent` items              | Buttons outside the list items     |
+| Title switcher, inline dropdown in a heading or text       | Inline `SelectTrigger`          | `SelectTrigger` with `!` overrides |
 | Sidebar rows, settings list, `NavItem`/`NavSection`        | `NavListItem` in `NavListGroup` | Styled links in a `ul`             |
 | App sidebar, icon rail                                     | `NavPanel` + `NavRail`          | A fixed `aside` with links         |
 | Sliding sub-panel, drill-in nav                            | `NavDrill`                      | Swapped lists with CSS transitions |

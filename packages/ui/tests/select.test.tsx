@@ -83,8 +83,8 @@ function QueryProbe() {
   );
 }
 
-const open = async (user: ReturnType<typeof userEvent.setup>) => {
-  screen.getByRole('combobox', { name: 'Country' }).focus();
+const open = async (user: ReturnType<typeof userEvent.setup>, name = 'Country') => {
+  screen.getByRole('combobox', { name }).focus();
   await user.keyboard('{Enter}');
   return screen.findByRole('listbox');
 };
@@ -390,6 +390,54 @@ describe('Select', () => {
         'useSelectSearchQuery must be used within a Select'
       );
       vi.restoreAllMocks();
+    });
+  });
+
+  describe('variants', () => {
+    function VersionSelect({
+      variant,
+      matchTriggerWidth,
+    }: {
+      variant?: 'default' | 'inline';
+      matchTriggerWidth?: boolean;
+    }) {
+      return (
+        <Select defaultValue="2.0.0">
+          <SelectTrigger aria-label="Version" variant={variant}>
+            <SelectValue />
+          </SelectTrigger>
+          <SelectContent matchTriggerWidth={matchTriggerWidth}>
+            <SelectItem value="1.0.0">v1.0.0</SelectItem>
+            <SelectItem value="2.0.0">v2.0.0</SelectItem>
+          </SelectContent>
+        </Select>
+      );
+    }
+
+    const chevron = () => screen.getByRole('combobox').querySelector('svg')!;
+
+    it('draws an inline trigger, its chevron at full opacity', () => {
+      render(<VersionSelect variant="inline" />);
+
+      expect(screen.getByRole('combobox').className).toMatch(/select-trigger--inline/);
+      expect(chevron().getAttribute('class')).not.toMatch(/select-icon--low-opacity/);
+    });
+
+    it('keeps the default trigger boxed, its chevron dimmed', () => {
+      render(<VersionSelect />);
+
+      expect(screen.getByRole('combobox').className).not.toMatch(/select-trigger--inline/);
+      expect(chevron().getAttribute('class')).toMatch(/select-icon--low-opacity/);
+    });
+
+    it('pins the list to its trigger width only when asked', async () => {
+      const user = userEvent.setup();
+      const { unmount } = render(<VersionSelect matchTriggerWidth />);
+      expect((await open(user, 'Version')).className).toMatch(/select-content--trigger-width/);
+      unmount();
+
+      render(<VersionSelect />);
+      expect((await open(user, 'Version')).className).not.toMatch(/select-content--trigger-width/);
     });
   });
 });

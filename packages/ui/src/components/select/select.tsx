@@ -93,14 +93,34 @@ SelectGroup.displayName = SelectPrimitive.Group.displayName;
 
 const SelectValue = SelectPrimitive.Value;
 
+export interface SelectTriggerProps extends React.ComponentPropsWithoutRef<
+  typeof SelectPrimitive.Trigger
+> {
+  /** `inline` sits in running text or a heading: no border, background, padding or height, in the surrounding font */
+  variant?: 'default' | 'inline';
+}
+
 const SelectTrigger = React.forwardRef<
   React.ElementRef<typeof SelectPrimitive.Trigger>,
-  React.ComponentPropsWithoutRef<typeof SelectPrimitive.Trigger>
->(({ className, children, ...props }, ref) => (
-  <SelectPrimitive.Trigger ref={ref} className={cn(styles['select-trigger'], className)} {...props}>
+  SelectTriggerProps
+>(({ className, children, variant = 'default', ...props }, ref) => (
+  <SelectPrimitive.Trigger
+    ref={ref}
+    className={cn(
+      styles['select-trigger'],
+      variant === 'inline' && styles['select-trigger--inline'],
+      className
+    )}
+    {...props}
+  >
     {children}
     <SelectPrimitive.Icon asChild>
-      <ChevronDownIcon className={cn(styles['select-icon'], styles['select-icon--low-opacity'])} />
+      <ChevronDownIcon
+        className={cn(
+          styles['select-icon'],
+          variant !== 'inline' && styles['select-icon--low-opacity']
+        )}
+      />
     </SelectPrimitive.Icon>
   </SelectPrimitive.Trigger>
 ));
@@ -116,10 +136,17 @@ const selectContentElevationVariants = generateElevationVariants(
   ELEVATION.OVERLAY
 );
 
+export interface SelectContentProps
+  extends
+    React.ComponentPropsWithoutRef<typeof SelectPrimitive.Content>,
+    VariantProps<typeof selectContentElevationVariants> {
+  /** Makes the list exactly as wide as its trigger, wrapping longer options, rather than at least as wide */
+  matchTriggerWidth?: boolean;
+}
+
 const SelectContent = React.forwardRef<
   React.ElementRef<typeof SelectPrimitive.Content>,
-  React.ComponentPropsWithoutRef<typeof SelectPrimitive.Content> &
-    VariantProps<typeof selectContentElevationVariants>
+  SelectContentProps
 >(
   (
     {
@@ -127,6 +154,7 @@ const SelectContent = React.forwardRef<
       children,
       position = 'popper',
       elevation = ELEVATION.OVERLAY,
+      matchTriggerWidth = false,
       onKeyDown,
       onKeyDownCapture,
       onPointerMoveCapture,
@@ -180,6 +208,7 @@ const SelectContent = React.forwardRef<
           className={cn(
             styles['select-content'],
             position === 'popper' && styles['select-content--popper'],
+            position === 'popper' && matchTriggerWidth && styles['select-content--trigger-width'],
             selectContentElevationVariants({ elevation }),
             className
           )}
