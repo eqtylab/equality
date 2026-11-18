@@ -58,6 +58,21 @@ The textarea's height can be set with `className` (or the native `rows` attribut
   className="h-42"
 />
 
+### Bare
+
+`variant="bare"` sits the textarea inside a frame that draws its own edge, such as an editor with a toolbar above it: it drops the border, background, radius and focus ring. Show focus on the frame instead, for example with `focus-within`.
+
+<div className="border-border focus-within:ring-focus-ring overflow-hidden rounded-lg border focus-within:ring-2">
+  <div className="border-border text-text-secondary border-b px-3 py-1.5 text-xs">
+    Toolbar
+  </div>
+  <Textarea
+    id="textarea-bare"
+    variant="bare"
+    placeholder="Write in the frame..."
+  />
+</div>
+
 ### Usage
 
 ```tsx
@@ -65,12 +80,14 @@ The textarea's height can be set with `className` (or the native `rows` attribut
 <Textarea placeholder="Disabled textarea" disabled />
 <Textarea placeholder="Longer content..." className="h-42" />
 <Textarea placeholder="By rows" rows={5} />
+<Textarea variant="bare" placeholder="Inside an editor frame" />
 ```
 
 ## Props
 
-Textarea accepts all standard `<textarea>` attributes (`placeholder`, `value`, `defaultValue`, `onChange`, `rows`, `maxLength`, `disabled`, etc.) plus `className`. It does not add any props of its own.
+Textarea accepts all standard `<textarea>` attributes (`placeholder`, `value`, `defaultValue`, `onChange`, `rows`, `maxLength`, `disabled`, etc.) plus `className` and `variant`.
 
-| Name        | Description                                     | Type     | Default | Required |
-| ----------- | ----------------------------------------------- | -------- | ------- | -------- |
-| `className` | Additional CSS classes applied to the textarea. | `string` | —       | ❌       |
+| Name        | Description                                                                                      | Type              | Default   | Required |
+| ----------- | ------------------------------------------------------------------------------------------------ | ----------------- | --------- | -------- |
+| `className` | Additional CSS classes applied to the textarea.                                                  | `string`          | —         | ❌       |
+| `variant`   | `bare` drops the border, background, radius and focus ring, for a textarea inside its own frame. | `default`, `bare` | `default` | ❌       |

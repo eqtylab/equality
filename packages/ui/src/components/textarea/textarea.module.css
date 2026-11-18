@@ -10,3 +10,8 @@
   @apply focus-ring;
   @apply disabled:cursor-not-allowed disabled:opacity-50;
 }
+
+.textarea--bare {
+  @apply rounded-none border-0 bg-transparent;
+  @apply focus-visible:ring-0 focus-visible:ring-offset-0;
+}

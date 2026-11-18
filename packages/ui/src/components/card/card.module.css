@@ -61,3 +61,29 @@
 .card--overlay {
   @apply bg-background-overlay shadow-shadow-overlay border-border-overlay;
 }
+
+/* CHOICE: a card picked from a set, such as a radio card. After the elevations so it wins */
+
+.card--choice {
+  @apply cursor-pointer transition-colors;
+  @apply hover:bg-list-item-hover active:bg-list-item-hover;
+}
+
+.card--selected {
+  @apply border-text-primary bg-list-item-current hover:bg-list-item-current active:bg-list-item-current;
+  @apply forced-colors:outline-2 forced-colors:-outline-offset-2 forced-colors:outline-[color:Highlight];
+}
+
+/* STATUS: a tinted border and background. After the elevations so it wins */
+
+.card--success {
+  @apply border-badge-background-success bg-badge-background-success/20;
+}
+
+.card--warning {
+  @apply border-badge-background-warning bg-badge-background-warning/20;
+}
+
+.card--danger {
+  @apply border-badge-background-danger bg-badge-background-danger/20;
+}

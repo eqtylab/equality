@@ -8,6 +8,10 @@
   @apply flex;
 }
 
+.size--xs {
+  @apply size-5 rounded-md;
+}
+
 .size--sm {
   @apply size-7 rounded-md;
 }

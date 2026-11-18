@@ -31,7 +31,19 @@ The `name` must be a valid Lucide icon (PascalCase). An unknown name logs a warn
 
 ## Sizes
 
-Icon Button comes in three sizes; `sm` is the default.
+Icon Button comes in four sizes; `sm` is the default.
+
+### Extra small
+
+For an action inside a field, such as a clear button at the end of an input.
+
+<IconButton
+  name="X"
+  label="Clear"
+  size="xs"
+  onClick={() => console.log("Clear clicked")}
+  client:only="react"
+/>
 
 ### Small (default)
 
@@ -66,6 +78,7 @@ Icon Button comes in three sizes; `sm` is the default.
 ### Usage
 
 ```tsx
+<IconButton name="X" label="Clear" size="xs" />
 <IconButton name="Settings" label="Settings" size="sm" />
 <IconButton name="Heart" label="Like" size="md" />
 <IconButton name="Share2" label="Share" size="lg" />
@@ -149,13 +162,13 @@ When an `href` is provided, Icon Button renders as an anchor while keeping its s
 
 The component also accepts standard `button` attributes (`onClick`, `type`, etc.) when rendered as a button.
 
-| Name       | Description                                                                    | Type                | Default   | Required |
-| ---------- | ------------------------------------------------------------------------------ | ------------------- | --------- | -------- |
-| `name`     | The [Lucide](https://lucide.dev/icons/) icon to display, by PascalCase name.   | `string`            | —         | ✅       |
-| `label`    | Accessible label (`aria-label`) describing the action. Strongly recommended.   | `string`            | —         | ❌       |
-| `size`     | The size of the button.                                                        | `sm`, `md`, `lg`    | `sm`      | ❌       |
-| `variant`  | The visual style, communicating intent.                                        | `primary`, `danger` | `primary` | ❌       |
-| `disabled` | Disables the button and ignores `href`.                                        | `boolean`           | `false`   | ❌       |
-| `href`     | Renders the button as an anchor pointing at this URL.                          | `string`            | —         | ❌       |
-| `target`   | Anchor target (when `href` is set). `_blank` adds `rel="noopener noreferrer"`. | `string`            | —         | ❌       |
-| `download` | Marks the link as a download (when `href` is set).                             | `string`, `boolean` | —         | ❌       |
+| Name       | Description                                                                    | Type                   | Default   | Required |
+| ---------- | ------------------------------------------------------------------------------ | ---------------------- | --------- | -------- |
+| `name`     | The [Lucide](https://lucide.dev/icons/) icon to display, by PascalCase name.   | `string`               | —         | ✅       |
+| `label`    | Accessible label (`aria-label`) describing the action. Strongly recommended.   | `string`               | —         | ❌       |
+| `size`     | The size of the button.                                                        | `xs`, `sm`, `md`, `lg` | `sm`      | ❌       |
+| `variant`  | The visual style, communicating intent.                                        | `primary`, `danger`    | `primary` | ❌       |
+| `disabled` | Disables the button and ignores `href`.                                        | `boolean`              | `false`   | ❌       |
+| `href`     | Renders the button as an anchor pointing at this URL.                          | `string`               | —         | ❌       |
+| `target`   | Anchor target (when `href` is set). `_blank` adds `rel="noopener noreferrer"`. | `string`               | —         | ❌       |
+| `download` | Marks the link as a download (when `href` is set).                             | `string`, `boolean`    | —         | ❌       |
