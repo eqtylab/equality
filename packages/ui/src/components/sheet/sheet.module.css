@@ -48,11 +48,22 @@
   @apply shrink-0;
 }
 
+/* A soft light from beyond the top-left corner: link purple in light mode, brand purple in dark */
 .sheet-header {
   @apply flex w-fit w-full shrink-0 items-center;
   @apply gap-4 p-4;
   @apply text-left;
-  @apply from-brand-primary/40 to-background border-b bg-gradient-to-r;
+  @apply border-b;
+  --sheet-header-glow-color: color-mix(in oklab, var(--color-text-link) 8%, transparent);
+  background-image: radial-gradient(
+    ellipse 760px 210px at -6% -40% in oklab,
+    var(--sheet-header-glow-color),
+    transparent
+  );
+
+  @variant dark {
+    --sheet-header-glow-color: color-mix(in oklab, var(--color-brand-primary) 13%, transparent);
+  }
 }
 
 .sheet-header-icon {
