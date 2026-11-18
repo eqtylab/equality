@@ -33,10 +33,10 @@ describe('select.module.css', () => {
     expect(body).toMatch(/&\s*>\s*span\s*\{[^}]*padding-block:\s*0\.05em;/);
   });
 
-  it('sizes an inline chevron to the surrounding font', () => {
+  it('sizes an inline chevron to the surrounding font, never below the default chevron', () => {
     const body = ruleBody(css, '.select-trigger--inline .select-icon');
-    expect(body).toMatch(/width:\s*0\.75em;/);
-    expect(body).toMatch(/height:\s*0\.75em;/);
+    expect(body).toMatch(/width:\s*max\(1rem,\s*0\.75em\);/);
+    expect(body).toMatch(/height:\s*max\(1rem,\s*0\.75em\);/);
   });
 
   it('comes after the base trigger rule, so it wins at the same specificity', () => {

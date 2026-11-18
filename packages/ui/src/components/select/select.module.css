@@ -30,7 +30,7 @@
 }
 
 .select-trigger--inline .select-icon {
-  @apply size-[0.75em];
+  @apply size-[max(1rem,0.75em)];
 }
 
 .select-icon--sm {
