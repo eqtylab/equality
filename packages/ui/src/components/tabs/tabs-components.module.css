@@ -2,7 +2,7 @@
 
 .tabs-list {
   @apply text-text-secondary;
-  @apply h-auto min-h-10;
+  @apply min-h-(--eq-control-md-height) h-auto;
   @apply flex items-center;
 }
 
@@ -11,7 +11,7 @@
   @apply cursor-pointer whitespace-nowrap;
   @apply ease-control duration-250 transition-colors;
   @apply motion-reduce:transition-none;
-  @apply px-3 py-1.5;
+  @apply px-(--eq-control-padding-x-normal) py-1.5;
   @apply text-lg font-medium;
   @apply flex gap-2;
   @apply flex-center;
