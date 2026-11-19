@@ -32,7 +32,6 @@ html {
     var(--color-text-secondary)
   );
   /* control: a stand-alone element */
-  --eq-control-height: --spacing(10); /* 40. Deprecated: use --eq-control-md-height */
   --eq-control-sm-height: --spacing(7); /* 28 */
   --eq-control-md-height: --spacing(10); /* 40 */
   --eq-control-lg-height: --spacing(11); /* 44 */

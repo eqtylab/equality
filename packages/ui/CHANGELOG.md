@@ -10,10 +10,9 @@ Notable changes to Equality are recorded here, following [Keep a Changelog](http
   size, line height and gap for each, and `--eq-control-padding-x-condensed`, `-normal` and
   `-spacious`. Each holds today's size, so nothing changes on screen.
 
-### Deprecated
+### Removed
 
-- `--eq-control-height`. Use `--eq-control-md-height`. Setting the old name no longer resizes the
-  `Nav` rail.
+- `--eq-control-height`. Use `--eq-control-md-height`, which the `Nav` rail now reads.
 
 ## 5.6.0 - 2026-11-18
 
