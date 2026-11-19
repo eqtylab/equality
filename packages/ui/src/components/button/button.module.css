@@ -2,7 +2,7 @@
 
 .button {
   @apply rounded-md;
-  @apply text-(length:--eq-control-md-font-size)/(--eq-control-md-line-height) whitespace-nowrap font-medium;
+  @apply text-(length:--eq-control-md-font-size)/[var(--tw-leading,var(--eq-control-md-line-height))] whitespace-nowrap font-medium;
   @apply transition-[color,background-color,border-color,box-shadow,text-decoration-color,text-underline-offset];
   @apply ease-control duration-250;
   @apply motion-reduce:transition-none;
@@ -120,7 +120,7 @@
 }
 
 .size--sm {
-  @apply text-(length:--eq-control-sm-font-size)/(--eq-control-sm-line-height) gap-(--eq-control-sm-gap);
+  @apply text-(length:--eq-control-sm-font-size)/[var(--tw-leading,var(--eq-control-sm-line-height))] gap-(--eq-control-sm-gap);
 }
 
 .size--sm:not(.button--link) {
@@ -131,7 +131,10 @@
   @apply h-(--eq-control-md-height) rounded-md px-[calc(var(--eq-control-padding-x-normal)+var(--button-edge-inset,0px))];
 }
 
+.size--lg {
+  @apply text-(length:--eq-control-lg-font-size)/[var(--tw-leading,var(--eq-control-lg-line-height))] gap-(--eq-control-lg-gap);
+}
+
 .size--lg:not(.button--link) {
   @apply h-(--eq-control-lg-height) rounded-md px-[calc(var(--eq-control-padding-x-spacious)+var(--button-edge-inset,0px))];
-  @apply text-(length:--eq-control-lg-font-size)/(--eq-control-lg-line-height) gap-(--eq-control-lg-gap);
 }

@@ -40,7 +40,6 @@
   @apply size-3;
 }
 
-/* An md Button's height */
 .timeline--md .timeline-marker {
   @apply size-(--eq-control-md-height);
 }

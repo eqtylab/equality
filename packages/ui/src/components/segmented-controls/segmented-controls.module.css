@@ -12,7 +12,7 @@
   @apply z-above relative;
   @apply gap-(--eq-control-md-gap) flex items-center;
   @apply px-(--eq-control-padding-x-normal) h-full;
-  @apply text-(length:--eq-control-md-font-size)/(--eq-control-md-line-height) whitespace-nowrap font-medium;
+  @apply text-(length:--eq-control-md-font-size)/[var(--tw-leading,var(--eq-control-md-line-height))] whitespace-nowrap font-medium;
   @apply cursor-pointer bg-transparent;
   @apply ease-control duration-250 transition-colors;
   @apply focus-visible:outline-none;
@@ -33,7 +33,7 @@
 }
 
 .size--sm .segment {
-  @apply px-(--eq-control-padding-x-condensed) text-(length:--eq-control-sm-font-size)/(--eq-control-sm-line-height) gap-(--eq-control-sm-gap);
+  @apply px-(--eq-control-padding-x-condensed) text-(length:--eq-control-sm-font-size)/[var(--tw-leading,var(--eq-control-sm-line-height))] gap-(--eq-control-sm-gap);
 }
 
 .size--sm .segment--icon-only {

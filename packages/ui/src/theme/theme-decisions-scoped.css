@@ -33,10 +33,11 @@
     var(--color-text-secondary)
   );
   /* control: a stand-alone element */
-  --eq-control-height: --spacing(10); /* 40: not read inside Equality */
+  --eq-control-height: --spacing(10); /* 40. Deprecated: use --eq-control-md-height */
   --eq-control-sm-height: --spacing(7); /* 28 */
   --eq-control-md-height: --spacing(10); /* 40 */
   --eq-control-lg-height: --spacing(11); /* 44 */
+  /* Font size and line height change together: line heights are lengths, not ratios of the size. */
   --eq-control-sm-font-size: --theme(--text-xs); /* 12 */
   --eq-control-sm-line-height: --spacing(4); /* 16 */
   --eq-control-md-font-size: --theme(--text-sm); /* 14 */
