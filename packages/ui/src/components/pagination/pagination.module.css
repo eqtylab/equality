@@ -12,8 +12,8 @@
 }
 
 .items-per-page-trigger.items-per-page-trigger {
-  @apply text-xs;
-  @apply h-7 w-auto px-2 py-0;
+  @apply text-(length:--eq-control-sm-font-size)/[var(--tw-leading,var(--eq-control-sm-line-height))];
+  @apply h-(--eq-control-sm-height) px-(--eq-control-padding-x-condensed) w-auto py-0;
 }
 
 .items-per-page-trigger.items-per-page-trigger:focus-visible {
