@@ -2,6 +2,18 @@
 
 Notable changes to Equality are recorded here, following [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## Unreleased
+
+### Added
+
+- Control size decisions: `--eq-control-sm-height`, `-md-height` and `-lg-height`, with a font
+  size, line height and gap for each, and `--eq-control-padding-x-condensed`, `-normal` and
+  `-spacious`. Each holds today's size, so nothing changes on screen.
+
+### Removed
+
+- `--eq-control-height`. Use `--eq-control-md-height`, which the `Nav` rail now reads.
+
 ## 5.6.0 - 2026-11-18
 
 ### Added

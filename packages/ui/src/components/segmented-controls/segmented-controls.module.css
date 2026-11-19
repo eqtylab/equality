@@ -10,9 +10,9 @@
 .segment {
   @apply rounded-none! border-0;
   @apply z-above relative;
-  @apply flex items-center gap-1.5;
-  @apply h-full px-3;
-  @apply whitespace-nowrap text-sm font-medium;
+  @apply gap-(--eq-control-md-gap) flex items-center;
+  @apply px-(--eq-control-padding-x-normal) h-full;
+  @apply text-(length:--eq-control-md-font-size)/[var(--tw-leading,var(--eq-control-md-line-height))] whitespace-nowrap font-medium;
   @apply cursor-pointer bg-transparent;
   @apply ease-control duration-250 transition-colors;
   @apply focus-visible:outline-none;
@@ -29,23 +29,23 @@
 }
 
 .size--sm {
-  @apply h-7;
+  @apply h-(--eq-control-sm-height);
 }
 
 .size--sm .segment {
-  @apply px-2 text-xs;
+  @apply px-(--eq-control-padding-x-condensed) text-(length:--eq-control-sm-font-size)/[var(--tw-leading,var(--eq-control-sm-line-height))] gap-(--eq-control-sm-gap);
 }
 
 .size--sm .segment--icon-only {
-  @apply px-0;
+  @apply gap-0 px-0;
 }
 
 .size--md {
-  @apply h-10;
+  @apply h-(--eq-control-md-height);
 }
 
 .size--lg {
-  @apply h-11;
+  @apply h-(--eq-control-lg-height);
 }
 
 .size--lg .segment:not(.segment--icon-only) {

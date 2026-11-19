@@ -16,7 +16,7 @@ function switcherPadding(controlHeight: number, touchTarget: number): number {
   );
   const value = /padding-top:\s*([^;]+);/.exec(body)![1];
   const expression = value
-    .replaceAll('var(--eq-control-height)', String(controlHeight))
+    .replaceAll('var(--eq-control-md-height)', String(controlHeight))
     .replaceAll('var(--eq-touch-target)', String(touchTarget))
     .replaceAll('0.25rem', '4')
     .replaceAll('max(', 'Math.max(')

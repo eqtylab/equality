@@ -13,15 +13,15 @@
 }
 
 .size--sm {
-  @apply size-7 rounded-md;
+  @apply size-(--eq-control-sm-height) rounded-md;
 }
 
 .size--md {
-  @apply size-10 rounded-md;
+  @apply size-(--eq-control-md-height) rounded-md;
 }
 
 .size--lg {
-  @apply size-11 rounded-md;
+  @apply size-(--eq-control-lg-height) rounded-md;
 }
 
 /* Color Variants */
