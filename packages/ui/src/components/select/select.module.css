@@ -4,9 +4,9 @@
   --mix-color: var(--color-border);
   --hover-darken: 12%;
   --hover-lighten: 12%;
-  @apply text-sm;
-  @apply px-3 py-2;
-  @apply h-10 w-full rounded-md;
+  @apply text-(length:--eq-control-md-font-size)/[var(--tw-leading,var(--eq-control-md-line-height))];
+  @apply px-(--eq-control-padding-x-normal);
+  @apply h-(--eq-control-md-height) w-full rounded-md;
   @apply border-border bg-background border;
   @apply flex-center-between gap-2;
   @apply focus-ring;
