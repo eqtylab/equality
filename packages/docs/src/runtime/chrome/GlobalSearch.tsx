@@ -271,7 +271,7 @@ export default function GlobalSearch({ suggested = [] }: Props) {
         <button
           ref={triggerRef}
           type="button"
-          className="border-border bg-background text-text-secondary focus-ring flex h-10 w-full min-w-0 cursor-pointer items-center gap-2 rounded-md border p-2 text-sm max-sm:w-10 max-sm:justify-center max-sm:border-transparent max-sm:bg-transparent max-sm:p-0"
+          className="border-border bg-background text-text-secondary focus-ring h-(--eq-control-md-height) max-sm:w-(--eq-control-md-height) flex w-full min-w-0 cursor-pointer items-center gap-2 rounded-md border p-2 text-sm max-sm:justify-center max-sm:border-transparent max-sm:bg-transparent max-sm:p-0"
           aria-haspopup="dialog"
           aria-label="Search documentation"
           onClick={open}

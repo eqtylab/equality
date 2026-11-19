@@ -150,6 +150,10 @@ classes backed by tokens — `bg-background`, `bg-background-raised`,
 `text-text-primary`, `text-text-secondary`, `border-border`, `text-text-danger`.
 These flip correctly in dark mode; `bg-slate-800` and `#1e293b` do not.
 
+A control or row you build yourself takes its height, text and side padding from
+Equality's control decisions: `h-(--eq-control-md-height)`, with `sm` (28) and
+`lg` (44) beside `md` (36). Never write `h-10`.
+
 **Accessibility is mostly free — don't undo it.** Radix gives you focus
 management, escape handling, and ARIA wiring. You still have to supply the text:
 a `label` on `IconButton`, a `<Label htmlFor>` on every input, an accessible name

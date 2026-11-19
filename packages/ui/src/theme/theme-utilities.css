@@ -6,6 +6,10 @@
   @apply focus-visible:outline-none;
 }
 
+@utility control-row-padding {
+  padding-block: calc((var(--eq-control-md-height) - var(--eq-control-md-line-height)) / 2);
+}
+
 @utility control-track {
   @apply border-control-edge dark:border-control-edge-dark border;
   @apply inset-shadow-control-sunken dark:inset-shadow-control-sunken-dark;

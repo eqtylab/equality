@@ -11,7 +11,7 @@ beforeAll(async () => {
 describe('icon-button.module.css', () => {
   it('draws an extra-small button at 24px, the WCAG 2.2 AA minimum target size', () => {
     const body = ruleBody(css, '.size--xs');
-    expect(body).toMatch(/width:\s*calc\(0\.25rem \* 6\);/);
-    expect(body).toMatch(/height:\s*calc\(0\.25rem \* 6\);/);
+    expect(body).toMatch(/[;{\s]width:\s*var\(--eq-control-xs-height\);/);
+    expect(body).toMatch(/[;{\s]height:\s*var\(--eq-control-xs-height\);/);
   });
 });

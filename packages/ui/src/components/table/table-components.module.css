@@ -69,7 +69,7 @@
   @apply grid items-center gap-4;
   grid-template-columns: subgrid;
   grid-column: 1 / -1;
-  @apply px-4 py-2;
+  @apply control-row-padding min-h-(--eq-control-md-height) px-4;
 }
 
 /* Keep at half the row hover in --color-list-item-hover or less, or a hovered row stops standing out */

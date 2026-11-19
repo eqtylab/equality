@@ -3,7 +3,7 @@
 .input {
   @apply outline-hidden;
   @apply border-border bg-background border;
-  @apply px-(--eq-control-padding-x-condensed) py-2;
+  @apply px-(--eq-control-padding-x-condensed) py-0;
   @apply h-(--eq-control-md-height) flex w-full rounded-md;
   @apply text-text-primary placeholder:text-text-secondary;
   @apply md:text-(length:--eq-control-md-font-size)/[var(--tw-leading,var(--eq-control-md-line-height))] text-ellipsis text-base;
@@ -19,8 +19,8 @@
 
 .input-wrapper {
   @apply border-border bg-background border;
-  @apply h-(--eq-control-md-height) flex w-full items-center gap-2 rounded-md;
-  @apply px-(--eq-control-padding-x-condensed) py-2;
+  @apply h-(--eq-control-md-height) gap-(--eq-control-md-gap) flex w-full items-center rounded-md;
+  @apply px-(--eq-control-padding-x-condensed) py-0;
   @apply has-[:disabled]:cursor-not-allowed has-[:disabled]:opacity-50;
   @apply has-[:focus]:focus-ring;
   @apply [&_svg]:text-text-secondary [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0;

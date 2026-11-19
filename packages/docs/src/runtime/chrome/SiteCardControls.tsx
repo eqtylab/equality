@@ -32,7 +32,8 @@ const TAG_ICON = 'text-text-secondary! [&_svg]:size-3.5!';
 
 /* Side padding and border must match NavListItem's, or the text drifts off the nav labels' left
    edge. */
-const BOX = 'rounded-lg border border-transparent px-(--eq-list-item-padding-x) py-[5px]';
+const BOX =
+  'min-h-(--eq-control-md-height) rounded-lg border border-transparent px-(--eq-control-padding-x-condensed) py-[5px]';
 const ROW = `${BOX} group focus-ring hover:bg-list-item-hover data-[state=open]:border-brand-primary data-[state=open]:bg-background flex w-full items-center text-left transition-colors`;
 
 /* Trigger width, not a 16rem floor: the sidebar's border leaves each row 255px on desktop, and a
@@ -157,7 +158,7 @@ export default function SiteCardControls({ title, sites, versions, inDrawer = fa
       {sites ? (
         <SiteMenu title={title} sites={sites} />
       ) : (
-        <div className={BOX}>
+        <div className={`${BOX} flex items-center`}>
           <p className={NAME}>{title}</p>
         </div>
       )}

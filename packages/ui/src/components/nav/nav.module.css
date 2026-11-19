@@ -70,22 +70,9 @@
   @apply overflow-visible px-0 pb-0 pt-4;
 }
 
-/* Beside a rail, half the difference between the rail's first item and the heading, each at least
-   a touch target, centres the heading on the item */
-.nav-rail + .nav-panel .nav-panel-header:has(> .nav-switcher-heading) {
-  padding-top: calc(
-    --spacing(4) +
-      (
-        max(var(--eq-control-md-height), var(--eq-touch-target)) -
-          max(--spacing(8), var(--eq-touch-target))
-      ) /
-      2
-  );
-}
-
-/* One height whether it holds the switcher, a plain name or the loading bar: the site card's 32px */
+/* One height whether it holds the switcher, a plain name or the loading bar. Same height as the rail's first item, so the two line up */
 .nav-switcher-heading {
-  @apply text-text-primary min-h-(--eq-touch-target) m-0 flex h-8 min-w-0 items-center text-sm font-semibold;
+  @apply text-text-primary min-h-(--eq-touch-target) h-(--eq-control-md-height) m-0 flex min-w-0 items-center text-sm font-semibold;
 }
 
 .nav-switcher-plain {
@@ -107,7 +94,7 @@
 /* Under the heading, so it outranks the size, fill and border SelectTrigger sets at rest whatever
    order the two modules load in */
 .nav-switcher-heading .nav-switcher {
-  @apply min-h-(--eq-touch-target) flex h-8 w-full min-w-0 items-center gap-2 rounded-md border border-transparent px-2;
+  @apply min-h-(--eq-touch-target) h-(--eq-control-md-height) flex w-full min-w-0 items-center gap-2 rounded-md border border-transparent px-2;
   @apply text-text-primary bg-transparent text-left text-sm font-semibold transition-colors duration-150;
   @apply motion-reduce:transition-none;
 }
