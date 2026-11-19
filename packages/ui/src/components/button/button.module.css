@@ -2,11 +2,11 @@
 
 .button {
   @apply rounded-md;
-  @apply whitespace-nowrap text-sm font-medium;
+  @apply text-(length:--eq-control-md-font-size)/(--eq-control-md-line-height) whitespace-nowrap font-medium;
   @apply transition-[color,background-color,border-color,box-shadow,text-decoration-color,text-underline-offset];
   @apply ease-control duration-250;
   @apply motion-reduce:transition-none;
-  @apply flex-center gap-1.5;
+  @apply flex-center gap-(--eq-control-md-gap);
   @apply cursor-pointer;
   @apply disabled:cursor-not-allowed disabled:opacity-50 disabled:shadow-none;
   @apply [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0;
@@ -120,17 +120,18 @@
 }
 
 .size--sm {
-  @apply text-xs;
+  @apply text-(length:--eq-control-sm-font-size)/(--eq-control-sm-line-height) gap-(--eq-control-sm-gap);
 }
 
 .size--sm:not(.button--link) {
-  @apply h-7 rounded-md px-[calc(--spacing(2)+var(--button-edge-inset,0px))];
+  @apply h-(--eq-control-sm-height) rounded-md px-[calc(var(--eq-control-padding-x-condensed)+var(--button-edge-inset,0px))];
 }
 
 .size--md:not(.button--link) {
-  @apply h-10 rounded-md px-[calc(--spacing(3)+var(--button-edge-inset,0px))] py-2;
+  @apply h-(--eq-control-md-height) rounded-md px-[calc(var(--eq-control-padding-x-normal)+var(--button-edge-inset,0px))];
 }
 
 .size--lg:not(.button--link) {
-  @apply h-11 rounded-md px-[calc(--spacing(8)+var(--button-edge-inset,0px))];
+  @apply h-(--eq-control-lg-height) rounded-md px-[calc(var(--eq-control-padding-x-spacious)+var(--button-edge-inset,0px))];
+  @apply text-(length:--eq-control-lg-font-size)/(--eq-control-lg-line-height) gap-(--eq-control-lg-gap);
 }

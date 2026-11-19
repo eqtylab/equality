@@ -2,11 +2,11 @@
    changes every component's compiled CSS. */
 /* Never read var(--spacing) or var(--text-*) here: the theme is inline, so consumer builds leave them undefined. */
 
-/* DECISIONS: Equality's names, --eq-{thing}-{property}. Parts read only these: h-(--eq-list-item-height).
+/* DECISIONS: Equality's names, --eq-{thing}-{property}. Parts read only these: h-(--eq-control-md-height).
    theme-decisions-scoped.css is generated from this file: run `pnpm build:decisions` after
    changing it, or tests/theme-css.test.ts fails. */
 html {
-  /* list-item: one selectable row (NavListItem; later DropdownMenuItem, SelectItem, CommandItem) */
+  /* list-item: one selectable row */
   --eq-list-item-height: --spacing(9); /* 36 */
   --eq-list-item-padding-x: --spacing(2); /* 8 */
   --eq-list-item-gap: --spacing(2); /* 8, icon to text */
@@ -32,7 +32,22 @@ html {
     var(--color-text-secondary)
   );
   /* control: a stand-alone element */
-  --eq-control-height: --spacing(10); /* 40: rail item; later Button, Input */
+  --eq-control-height: --spacing(10); /* 40: not read inside Equality */
+  --eq-control-sm-height: --spacing(7); /* 28 */
+  --eq-control-md-height: --spacing(10); /* 40 */
+  --eq-control-lg-height: --spacing(11); /* 44 */
+  --eq-control-sm-font-size: --theme(--text-xs); /* 12 */
+  --eq-control-sm-line-height: --spacing(4); /* 16 */
+  --eq-control-md-font-size: --theme(--text-sm); /* 14 */
+  --eq-control-md-line-height: --spacing(5); /* 20 */
+  --eq-control-lg-font-size: --theme(--text-sm); /* 14 */
+  --eq-control-lg-line-height: --spacing(5); /* 20 */
+  --eq-control-padding-x-condensed: --spacing(2); /* 8 */
+  --eq-control-padding-x-normal: --spacing(3); /* 12 */
+  --eq-control-padding-x-spacious: --spacing(8); /* 32 */
+  --eq-control-sm-gap: --spacing(1.5); /* 6, icon to text */
+  --eq-control-md-gap: --spacing(1.5); /* 6, icon to text */
+  --eq-control-lg-gap: --spacing(1.5); /* 6, icon to text */
   /* touch: the minimum tap target */
   --eq-touch-target: 0px;
 
