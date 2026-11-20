@@ -62,10 +62,13 @@
    must not shrink: in the scroller's column a long list squashes it to nothing. Its fill hides
    the rows scrolling under it */
 .nav-panel-header {
-  @apply text-text-primary z-3 control-row-padding sticky top-0 m-0 shrink-0 truncate px-2 text-sm font-semibold;
-  padding-top: calc(
-    --spacing(4) + (var(--eq-control-md-height) - var(--eq-control-md-line-height)) / 2
+  @apply text-text-primary z-3 sticky top-0 m-0 shrink-0 truncate px-2 text-sm font-semibold;
+  --nav-title-padding: calc(
+    (max(var(--eq-control-md-height), var(--eq-touch-target)) - var(--eq-control-md-line-height)) /
+      2
   );
+  padding-top: calc(--spacing(4) + var(--nav-title-padding));
+  padding-bottom: var(--nav-title-padding);
   background-color: inherit;
 }
 
@@ -73,7 +76,8 @@
   @apply overflow-visible px-0 pb-0 pt-4;
 }
 
-/* One height whether it holds the switcher, a plain name or the loading bar. Same height as the rail's first item, so the two line up */
+/* Change this height and the switcher stops lining up with the rail's first item, and rows jump
+   between a switcher, a plain name and the loading bar */
 .nav-switcher-heading {
   @apply text-text-primary min-h-(--eq-touch-target) h-(--eq-control-md-height) m-0 flex min-w-0 items-center text-sm font-semibold;
 }
@@ -170,7 +174,7 @@
 
 /* Keeps the footer from covering the ticked item the list scrolls to on open */
 .nav-switcher-list:has(.nav-switcher-footer) {
-  scroll-padding-bottom: 2.5rem;
+  scroll-padding-bottom: calc(var(--eq-control-md-height) + --spacing(3));
 }
 
 /* Two classes to outrank the Select's own item layout */
