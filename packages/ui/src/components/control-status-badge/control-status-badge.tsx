@@ -60,7 +60,7 @@ const getStatusConfig = (status: string): StatusConfig => {
   switch (status) {
     case 'in-progress':
       return {
-        icon: 'Clock',
+        icon: 'FilePenLine',
         className: styles['badge--in-progress'],
         label: 'In Progress',
       };
@@ -111,7 +111,7 @@ const getStatusConfig = (status: string): StatusConfig => {
       };
     case 'compliant':
       return {
-        icon: <CircleCheckFillIcon />,
+        icon: 'Check',
         className: styles['badge--compliant'],
         label: 'Compliant',
       };
@@ -131,19 +131,3 @@ const getStatusConfig = (status: string): StatusConfig => {
 };
 
 export { ControlStatusBadge };
-
-// Custom filled icon — intentionally uses a fill, which Lucide's icon set never does.
-const CircleCheckFillIcon = ({ className }: { className?: string }) => {
-  return (
-    <svg
-      className={className}
-      xmlns="http://www.w3.org/2000/svg"
-      width="12"
-      height="12"
-      viewBox="0 0 24 24"
-      fill="currentColor"
-    >
-      <path d="M12 1C18.0751 1 23 5.92487 23 12C23 18.0751 18.0751 23 12 23C5.92487 23 1 18.0751 1 12C1 5.92487 5.92487 1 12 1ZM15.707 9.29297C15.3165 8.90245 14.6835 8.90244 14.293 9.29297L11 12.5859L9.70703 11.293C9.31651 10.9024 8.68349 10.9024 8.29297 11.293C7.90244 11.6835 7.90245 12.3165 8.29297 12.707L10.293 14.707C10.6835 15.0976 11.3165 15.0976 11.707 14.707L15.707 10.707C16.0976 10.3165 16.0976 9.68349 15.707 9.29297Z" />
-    </svg>
-  );
-};
