@@ -72,6 +72,10 @@
   @apply gap-(--eq-control-md-gap) relative;
 }
 
+.select-item [data-avatar='md'] {
+  @apply control-row-overhang;
+}
+
 .select-item-indicator {
   @apply flex-center;
   @apply text-list-item-current-mark;

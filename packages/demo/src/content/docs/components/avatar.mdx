@@ -7,6 +7,8 @@ import {
   AvatarDemo,
   AvatarSizesDemo,
   AvatarShapeDemo,
+  AvatarControlDemo,
+  AvatarRowDemo,
 } from "@demo/components/demo/avatar";
 
 ## Overview
@@ -50,12 +52,70 @@ The `size` prop controls the dimensions of the avatar.
 
 <AvatarSizesDemo client:only="react" />
 
+| Size | Pixels | Use it                                                               |
+| ---- | ------ | -------------------------------------------------------------------- |
+| `sm` | 16     | Inside a line of text                                                |
+| `md` | 24     | In a table or menu row, beside a name                                |
+| `lg` | 36     | Beside a control, or in a row with two lines of text                 |
+| `xl` | 44     | On its own, in a card or a profile header, or beside a large control |
+
+An `lg` avatar is as tall as a `md` control, and an `xl` avatar as tall as a `lg` one.
+
 ```tsx
 <Avatar size="sm">...</Avatar>
 <Avatar size="md">...</Avatar>
 <Avatar size="lg">...</Avatar>
 <Avatar size="xl">...</Avatar>
 ```
+
+### Beside a control
+
+`size="lg"` makes the avatar as tall as a default control, so the two line up in a header or toolbar. Use `xl` beside a large control.
+
+<AvatarControlDemo client:only="react" />
+
+```tsx
+<div className="flex items-center gap-2">
+  <SearchBar searchQuery={query} setSearchQuery={setQuery} />
+  <Avatar size="lg">...</Avatar>
+</div>
+```
+
+### In a row
+
+Use the default `md` avatar in a `Table` cell or in a `DropdownMenu`, `Select` or `Command` item. The row keeps its height, so rows with and without avatars line up.
+
+<AvatarRowDemo client:only="react" />
+
+<AvatarRowDemo client:only="react" variant="menu" />
+
+<AvatarRowDemo client:only="react" variant="select" />
+
+```tsx
+<TableCell>
+  <div className="flex items-center gap-2">
+    <Avatar aria-hidden>
+      <AvatarFallback>AC</AvatarFallback>
+    </Avatar>
+    Alice Cooper
+  </div>
+</TableCell>
+```
+
+In a `Select` item, wrap the avatar and the name the same way, and give the item a `textValue` so it matches on the name:
+
+```tsx
+<SelectItem value="alice" textValue="Alice Cooper">
+  <span className="flex items-center gap-2">
+    <Avatar aria-hidden>
+      <AvatarFallback>AC</AvatarFallback>
+    </Avatar>
+    Alice Cooper
+  </span>
+</SelectItem>
+```
+
+When the name sits beside the avatar, hide the avatar from screen readers with `aria-hidden` so the name is not read twice.
 
 ## Shape
 

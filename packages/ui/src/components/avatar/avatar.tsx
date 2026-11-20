@@ -5,7 +5,9 @@ import styles from '@/components/avatar/avatar.module.css';
 import { cn } from '@/lib/utils';
 
 interface AvatarProps extends React.ComponentPropsWithoutRef<typeof AvatarPrimitive.Root> {
+  /** How large the avatar is; `lg` is as tall as a default control and `xl` as tall as a large one */
   size?: 'sm' | 'md' | 'lg' | 'xl';
+  /** Whether the avatar is round or a rounded square */
   shape?: 'circle' | 'square';
 }
 
@@ -14,6 +16,7 @@ const Avatar = React.forwardRef<React.ElementRef<typeof AvatarPrimitive.Root>, A
     <AvatarPrimitive.Root
       ref={ref}
       className={cn(styles.avatar, styles[size], styles[shape], className)}
+      data-avatar={size}
       {...props}
     />
   )

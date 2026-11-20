@@ -34,11 +34,11 @@
 }
 
 .avatar.lg {
-  @apply size-8;
+  @apply size-9;
 }
 
 .avatar.xl {
-  @apply size-10;
+  @apply size-11;
 }
 
 /* .avatar.xs .avatar-fallback {
@@ -50,15 +50,15 @@
 }
 
 .avatar.md .avatar-fallback {
-  @apply text-sm;
+  @apply text-[0.625rem];
 }
 
 .avatar.lg .avatar-fallback {
-  @apply text-lg;
+  @apply text-sm;
 }
 
 .avatar.xl .avatar-fallback {
-  @apply text-xl;
+  @apply text-lg;
 }
 
 /* Shape Variants */
