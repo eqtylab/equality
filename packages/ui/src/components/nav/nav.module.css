@@ -62,7 +62,10 @@
    must not shrink: in the scroller's column a long list squashes it to nothing. Its fill hides
    the rows scrolling under it */
 .nav-panel-header {
-  @apply text-text-primary z-3 pt-5.5 sticky top-0 m-0 shrink-0 truncate px-2 pb-1.5 text-sm font-semibold;
+  @apply text-text-primary z-3 control-row-padding sticky top-0 m-0 shrink-0 truncate px-2 text-sm font-semibold;
+  padding-top: calc(
+    --spacing(4) + (var(--eq-control-md-height) - var(--eq-control-md-line-height)) / 2
+  );
   background-color: inherit;
 }
 

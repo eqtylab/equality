@@ -32,6 +32,7 @@ with a control, search for it: it now sits 4px taller than the control beside it
 | `Command` row                                                             | 32 to 36   | 14       | 8            |
 | `Command` row in a `CommandDialog`                                        | 44 to 36   | 14       | 8            |
 | `DisplayField`                                                            | 38 to 36   | 14       | 12           |
+| `DateRangePicker` day                                                     | 40 to 36   | 14       |              |
 
 - Large `Button` side padding halves, from 32 to 16. This is the largest single move.
 - The gap between an icon and its text grows from 6 to 8 on every `md` and `lg` `Button`, link

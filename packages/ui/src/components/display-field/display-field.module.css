@@ -35,7 +35,7 @@
 
 .content {
   @apply block w-full overflow-y-clip;
-  @apply self-center px-3 py-0;
+  @apply content-center self-stretch px-3 py-0;
   font-family: var(--font-mono);
 }
 

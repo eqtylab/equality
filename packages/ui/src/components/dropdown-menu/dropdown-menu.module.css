@@ -57,12 +57,14 @@
 }
 
 .dropdown-menu-item-indicator-checkbox {
-  @apply top-2.75 size-3.5;
+  @apply size-3.5;
+  top: calc((var(--eq-control-md-height) - --spacing(3.5)) / 2);
   @apply border-text-secondary rounded-sm border;
 }
 
 .dropdown-menu-item-indicator-radio {
-  @apply top-2 h-5 w-4;
+  @apply h-5 w-4;
+  top: calc((var(--eq-control-md-height) - --spacing(5)) / 2);
 }
 
 .dropdown-menu-checkbox-item[data-state='checked'] .dropdown-menu-item-indicator-checkbox {
