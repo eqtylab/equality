@@ -65,7 +65,10 @@
   @apply text-text-primary z-3 sticky top-0 m-0 shrink-0 truncate px-2 font-semibold;
   @apply text-(length:--eq-control-md-font-size)/[var(--tw-leading,var(--eq-control-md-line-height))];
   --nav-title-padding: calc(
-    (max(var(--eq-control-md-height), var(--eq-touch-target)) - var(--eq-control-md-line-height)) /
+    (
+        max(var(--eq-control-md-height), var(--eq-touch-target)) -
+          var(--tw-leading, var(--eq-control-md-line-height))
+      ) /
       2
   );
   padding-top: calc(--spacing(4) + var(--nav-title-padding));

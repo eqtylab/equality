@@ -2,7 +2,7 @@
 
 .tabs-list {
   @apply text-text-secondary;
-  @apply h-(--eq-control-md-height);
+  @apply min-h-(--eq-control-md-height);
   @apply flex items-center;
 }
 

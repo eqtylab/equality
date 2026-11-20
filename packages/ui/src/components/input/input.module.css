@@ -13,6 +13,12 @@
   @apply focus-ring;
 }
 
+/* A file input's button and name are not centred by the browser: without this padding they sit
+   against the top edge. The 1px is the border */
+.input[type='file'] {
+  padding-block: calc((var(--eq-control-md-height) - 1lh) / 2 - 1px);
+}
+
 .input-container {
   @apply flex w-full flex-col;
 }
