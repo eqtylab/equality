@@ -2,7 +2,7 @@
 
 Notable changes to Equality are recorded here, following [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
-## Unreleased
+## 6.1.0 - 2026-11-20
 
 ### Changed
 
