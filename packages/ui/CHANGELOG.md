@@ -2,6 +2,14 @@
 
 Notable changes to Equality are recorded here, following [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## 6.0.1 - 2026-11-20
+
+### Fixed
+
+- A clickable `Table` row stays highlighted while the pointer is over a link or button inside it,
+  so the highlight no longer flickers as the pointer crosses the row. The link or button shows its
+  own hover on top.
+
 ## 6.0.0 - 2026-11-20
 
 Controls and rows move to one scale: 28, 36 and 44. The default control drops from 40 to 36, and
