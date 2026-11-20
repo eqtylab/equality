@@ -2,7 +2,7 @@
 
 Notable changes to Equality are recorded here, following [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
-## 6.0.0 - 2026-11-19
+## 6.0.0 - 2026-11-20
 
 Controls and rows move to one scale: 28, 36 and 44. The default control drops from 40 to 36, and
 menu rows grow from 32 to 36. If your app copied a 40px height from Equality to line something up
