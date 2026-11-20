@@ -86,10 +86,7 @@
   @apply cursor-pointer;
 }
 
-/* Prevent row from highlighting when the user hovers clickable tags in the table */
-.table-row--clickable:not([data-state='selected']):hover:not(
-    :has(button:hover, a:not(.table-row-link):hover)
-  ) {
+.table-row--clickable:not([data-state='selected']):hover {
   @apply bg-list-item-hover!;
 }
 
