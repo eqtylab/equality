@@ -2,6 +2,18 @@
 
 Notable changes to Equality are recorded here, following [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## 6.1.0 - 2026-11-20
+
+### Changed
+
+- `Avatar` `lg` grows from 32 to 36 and `xl` from 40 to 44, so `lg` is as tall as a default control
+  and `xl` as tall as a large one. `sm` (16) and the default `md` (24) are unchanged. To keep the
+  old size, step down a size (`xl` to `lg`, `lg` to `md`) or pass `className="size-8"` or
+  `className="size-10"`. An avatar forced to 36 with `!size-9` becomes `size="lg"`.
+- A default (`md`) `Avatar` in a `Table` cell or a `DropdownMenu`, `Select` or `Command` item no
+  longer makes the row taller: the row stays 36 instead of growing to 40.
+- `Avatar` initials are smaller, so two letters no longer reach the edge of the circle.
+
 ## 6.0.2 - 2026-11-20
 
 ### Changed

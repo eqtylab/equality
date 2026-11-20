@@ -74,6 +74,10 @@
   @apply data-[selected=true]:bg-list-item-hover;
 }
 
+.command-item [data-avatar='md'] {
+  @apply control-row-overhang;
+}
+
 .command-shortcut {
   @apply text-text-secondary text-xs;
   @apply ml-auto;

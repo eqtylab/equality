@@ -23,6 +23,13 @@
   @apply control-row-padding min-h-(--eq-control-md-height) pr-(--eq-control-padding-x-condensed) pl-8;
 }
 
+.dropdown-menu-trigger [data-avatar='md'],
+.dropdown-menu-item [data-avatar='md'],
+.dropdown-menu-checkbox-item [data-avatar='md'],
+.dropdown-menu-radio-item [data-avatar='md'] {
+  @apply control-row-overhang;
+}
+
 .dropdown-menu-trigger,
 .dropdown-menu-item,
 .dropdown-menu-checkbox-item,
