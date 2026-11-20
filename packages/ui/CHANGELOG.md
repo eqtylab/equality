@@ -32,12 +32,13 @@ with a control, search for it: it now sits 4px taller than the control beside it
 | `Command` row                                                             | 32 to 36   | 14       | 8            |
 | `Command` row in a `CommandDialog`                                        | 44 to 36   | 14       | 8            |
 | `DisplayField`                                                            | 38 to 36   | 14       | 12           |
-| `DateRangePicker` day                                                     | 40 to 36   | 14       |              |
 
 - Large `Button` side padding halves, from 32 to 16. This is the largest single move.
 - The gap between an icon and its text grows from 6 to 8 on every `md` and `lg` `Button`, link
   buttons included, and on `md` and `lg` segments.
 - A row that wraps keeps its padding and grows; 36 is its minimum.
+- Menus that scroll past 320px, `FilterDropdown`, `RadioDropdown` and `DropdownMenu` among them,
+  show about 9 rows before scrolling, down from 10.
 - `Command`'s input bar stays 36. The field inside it now fits: it was 40, or 48 in a
   `CommandDialog`, and overflowed the bar.
 - `Tabs` triggers fill the list's height. `Input` centres its text without vertical padding.

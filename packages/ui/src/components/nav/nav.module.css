@@ -62,7 +62,8 @@
    must not shrink: in the scroller's column a long list squashes it to nothing. Its fill hides
    the rows scrolling under it */
 .nav-panel-header {
-  @apply text-text-primary z-3 sticky top-0 m-0 shrink-0 truncate px-2 text-sm font-semibold;
+  @apply text-text-primary z-3 sticky top-0 m-0 shrink-0 truncate px-2 font-semibold;
+  @apply text-(length:--eq-control-md-font-size)/[var(--tw-leading,var(--eq-control-md-line-height))];
   --nav-title-padding: calc(
     (max(var(--eq-control-md-height), var(--eq-touch-target)) - var(--eq-control-md-line-height)) /
       2
@@ -77,7 +78,8 @@
 }
 
 /* Change this height and the switcher stops lining up with the rail's first item, and rows jump
-   between a switcher, a plain name and the loading bar */
+   between a switcher, a plain name and the loading bar. .nav-panel-header's padding must change
+   with it */
 .nav-switcher-heading {
   @apply text-text-primary min-h-(--eq-touch-target) h-(--eq-control-md-height) m-0 flex min-w-0 items-center text-sm font-semibold;
 }

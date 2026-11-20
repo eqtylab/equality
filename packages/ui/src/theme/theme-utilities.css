@@ -82,7 +82,8 @@
 @utility dropdown-item {
   @apply cursor-pointer;
   @apply flex items-center;
-  @apply text-sm transition-colors;
+  @apply text-(length:--eq-control-md-font-size)/[var(--tw-leading,var(--eq-control-md-line-height))];
+  @apply transition-colors;
   @apply relative rounded-sm;
   @apply outline-hidden select-none;
   @apply data-disabled:pointer-events-none data-disabled:opacity-50;

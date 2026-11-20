@@ -151,8 +151,11 @@ classes backed by tokens — `bg-background`, `bg-background-raised`,
 These flip correctly in dark mode; `bg-slate-800` and `#1e293b` do not.
 
 A control or row you build yourself takes its height, text and side padding from
-Equality's control decisions: `h-(--eq-control-md-height)`, with `sm` (28) and
-`lg` (44) beside `md` (36). Never write `h-10`.
+Equality's control decisions: `h-(--eq-control-md-height)` for height,
+`--eq-control-md-font-size` and `--eq-control-md-line-height` for text, and
+`--eq-control-padding-x-condensed`, `-normal` or `-spacious` (8, 12, 16) for side
+padding. Heights come in `xs` (24), `sm` (28), `md` (36) and `lg` (44); text
+comes in `sm`, `md` and `lg`. Never write `h-10`.
 
 **Accessibility is mostly free — don't undo it.** Radix gives you focus
 management, escape handling, and ARIA wiring. You still have to supply the text:

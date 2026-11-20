@@ -11,6 +11,7 @@
   @apply cursor-pointer whitespace-nowrap;
   @apply ease-control duration-250 transition-colors;
   @apply motion-reduce:transition-none;
+  /* Triggers must fill the list's height, or their hover fill and underline drift from the shared indicator */
   @apply px-(--eq-control-padding-x-normal) self-stretch py-0;
   @apply text-lg font-medium;
   @apply flex gap-2;
