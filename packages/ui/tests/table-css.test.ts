@@ -19,6 +19,13 @@ describe('table-components.module.css', () => {
     expect(ruleBody(css, '.table-row-link')).toMatch(/outline-style:\s*none;/);
   });
 
+  it('highlights a hovered clickable row wherever the pointer is on it', () => {
+    expect(ruleBody(css, ".table-row--clickable:not([data-state='selected']):hover")).toMatch(
+      /background-color:\s*var\(--color-list-item-hover\)/
+    );
+    expect(css).not.toContain(':has(button:hover');
+  });
+
   it('overhangs a small icon button into the row padding', () => {
     expect(ruleBody(css, ".table-cell [data-icon-button='sm']")).toMatch(
       /margin-block:\s*calc\(0\.25rem \* -1\);/
