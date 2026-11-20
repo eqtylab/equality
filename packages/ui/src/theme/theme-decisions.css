@@ -50,6 +50,7 @@ html {
 
   /* The current fill must stay stronger than the hover fill: Studio checks the pair with APCA */
   --color-list-item-current: color-mix(in oklch, var(--color-text-primary) 10%, transparent);
+  --color-list-item-current-mark: var(--color-brand-primary);
   --color-list-item-hover: color-mix(in oklch, var(--color-text-primary) 6%, transparent);
 }
 

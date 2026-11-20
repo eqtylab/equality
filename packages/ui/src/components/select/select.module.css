@@ -74,6 +74,7 @@
 
 .select-item-indicator {
   @apply flex-center;
+  @apply text-list-item-current-mark;
   @apply size-3.5 shrink-0;
 }
 

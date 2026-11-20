@@ -2,6 +2,12 @@
 
 Notable changes to Equality are recorded here, following [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## Unreleased
+
+### Changed
+
+- The tick on the chosen item in `DropdownMenu` radio items, `Select` and `NavSwitcher` is now the brand colour.
+
 ## 6.0.1 - 2026-11-20
 
 ### Fixed
