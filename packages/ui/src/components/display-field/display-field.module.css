@@ -1,12 +1,12 @@
 @reference '../../theme/theme.module.css';
 
 .display-field {
-  @apply text-text-primary text-clip text-sm;
+  @apply text-text-primary text-(length:--eq-control-md-font-size)/[var(--tw-leading,var(--eq-control-md-line-height))] text-clip;
 }
 
 .display-field-inner {
   @apply border-border bg-popover-background rounded-lg border;
-  @apply h-9.5 flex w-full overflow-clip;
+  @apply h-(--eq-control-md-height) flex w-full overflow-clip;
   @apply focus-ring;
   @apply z-above relative;
 }
@@ -29,13 +29,13 @@
 .prefix {
   @apply flex items-center gap-1;
   @apply px-2;
-  @apply text-sm font-medium transition-colors;
+  @apply text-(length:--eq-control-md-font-size)/[var(--tw-leading,var(--eq-control-md-line-height))] font-medium transition-colors;
   @apply rounded-br-md rounded-tr-md;
 }
 
 .content {
   @apply block w-full overflow-y-clip;
-  @apply px-3 py-2;
+  @apply self-center px-3 py-0;
   font-family: var(--font-mono);
 }
 

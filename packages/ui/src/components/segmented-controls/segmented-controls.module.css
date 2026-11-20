@@ -48,8 +48,12 @@
   @apply h-(--eq-control-lg-height);
 }
 
+.size--lg .segment {
+  @apply text-(length:--eq-control-lg-font-size)/[var(--tw-leading,var(--eq-control-lg-line-height))];
+}
+
 .size--lg .segment:not(.segment--icon-only) {
-  @apply px-4;
+  @apply px-(--eq-control-padding-x-spacious);
 }
 
 .variant--primary {

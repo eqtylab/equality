@@ -58,7 +58,10 @@ export default function ThemeToggle({ className }: Props) {
      */
     <button
       type="button"
-      className={[className, 'grid cursor-pointer max-lg:w-10 max-lg:justify-center max-lg:px-0']
+      className={[
+        className,
+        'max-lg:w-(--eq-control-md-height) grid cursor-pointer max-lg:justify-center max-lg:px-0',
+      ]
         .filter(Boolean)
         .join(' ')}
       onClick={() => setThemePreference(after(preference))}

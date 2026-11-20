@@ -51,7 +51,7 @@ const { nodes, switcher } = Astro.props;
         });
         return (
           <a
-            class="text-text-secondary hover:text-text-primary mb-1 flex max-h-10 items-center gap-2 rounded-md px-2 py-1.5 text-sm font-medium no-underline"
+            class="text-text-secondary hover:text-text-primary mb-1 flex min-h-(--eq-control-md-height) items-center gap-2 rounded-md px-2 py-2 text-sm font-medium no-underline"
             href={to.href}
             target={to.external ? '_blank' : undefined}
             rel={to.external ? 'noopener noreferrer' : undefined}

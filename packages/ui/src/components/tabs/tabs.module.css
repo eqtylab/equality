@@ -17,15 +17,9 @@
   @apply bg-background-sunken;
 }
 
-/* Triggers must fill the list's height, or their hover fill and underline drift from the shared indicator */
-.tabs-trigger--filled,
-.tabs-trigger--transparent {
-  @apply self-stretch;
-}
-
 .tabs-trigger--filled {
   @apply w-full;
-  @apply px-(--eq-control-padding-x-normal) py-1.5;
+  @apply px-(--eq-control-padding-x-normal) py-0;
   @apply text-text-secondary;
   @apply control-segment-fill control-segment-focus-ring;
 }
