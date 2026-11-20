@@ -63,6 +63,7 @@
 }
 
 .dropdown-menu-item-indicator-radio {
+  @apply text-list-item-current-mark;
   @apply h-5 w-4;
   top: calc((var(--eq-control-md-height) - --spacing(5)) / 2);
 }
