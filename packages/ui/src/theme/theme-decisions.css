@@ -7,11 +7,7 @@
    changing it, or tests/theme-css.test.ts fails. */
 html {
   /* list-item: one selectable row */
-  --eq-list-item-height: --spacing(9); /* 36. Deprecated: use --eq-control-md-height */
-  --eq-list-item-padding-x: --spacing(2); /* 8. Deprecated: use --eq-control-padding-x-condensed */
-  --eq-list-item-gap: --spacing(2); /* 8, icon to text. Deprecated: use --eq-control-md-gap */
   --eq-list-item-icon-size: --spacing(4); /* 16 */
-  --eq-list-item-font-size: --theme(--text-sm); /* 14. Deprecated: use --eq-control-md-font-size */
   --eq-list-item-muted-color: var(--color-text-tertiary);
   /* list: the rows together */
   --eq-list-gap: --spacing(0.5); /* 2, between items */

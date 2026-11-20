@@ -37,13 +37,15 @@ with a control, search for it: it now sits 4px taller than the control beside it
 - The gap between an icon and its text grows from 6 to 8 on every `md` and `lg` `Button`, link
   buttons included, and on `md` and `lg` segments.
 - A row that wraps keeps its padding and grows; 36 is its minimum.
-- Menus that scroll past 320px, `FilterDropdown`, `RadioDropdown` and `DropdownMenu` among them,
-  show about 9 rows before scrolling, down from 10.
+- `FilterDropdown` and `RadioDropdown` show about 9 rows before scrolling, down from 10, and
+  `Command`'s list about 8, down from 9.
 - `Command`'s input bar stays 36. The field inside it now fits: it was 40, or 48 in a
   `CommandDialog`, and overflowed the bar.
 - `Tabs` triggers fill the list's height. `Input` centres its text without vertical padding.
 - The `Nav` switcher is as tall as the rail's first item, so the panel header no longer nudges it
   down to line the two up.
+- `ControlStatusBadge` shows a pen-on-file icon for In Progress, matching the workbench, and a
+  plain tick for Compliant in place of the filled one.
 
 ### Added
 
@@ -52,19 +54,15 @@ with a control, search for it: it now sits 4px taller than the control beside it
   `--eq-control-padding-x-condensed`, `-normal` and `-spacious`. A control or row you build
   yourself reads these, such as `h-(--eq-control-md-height)`, so it follows the scale.
 
-### Deprecated
+### Removed
 
+- `--eq-control-height`. Use `--eq-control-md-height`, which the `Nav` rail now reads.
 - `--eq-list-item-height`. Use `--eq-control-md-height`.
 - `--eq-list-item-padding-x`. Use `--eq-control-padding-x-condensed`.
 - `--eq-list-item-gap`. Use `--eq-control-md-gap`.
 - `--eq-list-item-font-size`. Use `--eq-control-md-font-size`.
 
-Each keeps its value until a later major release removes it, but nothing in Equality reads it any
-more, so a site's override of one no longer takes effect. Override the name that replaces it.
-
-### Removed
-
-- `--eq-control-height`. Use `--eq-control-md-height`, which the `Nav` rail now reads.
+If your site read or overrode one of these, switch to the name that replaces it.
 
 ## 5.6.0 - 2026-11-18
 
