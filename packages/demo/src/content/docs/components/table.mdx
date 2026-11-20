@@ -69,6 +69,8 @@ Rows can be made interactive in two ways:
 
 Both props enable hover interactions automatically. Use `data-state="selected"` to mark a row as selected.
 
+Put a row's actions in buttons that show a hover of their own: a button takes its own clicks, and the row stays highlighted while the pointer is over it. Don't put links inside a clickable row, because two places to click make it unclear where a click will go. Make the row itself the link with `href` instead.
+
 Try clicking a row below to toggle its selected state!
 
 <TableDemo client:only="react" variant="clickable" />
