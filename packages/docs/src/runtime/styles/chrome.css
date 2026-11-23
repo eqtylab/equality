@@ -12,7 +12,7 @@
 @custom-variant pointer-focus (&:focus:not(:focus-visible));
 
 :root {
-  --eq-docs-header-height: 4.3125rem;
+  --eq-docs-header-height: 3.25rem;
   --eq-docs-sidebar-width: 18rem;
   --eq-docs-toc-width: 15rem;
   --eq-docs-content-max: 48rem;
@@ -78,4 +78,22 @@ html[data-equality-theme='dark'] [data-eq-docs-column]::before {
   @view-transition {
     navigation: none;
   }
+}
+
+header[data-eq-chrome]::after {
+  content: '';
+  position: absolute;
+  inset: auto 0 0;
+  height: 1px;
+  background: var(--color-border-raised);
+  pointer-events: none;
+}
+
+footer[data-eq-chrome]::before {
+  content: '';
+  position: absolute;
+  inset: 0 0 auto;
+  height: 1px;
+  background: var(--color-border);
+  pointer-events: none;
 }
