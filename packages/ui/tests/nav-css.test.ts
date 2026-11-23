@@ -43,4 +43,47 @@ describe('nav.module.css', () => {
       /padding-top:/
     );
   });
+
+  it('sizes the rail as a default control plus 8 each side', () => {
+    expect(ruleBody(css, '.nav-rail')).toMatch(
+      /width:\s*calc\(var\(--eq-control-md-height\) \+ calc\(0\.25rem \* 4\)\);/
+    );
+  });
+
+  it('draws the rail and panel lines inside their width, so neither grows by a pixel', () => {
+    const shared = ruleBody(css, '.nav-rail,\n.nav-panel');
+    expect(shared).not.toMatch(/border-right-width/);
+    expect(shared).toMatch(/position:\s*relative;/);
+    const line = ruleBody(css, '.nav-rail::after,\n.nav-panel::after');
+    expect(line).toMatch(/width:\s*1px;/);
+    expect(line).toMatch(/inset:\s*0 0 0 auto;/);
+  });
+
+  it('starts the rail and the panel 8 below their top, so their first items line up', () => {
+    expect(ruleBody(css, '.nav-rail .nav-scroller')).toMatch(
+      /padding-block:\s*calc\(0\.25rem \* 2\);/
+    );
+    expect(ruleBody(css, '.nav-panel .nav-scroller')).toMatch(
+      /padding-top:\s*calc\(0\.25rem \* 2\);/
+    );
+    expect(ruleBody(css, '.nav-panel-header:has(> .nav-switcher-heading)')).toMatch(
+      /padding-top:\s*calc\(0\.25rem \* 2\);/
+    );
+    expect(ruleBody(css, '.nav-panel-header')).toMatch(
+      /padding-top:\s*calc\(calc\(0\.25rem \* 2\) \+ var\(--nav-title-padding\)\);/
+    );
+  });
+
+  it('draws rail icons at the default control icon size', () => {
+    expect(ruleBody(css, '.nav-rail-item svg')).toMatch(
+      /width:\s*var\(--eq-control-md-icon-size\);/
+    );
+  });
+
+  it('draws the switcher outline inside it, so its name sits 8 in', () => {
+    expect(ruleBody(css, '.nav-switcher-heading .nav-switcher')).toMatch(/border-width:\s*0px;/);
+    expect(
+      ruleBody(css, ".nav-switcher-heading .nav-switcher[data-state='open']:not(:disabled)")
+    ).toMatch(/--tw-inset-ring-shadow:\s*inset 0 0 0 1px/);
+  });
 });
