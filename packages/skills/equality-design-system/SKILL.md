@@ -82,7 +82,7 @@ If you have no network access or web fetching fails, tell your user that you cou
 - Small label titles should use `Label` to describe
 - NEVER make custom badges!! There are more than enough properties in `Badge`
   - Use `ResourceBadge` when referencing integrity-backed resources and `ControlStatusBadge` when referencing control statuses.
-  - Leave badge `size` off, in table rows too: the default follows the line it sits in. Use `size="sm"` only where space is at a premium, such as log viewers
+  - Avoid using badge `size="sm"` except for specific scenarios where space is at a premium like within tables. Most badges should be the default `size="md"`
 - Icons should be used sparingly. Ensure consistency when using them, try not to conflate multiple concepts with the same icon
 - Nav: decide between drill in, expand and `NavSwitcher` with "Which One to Use" on the Nav docs page, and follow its "Best Practices". Statuses go in a row's `suffix`, never its `prefix`. Under a sticky header, set `--eq-nav-offset` to the header's height on the element around the rail and panel; never override the nav's own `top` or `max-height`.
 - Avatar: no `size` in a list or row with one line per person, even inside a card. `md` for a person on their own: card or page header, an "Assigned to" field, a name with a line under it. `lg` in profile headers. `xs` only beside an extra-small control.

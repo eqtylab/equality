@@ -26,14 +26,13 @@ const badgeVariants = cva(styles['badge'], {
       success: styles['badge--success'],
     },
     size: {
-      line: styles['badge--line'],
       sm: styles['badge--sm'],
       md: styles['badge--md'],
     },
   },
   defaultVariants: {
     variant: 'primary',
-    size: 'line',
+    size: 'md',
   },
 });
 
@@ -127,28 +126,24 @@ function Badge({
   // Validate icon-only mode requires an icon
   // If icon-only is set without an icon, fallback to showing both
   const effectiveDisplay = display === 'icon-only' && !effectiveIcon ? 'both' : display;
-  const shouldShowChildren =
-    effectiveDisplay !== 'icon-only' && React.Children.count(props.children) > 0;
+  const shouldShowChildren = effectiveDisplay !== 'icon-only';
   const isIconOnly = effectiveDisplay === 'icon-only' && effectiveIcon;
-  const isLineMarker = Boolean(isIconOnly) && (size == null || size === 'line');
-  const effectiveSize = isLineMarker ? 'md' : size;
 
   return (
     <span
       className={cn(
-        variant !== null && badgeVariants({ variant, size: effectiveSize }),
+        variant !== null && badgeVariants({ variant, size }),
         variant === null && styles['badge'],
-        variant === null && styles[`badge--${effectiveSize ?? 'line'}`],
+        variant === null && styles[`badge--${size ?? 'md'}`],
         monospace && styles['badge--monospace'],
         !pill && styles['badge--square'],
         isIconOnly && styles['badge--icon-only'],
-        isLineMarker && styles['badge--inline'],
         className
       )}
       {...props}
     >
       {renderIcon()}
-      {shouldShowChildren && <span className={styles['badge-label']}>{renderChildren()}</span>}
+      {shouldShowChildren && renderChildren()}
       {renderClosable()}
     </span>
   );

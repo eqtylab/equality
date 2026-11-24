@@ -19,17 +19,6 @@ const EXCEPTIONS: Record<string, string> = {
   'switch/switch.module.css': 'Its own shape, not a text control',
 };
 
-const HEIGHT_EXCEPTIONS: Record<string, string> = {
-  'badge/badge.module.css min-height: 20px':
-    'The line badge follows its line of text, falling back to 20 where lh is unsupported',
-};
-
-const allowed = (hit: string) =>
-  Object.keys(HEIGHT_EXCEPTIONS).some((key) => {
-    const [file, ...height] = key.split(' ');
-    return hit.startsWith(`${file}:`) && hit.endsWith(` ${height.join(' ')}`);
-  });
-
 let found: Map<string, string[]>;
 
 beforeAll(async () => {
@@ -52,7 +41,6 @@ describe('control heights', () => {
     const offenders = [...found]
       .filter(([file]) => !(file in EXCEPTIONS))
       .flatMap(([, hits]) => hits)
-      .filter((hit) => !allowed(hit))
       .sort();
     expect(offenders).toEqual([]);
   });
@@ -60,13 +48,5 @@ describe('control heights', () => {
   it('lists no exception that no longer writes a height by hand', () => {
     const stale = Object.keys(EXCEPTIONS).filter((file) => !found.has(file));
     expect(stale).toEqual([]);
-    const hits = [...found.values()].flat();
-    const staleHeights = Object.keys(HEIGHT_EXCEPTIONS).filter((key) => {
-      const [file, ...height] = key.split(' ');
-      return !hits.some(
-        (hit) => hit.startsWith(`${file}:`) && hit.endsWith(` ${height.join(' ')}`)
-      );
-    });
-    expect(staleHeights).toEqual([]);
   });
 });

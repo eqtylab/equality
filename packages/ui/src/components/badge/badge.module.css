@@ -12,20 +12,6 @@
 
 /* Size Variants */
 
-/* A text size on the root makes 1lh measure the badge, not the line it sits in; set it on .badge-label */
-.badge--line {
-  @apply inline-flex align-top;
-  min-height: 20px;
-  min-height: 1lh;
-  min-width: 20px;
-  min-width: 1lh;
-  @apply gap-1 px-2;
-}
-
-.badge-label {
-  @apply text-xs;
-}
-
 .badge--md {
   @apply px-2 py-0.5 text-xs;
   @apply min-h-5 min-w-5 gap-1;
@@ -114,8 +100,4 @@
 
 .badge--sm.badge--icon-only {
   @apply p-0.5;
-}
-
-.badge--inline {
-  @apply inline-flex align-top;
 }
