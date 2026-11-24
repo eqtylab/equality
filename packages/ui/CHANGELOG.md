@@ -35,7 +35,8 @@ Notable changes to Equality are recorded here, following [Keep a Changelog](http
   less than before: rows keep 4 above and below their content, from 8, so a two-line row is 48, from 56.
 - Table body rows draw a faint line between them instead of filling every other row. The last row
   draws none. Pass `striped` to bring the fill back.
-- The Table header draws its line inside its height, so it is 36, from 37.
+- The Table header draws its line inside its height, so it is 36, from 37, and grows when its text
+  wraps instead of spilling out.
 - `IconButton` icons match the icon beside text in the control of the same size: 16 at `md`, from
   22, and 20 at `lg`, from 26. `xs` (14) and `sm` (16) are unchanged.
 - An icon in a large control is 20, from 16.

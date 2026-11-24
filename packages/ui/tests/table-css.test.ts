@@ -127,4 +127,15 @@ describe('table-components.module.css', () => {
     );
     expect(comfortable).not.toMatch(/background|margin/);
   });
+
+  it('lets the header row grow when its text wraps', () => {
+    const headerRules = [
+      ...css.matchAll(/([^{}]*\.table-(?:header|head)(?![\w-])[^{}]*)\{([^{}]*)\}/g),
+    ];
+    expect(headerRules.length).toBeGreaterThan(0);
+    for (const [, selector, body] of headerRules) {
+      expect(body, selector).not.toMatch(/(^|[^-])height:/);
+    }
+    expect(ruleBody(css, '.table-head')).toMatch(/min-height:\s*var\(--eq-control-md-height\);/);
+  });
 });

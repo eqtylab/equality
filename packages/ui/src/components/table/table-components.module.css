@@ -61,7 +61,7 @@
 }
 
 .table-head {
-  @apply h-(--eq-control-md-height);
+  @apply min-h-(--eq-control-md-height);
   @apply content-center;
   @apply text-text-primary text-left font-medium transition-colors;
   @apply [&:has([role=checkbox])]:pr-0;
@@ -89,7 +89,7 @@
 }
 
 .table--comfortable > .table-inner > .table-header > .table-row > .table-head {
-  @apply h-(--eq-control-lg-height);
+  @apply min-h-(--eq-control-lg-height);
 }
 
 /* A border on the row itself would add 1px to its height and put it off the 36 scale */
