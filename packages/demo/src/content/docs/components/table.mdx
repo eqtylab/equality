@@ -64,14 +64,43 @@ Basic usage:
 
 Rows can be made interactive in two ways:
 
-- **`onClick`** — Pass a click handler for custom behavior (e.g., toggling selection state).
-- **`href`** — Pass a URL to make the row navigable on click. This also adds keyboard accessibility (`Enter`/`Space` to activate) and proper ARIA semantics. Add an `hrefLabel` prop to tell screen reader users where the link will go.
+- **`clickable` with `onClick`** — Runs your handler when the row is clicked, such as toggling selection or calling your router's `navigate` to open the row without reloading the page.
+- **`href`** — Renders a full-row link to a URL. Add an `hrefLabel` to tell screen reader users where the link goes. It's a plain `<a href>`, so a router won't handle it and the page reloads.
 
-Both props enable hover interactions automatically. Use `data-state="selected"` to mark a row as selected.
+Both enable hover styles. Use `data-state="selected"` to mark a row as selected.
 
-Try clicking a row below to toggle its selected state!
+A `clickable` row with `onClick` also works from the keyboard:
+
+- <kbd>Tab</kbd> reaches the table's rows as a single stop, starting on the
+  first row and returning to the row you left.
+- <kbd>Enter</kbd> does what a click does.
+- <kbd>Up</kbd> and <kbd>Down</kbd> arrows move to the previous and next row,
+  and <kbd>Home</kbd> and <kbd>End</kbd> to the first and last.
+
+Buttons, links and menus in the row keep their own keys, and clicking them doesn't trigger the row.
 
 <TableDemo client:only="react" variant="clickable" />
+
+#### Usage
+
+```tsx
+const navigate = useNavigate();
+
+<TableBody>
+  {agents.map((agent) => (
+    <TableRow
+      key={agent.id}
+      clickable
+      onClick={() => navigate(`/agents/${agent.id}`)}
+    >
+      <TableCell>{agent.name}</TableCell>
+      <TableCell>
+        <AgentActionsMenu agent={agent} />
+      </TableCell>
+    </TableRow>
+  ))}
+</TableBody>;
+```
 
 ### Sortable Columns
 
@@ -321,8 +350,8 @@ Use [container queries](https://tailwindcss.com/docs/responsive-design#what-are-
 
 ### TableRow
 
-| Name        | Description                                                 | Type      | Default          | Required |
-| ----------- | ----------------------------------------------------------- | --------- | ---------------- | -------- |
-| `clickable` | Applies hover and cursor interaction styles                 | `boolean` | `false`          | ❌       |
-| `href`      | URL to navigate to on click                                 | `string`  | —                | ❌       |
-| `hrefLabel` | Accessible label for the link (announced by screen readers) | `string`  | `"View details"` | ❌       |
+| Name        | Description                                                                                              | Type      | Default          | Required |
+| ----------- | -------------------------------------------------------------------------------------------------------- | --------- | ---------------- | -------- |
+| `clickable` | Applies hover and pointer styles. With `onClick`, makes the row reachable and openable from the keyboard | `boolean` | `false`          | ❌       |
+| `href`      | URL the row links to, rendered as a full-row link                                                        | `string`  | —                | ❌       |
+| `hrefLabel` | Accessible name for the row's link, announced by screen readers                                          | `string`  | `"View details"` | ❌       |

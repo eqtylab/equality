@@ -15,6 +15,12 @@ describe('table-components.module.css', () => {
     );
   });
 
+  it('draws a focused clickable row in the focus-ring colour', () => {
+    expect(ruleBody(css, '.table-row--clickable[data-table-row-focusable]:focus-visible')).toMatch(
+      /outline-color:\s*var\(--color-focus-ring\b/
+    );
+  });
+
   it("draws no outline on the row's stretched link, so focus shows as one line", () => {
     expect(ruleBody(css, '.table-row-link')).toMatch(/outline-style:\s*none;/);
   });

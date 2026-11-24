@@ -9,10 +9,18 @@ Notable changes to Equality are recorded here, following [Keep a Changelog](http
 - Control size decisions: `--eq-control-sm-height`, `-md-height` and `-lg-height`, with a font
   size, line height and gap for each, and `--eq-control-padding-x-condensed`, `-normal` and
   `-spacious`. Each holds today's size, so nothing changes on screen.
+- A `TableRow` with `clickable` and `onClick` works from the keyboard. Tab reaches the rows as one
+  stop, Enter does what a click does, and Up, Down, Home and End move between rows. Buttons, links
+  and menus in the row keep their own keys. A focused row draws the focus ring.
 
 ### Removed
 
 - `--eq-control-height`. Use `--eq-control-md-height`, which the `Nav` rail now reads.
+
+### Fixed
+
+- Clicking an item in a menu opened from inside a clickable `TableRow` no longer also triggers the
+  row's `onClick`.
 
 ## 5.6.0 - 2026-11-18
 

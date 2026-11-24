@@ -120,6 +120,10 @@
   @apply outline-focus-ring outline-2 outline-offset-[-2px];
 }
 
+.table-row--clickable[data-table-row-focusable]:focus-visible {
+  @apply outline-focus-ring outline-2 outline-offset-[-2px];
+}
+
 .table-body .table-row--clickable[data-state='selected'] {
   @apply bg-list-item-current;
 }
