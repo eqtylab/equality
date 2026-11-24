@@ -113,11 +113,38 @@
   @apply sr-only;
 }
 
-.table-row--linked :is(button, a:not(.table-row-link)) {
+.table-row-action {
+  @apply text-left outline-none;
+  font: inherit;
+  color: inherit;
+  background: none;
+  border: 0;
+  padding: 0;
+  margin: 0;
+  max-width: 100%;
+  overflow: inherit;
+  text-overflow: inherit;
+  white-space: inherit;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+/* The action covers the row, so a click anywhere on it opens the row */
+.table-row-action::after {
+  content: '';
+  @apply absolute inset-0 z-10;
+}
+
+/* Controls in a linked row sit above its link or action, or they can't be clicked */
+.table-row--linked
+  :is(a, button, input, select, textarea, label, [role='checkbox'], [role='switch']):not(
+    .table-row-link,
+    .table-row-action
+  ) {
   @apply relative z-20;
 }
 
-.table-row--linked:has(.table-row-link:focus-visible) {
+.table-row--linked:has(:is(.table-row-link, .table-row-action):focus-visible) {
   @apply outline-focus-ring outline-2 outline-offset-[-2px];
 }
 
@@ -125,7 +152,7 @@
   @apply outline-focus-ring outline-2 outline-offset-[-2px];
 }
 
-.table-body .table-row--clickable[data-state='selected'] {
+.table-body .table-row[data-state='selected'] {
   @apply bg-list-item-current;
 }
 

@@ -1,6 +1,7 @@
 import type { Elevation } from "@eqtylab/equality";
 import {
   Badge,
+  Checkbox,
   EmptyTableState,
   IconButton,
   SortButton,
@@ -10,6 +11,7 @@ import {
   TableHead,
   TableHeader,
   TableRow,
+  TableRowAction,
 } from "@eqtylab/equality";
 import { type CSSProperties, useState } from "react";
 
@@ -17,6 +19,7 @@ interface TableDemoProps {
   variant?:
     | "default"
     | "clickable"
+    | "selectable"
     | "with-border"
     | "with-sorter"
     | "empty-state"
@@ -44,9 +47,98 @@ export const TableDemo = ({
   variant = "default",
   elevation,
 }: TableDemoProps) => {
-  const [selectedRow, setSelectedRow] = useState<number | null>(null);
-  const toggleRow = (row: number) =>
-    setSelectedRow((current) => (current === row ? null : row));
+  const [opened, setOpened] = useState<string | null>(null);
+  const [selected, setSelected] = useState<string[]>([]);
+  const toggleSelected = (email: string) =>
+    setSelected((current) =>
+      current.includes(email)
+        ? current.filter((item) => item !== email)
+        : [...current, email],
+    );
+
+  if (variant === "clickable") {
+    return (
+      <div className="space-y-3">
+        <TableContainer elevation={elevation} columns={defaultCols}>
+          <TableHeader>
+            <TableRow>
+              <TableHead>Name</TableHead>
+              <TableHead>Email</TableHead>
+              <TableHead>Role</TableHead>
+              <TableHead>Status</TableHead>
+              <TableHead />
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            {longTableData.slice(0, 3).map((user) => (
+              <TableRow
+                key={user.email}
+                href={`#${user.email}`}
+                onClick={() => setOpened(user.name)}
+              >
+                <TableCell>
+                  <TableRowAction>{user.name}</TableRowAction>
+                </TableCell>
+                <TableCell>{user.email}</TableCell>
+                <TableCell>{user.role}</TableCell>
+                <TableCell>
+                  <Badge variant={user.active ? "success" : "neutral"}>
+                    {user.active ? "Active" : "Inactive"}
+                  </Badge>
+                </TableCell>
+                <TableCell>
+                  <IconButton name="EllipsisVertical" label="Row actions" />
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </TableContainer>
+        <p role="status" className="text-text-secondary text-sm">
+          {opened ? `Opened ${opened}` : "No row opened yet"}
+        </p>
+      </div>
+    );
+  }
+
+  if (variant === "selectable") {
+    return (
+      <TableContainer elevation={elevation} columns="auto 1fr 1fr auto">
+        <TableHeader>
+          <TableRow>
+            <TableHead>
+              <span className="sr-only">Select</span>
+            </TableHead>
+            <TableHead>Name</TableHead>
+            <TableHead>Email</TableHead>
+            <TableHead>Role</TableHead>
+          </TableRow>
+        </TableHeader>
+        <TableBody>
+          {longTableData.slice(0, 3).map((user) => {
+            const isSelected = selected.includes(user.email);
+            const nameId = `select-${user.email}`;
+            return (
+              <TableRow
+                key={user.email}
+                data-state={isSelected ? "selected" : undefined}
+              >
+                <TableCell>
+                  <Checkbox
+                    aria-labelledby={nameId}
+                    checked={isSelected}
+                    onCheckedChange={() => toggleSelected(user.email)}
+                  />
+                </TableCell>
+                <TableCell id={nameId}>{user.name}</TableCell>
+                <TableCell>{user.email}</TableCell>
+                <TableCell>{user.role}</TableCell>
+              </TableRow>
+            );
+          })}
+        </TableBody>
+      </TableContainer>
+    );
+  }
   if (variant === "column-sizing") {
     return (
       <TableContainer elevation={elevation} columns="3fr 3fr 100px 100px 60px">
@@ -510,11 +602,7 @@ export const TableDemo = ({
         </TableRow>
       </TableHeader>
       <TableBody>
-        <TableRow
-          clickable={variant === "clickable"}
-          data-state={selectedRow === 0 ? "selected" : undefined}
-          onClick={variant === "clickable" ? () => toggleRow(0) : undefined}
-        >
+        <TableRow>
           <TableCell>Alice Cooper</TableCell>
           <TableCell>alice@example.com</TableCell>
           <TableCell>Admin</TableCell>
@@ -525,11 +613,7 @@ export const TableDemo = ({
             <IconButton name="EllipsisVertical" label="Row actions" />
           </TableCell>
         </TableRow>
-        <TableRow
-          clickable={variant === "clickable"}
-          data-state={selectedRow === 1 ? "selected" : undefined}
-          onClick={variant === "clickable" ? () => toggleRow(1) : undefined}
-        >
+        <TableRow>
           <TableCell>Bob Smith</TableCell>
           <TableCell>bob@example.com</TableCell>
           <TableCell>User</TableCell>
@@ -541,7 +625,9 @@ export const TableDemo = ({
           </TableCell>
         </TableRow>
         <TableRow href="https://eqtylab.io">
-          <TableCell>Charlie Brown</TableCell>
+          <TableCell>
+            <TableRowAction>Charlie Brown</TableRowAction>
+          </TableCell>
           <TableCell>charlie@example.com</TableCell>
           <TableCell>Viewer</TableCell>
           <TableCell>

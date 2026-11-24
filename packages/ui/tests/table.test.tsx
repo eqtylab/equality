@@ -3,6 +3,7 @@ import { act, render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { describe, expect, it, vi } from 'vitest';
 
+import { Checkbox } from '@/components/checkbox/checkbox';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -16,6 +17,7 @@ import {
   TableHead,
   TableHeader,
   TableRow,
+  TableRowAction,
 } from '@/components/table/table-components';
 
 const NAMES = ['Alice', 'Bob', 'Charlie'];
@@ -211,5 +213,244 @@ describe('clickable TableRow', () => {
 
     expect(screen.getByTestId('plain').hasAttribute('tabindex')).toBe(false);
     expect(screen.getByTestId('unstyled').hasAttribute('tabindex')).toBe(false);
+  });
+});
+
+describe('clicks on controls inside a clickable TableRow', () => {
+  function ControlsRow({ onOpen }: { onOpen: () => void }) {
+    return (
+      <TableContainer>
+        <TableBody>
+          <TableRow clickable onClick={onOpen}>
+            <TableCell>
+              <label>
+                Include
+                <input type="checkbox" />
+              </label>
+            </TableCell>
+            <TableCell>
+              <select aria-label="Role">
+                <option>Admin</option>
+                <option>User</option>
+              </select>
+            </TableCell>
+            <TableCell>
+              <div role="switch" aria-checked="false" aria-label="Enabled" tabIndex={0} />
+            </TableCell>
+          </TableRow>
+        </TableBody>
+      </TableContainer>
+    );
+  }
+
+  it("don't open the row", async () => {
+    const user = userEvent.setup();
+    const onOpen = vi.fn();
+    render(<ControlsRow onOpen={onOpen} />);
+
+    await user.click(screen.getByRole('checkbox'));
+    await user.click(screen.getByText('Include'));
+    await user.selectOptions(screen.getByRole('combobox'), 'User');
+    await user.click(screen.getByRole('switch'));
+    expect(onOpen).not.toHaveBeenCalled();
+  });
+});
+
+describe('TableRow with href and onClick', () => {
+  function LinkedRow({ onOpen }: { onOpen: (event: React.MouseEvent) => void }) {
+    return (
+      <TableContainer>
+        <TableBody>
+          <TableRow clickable href="/agents/alice" onClick={onOpen}>
+            <TableCell>
+              <TableRowAction>Alice</TableRowAction>
+            </TableCell>
+          </TableRow>
+        </TableBody>
+      </TableContainer>
+    );
+  }
+
+  it('runs onClick in place of following the link on a plain click', async () => {
+    const user = userEvent.setup();
+    const onOpen = vi.fn((event: React.MouseEvent) => event.defaultPrevented);
+    render(<LinkedRow onOpen={onOpen} />);
+
+    await user.click(screen.getByRole('link', { name: 'Alice' }));
+    expect(onOpen).toHaveReturnedWith(true);
+  });
+
+  it('leaves a modified click to the browser, so it opens a new tab', async () => {
+    const user = userEvent.setup();
+    const onOpen = vi.fn();
+    render(<LinkedRow onOpen={onOpen} />);
+    const link = screen.getByRole('link', { name: 'Alice' });
+    let prevented: boolean | undefined;
+    link.addEventListener('click', (event) => {
+      queueMicrotask(() => (prevented = event.defaultPrevented));
+    });
+
+    await user.keyboard('{Meta>}');
+    await user.click(link);
+    await user.keyboard('{/Meta}');
+    expect(onOpen).not.toHaveBeenCalled();
+    expect(prevented).toBe(false);
+  });
+
+  it('opens on Enter', async () => {
+    const user = userEvent.setup();
+    const onOpen = vi.fn();
+    render(<LinkedRow onOpen={onOpen} />);
+
+    act(() => screen.getByRole('link', { name: 'Alice' }).focus());
+    await user.keyboard('{Enter}');
+    expect(onOpen).toHaveBeenCalledOnce();
+  });
+});
+
+describe('TableRowAction', () => {
+  function ActionTable({
+    href,
+    onOpen = () => {},
+  }: {
+    href?: (name: string) => string;
+    onOpen?: (name: string) => void;
+  }) {
+    return (
+      <>
+        <button>Before</button>
+        <TableContainer>
+          <TableBody>
+            {NAMES.map((name) => (
+              <TableRow
+                key={name}
+                clickable
+                href={href?.(name)}
+                onClick={() => onOpen(name)}
+                data-testid={name}
+              >
+                <TableCell>
+                  <TableRowAction>{name}</TableRowAction>
+                </TableCell>
+                <TableCell>
+                  <button>{`Copy ${name}`}</button>
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </TableContainer>
+      </>
+    );
+  }
+
+  it("is the row's link when the row has an href, named by its own text", () => {
+    render(<ActionTable href={(name) => `/people/${name}`} />);
+
+    const link = screen.getByRole('link', { name: 'Alice' });
+    expect(link.getAttribute('href')).toBe('/people/Alice');
+    expect(screen.getAllByRole('link')).toHaveLength(3);
+  });
+
+  it('is a button when the row has only onClick, and opens the row on Enter and Space', async () => {
+    const user = userEvent.setup();
+    const onOpen = vi.fn();
+    render(<ActionTable onOpen={onOpen} />);
+
+    act(() => screen.getByRole('button', { name: 'Alice' }).focus());
+    await user.keyboard('{Enter}');
+    await user.keyboard(' ');
+    expect(onOpen).toHaveBeenCalledTimes(2);
+    expect(onOpen).toHaveBeenNthCalledWith(1, 'Alice');
+  });
+
+  it("takes the row's tab stop and moves between rows with the arrow keys", async () => {
+    const user = userEvent.setup();
+    render(<ActionTable href={(name) => `/people/${name}`} />);
+
+    expect(screen.getByTestId('Alice').hasAttribute('tabindex')).toBe(false);
+    expect(screen.getByRole('link', { name: 'Alice' }).getAttribute('tabindex')).toBe('0');
+    expect(screen.getByRole('link', { name: 'Bob' }).getAttribute('tabindex')).toBe('-1');
+
+    screen.getByText('Before').focus();
+    await user.tab();
+    expect(document.activeElement).toBe(screen.getByRole('link', { name: 'Alice' }));
+    await user.keyboard('{ArrowDown}');
+    expect(document.activeElement).toBe(screen.getByRole('link', { name: 'Bob' }));
+    await user.keyboard('{End}');
+    expect(document.activeElement).toBe(screen.getByRole('link', { name: 'Charlie' }));
+  });
+
+  it('styles the row as clickable without the clickable prop', () => {
+    render(
+      <TableContainer>
+        <TableBody>
+          <TableRow onClick={() => {}} data-testid="row">
+            <TableCell>
+              <TableRowAction>Alice</TableRowAction>
+            </TableCell>
+          </TableRow>
+        </TableBody>
+      </TableContainer>
+    );
+
+    expect(screen.getByTestId('row').className).toMatch(/table-row--clickable/);
+  });
+
+  it('opens the row when clicked', async () => {
+    const user = userEvent.setup();
+    const onOpen = vi.fn();
+    render(<ActionTable onOpen={onOpen} />);
+
+    await user.click(screen.getByRole('button', { name: 'Bob' }));
+    await user.click(screen.getByRole('button', { name: 'Copy Bob' }));
+    expect(onOpen).toHaveBeenCalledExactlyOnceWith('Bob');
+  });
+});
+
+describe('a TableRow with an href and no TableRowAction', () => {
+  it('puts only one row link in the tab order', () => {
+    render(
+      <TableContainer>
+        <TableBody>
+          {NAMES.map((name) => (
+            <TableRow key={name} href={`/people/${name}`} hrefLabel={`Open ${name}`}>
+              <TableCell>{name}</TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      </TableContainer>
+    );
+
+    expect(screen.getByRole('link', { name: 'Open Alice' }).getAttribute('tabindex')).toBe('0');
+    expect(screen.getByRole('link', { name: 'Open Bob' }).getAttribute('tabindex')).toBe('-1');
+  });
+});
+
+describe('a TableRow with a selection checkbox', () => {
+  it('stays reachable from the keyboard when it opens on click', async () => {
+    const user = userEvent.setup();
+    const onOpen = vi.fn();
+    render(
+      <TableContainer>
+        <TableBody>
+          {NAMES.map((name) => (
+            <TableRow key={name} clickable onClick={() => onOpen(name)} data-testid={name}>
+              <TableCell>
+                <Checkbox aria-label={`Select ${name}`} />
+              </TableCell>
+              <TableCell>{name}</TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      </TableContainer>
+    );
+
+    expect(screen.getByTestId('Alice').getAttribute('tabindex')).toBe('0');
+    act(() => screen.getByTestId('Alice').focus());
+    await user.keyboard('{Enter}');
+    expect(onOpen).toHaveBeenCalledExactlyOnceWith('Alice');
+
+    await user.click(screen.getByRole('checkbox', { name: 'Select Bob' }));
+    expect(onOpen).toHaveBeenCalledOnce();
   });
 });

@@ -6,14 +6,32 @@ Notable changes to Equality are recorded here, following [Keep a Changelog](http
 
 ### Added
 
-- A `TableRow` with `clickable` and `onClick` works from the keyboard. Tab reaches the rows as one
-  stop, Enter does what a click does, and Up, Down, Home and End move between rows. Buttons, links
-  and menus in the row keep their own keys. A focused row draws the focus ring.
+- `TableRowAction` makes the text that names a row, such as a name, into the row's link when the
+  row has an `href`, or its button when it has only `onClick`. It covers the whole row, so a click
+  anywhere opens it, and screen readers announce it in place, as "Alice Cooper, link", with no
+  label of its own. A row with one takes hover and pointer styles without `clickable`, and draws
+  no hidden link, so `hrefLabel` isn't used.
+- Clickable rows work from the keyboard. Tab reaches each `TableBody`'s rows as one stop, Enter
+  opens the row, and Up, Down, Home and End move between rows. The stop is the row's
+  `TableRowAction` or link, or, for a `clickable` row with only `onClick`, the row itself, which
+  draws the focus ring.
+
+### Changed
+
+- A `TableRow` with both `href` and `onClick` runs `onClick` on a plain click instead of following
+  the link, so a router can open the row without reloading the page. A click with Cmd, Ctrl, Shift
+  or Alt goes to the browser, to open the URL in a new tab or window, and doesn't run `onClick`.
+  If your `onClick` already called `preventDefault()` for this, it can stop.
+- A `TableRow` with `href` and no `TableRowAction` is one tab stop per `TableBody`, as above,
+  where each row's link used to be its own stop.
+- `data-state="selected"` highlights any `TableRow` in a `TableBody`, not only a `clickable` one,
+  so a row selected with its checkbox shows as selected.
 
 ### Fixed
 
-- Clicking an item in a menu opened from inside a clickable `TableRow` no longer also triggers the
-  row's `onClick`.
+- Clicking a checkbox, select, text field, label, switch or menu item inside a clickable
+  `TableRow`, including an item in a menu opened from the row, no longer also runs the row's
+  `onClick`.
 
 ## 6.1.0 - 2026-11-20
 

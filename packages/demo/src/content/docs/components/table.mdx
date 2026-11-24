@@ -15,6 +15,7 @@ Rows use CSS Grid with [subgrid](https://developer.mozilla.org/en-US/docs/Web/CS
 - **TableContainer:** Wraps the `<table>` in a scrollable container with elevation styling. Accepts a `columns` prop for CSS Grid column sizing.
 - **TableHeader / TableBody / TableFooter:** Semantic section wrappers (`<thead>`, `<tbody>`, `<tfoot>`).
 - **TableRow:** A table row (`<tr>`) that inherits column tracks via subgrid.
+- **TableRowAction:** Text that names a clickable row, such as a name, made into the row's link or button.
 - **TableHead:** A column header cell (`<th>`).
 - **TableCell:** A data cell (`<td>`).
 
@@ -62,22 +63,20 @@ Basic usage:
 
 ### Clickable Rows
 
-Rows can be made interactive in two ways:
+A row can open something, such as a page or a sheet. Wrap the text that names the row in `<TableRowAction>`, inside its cell. It becomes the row's link when the row has an `href`, or a button when it only has `onClick`, and it covers the whole row, so a click anywhere on the row opens it. Screen readers announce it where it sits, as "Alice Cooper, link", so it needs no label of its own.
 
-- **`clickable` with `onClick`** — Runs your handler when the row is clicked, such as toggling selection or calling your router's `navigate` to open the row without reloading the page.
-- **`href`** — Renders a full-row link to a URL. Add an `hrefLabel` to tell screen reader users where the link goes. It's a plain `<a href>`, so a router won't handle it and the page reloads.
+- **`href`** — The URL the row opens. Pass the URL the browser should open, including any basename your router adds. In React Router, `useHref` gives it.
+- **`onClick`** — Runs when the row is opened. With `href`, a plain click runs `onClick` instead of following the link, so your router's `navigate` opens the row without reloading the page. <kbd>Cmd</kbd>/<kbd>Ctrl</kbd>, <kbd>Shift</kbd> and middle clicks still open the URL in a new tab or window.
 
-Both enable hover styles. Use `data-state="selected"` to mark a row as selected.
+Clickable rows work from the keyboard:
 
-A `clickable` row with `onClick` also works from the keyboard:
-
-- <kbd>Tab</kbd> reaches the table's rows as a single stop, starting on the
-  first row and returning to the row you left.
-- <kbd>Enter</kbd> does what a click does.
+- <kbd>Tab</kbd> reaches each table body's rows as a single stop, starting on
+  the first row and returning to the row you left.
+- <kbd>Enter</kbd> opens the row.
 - <kbd>Up</kbd> and <kbd>Down</kbd> arrows move to the previous and next row,
   and <kbd>Home</kbd> and <kbd>End</kbd> to the first and last.
 
-Buttons, links and menus in the row keep their own keys, and clicking them doesn't trigger the row.
+Buttons, links, menus and form controls in the row keep their own keys, and clicking them doesn't open the row.
 
 Put a row's actions in buttons that show a hover of their own: a button takes its own clicks, and the row stays highlighted while the pointer is over it. Don't put links inside a clickable row, because two places to click make it unclear where a click will go. Make the row itself the link with `href` instead.
 
@@ -92,16 +91,58 @@ const navigate = useNavigate();
   {agents.map((agent) => (
     <TableRow
       key={agent.id}
-      clickable
-      onClick={() => navigate(`/agents/${agent.id}`)}
+      href={agentHref(agent)}
+      onClick={() => navigate(agentPath(agent))}
     >
-      <TableCell>{agent.name}</TableCell>
       <TableCell>
-        <AgentActionsMenu agent={agent} />
+        <TableRowAction>{agent.name}</TableRowAction>
+      </TableCell>
+      <TableCell>
+        <DropdownMenu>{/* row actions */}</DropdownMenu>
       </TableCell>
     </TableRow>
   ))}
 </TableBody>;
+```
+
+#### Accessibility
+
+Always wrap the row's name in `TableRowAction`, so screen readers announce that the row can be opened. You don't need to set `hrefLabel`.
+
+```tsx
+<TableRow href="/agents/alice">
+  <TableCell>
+    <TableRowAction>Alice Cooper</TableRowAction>
+  </TableCell>
+</TableRow>
+```
+
+### Selectable Rows
+
+To let users select rows, add a [`Checkbox`](/components/checkbox) in each row's first cell, labelled by the cell that names the row. Screen readers announce the checkbox's state each time it changes. Select rows with the checkbox only, not by clicking the row, so the row's `onClick` stays free to open it if needed. Set `data-state="selected"` on a selected row to highlight it.
+
+<TableDemo client:only="react" variant="selectable" />
+
+#### Usage
+
+```tsx
+<TableBody>
+  {users.map((user) => (
+    <TableRow
+      key={user.id}
+      data-state={isSelected(user) ? "selected" : undefined}
+    >
+      <TableCell>
+        <Checkbox
+          aria-labelledby={`name-${user.id}`}
+          checked={isSelected(user)}
+          onCheckedChange={() => toggle(user)}
+        />
+      </TableCell>
+      <TableCell id={`name-${user.id}`}>{user.name}</TableCell>
+    </TableRow>
+  ))}
+</TableBody>
 ```
 
 ### Sortable Columns
@@ -352,8 +393,14 @@ Use [container queries](https://tailwindcss.com/docs/responsive-design#what-are-
 
 ### TableRow
 
-| Name        | Description                                                                                              | Type      | Default          | Required |
-| ----------- | -------------------------------------------------------------------------------------------------------- | --------- | ---------------- | -------- |
-| `clickable` | Applies hover and pointer styles. With `onClick`, makes the row reachable and openable from the keyboard | `boolean` | `false`          | ❌       |
-| `href`      | URL the row links to, rendered as a full-row link                                                        | `string`  | —                | ❌       |
-| `hrefLabel` | Accessible name for the row's link, announced by screen readers                                          | `string`  | `"View details"` | ❌       |
+| Name        | Description                                                                                                                                                                                           | Type      | Default          | Required |
+| ----------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------- | ---------------- | -------- |
+| `clickable` | Applies hover and pointer styles to a row with only `onClick` and no `TableRowAction`, and makes it reachable and openable from the keyboard. A row with `href` or a `TableRowAction` doesn't need it | `boolean` | `false`          | ❌       |
+| `href`      | URL the row opens. With `onClick`, a plain click runs `onClick` instead, and a modified click opens the URL in a new tab or window                                                                    | `string`  | —                | ❌       |
+| `hrefLabel` | Accessible name for the row's link when the row has no `TableRowAction`                                                                                                                               | `string`  | `"View details"` | ❌       |
+
+### TableRowAction
+
+| Name       | Description                                               | Type        | Default | Required |
+| ---------- | --------------------------------------------------------- | ----------- | ------- | -------- |
+| `children` | Text that names the row, which becomes its link or button | `ReactNode` | —       | ✅       |
