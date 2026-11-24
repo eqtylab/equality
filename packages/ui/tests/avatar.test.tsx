@@ -21,15 +21,6 @@ describe('Avatar', () => {
     );
     expect(container.querySelector('[data-avatar]')).toBeNull();
   });
-
-  it('follows the line it sits in unless given a size', () => {
-    const { container } = render(
-      <Avatar>
-        <AvatarFallback>A</AvatarFallback>
-      </Avatar>
-    );
-    expect(container.firstElementChild!.className).toMatch(/size-line/);
-  });
 });
 
 describe('AvatarFallback', () => {

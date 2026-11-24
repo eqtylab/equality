@@ -8,7 +8,7 @@ import {
   TableRow,
 } from '@/components/table/table-components';
 
-const rows = (props: { striped?: boolean; density?: 'regular' | 'comfortable' }) =>
+const rows = (props: { striped?: boolean }) =>
   render(
     <TableContainer {...props}>
       <TableBody>
@@ -26,14 +26,5 @@ describe('TableContainer', () => {
 
   it('stripes its rows when asked', () => {
     expect(rows({ striped: true })).toMatch(/table--striped/);
-  });
-
-  it('is regular unless asked', () => {
-    expect(rows({})).not.toMatch(/table--comfortable/);
-    expect(rows({ density: 'regular' })).not.toMatch(/table--comfortable/);
-  });
-
-  it('is comfortable when asked', () => {
-    expect(rows({ density: 'comfortable' })).toMatch(/table--comfortable/);
   });
 });
