@@ -23,4 +23,8 @@ describe('command.module.css', () => {
     expect(body).toMatch(/text-overflow:\s*ellipsis;/);
     expect(body).toMatch(/@media \(width >= 48rem\)\s*\{\s*font-size:\s*0\.875rem;/);
   });
+
+  it('keeps the item icon rule in the dialog, so 6.2.0 moves nothing there', () => {
+    expect(ruleBody(css, '.command-dialog-content-inner')).toMatch(/\[cmdk-item\] svg/);
+  });
 });

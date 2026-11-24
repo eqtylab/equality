@@ -435,12 +435,12 @@ function Rows({ nodes, top = false }) {
 
 ### Under a Sticky Header
 
-The rail and panel pin to the top of the viewport as the page scrolls. Under a sticky header, set `--eq-nav-offset` to the header's height, a length such as `64px`, on the element that wraps the rail and panel, and they pin below it instead. Don't set it on `:root`: a [Sheet](/components/sheet) holding the sidebar on a phone would inherit it and push the list down.
+The rail and panel pin to the top of the viewport as the page scrolls. For the header to meet the rail at a square corner, make it as tall as the rail is wide, with its bottom line drawn inside that height. The rail widens on touch screens, so an app used mostly on touch should grow its header there too. Under a sticky header, set `--eq-nav-offset` to the header's height on the element that wraps the rail and panel, and they pin below it instead. In the example, `--app-header-height` stands for your app's own header height; Equality doesn't define it. Don't set `--eq-nav-offset` on `:root`: a [Sheet](/components/sheet) holding the sidebar on a phone would inherit it and push the list down.
 
 ```tsx
 <>
-  <header style={{ position: "sticky", top: 0, height: 64 }}>…</header>
-  <div style={{ display: "flex", "--eq-nav-offset": "64px" }}>
+  <header style={{ position: "sticky", top: 0, height: "var(--app-header-height)" }}>…</header>
+  <div style={{ display: "flex", "--eq-nav-offset": "var(--app-header-height)" }}>
     <NavRail aria-label="Main">…</NavRail>
     <NavPanel aria-label={`Project: ${project.name}`} header={<NavSwitcher … />}>
       …

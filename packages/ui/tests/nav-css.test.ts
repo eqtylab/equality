@@ -43,4 +43,52 @@ describe('nav.module.css', () => {
       /padding-top:/
     );
   });
+
+  it('sizes the rail as its item plus 8 each side, on touch too', () => {
+    expect(ruleBody(css, '.nav-rail')).toMatch(
+      /width:\s*calc\(max\(var\(--eq-control-md-height\), var\(--eq-touch-target\)\) \+ calc\(0\.25rem \* 4\)\);/
+    );
+  });
+
+  it('draws the rail and panel lines inside their width, so neither grows by a pixel', () => {
+    const shared = ruleBody(css, '.nav-rail,\n.nav-panel');
+    expect(shared).not.toMatch(/border-right-width/);
+    expect(shared).toMatch(/position:\s*relative;/);
+    expect(shared).toMatch(/isolation:\s*isolate;/);
+    const line = ruleBody(css, '.nav-rail::after,\n.nav-panel::after');
+    expect(line).toMatch(/border-right:\s*1px solid var\(--color-border-raised\);/);
+    expect(line).not.toMatch(/background-color/);
+    expect(line).toMatch(/inset:\s*0 0 0 auto;/);
+  });
+
+  it('starts the rail and the panel 8 below their top, so their first items line up', () => {
+    expect(ruleBody(css, '.nav-rail .nav-scroller')).toMatch(
+      /padding-block:\s*calc\(0\.25rem \* 2\);/
+    );
+    expect(ruleBody(css, '.nav-panel .nav-scroller')).toMatch(
+      /padding-top:\s*calc\(0\.25rem \* 2\);/
+    );
+    expect(ruleBody(css, '.nav-panel-header:has(> .nav-switcher-heading)')).toMatch(
+      /padding-top:\s*calc\(0\.25rem \* 2\);/
+    );
+    expect(ruleBody(css, '.nav-panel-header')).toMatch(
+      /padding-top:\s*calc\(calc\(0\.25rem \* 2\) \+ var\(--nav-title-padding\)\);/
+    );
+  });
+
+  it('draws rail icons at the default control icon size', () => {
+    expect(ruleBody(css, '.nav-rail-item svg')).toMatch(
+      /width:\s*var\(--eq-control-md-icon-size\);/
+    );
+  });
+
+  it('draws the switcher outline inside it, so its name sits 8 in', () => {
+    expect(ruleBody(css, '.nav-switcher-heading .nav-switcher')).toMatch(/border-width:\s*0px;/);
+    expect(
+      ruleBody(css, ".nav-switcher-heading .nav-switcher[data-state='open']:not(:disabled)")
+    ).toMatch(/--tw-inset-ring-shadow:\s*inset 0 0 0 1px/);
+    expect(
+      ruleBody(css, ".nav-switcher-heading .nav-switcher[data-state='open']:not(:disabled)")
+    ).toMatch(/@media \(forced-colors: active\)\s*\{\s*outline-style:/);
+  });
 });

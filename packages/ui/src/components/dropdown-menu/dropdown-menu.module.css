@@ -15,7 +15,7 @@
 .dropdown-menu-item {
   @apply px-(--eq-control-padding-x-condensed) control-row-padding min-h-(--eq-control-md-height);
   @apply gap-(--eq-control-md-gap);
-  @apply [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0;
+  @apply [&_svg]:size-(--eq-control-md-icon-size) [&_svg]:pointer-events-none [&_svg]:shrink-0;
 }
 
 .dropdown-menu-checkbox-item,

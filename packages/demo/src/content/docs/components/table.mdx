@@ -287,6 +287,17 @@ Use [container queries](https://tailwindcss.com/docs/responsive-design#what-are-
 </div>
 ```
 
+## Inside a row
+
+A row is one line of text plus padding. These parts keep the row at its height:
+
+- A badge: the default `Badge`.
+- A switch: `Switch` with `size="sm"`.
+- An icon button: `IconButton` at its default size, which overhangs the row's padding (see [Content-Sized Columns](#content-sized-columns)).
+- An avatar: `Avatar` at its default size.
+
+<TableDemo client:only="react" variant="with-actions" />
+
 ## Elevations
 
 ### Sunken

@@ -4,6 +4,7 @@ import {
   EmptyTableState,
   IconButton,
   SortButton,
+  Switch,
   TableBody,
   TableCell,
   TableContainer,
@@ -26,7 +27,8 @@ interface TableDemoProps {
     | "responsive"
     | "sticky-header"
     | "sticky-header-page"
-    | "sticky-header-page-offset";
+    | "sticky-header-page-offset"
+    | "with-actions";
   elevation?: Elevation;
 }
 
@@ -93,6 +95,46 @@ export const TableDemo = ({
               <IconButton name="EllipsisVertical" label="Row actions" />
             </TableCell>
           </TableRow>
+        </TableBody>
+      </TableContainer>
+    );
+  }
+
+  if (variant === "with-actions") {
+    return (
+      <TableContainer elevation={elevation} columns="1fr auto auto auto">
+        <TableHeader>
+          <TableRow>
+            <TableHead>Name</TableHead>
+            <TableHead>Status</TableHead>
+            <TableHead>Alerts</TableHead>
+            <TableHead />
+          </TableRow>
+        </TableHeader>
+        <TableBody>
+          {longTableData.slice(0, 3).map((user) => (
+            <TableRow key={user.email}>
+              <TableCell>{user.name}</TableCell>
+              <TableCell>
+                <Badge variant={user.active ? "success" : "neutral"}>
+                  {user.active ? "Active" : "Inactive"}
+                </Badge>
+              </TableCell>
+              <TableCell>
+                <Switch
+                  size="sm"
+                  defaultChecked={user.active}
+                  aria-label={`Alerts for ${user.name}`}
+                />
+              </TableCell>
+              <TableCell>
+                <IconButton
+                  name="EllipsisVertical"
+                  label={`Actions for ${user.name}`}
+                />
+              </TableCell>
+            </TableRow>
+          ))}
         </TableBody>
       </TableContainer>
     );

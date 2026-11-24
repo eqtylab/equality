@@ -26,7 +26,7 @@
 }
 
 .select-icon {
-  @apply size-4;
+  @apply size-(--eq-control-md-icon-size);
 }
 
 .select-trigger--inline .select-icon {

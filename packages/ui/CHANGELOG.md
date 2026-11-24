@@ -2,6 +2,31 @@
 
 Notable changes to Equality are recorded here, following [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## 6.2.0 - 2026-11-24
+
+### Changed
+
+- Small, default and large controls each name the size of the icon beside their text. Icons stay
+  the size they were.
+- `NavRail` is 52 wide, from 72: a default control with 8 on each side. Its icons are 16, from 20, the
+  same as the icon in any default control. On a touch screen its items grow to the 44 touch target,
+  so the rail is 60.
+- `NavRail` and `NavPanel` draw their edge line inside their width, so the rail is exactly 52 and
+  the panel exactly its width.
+- `NavRail` and `NavPanel` start their first item 8 from the top, from 16, so the switcher lines up
+  with the rail's first item under a 52 header.
+- `NavSwitcher` has no border, so its name sits 8 in from its edge. Open, it draws its outline inside.
+
+To keep an app header lined up with the rail, make it 52 (its 36 controls with 8 above and below,
+its bottom line drawn inside) and set `--eq-nav-offset` to `52px`. A header you size by hand at
+another height still works; it just no longer meets the rail at a square corner. An app used mostly
+on touch screens should make its header 60 there, to match the touch rail.
+
+### Fixed
+
+- A small `Switch` in a table row or a line of text keeps the row at its height. It sat on the text
+  baseline, which made the row 3 taller.
+
 ## 6.1.0 - 2026-11-20
 
 ### Changed
