@@ -12,6 +12,19 @@
 
 /* Size Variants */
 
+/* The root sets no text size: 1lh measures the line height it inherits, so text styles live on .badge-label */
+.badge--line {
+  height: 20px;
+  height: 1lh;
+  min-width: 20px;
+  min-width: 1lh;
+  @apply gap-1 px-2;
+}
+
+.badge-label {
+  @apply text-xs;
+}
+
 .badge--md {
   @apply px-2 py-0.5 text-xs;
   @apply min-h-5 min-w-5 gap-1;

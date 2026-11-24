@@ -26,13 +26,14 @@ const badgeVariants = cva(styles['badge'], {
       success: styles['badge--success'],
     },
     size: {
+      line: styles['badge--line'],
       sm: styles['badge--sm'],
       md: styles['badge--md'],
     },
   },
   defaultVariants: {
     variant: 'primary',
-    size: 'md',
+    size: 'line',
   },
 });
 
@@ -126,7 +127,8 @@ function Badge({
   // Validate icon-only mode requires an icon
   // If icon-only is set without an icon, fallback to showing both
   const effectiveDisplay = display === 'icon-only' && !effectiveIcon ? 'both' : display;
-  const shouldShowChildren = effectiveDisplay !== 'icon-only';
+  const shouldShowChildren =
+    effectiveDisplay !== 'icon-only' && React.Children.count(props.children) > 0;
   const isIconOnly = effectiveDisplay === 'icon-only' && effectiveIcon;
 
   return (
@@ -134,7 +136,7 @@ function Badge({
       className={cn(
         variant !== null && badgeVariants({ variant, size }),
         variant === null && styles['badge'],
-        variant === null && styles[`badge--${size ?? 'md'}`],
+        variant === null && styles[`badge--${size ?? 'line'}`],
         monospace && styles['badge--monospace'],
         !pill && styles['badge--square'],
         isIconOnly && styles['badge--icon-only'],
@@ -143,7 +145,7 @@ function Badge({
       {...props}
     >
       {renderIcon()}
-      {shouldShowChildren && renderChildren()}
+      {shouldShowChildren && <span className={styles['badge-label']}>{renderChildren()}</span>}
       {renderClosable()}
     </span>
   );
