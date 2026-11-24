@@ -14,6 +14,7 @@
 
 /* A text size on the root makes 1lh measure the badge, not the line it sits in; set it on .badge-label */
 .badge--line {
+  @apply inline-flex align-top;
   min-height: 20px;
   min-height: 1lh;
   min-width: 20px;

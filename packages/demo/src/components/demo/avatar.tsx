@@ -55,7 +55,7 @@ export const AvatarSizesDemo = ({
 }) => {
   const sizes = ["line", "xs", "sm", "md", "lg"] as const;
   return (
-    <div className="mb-4 flex items-end gap-4">
+    <div className="mb-4 flex items-end gap-4 text-sm">
       {sizes.map((s) => (
         <Avatar key={s} size={s} shape={shape}>
           <AvatarImage
