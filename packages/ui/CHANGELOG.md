@@ -17,19 +17,22 @@ Notable changes to Equality are recorded here, following [Keep a Changelog](http
   | `lg` (36; 32 before 6.1.0) | `md`                                        |
   | `xl` (44; 40 before 6.1.0) | `lg` (`xl` is now a type error)             |
 
-  Only `xl` fails the build. An `sm`, `md` or `lg` you leave as it is still compiles but draws at
-  its new size, so check each one against the table.
+  Of the avatar sizes, only `xl` fails the build. An `sm`, `md` or `lg` you leave as it is still
+  compiles but draws at its new size, so check each one against the table.
+
+- The `control-row-overhang` utility is gone, so an app that applies it fails to build. Rows now
+  hold an avatar or icon button without it: remove it.
 
 ### Added
 
 - `TableContainer` takes `density`. `regular`, the default, keeps rows and the header at 36;
   `comfortable` makes them 44, for tables people read slowly or use mostly by touch.
 - `TableContainer` takes `striped`, which fills every other row, for wide, number-heavy tables.
-- `Badge` has a new default size, `line`: as tall as the line it sits in. In a row it is 20, as
-  before; beside larger or smaller text it follows that text. `md` (20) and `sm` (16) stay fixed.
 
 ### Changed
 
+- A `Badge` with no `size` is now as tall as the line it sits in. In a row it is 20, as before;
+  beside small text it is 16 and beside large text 24. Pass `size="md"` to keep it at 20 everywhere.
 - Table, `DropdownMenu`, `Select` and `Command` rows hold an avatar, badge, small switch or default
   `IconButton` and stay 36. A part taller than that, or text that wraps, makes its row taller, by
   less than before: rows keep 4 above and below their content, from 8, so a two-line row is 48, from 56.
@@ -43,6 +46,7 @@ Notable changes to Equality are recorded here, following [Keep a Changelog](http
 
 ### Removed
 
+- The `control-row-overhang` utility.
 - The `data-avatar` attribute on `Avatar` and `data-icon-button` on `IconButton`. Nothing in
   Equality reads them; style an avatar or icon button by its `className` instead.
 

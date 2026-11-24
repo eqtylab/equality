@@ -9,7 +9,6 @@ const HAND_WRITTEN_HEIGHT =
 
 const EXCEPTIONS: Record<string, string> = {
   'avatar/avatar.module.css': 'A picture, not a control',
-  'badge/badge.module.css': 'Follows its line of text, falling back to 20 where lh is unsupported',
   'bar-graph/bar-graph.module.css': 'A graph, not a control',
   'date-range-picker/date-range-picker.module.css': 'A grid of days, not a row of controls',
   'icon/icon.module.css': 'A picture, not a control',
@@ -19,6 +18,17 @@ const EXCEPTIONS: Record<string, string> = {
   'spinner/spinner.module.css': 'A picture, not a control',
   'switch/switch.module.css': 'Its own shape, not a text control',
 };
+
+const HEIGHT_EXCEPTIONS: Record<string, string> = {
+  'badge/badge.module.css min-height: 20px':
+    'The line badge follows its line of text, falling back to 20 where lh is unsupported',
+};
+
+const allowed = (hit: string) =>
+  Object.keys(HEIGHT_EXCEPTIONS).some((key) => {
+    const [file, ...height] = key.split(' ');
+    return hit.startsWith(`${file}:`) && hit.endsWith(` ${height.join(' ')}`);
+  });
 
 let found: Map<string, string[]>;
 
@@ -42,6 +52,7 @@ describe('control heights', () => {
     const offenders = [...found]
       .filter(([file]) => !(file in EXCEPTIONS))
       .flatMap(([, hits]) => hits)
+      .filter((hit) => !allowed(hit))
       .sort();
     expect(offenders).toEqual([]);
   });
@@ -49,5 +60,13 @@ describe('control heights', () => {
   it('lists no exception that no longer writes a height by hand', () => {
     const stale = Object.keys(EXCEPTIONS).filter((file) => !found.has(file));
     expect(stale).toEqual([]);
+    const hits = [...found.values()].flat();
+    const staleHeights = Object.keys(HEIGHT_EXCEPTIONS).filter((key) => {
+      const [file, ...height] = key.split(' ');
+      return !hits.some(
+        (hit) => hit.startsWith(`${file}:`) && hit.endsWith(` ${height.join(' ')}`)
+      );
+    });
+    expect(staleHeights).toEqual([]);
   });
 });
