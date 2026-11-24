@@ -172,8 +172,9 @@ Never write `h-10`.
 
 Text takes one of four styles: `text-title` for a page title, `text-section` for
 a card or section title, `text-body` for running text and `text-caption` for
-small supporting text. Each one's line is as tall as a control of the same step,
-so a title lines up with the buttons beside it. Never pair a size with a
+small supporting text. Title and section lines are as tall as a default and a small
+button, and body and caption match the text inside them, so a title lines up
+with the buttons beside it. Never pair a size with a
 hand-written line height, such as `text-2xl leading-(--eq-control-md-height)`.
 
 **Accessibility is mostly free — don't undo it.** Radix gives you focus

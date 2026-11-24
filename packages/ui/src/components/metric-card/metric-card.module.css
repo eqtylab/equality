@@ -22,7 +22,7 @@
   @apply size-(--eq-control-md-height) p-0;
 }
 
-.icon.icon.icon svg {
+.icon.icon.icon > * {
   @apply size-(--eq-control-md-icon-size);
 }
 

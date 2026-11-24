@@ -6,7 +6,7 @@ export function TypographyDemo({ example }: { example: TypographyExample }) {
   if (example === "title") {
     return (
       <div className="flex items-center justify-between gap-4">
-        <h1 className="text-title">Projects</h1>
+        <p className="text-title">Projects</p>
         <Button>New Project</Button>
       </div>
     );
@@ -17,7 +17,7 @@ export function TypographyDemo({ example }: { example: TypographyExample }) {
       <Card>
         <CardContent>
           <div className="flex items-center justify-between gap-4">
-            <h2 className="text-section">Recent Activity</h2>
+            <p className="text-section">Recent Activity</p>
             <Button variant="tertiary" size="sm">
               See All
             </Button>
@@ -44,7 +44,7 @@ export function TypographyDemo({ example }: { example: TypographyExample }) {
 
   return (
     <div className="flex items-center gap-2">
-      <h1 className="text-title">Model Registry</h1>
+      <p className="text-title">Model Registry</p>
       <Badge variant="neutral">Beta</Badge>
     </div>
   );

@@ -13,7 +13,7 @@
   @apply size-(--eq-control-sm-height) p-0;
 }
 
-.mark.mark.mark svg {
+.mark.mark.mark > * {
   @apply size-(--eq-control-md-icon-size);
 }
 

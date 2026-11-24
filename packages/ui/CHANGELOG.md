@@ -8,8 +8,8 @@ Notable changes to Equality are recorded here, following [Keep a Changelog](http
 
 - Four text styles for hierarchy: `text-title` for the page title, `text-section` for a card or
   section title, `text-body` for running text and descriptions, and `text-caption` for small
-  supporting text. Each style's line is as tall as a control of the same step, so a page title
-  lines up with a default button and a card title with a small one. See the Typography page.
+  supporting text. Title and section lines are as tall as a default and a small button, and body and caption match
+  the text inside them, so a page title lines up with a default button and a card title with a small one. See the Typography page.
 
 ### Changed
 
