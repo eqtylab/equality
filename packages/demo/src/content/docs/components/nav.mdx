@@ -435,7 +435,7 @@ function Rows({ nodes, top = false }) {
 
 ### Under a Sticky Header
 
-The rail and panel pin to the top of the viewport as the page scrolls. A header that holds default controls is 52: the controls with 8 above and below, and its bottom line drawn inside that height. At 52 its edges line up with the rail's. Under a sticky header, set `--eq-nav-offset` to the header's height, a length such as `52px`, on the element that wraps the rail and panel, and they pin below it instead. Don't set it on `:root`: a [Sheet](/components/sheet) holding the sidebar on a phone would inherit it and push the list down.
+The rail and panel pin to the top of the viewport as the page scrolls. A header that holds default controls is 52: the controls with 8 above and below, and its bottom line drawn inside that height. At 52 its edges line up with the rail's. On a touch screen the rail's items grow to the 44 touch target, so the rail is 60; an app used mostly on touch should make its header 60 there to match. Under a sticky header, set `--eq-nav-offset` to the header's height, a length such as `52px`, on the element that wraps the rail and panel, and they pin below it instead. Don't set it on `:root`: a [Sheet](/components/sheet) holding the sidebar on a phone would inherit it and push the list down.
 
 ```tsx
 <>
