@@ -297,10 +297,10 @@ largest gap, because it starts the biggest change of topic.
 | List items                                                        | 8px   |
 | Above the article footer, and from it to the site footer          | 64px  |
 | The previous/next links and the edit and report links, each side  | 32px  |
-| The site footer's padding                                         | 24px  |
+| The site footer's padding, above and below                        | 16px  |
 
-A one-line site footer is as tall as the header. That holds only while `--eq-docs-header-height`
-stays 4.3125rem; change the footer's padding with it.
+A one-line site footer is as tall as the header: it takes its minimum height from
+`--eq-docs-header-height`, so the two stay matched if the header changes.
 
 **The header gap stays under the h2 gap.** The header introduces the content rather than
 separating it, so the first heading must not read as a section break. The heading right after the

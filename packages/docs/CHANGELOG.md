@@ -2,6 +2,14 @@
 
 Notable changes to Equality's Docsite Generator are recorded here, following [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## 0.19.0 - 2026-11-24
+
+### Changed
+
+- The header is 52px tall (was 69px): its 36px controls with 8px above and below. Its bottom line is
+  drawn inside that height.
+- A one-line footer is 52px tall to match, with its top line drawn inside.
+
 ## 0.18.0 - 2026-11-20
 
 Needs `@eqtylab/equality` 6.0.0 or later.
