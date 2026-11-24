@@ -130,16 +130,19 @@ function Badge({
   const shouldShowChildren =
     effectiveDisplay !== 'icon-only' && React.Children.count(props.children) > 0;
   const isIconOnly = effectiveDisplay === 'icon-only' && effectiveIcon;
+  const isLineMarker = Boolean(isIconOnly) && (size == null || size === 'line');
+  const effectiveSize = isLineMarker ? 'md' : size;
 
   return (
     <span
       className={cn(
-        variant !== null && badgeVariants({ variant, size }),
+        variant !== null && badgeVariants({ variant, size: effectiveSize }),
         variant === null && styles['badge'],
-        variant === null && styles[`badge--${size ?? 'line'}`],
+        variant === null && styles[`badge--${effectiveSize ?? 'line'}`],
         monospace && styles['badge--monospace'],
         !pill && styles['badge--square'],
         isIconOnly && styles['badge--icon-only'],
+        isLineMarker && styles['badge--inline'],
         className
       )}
       {...props}

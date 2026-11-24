@@ -33,6 +33,7 @@ Notable changes to Equality are recorded here, following [Keep a Changelog](http
 
 - A `Badge` with no `size` is now as tall as the line it sits in, and sits inside a line of text
   instead of breaking it. In a row it is 20, as before. Pass `size="md"` to keep it at 20 everywhere.
+  An icon-only badge stays 20 wherever it sits, as before.
   Badges that stacked because each took its own line now sit side by side; wrap them in a flex
   column to keep them stacked.
   A badge's text now sits in an element of its own inside the badge, so a test or selector that
