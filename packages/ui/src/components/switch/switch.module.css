@@ -10,7 +10,7 @@
   @apply transition-colors;
   @apply duration-(--switch-transition-duration) ease-(--switch-transition-easing);
   @apply motion-reduce:transition-none;
-  @apply inline-flex shrink-0 items-center;
+  @apply inline-flex shrink-0 items-center align-top;
   @apply border-2 border-transparent;
   @apply focus-ring;
   @apply disabled:cursor-not-allowed disabled:opacity-50;

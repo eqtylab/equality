@@ -22,6 +22,11 @@ its bottom line drawn inside) and set `--eq-nav-offset` to `52px`. A header you 
 another height still works; it just no longer meets the rail at a square corner. An app used mostly
 on touch screens should make its header 60 there, to match the touch rail.
 
+### Fixed
+
+- A small `Switch` in a table row or a line of text keeps the row at its height. It sat on the text
+  baseline, which made the row 3 taller.
+
 ## 6.1.0 - 2026-11-20
 
 ### Changed
