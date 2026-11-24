@@ -45,6 +45,10 @@
   @apply size-(--eq-control-lg-height);
 }
 
+.avatar.size-xl {
+  @apply size-(--eq-shell-size);
+}
+
 .avatar.size-line .avatar-fallback {
   @apply text-[0.625rem] leading-none;
 }
@@ -63,6 +67,10 @@
 
 .avatar.size-lg .avatar-fallback {
   @apply text-base leading-none;
+}
+
+.avatar.size-xl .avatar-fallback {
+  @apply text-lg leading-none;
 }
 
 /* Shape Variants */
@@ -92,4 +100,9 @@
 .avatar.square.size-lg,
 .avatar.square.size-lg .avatar-fallback {
   @apply rounded-xl;
+}
+
+.avatar.square.size-xl,
+.avatar.square.size-xl .avatar-fallback {
+  @apply rounded-2xl;
 }

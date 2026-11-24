@@ -4,10 +4,10 @@ import * as AvatarPrimitive from '@radix-ui/react-avatar';
 import styles from '@/components/avatar/avatar.module.css';
 import { cn } from '@/lib/utils';
 
-type AvatarSize = 'line' | 'xs' | 'sm' | 'md' | 'lg';
+type AvatarSize = 'line' | 'xs' | 'sm' | 'md' | 'lg' | 'xl';
 
 interface AvatarProps extends React.ComponentPropsWithoutRef<typeof AvatarPrimitive.Root> {
-  /** How large the avatar is: `line` is as tall as the line of text it sits in, and `xs` to `lg` are as tall as the control of that size */
+  /** How large the avatar is: `line` is as tall as the line of text it sits in, and `xs` to `lg` are as tall as the control of that size, and `xl` is the largest, for a profile or page hero */
   size?: AvatarSize;
   /** Whether the avatar is round or a rounded square */
   shape?: 'circle' | 'square';
@@ -55,7 +55,7 @@ function firstGraphemes(children: React.ReactNode, count: number): React.ReactNo
   return graphemes.slice(0, count).join('');
 }
 
-const INITIALS: Record<AvatarSize, number> = { line: 1, xs: 1, sm: 1, md: 2, lg: 2 };
+const INITIALS: Record<AvatarSize, number> = { line: 1, xs: 1, sm: 1, md: 2, lg: 2, xl: 2 };
 
 const AvatarFallback = React.forwardRef<
   React.ElementRef<typeof AvatarPrimitive.Fallback>,

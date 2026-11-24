@@ -85,7 +85,7 @@ If you have no network access or web fetching fails, tell your user that you cou
   - Avoid using badge `size="sm"` except for specific scenarios where space is at a premium like within tables. Most badges should be the default `size="md"`
 - Icons should be used sparingly. Ensure consistency when using them, try not to conflate multiple concepts with the same icon
 - Nav: decide between drill in, expand and `NavSwitcher` with "Which One to Use" on the Nav docs page, and follow its "Best Practices". Statuses go in a row's `suffix`, never its `prefix`. Under a sticky header, set `--eq-nav-offset` to the header's height on the element around the rail and panel; never override the nav's own `top` or `max-height`.
-- Avatar: no `size` in a list or row with one line per person, even inside a card. `md` for a person on their own: card or page header, an "Assigned to" field, a name with a line under it. `lg` in profile headers. `xs` only beside an extra-small control.
+- Avatar: no `size` in a list or row with one line per person, even inside a card. `md` for a person on their own: card or page header, an "Assigned to" field, a name with a line under it. `lg` in profile headers, `xl` for a profile or page hero (the largest person on a page). `xs` only beside an extra-small control.
 - Table: rows draw a thin line by default. Add `striped` only for wide, number-heavy tables people read across: five or more columns and many rows. Tables in cards and dashboards keep the line.
 - No custom hex codes, no `bg-{color}-{number}` palette classes.
 - Keep interactive and status colours apart. They are two different purples, and they clash side by side:

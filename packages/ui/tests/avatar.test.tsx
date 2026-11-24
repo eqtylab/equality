@@ -3,7 +3,7 @@ import { describe, expect, it } from 'vitest';
 
 import { Avatar, AvatarFallback } from '@/components/avatar/avatar';
 
-type Size = 'line' | 'xs' | 'sm' | 'md' | 'lg';
+type Size = 'line' | 'xs' | 'sm' | 'md' | 'lg' | 'xl';
 
 const initials = (children: React.ReactNode, size?: Size) =>
   render(
@@ -31,6 +31,7 @@ describe('AvatarFallback', () => {
     ['sm', 'A'],
     ['md', 'AC'],
     ['lg', 'AC'],
+    ['xl', 'AC'],
   ])('shows %s initials for Alice Cooper as %j', (size, shown) => {
     expect(initials('AC', size)).toBe(shown);
   });

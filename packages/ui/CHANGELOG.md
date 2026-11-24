@@ -8,17 +8,18 @@ Notable changes to Equality are recorded here, following [Keep a Changelog](http
 
 - `Avatar` sizes now match the control sizes: `xs` 24, `sm` 28, `md` 36 and `lg` 44. The new
   default, `line`, is as tall as the line of text the avatar sits in: 20 in a table, menu or list
-  row. `xl` is gone. Initials show one letter at `line`, `xs` and `sm`, and two at `md` and `lg`.
+  row. `xl` is now 52, for a profile or page hero. Initials show one letter at `line`, `xs` and
+  `sm`, and two at `md`, `lg` and `xl`.
 
   | You had                    | Use now                                                   |
   | -------------------------- | --------------------------------------------------------- |
   | `sm` (16)                  | no `size`                                                 |
   | `md` or no `size` (24)     | no `size` in rows and lists, `md` elsewhere (grows to 36) |
   | `lg` (36; 32 before 6.1.0) | `md`                                                      |
-  | `xl` (44; 40 before 6.1.0) | `lg` (`xl` is now a type error)                           |
+  | `xl` (44; 40 before 6.1.0) | `lg` to keep 44; `xl` is now 52                           |
 
-  Of the avatar sizes, only `xl` fails the build. An `sm`, `md` or `lg` you leave as it is still
-  compiles but draws at its new size, so check each one against the table.
+  Every renamed size, `xl` included, still compiles but draws at its new size, so check each one
+  against the table.
 
 - The `control-row-overhang` utility is gone, so an app that applies it fails to build. Rows now
   hold an avatar or icon button without it: remove it.

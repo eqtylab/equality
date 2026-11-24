@@ -39,6 +39,7 @@ describe('avatar.module.css', () => {
     ['sm', '0.875rem'],
     ['md', '0.875rem'],
     ['lg', '1rem'],
+    ['xl', '1.125rem'],
   ])('sets %s initials at %s on the fallback', (size, rem) => {
     expect(ruleBody(css, `.avatar.size-${size} .avatar-fallback`)).toMatch(
       new RegExp(`font-size:\\s*${rem.replace('.', '\\.')};`)
@@ -59,8 +60,14 @@ describe('avatar.module.css', () => {
     ).toMatch(/border-radius:\s*0\.25rem;/);
   });
 
-  it('drops the sizes outside the control scale', () => {
-    expect(css).not.toMatch(/\.size-(xl|2xl|3xl)\b/);
+  it('makes an xl avatar as tall as the shell, a default control with room around it', () => {
+    const body = ruleBody(css, '.avatar.size-xl');
+    expect(body).toMatch(/width:\s*var\(--eq-shell-size\);/);
+    expect(body).toMatch(/height:\s*var\(--eq-shell-size\);/);
+  });
+
+  it('drops the sizes outside the scale', () => {
+    expect(css).not.toMatch(/\.size-(2xl|3xl)\b/);
     expect(css).not.toMatch(/\.avatar\.(sm|md|lg|xl)\b/);
   });
 });

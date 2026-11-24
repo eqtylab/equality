@@ -32,7 +32,7 @@ export const AvatarDemo = ({
   shape,
 }: {
   variant?: "default" | "fallback";
-  size?: "line" | "xs" | "sm" | "md" | "lg";
+  size?: "line" | "xs" | "sm" | "md" | "lg" | "xl";
   shape?: "circle" | "square";
 }) => {
   return (
@@ -53,7 +53,7 @@ export const AvatarSizesDemo = ({
   variant?: "default" | "fallback";
   shape?: "circle" | "square";
 }) => {
-  const sizes = ["line", "xs", "sm", "md", "lg"] as const;
+  const sizes = ["line", "xs", "sm", "md", "lg", "xl"] as const;
   return (
     <div className="mb-4 flex items-end gap-4 text-sm">
       {sizes.map((s) => (

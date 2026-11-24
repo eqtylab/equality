@@ -52,6 +52,8 @@
   --eq-control-sm-icon-size: --spacing(4); /* 16 */
   --eq-control-md-icon-size: --spacing(4); /* 16 */
   --eq-control-lg-icon-size: --spacing(5); /* 20 */
+  /* shell: a default control with 8 on each side */
+  --eq-shell-size: calc(var(--eq-control-md-height) + --spacing(4)); /* 52 */
   /* touch: the minimum tap target */
   --eq-touch-target: 0px;
 
