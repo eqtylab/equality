@@ -19,7 +19,9 @@ const SectionHeading = ({
   return (
     <div className={cn(hasRightContent && styles['section-heading--right-content'], className)}>
       <div className={styles['content']}>
-        <h3 className={styles['heading']}>{heading}</h3>
+        <h3 className={cn(styles['heading'], description && styles['heading--stacked'])}>
+          {heading}
+        </h3>
         {description && <p className={styles['description']}>{description}</p>}
       </div>
       {hasRightContent && renderRightContent()}

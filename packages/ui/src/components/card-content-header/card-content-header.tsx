@@ -32,7 +32,7 @@ const CardContentHeader = forwardRef<HTMLDivElement, CardContentHeaderProps>(
         {...props}
       >
         {/* TODO refactor this to be a slot so elevation can be set independently */}
-        <Icon icon={icon} background="circle" elevation="overlay" />
+        <Icon className={styles.mark} icon={icon} background="circle" elevation="overlay" />
         {onButtonClick && (
           <Button className={styles.button} variant="tertiary" size="sm" onClick={onButtonClick}>
             See All

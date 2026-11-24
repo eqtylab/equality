@@ -8,12 +8,21 @@
   @apply flex-wrap;
 }
 
+/* Quadrupled class: it has to outrank Icon's circle padding, and a tripled one its glyph size */
+.mark.mark.mark.mark {
+  @apply size-(--eq-control-sm-height) p-0;
+}
+
+.mark.mark.mark svg {
+  @apply size-(--eq-control-md-icon-size);
+}
+
 .button {
   @apply @sm/card:order-3;
 }
 
 .title {
-  @apply text-text-primary grow text-lg;
+  @apply text-section text-text-primary grow;
 }
 
 .title--button-click {

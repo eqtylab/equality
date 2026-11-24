@@ -11,9 +11,13 @@
 }
 
 .heading {
-  @apply text-xl font-medium;
+  @apply text-section;
+}
+
+.heading--stacked {
+  line-height: var(--eq-type-section-stacked-line-height);
 }
 
 .description {
-  @apply text-text-secondary text-sm;
+  @apply text-body text-text-secondary;
 }
