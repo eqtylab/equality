@@ -29,7 +29,7 @@
   @apply px-(--eq-control-padding-x-condensed) py-0;
   @apply has-[:disabled]:cursor-not-allowed has-[:disabled]:opacity-50;
   @apply has-[:focus]:focus-ring;
-  @apply [&_svg]:text-text-secondary [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0;
+  @apply [&_svg]:text-text-secondary [&_svg]:size-(--eq-control-md-icon-size) [&_svg]:pointer-events-none [&_svg]:shrink-0;
 }
 
 .input-element {

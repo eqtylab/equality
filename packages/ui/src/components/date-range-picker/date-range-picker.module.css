@@ -6,7 +6,7 @@
 
 .calendar-icon {
   @apply text-text-secondary;
-  @apply absolute left-3 top-1/2 size-4 -translate-y-1/2;
+  @apply size-(--eq-control-md-icon-size) absolute left-3 top-1/2 -translate-y-1/2;
 }
 
 .date-range {

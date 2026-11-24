@@ -135,7 +135,7 @@
 }
 
 .nav-switcher-icon {
-  @apply text-(color:--eq-list-item-muted-color) ml-auto size-4 shrink-0;
+  @apply text-(color:--eq-list-item-muted-color) size-(--eq-control-md-icon-size) ml-auto shrink-0;
 }
 
 /* The trigger draws ↕ itself, so SelectTrigger's ⌄ goes. SelectTrigger always renders lucide's

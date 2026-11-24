@@ -2,6 +2,15 @@
 
 Notable changes to Equality are recorded here, following [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## 6.2.0 - 2026-11-23
+
+### Changed
+
+- Each control size names the size of the icon beside its text, so the next release can change
+  them in one place.
+
+Nothing on screen changes in this release.
+
 ## 6.1.0 - 2026-11-20
 
 ### Changed

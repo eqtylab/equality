@@ -42,33 +42,34 @@ If you have no network access or web fetching fails, tell your user that you cou
 
 ### Name translation
 
-| If you're thinking of…                                     | Use in Equality                  | Don't hand-roll it from            |
-| ---------------------------------------------------------- | -------------------------------- | ---------------------------------- |
-| Combobox, searchable select, filterable single-select      | `Select` with `SelectSearch`     | `Popover` + `Command`              |
-| Command palette, ⌘K launcher                               | `Command`                        | `Dialog` + `Input` + a list        |
-| Modal, lightbox                                            | `Dialog`                         | A fixed-position `div`             |
-| Confirmation or destructive-action prompt                  | `AlertDialog`                    | `Dialog` with two buttons          |
-| Drawer, side panel, slide-over                             | `Sheet`                          | `Dialog` with custom styles        |
-| Snackbar, notification                                     | `Toast`                          | A timed, positioned `div`          |
-| Page status strip, archived or read-only banner            | `Banner`                         | A gradient `div` under the header  |
-| Activity feed, history, audit trail, event log             | `Timeline`                       | A list with a border for a rail    |
-| Toggle                                                     | `Switch`                         | A styled checkbox                  |
-| Chip, pill, tag, status label                              | `Badge`                          | A rounded `span`                   |
-| Loader, activity indicator                                 | `Spinner`                        | An animated SVG                    |
-| Button group or toggle group for mutually exclusive values | `SegmentedControls`              | A row of `Button`s                 |
-| Multi-select filter                                        | `FilterDropdown`                 | `DropdownMenu` with checkboxes     |
-| Footer action, "Select all" or "Other" while searching     | `persistent` items               | Buttons outside the list items     |
-| Title switcher, inline dropdown in a heading or text       | `SelectTrigger variant="inline"` | `SelectTrigger` with `!` overrides |
-| Radio card, selectable card in a set                       | `Card selected`                  | `Card` with `!` overrides          |
-| Pass/fail or status-tinted card                            | `Card variant="success"`         | `Card` with `!` overrides          |
-| Textarea inside an editor frame                            | `Textarea variant="bare"`        | `Textarea` with `!` overrides      |
-| Field-like trigger for a date or people picker             | `Button variant="field"`         | A tertiary `Button` with overrides |
-| Clear button inside a picker field                         | `IconButton size="xs"`           | `IconButton` with a size override  |
-| Avatar sized to match a control                            | `Avatar size="lg"`               | `Avatar` with `!size-9`            |
-| Sidebar rows, settings list, `NavItem`/`NavSection`        | `NavListItem` in `NavListGroup`  | Styled links in a `ul`             |
-| App sidebar, icon rail                                     | `NavPanel` + `NavRail`           | A fixed `aside` with links         |
-| Sliding sub-panel, drill-in nav                            | `NavDrill`                       | Swapped lists with CSS transitions |
-| Collapsible nav group, tree sidebar, folder rows           | `NavListExpandable`              | `<details>` or a toggled `ul`      |
+| If you're thinking of…                                     | Use in Equality                  | Don't hand-roll it from             |
+| ---------------------------------------------------------- | -------------------------------- | ----------------------------------- |
+| Combobox, searchable select, filterable single-select      | `Select` with `SelectSearch`     | `Popover` + `Command`               |
+| Command palette, ⌘K launcher                               | `Command`                        | `Dialog` + `Input` + a list         |
+| Modal, lightbox                                            | `Dialog`                         | A fixed-position `div`              |
+| Confirmation or destructive-action prompt                  | `AlertDialog`                    | `Dialog` with two buttons           |
+| Drawer, side panel, slide-over                             | `Sheet`                          | `Dialog` with custom styles         |
+| Snackbar, notification                                     | `Toast`                          | A timed, positioned `div`           |
+| Page status strip, archived or read-only banner            | `Banner`                         | A gradient `div` under the header   |
+| Activity feed, history, audit trail, event log             | `Timeline`                       | A list with a border for a rail     |
+| Toggle                                                     | `Switch`                         | A styled checkbox                   |
+| Chip, pill, tag, status label                              | `Badge`                          | A rounded `span`                    |
+| Loader, activity indicator                                 | `Spinner`                        | An animated SVG                     |
+| Button group or toggle group for mutually exclusive values | `SegmentedControls`              | A row of `Button`s                  |
+| Multi-select filter                                        | `FilterDropdown`                 | `DropdownMenu` with checkboxes      |
+| Footer action, "Select all" or "Other" while searching     | `persistent` items               | Buttons outside the list items      |
+| Title switcher, inline dropdown in a heading or text       | `SelectTrigger variant="inline"` | `SelectTrigger` with `!` overrides  |
+| Radio card, selectable card in a set                       | `Card selected`                  | `Card` with `!` overrides           |
+| Pass/fail or status-tinted card                            | `Card variant="success"`         | `Card` with `!` overrides           |
+| Textarea inside an editor frame                            | `Textarea variant="bare"`        | `Textarea` with `!` overrides       |
+| Field-like trigger for a date or people picker             | `Button variant="field"`         | A tertiary `Button` with overrides  |
+| Clear button inside a picker field                         | `IconButton size="xs"`           | `IconButton` with a size override   |
+| Avatar sized to match a control                            | `Avatar size="lg"`               | `Avatar` with `!size-9`             |
+| Row action, kebab or copy button at the end of a table row | `IconButton`                     | `IconButton` with a negative margin |
+| Sidebar rows, settings list, `NavItem`/`NavSection`        | `NavListItem` in `NavListGroup`  | Styled links in a `ul`              |
+| App sidebar, icon rail                                     | `NavPanel` + `NavRail`           | A fixed `aside` with links          |
+| Sliding sub-panel, drill-in nav                            | `NavDrill`                       | Swapped lists with CSS transitions  |
+| Collapsible nav group, tree sidebar, folder rows           | `NavListExpandable`              | `<details>` or a toggled `ul`       |
 
 ## Common Mistakes
 
@@ -156,7 +157,9 @@ Equality's control decisions: `h-(--eq-control-md-height)` for height,
 `--eq-control-md-font-size` and `--eq-control-md-line-height` for text, and
 `--eq-control-padding-x-condensed`, `-normal` or `-spacious` (8, 12, 16) for side
 padding. Heights come in `xs` (24), `sm` (28), `md` (36) and `lg` (44); text
-comes in `sm`, `md` and `lg`. Never write `h-10`.
+comes in `sm`, `md` and `lg`. An icon beside the text takes
+`--eq-control-{xs,sm,md,lg}-icon-size`, such as `size-(--eq-control-md-icon-size)`.
+Never write `h-10`.
 
 **Accessibility is mostly free — don't undo it.** Radix gives you focus
 management, escape handling, and ARIA wiring. You still have to supply the text:
