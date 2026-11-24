@@ -9,10 +9,10 @@ beforeAll(async () => {
 }, 30_000);
 
 describe('avatar.module.css', () => {
-  it('makes a line avatar as tall as its line, falling back to 20 where lh is unsupported', () => {
+  it('makes a line avatar as tall as its line, falling back to the line size where lh is unsupported', () => {
     const body = ruleBody(css, '.avatar.size-line');
     for (const side of ['width', 'height']) {
-      const fallback = body.search(new RegExp(`(^|[^-])${side}:\\s*20px;`));
+      const fallback = body.search(new RegExp(`(^|[^-])${side}:\\s*var\\(--eq-size-line\\);`));
       const line = body.search(new RegExp(`(^|[^-])${side}:\\s*1lh;`));
       expect(fallback, side).toBeGreaterThan(-1);
       expect(line, side).toBeGreaterThan(fallback);

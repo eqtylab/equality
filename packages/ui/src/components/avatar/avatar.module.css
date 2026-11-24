@@ -23,9 +23,9 @@
 /* Size Variants */
 
 .avatar.size-line {
-  width: 20px;
+  width: var(--eq-size-line);
   width: 1lh;
-  height: 20px;
+  height: var(--eq-size-line);
   height: 1lh;
 }
 
@@ -45,10 +45,8 @@
   @apply size-(--eq-control-lg-height);
 }
 
-/* Not yet a decision: 7.1.0 puts 52 on the size scale, so read that name then instead of this sum */
 .avatar.size-xl {
-  width: calc(var(--eq-control-md-height) + --spacing(4));
-  height: calc(var(--eq-control-md-height) + --spacing(4));
+  @apply size-(--eq-size-xl);
 }
 
 .avatar.size-line .avatar-fallback {
