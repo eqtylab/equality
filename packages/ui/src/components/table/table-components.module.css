@@ -82,6 +82,16 @@
   @apply relative;
 }
 
+.table--comfortable > .table-inner > .table-body > .table-row,
+.table--comfortable > .table-inner > .table-footer > .table-row {
+  @apply min-h-(--eq-control-lg-height);
+  padding-block: calc((var(--eq-control-lg-height) - var(--eq-control-sm-height)) / 2);
+}
+
+.table--comfortable > .table-inner > .table-header > .table-row > .table-head {
+  @apply h-(--eq-control-lg-height);
+}
+
 /* A border on the row itself would add 1px to its height and put it off the 36 scale */
 .table-body > .table-row:not(:last-child)::after {
   content: '';

@@ -50,4 +50,12 @@ describe('select.module.css', () => {
       /width:\s*var\(--radix-select-trigger-width\);/
     );
   });
+
+  it('holds a small control in an item row without growing it', () => {
+    const body = ruleBody(css, '.select-item');
+    expect(body).toMatch(/min-height:\s*var\(--eq-control-md-height\);/);
+    expect(body).toMatch(
+      /padding-block:\s*calc\(\(var\(--eq-control-md-height\)\s*-\s*var\(--eq-control-sm-height\)\)\s*\/\s*2\);/
+    );
+  });
 });

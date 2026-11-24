@@ -31,4 +31,12 @@ describe('command.module.css', () => {
   it('carries no rule for an input wrapper attribute that nothing renders', () => {
     expect(css).not.toContain('cmdk-input-wrapper');
   });
+
+  it('holds a small control in an item row without growing it', () => {
+    const body = ruleBody(css, '.command-item');
+    expect(body).toMatch(/min-height:\s*var\(--eq-control-md-height\);/);
+    expect(body).toMatch(
+      /padding-block:\s*calc\(\(var\(--eq-control-md-height\)\s*-\s*var\(--eq-control-sm-height\)\)\s*\/\s*2\);/
+    );
+  });
 });

@@ -15,21 +15,38 @@ const TableContainer = React.forwardRef<
       columns?: string;
       /** Fill every other row instead of drawing a line between rows, for wide, number-heavy tables */
       striped?: boolean;
+      /** Row height: `regular` for most tables, `comfortable` for tables people scan slowly or touch */
+      density?: 'regular' | 'comfortable';
     }
->(({ className, style, elevation = ELEVATION.RAISED, border, columns, striped, ...props }, ref) => (
-  <div
-    className={cn(
-      styles['table'],
-      tableElevationVariants({ elevation }),
-      border && styles['table-border'],
-      striped && styles['table--striped'],
-      className
-    )}
-    style={columns ? ({ ...style, '--table-columns': columns } as React.CSSProperties) : style}
-  >
-    <table ref={ref} className={styles['table-inner']} {...props} />
-  </div>
-));
+>(
+  (
+    {
+      className,
+      style,
+      elevation = ELEVATION.RAISED,
+      border,
+      columns,
+      striped,
+      density = 'regular',
+      ...props
+    },
+    ref
+  ) => (
+    <div
+      className={cn(
+        styles['table'],
+        tableElevationVariants({ elevation }),
+        border && styles['table-border'],
+        striped && styles['table--striped'],
+        density === 'comfortable' && styles['table--comfortable'],
+        className
+      )}
+      style={columns ? ({ ...style, '--table-columns': columns } as React.CSSProperties) : style}
+    >
+      <table ref={ref} className={styles['table-inner']} {...props} />
+    </div>
+  )
+);
 TableContainer.displayName = 'Table';
 
 const TableHeader = React.forwardRef<

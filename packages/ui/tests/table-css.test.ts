@@ -82,4 +82,49 @@ describe('table-components.module.css', () => {
   it('keeps no border rule for body rows, which draw no border', () => {
     expect(ruleBody(css, '.table-body')).not.toMatch(/last-child/);
   });
+
+  const ROW_PADDING = (row: string) =>
+    new RegExp(
+      String.raw`padding-block:\s*calc\(\(var\(--eq-control-${row}-height\)\s*-\s*var\(--eq-control-sm-height\)\)\s*/\s*2\);`
+    );
+
+  it('holds a small control in a regular row without growing it', () => {
+    const body = ruleBody(css, '\n.table-row');
+    expect(body).toMatch(/min-height:\s*var\(--eq-control-md-height\);/);
+    expect(body).toMatch(ROW_PADDING('md'));
+  });
+
+  it('makes body and footer rows the large control height in a comfortable table', () => {
+    const selector =
+      '.table--comfortable > .table-inner > .table-body > .table-row,\n.table--comfortable > .table-inner > .table-footer > .table-row';
+    const body = ruleBody(css, selector);
+    expect(body).toMatch(/min-height:\s*var\(--eq-control-lg-height\);/);
+    expect(body).toMatch(ROW_PADDING('lg'));
+  });
+
+  it('makes the header row the large control height in a comfortable table', () => {
+    expect(
+      ruleBody(css, '.table--comfortable > .table-inner > .table-header > .table-row > .table-head')
+    ).toMatch(/height:\s*var\(--eq-control-lg-height\);/);
+  });
+
+  it('lets every row grow with what it holds', () => {
+    const rowRules = [...css.matchAll(/([^{}]*\.table-row(?![\w-])[^{}]*)\{([^{}]*)\}/g)];
+    expect(rowRules.length).toBeGreaterThan(0);
+    for (const [, selector, body] of rowRules) {
+      if (/\.table-head\b|\.table-cell\b|::after/.test(selector)) continue;
+      expect(body, selector).not.toMatch(/(^|[^-])height:/);
+    }
+  });
+
+  it('keeps stripes and the selected row on comfortable rows, which share their selectors', () => {
+    expect(css).not.toMatch(/\.table--comfortable[^{]*nth-child/);
+    expect(css).not.toMatch(/\.table--comfortable[^{]*data-state/);
+    expect(css).not.toMatch(/\.table--comfortable[^{]*background/);
+    const comfortable = ruleBody(
+      css,
+      '.table--comfortable > .table-inner > .table-body > .table-row,\n.table--comfortable > .table-inner > .table-footer > .table-row'
+    );
+    expect(comfortable).not.toMatch(/background|margin/);
+  });
 });
