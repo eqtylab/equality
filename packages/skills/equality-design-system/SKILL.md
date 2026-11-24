@@ -75,10 +75,12 @@ If you have no network access or web fetching fails, tell your user that you cou
 | App sidebar, icon rail                                                                     | `NavPanel` + `NavRail`                                           | A fixed `aside` with links                             |
 | Sliding sub-panel, drill-in nav                                                            | `NavDrill`                                                       | Swapped lists with CSS transitions                     |
 | Collapsible nav group, tree sidebar, folder rows                                           | `NavListExpandable`                                              | `<details>` or a toggled `ul`                          |
+| Page title level with its actions                                                          | `text-title`                                                     | `text-2xl` with a line height                          |
+| Card or section title beside a small button                                                | `CardContentHeader`, `SectionHeading` or `text-section`          | `text-lg` or `font-semibold` with a line height        |
 
 ## Common Mistakes
 
-- Headings should almost always go through the `Heading` component (`as` sets the tag, `displayAs` the visual level & styling), so semantic level and visual size can differ without custom CSS.
+- `Heading` sets the tag and a document heading's size (`as` sets the tag, `displayAs` the visual level), so semantic level and visual size can differ without custom CSS. A page, card or section title that sits on a line with controls takes `text-title` or `text-section` instead.
 - Small label titles should use `Label` to describe
 - NEVER make custom badges!! There are more than enough properties in `Badge`
   - Use `ResourceBadge` when referencing integrity-backed resources and `ControlStatusBadge` when referencing control statuses.
@@ -167,6 +169,12 @@ padding. Heights come in `xs` (24), `sm` (28), `md` (36) and `lg` (44); text
 comes in `sm`, `md` and `lg`. An icon beside the text takes
 `--eq-control-{xs,sm,md,lg}-icon-size`, such as `size-(--eq-control-md-icon-size)`.
 Never write `h-10`.
+
+Text takes one of four styles: `text-title` for a page title, `text-section` for
+a card or section title, `text-body` for running text and `text-caption` for
+small supporting text. Each one's line is as tall as a control of the same step,
+so a title lines up with the buttons beside it. Never pair a size with a
+hand-written line height, such as `text-2xl leading-(--eq-control-md-height)`.
 
 **Accessibility is mostly free — don't undo it.** Radix gives you focus
 management, escape handling, and ARIA wiring. You still have to supply the text:

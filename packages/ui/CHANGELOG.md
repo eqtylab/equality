@@ -2,6 +2,22 @@
 
 Notable changes to Equality are recorded here, following [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## 7.1.0 - 2026-11-24
+
+### Added
+
+- Four text styles for hierarchy: `text-title` for the page title, `text-section` for a card or
+  section title, `text-body` for running text and descriptions, and `text-caption` for small
+  supporting text. Each style's line is as tall as a control of the same step, so a page title
+  lines up with a default button and a card title with a small one. See the Typography page.
+
+### Changed
+
+- `CardContentHeader` has a smaller icon circle, 28 from 36, with a 16 icon, from 20, and a 16
+  semibold title, from 18, so the header is as tall as its "See All" button.
+- `MetricCard`'s icon is 16, from 20, in the same circle.
+- `SectionHeading`'s title is 16 semibold, from 20 medium, and sits tighter over a description.
+
 ## 7.0.0 - 2026-11-24
 
 ### Breaking

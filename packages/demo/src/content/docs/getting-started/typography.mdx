@@ -1,0 +1,81 @@
+---
+title: "Typography"
+description: "Four text styles for hierarchy, each on a line as tall as a control"
+---
+
+import { TypographyDemo } from "@demo/components/demo/typography";
+
+## Overview
+
+Pick a text style for hierarchy: `text-title`, `text-section`, `text-body` or `text-caption`. Each style's line is as tall as a control of the same step, so a title lines up with the buttons beside it without extra spacing.
+
+Use `Heading` for headings in long-form content. Use these styles for a page, card or section title that shares a line with controls.
+
+## Text Styles
+
+### Title
+
+Use `text-title` for the page title. Its line is as tall as a default button.
+
+<TypographyDemo example="title" />
+
+```tsx
+<div className="flex items-center justify-between gap-4">
+  <h1 className="text-title">Projects</h1>
+  <Button>New Project</Button>
+</div>
+```
+
+### Section
+
+Use `text-section` for a card or section title. Its line is as tall as a small button. [Card Content Header](/components/card-content-header) and [Section Heading](/components/section-heading) already use it.
+
+<TypographyDemo example="section" />
+
+```tsx
+<Card>
+  <CardContent>
+    <div className="flex items-center justify-between gap-4">
+      <h2 className="text-section">Recent Activity</h2>
+      <Button variant="tertiary" size="sm">
+        See All
+      </Button>
+    </div>
+  </CardContent>
+</Card>
+```
+
+### Body
+
+Use `text-body` for running text and descriptions.
+
+<TypographyDemo example="body" />
+
+```tsx
+<p className="text-body">
+  Every model in this project is evaluated against its controls before release.
+</p>
+```
+
+### Caption
+
+Use `text-caption` for small supporting text, such as a timestamp or a hint under a field.
+
+<TypographyDemo example="caption" />
+
+```tsx
+<p className="text-caption text-text-secondary">Updated 2 hours ago</p>
+```
+
+## Badge Beside a Title
+
+A badge beside a title keeps its default size and sits centred on the title's line.
+
+<TypographyDemo example="badge" />
+
+```tsx
+<div className="flex items-center gap-2">
+  <h1 className="text-title">Model Registry</h1>
+  <Badge variant="neutral">Beta</Badge>
+</div>
+```
