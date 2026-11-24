@@ -2,7 +2,14 @@
 
 Notable changes to Equality's Docsite Generator are recorded here, following [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
-## Unreleased
+## 0.18.0 - 2026-11-20
+
+Needs `@eqtylab/equality` 6.0.0 or later.
+
+### Changed
+
+- The header's controls are 36px tall (were 40px), and the navigation drawer's links are 36px
+  (were 32px), so both match Equality 6's controls.
 
 ## 0.17.0 - 2026-11-06
 

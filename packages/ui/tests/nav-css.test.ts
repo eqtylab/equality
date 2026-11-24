@@ -8,22 +8,6 @@ beforeAll(async () => {
   css = await compileCss('src/components/nav/nav.module.css');
 }, 30_000);
 
-// The switcher's top padding in px, for a rail item and touch target of the given sizes
-function switcherPadding(controlHeight: number, touchTarget: number): number {
-  const body = ruleBody(
-    css,
-    '.nav-rail + .nav-panel .nav-panel-header:has(> .nav-switcher-heading)'
-  );
-  const value = /padding-top:\s*([^;]+);/.exec(body)![1];
-  const expression = value
-    .replaceAll('var(--eq-control-md-height)', String(controlHeight))
-    .replaceAll('var(--eq-touch-target)', String(touchTarget))
-    .replaceAll('0.25rem', '4')
-    .replaceAll('max(', 'Math.max(')
-    .replaceAll('calc(', '(');
-  return new Function(`return ${expression}`)() as number;
-}
-
 describe('nav.module.css', () => {
   it('registers --eq-nav-offset as a length defaulting to 0px, so a bare 0 keeps the scroller valid', () => {
     const body = ruleBody(css, '@property --eq-nav-offset');
@@ -38,10 +22,12 @@ describe('nav.module.css', () => {
     expect(body).toMatch(/max-height:\s*min\(calc\(100dvh - var\(--eq-nav-offset\)\), 100%\);/);
   });
 
-  // The header carries the scroller's 16px top padding, which the rail keeps
-  it("centres the switcher on the rail's first item with a mouse and on touch", () => {
-    expect(switcherPadding(40, 0)).toBe(20);
-    expect(switcherPadding(40, 44)).toBe(16);
+  it("draws the switcher heading as tall as the rail's first item, with a mouse and on touch", () => {
+    for (const selector of ['.nav-rail-item', '.nav-switcher-heading']) {
+      const body = ruleBody(css, selector);
+      expect(body).toMatch(/[;{\s]height:\s*var\(--eq-control-md-height\);/);
+      expect(body).toMatch(/min-height:\s*var\(--eq-touch-target\);/);
+    }
   });
 
   it('pins the panel header and keeps a long list from squashing it', () => {

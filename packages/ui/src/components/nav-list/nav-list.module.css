@@ -11,7 +11,7 @@
 }
 
 .nav-list-group-label {
-  @apply px-(--eq-list-item-padding-x) flex items-center gap-2;
+  @apply px-(--eq-control-padding-x-condensed) flex items-center gap-2;
   padding-top: calc(var(--eq-list-group-gap) - var(--eq-list-gap));
   @apply text-(length:--eq-list-label-font-size) text-text-primary font-medium;
 }
@@ -38,7 +38,7 @@
   )
   > li
   .nav-list-items[data-depth='1']:not(.nav-list-expandable-items) {
-  margin-left: calc(var(--eq-list-item-icon-size) + var(--eq-list-item-gap));
+  margin-left: calc(var(--eq-list-item-icon-size) + var(--eq-control-md-gap));
 }
 
 .nav-list-separator {
@@ -52,9 +52,9 @@
 }
 
 .nav-list-item {
-  @apply h-(--eq-list-item-height) min-h-(--eq-touch-target) gap-(--eq-list-item-gap) flex w-full min-w-0 items-center;
-  @apply px-(--eq-list-item-padding-x) rounded-md border border-transparent bg-transparent text-left no-underline;
-  @apply text-(length:--eq-list-item-font-size) text-text-secondary;
+  @apply h-(--eq-control-md-height) min-h-(--eq-touch-target) gap-(--eq-control-md-gap) flex w-full min-w-0 items-center;
+  @apply px-(--eq-control-padding-x-condensed) rounded-md border border-transparent bg-transparent text-left no-underline;
+  @apply text-(length:--eq-control-md-font-size) text-text-secondary;
   @apply transition-colors duration-150 motion-reduce:transition-none;
 }
 
@@ -196,7 +196,7 @@
       > :is([data-slot='nav-list-item'], [data-slot='nav-list-expandable-trigger'])
       > .nav-list-item-prefix
   ) {
-  --nav-list-child-indent: calc(var(--eq-list-item-icon-size) + var(--eq-list-item-gap));
+  --nav-list-child-indent: calc(var(--eq-list-item-icon-size) + var(--eq-control-md-gap));
 }
 
 /* A group's own rows indent their text, not the row, so the highlight stays full width. No tree
@@ -206,7 +206,7 @@
 }
 
 .nav-list-expandable-items > li > .nav-list-item {
-  padding-left: calc(var(--eq-list-item-padding-x) + var(--nav-list-child-indent));
+  padding-left: calc(var(--eq-control-padding-x-condensed) + var(--nav-list-child-indent));
 }
 
 /* A group inside a group: the tree line runs half an icon's width inside the parent's text, and
@@ -214,16 +214,17 @@
 .nav-list-expandable-items .nav-list-items.nav-list-expandable-items {
   @apply border-border-raised border-l;
   margin-left: calc(
-    var(--eq-list-item-padding-x) + var(--nav-list-child-indent) + var(--eq-list-item-icon-size) / 2
+    var(--eq-control-padding-x-condensed) + var(--nav-list-child-indent) +
+      var(--eq-list-item-icon-size) / 2
   );
 }
 
 .nav-list-expandable-items .nav-list-expandable-items .nav-list-items.nav-list-expandable-items {
-  margin-left: calc(var(--eq-list-item-padding-x) + var(--eq-list-item-icon-size) / 2);
+  margin-left: calc(var(--eq-control-padding-x-condensed) + var(--eq-list-item-icon-size) / 2);
 }
 
 .nav-list-expandable-items .nav-list-expandable-items > li > .nav-list-item {
-  @apply pl-(--eq-list-item-padding-x);
+  @apply pl-(--eq-control-padding-x-condensed);
 }
 
 /* Only top-level headings lead; a group inside one reads as a row */

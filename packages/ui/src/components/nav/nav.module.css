@@ -62,7 +62,17 @@
    must not shrink: in the scroller's column a long list squashes it to nothing. Its fill hides
    the rows scrolling under it */
 .nav-panel-header {
-  @apply text-text-primary z-3 pt-5.5 sticky top-0 m-0 shrink-0 truncate px-2 pb-1.5 text-sm font-semibold;
+  @apply text-text-primary z-3 sticky top-0 m-0 shrink-0 truncate px-2 font-semibold;
+  @apply text-(length:--eq-control-md-font-size)/[var(--tw-leading,var(--eq-control-md-line-height))];
+  --nav-title-padding: calc(
+    (
+        max(var(--eq-control-md-height), var(--eq-touch-target)) -
+          var(--tw-leading, var(--eq-control-md-line-height))
+      ) /
+      2
+  );
+  padding-top: calc(--spacing(4) + var(--nav-title-padding));
+  padding-bottom: var(--nav-title-padding);
   background-color: inherit;
 }
 
@@ -70,22 +80,11 @@
   @apply overflow-visible px-0 pb-0 pt-4;
 }
 
-/* Beside a rail, half the difference between the rail's first item and the heading, each at least
-   a touch target, centres the heading on the item */
-.nav-rail + .nav-panel .nav-panel-header:has(> .nav-switcher-heading) {
-  padding-top: calc(
-    --spacing(4) +
-      (
-        max(var(--eq-control-md-height), var(--eq-touch-target)) -
-          max(--spacing(8), var(--eq-touch-target))
-      ) /
-      2
-  );
-}
-
-/* One height whether it holds the switcher, a plain name or the loading bar: the site card's 32px */
+/* Change this height and the switcher stops lining up with the rail's first item, and rows jump
+   between a switcher, a plain name and the loading bar. .nav-panel-header's padding must change
+   with it */
 .nav-switcher-heading {
-  @apply text-text-primary min-h-(--eq-touch-target) m-0 flex h-8 min-w-0 items-center text-sm font-semibold;
+  @apply text-text-primary min-h-(--eq-touch-target) h-(--eq-control-md-height) m-0 flex min-w-0 items-center text-sm font-semibold;
 }
 
 .nav-switcher-plain {
@@ -107,7 +106,7 @@
 /* Under the heading, so it outranks the size, fill and border SelectTrigger sets at rest whatever
    order the two modules load in */
 .nav-switcher-heading .nav-switcher {
-  @apply min-h-(--eq-touch-target) flex h-8 w-full min-w-0 items-center gap-2 rounded-md border border-transparent px-2;
+  @apply min-h-(--eq-touch-target) h-(--eq-control-md-height) flex w-full min-w-0 items-center gap-2 rounded-md border border-transparent px-2;
   @apply text-text-primary bg-transparent text-left text-sm font-semibold transition-colors duration-150;
   @apply motion-reduce:transition-none;
 }
@@ -180,7 +179,7 @@
 
 /* Keeps the footer from covering the ticked item the list scrolls to on open */
 .nav-switcher-list:has(.nav-switcher-footer) {
-  scroll-padding-bottom: 2.5rem;
+  scroll-padding-bottom: calc(var(--eq-control-md-height) + --spacing(3));
 }
 
 /* Two classes to outrank the Select's own item layout */

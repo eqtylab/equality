@@ -79,6 +79,8 @@ A `clickable` row with `onClick` also works from the keyboard:
 
 Buttons, links and menus in the row keep their own keys, and clicking them doesn't trigger the row.
 
+Put a row's actions in buttons that show a hover of their own: a button takes its own clicks, and the row stays highlighted while the pointer is over it. Don't put links inside a clickable row, because two places to click make it unclear where a click will go. Make the row itself the link with `href` instead.
+
 <TableDemo client:only="react" variant="clickable" />
 
 #### Usage

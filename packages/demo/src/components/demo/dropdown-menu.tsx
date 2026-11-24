@@ -397,7 +397,7 @@ export const DropdownMenuDemo = ({
                 textValue={person.name}
                 onSelect={() => setAssignee(person.name)}
               >
-                <Avatar size="sm">
+                <Avatar aria-hidden>
                   <AvatarFallback>{person.initials}</AvatarFallback>
                 </Avatar>
                 <span>{person.name}</span>

@@ -6,21 +6,102 @@ Notable changes to Equality are recorded here, following [Keep a Changelog](http
 
 ### Added
 
-- Control size decisions: `--eq-control-sm-height`, `-md-height` and `-lg-height`, with a font
-  size, line height and gap for each, and `--eq-control-padding-x-condensed`, `-normal` and
-  `-spacious`. Each holds today's size, so nothing changes on screen.
 - A `TableRow` with `clickable` and `onClick` works from the keyboard. Tab reaches the rows as one
   stop, Enter does what a click does, and Up, Down, Home and End move between rows. Buttons, links
   and menus in the row keep their own keys. A focused row draws the focus ring.
-
-### Removed
-
-- `--eq-control-height`. Use `--eq-control-md-height`, which the `Nav` rail now reads.
 
 ### Fixed
 
 - Clicking an item in a menu opened from inside a clickable `TableRow` no longer also triggers the
   row's `onClick`.
+
+## 6.1.0 - 2026-11-20
+
+### Changed
+
+- `Avatar` `lg` grows from 32 to 36 and `xl` from 40 to 44, so `lg` is as tall as a default control
+  and `xl` as tall as a large one. `sm` (16) and the default `md` (24) are unchanged. To keep the
+  old size, step down a size (`xl` to `lg`, `lg` to `md`) or pass `className="size-8"` or
+  `className="size-10"`. An avatar forced to 36 with `!size-9` becomes `size="lg"`.
+- A default (`md`) `Avatar` in a `Table` cell or a `DropdownMenu`, `Select` or `Command` item no
+  longer makes the row taller: the row stays 36 instead of growing to 40.
+- `Avatar` initials are smaller, so two letters no longer reach the edge of the circle.
+
+## 6.0.2 - 2026-11-20
+
+### Changed
+
+- The tick on the chosen item in `DropdownMenu` radio items, `Select` and `NavSwitcher` is now the brand colour.
+
+## 6.0.1 - 2026-11-20
+
+### Fixed
+
+- A clickable `Table` row stays highlighted while the pointer is over a link or button inside it,
+  so the highlight no longer flickers as the pointer crosses the row. The link or button shows its
+  own hover on top.
+
+## 6.0.0 - 2026-11-20
+
+Controls and rows move to one scale: 28, 36 and 44. The default control drops from 40 to 36, and
+menu rows grow from 32 to 36. If your app copied a 40px height from Equality to line something up
+with a control, search for it: it now sits 4px taller than the control beside it.
+
+### Changed
+
+| Part                                                                      | Height     | Text     | Side padding |
+| ------------------------------------------------------------------------- | ---------- | -------- | ------------ |
+| `Button` `md`                                                             | 40 to 36   | 14       | 12           |
+| `Button` `lg`                                                             | 44         | 14 to 16 | 32 to 16     |
+| `Button` `sm`                                                             | 28         | 12       | 8            |
+| `IconButton` `md`                                                         | 40 to 36   |          |              |
+| `IconButton` `xs`, `sm`, `lg`                                             | 24, 28, 44 |          |              |
+| `SegmentedControls` `md`                                                  | 40 to 36   | 14       | 12           |
+| `SegmentedControls` `lg`                                                  | 44         | 14 to 16 | 16           |
+| `Input`, `SearchBar`, `Select` trigger                                    | 40 to 36   | 14       | 8, 8, 12     |
+| `Tabs` list                                                               | 40 to 36   | 18       | 12           |
+| `Table` header                                                            | 40 to 36   | 14       |              |
+| `Table` row                                                               | 36         | 14       | 16           |
+| `Timeline` `md` marker                                                    | 40 to 36   |          |              |
+| `Nav` rail item                                                           | 40 to 36   |          |              |
+| `NavSwitcher` and the `Nav` panel title                                   | 32 to 36   | 14       | 8            |
+| `NavList` row                                                             | 36         | 14       | 8            |
+| `DropdownMenu`, `RadioDropdown`, `SortSelector` and `FilterDropdown` rows | 32 to 36   | 14       | 8            |
+| `Select` option                                                           | 32 to 36   | 14       | 8            |
+| `Command` row                                                             | 32 to 36   | 14       | 8            |
+| `Command` row in a `CommandDialog`                                        | 44 to 36   | 14       | 8            |
+| `DisplayField`                                                            | 38 to 36   | 14       | 12           |
+
+- Large `Button` side padding halves, from 32 to 16. This is the largest single move.
+- The gap between an icon and its text grows from 6 to 8 on every `md` and `lg` `Button`, link
+  buttons included, and on `md` and `lg` segments.
+- A row that wraps keeps its padding and grows; 36 is its minimum.
+- `FilterDropdown` and `RadioDropdown` show about 9 rows before scrolling, down from 10, and
+  `Command`'s list about 8, down from 9.
+- `Command`'s input bar stays 36. The field inside it now fits: it was 40, or 48 in a
+  `CommandDialog`, and overflowed the bar.
+- `Tabs` triggers fill the list's height. `Input` centres its text without vertical padding.
+- The `Nav` switcher is as tall as the rail's first item, so the panel header no longer nudges it
+  down to line the two up.
+- `ControlStatusBadge` shows a pen-on-file icon for In Progress, matching the workbench, and a
+  plain tick for Compliant in place of the filled one.
+
+### Added
+
+- Control size decisions: `--eq-control-xs-height`, `-sm-height`, `-md-height` and `-lg-height`;
+  a font size, line height and gap for `sm`, `md` and `lg`; and
+  `--eq-control-padding-x-condensed`, `-normal` and `-spacious`. A control or row you build
+  yourself reads these, such as `h-(--eq-control-md-height)`, so it follows the scale.
+
+### Removed
+
+- `--eq-control-height`. Use `--eq-control-md-height`, which the `Nav` rail now reads.
+- `--eq-list-item-height`. Use `--eq-control-md-height`.
+- `--eq-list-item-padding-x`. Use `--eq-control-padding-x-condensed`.
+- `--eq-list-item-gap`. Use `--eq-control-md-gap`.
+- `--eq-list-item-font-size`. Use `--eq-control-md-font-size`.
+
+If your site read or overrode one of these, switch to the name that replaces it.
 
 ## 5.6.0 - 2026-11-18
 

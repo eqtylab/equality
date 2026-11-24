@@ -64,6 +64,7 @@ If you have no network access or web fetching fails, tell your user that you cou
 | Textarea inside an editor frame                            | `Textarea variant="bare"`        | `Textarea` with `!` overrides      |
 | Field-like trigger for a date or people picker             | `Button variant="field"`         | A tertiary `Button` with overrides |
 | Clear button inside a picker field                         | `IconButton size="xs"`           | `IconButton` with a size override  |
+| Avatar sized to match a control                            | `Avatar size="lg"`               | `Avatar` with `!size-9`            |
 | Sidebar rows, settings list, `NavItem`/`NavSection`        | `NavListItem` in `NavListGroup`  | Styled links in a `ul`             |
 | App sidebar, icon rail                                     | `NavPanel` + `NavRail`           | A fixed `aside` with links         |
 | Sliding sub-panel, drill-in nav                            | `NavDrill`                       | Swapped lists with CSS transitions |
@@ -149,6 +150,13 @@ container of its own.
 classes backed by tokens — `bg-background`, `bg-background-raised`,
 `text-text-primary`, `text-text-secondary`, `border-border`, `text-text-danger`.
 These flip correctly in dark mode; `bg-slate-800` and `#1e293b` do not.
+
+A control or row you build yourself takes its height, text and side padding from
+Equality's control decisions: `h-(--eq-control-md-height)` for height,
+`--eq-control-md-font-size` and `--eq-control-md-line-height` for text, and
+`--eq-control-padding-x-condensed`, `-normal` or `-spacious` (8, 12, 16) for side
+padding. Heights come in `xs` (24), `sm` (28), `md` (36) and `lg` (44); text
+comes in `sm`, `md` and `lg`. Never write `h-10`.
 
 **Accessibility is mostly free — don't undo it.** Radix gives you focus
 management, escape handling, and ARIA wiring. You still have to supply the text:

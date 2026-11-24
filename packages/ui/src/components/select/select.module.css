@@ -8,7 +8,7 @@
   @apply px-(--eq-control-padding-x-normal);
   @apply h-(--eq-control-md-height) w-full rounded-md;
   @apply border-border bg-background border;
-  @apply flex-center-between gap-2;
+  @apply flex-center-between gap-(--eq-control-md-gap);
   @apply focus-ring;
   @apply data-placeholder:text-text-secondary;
   @apply disabled:cursor-not-allowed disabled:opacity-50;
@@ -68,12 +68,17 @@
 
 .select-item {
   @apply dropdown-item;
-  @apply py-1.5 pl-2 pr-2;
-  @apply relative gap-2;
+  @apply control-row-padding min-h-(--eq-control-md-height) px-(--eq-control-padding-x-condensed);
+  @apply gap-(--eq-control-md-gap) relative;
+}
+
+.select-item [data-avatar='md'] {
+  @apply control-row-overhang;
 }
 
 .select-item-indicator {
   @apply flex-center;
+  @apply text-list-item-current-mark;
   @apply size-3.5 shrink-0;
 }
 

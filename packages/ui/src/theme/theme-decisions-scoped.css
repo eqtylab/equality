@@ -8,11 +8,7 @@
 
 .root {
   /* list-item: one selectable row */
-  --eq-list-item-height: --spacing(9); /* 36 */
-  --eq-list-item-padding-x: --spacing(2); /* 8 */
-  --eq-list-item-gap: --spacing(2); /* 8, icon to text */
   --eq-list-item-icon-size: --spacing(4); /* 16 */
-  --eq-list-item-font-size: --theme(--text-sm); /* 14 */
   --eq-list-item-muted-color: var(--color-text-tertiary);
   /* list: the rows together */
   --eq-list-gap: --spacing(0.5); /* 2, between items */
@@ -33,27 +29,29 @@
     var(--color-text-secondary)
   );
   /* control: a stand-alone element */
+  --eq-control-xs-height: --spacing(6); /* 24 */
   --eq-control-sm-height: --spacing(7); /* 28 */
-  --eq-control-md-height: --spacing(10); /* 40 */
+  --eq-control-md-height: --spacing(9); /* 36 */
   --eq-control-lg-height: --spacing(11); /* 44 */
   /* Font size and line height change together: line heights are lengths, not ratios of the size. */
   --eq-control-sm-font-size: --theme(--text-xs); /* 12 */
   --eq-control-sm-line-height: --spacing(4); /* 16 */
   --eq-control-md-font-size: --theme(--text-sm); /* 14 */
   --eq-control-md-line-height: --spacing(5); /* 20 */
-  --eq-control-lg-font-size: --theme(--text-sm); /* 14 */
-  --eq-control-lg-line-height: --spacing(5); /* 20 */
+  --eq-control-lg-font-size: --theme(--text-base); /* 16 */
+  --eq-control-lg-line-height: --spacing(6); /* 24 */
   --eq-control-padding-x-condensed: --spacing(2); /* 8 */
   --eq-control-padding-x-normal: --spacing(3); /* 12 */
-  --eq-control-padding-x-spacious: --spacing(8); /* 32 */
+  --eq-control-padding-x-spacious: --spacing(4); /* 16 */
   --eq-control-sm-gap: --spacing(1.5); /* 6, icon to text */
-  --eq-control-md-gap: --spacing(1.5); /* 6, icon to text */
-  --eq-control-lg-gap: --spacing(1.5); /* 6, icon to text */
+  --eq-control-md-gap: --spacing(2); /* 8, icon to text */
+  --eq-control-lg-gap: --spacing(2); /* 8, icon to text */
   /* touch: the minimum tap target */
   --eq-touch-target: 0px;
 
   /* The current fill must stay stronger than the hover fill: Studio checks the pair with APCA */
   --color-list-item-current: color-mix(in oklch, var(--color-text-primary) 10%, transparent);
+  --color-list-item-current-mark: var(--color-brand-primary);
   --color-list-item-hover: color-mix(in oklch, var(--color-text-primary) 6%, transparent);
 }
 

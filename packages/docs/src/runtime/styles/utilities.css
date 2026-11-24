@@ -11,7 +11,7 @@
  */
 @utility eq-nav-control {
   @apply text-text-secondary hover:text-text-primary hover:bg-list-item-hover;
-  @apply h-10 items-center gap-1.5 rounded-md px-3;
+  @apply h-(--eq-control-md-height) items-center gap-1.5 rounded-md px-3;
   @apply text-sm font-medium no-underline transition-colors;
   @apply focus-ring;
 }

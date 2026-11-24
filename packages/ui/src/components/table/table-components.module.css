@@ -65,11 +65,15 @@
   @apply -my-1;
 }
 
+.table-cell [data-avatar='md'] {
+  @apply control-row-overhang;
+}
+
 .table-row {
   @apply grid items-center gap-4;
   grid-template-columns: subgrid;
   grid-column: 1 / -1;
-  @apply px-4 py-2;
+  @apply control-row-padding min-h-(--eq-control-md-height) px-4;
 }
 
 /* Keep at half the row hover in --color-list-item-hover or less, or a hovered row stops standing out */
@@ -86,10 +90,7 @@
   @apply cursor-pointer;
 }
 
-/* Prevent row from highlighting when the user hovers clickable tags in the table */
-.table-row--clickable:not([data-state='selected']):hover:not(
-    :has(button:hover, a:not(.table-row-link):hover)
-  ) {
+.table-row--clickable:not([data-state='selected']):hover {
   @apply bg-list-item-hover!;
 }
 

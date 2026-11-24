@@ -13,14 +13,21 @@
 
 .dropdown-menu-trigger,
 .dropdown-menu-item {
-  @apply px-2 py-1.5;
-  @apply gap-2;
+  @apply px-(--eq-control-padding-x-condensed) control-row-padding min-h-(--eq-control-md-height);
+  @apply gap-(--eq-control-md-gap);
   @apply [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0;
 }
 
 .dropdown-menu-checkbox-item,
 .dropdown-menu-radio-item {
-  @apply py-1.5 pl-8 pr-2;
+  @apply control-row-padding min-h-(--eq-control-md-height) pr-(--eq-control-padding-x-condensed) pl-8;
+}
+
+.dropdown-menu-trigger [data-avatar='md'],
+.dropdown-menu-item [data-avatar='md'],
+.dropdown-menu-checkbox-item [data-avatar='md'],
+.dropdown-menu-radio-item [data-avatar='md'] {
+  @apply control-row-overhang;
 }
 
 .dropdown-menu-trigger,
@@ -57,12 +64,15 @@
 }
 
 .dropdown-menu-item-indicator-checkbox {
-  @apply top-2.25 size-3.5;
+  @apply size-3.5;
+  top: calc((var(--eq-control-md-height) - --spacing(3.5)) / 2);
   @apply border-text-secondary rounded-sm border;
 }
 
 .dropdown-menu-item-indicator-radio {
-  @apply top-1.5 h-5 w-4;
+  @apply text-list-item-current-mark;
+  @apply h-5 w-4;
+  top: calc((var(--eq-control-md-height) - --spacing(5)) / 2);
 }
 
 .dropdown-menu-checkbox-item[data-state='checked'] .dropdown-menu-item-indicator-checkbox {

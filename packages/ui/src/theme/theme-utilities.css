@@ -6,6 +6,14 @@
   @apply focus-visible:outline-none;
 }
 
+@utility control-row-padding {
+  padding-block: calc((var(--eq-control-md-height) - var(--eq-control-md-line-height)) / 2);
+}
+
+@utility control-row-overhang {
+  margin-block: calc((var(--eq-control-md-line-height) - --spacing(6)) / 2);
+}
+
 @utility control-track {
   @apply border-control-edge dark:border-control-edge-dark border;
   @apply inset-shadow-control-sunken dark:inset-shadow-control-sunken-dark;
@@ -78,7 +86,8 @@
 @utility dropdown-item {
   @apply cursor-pointer;
   @apply flex items-center;
-  @apply text-sm transition-colors;
+  @apply text-(length:--eq-control-md-font-size)/[var(--tw-leading,var(--eq-control-md-line-height))];
+  @apply transition-colors;
   @apply relative rounded-sm;
   @apply outline-hidden select-none;
   @apply data-disabled:pointer-events-none data-disabled:opacity-50;

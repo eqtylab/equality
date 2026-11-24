@@ -90,5 +90,6 @@
 
 @theme inline reference {
   --color-list-item-current: var(--color-list-item-current);
+  --color-list-item-current-mark: var(--color-list-item-current-mark);
   --color-list-item-hover: var(--color-list-item-hover);
 }
