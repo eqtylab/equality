@@ -10,12 +10,12 @@ Notable changes to Equality are recorded here, following [Keep a Changelog](http
   default, `line`, is as tall as the line of text the avatar sits in: 20 in a table, menu or list
   row. `xl` is gone. Initials show one letter at `line`, `xs` and `sm`, and two at `md` and `lg`.
 
-  | You had                    | Use now                                     |
-  | -------------------------- | ------------------------------------------- |
-  | `sm` (16)                  | no `size`                                   |
-  | `md` or no `size` (24)     | no `size` in rows and lists, `xs` elsewhere |
-  | `lg` (36; 32 before 6.1.0) | `md`                                        |
-  | `xl` (44; 40 before 6.1.0) | `lg` (`xl` is now a type error)             |
+  | You had                    | Use now                                                   |
+  | -------------------------- | --------------------------------------------------------- |
+  | `sm` (16)                  | no `size`                                                 |
+  | `md` or no `size` (24)     | no `size` in rows and lists, `md` elsewhere (grows to 36) |
+  | `lg` (36; 32 before 6.1.0) | `md`                                                      |
+  | `xl` (44; 40 before 6.1.0) | `lg` (`xl` is now a type error)                           |
 
   Of the avatar sizes, only `xl` fails the build. An `sm`, `md` or `lg` you leave as it is still
   compiles but draws at its new size, so check each one against the table.
