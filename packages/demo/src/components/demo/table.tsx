@@ -1,5 +1,7 @@
 import type { Elevation } from "@eqtylab/equality";
 import {
+  Avatar,
+  AvatarFallback,
   Badge,
   EmptyTableState,
   IconButton,
@@ -31,6 +33,7 @@ interface TableDemoProps {
     | "with-actions"
     | "striped";
   elevation?: Elevation;
+  density?: "regular" | "comfortable";
 }
 
 const defaultCols = "1fr 1fr auto auto auto";
@@ -46,6 +49,7 @@ const longTableData = Array.from({ length: 10 }, (_, i) => ({
 export const TableDemo = ({
   variant = "default",
   elevation,
+  density,
 }: TableDemoProps) => {
   const [selectedRow, setSelectedRow] = useState<number | null>(null);
   const toggleRow = (row: number) =>
@@ -147,7 +151,11 @@ export const TableDemo = ({
 
   if (variant === "with-actions") {
     return (
-      <TableContainer elevation={elevation} columns="1fr auto auto auto">
+      <TableContainer
+        elevation={elevation}
+        density={density}
+        columns="1fr auto auto auto"
+      >
         <TableHeader>
           <TableRow>
             <TableHead>Name</TableHead>
@@ -159,7 +167,14 @@ export const TableDemo = ({
         <TableBody>
           {longTableData.slice(0, 3).map((user) => (
             <TableRow key={user.email}>
-              <TableCell>{user.name}</TableCell>
+              <TableCell>
+                <div className="flex items-center gap-2">
+                  <Avatar aria-hidden>
+                    <AvatarFallback>{user.name.slice(0, 1)}</AvatarFallback>
+                  </Avatar>
+                  {user.name}
+                </div>
+              </TableCell>
               <TableCell>
                 <Badge variant={user.active ? "success" : "neutral"}>
                   {user.active ? "Active" : "Inactive"}

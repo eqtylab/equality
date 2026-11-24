@@ -13,7 +13,7 @@ import {
 
 ## Overview
 
-Avatars represent a user or entity with a profile image and initials fallback.
+Avatars represent a user or entity with a profile image and initials fallback. Give the fallback the full initials; small avatars show the first one.
 
 ## Usage
 
@@ -48,42 +48,42 @@ When no image is provided or the image fails to load, `AvatarFallback` is displa
 
 ## Sizes
 
-The `size` prop controls the dimensions of the avatar.
+Leave `size` off in rows and in text. The default avatar is as tall as the line of text it sits in, so it fits a table, menu or list row without making it taller. Pass a size when the avatar stands beside a control or on its own: each size is as tall as the control of the same name.
 
 <AvatarSizesDemo client:only="react" />
 
-| Size | Pixels | Use it                                                               |
-| ---- | ------ | -------------------------------------------------------------------- |
-| `sm` | 16     | Inside a line of text                                                |
-| `md` | 24     | In a table or menu row, beside a name                                |
-| `lg` | 36     | Beside a control, or in a row with two lines of text                 |
-| `xl` | 44     | On its own, in a card or a profile header, or beside a large control |
-
-An `lg` avatar is as tall as a `md` control, and an `xl` avatar as tall as a `lg` one.
+| Size          | Pixels            | Use it                                                 | Initials |
+| ------------- | ----------------- | ------------------------------------------------------ | -------- |
+| none (`line`) | As tall as a line | In a table, menu or list row, or inside a line of text | One      |
+| `xs`          | 24                | Beside an extra-small control, or a name outside a row | One      |
+| `sm`          | 28                | Beside a small control                                 | One      |
+| `md`          | 36                | Beside a default control, in a card or a page header   | Two      |
+| `lg`          | 44                | Beside a large control, or in a profile header         | Two      |
 
 ```tsx
+<Avatar>...</Avatar>
+<Avatar size="xs">...</Avatar>
 <Avatar size="sm">...</Avatar>
 <Avatar size="md">...</Avatar>
 <Avatar size="lg">...</Avatar>
-<Avatar size="xl">...</Avatar>
 ```
 
 ### Beside a control
 
-`size="lg"` makes the avatar as tall as a default control, so the two line up in a header or toolbar. Use `xl` beside a large control.
+Match the avatar's size to the control's, so the two line up in a header or toolbar. A default control takes `size="md"`.
 
 <AvatarControlDemo client:only="react" />
 
 ```tsx
 <div className="flex items-center gap-2">
   <SearchBar searchQuery={query} setSearchQuery={setQuery} />
-  <Avatar size="lg">...</Avatar>
+  <Avatar size="md">...</Avatar>
 </div>
 ```
 
 ### In a row
 
-Use the default `md` avatar in a `Table` cell or in a `DropdownMenu`, `Select` or `Command` item. The row keeps its height, so rows with and without avatars line up.
+Use the default avatar, with no `size`, in a `Table` cell or in a `DropdownMenu`, `Select` or `Command` item, at either table density. The row keeps its height, so rows with and without avatars line up.
 
 <AvatarRowDemo client:only="react" />
 
@@ -144,10 +144,10 @@ The `shape` prop controls the border radius of the avatar.
 
 ### Avatar
 
-| Name    | Description             | Type                   | Default  | Required |
-| ------- | ----------------------- | ---------------------- | -------- | -------- |
-| `size`  | The size of the avatar  | `sm`, `md`, `lg`, `xl` | `md`     | ❌       |
-| `shape` | The shape of the avatar | `circle`, `square`     | `circle` | ❌       |
+| Name    | Description             | Type                           | Default  | Required |
+| ------- | ----------------------- | ------------------------------ | -------- | -------- |
+| `size`  | The size of the avatar  | `line`, `xs`, `sm`, `md`, `lg` | `line`   | ❌       |
+| `shape` | The shape of the avatar | `circle`, `square`             | `circle` | ❌       |
 
 ### AvatarImage
 

@@ -76,10 +76,11 @@ import { Badge } from "@eqtylab/equality";
 
 ## Sizes
 
-The Badge comes in two sizes. The default `md` size is 20px tall and should be used in most situations, while `sm` is 16px tall for use in tighter layouts where density is desired (such as log viewers). Small badges generally look better with `pill={false}` applied.
+Leave `size` off in most places. The default badge is as tall as the line of text it sits in, so it fits a table or menu row without making it taller, and grows beside a heading. Pass a size only when the badge must stay one height whatever the text around it: `md` is 20px tall, and `sm` is 16px tall for dense layouts such as log viewers. Small badges generally look better with `pill={false}` applied.
 
 <div className="flex items-center gap-3">
-  <Badge size="md">Medium (Default)</Badge>
+  <Badge>Default</Badge>
+  <Badge size="md">Medium</Badge>
   <Badge size="sm" icon="Check">
     Small
   </Badge>
@@ -88,11 +89,16 @@ The Badge comes in two sizes. The default `md` size is 20px tall and should be u
   </Badge>
 </div>
 
+<div className="flex items-center gap-3 text-xl">
+  Beside a heading <Badge>Default</Badge>
+</div>
+
 ### Usage
 
 ```tsx
-<Badge size="md">Medium (Default)</Badge>
-<Badge size="sm">Small (Square)</Badge>
+<Badge>Default</Badge>
+<Badge size="md">Medium</Badge>
+<Badge size="sm">Small</Badge>
 <Badge size="sm" pill={false}>Small (Square)</Badge>
 ```
 
@@ -204,7 +210,7 @@ You can enhance your badge by displaying an icon. The `icon` prop accepts either
 | Prop             | Type                                                                                    | Default     | Description                                                                                                                       |
 | ---------------- | --------------------------------------------------------------------------------------- | ----------- | --------------------------------------------------------------------------------------------------------------------------------- |
 | `variant`        | `"neutral"` \| `"primary"` \| `"secondary"` \| `"warning"` \| `"danger"` \| `"success"` | `"primary"` | The visual style variant of the badge.                                                                                            |
-| `size`           | `"sm"` \| `"md"`                                                                        | `"md"`      | The size of the badge. `"md"` renders at 20px tall, `"sm"` at 16px tall.                                                          |
+| `size`           | `"line"` \| `"sm"` \| `"md"`                                                            | `"line"`    | The size of the badge. `"line"` is as tall as the line of text it sits in, `"md"` is 20px tall and `"sm"` is 16px tall.           |
 | `display`        | `"both"` \| `"text-only"` \| `"icon-only"`                                              | `"both"`    | Controls what elements are displayed. `"both"` shows icon and text, `"text-only"` shows only text, `"icon-only"` shows only icon. |
 | `icon`           | `string` \| `ReactElement`                                                              | -           | Icon to display. Can be a Lucide icon name or a custom React element.                                                             |
 | `pill`           | `boolean`                                                                               | `true`      | When true (default), badge is pill-shaped. Set to `false` for a square badge with subtle border radius.                           |

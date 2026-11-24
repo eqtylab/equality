@@ -64,9 +64,11 @@ If you have no network access or web fetching fails, tell your user that you cou
 | Textarea inside an editor frame                            | `Textarea variant="bare"`                          | `Textarea` with `!` overrides       |
 | Field-like trigger for a date or people picker             | `Button variant="field"`                           | A tertiary `Button` with overrides  |
 | Clear button inside a picker field                         | `IconButton size="xs"`                             | `IconButton` with a size override   |
-| Avatar sized to match a control                            | `Avatar size="lg"`                                 | `Avatar` with `!size-9`             |
+| Avatar beside a name in a table, menu or list row          | `Avatar` with no `size`                            | `Avatar` with a negative margin     |
+| Avatar sized to match a control                            | `Avatar size="md"`                                 | `Avatar` with `!size-9`             |
 | Row action, kebab or copy button at the end of a table row | `IconButton` at its default size, in a `TableCell` | `IconButton` with a negative margin |
 | Zebra stripes on a table                                   | `TableContainer striped`                           | `nth-child` row fills               |
+| Taller table rows, comfortable or touch-friendly table     | `TableContainer density="comfortable"`             | Extra padding on `TableRow`         |
 | Sidebar rows, settings list, `NavItem`/`NavSection`        | `NavListItem` in `NavListGroup`                    | Styled links in a `ul`              |
 | App sidebar, icon rail                                     | `NavPanel` + `NavRail`                             | A fixed `aside` with links          |
 | Sliding sub-panel, drill-in nav                            | `NavDrill`                                         | Swapped lists with CSS transitions  |
@@ -78,9 +80,10 @@ If you have no network access or web fetching fails, tell your user that you cou
 - Small label titles should use `Label` to describe
 - NEVER make custom badges!! There are more than enough properties in `Badge`
   - Use `ResourceBadge` when referencing integrity-backed resources and `ControlStatusBadge` when referencing control statuses.
-  - Avoid using badge `size="sm"` except for specific scenarios where space is at a premium like within tables. Most badges should be the default `size="md"`
+  - Leave badge `size` off, in table rows too: the default follows the line it sits in. Use `size="sm"` only where space is at a premium, such as log viewers
 - Icons should be used sparingly. Ensure consistency when using them, try not to conflate multiple concepts with the same icon
 - Nav: decide between drill in, expand and `NavSwitcher` with "Which One to Use" on the Nav docs page, and follow its "Best Practices". Statuses go in a row's `suffix`, never its `prefix`. Under a sticky header, set `--eq-nav-offset` to the header's height on the element around the rail and panel; never override the nav's own `top` or `max-height`.
+- Avatar: leave `size` off in table, menu and list rows, where it follows the line. Use `md` in cards and page headers and `lg` in profile headers; match `xs` to `lg` to the control beside it.
 - Table: rows draw a thin line by default. Add `striped` only for wide, number-heavy tables people read across: five or more columns and many rows. Tables in cards and dashboards keep the line.
 - No custom hex codes, no `bg-{color}-{number}` palette classes.
 - Keep interactive and status colours apart. They are two different purples, and they clash side by side:

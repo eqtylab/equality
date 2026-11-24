@@ -2,6 +2,49 @@
 
 Notable changes to Equality are recorded here, following [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## 7.0.0 - 2026-11-24
+
+### Breaking
+
+- `Avatar` sizes now match the control sizes: `xs` 24, `sm` 28, `md` 36 and `lg` 44. The new
+  default, `line`, is as tall as the line of text the avatar sits in: 20 in a table, menu or list
+  row. `xl` is gone. Initials show one letter at `line`, `xs` and `sm`, and two at `md` and `lg`.
+
+  | You had                    | Use now                                     |
+  | -------------------------- | ------------------------------------------- |
+  | `sm` (16)                  | no `size`                                   |
+  | `md` or no `size` (24)     | no `size` in rows and lists, `xs` elsewhere |
+  | `lg` (36; 32 before 6.1.0) | `md`                                        |
+  | `xl` (44; 40 before 6.1.0) | `lg` (`xl` is now a type error)             |
+
+  Only `xl` fails the build. An `sm`, `md` or `lg` you leave as it is still compiles but draws at
+  its new size, so check each one against the table.
+
+### Added
+
+- `TableContainer` takes `density`. `regular`, the default, keeps rows and the header at 36;
+  `comfortable` makes them 44, for tables people read slowly or use mostly by touch.
+- `TableContainer` takes `striped`, which fills every other row, for wide, number-heavy tables.
+- `Badge` has a new default size, `line`: as tall as the line it sits in. In a row it is 20, as
+  before; beside larger or smaller text it follows that text. `md` (20) and `sm` (16) stay fixed.
+- `IconButton` adds an icon size for `xs`, so every control size names the size of its icon.
+
+### Changed
+
+- Table, `DropdownMenu`, `Select` and `Command` rows hold an avatar, badge, small switch or default
+  `IconButton` and stay 36. A part taller than that, or text that wraps, makes its row taller.
+- Table body rows draw a faint line between them instead of filling every other row. The last row
+  draws none. Pass `striped` to bring the fill back.
+- The Table header draws its line inside its height, so it is 36, from 37.
+- `IconButton` icons match the icon beside text in the control of the same size: 16 at `md`, from
+  22, and 20 at `lg`, from 26. `xs` (14) and `sm` (16) are unchanged.
+- An icon in a large control is 20, from 16.
+
+### Removed
+
+- The `data-avatar` attribute on `Avatar` and `data-icon-button` on `IconButton`. Nothing in
+  Equality reads them; style an avatar or icon button by its `className` instead.
+
 ## 6.2.0 - 2026-11-24
 
 ### Changed

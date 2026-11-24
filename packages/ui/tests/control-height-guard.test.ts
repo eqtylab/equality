@@ -9,6 +9,7 @@ const HAND_WRITTEN_HEIGHT =
 
 const EXCEPTIONS: Record<string, string> = {
   'avatar/avatar.module.css': 'A picture, not a control',
+  'badge/badge.module.css': 'Follows its line of text, falling back to 20 where lh is unsupported',
   'bar-graph/bar-graph.module.css': 'A graph, not a control',
   'date-range-picker/date-range-picker.module.css': 'A grid of days, not a row of controls',
   'icon/icon.module.css': 'A picture, not a control',
