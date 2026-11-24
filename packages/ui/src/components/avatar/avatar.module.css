@@ -2,7 +2,7 @@
 
 /* A text size on any root rule makes a line avatar's 1lh measure itself, not the line it sits in */
 .avatar {
-  @apply relative flex;
+  @apply relative flex shrink-0;
   @apply overflow-hidden;
   @apply aspect-square;
 }

@@ -27,12 +27,12 @@ Notable changes to Equality are recorded here, following [Keep a Changelog](http
 - `TableContainer` takes `striped`, which fills every other row, for wide, number-heavy tables.
 - `Badge` has a new default size, `line`: as tall as the line it sits in. In a row it is 20, as
   before; beside larger or smaller text it follows that text. `md` (20) and `sm` (16) stay fixed.
-- `IconButton` adds an icon size for `xs`, so every control size names the size of its icon.
 
 ### Changed
 
 - Table, `DropdownMenu`, `Select` and `Command` rows hold an avatar, badge, small switch or default
-  `IconButton` and stay 36. A part taller than that, or text that wraps, makes its row taller.
+  `IconButton` and stay 36. A part taller than that, or text that wraps, makes its row taller, by
+  less than before: rows keep 4 above and below their content, from 8, so a two-line row is 48, from 56.
 - Table body rows draw a faint line between them instead of filling every other row. The last row
   draws none. Pass `striped` to bring the fill back.
 - The Table header draws its line inside its height, so it is 36, from 37.
