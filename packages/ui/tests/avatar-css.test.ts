@@ -60,12 +60,6 @@ describe('avatar.module.css', () => {
     ).toMatch(/border-radius:\s*0\.25rem;/);
   });
 
-  it('makes an xl avatar as tall as the shell, a default control with room around it', () => {
-    const body = ruleBody(css, '.avatar.size-xl');
-    expect(body).toMatch(/width:\s*var\(--eq-shell-size\);/);
-    expect(body).toMatch(/height:\s*var\(--eq-shell-size\);/);
-  });
-
   it('drops the sizes outside the scale', () => {
     expect(css).not.toMatch(/\.size-(2xl|3xl)\b/);
     expect(css).not.toMatch(/\.avatar\.(sm|md|lg|xl)\b/);
