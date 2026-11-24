@@ -7,4 +7,5 @@ order:
   - component-architecture
   - color-tokens
   - typography
+  - sizing
   - elevation

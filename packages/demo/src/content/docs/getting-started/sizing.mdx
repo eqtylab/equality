@@ -1,0 +1,66 @@
+---
+title: "Sizing"
+description: "Seven size steps shared by text lines, controls, rows and avatars, and when to use each"
+---
+
+import { SizingDemo } from "@demo/components/demo/sizing";
+
+## Overview
+
+Equality sizes text lines, controls, rows and avatars on one scale of seven steps: 16, 20, 24, 28, 36, 44 and 52. Parts on the same step line up beside each other without extra spacing. Pick the step that fits what the part is. Never use a size between two steps.
+
+## The Scale
+
+<SizingDemo />
+
+| Step | Text line      | Control     | Row                  | Avatar              | Also                                  |
+| ---- | -------------- | ----------- | -------------------- | ------------------- | ------------------------------------- |
+| 16   | `text-caption` |             |                      |                     | Small badge                           |
+| 20   | `text-body`    |             |                      | No `size`, in a row | Default badge                         |
+| 24   |                | Extra small |                      | `xs`                |                                       |
+| 28   | `text-section` | Small       | The part a row holds | `sm`                | Card header icon                      |
+| 36   | `text-title`   | Default     | Regular              | `md`                |                                       |
+| 44   |                | Large       | Comfortable          | `lg`                |                                       |
+| 52   |                |             |                      | `xl`                | Nav rail, and an app header beside it |
+
+## When to Use Each Step
+
+### 16
+
+Small supporting text, such as a timestamp or a hint under a field. A small badge, only where space is tight.
+
+### 20
+
+Running text and descriptions, and anything that sits in a line of text: a default badge, or an avatar in a table, menu or list row.
+
+### 24
+
+An extra-small control beside a field, such as the clear button inside a picker. An `xs` avatar only beside an extra-small control.
+
+### 28
+
+A card or section title and the small button beside it. The one part a row holds: an avatar, a badge, a small switch or a default `IconButton`.
+
+### 36
+
+The page title and the default controls beside it. Regular table rows. An `md` avatar for one person on their own, such as a card header or an "Assigned to" field.
+
+### 44
+
+Large controls. Comfortable table rows, for tables people read slowly or use mostly by touch. An `lg` avatar in a profile header.
+
+### 52
+
+The nav rail, and an app header that meets it at the corner. The `xl` avatar for a profile or page hero. On touch screens the rail grows to 60, so an app header beside it should too.
+
+## Rows
+
+A table row is 36, or 44 with `density="comfortable"`. Either holds one part up to 28 without growing. Text that wraps, or a taller part, makes the row taller.
+
+## Building Your Own Component
+
+Put a part you build yourself on a step, not a pixel value:
+
+- A control takes its height from `--eq-control-{xs,sm,md,lg}-height` (24, 28, 36, 44), such as `h-(--eq-control-md-height)`.
+- Text takes one of the four styles on the [Typography](/getting-started/typography) page.
+- A picture or mark that isn't a control, such as a logo or an icon in a circle, takes `--eq-size-{2xs,line,xs,sm,md,lg,xl}` (16 to 52), such as `size-(--eq-size-sm)`.

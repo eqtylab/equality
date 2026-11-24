@@ -168,7 +168,10 @@ Equality's control decisions: `h-(--eq-control-md-height)` for height,
 padding. Heights come in `xs` (24), `sm` (28), `md` (36) and `lg` (44); text
 comes in `sm`, `md` and `lg`. An icon beside the text takes
 `--eq-control-{xs,sm,md,lg}-icon-size`, such as `size-(--eq-control-md-icon-size)`.
-Never write `h-10`.
+Never write `h-10`. Text lines, controls, rows and avatars share seven size steps
+(16, 20, 24, 28, 36, 44, 52); the Sizing page says what sits on each:
+<https://equality.eqtylab.io/getting-started/sizing>. A picture or mark you build
+that isn't a control takes `--eq-size-{2xs,line,xs,sm,md,lg,xl}`.
 
 Text takes one of four styles: `text-title` for a page title, `text-section` for
 a card or section title, `text-body` for running text and `text-caption` for
@@ -187,7 +190,7 @@ import { extendTailwindMerge } from 'tailwind-merge';
 const twMerge = extendTailwindMerge({
   extend: {
     classGroups: {
-      'font-size': [{ text: ['title', 'section', 'body', 'caption'] }],
+      'font-size': [{ text: ['xxs', 'title', 'section', 'body', 'caption'] }],
     },
   },
 });
