@@ -80,20 +80,18 @@ html[data-equality-theme='dark'] [data-eq-docs-column]::before {
   }
 }
 
-header[data-eq-chrome]::after {
+[data-eq-docs-header]::after {
   content: '';
   position: absolute;
   inset: auto 0 0;
-  height: 1px;
-  background: var(--color-border-raised);
+  border-bottom: 1px solid var(--color-border-raised);
   pointer-events: none;
 }
 
-footer[data-eq-chrome]::before {
+[data-eq-docs-footer]::before {
   content: '';
   position: absolute;
   inset: 0 0 auto;
-  height: 1px;
-  background: var(--color-border);
+  border-top: 1px solid var(--color-border);
   pointer-events: none;
 }

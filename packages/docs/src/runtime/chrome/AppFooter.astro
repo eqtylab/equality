@@ -19,11 +19,10 @@ const currentYear = new Date().getFullYear();
 const license = typeof CONFIG.license === 'string' ? { name: CONFIG.license, href: undefined } : CONFIG.license;
 ---
 
-<footer class="relative mt-8 bg-background-raised" data-eq-chrome data-pagefind-ignore>
+<footer class="relative mt-8 bg-background-raised" data-eq-chrome data-eq-docs-footer data-pagefind-ignore>
   {/* Mirrors main's columns from xl, where the table of contents appears: the same max width,
-      padding and gap, and a TOC-wide column, so the license's right edge meets the TOC's.
-      py-4 matches --eq-docs-header-height for a one-line footer; change both. */}
-  <div class="mx-auto flex max-w-[calc(var(--eq-docs-content-max)+var(--eq-docs-toc-width)+8rem)] flex-col gap-6 px-6 py-4 text-sm md:flex-row md:items-start md:justify-between xl:gap-16">
+      padding and gap, and a TOC-wide column, so the license's right edge meets the TOC's. */}
+  <div class="mx-auto flex max-w-[calc(var(--eq-docs-content-max)+var(--eq-docs-toc-width)+8rem)] min-h-(--eq-docs-header-height) flex-col justify-center gap-6 px-6 py-4 text-sm md:flex-row md:items-start md:justify-between xl:gap-16">
     {links.length > 0 && (
       <ul class="m-0 flex flex-col list-none flex-wrap gap-2 p-0 xl:min-w-0 xl:flex-1">
         {links.map((row) => (

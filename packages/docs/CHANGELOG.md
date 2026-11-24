@@ -4,8 +4,6 @@ Notable changes to Equality's Docsite Generator are recorded here, following [Ke
 
 ## 0.19.0 - 2026-11-23
 
-Needs `@eqtylab/equality` 6.4.0 or later.
-
 ### Changed
 
 - The header is 52px tall (was 69px): its 36px controls with 8px above and below. Its bottom line is
