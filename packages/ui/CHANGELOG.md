@@ -6,7 +6,8 @@ Notable changes to Equality are recorded here, following [Keep a Changelog](http
 
 ### Changed
 
-- Each control size names the size of the icon beside its text. Icons stay the size they were.
+- Small, default and large controls each name the size of the icon beside their text. Icons stay
+  the size they were.
 - `NavRail` is 52 wide, from 72: a default control with 8 on each side. Its icons are 16, from 20, the
   same as the icon in any default control. On a touch screen its items grow to the 44 touch target,
   so the rail is 60.

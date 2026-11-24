@@ -19,9 +19,8 @@ const READERS: [file: string, selector: string, size: 'sm' | 'md' | 'lg'][] = [
 ];
 
 describe('the icon beside text', () => {
-  it('has one named size per control size', async () => {
+  it('names the icon size in small, default and large controls', async () => {
     const decisions = await readFile('src/theme/theme-decisions.css', 'utf8');
-    expect(decisions).toMatch(/--eq-control-xs-icon-size:\s*--spacing\(3\.5\);/);
     expect(decisions).toMatch(/--eq-control-sm-icon-size:\s*--spacing\(4\);/);
     expect(decisions).toMatch(/--eq-control-md-icon-size:\s*--spacing\(4\);/);
     expect(decisions).toMatch(/--eq-control-lg-icon-size:\s*--spacing\(4\);/);

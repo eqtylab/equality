@@ -158,7 +158,7 @@ Equality's control decisions: `h-(--eq-control-md-height)` for height,
 `--eq-control-padding-x-condensed`, `-normal` or `-spacious` (8, 12, 16) for side
 padding. Heights come in `xs` (24), `sm` (28), `md` (36) and `lg` (44); text
 comes in `sm`, `md` and `lg`. An icon beside the text takes
-`--eq-control-{xs,sm,md,lg}-icon-size`, such as `size-(--eq-control-md-icon-size)`.
+`--eq-control-{sm,md,lg}-icon-size`, such as `size-(--eq-control-md-icon-size)`.
 Never write `h-10`.
 
 **Accessibility is mostly free — don't undo it.** Radix gives you focus
