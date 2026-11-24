@@ -2,6 +2,16 @@
 
 Notable changes to Equality's Docsite Generator are recorded here, following [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## 0.20.0 - 2026-11-24
+
+Needs `@eqtylab/equality` 7.0.0 or later.
+
+### Changed
+
+- Markdown tables draw a faint line between rows instead of filling every other row, as Equality 7
+  tables do. Their rows stay 36px; a row whose text wraps sits tighter, with 4px above and below,
+  from 8.
+
 ## 0.19.0 - 2026-11-24
 
 ### Changed
