@@ -7,42 +7,32 @@ import { cn } from '@/lib/utils';
 
 export interface CardContentHeaderProps {
   className?: string;
+  /** A Lucide icon name or a React element, shown in a circle beside the heading. */
   icon: React.ReactElement | string;
+  /** The card's title, rendered as an `h3`. */
   heading?: string;
+  /** Shows a "See All" button at the end of the heading's line and runs on click. */
   onButtonClick?: () => void;
 }
 
 const CardContentHeader = forwardRef<HTMLDivElement, CardContentHeaderProps>(
   ({ className, icon, heading, onButtonClick, ...props }, ref) => {
-    const shouldRender = heading || onButtonClick;
-    const shouldWrap = !!onButtonClick;
-
-    if (!shouldRender) {
+    if (!heading && !onButtonClick) {
       return null;
     }
 
     return (
-      <div
-        ref={ref}
-        className={cn(
-          styles['card-content-header'],
-          shouldWrap && styles['card-content-header--wrap'],
-          className
-        )}
-        {...props}
-      >
+      <div ref={ref} className={cn(styles['card-content-header'], className)} {...props}>
         {/* TODO refactor this to be a slot so elevation can be set independently */}
         <Icon className={styles.mark} icon={icon} background="circle" elevation="overlay" />
-        {onButtonClick && (
-          <Button className={styles.button} variant="tertiary" size="sm" onClick={onButtonClick}>
-            See All
-          </Button>
-        )}
-        {heading && (
-          <h3 className={cn(styles.title, onButtonClick && styles['title--button-click'])}>
-            {heading}
-          </h3>
-        )}
+        <div className={styles.line}>
+          {heading && <h3 className={styles.title}>{heading}</h3>}
+          {onButtonClick && (
+            <Button className={styles.button} variant="tertiary" size="sm" onClick={onButtonClick}>
+              See All
+            </Button>
+          )}
+        </div>
       </div>
     );
   }

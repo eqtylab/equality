@@ -18,7 +18,9 @@ Notable changes to Equality are recorded here, following [Keep a Changelog](http
 ### Changed
 
 - `CardContentHeader` has a smaller icon circle, 28 from 36, with a 16 icon, from 20, and a 16
-  semibold title, from 18, so the header is as tall as its "See All" button.
+  semibold title, from 18, so the header is as tall as its "See All" button. The icon and title now
+  stay side by side at every width, with "See All" at the end of the title's line; a long title wraps
+  beside the icon instead of dropping under it.
 - `MetricCard`'s icon is 16, from 20, in the same circle.
 - `SectionHeading`'s title is 16 semibold, from 20 medium, and sits tighter over a description.
 

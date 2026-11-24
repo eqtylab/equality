@@ -14,7 +14,7 @@ import {
 
 Card Content Header is a header row for the top of a card's content, pairing a circular icon with a heading and an optional "See All" action button. It is designed to sit inside [CardContent](/components/card), giving grouped content a consistent title treatment.
 
-The component renders nothing unless a `heading` or an `onButtonClick` handler is provided. When `onButtonClick` is set, a tertiary "See All" button is shown and the layout adjusts to accommodate it.
+The component renders nothing unless a `heading` or an `onButtonClick` handler is provided. When `onButtonClick` is set, a tertiary "See All" button sits at the end of the heading's line. The icon and heading stay side by side at every width: a long heading wraps beside the icon, never under it.
 
 ## Usage
 
@@ -54,6 +54,18 @@ The `icon` prop accepts either a [Lucide](https://lucide.dev/icons/) icon name o
       onButtonClick={() => {}}
     />
     <CardDescription>Card with CardContentHeader</CardDescription>
+  </CardContent>
+</Card>
+
+### Long Heading
+
+<Card client:only="react" className="max-w-xs">
+  <CardContent>
+    <CardContentHeader
+      icon="SquareChartGantt"
+      heading="Evaluations Awaiting Reviewer Sign-off"
+      onButtonClick={() => {}}
+    />
   </CardContent>
 </Card>
 
