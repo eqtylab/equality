@@ -44,9 +44,9 @@ describe('nav.module.css', () => {
     );
   });
 
-  it('sizes the rail as a default control plus 8 each side', () => {
+  it('sizes the rail as its item plus 8 each side, on touch too', () => {
     expect(ruleBody(css, '.nav-rail')).toMatch(
-      /width:\s*calc\(var\(--eq-control-md-height\) \+ calc\(0\.25rem \* 4\)\);/
+      /width:\s*calc\(max\(var\(--eq-control-md-height\), var\(--eq-touch-target\)\) \+ calc\(0\.25rem \* 4\)\);/
     );
   });
 
@@ -54,8 +54,10 @@ describe('nav.module.css', () => {
     const shared = ruleBody(css, '.nav-rail,\n.nav-panel');
     expect(shared).not.toMatch(/border-right-width/);
     expect(shared).toMatch(/position:\s*relative;/);
+    expect(shared).toMatch(/isolation:\s*isolate;/);
     const line = ruleBody(css, '.nav-rail::after,\n.nav-panel::after');
-    expect(line).toMatch(/width:\s*1px;/);
+    expect(line).toMatch(/border-right:\s*1px solid var\(--color-border-raised\);/);
+    expect(line).not.toMatch(/background-color/);
     expect(line).toMatch(/inset:\s*0 0 0 auto;/);
   });
 
@@ -85,5 +87,8 @@ describe('nav.module.css', () => {
     expect(
       ruleBody(css, ".nav-switcher-heading .nav-switcher[data-state='open']:not(:disabled)")
     ).toMatch(/--tw-inset-ring-shadow:\s*inset 0 0 0 1px/);
+    expect(
+      ruleBody(css, ".nav-switcher-heading .nav-switcher[data-state='open']:not(:disabled)")
+    ).toMatch(/@media \(forced-colors: active\)\s*\{\s*outline-style:/);
   });
 });

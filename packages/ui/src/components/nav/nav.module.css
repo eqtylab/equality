@@ -9,22 +9,22 @@
 
 .nav-rail,
 .nav-panel {
-  @apply bg-background-raised relative flex shrink-0 flex-col;
+  @apply bg-background-raised relative isolate flex shrink-0 flex-col;
   /* Without size containment a long list grows the row and stretches the page */
   contain: size;
 }
 
-/* Drawn over the scroller, whose fill would hide a border or an inset shadow */
+/* A border on the rail itself would take 1px from its content box and put the items off-centre */
 .nav-rail::after,
 .nav-panel::after {
   content: '';
-  @apply bg-border-raised z-4 pointer-events-none absolute;
+  @apply z-4 pointer-events-none absolute;
   inset: 0 0 0 auto;
-  width: 1px;
+  border-right: 1px solid var(--color-border-raised);
 }
 
 .nav-rail {
-  width: calc(var(--eq-control-md-height) + --spacing(4));
+  width: calc(max(var(--eq-control-md-height), var(--eq-touch-target)) + --spacing(4));
 }
 
 .nav-panel {
@@ -165,6 +165,7 @@
 
 .nav-switcher-heading .nav-switcher[data-state='open']:not(:disabled) {
   @apply bg-background inset-ring-brand-primary inset-ring;
+  @apply forced-colors:outline-2 forced-colors:-outline-offset-2 forced-colors:outline-[color:Highlight];
 }
 
 .nav-switcher-heading .nav-switcher:focus-visible {
