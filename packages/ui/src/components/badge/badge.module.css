@@ -115,3 +115,7 @@
 .badge--sm.badge--icon-only {
   @apply p-0.5;
 }
+
+.badge--line.badge--icon-only {
+  @apply items-center justify-center;
+}
