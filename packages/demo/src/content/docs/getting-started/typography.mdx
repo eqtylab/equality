@@ -79,3 +79,24 @@ A badge beside a title keeps its default size and sits centred on the title's li
   <Badge variant="neutral">Beta</Badge>
 </div>
 ```
+
+## Merging Classes
+
+If your app merges classes with tailwind-merge, register the four styles as font sizes, or a text colour beside them removes them.
+
+```ts
+import { clsx, type ClassValue } from "clsx";
+import { extendTailwindMerge } from "tailwind-merge";
+
+const twMerge = extendTailwindMerge({
+  extend: {
+    classGroups: {
+      "font-size": [{ text: ["title", "section", "body", "caption"] }],
+    },
+  },
+});
+
+export function cn(...inputs: ClassValue[]) {
+  return twMerge(clsx(inputs));
+}
+```

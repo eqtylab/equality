@@ -172,10 +172,30 @@ Never write `h-10`.
 
 Text takes one of four styles: `text-title` for a page title, `text-section` for
 a card or section title, `text-body` for running text and `text-caption` for
-small supporting text. Title and section lines are as tall as a default and a small
-button, and body and caption match the text inside them, so a title lines up
-with the buttons beside it. Never pair a size with a
-hand-written line height, such as `text-2xl leading-(--eq-control-md-height)`.
+small supporting text. Title and section lines are as tall as a default and a
+small button, and body and caption match the text inside them, so a title lines
+up with the buttons beside it. Never pair a size with a hand-written line height,
+such as `text-2xl leading-(--eq-control-md-height)`.
+
+If your app merges classes with tailwind-merge, register the four styles as font
+sizes, or a text colour beside them removes them.
+
+```ts
+import { clsx, type ClassValue } from 'clsx';
+import { extendTailwindMerge } from 'tailwind-merge';
+
+const twMerge = extendTailwindMerge({
+  extend: {
+    classGroups: {
+      'font-size': [{ text: ['title', 'section', 'body', 'caption'] }],
+    },
+  },
+});
+
+export function cn(...inputs: ClassValue[]) {
+  return twMerge(clsx(inputs));
+}
+```
 
 **Accessibility is mostly free — don't undo it.** Radix gives you focus
 management, escape handling, and ARIA wiring. You still have to supply the text:
