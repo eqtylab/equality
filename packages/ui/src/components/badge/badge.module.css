@@ -12,7 +12,7 @@
 
 /* Size Variants */
 
-/* The root sets no text size: 1lh measures the line height it inherits, so text styles live on .badge-label */
+/* A text size on the root makes 1lh measure the badge, not the line it sits in; set it on .badge-label */
 .badge--line {
   height: 20px;
   height: 1lh;
