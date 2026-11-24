@@ -24,7 +24,11 @@ describe('command.module.css', () => {
     expect(body).toMatch(/@media \(width >= 48rem\)\s*\{\s*font-size:\s*0\.875rem;/);
   });
 
-  it('keeps the item icon rule in the dialog, so 6.2.0 moves nothing there', () => {
-    expect(ruleBody(css, '.command-dialog-content-inner')).toMatch(/\[cmdk-item\] svg/);
+  it('sizes item icons in one place, so the dialog draws them the same as the list', () => {
+    expect(ruleBody(css, '.command-dialog-content-inner')).not.toMatch(/\[cmdk-item\]/);
+  });
+
+  it('carries no rule for an input wrapper attribute that nothing renders', () => {
+    expect(css).not.toContain('cmdk-input-wrapper');
   });
 });

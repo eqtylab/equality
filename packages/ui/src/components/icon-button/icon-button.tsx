@@ -24,13 +24,6 @@ const iconButtonVariants = cva(styles['icon-btn'], {
   },
 });
 
-const iconSizeMap = {
-  xs: 14,
-  sm: 16,
-  md: 22,
-  lg: 26,
-};
-
 export interface IconButtonProps
   extends
     Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, 'name'>,
@@ -59,14 +52,12 @@ const IconButton = React.forwardRef<HTMLButtonElement | HTMLAnchorElement, IconB
     ref
   ) {
     const Icon = LucideIcons[name] as LucideIcons.LucideIcon;
-    const iconSize = iconSizeMap[size || 'sm'];
-    const IconComponent = Icon as React.ComponentType<{ size?: number }>;
 
     if (!Icon) {
       throw new Error(`Icon "${name}" not found in lucide-react`);
     }
 
-    const content = <IconComponent size={iconSize} />;
+    const content = <Icon />;
 
     if (href && !disabled) {
       return (
@@ -76,7 +67,6 @@ const IconButton = React.forwardRef<HTMLButtonElement | HTMLAnchorElement, IconB
           target={target}
           download={download}
           aria-label={label}
-          data-icon-button={size || 'sm'}
           rel={target === '_blank' ? 'noopener noreferrer' : undefined}
           className={cn(iconButtonVariants({ size, variant }), className)}
           {...(props as React.AnchorHTMLAttributes<HTMLAnchorElement>)}
@@ -91,7 +81,6 @@ const IconButton = React.forwardRef<HTMLButtonElement | HTMLAnchorElement, IconB
         ref={ref as React.Ref<HTMLButtonElement>}
         type="button"
         aria-label={label}
-        data-icon-button={size || 'sm'}
         disabled={disabled}
         className={cn(iconButtonVariants({ size, variant }), className)}
         {...props}

@@ -37,12 +37,12 @@ describe('IconButton', () => {
     expect(screen.getByRole('link', { name: 'Open' }).getAttribute('data-state')).toBe('closed');
   });
 
-  it('draws an extra-small button with a 14px icon', () => {
+  it('leaves the icon size to the stylesheet', () => {
     render(<IconButton name="X" label="Clear" size="xs" />);
     const button = screen.getByRole('button', { name: 'Clear' });
 
     expect(button.className).toMatch(/size--xs/);
-    expect(button.getAttribute('data-icon-button')).toBe('xs');
-    expect(button.querySelector('svg')!.getAttribute('width')).toBe('14');
+    expect(button.hasAttribute('data-icon-button')).toBe(false);
+    expect(button.querySelector('svg')!.getAttribute('width')).not.toBe('14');
   });
 });

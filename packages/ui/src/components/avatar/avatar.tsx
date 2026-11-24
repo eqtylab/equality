@@ -16,7 +16,6 @@ const Avatar = React.forwardRef<React.ElementRef<typeof AvatarPrimitive.Root>, A
     <AvatarPrimitive.Root
       ref={ref}
       className={cn(styles.avatar, styles[size], styles[shape], className)}
-      data-avatar={size}
       {...props}
     />
   )

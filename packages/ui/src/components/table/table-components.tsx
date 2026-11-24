@@ -13,13 +13,16 @@ const TableContainer = React.forwardRef<
     VariantProps<typeof tableElevationVariants> & {
       border?: boolean;
       columns?: string;
+      /** Fill every other row instead of drawing a line between rows, for wide, number-heavy tables */
+      striped?: boolean;
     }
->(({ className, style, elevation = ELEVATION.RAISED, border, columns, ...props }, ref) => (
+>(({ className, style, elevation = ELEVATION.RAISED, border, columns, striped, ...props }, ref) => (
   <div
     className={cn(
       styles['table'],
       tableElevationVariants({ elevation }),
       border && styles['table-border'],
+      striped && styles['table--striped'],
       className
     )}
     style={columns ? ({ ...style, '--table-columns': columns } as React.CSSProperties) : style}

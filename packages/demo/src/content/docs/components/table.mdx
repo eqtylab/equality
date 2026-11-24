@@ -58,7 +58,21 @@ Basic usage:
 
 ### Default
 
+Each row draws a thin line along its bottom edge, so rows stay easy to tell apart without adding weight. Use this for most tables, and for every table in a card.
+
 <TableDemo client:only="react" />
+
+### Striped
+
+Add `striped` to fill every other row instead of drawing lines. Use it for wide, number-heavy tables that people read across: five or more columns and many rows, where the fill helps the eye stay on one row. Everything else uses the default line.
+
+<TableDemo client:only="react" variant="striped" />
+
+```tsx
+<TableContainer striped columns="minmax(10rem, 1fr) repeat(6, auto)">
+  ...
+</TableContainer>
+```
 
 ### Clickable Rows
 
@@ -325,6 +339,7 @@ A row is one line of text plus padding. These parts keep the row at its height:
 | `columns`   | CSS `grid-template-columns` value for column sizing    | `string`                              | —        | ❌       |
 | `elevation` | Controls the shadow and background styling             | `sunken`, `base`, `raised`, `overlay` | `raised` | ❌       |
 | `border`    | Applies an elevation-aware border with rounded corners | `boolean`                             | `false`  | ❌       |
+| `striped`   | Fills every other row instead of drawing row lines     | `boolean`                             | `false`  | ❌       |
 
 ### TableHeader
 
