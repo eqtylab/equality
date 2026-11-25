@@ -1,5 +1,8 @@
 @reference '../../theme/theme.module.css';
 
+/* Declares the order before the layer below, or it lands under the app's base layer and preflight zeroes cell padding */
+@layer theme, base, components, utilities;
+
 .table {
   @apply w-full;
 }
@@ -18,10 +21,6 @@
   @apply grid gap-4;
   grid-template-columns: subgrid;
   grid-column: 1 / -1;
-
-  & .table-row {
-    @apply py-0;
-  }
 }
 
 .table-header > .table-row {
@@ -62,7 +61,6 @@
 
 .table-head {
   @apply min-h-(--eq-control-md-height);
-  padding-block: calc((var(--eq-control-md-height) - var(--eq-type-body-line-height)) / 2);
   @apply content-center;
   @apply text-text-primary text-left font-medium transition-colors;
   @apply [&:has([role=checkbox])]:pr-0;
@@ -70,16 +68,6 @@
 
 .table-cell {
   @apply [&:has([role=checkbox])]:pr-0;
-  padding-block: calc((var(--eq-control-md-height) - var(--eq-type-body-line-height)) / 2);
-}
-
-:is(.table-cell, .table-head):has(
-  button,
-  [role='button'],
-  [data-slot='button'],
-  [data-slot='icon-button']
-) {
-  padding-block: calc((var(--eq-control-md-height) - var(--eq-control-sm-height)) / 2);
 }
 
 .table-row {
@@ -95,41 +83,48 @@
 
 .table--comfortable > .table-inner > .table-body > .table-row,
 .table--comfortable > .table-inner > .table-footer > .table-row {
-  @apply min-h-(--eq-control-lg-height) py-0;
-}
-
-.table--comfortable
-  > .table-inner
-  > :is(.table-body, .table-footer)
-  > .table-row
-  > :is(.table-cell, .table-head) {
-  padding-block: calc((var(--eq-control-lg-height) - var(--eq-type-body-line-height)) / 2);
-}
-
-.table--comfortable
-  > .table-inner
-  > :is(.table-body, .table-footer)
-  > .table-row
-  > :is(.table-cell, .table-head):has(
-    button,
-    [role='button'],
-    [data-slot='button'],
-    [data-slot='icon-button']
-  ) {
-  padding-block: calc((var(--eq-control-lg-height) - var(--eq-control-sm-height)) / 2);
+  @apply min-h-(--eq-control-lg-height);
 }
 
 .table--comfortable > .table-inner > .table-header > .table-row > .table-head {
   @apply min-h-(--eq-control-lg-height);
-  padding-block: calc((var(--eq-control-lg-height) - var(--eq-type-body-line-height)) / 2);
 }
 
-.table--comfortable
-  > .table-inner
-  > .table-header
-  > .table-row
-  > .table-head:has(button, [role='button'], [data-slot='button'], [data-slot='icon-button']) {
-  padding-block: calc((var(--eq-control-lg-height) - var(--eq-control-sm-height)) / 2);
+/* In a layer so an app's py-* utilities on a cell still win; unlayered, these would beat them */
+@layer components {
+  :is(.table-cell, .table-head) {
+    padding-block: calc((var(--eq-control-md-height) - var(--eq-type-body-line-height)) / 2);
+  }
+
+  :is(.table-cell, .table-head):is(
+    :has(> :is(button, [role='button'], [data-slot='button'], [data-slot='icon-button'])),
+    :has(> * > :is(button, [role='button'], [data-slot='button'], [data-slot='icon-button'])):not(
+      :has(
+        > * > :not(:is(button, [role='button'], [data-slot='button'], [data-slot='icon-button']))
+      )
+    )
+  ) {
+    padding-block: calc((var(--eq-control-md-height) - var(--eq-control-sm-height)) / 2);
+  }
+
+  .table--comfortable > .table-inner > * > .table-row > :is(.table-cell, .table-head) {
+    padding-block: calc((var(--eq-control-lg-height) - var(--eq-type-body-line-height)) / 2);
+  }
+
+  .table--comfortable
+    > .table-inner
+    > *
+    > .table-row
+    > :is(.table-cell, .table-head):is(
+      :has(> :is(button, [role='button'], [data-slot='button'], [data-slot='icon-button'])),
+      :has(> * > :is(button, [role='button'], [data-slot='button'], [data-slot='icon-button'])):not(
+        :has(
+          > * > :not(:is(button, [role='button'], [data-slot='button'], [data-slot='icon-button']))
+        )
+      )
+    ) {
+    padding-block: calc((var(--eq-control-lg-height) - var(--eq-control-sm-height)) / 2);
+  }
 }
 
 /* A border on the row itself would add 1px to its height and put it off the 36 scale */
