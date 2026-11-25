@@ -27,8 +27,9 @@ Notable changes to Equality are recorded here, following [Keep a Changelog](http
 
 ### Changed
 
-- Regular Table rows hold an avatar, badge, small switch or small `IconButton` at 36 without pulling
-  it into their padding, so a cell that hides its overflow no longer cuts it off.
+- Regular Table rows hold an avatar, badge, small switch or small button at 36 without pulling it
+  into their padding, so a cell that hides its overflow no longer cuts it off. A cell holding a
+  button pads 4 above and below, so a row with a small `Button` is 36, from 44.
 - An icon you size yourself in a `CommandDialog` item, such as with `size-4`, keeps its size, as in
   a `Command` outside a dialog; the dialog drew it at 20.
 - A `TitleBlock` takes an `Avatar` as its mark. Give it the Avatar size that matches the block's:
