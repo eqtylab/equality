@@ -42,7 +42,7 @@ describe('IconButton', () => {
     const button = screen.getByRole('button', { name: 'Clear' });
 
     expect(button.className).toMatch(/size--xs/);
-    expect(button.getAttribute('data-icon-button')).toBe('xs');
+    expect(button.hasAttribute('data-icon-button')).toBe(false);
     expect(button.querySelector('svg')!.getAttribute('width')).toBe('24');
   });
 });

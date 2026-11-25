@@ -67,7 +67,6 @@ const IconButton = React.forwardRef<HTMLButtonElement | HTMLAnchorElement, IconB
           target={target}
           download={download}
           aria-label={label}
-          data-icon-button={size || 'sm'}
           rel={target === '_blank' ? 'noopener noreferrer' : undefined}
           className={cn(iconButtonVariants({ size, variant }), className)}
           {...(props as React.AnchorHTMLAttributes<HTMLAnchorElement>)}
@@ -82,7 +81,6 @@ const IconButton = React.forwardRef<HTMLButtonElement | HTMLAnchorElement, IconB
         ref={ref as React.Ref<HTMLButtonElement>}
         type="button"
         aria-label={label}
-        data-icon-button={size || 'sm'}
         disabled={disabled}
         className={cn(iconButtonVariants({ size, variant }), className)}
         {...props}

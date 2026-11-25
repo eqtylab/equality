@@ -7,11 +7,7 @@
 }
 
 @utility control-row-padding {
-  padding-block: calc((var(--eq-control-md-height) - var(--eq-type-body-line-height)) / 2);
-}
-
-@utility control-row-overhang {
-  margin-block: calc((var(--eq-type-body-line-height) - --spacing(6)) / 2);
+  padding-block: calc((var(--eq-control-md-height) - var(--eq-control-sm-height)) / 2);
 }
 
 @utility control-track {
