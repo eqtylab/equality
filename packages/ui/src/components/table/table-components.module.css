@@ -109,9 +109,28 @@
     ) {
     padding-block: calc((var(--eq-control-md-height) - var(--eq-type-body-line-height)) / 2);
   }
+
+  .table-header
+    > .table-row
+    > .table-head:has([role='switch'], [data-slot='segmented-controls']):not(
+      :has(.table-inner :is([role='switch'], [data-slot='segmented-controls']))
+    ) {
+    padding-block: calc((var(--eq-control-md-height) - var(--eq-control-sm-height)) / 2);
+  }
+
+  .table--comfortable
+    > .table-inner
+    > *
+    > .table-row
+    > :is(.table-cell, .table-head):has([role='switch'], [data-slot='segmented-controls']):not(
+      :has(.table-inner :is([role='switch'], [data-slot='segmented-controls']))
+    ) {
+    padding-block: calc((var(--eq-control-lg-height) - var(--eq-control-sm-height)) / 2);
+  }
 }
 
 /* Unlayered so an unlayered reset such as button { margin: 0 } can't cancel the pull */
+/* The inner :not keeps exclusions to the button's own cell; without it a table inside a collapsible grows to 44 rows */
 :is(.table-cell, .table-head)
   :is(
     button,
@@ -124,12 +143,28 @@
     [role='checkbox'],
     [role='radio'],
     [role='tab'],
-    [data-slot='title-block'] *,
-    [data-slot='empty-table-state'] *,
-    [data-slot='segmented-controls'] *,
-    [data-slot='pagination'] *,
-    [data-slot='code-block'] *,
-    [data-slot='motion-collapsible'] *
+    :is(
+        [data-slot='title-block'],
+        [data-slot='empty-table-state'],
+        [data-slot='segmented-controls'],
+        [data-slot='pagination'],
+        [data-slot='code-block'],
+        [data-slot='motion-collapsible'],
+        [data-slot='truncated-description']
+      )
+      *:not(
+        :is(
+            [data-slot='title-block'],
+            [data-slot='empty-table-state'],
+            [data-slot='segmented-controls'],
+            [data-slot='pagination'],
+            [data-slot='code-block'],
+            [data-slot='motion-collapsible'],
+            [data-slot='truncated-description']
+          )
+          :is(.table-cell, .table-head)
+          *
+      )
   ) {
   margin-block: calc((var(--eq-type-body-line-height) - var(--eq-control-sm-height)) / 2);
 }

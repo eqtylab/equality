@@ -89,14 +89,39 @@ describe('table-components.module.css', () => {
     expect(css).not.toMatch(/\.table-(cell|head)[^{]*:has\(\s*>\s*:is\(button/);
   });
 
-  it('pulls a button or a small title block at any depth in a cell into its padding, outside the layer, but not a switch, checkbox or radio, or the buttons of a title block, empty state or segmented control', () => {
-    const flat = flatten(css);
-    const selector = `${CELLS} :is(${BUTTONS}, [data-slot='title-block'][data-size='sm']):not([role='switch'], [role='checkbox'], [role='radio'], [role='tab'], [data-slot='title-block'] *, [data-slot='empty-table-state'] *, [data-slot='segmented-controls'] *, [data-slot='pagination'] *, [data-slot='code-block'] *, [data-slot='motion-collapsible'] *)`;
+  it('pulls a button or a small title block at any depth in a cell into its padding, outside the layer, but not a switch, checkbox, radio or tab, or a button inside an excluded component within that cell', () => {
+    const squash = (text: string) =>
+      text.replace(/\s+/g, ' ').replace(/\( /g, '(').replace(/,? \)/g, ')');
+    const flat = squash(css);
+    const excluded = [
+      'title-block',
+      'empty-table-state',
+      'segmented-controls',
+      'pagination',
+      'code-block',
+      'motion-collapsible',
+      'truncated-description',
+    ]
+      .map((slot) => `[data-slot='${slot}']`)
+      .join(', ');
+    const selector = `${CELLS} :is(${BUTTONS}, [data-slot='title-block'][data-size='sm']):not([role='switch'], [role='checkbox'], [role='radio'], [role='tab'], :is(${excluded}) *:not(:is(${excluded}) ${CELLS} *))`;
     expect(ruleBody(flat, selector)).toMatch(
-      /margin-block:\s*calc\(\(var\(--eq-type-body-line-height\)\s*-\s*var\(--eq-control-sm-height\)\)\s*\/\s*2\);/
+      /margin-block: calc\(\(var\(--eq-type-body-line-height\) - var\(--eq-control-sm-height\)\) \/ 2\);/
     );
     const layer = flat.slice(flat.indexOf('@layer components {'), flat.indexOf(selector));
-    expect(layer).toMatch(/\n\}\s*$/);
+    expect(layer.split('{').length).toBe(layer.split('}').length);
+  });
+
+  it('pads a header or comfortable cell holding a switch or segmented control as a small control, as 6.5.0 did', () => {
+    const flat = flatten(css);
+    const holds =
+      ":has([role='switch'], [data-slot='segmented-controls']):not(:has(.table-inner :is([role='switch'], [data-slot='segmented-controls'])))";
+    expect(ruleBody(flat, `.table-header > .table-row > .table-head${holds}`)).toMatch(
+      CELL_PADDING('md', 'control-sm-height')
+    );
+    expect(ruleBody(flat, `${COMFORTABLE} * > .table-row > ${CELLS}${holds}`)).toMatch(
+      CELL_PADDING('lg', 'control-sm-height')
+    );
   });
 
   it("pads cells in a layer, so an app's padding utilities on a cell still win", () => {
