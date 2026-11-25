@@ -93,11 +93,13 @@
 /* In a layer so an app's py-* utilities on a cell still win; unlayered, these would beat them */
 @layer components {
   :is(.table-cell, .table-head) {
-    padding-block: calc((var(--eq-control-md-height) - var(--eq-type-body-line-height)) / 2);
+    --table-cell-padding: calc((var(--eq-control-md-height) - var(--eq-type-body-line-height)) / 2);
+    padding-block: var(--table-cell-padding);
   }
 
   .table--comfortable > .table-inner > * > .table-row > :is(.table-cell, .table-head) {
-    padding-block: calc((var(--eq-control-lg-height) - var(--eq-type-body-line-height)) / 2);
+    --table-cell-padding: calc((var(--eq-control-lg-height) - var(--eq-type-body-line-height)) / 2);
+    padding-block: var(--table-cell-padding);
   }
 
   .table--comfortable
@@ -107,7 +109,8 @@
     > :is(.table-cell, .table-head):has([data-slot='title-block'][data-size='md']):not(
       :has(.table-inner [data-slot='title-block'][data-size='md'])
     ) {
-    padding-block: calc((var(--eq-control-md-height) - var(--eq-type-body-line-height)) / 2);
+    --table-cell-padding: calc((var(--eq-control-md-height) - var(--eq-type-body-line-height)) / 2);
+    padding-block: var(--table-cell-padding);
   }
 
   .table-header
@@ -115,7 +118,8 @@
     > .table-head:has([role='switch'], [data-slot='segmented-controls']):not(
       :has(.table-inner :is([role='switch'], [data-slot='segmented-controls']))
     ) {
-    padding-block: calc((var(--eq-control-md-height) - var(--eq-control-sm-height)) / 2);
+    --table-cell-padding: calc((var(--eq-control-md-height) - var(--eq-control-sm-height)) / 2);
+    padding-block: var(--table-cell-padding);
   }
 
   .table--comfortable
@@ -125,11 +129,13 @@
     > :is(.table-cell, .table-head):has([role='switch'], [data-slot='segmented-controls']):not(
       :has(.table-inner :is([role='switch'], [data-slot='segmented-controls']))
     ) {
-    padding-block: calc((var(--eq-control-lg-height) - var(--eq-control-sm-height)) / 2);
+    --table-cell-padding: calc((var(--eq-control-lg-height) - var(--eq-control-sm-height)) / 2);
+    padding-block: var(--table-cell-padding);
   }
 }
 
 /* Unlayered so an unlayered reset such as button { margin: 0 } can't cancel the pull */
+/* Reads --table-cell-padding, so a cell rule that sets padding-block without it leaves a button 4 from the wrong line */
 /* The inner :not keeps exclusions to the button's own cell; without it a table inside a collapsible grows to 44 rows */
 :is(.table-cell, .table-head)
   :is(
@@ -143,6 +149,7 @@
     [role='checkbox'],
     [role='radio'],
     [role='tab'],
+    [data-sort-button],
     :is(
         [data-slot='title-block'],
         [data-slot='empty-table-state'],
@@ -166,7 +173,9 @@
           *
       )
   ) {
-  margin-block: calc((var(--eq-type-body-line-height) - var(--eq-control-sm-height)) / 2);
+  margin-block: calc(
+    (var(--eq-control-sm-height) - var(--eq-type-body-line-height)) / 2 - var(--table-cell-padding)
+  );
 }
 
 /* A border on the row itself would add 1px to its height and put it off the 36 scale */

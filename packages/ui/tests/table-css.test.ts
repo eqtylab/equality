@@ -69,7 +69,7 @@ describe('table-components.module.css', () => {
 
   const CELL_PADDING = (row: string, part: string) =>
     new RegExp(
-      String.raw`padding-block:\s*calc\(\(var\(--eq-control-${row}-height\)\s*-\s*var\(--eq-${part}\)\)\s*/\s*2\);`
+      String.raw`--table-cell-padding:\s*calc\(\(var\(--eq-control-${row}-height\)\s*-\s*var\(--eq-${part}\)\)\s*/\s*2\);`
     );
 
   const BUTTONS = "button, [role='button'], [data-slot='button'], [data-slot='icon-button']";
@@ -104,9 +104,9 @@ describe('table-components.module.css', () => {
     ]
       .map((slot) => `[data-slot='${slot}']`)
       .join(', ');
-    const selector = `${CELLS} :is(${BUTTONS}, [data-slot='title-block'][data-size='sm']):not([role='switch'], [role='checkbox'], [role='radio'], [role='tab'], :is(${excluded}) *:not(:is(${excluded}) ${CELLS} *))`;
+    const selector = `${CELLS} :is(${BUTTONS}, [data-slot='title-block'][data-size='sm']):not([role='switch'], [role='checkbox'], [role='radio'], [role='tab'], [data-sort-button], :is(${excluded}) *:not(:is(${excluded}) ${CELLS} *))`;
     expect(ruleBody(flat, selector)).toMatch(
-      /margin-block: calc\(\(var\(--eq-type-body-line-height\) - var\(--eq-control-sm-height\)\) \/ 2\);/
+      /margin-block: calc\(\(var\(--eq-control-sm-height\) - var\(--eq-type-body-line-height\)\) \/ 2 - var\(--table-cell-padding\)\);/
     );
     const layer = flat.slice(flat.indexOf('@layer components {'), flat.indexOf(selector));
     expect(layer.split('{').length).toBe(layer.split('}').length);
