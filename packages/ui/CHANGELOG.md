@@ -41,7 +41,8 @@ Notable changes to Equality are recorded here, following [Keep a Changelog](http
 
 - The `control-row-overhang` utility.
 - The `data-avatar` attribute on `Avatar` is gone. `IconButton`'s `data-icon-button` is now
-  `data-slot="icon-button"`, and `Button` carries `data-slot="button"`.
+  `data-slot="icon-button"`, `Button` carries `data-slot="button"` and `TitleBlock` carries
+  `data-slot="title-block"`.
 
 ## 6.5.0 - 2026-11-25
 
