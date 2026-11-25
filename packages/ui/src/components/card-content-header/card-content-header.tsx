@@ -28,7 +28,12 @@ const CardContentHeader = forwardRef<HTMLDivElement, CardContentHeaderProps>(
         title={heading}
         actions={
           onButtonClick && (
-            <Button variant="tertiary" size="sm" onClick={onButtonClick}>
+            <Button
+              variant="tertiary"
+              size="sm"
+              aria-label={heading ? `See All ${heading}` : undefined}
+              onClick={onButtonClick}
+            >
               See All
             </Button>
           )

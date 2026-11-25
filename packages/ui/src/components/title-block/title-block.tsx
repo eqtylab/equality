@@ -63,13 +63,13 @@ const TitleBlock = forwardRef<HTMLDivElement, TitleBlockProps>(
       >
         {mark && <div className={styles['mark-slot']}>{mark}</div>}
         <div className={styles.stack}>
-          <div className={styles.line}>
-            {title && (
+          {title && (
+            <div className={styles.line}>
               <Title id={titleId} className={styles.title}>
                 {title}
               </Title>
-            )}
-          </div>
+            </div>
+          )}
           {description && <div className={styles.description}>{description}</div>}
           {children}
         </div>
