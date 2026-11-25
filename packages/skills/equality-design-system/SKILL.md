@@ -163,8 +163,9 @@ These flip correctly in dark mode; `bg-slate-800` and `#1e293b` do not.
 
 A control or row you build yourself takes its height, text and side padding from
 Equality's control decisions: `h-(--eq-control-md-height)` for height, a text
-style for its label (`text-caption` at `sm`, `text-body` at `md`, `text-section`
-at `lg`), and `--eq-control-padding-x-condensed`, `-normal` or `-spacious` (8,
+style for its label in the control's own weight, medium in Equality
+(`text-caption` at `sm`, `text-body` at `md`, `text-section font-medium` at
+`lg`), and `--eq-control-padding-x-condensed`, `-normal` or `-spacious` (8,
 12, 16) for side padding. Heights come in `xs` (24), `sm` (28), `md` (36) and
 `lg` (44). Use the text styles, not the control text names
 (`--eq-control-*-font-size` and `-line-height`): those are deprecated and a

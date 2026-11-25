@@ -35,8 +35,8 @@ Notable changes to Equality are recorded here, following [Keep a Changelog](http
   `text-body`. To line a title up with controls, put it in a row with them and centre it: a card
   title in a row with small buttons, a page title in a row with default ones. See the Typography
   page.
-- `theme/theme-options.css`: the seven size steps, 16 to 52, that Equality's own sizes choose from.
-  Build a custom picture or mark on one of them.
+- Seven size steps, 16 to 52, that Equality's own sizes choose from. Build a custom picture or mark
+  on one of them; the Sizing page lists them.
 - If your app merges classes with tailwind-merge, register the four styles as font sizes, or a
   text colour beside them removes them. Extend its `font-size` group with `xxs`, `title`,
   `section`, `body` and `caption` through `extendTailwindMerge`; the Typography page has the snippet.
@@ -64,8 +64,8 @@ Notable changes to Equality are recorded here, following [Keep a Changelog](http
 ### Deprecated
 
 - `--eq-control-sm-font-size`, `--eq-control-md-font-size`, `--eq-control-lg-font-size` and their
-  `-line-height` pairs equal the caption, body and section text styles. Use those styles instead.
-  The control text names still work; a later major removes them.
+  `-line-height` pairs match the caption, body and section text styles in size and line height. Use
+  those styles instead. The control text names still work; a later major removes them.
 
 ### Removed
 
