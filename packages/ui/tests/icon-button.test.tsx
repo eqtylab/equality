@@ -21,6 +21,7 @@ describe('IconButton', () => {
     const ref = React.createRef<HTMLButtonElement | HTMLAnchorElement>();
     render(<IconButton ref={ref} name="ExternalLink" label="Open" href="/docs" />);
     expect(ref.current).toBe(screen.getByRole('link', { name: 'Open' }));
+    expect(ref.current?.getAttribute('data-slot')).toBe('icon-button');
   });
 
   it('takes a tooltip trigger’s props when it has href', () => {

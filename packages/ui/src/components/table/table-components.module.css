@@ -40,7 +40,9 @@
   padding-block: calc((var(--eq-control-md-height) - var(--eq-type-body-line-height)) / 2);
 }
 
-.table-header > .table-row > .table-head:has(button, [role='button']) {
+.table-header
+  > .table-row
+  > .table-head:has(button, [role='button'], [data-slot='button'], [data-slot='icon-button']) {
   padding-block: calc((var(--eq-control-md-height) - var(--eq-control-sm-height)) / 2);
 }
 
@@ -81,7 +83,7 @@
   padding-block: calc((var(--eq-control-md-height) - var(--eq-type-body-line-height)) / 2);
 }
 
-.table-cell:has(button, [role='button']) {
+.table-cell:has(button, [role='button'], [data-slot='button'], [data-slot='icon-button']) {
   padding-block: calc((var(--eq-control-md-height) - var(--eq-control-sm-height)) / 2);
 }
 
@@ -113,7 +115,12 @@
   > .table-inner
   > :is(.table-body, .table-footer)
   > .table-row
-  > :is(.table-cell, .table-head):has(button, [role='button']) {
+  > :is(.table-cell, .table-head):has(
+    button,
+    [role='button'],
+    [data-slot='button'],
+    [data-slot='icon-button']
+  ) {
   padding-block: calc((var(--eq-control-lg-height) - var(--eq-control-sm-height)) / 2);
 }
 
@@ -126,7 +133,7 @@
   > .table-inner
   > .table-header
   > .table-row
-  > .table-head:has(button, [role='button']) {
+  > .table-head:has(button, [role='button'], [data-slot='button'], [data-slot='icon-button']) {
   padding-block: calc((var(--eq-control-lg-height) - var(--eq-control-sm-height)) / 2);
 }
 
