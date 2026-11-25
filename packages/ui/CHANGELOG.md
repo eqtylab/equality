@@ -28,6 +28,15 @@ Notable changes to Equality are recorded here, following [Keep a Changelog](http
 - Import Equality's preflight, and any other CSS reset, in a layer before `components`, such as
   `layer(base)`. A reset outside a layer removes table cell padding.
 
+- A block margin on a button in a table cell, such as `my-*`, `mt-*` or `mb-*`, is ignored unless
+  written with `!`, such as `my-0!`.
+
+### Added
+
+- `Button`, `IconButton`, `TitleBlock`, `EmptyTableState`, `SegmentedControls`, `Pagination`,
+  `CodeBlock` and `MotionCollapsibleContent` carry a `data-slot` attribute, such as
+  `data-slot="button"`. `TitleBlock` also carries its `data-size`.
+
 ### Changed
 
 - Table cells pad 8 above and below, or 12 in a comfortable table. A button in a cell, such as a
@@ -38,18 +47,16 @@ Notable changes to Equality are recorded here, following [Keep a Changelog](http
   are unchanged.
 - Table rows no longer pad; each cell does. Padding you set on a `TableCell` now replaces
   Equality's, and padding on a `TableRow` adds to it.
-- An icon you size yourself in a `CommandDialog` item, such as with `size-4`, keeps its size, as in
-  a `Command` outside a dialog; the dialog drew it at 20.
+- Icons in a `CommandDialog` item draw at 16, as in a `Command`; they were 20. An icon you size
+  yourself, such as with `size-4`, keeps its size.
+- An `Avatar` no longer shrinks in a flex row.
 - A `TitleBlock` takes an `Avatar` as its mark. Give it the Avatar size that matches the block's:
   `sm`, `md` or `lg`.
 
 ### Removed
 
-- The `control-row-overhang` utility.
-- The `data-avatar` attribute on `Avatar` is gone. `IconButton`'s `data-icon-button` is now
-  `data-slot="icon-button"`, `Button` carries `data-slot="button"`, `TitleBlock` carries
-  `data-slot="title-block"` and its `data-size`, `EmptyTableState` carries
-  `data-slot="empty-table-state"` and `SegmentedControls` carries `data-slot="segmented-controls"`.
+- The `data-avatar` attribute on `Avatar`, and `data-icon-button` on `IconButton`, which is now
+  `data-slot="icon-button"`.
 
 ## 6.5.0 - 2026-11-25
 

@@ -301,7 +301,16 @@ Every row has room for a small button, so a row with an avatar, a badge or a row
 
 Anything taller, or text that wraps, makes its row taller.
 
-A button in a cell reaches 4 into the cell's padding above and below, so buttons stacked in one cell, or wrapping onto a second line, overlap: give them `my-0!`.
+A button in a cell reaches 4 into the cell's padding above and below. Buttons you stack in one cell, such as a button above a panel it opens, or a row of buttons that wraps onto a second line, then overlap. Give each of them `my-0!`:
+
+```tsx
+<TableCell>
+  <div className="flex flex-col gap-2">
+    <Button className="my-0!">Approve</Button>
+    <Button className="my-0!">Reject</Button>
+  </div>
+</TableCell>
+```
 
 For a person with a subline, such as a name over an email, put a [Title Block](/components/title-block) in the cell with an `md` Avatar as its mark, so the avatar sits beside both lines. A medium block sets the email as a caption, so the row is 52 at either density.
 
@@ -329,6 +338,8 @@ Show an ID as plain text when the row's menu or the view it opens can copy it. K
 ## Density
 
 Rows are `regular` by default. Set `density="comfortable"` for taller rows and header when people read each row slowly, such as a short list of items to review, or when the table is mainly used on touch screens. Keep most tables, and every table in a card, `regular`.
+
+A comfortable row fits small controls: a `Button` with `size="sm"` or an `IconButton` at its default size keeps it at 44. A default-size `Button` makes it 52.
 
 <TableDemo client:only="react" variant="with-actions" density="comfortable" />
 
