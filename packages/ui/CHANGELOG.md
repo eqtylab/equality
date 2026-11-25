@@ -2,38 +2,6 @@
 
 Notable changes to Equality are recorded here, following [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
-## 7.1.0 - 2026-11-24
-
-### Added
-
-- Four text styles for hierarchy: `text-title` for the page title, `text-section` for a card or
-  section title, `text-body` for running text and descriptions, and `text-caption` for small
-  supporting text. Each is a Tailwind text size on its own line height, so plain `text-sm` matches
-  `text-body`. To line a title up with controls, put it in a row
-  with them and centre it: a card title in a row with small buttons, a page title in a row with
-  default ones. See the Typography page.
-- `theme/theme-options.css`: the seven size steps, 16 to 52, that Equality's own sizes choose from.
-  Build a custom picture or mark on one of them.
-- If your app merges classes with tailwind-merge, register the four styles as font sizes, or a
-  text colour beside them removes them. Extend its `font-size` group with `xxs`, `title`,
-  `section`, `body` and `caption` through `extendTailwindMerge`; the Typography page has the snippet.
-
-### Changed
-
-- `CardContentHeader` has a smaller icon circle, 28 from 36, with a 16 icon, from 20, and a 16
-  semibold title, from 18, so the header is as tall as its "See All" button. The icon and title now
-  stay side by side at every width, with "See All" at the end of the title's line; a long title wraps
-  beside the icon instead of dropping under it. "See All" now follows the title for screen readers
-  and keyboard.
-- `MetricCard`'s icon is 16, from 20, in the same circle.
-- `SectionHeading`'s title is 16 semibold, from 20 medium, and sits tighter over a description.
-
-### Deprecated
-
-- `--eq-control-sm-font-size`, `--eq-control-md-font-size`, `--eq-control-lg-font-size` and their
-  `-line-height` pairs equal the caption, body and section text styles. Use those styles instead.
-  The control text names still work and go at the next major.
-
 ## 7.0.0 - 2026-11-24
 
 ### Breaking
@@ -61,6 +29,17 @@ Notable changes to Equality are recorded here, following [Keep a Changelog](http
 - `TableContainer` takes `density`. `regular`, the default, keeps rows and the header at 36;
   `comfortable` makes them 44, for tables people read slowly or use mostly by touch.
 - `TableContainer` takes `striped`, which fills every other row, for wide, number-heavy tables.
+- Four text styles for hierarchy: `text-title` for the page title, `text-section` for a card or
+  section title, `text-body` for running text and descriptions, and `text-caption` for small
+  supporting text. Each is a Tailwind text size on its own line height, so plain `text-sm` matches
+  `text-body`. To line a title up with controls, put it in a row with them and centre it: a card
+  title in a row with small buttons, a page title in a row with default ones. See the Typography
+  page.
+- `theme/theme-options.css`: the seven size steps, 16 to 52, that Equality's own sizes choose from.
+  Build a custom picture or mark on one of them.
+- If your app merges classes with tailwind-merge, register the four styles as font sizes, or a
+  text colour beside them removes them. Extend its `font-size` group with `xxs`, `title`,
+  `section`, `body` and `caption` through `extendTailwindMerge`; the Typography page has the snippet.
 
 ### Changed
 
@@ -74,6 +53,19 @@ Notable changes to Equality are recorded here, following [Keep a Changelog](http
 - `IconButton` icons match the icon beside text in the control of the same size: 16 at `md`, from
   22, and 20 at `lg`, from 26. `xs` (14) and `sm` (16) are unchanged.
 - An icon in a large control is 20, from 16.
+- `CardContentHeader` has a smaller icon circle, 28 from 36, with a 16 icon, from 20, and a 16
+  semibold title, from 18, so the header is as tall as its "See All" button. The icon and title now
+  stay side by side at every width, with "See All" at the end of the title's line; a long title wraps
+  beside the icon instead of dropping under it. "See All" now follows the title for screen readers
+  and keyboard.
+- `MetricCard`'s icon is 16, from 20, in the same circle.
+- `SectionHeading`'s title is 16 semibold, from 20 medium, and sits tighter over a description.
+
+### Deprecated
+
+- `--eq-control-sm-font-size`, `--eq-control-md-font-size`, `--eq-control-lg-font-size` and their
+  `-line-height` pairs equal the caption, body and section text styles. Use those styles instead.
+  The control text names still work; a later major removes them.
 
 ### Removed
 
