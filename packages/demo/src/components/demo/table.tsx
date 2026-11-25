@@ -28,8 +28,7 @@ interface TableDemoProps {
     | "sticky-header"
     | "sticky-header-page"
     | "sticky-header-page-offset"
-    | "with-actions"
-    | "striped";
+    | "with-actions";
   elevation?: Elevation;
   density?: "regular" | "comfortable";
 }
@@ -98,50 +97,6 @@ export const TableDemo = ({
               <IconButton name="EllipsisVertical" label="Row actions" />
             </TableCell>
           </TableRow>
-        </TableBody>
-      </TableContainer>
-    );
-  }
-
-  if (variant === "striped") {
-    const models = [
-      ["claims-triage-v4", "0.912", "0.884", "0.931", "0.907", "142", "$0.84"],
-      ["claims-triage-v3", "0.897", "0.861", "0.925", "0.892", "156", "$0.79"],
-      ["fraud-screen-v2", "0.874", "0.902", "0.811", "0.854", "88", "$0.41"],
-      ["fraud-screen-v1", "0.853", "0.879", "0.794", "0.834", "91", "$0.40"],
-      ["intake-router-v7", "0.948", "0.951", "0.942", "0.946", "37", "$0.12"],
-      ["intake-router-v6", "0.939", "0.944", "0.930", "0.937", "35", "$0.12"],
-      ["summary-gen-v2", "0.821", "0.808", "0.846", "0.827", "611", "$2.30"],
-      ["summary-gen-v1", "0.802", "0.794", "0.823", "0.808", "644", "$2.25"],
-    ];
-    return (
-      <TableContainer
-        elevation={elevation}
-        striped
-        columns="minmax(10rem, 1fr) repeat(6, auto)"
-      >
-        <TableHeader>
-          <TableRow>
-            <TableHead>Model</TableHead>
-            <TableHead className="text-right!">Accuracy</TableHead>
-            <TableHead className="text-right!">Precision</TableHead>
-            <TableHead className="text-right!">Recall</TableHead>
-            <TableHead className="text-right!">F1</TableHead>
-            <TableHead className="text-right!">Latency (ms)</TableHead>
-            <TableHead className="text-right!">Cost / 1k</TableHead>
-          </TableRow>
-        </TableHeader>
-        <TableBody>
-          {models.map(([name, ...values]) => (
-            <TableRow key={name}>
-              <TableCell>{name}</TableCell>
-              {values.map((value, i) => (
-                <TableCell key={i} className="text-right tabular-nums">
-                  {value}
-                </TableCell>
-              ))}
-            </TableRow>
-          ))}
         </TableBody>
       </TableContainer>
     );
