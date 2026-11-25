@@ -26,9 +26,9 @@ describe('the icon beside text', () => {
     expect(decisions).toMatch(/--eq-control-lg-icon-size:\s*--spacing\(4\);/);
   });
 
-  it('gives a list item the default control icon size, from one name', async () => {
+  it('gives a list item a 16 icon, the same size as a default control icon', async () => {
     const decisions = await readFile('src/theme/theme-decisions.css', 'utf8');
-    expect(decisions).toMatch(/--eq-list-item-icon-size:\s*var\(--eq-control-md-icon-size\);/);
+    expect(decisions).toMatch(/--eq-list-item-icon-size:\s*--spacing\(4\);/);
   });
 
   it.each(READERS)(
