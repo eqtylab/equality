@@ -2,6 +2,10 @@
 
 Notable changes to Equality's Docsite Generator are recorded here, following [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## 0.20.0 - 2026-11-25
+
+Works with `@eqtylab/equality` 7.
+
 ## 0.19.0 - 2026-11-24
 
 ### Changed
