@@ -24,7 +24,7 @@ describe('TitleBlockMark', () => {
 });
 
 describe('TitleBlock', () => {
-  it('puts trailing items in the title row and actions outside it', () => {
+  it('puts trailing items before the actions at the end of the block, outside the title row', () => {
     render(
       <TitleBlock
         title="Policies"
@@ -35,8 +35,12 @@ describe('TitleBlock', () => {
     );
 
     const row = screen.getByRole('heading', { name: 'Policies' }).parentElement;
-    expect(row?.contains(screen.getByText('3 active'))).toBe(true);
-    expect(row?.contains(screen.getByText('Rules every run is checked against'))).toBe(false);
-    expect(row?.contains(screen.getByRole('button', { name: 'Edit' }))).toBe(false);
+    const badge = screen.getByText('3 active');
+    const button = screen.getByRole('button', { name: 'Edit' });
+    expect(row?.contains(badge)).toBe(false);
+    expect(row?.contains(button)).toBe(false);
+    const end = badge.parentElement?.parentElement;
+    expect(end?.contains(button)).toBe(true);
+    expect(end?.firstElementChild?.contains(badge)).toBe(true);
   });
 });

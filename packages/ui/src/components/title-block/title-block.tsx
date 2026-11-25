@@ -19,9 +19,9 @@ export interface TitleBlockProps extends Omit<React.HTMLAttributes<HTMLDivElemen
   title?: React.ReactNode;
   /** Supporting text under the title. */
   description?: React.ReactNode;
-  /** Badges or status at the end of the title's first line. */
+  /** Badges or status at the end of the block, centred on it, before any actions. */
   trailing?: React.ReactNode;
-  /** Buttons or a menu at the end of the block, centred on its full height. */
+  /** Buttons or a menu at the end of the block, centred on it, after any trailing items. */
   actions?: React.ReactNode;
   /** The element the title renders as, to fit the page's heading outline. */
   titleAs?: 'h2' | 'h3' | 'h4' | 'p';
@@ -69,12 +69,16 @@ const TitleBlock = forwardRef<HTMLDivElement, TitleBlockProps>(
                 {title}
               </Title>
             )}
-            {trailing && <div className={styles.trailing}>{trailing}</div>}
           </div>
           {description && <p className={styles.description}>{description}</p>}
           {children}
         </div>
-        {actions && <div className={styles.actions}>{actions}</div>}
+        {(trailing || actions) && (
+          <div className={styles.end}>
+            {trailing && <div className={styles.trailing}>{trailing}</div>}
+            {actions && <div className={styles.actions}>{actions}</div>}
+          </div>
+        )}
       </div>
     </TitleBlockSizeContext.Provider>
   )
@@ -161,7 +165,6 @@ function TitleBlockSkeleton({
               <Skeleton className={cn(styles['placeholder-bar'], titleWidth)} />
             </div>
           </div>
-          {trailing && <div className={styles.trailing}>{trailing}</div>}
         </div>
         {descriptionWidth && (
           <div className={styles['placeholder-line']}>
@@ -169,7 +172,12 @@ function TitleBlockSkeleton({
           </div>
         )}
       </div>
-      {actions && <div className={styles.actions}>{actions}</div>}
+      {(trailing || actions) && (
+        <div className={styles.end}>
+          {trailing && <div className={styles.trailing}>{trailing}</div>}
+          {actions && <div className={styles.actions}>{actions}</div>}
+        </div>
+      )}
     </div>
   );
 }

@@ -14,11 +14,11 @@ import {
 
 ## Overview
 
-Title Block sets a title beside a mark, such as an icon tile. A description can sit under the title. Trailing items, such as a badge or a status, sit at the end of the title's first line, and actions, such as a button or a menu, sit at the end of the block. Use it for a card's header, an item card, a person or thing with a line under it, and the top of a page section.
+Title Block sets a title beside a mark, such as an icon tile. A description can sit under the title. Trailing items, such as a badge or a status, and actions, such as a button or a menu, sit together at the end of the block, centred on it. Use it for a card's header, an item card, a person or thing with a line under it, and the top of a page section.
 
 It is made of three parts: `TitleBlock` (the block), `TitleBlockMark` (the icon tile) and `TitleBlockSkeleton` (the placeholder while it loads).
 
-The mark and the title stay side by side at every width. A long title wraps beside the mark, never under it, and trailing items stay level with its first line.
+The mark and the title stay side by side at every width. A long title wraps beside the mark, never under it, and the items at the end stay centred on the block.
 
 [Card Content Header](/components/card-content-header) is Title Block's small size with a "See All" button. Use it when that is all a card's header needs.
 
@@ -136,7 +136,7 @@ Pick the mark by what the block names:
 
 ### Trailing Items and Actions
 
-`trailing` puts a status or a [Badge](/components/badge) at its default size at the end of the title's first line, so it reads with the title. `actions` puts controls, such as a small [Button](/components/button) or an [Icon Button](/components/icon-button) menu, at the end of the block, centred on its full height, so a control never reaches above the block's top. Keep each to one or two items. With actions and no mark, the title row still takes the block's full height, so a section heading lines up with its button.
+`trailing` takes a status or a [Badge](/components/badge) at its default size, and `actions` takes controls, such as a small [Button](/components/button) or an [Icon Button](/components/icon-button) menu. Both sit at the end of the block on one line, trailing items first, centred on the block's full height, so a badge lines up with the button beside it and a control never reaches above the block's top. Keep each to one or two items. With actions and no mark, the title row still takes the block's full height, so a section heading lines up with its button.
 
 <div className="my-4">
   <TitleBlockTrailingDemo client:only="react" />
@@ -253,17 +253,17 @@ A mark you build yourself, such as a logo, goes in `mark`. Put it in a box as ta
 
 ### TitleBlock
 
-| Name          | Description                                                 | Type                  | Default | Required |
-| ------------- | ----------------------------------------------------------- | --------------------- | ------- | -------- |
-| `size`        | How large the mark and title are                            | `sm`, `md`, `lg`      | `md`    | ❌       |
-| `mark`        | A `TitleBlockMark` shown before the title                   | `ReactNode`           | —       | ❌       |
-| `title`       | The block's title                                           | `ReactNode`           | —       | ❌       |
-| `description` | Supporting text under the title                             | `ReactNode`           | —       | ❌       |
-| `trailing`    | Badges or status at the end of the title's first line       | `ReactNode`           | —       | ❌       |
-| `actions`     | Buttons or a menu at the end of the block, centred on it    | `ReactNode`           | —       | ❌       |
-| `titleAs`     | The element the title renders as, to fit the page's outline | `h2`, `h3`, `h4`, `p` | `h3`    | ❌       |
-| `titleId`     | An id for the title, so a region can take its name from it  | `string`              | —       | ❌       |
-| `children`    | Content shown under the description                         | `ReactNode`           | —       | ❌       |
+| Name          | Description                                                  | Type                  | Default | Required |
+| ------------- | ------------------------------------------------------------ | --------------------- | ------- | -------- |
+| `size`        | How large the mark and title are                             | `sm`, `md`, `lg`      | `md`    | ❌       |
+| `mark`        | A `TitleBlockMark` shown before the title                    | `ReactNode`           | —       | ❌       |
+| `title`       | The block's title                                            | `ReactNode`           | —       | ❌       |
+| `description` | Supporting text under the title                              | `ReactNode`           | —       | ❌       |
+| `trailing`    | Badges or status at the end of the block, before the actions | `ReactNode`           | —       | ❌       |
+| `actions`     | Buttons or a menu at the end of the block, centred on it     | `ReactNode`           | —       | ❌       |
+| `titleAs`     | The element the title renders as, to fit the page's outline  | `h2`, `h3`, `h4`, `p` | `h3`    | ❌       |
+| `titleId`     | An id for the title, so a region can take its name from it   | `string`              | —       | ❌       |
+| `children`    | Content shown under the description                          | `ReactNode`           | —       | ❌       |
 
 ### TitleBlockMark
 

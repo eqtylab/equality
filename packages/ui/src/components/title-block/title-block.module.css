@@ -50,12 +50,16 @@
   @apply text-text-primary min-w-0 break-words;
 }
 
+.end {
+  @apply flex shrink-0 items-center gap-2 self-center;
+}
+
 .trailing {
-  @apply text-body ml-auto flex shrink-0 items-center gap-2;
+  @apply text-body flex items-center gap-2;
 }
 
 .actions {
-  @apply flex shrink-0 items-center gap-2 self-center;
+  @apply flex items-center gap-2;
 }
 
 .description {
@@ -79,20 +83,12 @@
   padding-block: calc((var(--eq-control-sm-height) - var(--eq-type-section-line-height)) / 2);
 }
 
-.size-sm .trailing {
-  @apply h-(--eq-control-sm-height);
-}
-
 .size-md {
   @apply gap-3;
 }
 
 .size-md .title {
   @apply text-body font-semibold;
-}
-
-.size-md .trailing {
-  @apply h-(--eq-type-body-line-height);
 }
 
 .size-md.with-description .mark-slot {
@@ -109,10 +105,6 @@
 
 .size-lg .title {
   @apply text-section;
-}
-
-.size-lg .trailing {
-  @apply h-(--eq-type-section-line-height);
 }
 
 .size-sm .title > .placeholder-line,
