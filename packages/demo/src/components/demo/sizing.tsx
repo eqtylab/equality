@@ -32,6 +32,7 @@ const STEPS = [
     step: 24,
     parts: (
       <>
+        <p className="text-section">Section</p>
         <IconButton size="xs" name="X" label="Clear" />
         <Avatar size="xs">
           <AvatarFallback>AB</AvatarFallback>
@@ -43,10 +44,12 @@ const STEPS = [
     step: 28,
     parts: (
       <>
-        <p className="text-section">Section</p>
-        <Button size="sm" variant="tertiary">
-          Small
-        </Button>
+        <div className="bg-background-sunken flex h-full items-center gap-3 rounded-md pl-2 pr-0.5">
+          <p className="text-section">Section row</p>
+          <Button size="sm" variant="tertiary">
+            Small
+          </Button>
+        </div>
         <Avatar size="sm">
           <AvatarFallback>AB</AvatarFallback>
         </Avatar>
