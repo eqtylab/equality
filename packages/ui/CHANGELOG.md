@@ -2,6 +2,27 @@
 
 Notable changes to Equality are recorded here, following [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## 6.3.0 - 2026-11-24
+
+### Added
+
+- Four text styles for hierarchy: `text-title` for the page title, `text-section` for a card or
+  section title, `text-body` for running text and descriptions, and `text-caption` for small
+  supporting text. Each is a Tailwind text size on its own line height, so plain `text-sm` matches
+  `text-body`. To line a title up with controls, put it in a row with them and centre it. See the
+  Typography page.
+- Seven size steps, 16 to 52, that Equality's own sizes choose from. Build a custom picture or mark
+  on one of them; the Sizing page lists them.
+- If your app merges classes with tailwind-merge, register the four styles as font sizes, or a
+  text colour beside them removes them. Extend its `font-size` group with `xxs`, `title`,
+  `section`, `body` and `caption` through `extendTailwindMerge`; the Typography page has the snippet.
+
+### Deprecated
+
+- `--eq-control-sm-font-size`, `--eq-control-md-font-size`, `--eq-control-lg-font-size` and their
+  `-line-height` pairs match the caption, body and section text styles in size and line height. Use
+  those styles instead. The control text names still work; a later major removes them.
+
 ## 6.2.0 - 2026-11-24
 
 ### Changed

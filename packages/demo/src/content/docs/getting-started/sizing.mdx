@@ -1,0 +1,66 @@
+---
+title: "Sizing"
+description: "Seven size steps shared by text lines and controls, and when to use each"
+---
+
+import { SizingDemo } from "@demo/components/demo/sizing";
+
+## Overview
+
+Options are the sizes Equality allows, named by position. Decisions say what a thing uses, and read only options. Components read decisions; a box that isn't a control may read an option.
+
+Equality sizes text lines and controls on one scale of seven steps: 16, 20, 24, 28, 36, 44 and 52. Each step is the height of a line of text or of a box. The four [text styles](/getting-started/typography) are Tailwind text sizes, each on the step that is its line height. A text line follows its own size, and a row centres it among the controls beside it: a 24 section line sits in a 28 row with small buttons. Pick the step that fits what the part is. Give text lines and controls a step; icons have their own sizes.
+
+Controls' size names are the step they sit on (`sm` 28, `md` 36). Avatar, Badge, Icon, Switch, Checkbox and Timeline use their own size names.
+
+## The Scale
+
+<SizingDemo />
+
+| Step | Text line      | Control     | Also                                  |
+| ---- | -------------- | ----------- | ------------------------------------- |
+| 16   | `text-caption` |             | Small badge                           |
+| 20   | `text-body`    |             | Default badge                         |
+| 24   | `text-section` | Extra small |                                       |
+| 28   |                | Small       |                                       |
+| 36   | `text-title`   | Default     |                                       |
+| 44   |                | Large       |                                       |
+| 52   |                |             | Nav rail, and an app header beside it |
+
+## When to Use Each Step
+
+### 16
+
+Small supporting text, such as a timestamp or a hint under a field. A small badge, only where space is tight.
+
+### 20
+
+Running text and descriptions, and anything that sits in a line of text, such as a default badge.
+
+### 24
+
+A card or section title's line. An extra-small control beside a field, such as the clear button inside a picker.
+
+### 28
+
+Small controls. A row holding a card or section title, centred, and the small buttons beside it.
+
+### 36
+
+Default controls. A row holding the page title, 30 on a 36 line, and the default controls beside it.
+
+### 44
+
+Large controls.
+
+### 52
+
+The nav rail, and an app header that meets it at the corner. On touch screens the rail grows, so an app header beside it should too.
+
+## Building Your Own Component
+
+Put a part you build yourself on a step, not a pixel value. The steps are options: the values Equality allows. The sizes chosen from them for controls and text are decisions. Read a decision where one fits:
+
+- A control takes its height from `--eq-control-{xs,sm,md,lg}-height` (24, 28, 36, 44), such as `h-(--eq-control-md-height)`.
+- Text takes one of the four styles on the [Typography](/getting-started/typography) page.
+- A picture or mark that isn't a control, such as a logo or an icon in a circle, takes `--eq-size-{3xs,2xs,xs,sm,md,lg,xl}` (16 to 52), such as `size-(--eq-size-sm)`.

@@ -6,4 +6,6 @@ order:
   - customizing
   - component-architecture
   - color-tokens
+  - typography
+  - sizing
   - elevation
