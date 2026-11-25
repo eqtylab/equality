@@ -9,7 +9,8 @@ Notable changes to Equality are recorded here, following [Keep a Changelog](http
 - `Avatar` sizes now match the control sizes: `xs` 24, `sm` 28, `md` 36 and `lg` 44. The new
   default, `line`, is as tall as the line of text the avatar sits in: 20 in a table, menu or list
   row. `xl` is now 52, for a profile or page hero. Initials show one letter at `line`, `xs` and
-  `sm`, and two at `md`, `lg` and `xl`.
+  `sm`, and two at `md`, `lg` and `xl`; screen readers hear them all. A count such as `+3` shows
+  whole.
 
   | You had                    | Use now                                                   |
   | -------------------------- | --------------------------------------------------------- |
@@ -46,12 +47,17 @@ Notable changes to Equality are recorded here, following [Keep a Changelog](http
 - Table, `DropdownMenu`, `Select` and `Command` rows hold an avatar, badge, small switch or default
   `IconButton` and stay 36. A part taller than that, or text that wraps, makes its row taller, by
   less than before: rows keep 4 above and below their content, from 8, so a two-line row is 48, from 56.
+- The `control-row-padding` utility pads 4 above and below, from 8, so a row keeps room for a 28
+  part. A row of your own that uses it without a minimum height is 8 shorter: give it a minimum
+  height of 36 to keep it where it was.
 - Table body rows draw a faint line between them instead of filling every other row. The last row
   draws none. Pass `striped` to bring the fill back.
 - The Table header draws its line inside its height, so it is 36, from 37, and grows when its text
   wraps instead of spilling out.
 - `IconButton` icons match the icon beside text in the control of the same size: 16 at `md`, from
-  22, and 20 at `lg`, from 26. `xs` (14) and `sm` (16) are unchanged.
+  22, and 20 at `lg`, from 26. `xs` (14) and `sm` (16) are unchanged. The icon button's own size now
+  wins over an icon size set through `className`, such as `[&_svg]:size-5`; to change it, pass
+  another `size`.
 - An icon in a large control is 20, from 16.
 - `CardContentHeader` has a smaller icon circle, 28 from 36, with a 16 icon, from 20, and a 16
   semibold title, from 18, so the header is as tall as its "See All" button. The icon and title now
