@@ -9,7 +9,7 @@ export interface CardContentHeaderProps {
   icon: React.ReactElement | string;
   /** The card's title, rendered as an `h3`. */
   heading?: string;
-  /** Shows a "See All" button at the end of the heading's line and runs on click. */
+  /** Shows a "See All" button at the end of the header and runs on click. */
   onButtonClick?: () => void;
 }
 

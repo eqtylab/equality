@@ -15,7 +15,7 @@ export interface TitleBlockProps extends Omit<React.HTMLAttributes<HTMLDivElemen
   size?: TitleBlockSize;
   /** A `TitleBlockMark` shown before the title. */
   mark?: React.ReactNode;
-  /** The block's title. Without one, trailing items still sit at the end of the row. */
+  /** The block's title. Without one, trailing items still sit at the end of the block. */
   title?: React.ReactNode;
   /** Supporting text under the title. */
   description?: React.ReactNode;
@@ -70,7 +70,7 @@ const TitleBlock = forwardRef<HTMLDivElement, TitleBlockProps>(
               </Title>
             )}
           </div>
-          {description && <p className={styles.description}>{description}</p>}
+          {description && <div className={styles.description}>{description}</div>}
           {children}
         </div>
         {(trailing || actions) && (

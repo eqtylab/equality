@@ -91,8 +91,22 @@
   @apply text-body font-semibold;
 }
 
+.size-md .description {
+  @apply text-caption;
+}
+
+.size-md .stack > .placeholder-line {
+  @apply h-(--eq-type-caption-line-height);
+}
+
 .size-md.with-description .mark-slot {
-  margin-top: calc((2 * var(--eq-type-body-line-height) - var(--eq-control-md-height)) / 2);
+  margin-top: calc(
+    (
+        var(--eq-type-body-line-height) + var(--eq-type-caption-line-height) -
+          var(--eq-control-md-height)
+      ) /
+      2
+  );
 }
 
 .size-md:not(.with-description):is(.with-mark, .with-actions) .line {
@@ -104,14 +118,17 @@
 }
 
 .size-lg .title {
-  @apply text-section;
+  @apply text-body font-semibold;
 }
 
-.size-sm .title > .placeholder-line,
-.size-lg .title > .placeholder-line {
+.size-sm .title > .placeholder-line {
   @apply h-(--eq-type-section-line-height);
 }
 
+.size-lg.with-description.with-mark .stack {
+  padding-block: calc((var(--eq-control-lg-height) - 2 * var(--eq-type-body-line-height)) / 2);
+}
+
 .size-lg:not(.with-description):is(.with-mark, .with-actions) .line {
-  padding-block: calc((var(--eq-control-lg-height) - var(--eq-type-section-line-height)) / 2);
+  padding-block: calc((var(--eq-control-lg-height) - var(--eq-type-body-line-height)) / 2);
 }
