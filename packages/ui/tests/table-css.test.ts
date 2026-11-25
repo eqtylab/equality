@@ -94,18 +94,53 @@ describe('table-components.module.css', () => {
       String.raw`padding-block:\s*calc\(\(var\(--eq-control-${row}-height\)\s*-\s*var\(--eq-control-sm-height\)\)\s*/\s*2\);`
     );
 
+  const CELL_PADDING = (row: string, part: string) =>
+    new RegExp(
+      String.raw`padding-block:\s*calc\(\(var\(--eq-control-${row}-height\)\s*-\s*var\(--eq-${part}\)\)\s*/\s*2\);`
+    );
+
+  const COMFORTABLE_CELLS = (suffix = '') =>
+    ['body', 'footer']
+      .map(
+        (part) =>
+          `.table--comfortable > .table-inner > .table-${part} > .table-row > .table-cell${suffix}`
+      )
+      .join(',\n');
+
   it('makes body and footer rows the large control height in a comfortable table', () => {
     const selector =
       '.table--comfortable > .table-inner > .table-body > .table-row,\n.table--comfortable > .table-inner > .table-footer > .table-row';
     const body = ruleBody(css, selector);
     expect(body).toMatch(/min-height:\s*var\(--eq-control-lg-height\);/);
-    expect(body).toMatch(ROW_PADDING('lg'));
+    expect(body).toMatch(/padding-block:\s*calc\(0\.25rem \* 0\);/);
+  });
+
+  it('pads a comfortable cell of text to the row, and one holding a button to a small control', () => {
+    const flat = css.replace(/\n\s+(?=[>[])/g, ' ');
+    expect(ruleBody(flat, COMFORTABLE_CELLS())).toMatch(
+      CELL_PADDING('lg', 'type-body-line-height')
+    );
+    expect(ruleBody(flat, COMFORTABLE_CELLS(":has(button, [role='button'])"))).toMatch(
+      ROW_PADDING('lg')
+    );
+  });
+
+  it('pulls nothing into a comfortable cell', () => {
+    expect(
+      ruleBody(
+        css.replace(/\n\s+(?=[>[])/g, ' '),
+        ".table--comfortable > .table-inner > :is(.table-body, .table-footer) > .table-row > .table-cell [data-icon-button='sm']"
+      )
+    ).toMatch(/margin-block:\s*calc\(0\.25rem \* 0\);/);
   });
 
   it('makes the header row the large control height in a comfortable table', () => {
-    expect(
-      ruleBody(css, '.table--comfortable > .table-inner > .table-header > .table-row > .table-head')
-    ).toMatch(/height:\s*var\(--eq-control-lg-height\);/);
+    const head = ruleBody(
+      css,
+      '.table--comfortable > .table-inner > .table-header > .table-row > .table-head'
+    );
+    expect(head).toMatch(/height:\s*var\(--eq-control-lg-height\);/);
+    expect(head).toMatch(CELL_PADDING('lg', 'type-body-line-height'));
   });
 
   it('lets every row grow with what it holds', () => {

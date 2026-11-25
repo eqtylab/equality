@@ -92,12 +92,39 @@
 
 .table--comfortable > .table-inner > .table-body > .table-row,
 .table--comfortable > .table-inner > .table-footer > .table-row {
-  @apply min-h-(--eq-control-lg-height);
+  @apply min-h-(--eq-control-lg-height) py-0;
+}
+
+.table--comfortable > .table-inner > .table-body > .table-row > .table-cell,
+.table--comfortable > .table-inner > .table-footer > .table-row > .table-cell {
+  padding-block: calc((var(--eq-control-lg-height) - var(--eq-type-body-line-height)) / 2);
+}
+
+.table--comfortable
+  > .table-inner
+  > .table-body
+  > .table-row
+  > .table-cell:has(button, [role='button']),
+.table--comfortable
+  > .table-inner
+  > .table-footer
+  > .table-row
+  > .table-cell:has(button, [role='button']) {
   padding-block: calc((var(--eq-control-lg-height) - var(--eq-control-sm-height)) / 2);
+}
+
+.table--comfortable
+  > .table-inner
+  > :is(.table-body, .table-footer)
+  > .table-row
+  > .table-cell
+  [data-icon-button='sm'] {
+  @apply my-0;
 }
 
 .table--comfortable > .table-inner > .table-header > .table-row > .table-head {
   @apply min-h-(--eq-control-lg-height);
+  padding-block: calc((var(--eq-control-lg-height) - var(--eq-type-body-line-height)) / 2);
 }
 
 /* A border on the row itself would add 1px to its height and put it off the 36 scale */
