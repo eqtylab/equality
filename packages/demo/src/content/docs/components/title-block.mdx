@@ -28,7 +28,17 @@ The mark and the title stay side by side at every width. A long title wraps besi
 Import the components:
 
 ```tsx
-import { TitleBlock, TitleBlockMark } from "@eqtylab/equality";
+import {
+  Badge,
+  Button,
+  ControlStatusBadge,
+  IconButton,
+  Progress,
+  Skeleton,
+  TitleBlock,
+  TitleBlockMark,
+  TitleBlockSkeleton,
+} from "@eqtylab/equality";
 ```
 
 Basic usage with a mark, a title and a description:
@@ -53,7 +63,7 @@ Pick the size by what the block holds. The mark sets the block's height, and a `
 | `md` (default) | A name and a short fact, such as a person and their email. The fact is set as a caption |
 | `lg`           | A title and a sentence that describes it                                                |
 
-The larger `sm` title is for section and page headings. `md` and `lg` share one title size, so blocks side by side match, in a card or a table row.
+The larger `sm` title is for card and section headings. `md` and `lg` share one title size, so blocks side by side match, in a card or a table row.
 
 #### Small
 
@@ -204,13 +214,13 @@ Children render under the description, such as a row of badges or a progress bar
   title="Data Layer"
   description="Inputs every run reads from"
 >
-  <Progress value={60} className="mt-2" />
+  <Progress value={60} className="mt-2" aria-label="Sources read" />
 </TitleBlock>
 ```
 
 ### Loading
 
-Show `TitleBlockSkeleton` while the block's data loads. It is as tall as the block it stands in for, so the page doesn't jump when the data arrives. Give it the same `size`, a width for each line the block will have, and a placeholder for each trailing item and action. Set `mark={false}` when it has no mark.
+Show `TitleBlockSkeleton` while the block's data loads. It is as tall as the block it stands in for, when that block has nothing under its description, so the page doesn't jump when the data arrives. Give it the same `size`, a width for each line the block will have, and a placeholder for each trailing item and action. Set `mark={false}` when it has no mark.
 
 <div className="my-4">
   <TitleBlockSkeletonDemo client:only="react" />
