@@ -43,16 +43,18 @@ type GraphemeSegmenter = new () => {
 const Segmenter = (Intl as { Segmenter?: GraphemeSegmenter }).Segmenter;
 const segmenter = Segmenter ? new Segmenter() : null;
 
-function firstGraphemes(children: React.ReactNode, count: number): React.ReactNode {
+const INITIAL_LETTERS = /^[\p{L}\p{M}\s]+$/u;
+
+function shortenInitials(children: React.ReactNode, count: number) {
   const parts = React.Children.toArray(children);
-  if (!parts.every((part) => typeof part === 'string' || typeof part === 'number')) {
-    return children;
-  }
+  if (!parts.every((part) => typeof part === 'string' || typeof part === 'number')) return null;
   const text = parts.join('').trim();
+  if (!INITIAL_LETTERS.test(text)) return null;
   const graphemes = segmenter
     ? Array.from(segmenter.segment(text), ({ segment }) => segment)
     : Array.from(text);
-  return graphemes.slice(0, count).join('');
+  if (graphemes.length <= count) return { drawn: text, full: text };
+  return { drawn: graphemes.slice(0, count).join(''), full: text };
 }
 
 const INITIALS: Record<AvatarSize, number> = { line: 1, xs: 1, sm: 1, md: 2, lg: 2, xl: 2 };
@@ -62,13 +64,23 @@ const AvatarFallback = React.forwardRef<
   React.ComponentPropsWithoutRef<typeof AvatarPrimitive.Fallback>
 >(({ className, children, ...props }, ref) => {
   const size = React.useContext(AvatarSizeContext);
+  const initials = shortenInitials(children, INITIALS[size]);
   return (
     <AvatarPrimitive.Fallback
       ref={ref}
       className={cn(styles['avatar-fallback'], className)}
       {...props}
     >
-      {firstGraphemes(children, INITIALS[size])}
+      {!initials ? (
+        children
+      ) : initials.drawn === initials.full ? (
+        initials.full
+      ) : (
+        <>
+          <span aria-hidden="true">{initials.drawn}</span>
+          <span className={styles['avatar-initials-full']}>{initials.full}</span>
+        </>
+      )}
     </AvatarPrimitive.Fallback>
   );
 });

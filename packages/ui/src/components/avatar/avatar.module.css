@@ -20,6 +20,10 @@
   @apply flex-center;
 }
 
+.avatar-initials-full {
+  @apply sr-only;
+}
+
 /* Size Variants */
 
 .avatar.size-line {
