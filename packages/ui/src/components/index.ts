@@ -62,6 +62,7 @@ export * from './tabs/tabs';
 export * from './tabs/tabs-components';
 export * from './textarea/textarea';
 export * from './timeline/timeline';
+export * from './title-block/title-block';
 export * from './toast/toast';
 export * from './toast/toast-components';
 export * from './tooltip/tooltip';
