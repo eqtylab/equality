@@ -85,7 +85,7 @@ With no description, the title centres on the mark.
   size="sm"
   mark={<TitleBlockMark icon="SquareChartGantt" />}
   title="Activity Logs"
-  trailing={
+  actions={
     <Button variant="tertiary" size="sm">
       See All
     </Button>
@@ -161,7 +161,7 @@ An Avatar does not take the block's size. Pass the Avatar size with the same nam
 
 ### Trailing Items and Actions
 
-`trailing` puts a status or a [Badge](/components/badge) at its default size at the end of the title's first line, so it reads with the title. `actions` puts controls, such as a small [Button](/components/button) or an [Icon Button](/components/icon-button) menu, at the end of the block, centred on its full height, so a control never reaches above the block's top. Keep each to one or two items. At `sm`, the block is one 28 row, so a small button can go in either.
+`trailing` puts a status or a [Badge](/components/badge) at its default size at the end of the title's first line, so it reads with the title. `actions` puts controls, such as a small [Button](/components/button) or an [Icon Button](/components/icon-button) menu, at the end of the block, centred on its full height, so a control never reaches above the block's top. Keep each to one or two items. With actions and no mark, the title row still takes the block's full height, so a section heading lines up with its button.
 
 <div className="my-4">
   <TitleBlockTrailingDemo client:only="react" />

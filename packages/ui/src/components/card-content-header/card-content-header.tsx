@@ -26,7 +26,7 @@ const CardContentHeader = forwardRef<HTMLDivElement, CardContentHeaderProps>(
         className={className}
         mark={<TitleBlockMark icon={icon} />}
         title={heading}
-        trailing={
+        actions={
           onButtonClick && (
             <Button variant="tertiary" size="sm" onClick={onButtonClick}>
               See All

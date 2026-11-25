@@ -46,13 +46,14 @@ export function TitleBlockSizeDemo({ size }: { size: TitleBlockSize }) {
           title={title}
           description={description}
           trailing={
+            size === "sm" ? undefined : <Badge variant="success">Active</Badge>
+          }
+          actions={
             size === "sm" ? (
               <Button variant="tertiary" size="sm">
                 See All
               </Button>
-            ) : (
-              <Badge variant="success">Active</Badge>
-            )
+            ) : undefined
           }
         />
       </CardContent>
@@ -173,6 +174,27 @@ export function TitleBlockTrailingDemo() {
             trailing={<Badge variant="success">Active</Badge>}
             actions={
               <IconButton name="EllipsisVertical" label="More actions" />
+            }
+          />
+        </CardContent>
+      </Card>
+      <Card>
+        <CardContent className="grid gap-4">
+          <TitleBlock
+            title="Members"
+            actions={
+              <Button variant="tertiary" size="sm">
+                Invite
+              </Button>
+            }
+          />
+          <TitleBlock
+            size="lg"
+            title="Policies"
+            actions={
+              <Button variant="tertiary" size="sm">
+                Add Policy
+              </Button>
             }
           />
         </CardContent>

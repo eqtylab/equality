@@ -23,7 +23,8 @@ Notable changes to Equality are recorded here, following [Keep a Changelog](http
 ### Changed
 
 - `CardContentHeader`'s icon now sits on a square tile instead of a circle, and the header lays out
-  like `TitleBlock`'s small size. Its props are unchanged.
+  like `TitleBlock`'s small size. "See All" centres on the header, so when a long heading wraps it
+  sits in the middle rather than level with the first line. Its props are unchanged.
 
 ## 7.0.0 - 2026-11-24
 

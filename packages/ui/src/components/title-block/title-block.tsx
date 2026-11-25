@@ -55,6 +55,7 @@ const TitleBlock = forwardRef<HTMLDivElement, TitleBlockProps>(
           styles['title-block'],
           styles[`size-${size}`],
           mark && styles['with-mark'],
+          actions && styles['with-actions'],
           description && styles['with-description'],
           className
         )}
@@ -137,6 +138,7 @@ function TitleBlockSkeleton({
         styles['title-block'],
         styles[`size-${size}`],
         mark && styles['with-mark'],
+        actions && styles['with-actions'],
         descriptionWidth && styles['with-description'],
         className
       )}

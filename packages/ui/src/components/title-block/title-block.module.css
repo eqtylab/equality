@@ -99,7 +99,7 @@
   margin-top: calc((2 * var(--eq-type-body-line-height) - var(--eq-control-md-height)) / 2);
 }
 
-.size-md.with-mark:not(.with-description) .line {
+.size-md:not(.with-description):is(.with-mark, .with-actions) .line {
   padding-block: calc((var(--eq-control-md-height) - var(--eq-type-body-line-height)) / 2);
 }
 
@@ -120,6 +120,6 @@
   @apply h-(--eq-type-section-line-height);
 }
 
-.size-lg.with-mark:not(.with-description) .line {
+.size-lg:not(.with-description):is(.with-mark, .with-actions) .line {
   padding-block: calc((var(--eq-control-lg-height) - var(--eq-type-section-line-height)) / 2);
 }
