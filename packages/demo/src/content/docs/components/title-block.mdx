@@ -99,7 +99,7 @@ With no description, the title centres on the mark.
   mark={<TitleBlockMark icon="SquareChartGantt" />}
   title="Activity Logs"
   actions={
-    <Button variant="tertiary" size="sm">
+    <Button variant="tertiary" size="sm" aria-label="See All Activity Logs">
       See All
     </Button>
   }
@@ -149,7 +149,7 @@ Pick the mark by what the block names:
 
 ### Trailing Items and Actions
 
-`trailing` takes a status or a [Badge](/components/badge) at its default size, and `actions` takes controls, such as a small [Button](/components/button) or an [Icon Button](/components/icon-button) menu. Both sit at the end of the block on one line, trailing items first, centred on the block's full height, so a badge lines up with the button beside it and a control never reaches above the block's top. Keep each to one or two items. With actions and no mark, the title row still takes the block's full height, so a section heading lines up with its button.
+`trailing` takes a status or a [Badge](/components/badge) at its default size, and `actions` takes controls, such as a small [Button](/components/button) or an [Icon Button](/components/icon-button) menu. Both sit at the end of the block on one line, trailing items first, centred on the block's full height, so a badge lines up with the button beside it and a control never reaches above the block's top. Keep each to one or two items. When the block is too narrow for them beside the title, such as two badges and two buttons on a phone, they wrap under the title. With actions and no mark, the title row still takes the block's full height, so a section heading lines up with its button.
 
 <div className="my-4">
   <TitleBlockTrailingDemo client:only="react" />
@@ -169,7 +169,7 @@ Pick the mark by what the block names:
   description="Inputs every run reads from"
   trailing={<Badge variant="neutral">3 sources</Badge>}
   actions={
-    <Button variant="tertiary" size="sm">
+    <Button variant="tertiary" size="sm" aria-label="Edit Data Layer">
       Edit
     </Button>
   }
@@ -181,7 +181,12 @@ Pick the mark by what the block names:
   title="Configuration Summary"
   description="What this project runs with today"
   trailing={<Badge variant="success">Active</Badge>}
-  actions={<IconButton name="EllipsisVertical" label="More actions" />}
+  actions={
+    <IconButton
+      name="EllipsisVertical"
+      label="More actions for Configuration Summary"
+    />
+  }
 />
 ```
 
@@ -248,6 +253,8 @@ Show `TitleBlockSkeleton` while the block's data loads. It is as tall as the blo
 ## Accessibility
 
 The title renders as an `h3`. Set `titleAs` to fit the page's heading outline: `h2`, `h3` or `h4`, or `p` when the block is not a heading. To name a region by its title, give the title an id with `titleId` and point the region's `aria-labelledby` at it.
+
+Give an action that repeats from block to block, such as "Edit" in every row, a name that includes the title, with its visible text first: `aria-label="Edit Data Layer"`. Screen reader users then hear which block it acts on, and voice-control users can still say "Edit".
 
 ```tsx
 <section aria-labelledby="members-title">

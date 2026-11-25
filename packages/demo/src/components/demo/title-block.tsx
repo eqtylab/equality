@@ -47,7 +47,11 @@ export function TitleBlockSizeDemo({ size }: { size: TitleBlockSize }) {
           }
           actions={
             size === "sm" ? (
-              <Button variant="tertiary" size="sm">
+              <Button
+                variant="tertiary"
+                size="sm"
+                aria-label={`See All ${title}`}
+              >
                 See All
               </Button>
             ) : undefined
@@ -127,7 +131,7 @@ export function TitleBlockTrailingDemo() {
             description="Inputs every run reads from"
             trailing={<Badge variant="neutral">3 sources</Badge>}
             actions={
-              <Button variant="tertiary" size="sm">
+              <Button variant="tertiary" size="sm" aria-label="Edit Data Layer">
                 Edit
               </Button>
             }
@@ -143,7 +147,10 @@ export function TitleBlockTrailingDemo() {
             description="What this project runs with today"
             trailing={<Badge variant="success">Active</Badge>}
             actions={
-              <IconButton name="EllipsisVertical" label="More actions" />
+              <IconButton
+                name="EllipsisVertical"
+                label="More actions for Configuration Summary"
+              />
             }
           />
         </CardContent>
