@@ -19,8 +19,10 @@ export interface TitleBlockProps extends Omit<React.HTMLAttributes<HTMLDivElemen
   title?: React.ReactNode;
   /** Supporting text under the title. */
   description?: React.ReactNode;
-  /** Badges or actions at the end of the title's first line. */
+  /** Badges or status at the end of the title's first line. */
   trailing?: React.ReactNode;
+  /** Buttons or a menu at the end of the block, centred on its full height. */
+  actions?: React.ReactNode;
   /** The element the title renders as, to fit the page's heading outline. */
   titleAs?: 'h2' | 'h3' | 'h4' | 'p';
   /** An id for the title, so a region can take its name with `aria-labelledby`. */
@@ -38,6 +40,7 @@ const TitleBlock = forwardRef<HTMLDivElement, TitleBlockProps>(
       title,
       description,
       trailing,
+      actions,
       titleAs: Title = 'h3',
       titleId,
       children,
@@ -70,6 +73,7 @@ const TitleBlock = forwardRef<HTMLDivElement, TitleBlockProps>(
           {description && <p className={styles.description}>{description}</p>}
           {children}
         </div>
+        {actions && <div className={styles.actions}>{actions}</div>}
       </div>
     </TitleBlockSizeContext.Provider>
   )
@@ -110,6 +114,8 @@ export interface TitleBlockSkeletonProps {
   descriptionWidth?: string;
   /** Placeholders for the trailing items, such as a `Skeleton` the size of a badge. */
   trailing?: React.ReactNode;
+  /** Placeholders for the actions, such as a `Skeleton` the size of a button. */
+  actions?: React.ReactNode;
   /** The mark's shape: a square tile, a round avatar, or none. */
   mark?: 'square' | 'round' | false;
   /** Classes added to the root. */
@@ -121,6 +127,7 @@ function TitleBlockSkeleton({
   titleWidth,
   descriptionWidth,
   trailing,
+  actions,
   mark = 'square',
   className,
 }: TitleBlockSkeletonProps) {
@@ -160,6 +167,7 @@ function TitleBlockSkeleton({
           </div>
         )}
       </div>
+      {actions && <div className={styles.actions}>{actions}</div>}
     </div>
   );
 }

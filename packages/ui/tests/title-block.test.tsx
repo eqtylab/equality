@@ -24,17 +24,19 @@ describe('TitleBlockMark', () => {
 });
 
 describe('TitleBlock', () => {
-  it('puts trailing items in the title row, not under the description', () => {
+  it('puts trailing items in the title row and actions outside it', () => {
     render(
       <TitleBlock
         title="Policies"
         description="Rules every run is checked against"
         trailing={<span>3 active</span>}
+        actions={<button type="button">Edit</button>}
       />
     );
 
     const row = screen.getByRole('heading', { name: 'Policies' }).parentElement;
     expect(row?.contains(screen.getByText('3 active'))).toBe(true);
     expect(row?.contains(screen.getByText('Rules every run is checked against'))).toBe(false);
+    expect(row?.contains(screen.getByRole('button', { name: 'Edit' }))).toBe(false);
   });
 });

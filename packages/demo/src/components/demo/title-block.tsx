@@ -7,6 +7,7 @@ import {
   Card,
   CardContent,
   ControlStatusBadge,
+  IconButton,
   Skeleton,
   TitleBlock,
   TitleBlockMark,
@@ -153,13 +154,25 @@ export function TitleBlockTrailingDemo() {
             mark={<TitleBlockMark icon="Layers" />}
             title="Data Layer"
             description="Inputs every run reads from"
-            trailing={
-              <>
-                <Badge variant="neutral">3 sources</Badge>
-                <Button variant="tertiary" size="sm">
-                  Edit
-                </Button>
-              </>
+            trailing={<Badge variant="neutral">3 sources</Badge>}
+            actions={
+              <Button variant="tertiary" size="sm">
+                Edit
+              </Button>
+            }
+          />
+        </CardContent>
+      </Card>
+      <Card>
+        <CardContent>
+          <TitleBlock
+            size="lg"
+            mark={<TitleBlockMark icon="Settings2" />}
+            title="Configuration Summary"
+            description="What this project runs with today"
+            trailing={<Badge variant="success">Active</Badge>}
+            actions={
+              <IconButton name="EllipsisVertical" label="More actions" />
             }
           />
         </CardContent>

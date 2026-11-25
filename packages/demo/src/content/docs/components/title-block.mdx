@@ -14,7 +14,7 @@ import {
 
 ## Overview
 
-Title Block sets a title beside a mark, such as an icon tile or an avatar. A description can sit under the title, and trailing items, such as a badge or a small button, sit at the end of the title's first line. Use it for a card's header, an item card, a person or thing with a line under it, and the top of a page section.
+Title Block sets a title beside a mark, such as an icon tile or an avatar. A description can sit under the title. Trailing items, such as a badge or a status, sit at the end of the title's first line, and actions, such as a button or a menu, sit at the end of the block. Use it for a card's header, an item card, a person or thing with a line under it, and the top of a page section.
 
 It is made of three parts: `TitleBlock` (the block), `TitleBlockMark` (the icon tile) and `TitleBlockSkeleton` (the placeholder while it loads).
 
@@ -159,9 +159,9 @@ An Avatar does not take the block's size. Pass the Avatar size with the same nam
 />
 ```
 
-### Trailing Items
+### Trailing Items and Actions
 
-`trailing` puts items at the end of the title's first line: a status, a [Badge](/components/badge) at its default size, or a small [Button](/components/button). Keep it to one or two items.
+`trailing` puts a status or a [Badge](/components/badge) at its default size at the end of the title's first line, so it reads with the title. `actions` puts controls, such as a small [Button](/components/button) or an [Icon Button](/components/icon-button) menu, at the end of the block, centred on its full height, so a control never reaches above the block's top. Keep each to one or two items. At `sm`, the block is one 28 row, so a small button can go in either.
 
 <div className="my-4">
   <TitleBlockTrailingDemo client:only="react" />
@@ -179,14 +179,21 @@ An Avatar does not take the block's size. Pass the Avatar size with the same nam
   mark={<TitleBlockMark icon="Layers" />}
   title="Data Layer"
   description="Inputs every run reads from"
-  trailing={
-    <>
-      <Badge variant="neutral">3 sources</Badge>
-      <Button variant="tertiary" size="sm">
-        Edit
-      </Button>
-    </>
+  trailing={<Badge variant="neutral">3 sources</Badge>}
+  actions={
+    <Button variant="tertiary" size="sm">
+      Edit
+    </Button>
   }
+/>
+
+<TitleBlock
+  size="lg"
+  mark={<TitleBlockMark icon="Settings2" />}
+  title="Configuration Summary"
+  description="What this project runs with today"
+  trailing={<Badge variant="success">Active</Badge>}
+  actions={<IconButton name="EllipsisVertical" label="More actions" />}
 />
 ```
 
@@ -212,7 +219,7 @@ Children render under the description, such as a row of badges or a progress bar
 
 ### Loading
 
-Show `TitleBlockSkeleton` while the block's data loads. It is as tall as the block it stands in for, so the page doesn't jump when the data arrives. Give it the same `size`, a width for each line the block will have, and a placeholder for each trailing item. Set `mark="round"` when the block will show a round Avatar, and `mark={false}` when it has no mark.
+Show `TitleBlockSkeleton` while the block's data loads. It is as tall as the block it stands in for, so the page doesn't jump when the data arrives. Give it the same `size`, a width for each line the block will have, and a placeholder for each trailing item and action. Set `mark="round"` when the block will show a round Avatar, and `mark={false}` when it has no mark.
 
 <div className="my-4">
   <TitleBlockSkeletonDemo client:only="react" />
@@ -277,7 +284,8 @@ A mark you build yourself, such as a logo, goes in `mark`. Put it in a box as ta
 | `mark`        | A `TitleBlockMark` or an `Avatar` shown before the title    | `ReactNode`           | —       | ❌       |
 | `title`       | The block's title                                           | `ReactNode`           | —       | ❌       |
 | `description` | Supporting text under the title                             | `ReactNode`           | —       | ❌       |
-| `trailing`    | Badges or actions at the end of the title's first line      | `ReactNode`           | —       | ❌       |
+| `trailing`    | Badges or status at the end of the title's first line       | `ReactNode`           | —       | ❌       |
+| `actions`     | Buttons or a menu at the end of the block, centred on it    | `ReactNode`           | —       | ❌       |
 | `titleAs`     | The element the title renders as, to fit the page's outline | `h2`, `h3`, `h4`, `p` | `h3`    | ❌       |
 | `titleId`     | An id for the title, so a region can take its name from it  | `string`              | —       | ❌       |
 | `children`    | Content shown under the description                         | `ReactNode`           | —       | ❌       |
@@ -298,4 +306,5 @@ Outside a `TitleBlock`, the tile takes the medium size.
 | `titleWidth`       | A width class for the title bar, such as `w-40`                         | `string`                   | —        | ✅       |
 | `descriptionWidth` | A width class for the description bar. Leave it out with no description | `string`                   | —        | ❌       |
 | `trailing`         | Placeholders for the trailing items                                     | `ReactNode`                | —        | ❌       |
+| `actions`          | Placeholders for the actions                                            | `ReactNode`                | —        | ❌       |
 | `mark`             | The mark's shape: a square tile, a round avatar, or none                | `square`, `round`, `false` | `square` | ❌       |

@@ -54,6 +54,10 @@
   @apply text-body ml-auto flex shrink-0 items-center gap-2;
 }
 
+.actions {
+  @apply flex shrink-0 items-center gap-2 self-center;
+}
+
 .description {
   @apply text-body text-text-secondary;
 }

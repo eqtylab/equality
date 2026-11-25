@@ -6,8 +6,9 @@ Notable changes to Equality are recorded here, following [Keep a Changelog](http
 
 ### Added
 
-- `TitleBlock` sets a title beside a mark, with an optional description under it and trailing
-  items at the end of the title's first line. It comes in three sizes: `sm` for a card's header
+- `TitleBlock` sets a title beside a mark, with an optional description under it. Badges and
+  status go in `trailing`, at the end of the title's first line; buttons and menus go in `actions`,
+  at the end of the block and centred on it, so a control never reaches above the block. It comes in three sizes: `sm` for a card's header
   row beside small buttons, `md` (the default) for an item card or a person or thing with a line
   under it, and `lg` for the top of a page section or a summary card. A long title wraps beside the
   mark, never under it.
