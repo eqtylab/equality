@@ -175,10 +175,11 @@ that isn't a control takes `--eq-size-{2xs,line,xs,sm,md,lg,xl}`.
 
 Text takes one of four styles: `text-title` for a page title, `text-section` for
 a card or section title, `text-body` for running text and `text-caption` for
-small supporting text. Title and section lines are as tall as a default and a
-small button, and body and caption match the text inside them, so a title lines
-up with the buttons beside it. Never pair a size with a hand-written line height,
-such as `text-2xl leading-(--eq-control-md-height)`.
+small supporting text. Each line follows its size: caption 12 on 16, body 14 on
+20, section 16 on 24, title 28 on 36. To line a title up with controls, put it in
+a row with them and centre it: a section title in a 28 row with small buttons, a
+page title in a 36 row with default ones. Never pair a size with a hand-written
+line height, such as `text-2xl leading-(--eq-control-md-height)`.
 
 If your app merges classes with tailwind-merge, register the four styles as font
 sizes, or a text colour beside them removes them.

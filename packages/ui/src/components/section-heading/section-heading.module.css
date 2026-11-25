@@ -14,8 +14,8 @@
   @apply text-section;
 }
 
-.heading--stacked {
-  line-height: var(--eq-type-section-stacked-line-height);
+.heading--row {
+  padding-block: calc((var(--eq-control-sm-height) - var(--eq-type-section-line-height)) / 2);
 }
 
 .description {

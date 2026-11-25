@@ -39,12 +39,11 @@
   --eq-size-lg: --spacing(11); /* 44 */
   --eq-size-xl: --spacing(13); /* 52 */
   /* type: a role's size, line height and weight together */
-  --eq-type-title-font-size: --theme(--text-2xl); /* 24 */
+  --eq-type-title-font-size: 1.75rem; /* 28 */
   --eq-type-title-line-height: var(--eq-size-md);
   --eq-type-title-font-weight: --theme(--font-weight-semibold);
   --eq-type-section-font-size: --theme(--text-base); /* 16 */
-  --eq-type-section-line-height: var(--eq-size-sm);
-  --eq-type-section-stacked-line-height: var(--eq-size-xs); /* a section title over a description */
+  --eq-type-section-line-height: var(--eq-size-xs);
   --eq-type-section-font-weight: --theme(--font-weight-semibold);
   --eq-type-body-font-size: --theme(--text-sm); /* 14 */
   --eq-type-body-line-height: var(--eq-size-line);

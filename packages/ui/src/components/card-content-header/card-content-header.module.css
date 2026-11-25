@@ -19,6 +19,7 @@
 
 .title {
   @apply text-section text-text-primary min-w-0 break-words;
+  padding-block: calc((var(--eq-control-sm-height) - var(--eq-type-section-line-height)) / 2);
 }
 
 .button {
