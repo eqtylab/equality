@@ -9,6 +9,8 @@ Notable changes to Equality are recorded here, following [Keep a Changelog](http
 - `TableContainer` takes `density`. `regular`, the default, keeps rows and the header at 36;
   `comfortable` makes them 44, for tables people read slowly or use mostly by touch.
 - `TableContainer` takes `striped`, which fills every other row, for wide, number-heavy tables.
+- `--eq-control-xs-icon-size`, the icon size in an extra-small control, and
+  `--eq-table-row-divider-color`, the colour of the line between table rows.
 
 ### Changed
 
@@ -18,9 +20,10 @@ Notable changes to Equality are recorded here, following [Keep a Changelog](http
   wraps instead of spilling out.
 - `IconButton` icons match the icon beside text in the control of the same size: 16 at `md`, from
   22, and 20 at `lg`, from 26. `xs` (14) and `sm` (16) are unchanged. The icon button's own size now
-  wins over an icon size set through `className`, such as `[&_svg]:size-5`; to change it, pass
-  another `size`.
-- An icon in a large `Button` is 20, from 16.
+  wins over an icon size set through `className`, such as `[&_svg]:size-5`; only an `!important`
+  size still wins. For another icon size, pass another `size`.
+- `--eq-control-lg-icon-size` is 20, from 16, so an icon in a large `Button`, and any icon your app
+  sizes with it, is 20.
 
 ## 6.3.0 - 2026-11-25
 

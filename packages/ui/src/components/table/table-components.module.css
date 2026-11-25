@@ -62,7 +62,7 @@
 }
 
 .table-footer {
-  @apply border-t last:[&>tr]:border-b-0;
+  @apply border-t;
   @apply grid font-medium;
   grid-template-columns: subgrid;
   grid-column: 1 / -1;
@@ -124,7 +124,7 @@
   > :is(.table-body, .table-footer)
   > .table-row
   > .table-cell
-  > [data-icon-button='sm'] {
+  [data-icon-button='sm'] {
   @apply my-0;
 }
 
@@ -146,7 +146,7 @@
   content: '';
   @apply pointer-events-none absolute;
   inset: auto 0 0;
-  border-bottom: 1px solid var(--eq-row-divider-color);
+  border-bottom: 1px solid var(--eq-table-row-divider-color);
 }
 
 /* Keep at half the row hover in --color-list-item-hover or less, or a hovered row stops standing out.

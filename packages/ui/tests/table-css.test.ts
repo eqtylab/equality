@@ -36,14 +36,14 @@ describe('table-components.module.css', () => {
   it('names one row line colour: the border at 60%', async () => {
     const decisions = await readFile('src/theme/theme-decisions.css', 'utf8');
     expect(decisions).toMatch(
-      /--eq-row-divider-color:\s*color-mix\(in oklab, var\(--color-border\) 60%, transparent\);/
+      /--eq-table-row-divider-color:\s*color-mix\(in oklab, var\(--color-border\) 60%, transparent\);/
     );
   });
 
   it('draws a line inside each body row but the last, so the row stays its height', () => {
     expect(ruleBody(css, '.table-body > .table-row')).toMatch(/position:\s*relative;/);
     const line = ruleBody(css, '.table-body > .table-row:not(:last-child)::after');
-    expect(line).toMatch(/border-bottom:\s*1px solid var\(--eq-row-divider-color\);/);
+    expect(line).toMatch(/border-bottom:\s*1px solid var\(--eq-table-row-divider-color\);/);
     expect(line).toMatch(/position:\s*absolute;/);
     expect(line).not.toMatch(/background-color/);
   });
@@ -121,11 +121,11 @@ describe('table-components.module.css', () => {
     expect(ruleBody(flat, COMFORTABLE_CELLS(BUTTON))).toMatch(ROW_PADDING('lg'));
   });
 
-  it('pulls no icon button into a comfortable cell', () => {
+  it('pulls no icon button into a comfortable cell, however deep it sits', () => {
     expect(
       ruleBody(
         flatten(css),
-        `${COMFORTABLE} :is(.table-body, .table-footer) > .table-row > .table-cell > [data-icon-button='sm']`
+        `${COMFORTABLE} :is(.table-body, .table-footer) > .table-row > .table-cell [data-icon-button='sm']`
       )
     ).toMatch(/margin-block:\s*calc\(0\.25rem \* 0\);/);
   });

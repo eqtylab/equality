@@ -17,8 +17,8 @@ html {
   --eq-list-label-gap: --spacing(1); /* 4, label to its first item */
   --eq-list-label-font-size: --theme(--text-xs); /* 12 */
   --eq-list-indent: --spacing(3); /* 12, child indent when items have no icons */
-  /* row: a table row */
-  --eq-row-divider-color: color-mix(in oklab, var(--color-border) 60%, transparent);
+  /* table: a table row */
+  --eq-table-row-divider-color: color-mix(in oklab, var(--color-border) 60%, transparent);
   /* nav-motion: a drill-in and a folder opening share one motion. NavDrill reads these in
      JavaScript, folder groups in CSS */
   --eq-nav-motion-duration: 300ms;
