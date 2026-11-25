@@ -12,7 +12,8 @@ Notable changes to Equality are recorded here, following [Keep a Changelog](http
   never reaches above the block. It comes in three sizes, by what the block holds: `sm` for a title
   alone, `md` (the default) for a name and a short fact, set as a caption, and `lg` for a title and
   a sentence. The mark sets the block's height, and `md` and `lg` share one title size. A long title
-  wraps beside the mark, never under it.
+  wraps beside the mark, never under it. When the block is too narrow for its badges and actions
+  beside the title, they wrap under the title. A block placed inside another keeps its own size.
 - `TitleBlockMark` puts an icon on a square tile, or a circle with `shape="round"`, that takes its
   size from the block.
 - `TitleBlockSkeleton` stands in for a title block while it loads, at the same height, so the page

@@ -68,6 +68,17 @@ describe('TitleBlockMark', () => {
   });
 });
 
+describe('TitleBlock sizes', () => {
+  it("reach only the block's own parts, so a block nested in another keeps its own size", () => {
+    const sized = rules(titleBlock).filter(({ selector }) => /^\.size-/.test(selector));
+    expect(sized.length).toBeGreaterThan(10);
+    for (const { selector } of sized) {
+      const parts = selector.replace(/\s*>\s*/g, '>').replace(/\([^)]*\)/g, '()');
+      expect(parts, selector).not.toMatch(/\s/);
+    }
+  });
+});
+
 describe('MetricCard', () => {
   it("draws its icon as a 36 circle with a 16 glyph, over Icon's own sizes", () => {
     const circle = ruleBody(metricCard, '.icon.icon.icon.icon');

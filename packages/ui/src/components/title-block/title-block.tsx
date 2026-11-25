@@ -62,23 +62,25 @@ const TitleBlock = forwardRef<HTMLDivElement, TitleBlockProps>(
         {...props}
       >
         {mark && <div className={styles['mark-slot']}>{mark}</div>}
-        <div className={styles.stack}>
-          {title && (
-            <div className={styles.line}>
-              <Title id={titleId} className={styles.title}>
-                {title}
-              </Title>
+        <div className={styles.body}>
+          <div className={styles.stack}>
+            {title && (
+              <div className={styles.line}>
+                <Title id={titleId} className={styles.title}>
+                  {title}
+                </Title>
+              </div>
+            )}
+            {description && <div className={styles.description}>{description}</div>}
+            {children}
+          </div>
+          {(trailing || actions) && (
+            <div className={styles.end}>
+              {trailing && <div className={styles.trailing}>{trailing}</div>}
+              {actions && <div className={styles.actions}>{actions}</div>}
             </div>
           )}
-          {description && <div className={styles.description}>{description}</div>}
-          {children}
         </div>
-        {(trailing || actions) && (
-          <div className={styles.end}>
-            {trailing && <div className={styles.trailing}>{trailing}</div>}
-            {actions && <div className={styles.actions}>{actions}</div>}
-          </div>
-        )}
       </div>
     </TitleBlockSizeContext.Provider>
   )
@@ -174,26 +176,28 @@ const TitleBlockSkeleton = forwardRef<HTMLDivElement, TitleBlockSkeletonProps>(
           />
         </div>
       )}
-      <div className={styles.stack}>
-        <div className={styles.line}>
-          <div className={styles.title}>
-            <div className={styles['placeholder-line']}>
-              <Skeleton className={cn(styles['placeholder-bar'], titleWidth)} />
+      <div className={styles.body}>
+        <div className={styles.stack}>
+          <div className={styles.line}>
+            <div className={styles.title}>
+              <div className={styles['placeholder-line']}>
+                <Skeleton className={cn(styles['placeholder-bar'], titleWidth)} />
+              </div>
             </div>
           </div>
+          {descriptionWidth && (
+            <div className={styles['placeholder-line']}>
+              <Skeleton className={cn(styles['placeholder-bar'], descriptionWidth)} />
+            </div>
+          )}
         </div>
-        {descriptionWidth && (
-          <div className={styles['placeholder-line']}>
-            <Skeleton className={cn(styles['placeholder-bar'], descriptionWidth)} />
+        {(trailing || actions) && (
+          <div className={styles.end}>
+            {trailing && <div className={styles.trailing}>{trailing}</div>}
+            {actions && <div className={styles.actions}>{actions}</div>}
           </div>
         )}
       </div>
-      {(trailing || actions) && (
-        <div className={styles.end}>
-          {trailing && <div className={styles.trailing}>{trailing}</div>}
-          {actions && <div className={styles.actions}>{actions}</div>}
-        </div>
-      )}
     </div>
   )
 );

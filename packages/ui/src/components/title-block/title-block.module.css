@@ -38,8 +38,14 @@
   @apply size-(--eq-size-2xs);
 }
 
+.body {
+  @apply flex min-w-0 flex-1 flex-wrap items-start gap-y-2;
+  column-gap: inherit;
+}
+
+/* The basis is the narrowest the title gets beside the end group; raise it and one badge and one button no longer share a row at 360 */
 .stack {
-  @apply min-w-0 flex-1;
+  @apply min-w-0 flex-[1_1_6rem];
 }
 
 .line {
@@ -51,15 +57,15 @@
 }
 
 .end {
-  @apply flex shrink-0 items-center gap-2 self-center;
+  @apply flex min-w-0 flex-wrap items-center gap-2 self-center;
 }
 
 .trailing {
-  @apply text-body flex items-center gap-2;
+  @apply text-body flex flex-wrap items-center gap-2;
 }
 
 .actions {
-  @apply flex items-center gap-2;
+  @apply flex flex-wrap items-center gap-2;
 }
 
 .description {
@@ -78,7 +84,7 @@
   @apply gap-2;
 }
 
-.size-sm .title {
+.size-sm > .body > .stack > .line > .title {
   @apply text-section;
   padding-block: calc((var(--eq-control-sm-height) - var(--eq-type-section-line-height)) / 2);
 }
@@ -87,19 +93,19 @@
   @apply gap-3;
 }
 
-.size-md .title {
+.size-md > .body > .stack > .line > .title {
   @apply text-body font-semibold;
 }
 
-.size-md .description {
+.size-md > .body > .stack > .description {
   @apply text-caption;
 }
 
-.size-md .stack > .placeholder-line {
+.size-md > .body > .stack > .placeholder-line {
   @apply h-(--eq-type-caption-line-height);
 }
 
-.size-md.with-description .mark-slot {
+.size-md.with-description > .mark-slot {
   margin-top: calc(
     (
         var(--eq-type-body-line-height) + var(--eq-type-caption-line-height) -
@@ -109,7 +115,7 @@
   );
 }
 
-.size-md:not(.with-description):is(.with-mark, .with-actions) .line {
+.size-md:not(.with-description):is(.with-mark, .with-actions) > .body > .stack > .line {
   padding-block: calc((var(--eq-control-md-height) - var(--eq-type-body-line-height)) / 2);
 }
 
@@ -117,18 +123,18 @@
   @apply gap-4;
 }
 
-.size-lg .title {
+.size-lg > .body > .stack > .line > .title {
   @apply text-body font-semibold;
 }
 
-.size-sm .title > .placeholder-line {
+.size-sm > .body > .stack > .line > .title > .placeholder-line {
   @apply h-(--eq-type-section-line-height);
 }
 
-.size-lg.with-description.with-mark .stack {
+.size-lg.with-description.with-mark > .body > .stack {
   padding-block: calc((var(--eq-control-lg-height) - 2 * var(--eq-type-body-line-height)) / 2);
 }
 
-.size-lg:not(.with-description):is(.with-mark, .with-actions) .line {
+.size-lg:not(.with-description):is(.with-mark, .with-actions) > .body > .stack > .line {
   padding-block: calc((var(--eq-control-lg-height) - var(--eq-type-body-line-height)) / 2);
 }
