@@ -46,6 +46,7 @@
   --eq-control-sm-height: var(--eq-size-sm); /* 28 */
   --eq-control-md-height: var(--eq-size-md); /* 36 */
   --eq-control-lg-height: var(--eq-size-lg); /* 44 */
+  /* Deprecated: equal to the caption, body and section styles; removed at the next major */
   /* Font size and line height change together: line heights are lengths, not ratios of the size. */
   --eq-control-sm-font-size: --theme(--text-xs); /* 12 */
   --eq-control-sm-line-height: var(--eq-size-3xs); /* 16 */

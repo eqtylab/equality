@@ -162,11 +162,13 @@ classes backed by tokens — `bg-background`, `bg-background-raised`,
 These flip correctly in dark mode; `bg-slate-800` and `#1e293b` do not.
 
 A control or row you build yourself takes its height, text and side padding from
-Equality's control decisions: `h-(--eq-control-md-height)` for height,
-`--eq-control-md-font-size` and `--eq-control-md-line-height` for text, and
-`--eq-control-padding-x-condensed`, `-normal` or `-spacious` (8, 12, 16) for side
-padding. Heights come in `xs` (24), `sm` (28), `md` (36) and `lg` (44); text
-comes in `sm`, `md` and `lg`. An icon beside the text takes
+Equality's control decisions: `h-(--eq-control-md-height)` for height, a text
+style for its label (`text-caption` at `sm`, `text-body` at `md`, `text-section`
+at `lg`), and `--eq-control-padding-x-condensed`, `-normal` or `-spacious` (8,
+12, 16) for side padding. Heights come in `xs` (24), `sm` (28), `md` (36) and
+`lg` (44). Use the text styles, not the control text names
+(`--eq-control-*-font-size` and `-line-height`): those are deprecated and go at
+the next major. An icon beside the text takes
 `--eq-control-{xs,sm,md,lg}-icon-size`, such as `size-(--eq-control-md-icon-size)`.
 Never write `h-10`. Text lines, controls, rows and avatars share seven size steps
 (16, 20, 24, 28, 36, 44, 52); the Sizing page says what sits on each:

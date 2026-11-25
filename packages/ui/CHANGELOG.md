@@ -28,6 +28,12 @@ Notable changes to Equality are recorded here, following [Keep a Changelog](http
 - `MetricCard`'s icon is 16, from 20, in the same circle.
 - `SectionHeading`'s title is 16 semibold, from 20 medium, and sits tighter over a description.
 
+### Deprecated
+
+- `--eq-control-sm-font-size`, `--eq-control-md-font-size`, `--eq-control-lg-font-size` and their
+  `-line-height` pairs equal the caption, body and section text styles. Use those styles instead.
+  The control text names still work and go at the next major.
+
 ## 7.0.0 - 2026-11-24
 
 ### Breaking
