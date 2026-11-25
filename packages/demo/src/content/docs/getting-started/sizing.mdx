@@ -7,7 +7,9 @@ import { SizingDemo } from "@demo/components/demo/sizing";
 
 ## Overview
 
-Equality sizes text lines, controls, rows and avatars on one scale of seven steps: 16, 20, 24, 28, 36, 44 and 52. A text line follows its own size, and a row centres it among the controls beside it: a 24 section line sits in a 28 row with small buttons. Pick the step that fits what the part is. Give text lines, controls, rows and avatars a step; icons have their own sizes.
+Equality sizes text lines, controls, rows and avatars on one scale of seven steps: 16, 20, 24, 28, 36, 44 and 52. Each step is the height of a line of text or of a box. The four [text styles](/getting-started/typography) are Tailwind text sizes, each on the step that is its line height. A text line follows its own size, and a row centres it among the controls beside it: a 24 section line sits in a 28 row with small buttons. Pick the step that fits what the part is. Give text lines, controls, rows and avatars a step; icons have their own sizes.
+
+A component's `size` name is the step it sits on: an `sm` button is 28 and an `md` avatar 36. Badge is the one exception, since its names came first: an `md` badge is 20 and an `sm` badge 16.
 
 ## The Scale
 
@@ -43,7 +45,7 @@ A row holding a card or section title, centred, and the small buttons beside it,
 
 ### 36
 
-A row holding the page title, whose line is 36, and the default controls beside it. Regular table rows. An `md` avatar for one person on their own, such as a person's card or page header, or an "Assigned to" field.
+A row holding the page title, 30 on a 36 line, and the default controls beside it. Regular table rows. An `md` avatar for one person on their own, such as a person's card or page header, or an "Assigned to" field.
 
 ### 44
 
@@ -63,4 +65,4 @@ Put a part you build yourself on a step, not a pixel value:
 
 - A control takes its height from `--eq-control-{xs,sm,md,lg}-height` (24, 28, 36, 44), such as `h-(--eq-control-md-height)`.
 - Text takes one of the four styles on the [Typography](/getting-started/typography) page.
-- A picture or mark that isn't a control, such as a logo or an icon in a circle, takes `--eq-size-{2xs,line,xs,sm,md,lg,xl}` (16 to 52), such as `size-(--eq-size-sm)`.
+- A picture or mark that isn't a control, such as a logo or an icon in a circle, takes `--eq-size-{3xs,2xs,xs,sm,md,lg,xl}` (16 to 52), such as `size-(--eq-size-sm)`.

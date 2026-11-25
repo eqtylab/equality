@@ -8,7 +8,8 @@ Notable changes to Equality are recorded here, following [Keep a Changelog](http
 
 - Four text styles for hierarchy: `text-title` for the page title, `text-section` for a card or
   section title, `text-body` for running text and descriptions, and `text-caption` for small
-  supporting text. Each line follows its size. To line a title up with controls, put it in a row
+  supporting text. Each is a Tailwind text size on its own line height, so plain `text-sm` matches
+  `text-body`. To line a title up with controls, put it in a row
   with them and centre it: a card title in a row with small buttons, a page title in a row with
   default ones. See the Typography page.
 - If your app merges classes with tailwind-merge, register the four styles as font sizes, or a

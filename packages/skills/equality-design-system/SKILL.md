@@ -171,12 +171,14 @@ comes in `sm`, `md` and `lg`. An icon beside the text takes
 Never write `h-10`. Text lines, controls, rows and avatars share seven size steps
 (16, 20, 24, 28, 36, 44, 52); the Sizing page says what sits on each:
 <https://equality.eqtylab.io/getting-started/sizing>. A picture or mark you build
-that isn't a control takes `--eq-size-{2xs,line,xs,sm,md,lg,xl}`.
+that isn't a control takes `--eq-size-{3xs,2xs,xs,sm,md,lg,xl}`. A component's
+`size` name is the step it sits on (`sm` 28, `md` 36), except Badge: `md` is 20
+and `sm` 16.
 
 Text takes one of four styles: `text-title` for a page title, `text-section` for
 a card or section title, `text-body` for running text and `text-caption` for
 small supporting text. Each line follows its size: caption 12 on 16, body 14 on
-20, section 16 on 24, title 28 on 36. To line a title up with controls, put it in
+20, section 16 on 24, title 30 on 36. To line a title up with controls, put it in
 a row with them and centre it: a section title in a 28 row with small buttons, a
 page title in a 36 row with default ones. Never pair a size with a hand-written
 line height, such as `text-2xl leading-(--eq-control-md-height)`.

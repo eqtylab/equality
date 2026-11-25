@@ -12,7 +12,7 @@ describe('avatar.module.css', () => {
   it('makes a line avatar as tall as its line, falling back to the line size where lh is unsupported', () => {
     const body = ruleBody(css, '.avatar.size-line');
     for (const side of ['width', 'height']) {
-      const fallback = body.search(new RegExp(`(^|[^-])${side}:\\s*var\\(--eq-size-line\\);`));
+      const fallback = body.search(new RegExp(`(^|[^-])${side}:\\s*var\\(--eq-size-2xs\\);`));
       const line = body.search(new RegExp(`(^|[^-])${side}:\\s*1lh;`));
       expect(fallback, side).toBeGreaterThan(-1);
       expect(line, side).toBeGreaterThan(fallback);

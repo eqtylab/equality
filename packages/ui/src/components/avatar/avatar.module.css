@@ -23,9 +23,9 @@
 /* Size Variants */
 
 .avatar.size-line {
-  width: var(--eq-size-line);
+  width: var(--eq-size-2xs);
   width: 1lh;
-  height: var(--eq-size-line);
+  height: var(--eq-size-2xs);
   height: 1lh;
 }
 

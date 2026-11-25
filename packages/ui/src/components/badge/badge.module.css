@@ -13,13 +13,17 @@
 /* Size Variants */
 
 .badge--md {
-  @apply px-2 py-0.5 text-xs;
-  @apply min-h-5 min-w-5 gap-1;
+  @apply text-caption gap-1 px-2;
+  min-height: var(--eq-size-2xs);
+  min-width: var(--eq-size-2xs);
+  padding-block: calc((var(--eq-size-2xs) - var(--eq-type-caption-line-height)) / 2);
 }
 
 .badge--sm {
-  @apply px-1 py-0 text-xs;
-  @apply min-h-4 min-w-4 gap-0.5;
+  @apply text-caption gap-0.5 px-1;
+  min-height: var(--eq-size-3xs);
+  min-width: var(--eq-size-3xs);
+  padding-block: calc((var(--eq-size-3xs) - var(--eq-type-caption-line-height)) / 2);
 }
 
 /* Color Variants */
