@@ -31,11 +31,15 @@ Notable changes to Equality are recorded here, following [Keep a Changelog](http
 - A block margin on a button in a table cell, such as `my-*`, `mt-*` or `mb-*`, is ignored unless
   written with `!`, such as `my-0!`.
 
+- Table cells pull an element with `data-slot="icon-button"` into their padding, not one with
+  `data-icon-button`. An element of your own that set `data-icon-button`, such as a placeholder for
+  a row menu, takes `data-slot="icon-button"`, or its row is 44, from 36.
+
 ### Added
 
 - `Button`, `IconButton`, `TitleBlock`, `EmptyTableState`, `SegmentedControls`, `Pagination`,
-  `CodeBlock` and `MotionCollapsibleContent` carry a `data-slot` attribute, such as
-  `data-slot="button"`. `TitleBlock` also carries its `data-size`.
+  `CodeBlock`, `MotionCollapsibleContent` and `TruncatedDescription` carry a `data-slot` attribute,
+  such as `data-slot="button"`. `TitleBlock` also carries its `data-size`.
 
 ### Changed
 
@@ -43,8 +47,9 @@ Notable changes to Equality are recorded here, following [Keep a Changelog](http
   default `IconButton` or a small `Button`, reaches into that padding, so its row stays 36, or 44
   comfortable, and a cell that hides its overflow doesn't cut it off. A row with a small `Button` is
   36, from 44.
-- A row holding a default `Button` or `Select` in a regular table is 44, from 52; comfortable rows
-  are unchanged.
+- A row holding a default `Button` or `Select` in a regular table is 44, from 52. In a comfortable
+  table, a default `Button` makes its row 52, from 44, and a header holding one is 44, from 36, or
+  52 comfortable, from 44.
 - Table rows no longer pad; each cell does. Padding you set on a `TableCell` now replaces
   Equality's, and padding on a `TableRow` adds to it.
 - Icons in a `CommandDialog` item draw at 16, as in a `Command`; they were 20. An icon you size
