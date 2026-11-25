@@ -17,6 +17,10 @@ Notable changes to Equality are recorded here, following [Keep a Changelog](http
   text colour beside them removes them. Extend its `font-size` group with `xxs`, `title`,
   `section`, `body` and `caption` through `extendTailwindMerge`; the Typography page has the snippet.
 
+### Changed
+
+- `NavRail` is 60 wide, from 52, or 68 on a touch screen. An app header above it keeps its height.
+
 ### Deprecated
 
 - `--eq-control-sm-font-size`, `--eq-control-md-font-size`, `--eq-control-lg-font-size` and their

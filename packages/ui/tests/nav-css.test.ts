@@ -44,9 +44,9 @@ describe('nav.module.css', () => {
     );
   });
 
-  it('sizes the rail as its item plus 8 each side, on touch too', () => {
+  it('sizes the rail as its item plus 12 each side, on touch too', () => {
     expect(ruleBody(css, '.nav-rail')).toMatch(
-      /width:\s*calc\(max\(var\(--eq-control-md-height\), var\(--eq-touch-target\)\) \+ calc\(0\.25rem \* 4\)\);/
+      /width:\s*calc\(max\(var\(--eq-control-md-height\), var\(--eq-touch-target\)\) \+ calc\(0\.25rem \* 6\)\);/
     );
   });
 
