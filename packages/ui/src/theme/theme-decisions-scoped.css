@@ -30,7 +30,7 @@
     var(--color-text-primary),
     var(--color-text-secondary)
   );
-  /* size: the scale. Decisions read it; parts read decisions */
+  /* size: the scale. Decisions read it; parts read decisions; pictures may read the scale */
   --eq-size-2xs: --spacing(4); /* 16 */
   --eq-size-line: --spacing(5); /* 20 */
   --eq-size-xs: --spacing(6); /* 24 */
