@@ -105,6 +105,8 @@ const SegmentedControls = ({
         styles[`variant--${activeVariant}`],
         className
       )}
+      // data-slot: table cells select this; renaming it changes row heights
+      data-slot="segmented-controls"
     >
       {options.map((option) => {
         const currentlyActive = option.value === value;

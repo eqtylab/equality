@@ -81,10 +81,10 @@ describe('table-components.module.css', () => {
     expect(css).not.toMatch(/\.table-(cell|head)[^{]*:has\(\s*>\s*:is\(button/);
   });
 
-  it('pulls a button at any depth in a cell into its padding, but not a title block or empty state button', () => {
+  it('pulls a button at any depth in a cell into its padding, but not a switch, checkbox or radio, or the buttons of a title block, empty state or segmented control', () => {
     const pull = ruleBody(
       flatten(css),
-      `${CELLS} :is(${BUTTONS}):not([data-slot='title-block'] *, [data-slot='empty-table-state'] *)`
+      `${CELLS} :is(${BUTTONS}):not([role='switch'], [role='checkbox'], [role='radio'], [data-slot='title-block'] *, [data-slot='empty-table-state'] *, [data-slot='segmented-controls'] *)`
     );
     expect(pull).toMatch(
       /margin-block:\s*calc\(\(var\(--eq-type-body-line-height\)\s*-\s*var\(--eq-control-sm-height\)\)\s*\/\s*2\);/

@@ -118,8 +118,12 @@
 
   :is(.table-cell, .table-head)
     :is(button, [role='button'], [data-slot='button'], [data-slot='icon-button']):not(
+      [role='switch'],
+      [role='checkbox'],
+      [role='radio'],
       [data-slot='title-block'] *,
-      [data-slot='empty-table-state'] *
+      [data-slot='empty-table-state'] *,
+      [data-slot='segmented-controls'] *
     ) {
     margin-block: calc((var(--eq-type-body-line-height) - var(--eq-control-sm-height)) / 2);
   }
