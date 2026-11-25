@@ -299,9 +299,9 @@ Every row has room for a small button, so a row with an avatar, a badge or a row
 - A switch: `Switch` with `size="sm"`.
 - A row action, such as a ⋮ menu: `IconButton` with no `size`.
 
-Anything taller, or text that wraps, makes its row taller.
+Anything taller, or text that wraps, makes its row taller. A default-size `Button` makes a regular row 44; a comfortable row stays 44 with a small or default-size button.
 
-A button in a cell reaches 4 into the cell's padding above and below. Buttons you stack in one cell, such as a button above a panel it opens, or a row of buttons that wraps onto a second line, then overlap. Give each of them `my-0!`:
+A button in a cell reaches into the cell's padding, stopping 4 short of the row's lines. Buttons you stack in one cell, such as a button above a panel it opens, or a row of buttons that wraps onto a second line, then overlap. Give each of them `my-0!`:
 
 ```tsx
 <TableCell>
@@ -339,7 +339,7 @@ Show an ID as plain text when the row's menu or the view it opens can copy it. K
 
 Rows are `regular` by default. Set `density="comfortable"` for taller rows and header when people read each row slowly, such as a short list of items to review, or when the table is mainly used on touch screens. Keep most tables, and every table in a card, `regular`.
 
-A comfortable row fits small controls: a `Button` with `size="sm"` or an `IconButton` at its default size keeps it at 44. A default-size `Button` makes it 52.
+A comfortable row stays 44 with a small or default-size `Button` or `IconButton`. A large one makes it 52.
 
 <TableDemo client:only="react" variant="with-actions" density="comfortable" />
 
