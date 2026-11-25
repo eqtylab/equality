@@ -7,7 +7,7 @@
 }
 
 @utility control-row-padding {
-  padding-block: calc((var(--eq-control-md-height) - var(--eq-control-sm-height)) / 2);
+  padding-block: calc((var(--eq-control-md-height) - var(--eq-type-body-line-height)) / 2);
 }
 
 @utility control-track {

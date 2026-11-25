@@ -70,6 +70,7 @@
 
 .table-head {
   @apply min-h-(--eq-control-md-height);
+  padding-block: calc((var(--eq-control-md-height) - var(--eq-type-body-line-height)) / 2);
   @apply content-center;
   @apply text-text-primary text-left font-medium transition-colors;
   @apply [&:has([role=checkbox])]:pr-0;
@@ -77,13 +78,18 @@
 
 .table-cell {
   @apply [&:has([role=checkbox])]:pr-0;
+  padding-block: calc((var(--eq-control-md-height) - var(--eq-type-body-line-height)) / 2);
+}
+
+.table-cell:has(button, [role='button']) {
+  padding-block: calc((var(--eq-control-md-height) - var(--eq-control-sm-height)) / 2);
 }
 
 .table-row {
   @apply grid items-center gap-4;
   grid-template-columns: subgrid;
   grid-column: 1 / -1;
-  @apply control-row-padding min-h-(--eq-control-md-height) px-4;
+  @apply min-h-(--eq-control-md-height) px-4;
 }
 
 .table-body > .table-row {

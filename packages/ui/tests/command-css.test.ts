@@ -32,11 +32,11 @@ describe('command.module.css', () => {
     expect(css).not.toContain('cmdk-input-wrapper');
   });
 
-  it('holds a small control in an item row without growing it', () => {
+  it('pads an item row for a line of text', () => {
     const body = ruleBody(css, '.command-item');
     expect(body).toMatch(/min-height:\s*var\(--eq-control-md-height\);/);
     expect(body).toMatch(
-      /padding-block:\s*calc\(\(var\(--eq-control-md-height\)\s*-\s*var\(--eq-control-sm-height\)\)\s*\/\s*2\);/
+      /padding-block:\s*calc\(\(var\(--eq-control-md-height\)\s*-\s*var\(--eq-type-body-line-height\)\)\s*\/\s*2\);/
     );
   });
 });

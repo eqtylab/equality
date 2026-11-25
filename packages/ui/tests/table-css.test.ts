@@ -64,12 +64,6 @@ describe('table-components.module.css', () => {
       String.raw`padding-block:\s*calc\(\(var\(--eq-control-${row}-height\)\s*-\s*var\(--eq-control-sm-height\)\)\s*/\s*2\);`
     );
 
-  it('holds a small control in a regular row without growing it', () => {
-    const body = ruleBody(css, '\n.table-row');
-    expect(body).toMatch(/min-height:\s*var\(--eq-control-md-height\);/);
-    expect(body).toMatch(ROW_PADDING('md'));
-  });
-
   const CELL_PADDING = (row: string, part: string) =>
     new RegExp(
       String.raw`padding-block:\s*calc\(\(var\(--eq-control-${row}-height\)\s*-\s*var\(--eq-${part}\)\)\s*/\s*2\);`
@@ -80,6 +74,15 @@ describe('table-components.module.css', () => {
   const COMFORTABLE_CELLS = (suffix = '') =>
     `${COMFORTABLE} :is(.table-body, .table-footer) > .table-row > :is(.table-cell, .table-head)${suffix}`;
   const flatten = (text: string) => text.replace(/\n\s+(?=[>[:])/g, ' ');
+
+  it('holds a small control in a regular row by padding its cell less than a cell of text', () => {
+    const row = ruleBody(css, '\n.table-row');
+    expect(row).toMatch(/min-height:\s*var\(--eq-control-md-height\);/);
+    expect(row).not.toMatch(/padding-block/);
+    expect(ruleBody(css, '\n.table-cell')).toMatch(CELL_PADDING('md', 'type-body-line-height'));
+    expect(ruleBody(css, ".table-cell:has(button, [role='button'])")).toMatch(ROW_PADDING('md'));
+    expect(ruleBody(css, '.table-head')).toMatch(CELL_PADDING('md', 'type-body-line-height'));
+  });
 
   it('makes body and footer rows the large control height in a comfortable table', () => {
     const selector =
