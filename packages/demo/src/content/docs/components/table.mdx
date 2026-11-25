@@ -58,7 +58,7 @@ Basic usage:
 
 ### Default
 
-Each row draws a thin line along its bottom edge, so rows stay easy to tell apart without adding weight. Use this for most tables, and for every table in a card.
+A thin line runs between rows, so rows stay easy to tell apart without adding weight. Use this for most tables, and for every table in a card.
 
 <TableDemo client:only="react" />
 
@@ -227,7 +227,7 @@ Mix `fr` units for flexible columns with fixed pixel values for predictable sizi
 
 ### Content-Sized Columns
 
-Use `auto` for columns that should shrink to fit their content. This is useful for action columns or icon-only columns. An `IconButton` at its default `sm` size overhangs the row's padding, so a row with an actions menu or a `CopyButton` is as tall as one without.
+Use `auto` for columns that should shrink to fit their content. This is useful for action columns or icon-only columns. In a regular row, an `IconButton` at its default `sm` size overhangs the row's padding, so a row with an actions menu or a `CopyButton` is as tall as one without.
 
 ```tsx
 <TableContainer columns="1fr 1fr auto auto auto">
@@ -307,7 +307,7 @@ A row is one line of text plus padding. These parts keep the row at its height:
 
 - A badge: the default `Badge`.
 - A switch: `Switch` with `size="sm"`.
-- An icon button: `IconButton` at its default size, which overhangs the row's padding (see [Content-Sized Columns](#content-sized-columns)).
+- An icon button: `IconButton` at its default size, which overhangs a regular row's padding (see [Content-Sized Columns](#content-sized-columns)).
 - An avatar: `Avatar` at its default size.
 
 <TableDemo client:only="react" variant="with-actions" />
