@@ -13,7 +13,7 @@ const TitleBlockSizeContext = React.createContext<TitleBlockSize>('md');
 export interface TitleBlockProps extends Omit<React.HTMLAttributes<HTMLDivElement>, 'title'> {
   /** How large the mark and title are. */
   size?: TitleBlockSize;
-  /** A `TitleBlockMark` or an `Avatar` shown before the title. */
+  /** A `TitleBlockMark` shown before the title. */
   mark?: React.ReactNode;
   /** The block's title. Without one, trailing items still sit at the end of the row. */
   title?: React.ReactNode;
