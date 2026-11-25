@@ -1,11 +1,10 @@
 import { forwardRef } from 'react';
 
 import { Button } from '@/components/button/button';
-import styles from '@/components/card-content-header/card-content-header.module.css';
-import { Icon } from '@/components/icon/icon';
-import { TitleBlock } from '@/components/title-block/title-block';
+import { TitleBlock, TitleBlockMark } from '@/components/title-block/title-block';
 
 export interface CardContentHeaderProps {
+  /** Classes added to the header. */
   className?: string;
   /** A Lucide icon name or a React element, shown in a circle beside the heading. */
   icon: React.ReactElement | string;
@@ -26,16 +25,7 @@ const CardContentHeader = forwardRef<HTMLDivElement, CardContentHeaderProps>(
         ref={ref}
         size="sm"
         className={className}
-        mark={
-          <Icon
-            icon={icon}
-            size="sm"
-            background="circle"
-            elevation="overlay"
-            aria-hidden
-            className={styles.mark}
-          />
-        }
+        mark={<TitleBlockMark icon={icon} shape="round" />}
         title={heading}
         actions={
           onButtonClick && (

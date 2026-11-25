@@ -1,6 +1,0 @@
-@reference '../../theme/theme.module.css';
-
-/* Quadrupled class: it has to outrank Icon's padding, which would make the circle 32 */
-.mark.mark.mark.mark {
-  @apply size-(--eq-size-sm) p-0;
-}

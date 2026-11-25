@@ -13,7 +13,8 @@ Notable changes to Equality are recorded here, following [Keep a Changelog](http
   alone, `md` (the default) for a name and a short fact, set as a caption, and `lg` for a title and
   a sentence. The mark sets the block's height, and `md` and `lg` share one title size. A long title
   wraps beside the mark, never under it.
-- `TitleBlockMark` puts an icon on a square tile that takes its size from the block.
+- `TitleBlockMark` puts an icon on a square tile, or a circle with `shape="round"`, that takes its
+  size from the block.
 - `TitleBlockSkeleton` stands in for a title block while it loads, at the same height, so the page
   doesn't jump when the data arrives.
 - `Skeleton` carries `data-slot="skeleton"`, so an app can restyle every placeholder, such as its

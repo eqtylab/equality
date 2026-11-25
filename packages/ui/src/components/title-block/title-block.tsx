@@ -85,32 +85,44 @@ const TitleBlock = forwardRef<HTMLDivElement, TitleBlockProps>(
 );
 TitleBlock.displayName = 'TitleBlock';
 
-export interface TitleBlockMarkProps {
+export interface TitleBlockMarkProps extends Omit<
+  React.HTMLAttributes<HTMLSpanElement>,
+  'children'
+> {
   /** A Lucide icon name or a React element, shown on a tile sized to the TitleBlock. */
   icon: React.ReactElement | string;
-  /** Classes added to the tile. */
-  className?: string;
+  /** A square tile, or a circle. */
+  shape?: 'square' | 'round';
 }
 
 const TitleBlockMark = forwardRef<HTMLSpanElement, TitleBlockMarkProps>(
-  ({ icon, className }, ref) => {
+  ({ icon, shape = 'square', className, ...props }, ref) => {
     const size = React.useContext(TitleBlockSizeContext);
 
     return (
       <Icon
         ref={ref}
         icon={icon}
-        background="square"
+        background={shape === 'round' ? 'circle' : 'square'}
         elevation="overlay"
         aria-hidden
-        className={cn(styles.mark, styles[`mark-${size}`], className)}
+        className={cn(
+          styles.mark,
+          styles[`mark-${size}`],
+          shape === 'round' && styles['mark-round'],
+          className
+        )}
+        {...props}
       />
     );
   }
 );
 TitleBlockMark.displayName = 'TitleBlockMark';
 
-export interface TitleBlockSkeletonProps {
+export interface TitleBlockSkeletonProps extends Omit<
+  React.HTMLAttributes<HTMLDivElement>,
+  'children'
+> {
   /** The size of the TitleBlock it stands in for. */
   size?: TitleBlockSize;
   /** A width class for the title bar, such as `w-40`. */
@@ -121,23 +133,26 @@ export interface TitleBlockSkeletonProps {
   trailing?: React.ReactNode;
   /** Placeholders for the actions, such as a `Skeleton` the size of a button. */
   actions?: React.ReactNode;
-  /** The mark's shape: a square tile, a round avatar, or none. */
+  /** The mark's shape: a square tile, a round mark, or none. */
   mark?: 'square' | 'round' | false;
-  /** Classes added to the root. */
-  className?: string;
 }
 
-function TitleBlockSkeleton({
-  size = 'md',
-  titleWidth,
-  descriptionWidth,
-  trailing,
-  actions,
-  mark = 'square',
-  className,
-}: TitleBlockSkeletonProps) {
-  return (
+const TitleBlockSkeleton = forwardRef<HTMLDivElement, TitleBlockSkeletonProps>(
+  (
+    {
+      size = 'md',
+      titleWidth,
+      descriptionWidth,
+      trailing,
+      actions,
+      mark = 'square',
+      className,
+      ...props
+    },
+    ref
+  ) => (
     <div
+      ref={ref}
       className={cn(
         styles['title-block'],
         styles[`size-${size}`],
@@ -146,6 +161,7 @@ function TitleBlockSkeleton({
         descriptionWidth && styles['with-description'],
         className
       )}
+      {...props}
     >
       {mark && (
         <div className={styles['mark-slot']}>
@@ -179,7 +195,8 @@ function TitleBlockSkeleton({
         </div>
       )}
     </div>
-  );
-}
+  )
+);
+TitleBlockSkeleton.displayName = 'TitleBlockSkeleton';
 
 export { TitleBlock, TitleBlockMark, TitleBlockSkeleton };
