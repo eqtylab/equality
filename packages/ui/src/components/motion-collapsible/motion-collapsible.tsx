@@ -37,6 +37,8 @@ const MotionCollapsibleContent = ({
             isSettled && styles['motion-collapsible--settled'],
             className
           )}
+          // data-slot: table cells select this; renaming it makes its buttons overlap in a cell
+          data-slot="motion-collapsible"
         >
           <div>{children}</div>
         </motion.div>

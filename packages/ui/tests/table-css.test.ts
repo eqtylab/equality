@@ -42,6 +42,14 @@ describe('table-components.module.css', () => {
     expect(line).not.toMatch(/background-color/);
   });
 
+  it("hides the row line while a linked row shows its focus ring, so the ring's edge stays solid", () => {
+    const hide = '.table-row--linked:has(.table-row-link:focus-visible)::after';
+    expect(ruleBody(css, hide)).toMatch(/content:\s*none;/);
+    expect(css.indexOf(`${hide} {`)).toBeGreaterThan(
+      css.indexOf('.table-body > .table-row:not(:last-child)::after {')
+    );
+  });
+
   it('fills no rows: a line between them is the only row style', () => {
     expect(css).not.toMatch(/nth-child/);
     expect(css).not.toMatch(/table--striped/);
@@ -83,7 +91,7 @@ describe('table-components.module.css', () => {
 
   it('pulls a button or a small title block at any depth in a cell into its padding, outside the layer, but not a switch, checkbox or radio, or the buttons of a title block, empty state or segmented control', () => {
     const flat = flatten(css);
-    const selector = `${CELLS} :is(${BUTTONS}, [data-slot='title-block'][data-size='sm']):not([role='switch'], [role='checkbox'], [role='radio'], [data-slot='title-block'] *, [data-slot='empty-table-state'] *, [data-slot='segmented-controls'] *)`;
+    const selector = `${CELLS} :is(${BUTTONS}, [data-slot='title-block'][data-size='sm']):not([role='switch'], [role='checkbox'], [role='radio'], [role='tab'], [data-slot='title-block'] *, [data-slot='empty-table-state'] *, [data-slot='segmented-controls'] *, [data-slot='pagination'] *, [data-slot='code-block'] *, [data-slot='motion-collapsible'] *)`;
     expect(ruleBody(flat, selector)).toMatch(
       /margin-block:\s*calc\(\(var\(--eq-type-body-line-height\)\s*-\s*var\(--eq-control-sm-height\)\)\s*\/\s*2\);/
     );

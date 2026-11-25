@@ -123,9 +123,13 @@
     [role='switch'],
     [role='checkbox'],
     [role='radio'],
+    [role='tab'],
     [data-slot='title-block'] *,
     [data-slot='empty-table-state'] *,
-    [data-slot='segmented-controls'] *
+    [data-slot='segmented-controls'] *,
+    [data-slot='pagination'] *,
+    [data-slot='code-block'] *,
+    [data-slot='motion-collapsible'] *
   ) {
   margin-block: calc((var(--eq-type-body-line-height) - var(--eq-control-sm-height)) / 2);
 }
@@ -136,6 +140,11 @@
   @apply pointer-events-none absolute;
   inset: auto 0 0;
   border-bottom: 1px solid var(--eq-table-row-divider-color);
+}
+
+/* After the row line rule: same weight, so moved above it the line tints the bottom of the focus ring */
+.table-row--linked:has(.table-row-link:focus-visible)::after {
+  content: none;
 }
 
 /* Clickable Variant */
