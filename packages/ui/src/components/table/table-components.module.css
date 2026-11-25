@@ -15,7 +15,6 @@
 }
 
 .table-header {
-  @apply [&_tr]:border-b;
   @apply grid gap-4;
   grid-template-columns: subgrid;
   grid-column: 1 / -1;
@@ -23,6 +22,18 @@
   & .table-row {
     @apply py-0;
   }
+}
+
+.table-header > .table-row {
+  @apply relative;
+}
+
+/* A border on the row itself would add 1px to its height and put it off the 36 scale */
+.table-header > .table-row::after {
+  content: '';
+  @apply pointer-events-none absolute;
+  inset: auto 0 0;
+  border-bottom: 1px solid var(--color-border);
 }
 
 /* Sticks to the top of the scrollable container (requires a constrained height). */
@@ -37,7 +48,6 @@
 }
 
 .table-body {
-  @apply [&_tr:last-child]:border-0;
   @apply grid;
   grid-template-columns: subgrid;
   grid-column: 1 / -1;
@@ -51,7 +61,7 @@
 }
 
 .table-head {
-  @apply h-(--eq-control-md-height);
+  @apply min-h-(--eq-control-md-height);
   @apply content-center;
   @apply text-text-primary text-left font-medium transition-colors;
   @apply [&:has([role=checkbox])]:pr-0;
@@ -76,11 +86,41 @@
   @apply control-row-padding min-h-(--eq-control-md-height) px-4;
 }
 
-/* Keep at half the row hover in --color-list-item-hover or less, or a hovered row stops standing out */
-.table-body .table-row:nth-child(even) {
+.table-body > .table-row {
+  @apply relative;
+}
+
+.table--comfortable > .table-inner > .table-body > .table-row,
+.table--comfortable > .table-inner > .table-footer > .table-row {
+  @apply min-h-(--eq-control-lg-height);
+  padding-block: calc((var(--eq-control-lg-height) - var(--eq-control-sm-height)) / 2);
+}
+
+.table--comfortable > .table-inner > .table-header > .table-row > .table-head {
+  @apply min-h-(--eq-control-lg-height);
+}
+
+/* A border on the row itself would add 1px to its height and put it off the 36 scale */
+.table-body > .table-row:not(:last-child)::after {
+  content: '';
+  @apply pointer-events-none absolute;
+  inset: auto 0 0;
+  border-bottom: 1px solid var(--eq-row-divider-color);
+}
+
+/* Keep at half the row hover in --color-list-item-hover or less, or a hovered row stops standing out.
+   :where keeps it no stronger than the selected row rule below, or a selected even row shows the stripe */
+.table--striped > .table-inner > .table-body > :where(.table-row:nth-child(even)) {
   background-color: color-mix(in oklch, var(--color-text-primary) 3%, transparent);
   @variant dark {
     background-color: color-mix(in oklch, var(--color-text-primary) 4%, transparent);
+  }
+}
+
+/* Forced colours drop the stripe fill, so the line comes back there to keep the rows apart */
+@media not (forced-colors: active) {
+  .table--striped > .table-inner > .table-body > .table-row::after {
+    content: none;
   }
 }
 

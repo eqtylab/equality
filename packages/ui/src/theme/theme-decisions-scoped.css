@@ -16,6 +16,8 @@
   --eq-list-label-gap: --spacing(1); /* 4, label to its first item */
   --eq-list-label-font-size: --theme(--text-xs); /* 12 */
   --eq-list-indent: --spacing(3); /* 12, child indent when items have no icons */
+  /* row: a table row */
+  --eq-row-divider-color: color-mix(in oklab, var(--color-border) 60%, transparent);
   /* nav-motion: a drill-in and a folder opening share one motion. NavDrill reads these in
      JavaScript, folder groups in CSS */
   --eq-nav-motion-duration: 300ms;
@@ -62,9 +64,10 @@
   --eq-control-sm-gap: --spacing(1.5); /* 6, icon to text */
   --eq-control-md-gap: --spacing(2); /* 8, icon to text */
   --eq-control-lg-gap: --spacing(2); /* 8, icon to text */
+  --eq-control-xs-icon-size: --spacing(3.5); /* 14 */
   --eq-control-sm-icon-size: --spacing(4); /* 16 */
   --eq-control-md-icon-size: --spacing(4); /* 16 */
-  --eq-control-lg-icon-size: --spacing(4); /* 16 */
+  --eq-control-lg-icon-size: --spacing(5); /* 20 */
   /* touch: the minimum tap target */
   --eq-touch-target: 0px;
 

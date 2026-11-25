@@ -8,19 +8,29 @@
   @apply flex;
 }
 
+/* Doubled class: it has to outrank the svg rule of a Button the icon button sits in */
+.icon-btn.icon-btn svg {
+  width: var(--icon-btn-icon-size, var(--eq-control-sm-icon-size));
+  height: var(--icon-btn-icon-size, var(--eq-control-sm-icon-size));
+}
+
 .size--xs {
+  --icon-btn-icon-size: var(--eq-control-xs-icon-size);
   @apply size-(--eq-control-xs-height) rounded-md;
 }
 
 .size--sm {
+  --icon-btn-icon-size: var(--eq-control-sm-icon-size);
   @apply size-(--eq-control-sm-height) rounded-md;
 }
 
 .size--md {
+  --icon-btn-icon-size: var(--eq-control-md-icon-size);
   @apply size-(--eq-control-md-height) rounded-md;
 }
 
 .size--lg {
+  --icon-btn-icon-size: var(--eq-control-lg-icon-size);
   @apply size-(--eq-control-lg-height) rounded-md;
 }
 

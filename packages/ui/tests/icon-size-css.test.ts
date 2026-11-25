@@ -19,11 +19,12 @@ const READERS: [file: string, selector: string, size: 'sm' | 'md' | 'lg'][] = [
 ];
 
 describe('the icon beside text', () => {
-  it('names the icon size in small, default and large controls', async () => {
+  it('has one named size per control size', async () => {
     const decisions = await readFile('src/theme/theme-decisions.css', 'utf8');
+    expect(decisions).toMatch(/--eq-control-xs-icon-size:\s*--spacing\(3\.5\);/);
     expect(decisions).toMatch(/--eq-control-sm-icon-size:\s*--spacing\(4\);/);
     expect(decisions).toMatch(/--eq-control-md-icon-size:\s*--spacing\(4\);/);
-    expect(decisions).toMatch(/--eq-control-lg-icon-size:\s*--spacing\(4\);/);
+    expect(decisions).toMatch(/--eq-control-lg-icon-size:\s*--spacing\(5\);/);
   });
 
   it('gives a list item a 16 icon, the same size as a default control icon', async () => {
@@ -42,8 +43,30 @@ describe('the icon beside text', () => {
     30_000
   );
 
-  it('is not yet read by the icon button, whose icons differ', async () => {
+  it.each(['xs', 'sm', 'md', 'lg'])(
+    'is read by a %s icon button',
+    async (size) => {
+      const css = await compileCss('src/components/icon-button/icon-button.module.css');
+      expect(ruleBody(css, `.size--${size}`)).toMatch(
+        new RegExp(`--icon-btn-icon-size:\\s*var\\(--eq-control-${size}-icon-size\\);`)
+      );
+    },
+    30_000
+  );
+
+  it('outranks the icon rule of a Button the icon button sits in', async () => {
     const css = await compileCss('src/components/icon-button/icon-button.module.css');
-    expect(css).not.toContain('icon-size');
+    expect(css).toContain('.icon-btn.icon-btn svg {');
+  });
+
+  it('falls back to the small size when an icon button has no size', async () => {
+    const css = await compileCss('src/components/icon-button/icon-button.module.css');
+    const body = ruleBody(css, '.icon-btn.icon-btn svg');
+    expect(body).toMatch(
+      /width:\s*var\(--icon-btn-icon-size,\s*var\(--eq-control-sm-icon-size\)\);/
+    );
+    expect(body).toMatch(
+      /height:\s*var\(--icon-btn-icon-size,\s*var\(--eq-control-sm-icon-size\)\);/
+    );
   });
 });
