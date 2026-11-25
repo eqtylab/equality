@@ -2,6 +2,26 @@
 
 Notable changes to Equality are recorded here, following [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## 7.1.0 - 2026-11-24
+
+### Added
+
+- `TitleBlock` sets a title beside a mark, with an optional description under it and trailing
+  items at the end of the title's first line. It comes in three sizes: `sm` for a card's header
+  row beside small buttons, `md` (the default) for an item card or a person or thing with a line
+  under it, and `lg` for the top of a page section or a summary card. A long title wraps beside the
+  mark, never under it.
+- `TitleBlockMark` puts an icon on a square tile that takes its size from the block. Use it for an
+  icon; use an `Avatar` of the same size for a person, a square `Avatar` for a thing with its own
+  picture or colour, and no mark when the title stands alone.
+- `TitleBlockSkeleton` stands in for a title block while it loads, at the same height, so the page
+  doesn't jump when the data arrives.
+
+### Changed
+
+- `CardContentHeader`'s icon now sits on a square tile instead of a circle, and the header lays out
+  like `TitleBlock`'s small size. Its props are unchanged.
+
 ## 7.0.0 - 2026-11-24
 
 ### Breaking
