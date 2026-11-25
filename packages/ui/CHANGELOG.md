@@ -16,6 +16,8 @@ Notable changes to Equality are recorded here, following [Keep a Changelog](http
   picture or colour, and no mark when the title stands alone.
 - `TitleBlockSkeleton` stands in for a title block while it loads, at the same height, so the page
   doesn't jump when the data arrives.
+- `Skeleton` carries `data-slot="skeleton"`, so an app can restyle every placeholder, such as its
+  loading animation, in one rule.
 
 ### Changed
 
