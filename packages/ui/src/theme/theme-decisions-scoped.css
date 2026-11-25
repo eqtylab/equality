@@ -31,7 +31,7 @@
     var(--color-text-secondary)
   );
   /* size: the scale. Each step is a line height or a box height. Decisions read it; parts read
-     decisions; pictures may read the scale */
+     decisions; a box that isn't a control (Avatar, Badge, a Timeline marker) may read the scale */
   --eq-size-3xs: --spacing(4); /* 16 */
   --eq-size-2xs: --spacing(5); /* 20 */
   --eq-size-xs: --spacing(6); /* 24 */

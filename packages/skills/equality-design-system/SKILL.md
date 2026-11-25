@@ -171,9 +171,9 @@ comes in `sm`, `md` and `lg`. An icon beside the text takes
 Never write `h-10`. Text lines, controls, rows and avatars share seven size steps
 (16, 20, 24, 28, 36, 44, 52); the Sizing page says what sits on each:
 <https://equality.eqtylab.io/getting-started/sizing>. A picture or mark you build
-that isn't a control takes `--eq-size-{3xs,2xs,xs,sm,md,lg,xl}`. A component's
-`size` name is the step it sits on (`sm` 28, `md` 36), except Badge: `md` is 20
-and `sm` 16.
+that isn't a control takes `--eq-size-{3xs,2xs,xs,sm,md,lg,xl}`. Controls' and
+Avatar's size names are the step they sit on (`sm` 28, `md` 36). Badge, Icon,
+Switch, Checkbox and Timeline use their own size names.
 
 Text takes one of four styles: `text-title` for a page title, `text-section` for
 a card or section title, `text-body` for running text and `text-caption` for
