@@ -25,8 +25,8 @@ Notable changes to Equality are recorded here, following [Keep a Changelog](http
 - The `control-row-overhang` utility is gone, so an app that applies it fails to build. Rows now
   hold an avatar or icon button without it: remove it.
 
-- Import Equality's preflight in a layer before `components`, such as `layer(base)`. Imported
-  without a layer, it removes table cell padding.
+- Import Equality's preflight, and any other CSS reset, in a layer before `components`, such as
+  `layer(base)`. A reset outside a layer removes table cell padding.
 
 ### Changed
 
@@ -34,7 +34,8 @@ Notable changes to Equality are recorded here, following [Keep a Changelog](http
   default `IconButton` or a small `Button`, reaches into that padding, so its row stays 36, or 44
   comfortable, and a cell that hides its overflow doesn't cut it off. A row with a small `Button` is
   36, from 44.
-- A row holding a default `Button` or `Select` is 44, from 52.
+- A row holding a default `Button` or `Select` in a regular table is 44, from 52; comfortable rows
+  are unchanged.
 - Table rows no longer pad; each cell does. Padding you set on a `TableCell` now replaces
   Equality's, and padding on a `TableRow` adds to it.
 - An icon you size yourself in a `CommandDialog` item, such as with `size-4`, keeps its size, as in
@@ -47,8 +48,8 @@ Notable changes to Equality are recorded here, following [Keep a Changelog](http
 - The `control-row-overhang` utility.
 - The `data-avatar` attribute on `Avatar` is gone. `IconButton`'s `data-icon-button` is now
   `data-slot="icon-button"`, `Button` carries `data-slot="button"`, `TitleBlock` carries
-  `data-slot="title-block"`, `EmptyTableState` carries `data-slot="empty-table-state"` and
-  `SegmentedControls` carries `data-slot="segmented-controls"`.
+  `data-slot="title-block"` and its `data-size`, `EmptyTableState` carries
+  `data-slot="empty-table-state"` and `SegmentedControls` carries `data-slot="segmented-controls"`.
 
 ## 6.5.0 - 2026-11-25
 
