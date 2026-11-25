@@ -84,13 +84,10 @@ describe('table-components.module.css', () => {
     expect(row).toMatch(/min-height:\s*var\(--eq-control-md-height\);/);
     expect(row).not.toMatch(/padding-block/);
     expect(ruleBody(css, '\n.table-cell')).toMatch(CELL_PADDING('md', 'type-body-line-height'));
-    expect(
-      ruleBody(
-        css,
-        ".table-cell:has(button, [role='button'], [data-slot='button'], [data-slot='icon-button'])"
-      )
-    ).toMatch(ROW_PADDING('md'));
-    expect(ruleBody(css, '.table-head')).toMatch(CELL_PADDING('md', 'type-body-line-height'));
+    expect(ruleBody(flatten(css), `:is(.table-cell, .table-head)${BUTTON}`)).toMatch(
+      ROW_PADDING('md')
+    );
+    expect(ruleBody(css, '\n.table-head')).toMatch(CELL_PADDING('md', 'type-body-line-height'));
   });
 
   it('makes body and footer rows the large control height in a comfortable table', () => {
@@ -117,15 +114,6 @@ describe('table-components.module.css', () => {
     expect(
       ruleBody(flat, `${COMFORTABLE} .table-header > .table-row > .table-head${BUTTON}`)
     ).toMatch(ROW_PADDING('lg'));
-  });
-
-  it('pads a regular header cell, so wrapped header text is not flush', () => {
-    expect(ruleBody(css, '.table-header > .table-row > .table-head')).toMatch(
-      CELL_PADDING('md', 'type-body-line-height')
-    );
-    expect(ruleBody(flatten(css), `.table-header > .table-row > .table-head${BUTTON}`)).toMatch(
-      ROW_PADDING('md')
-    );
   });
 
   it('lets every row grow with what it holds', () => {

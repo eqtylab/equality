@@ -36,16 +36,6 @@
   border-bottom: 1px solid var(--color-border);
 }
 
-.table-header > .table-row > .table-head {
-  padding-block: calc((var(--eq-control-md-height) - var(--eq-type-body-line-height)) / 2);
-}
-
-.table-header
-  > .table-row
-  > .table-head:has(button, [role='button'], [data-slot='button'], [data-slot='icon-button']) {
-  padding-block: calc((var(--eq-control-md-height) - var(--eq-control-sm-height)) / 2);
-}
-
 /* Sticks to the top of the scrollable container (requires a constrained height). */
 .table-header--sticky-container {
   @apply sticky top-0 z-10;
@@ -83,7 +73,12 @@
   padding-block: calc((var(--eq-control-md-height) - var(--eq-type-body-line-height)) / 2);
 }
 
-.table-cell:has(button, [role='button'], [data-slot='button'], [data-slot='icon-button']) {
+:is(.table-cell, .table-head):has(
+  button,
+  [role='button'],
+  [data-slot='button'],
+  [data-slot='icon-button']
+) {
   padding-block: calc((var(--eq-control-md-height) - var(--eq-control-sm-height)) / 2);
 }
 
