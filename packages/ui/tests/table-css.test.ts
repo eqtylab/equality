@@ -118,6 +118,12 @@ describe('table-components.module.css', () => {
     );
   });
 
+  it('pads a cell holding a title block 8 at either density, so a person row is 52', () => {
+    const TB = "[data-slot='title-block']";
+    const selector = `.table-row > ${CELLS}:has(> ${TB}, > * > ${TB}),\n  ${COMFORTABLE} * > .table-row > ${CELLS}:has(> ${TB}, > * > ${TB})`;
+    expect(ruleBody(flatten(css), selector)).toMatch(CELL_PADDING('md', 'type-body-line-height'));
+  });
+
   it('lets every row grow with what it holds', () => {
     const rowRules = [...css.matchAll(/([^{}]*\.table-row(?![\w-])[^{}]*)\{([^{}]*)\}/g)];
     expect(rowRules.length).toBeGreaterThan(0);

@@ -51,6 +51,7 @@ const TitleBlock = forwardRef<HTMLDivElement, TitleBlockProps>(
     <TitleBlockSizeContext.Provider value={size}>
       <div
         ref={ref}
+        data-slot="title-block"
         className={cn(
           styles['title-block'],
           styles[`size-${size}`],
@@ -155,6 +156,7 @@ const TitleBlockSkeleton = forwardRef<HTMLDivElement, TitleBlockSkeletonProps>(
   ) => (
     <div
       ref={ref}
+      data-slot="title-block"
       className={cn(
         styles['title-block'],
         styles[`size-${size}`],
