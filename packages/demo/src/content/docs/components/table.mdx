@@ -3,6 +3,7 @@ title: "Table"
 description: "A data table for displaying structured information in rows and columns."
 ---
 
+import { AvatarRowDemo } from "@demo/components/demo/avatar";
 import { TableDemo } from "@demo/components/demo/table";
 import { ELEVATION } from "@eqtylab/equality";
 
@@ -299,6 +300,25 @@ Every row has room for one part as tall as a small control, so a row with an ava
 - A row action, such as a ⋮ menu: `IconButton` with no `size`.
 
 Anything taller, or text that wraps, makes its row taller.
+
+For a person with a subline, such as a name over an email, put a [Title Block](/components/title-block) in the cell with an `md` Avatar as its mark, so the avatar sits beside both lines. The row grows to fit them.
+
+<AvatarRowDemo client:only="react" variant="person" />
+
+```tsx
+<TableCell>
+  <TitleBlock
+    titleAs="p"
+    mark={
+      <Avatar size="md" aria-hidden>
+        <AvatarFallback>AC</AvatarFallback>
+      </Avatar>
+    }
+    title="Alice Cooper"
+    description="alice@example.com"
+  />
+</TableCell>
+```
 
 Show an ID as plain text when the row's menu or the view it opens can copy it. Keep a `CopyButton` in the cell only when neither can.
 

@@ -27,13 +27,8 @@ Notable changes to Equality are recorded here, following [Keep a Changelog](http
 
 ### Changed
 
-- Regular Table rows, and `DropdownMenu`, `Select` and `Command` rows, hold an avatar, badge, small
-  switch or default `IconButton` and stay 36. A part taller than that, or text that wraps, makes its
-  row taller, by less than before: rows keep 4 above and below their content, from 8, so a two-line
-  row is 48, from 56. Comfortable Table rows are unchanged.
-- The `control-row-padding` utility pads 4 above and below, from 8, so a row keeps room for a 28
-  part. A row of your own that uses it without a minimum height is 8 shorter: give it a minimum
-  height of 36 to keep it where it was.
+- Regular Table rows hold an avatar, badge, small switch or small `IconButton` at 36 without pulling
+  it into their padding, so a cell that hides its overflow no longer cuts it off.
 - An icon you size yourself in a `CommandDialog` item, such as with `size-4`, keeps its size, as in
   a `Command` outside a dialog; the dialog drew it at 20.
 - A `TitleBlock` takes an `Avatar` as its mark. Give it the Avatar size that matches the block's:

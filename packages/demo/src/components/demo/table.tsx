@@ -38,6 +38,12 @@ interface TableDemoProps {
 const defaultCols = "1fr 1fr auto auto auto";
 
 const roles = ["Admin", "User", "Viewer"] as const;
+const teamMembers = [
+  { name: "Alice Cooper", initials: "AC", active: false },
+  { name: "Bob Smith", initials: "BS", active: true },
+  { name: "Charlie Brown", initials: "CB", active: true },
+];
+
 const longTableData = Array.from({ length: 10 }, (_, i) => ({
   name: `User ${i + 1}`,
   email: `user${i + 1}@example.com`,
@@ -120,12 +126,12 @@ export const TableDemo = ({
           </TableRow>
         </TableHeader>
         <TableBody>
-          {longTableData.slice(0, 3).map((user) => (
-            <TableRow key={user.email}>
+          {teamMembers.map((user) => (
+            <TableRow key={user.name}>
               <TableCell>
                 <div className="flex items-center gap-2">
                   <Avatar aria-hidden>
-                    <AvatarFallback>{user.name.slice(0, 1)}</AvatarFallback>
+                    <AvatarFallback>{user.initials}</AvatarFallback>
                   </Avatar>
                   {user.name}
                 </div>
