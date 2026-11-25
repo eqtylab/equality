@@ -36,6 +36,14 @@
   border-bottom: 1px solid var(--color-border);
 }
 
+.table-header > .table-row > .table-head {
+  padding-block: calc((var(--eq-control-md-height) - var(--eq-type-body-line-height)) / 2);
+}
+
+.table-header > .table-row > .table-head:has(button, [role='button'], [data-icon-button]) {
+  padding-block: calc((var(--eq-control-md-height) - var(--eq-control-sm-height)) / 2);
+}
+
 /* Sticks to the top of the scrollable container (requires a constrained height). */
 .table-header--sticky-container {
   @apply sticky top-0 z-10;
@@ -95,21 +103,19 @@
   @apply min-h-(--eq-control-lg-height) py-0;
 }
 
-.table--comfortable > .table-inner > .table-body > .table-row > .table-cell,
-.table--comfortable > .table-inner > .table-footer > .table-row > .table-cell {
+.table--comfortable
+  > .table-inner
+  > :is(.table-body, .table-footer)
+  > .table-row
+  > :is(.table-cell, .table-head) {
   padding-block: calc((var(--eq-control-lg-height) - var(--eq-type-body-line-height)) / 2);
 }
 
 .table--comfortable
   > .table-inner
-  > .table-body
+  > :is(.table-body, .table-footer)
   > .table-row
-  > .table-cell:has(button, [role='button']),
-.table--comfortable
-  > .table-inner
-  > .table-footer
-  > .table-row
-  > .table-cell:has(button, [role='button']) {
+  > :is(.table-cell, .table-head):has(button, [role='button'], [data-icon-button]) {
   padding-block: calc((var(--eq-control-lg-height) - var(--eq-control-sm-height)) / 2);
 }
 
@@ -118,13 +124,21 @@
   > :is(.table-body, .table-footer)
   > .table-row
   > .table-cell
-  [data-icon-button='sm'] {
+  > [data-icon-button='sm'] {
   @apply my-0;
 }
 
 .table--comfortable > .table-inner > .table-header > .table-row > .table-head {
   @apply min-h-(--eq-control-lg-height);
   padding-block: calc((var(--eq-control-lg-height) - var(--eq-type-body-line-height)) / 2);
+}
+
+.table--comfortable
+  > .table-inner
+  > .table-header
+  > .table-row
+  > .table-head:has(button, [role='button'], [data-icon-button]) {
+  padding-block: calc((var(--eq-control-lg-height) - var(--eq-control-sm-height)) / 2);
 }
 
 /* A border on the row itself would add 1px to its height and put it off the 36 scale */
@@ -144,7 +158,7 @@
   }
 }
 
-/* Forced colours drop the stripe fill, so the line comes back there to keep the rows apart */
+/* Keep the forced-colours exception: those modes drop the stripe fill, so striped rows need their line there */
 @media not (forced-colors: active) {
   .table--striped > .table-inner > .table-body > .table-row::after {
     content: none;

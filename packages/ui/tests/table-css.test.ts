@@ -99,13 +99,11 @@ describe('table-components.module.css', () => {
       String.raw`padding-block:\s*calc\(\(var\(--eq-control-${row}-height\)\s*-\s*var\(--eq-${part}\)\)\s*/\s*2\);`
     );
 
+  const BUTTON = ":has(button, [role='button'], [data-icon-button])";
+  const COMFORTABLE = '.table--comfortable > .table-inner >';
   const COMFORTABLE_CELLS = (suffix = '') =>
-    ['body', 'footer']
-      .map(
-        (part) =>
-          `.table--comfortable > .table-inner > .table-${part} > .table-row > .table-cell${suffix}`
-      )
-      .join(',\n');
+    `${COMFORTABLE} :is(.table-body, .table-footer) > .table-row > :is(.table-cell, .table-head)${suffix}`;
+  const flatten = (text: string) => text.replace(/\n\s+(?=[>[:])/g, ' ');
 
   it('makes body and footer rows the large control height in a comfortable table', () => {
     const selector =
@@ -116,31 +114,39 @@ describe('table-components.module.css', () => {
   });
 
   it('pads a comfortable cell of text to the row, and one holding a button to a small control', () => {
-    const flat = css.replace(/\n\s+(?=[>[])/g, ' ');
+    const flat = flatten(css);
     expect(ruleBody(flat, COMFORTABLE_CELLS())).toMatch(
       CELL_PADDING('lg', 'type-body-line-height')
     );
-    expect(ruleBody(flat, COMFORTABLE_CELLS(":has(button, [role='button'])"))).toMatch(
-      ROW_PADDING('lg')
-    );
+    expect(ruleBody(flat, COMFORTABLE_CELLS(BUTTON))).toMatch(ROW_PADDING('lg'));
   });
 
-  it('pulls nothing into a comfortable cell', () => {
+  it('pulls no icon button into a comfortable cell', () => {
     expect(
       ruleBody(
-        css.replace(/\n\s+(?=[>[])/g, ' '),
-        ".table--comfortable > .table-inner > :is(.table-body, .table-footer) > .table-row > .table-cell [data-icon-button='sm']"
+        flatten(css),
+        `${COMFORTABLE} :is(.table-body, .table-footer) > .table-row > .table-cell > [data-icon-button='sm']`
       )
     ).toMatch(/margin-block:\s*calc\(0\.25rem \* 0\);/);
   });
 
   it('makes the header row the large control height in a comfortable table', () => {
-    const head = ruleBody(
-      css,
-      '.table--comfortable > .table-inner > .table-header > .table-row > .table-head'
-    );
+    const flat = flatten(css);
+    const head = ruleBody(flat, `${COMFORTABLE} .table-header > .table-row > .table-head`);
     expect(head).toMatch(/height:\s*var\(--eq-control-lg-height\);/);
     expect(head).toMatch(CELL_PADDING('lg', 'type-body-line-height'));
+    expect(
+      ruleBody(flat, `${COMFORTABLE} .table-header > .table-row > .table-head${BUTTON}`)
+    ).toMatch(ROW_PADDING('lg'));
+  });
+
+  it('pads a regular header cell, so wrapped header text is not flush', () => {
+    expect(ruleBody(css, '.table-header > .table-row > .table-head')).toMatch(
+      CELL_PADDING('md', 'type-body-line-height')
+    );
+    expect(ruleBody(css, `.table-header > .table-row > .table-head${BUTTON}`)).toMatch(
+      ROW_PADDING('md')
+    );
   });
 
   it('lets every row grow with what it holds', () => {
@@ -171,6 +177,6 @@ describe('table-components.module.css', () => {
     for (const [, selector, body] of headerRules) {
       expect(body, selector).not.toMatch(/(^|[^-])height:/);
     }
-    expect(ruleBody(css, '.table-head')).toMatch(/min-height:\s*var\(--eq-control-md-height\);/);
+    expect(ruleBody(css, '\n.table-head')).toMatch(/min-height:\s*var\(--eq-control-md-height\);/);
   });
 });
