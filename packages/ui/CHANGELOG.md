@@ -20,7 +20,7 @@ Notable changes to Equality are recorded here, following [Keep a Changelog](http
   22, and 20 at `lg`, from 26. `xs` (14) and `sm` (16) are unchanged. The icon button's own size now
   wins over an icon size set through `className`, such as `[&_svg]:size-5`; to change it, pass
   another `size`.
-- An icon in a large control is 20, from 16.
+- An icon in a large `Button` is 20, from 16.
 
 ## 6.3.0 - 2026-11-25
 
