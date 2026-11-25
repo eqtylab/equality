@@ -12,9 +12,11 @@ import {
 
 ## Overview
 
-Card Content Header is a header row for the top of a card's content, pairing a circular icon with a heading and an optional "See All" action button. It is designed to sit inside [CardContent](/components/card), giving grouped content a consistent title treatment.
+Card Content Header is a header row for the top of a card's content, pairing an icon on a square tile with a heading and an optional "See All" action button. It is designed to sit inside [CardContent](/components/card), giving grouped content a consistent title treatment.
 
-The component renders nothing unless a `heading` or an `onButtonClick` handler is provided. When `onButtonClick` is set, a tertiary "See All" button is shown and the layout adjusts to accommodate it.
+It is [Title Block](/components/title-block)'s small size with a "See All" action. Reach for Title Block when you need a description, a badge or a different action.
+
+The component renders nothing unless a `heading` or an `onButtonClick` handler is provided. When `onButtonClick` is set, a tertiary "See All" button sits at the end of the header. The icon and heading stay side by side at every width: a long heading wraps beside the icon, never under it, and "See All" stays centred on the header.
 
 ## Usage
 
@@ -30,7 +32,7 @@ Basic usage with the required `icon` and a heading:
 <CardContentHeader icon="SquareChartGantt" heading="Activity Logs" />
 ```
 
-The `icon` prop accepts either a [Lucide](https://lucide.dev/icons/) icon name or a React element, and is rendered inside a circular, elevated background.
+The `icon` prop accepts either a [Lucide](https://lucide.dev/icons/) icon name or a React element, and is rendered on a square tile.
 
 ## Variants
 
@@ -57,6 +59,18 @@ The `icon` prop accepts either a [Lucide](https://lucide.dev/icons/) icon name o
   </CardContent>
 </Card>
 
+### Long Heading
+
+<Card client:only="react" className="max-w-xs">
+  <CardContent>
+    <CardContentHeader
+      icon="SquareChartGantt"
+      heading="Evaluations Awaiting Reviewer Sign-off"
+      onButtonClick={() => {}}
+    />
+  </CardContent>
+</Card>
+
 ### Usage
 
 ```tsx
@@ -76,7 +90,7 @@ The `icon` prop accepts either a [Lucide](https://lucide.dev/icons/) icon name o
 
 | Name            | Description                                                                               | Type                     | Default | Required |
 | --------------- | ----------------------------------------------------------------------------------------- | ------------------------ | ------- | -------- |
-| `icon`          | Icon shown in the circular background. A Lucide icon name or a React element.             | `string`, `ReactElement` | —       | ✅       |
+| `icon`          | Icon shown on the square tile. A Lucide icon name or a React element.                     | `string`, `ReactElement` | —       | ✅       |
 | `heading`       | Heading text rendered as an `h3`.                                                         | `string`                 | —       | ❌       |
 | `onButtonClick` | Handler for the "See All" button. Providing it renders the button and adjusts the layout. | `() => void`             | —       | ❌       |
 

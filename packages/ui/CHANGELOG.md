@@ -2,6 +2,31 @@
 
 Notable changes to Equality are recorded here, following [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## 6.5.0 - 2026-11-25
+
+### Added
+
+- `TitleBlock` sets a title beside a mark, with an optional description under it. Badges and
+  status go in `trailing`, at the end of the title's first line; buttons and menus go in `actions`,
+  at the end of the block and centred on it, so a control never reaches above the block. It comes
+  in three sizes: `sm` for a card's header row beside small buttons, `md` (the default) for an item
+  card or a thing with a line under it, and `lg` for the top of a page section or a summary card. A
+  long title wraps beside the mark, never under it.
+- `TitleBlockMark` puts an icon on a square tile that takes its size from the block.
+- `TitleBlockSkeleton` stands in for a title block while it loads, at the same height, so the page
+  doesn't jump when the data arrives.
+- `Skeleton` carries `data-slot="skeleton"`, so an app can restyle every placeholder, such as its
+  loading animation, in one rule.
+
+### Changed
+
+- `CardContentHeader` lays out like `TitleBlock`'s small size: its icon sits on a 28 square tile,
+  from a 36 circle, at 16, from 20, beside a 16 semibold title, from 18. The icon and title stay side
+  by side at every width; a long title wraps beside the icon. "See All" centres on the header and
+  follows the title for screen readers and keyboard. Its props are unchanged.
+- `MetricCard`'s icon is 16, from 20, in the same circle.
+- `SectionHeading`'s title is 16 semibold, from 20 medium, and sits tighter over a description.
+
 ## 6.4.0 - 2026-11-25
 
 ### Added

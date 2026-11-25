@@ -1,4 +1,4 @@
-import { Button, SectionHeading } from "@eqtylab/equality";
+import { Badge, Button, SectionHeading } from "@eqtylab/equality";
 import { UserPlus } from "lucide-react";
 
 export function SectionHeadingDemo({
@@ -25,6 +25,19 @@ export function SectionHeadingDemo({
             Clear Filters
           </Button>
         )
+      }
+    />
+  );
+}
+
+export function SectionHeadingBadgeDemo() {
+  return (
+    <SectionHeading
+      heading={
+        <span className="flex items-center gap-2">
+          Project Members
+          <Badge variant="neutral">12</Badge>
+        </span>
       }
     />
   );
