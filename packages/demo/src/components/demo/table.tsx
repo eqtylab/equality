@@ -123,12 +123,12 @@ export const TableDemo = ({
         <TableHeader>
           <TableRow>
             <TableHead>Model</TableHead>
-            <TableHead>Accuracy</TableHead>
-            <TableHead>Precision</TableHead>
-            <TableHead>Recall</TableHead>
-            <TableHead>F1</TableHead>
-            <TableHead>Latency (ms)</TableHead>
-            <TableHead>Cost / 1k</TableHead>
+            <TableHead className="text-right!">Accuracy</TableHead>
+            <TableHead className="text-right!">Precision</TableHead>
+            <TableHead className="text-right!">Recall</TableHead>
+            <TableHead className="text-right!">F1</TableHead>
+            <TableHead className="text-right!">Latency (ms)</TableHead>
+            <TableHead className="text-right!">Cost / 1k</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -136,7 +136,7 @@ export const TableDemo = ({
             <TableRow key={name}>
               <TableCell>{name}</TableCell>
               {values.map((value, i) => (
-                <TableCell key={i} className="tabular-nums">
+                <TableCell key={i} className="text-right tabular-nums">
                   {value}
                 </TableCell>
               ))}
