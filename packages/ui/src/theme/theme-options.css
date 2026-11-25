@@ -4,7 +4,7 @@
 
 /* OPTIONS: the values Equality allows, named by position. Decisions name what a value is for.
    Options read only Tailwind's unit; decisions read options; parts read decisions; a box that isn't
-   a control (Avatar, Badge, a Timeline marker) may read an option. theme-options-scoped.css is
+   a control (Badge, a Timeline marker) may read an option. theme-options-scoped.css is
    generated from this file: run `pnpm build:decisions` after changing it, or
    tests/theme-css.test.ts fails. */
 html {

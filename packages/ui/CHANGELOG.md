@@ -25,7 +25,8 @@ Notable changes to Equality are recorded here, following [Keep a Changelog](http
 
 - `--eq-control-sm-font-size`, `--eq-control-md-font-size`, `--eq-control-lg-font-size` and their
   `-line-height` pairs match the caption, body and section text styles in size and line height. Use
-  those styles instead. The control text names still work; a later major removes them.
+  those styles instead. The control text names still work; a later major removes them. Equality's
+  own controls read the text styles, so overriding a style changes their text too.
 
 ## 6.2.0 - 2026-11-24
 

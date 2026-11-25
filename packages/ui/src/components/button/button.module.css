@@ -2,7 +2,7 @@
 
 .button {
   @apply rounded-md;
-  @apply text-(length:--eq-control-md-font-size)/[var(--tw-leading,var(--eq-control-md-line-height))] whitespace-nowrap font-medium;
+  @apply text-(length:--eq-type-body-font-size)/[var(--tw-leading,var(--eq-type-body-line-height))] whitespace-nowrap font-medium;
   @apply transition-[color,background-color,border-color,box-shadow,text-decoration-color,text-underline-offset];
   @apply ease-control duration-250;
   @apply motion-reduce:transition-none;
@@ -120,7 +120,7 @@
 }
 
 .size--sm {
-  @apply text-(length:--eq-control-sm-font-size)/[var(--tw-leading,var(--eq-control-sm-line-height))] gap-(--eq-control-sm-gap);
+  @apply text-(length:--eq-type-caption-font-size)/[var(--tw-leading,var(--eq-type-caption-line-height))] gap-(--eq-control-sm-gap);
   @apply [&_svg]:size-(--eq-control-sm-icon-size);
 }
 
@@ -133,7 +133,7 @@
 }
 
 .size--lg {
-  @apply text-(length:--eq-control-lg-font-size)/[var(--tw-leading,var(--eq-control-lg-line-height))] gap-(--eq-control-lg-gap);
+  @apply text-(length:--eq-type-section-font-size)/[var(--tw-leading,var(--eq-type-section-line-height))] gap-(--eq-control-lg-gap);
   @apply [&_svg]:size-(--eq-control-lg-icon-size);
 }
 
