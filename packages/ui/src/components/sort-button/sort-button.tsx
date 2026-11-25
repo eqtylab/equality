@@ -32,7 +32,13 @@ function SortButton<T extends string>({
   };
 
   return (
-    <button type="button" onClick={handleClick} className={styles['sort-button']}>
+    <button
+      type="button"
+      onClick={handleClick}
+      className={styles['sort-button']}
+      // data-sort-button: table header cells select this; renaming it changes how a wrapped label sits
+      data-sort-button
+    >
       {icon}
       {children}
       <div className={styles['arrow-container']}>
