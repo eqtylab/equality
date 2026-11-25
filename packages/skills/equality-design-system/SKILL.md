@@ -170,11 +170,10 @@ comes in `sm`, `md` and `lg`. An icon beside the text takes
 `--eq-control-{xs,sm,md,lg}-icon-size`, such as `size-(--eq-control-md-icon-size)`.
 Never write `h-10`. Text lines, controls, rows and avatars share seven size steps
 (16, 20, 24, 28, 36, 44, 52); the Sizing page says what sits on each:
-<https://equality.eqtylab.io/getting-started/sizing>. The steps are options, in
-`theme-options.css`; control and text sizes are decisions, in
-`theme-decisions.css`, and a part you build reads a decision where one fits. A
-picture or mark you build that isn't a control takes an option,
-`--eq-size-{3xs,2xs,xs,sm,md,lg,xl}`. Controls' and
+<https://equality.eqtylab.io/getting-started/sizing>. The steps are options: the values
+Equality allows. Control and text sizes are decisions chosen from them, and a
+part you build reads a decision where one fits. A picture or mark you build that
+isn't a control takes an option, `--eq-size-{3xs,2xs,xs,sm,md,lg,xl}`. Controls' and
 Avatar's size names are the step they sit on (`sm` 28, `md` 36). Badge, Icon,
 Switch, Checkbox and Timeline use their own size names.
 

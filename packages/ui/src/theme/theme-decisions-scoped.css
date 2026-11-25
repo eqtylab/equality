@@ -8,7 +8,7 @@
 
 .root {
   /* list-item: one selectable row */
-  --eq-list-item-icon-size: var(--eq-control-md-icon-size);
+  --eq-list-item-icon-size: --spacing(4); /* 16 */
   --eq-list-item-muted-color: var(--color-text-tertiary);
   /* list: the rows together */
   --eq-list-gap: --spacing(0.5); /* 2, between items */

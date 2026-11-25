@@ -2,13 +2,14 @@
    changes every component's compiled CSS. */
 /* Never read var(--spacing) or var(--text-*) here: the theme is inline, so consumer builds leave them undefined. */
 
-/* DECISIONS: Equality's names, --eq-{thing}-{property}. Parts read only these: h-(--eq-control-md-height).
+/* DECISIONS: Equality's names, --eq-{thing}-{property}. Parts read these, such as
+   h-(--eq-control-md-height); a box that isn't a control may read an option.
    Decisions read options (theme-options.css or Tailwind), never another decision.
    theme-decisions-scoped.css is generated from this file: run `pnpm build:decisions` after
    changing it, or tests/theme-css.test.ts fails. */
 html {
   /* list-item: one selectable row */
-  --eq-list-item-icon-size: var(--eq-control-md-icon-size);
+  --eq-list-item-icon-size: --spacing(4); /* 16 */
   --eq-list-item-muted-color: var(--color-text-tertiary);
   /* list: the rows together */
   --eq-list-gap: --spacing(0.5); /* 2, between items */
