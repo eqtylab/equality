@@ -19,6 +19,12 @@ beforeAll(async () => {
   css = (await postcss([tailwindcss()]).process(fixture, { from })).css;
 });
 
+describe('a consumer build', () => {
+  it.each(['3xs', '2xs', 'xs', 'sm', 'md', 'lg', 'xl'])('declares --eq-size-%s', (step) => {
+    expect(css).toMatch(new RegExp(`--eq-size-${step}:\\s*calc\\(`));
+  });
+});
+
 describe('type utilities', () => {
   it.each(roles)('text-%s emits the decision, and an explicit class still wins', (role) => {
     const body = ruleBody(css, `.text-${role}`);
