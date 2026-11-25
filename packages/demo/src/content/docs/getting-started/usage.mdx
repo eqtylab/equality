@@ -56,7 +56,7 @@ The preflight is a document-wide reset, so it will flatten the typography of a s
 <div data-equality-root>...</div>
 ```
 
-Neither preflight declares a layer of its own, so `layer()` can place the reset wherever the host's cascade needs it — for example `layer(equality-reset)` ordered against Starlight's own layer.
+Neither preflight declares a layer of its own, so `layer()` can place the reset wherever the host's cascade needs it — for example `layer(equality-reset)` ordered against Starlight's own layer. Equality's preflight must sit in a cascade layer below components (`layer(base)`), or it removes table cell padding.
 
 Note that Equality's dark palette activates on `html[data-equality-theme="dark"]`, which a host's theme toggle won't set. Mirror the host's attribute to follow its switcher:
 

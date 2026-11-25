@@ -27,13 +27,15 @@ Notable changes to Equality are recorded here, following [Keep a Changelog](http
 
 ### Changed
 
-- Regular Table rows hold an avatar, badge, small switch or small button at 36 without pulling it
-  into their padding, so a cell that hides its overflow no longer cuts it off. A cell holding a
-  button pads 4 above and below, so a row with a small `Button` is 36, from 44.
-- A cell holding a default control, such as a default `Button` or `Select`, pads 4 above and below,
-  so its row is 44, from 52.
-- Table rows no longer pad; each cell does, by what it holds. Padding you set on a `TableCell` now
-  replaces Equality's, and padding on a `TableRow` adds to it.
+- Table cells pad 8 above and below, or 12 in a comfortable table. A button in a cell, such as a
+  default `IconButton` or a small `Button`, reaches into that padding, so its row stays 36, or 44
+  comfortable, and a cell that hides its overflow doesn't cut it off. A row with a small `Button` is
+  36, from 44.
+- A row holding a default `Button` or `Select` is 44, from 52.
+- Table rows no longer pad; each cell does. Padding you set on a `TableCell` now replaces
+  Equality's, and padding on a `TableRow` adds to it.
+- Equality's preflight must sit in a cascade layer below components (`layer(base)`), or it removes
+  table cell padding.
 - An icon you size yourself in a `CommandDialog` item, such as with `size-4`, keeps its size, as in
   a `Command` outside a dialog; the dialog drew it at 20.
 - A `TitleBlock` takes an `Avatar` as its mark. Give it the Avatar size that matches the block's:
@@ -43,8 +45,8 @@ Notable changes to Equality are recorded here, following [Keep a Changelog](http
 
 - The `control-row-overhang` utility.
 - The `data-avatar` attribute on `Avatar` is gone. `IconButton`'s `data-icon-button` is now
-  `data-slot="icon-button"`, `Button` carries `data-slot="button"` and `TitleBlock` carries
-  `data-slot="title-block"`.
+  `data-slot="icon-button"`, `Button` carries `data-slot="button"`, `TitleBlock` carries
+  `data-slot="title-block"` and `EmptyTableState` carries `data-slot="empty-table-state"`.
 
 ## 6.5.0 - 2026-11-25
 
