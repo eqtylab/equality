@@ -47,6 +47,8 @@ describe('AvatarFallback', () => {
     ['Éa', 'line', 'É'],
     ['e\u0301f', 'line', 'e\u0301'],
     ['', 'md', ''],
+    ['A C', 'md', 'AC'],
+    ['A C', 'line', 'A'],
   ])('keeps the first letter of %j whole at %s: %j', (given, size, shown) => {
     expect(initials(given, size)).toBe(shown);
   });

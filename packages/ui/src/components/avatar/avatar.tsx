@@ -50,10 +50,11 @@ function shortenInitials(children: React.ReactNode, count: number) {
   if (!parts.every((part) => typeof part === 'string' || typeof part === 'number')) return null;
   const text = parts.join('').trim();
   if (!INITIAL_LETTERS.test(text)) return null;
+  const letters = text.replace(/\s+/g, '');
   const graphemes = segmenter
-    ? Array.from(segmenter.segment(text), ({ segment }) => segment)
-    : Array.from(text);
-  if (graphemes.length <= count) return { drawn: text, full: text };
+    ? Array.from(segmenter.segment(letters), ({ segment }) => segment)
+    : Array.from(letters);
+  if (graphemes.length <= count && letters === text) return { drawn: text, full: text };
   return { drawn: graphemes.slice(0, count).join(''), full: text };
 }
 
