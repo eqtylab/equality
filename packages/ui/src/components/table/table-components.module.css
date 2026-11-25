@@ -207,22 +207,6 @@
   content: none;
 }
 
-/* Keep at half the row hover in --color-list-item-hover or less, or a hovered row stops standing out.
-   :where keeps it no stronger than the selected row rule below, or a selected even row shows the stripe */
-.table--striped > .table-inner > .table-body > :where(.table-row:nth-child(even)) {
-  background-color: color-mix(in oklch, var(--color-text-primary) 3%, transparent);
-  @variant dark {
-    background-color: color-mix(in oklch, var(--color-text-primary) 4%, transparent);
-  }
-}
-
-/* Keep the forced-colours exception: those modes drop the stripe fill, so striped rows need their line there */
-@media not (forced-colors: active) {
-  .table--striped > .table-inner > .table-body > .table-row::after {
-    content: none;
-  }
-}
-
 /* Clickable Variant */
 
 .table-row--clickable:not([data-state='selected']) {

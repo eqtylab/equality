@@ -56,33 +56,9 @@ describe('table-components.module.css', () => {
     );
   });
 
-  it('stripes no rows unless the table asks', () => {
-    expect(css).not.toMatch(/(^|\n)\.table-body \.table-row:nth-child\(even\)/);
-  });
-
-  it('lets a selected row in a striped table show over its stripe', () => {
-    const selected = ".table-body .table-row--clickable[data-state='selected']";
-    const stripe = css.indexOf('.table--striped > .table-inner');
-    expect(stripe).toBeGreaterThan(-1);
-    expect(css.indexOf(selected)).toBeGreaterThan(stripe);
-  });
-
-  it('brings back the stripes, and drops the lines, on a striped table', () => {
-    expect(
-      ruleBody(
-        css,
-        '.table--striped > .table-inner > .table-body > :where(.table-row:nth-child(even))'
-      )
-    ).toMatch(
-      /background-color:\s*color-mix\(in oklch, var\(--color-text-primary\) 3%, transparent\);/
-    );
-    expect(css).toMatch(
-      /@media not \(forced-colors: active\)\s*\{\s*\.table--striped > \.table-inner > \.table-body > \.table-row::after\s*\{\s*content:\s*none;/
-    );
-  });
-
-  it('keeps striped rules off a table nested inside a striped one', () => {
-    expect(css).not.toMatch(/\.table--striped \.table-body/);
+  it('fills no rows: a line between them is the only row style', () => {
+    expect(css).not.toMatch(/nth-child/);
+    expect(css).not.toMatch(/table--striped/);
   });
 
   it('draws the header line inside its row, so the header stays its height', () => {
@@ -181,7 +157,7 @@ describe('table-components.module.css', () => {
     }
   });
 
-  it('keeps stripes and the selected row on comfortable rows, which share their selectors', () => {
+  it('keeps the selected row on comfortable rows, which share its selector', () => {
     expect(css).not.toMatch(/\.table--comfortable[^{]*nth-child/);
     expect(css).not.toMatch(/\.table--comfortable[^{]*data-state/);
     expect(css).not.toMatch(/\.table--comfortable[^{]*background/);

@@ -9,7 +9,6 @@ Notable changes to Equality are recorded here, following [Keep a Changelog](http
 - `TableContainer` takes `density`. `regular`, the default, keeps rows and the header at 36;
   `comfortable` makes them 44, for tables people read slowly or use mostly by touch. A
   comfortable row stays 44 with a `Button` or `IconButton` of any size, links included.
-- `TableContainer` takes `striped`, which fills every other row, for wide, number-heavy tables.
 - `--eq-control-xs-icon-size`, the icon size in an extra-small control, and
   `--eq-table-row-divider-color`, the colour of the line between table rows.
 - `Button` carries `data-button` with its size, and `SortButton` carries `data-sort-button`.
@@ -17,7 +16,7 @@ Notable changes to Equality are recorded here, following [Keep a Changelog](http
 ### Changed
 
 - Table body rows draw a faint line between them instead of filling every other row. The last row
-  draws none. Pass `striped` to bring the fill back.
+  draws none.
 - The Table header draws its line inside its height, so it is 36, from 37, and grows when its text
   wraps instead of spilling out. A header cell pads by the control it holds: a default-size
   `Button` or `IconButton` keeps the header at 36, and a wrapped `SortButton` label sits as far from

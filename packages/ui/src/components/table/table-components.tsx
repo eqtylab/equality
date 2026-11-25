@@ -13,8 +13,6 @@ const TableContainer = React.forwardRef<
     VariantProps<typeof tableElevationVariants> & {
       border?: boolean;
       columns?: string;
-      /** Fill every other row instead of drawing a line between rows, for wide, number-heavy tables */
-      striped?: boolean;
       /** Row height: `regular` for most tables, `comfortable` for tables people scan slowly or touch */
       density?: 'regular' | 'comfortable';
     }
@@ -26,7 +24,6 @@ const TableContainer = React.forwardRef<
       elevation = ELEVATION.RAISED,
       border,
       columns,
-      striped,
       density = 'regular',
       ...props
     },
@@ -37,7 +34,6 @@ const TableContainer = React.forwardRef<
         styles['table'],
         tableElevationVariants({ elevation }),
         border && styles['table-border'],
-        striped && styles['table--striped'],
         density === 'comfortable' && styles['table--comfortable'],
         className
       )}

@@ -8,7 +8,7 @@ import {
   TableRow,
 } from '@/components/table/table-components';
 
-const rows = (props: { striped?: boolean; density?: 'regular' | 'comfortable' }) =>
+const rows = (props: { density?: 'regular' | 'comfortable' }) =>
   render(
     <TableContainer {...props}>
       <TableBody>
@@ -20,14 +20,6 @@ const rows = (props: { striped?: boolean; density?: 'regular' | 'comfortable' })
   ).container.firstElementChild!.className;
 
 describe('TableContainer', () => {
-  it('draws row lines by default, not stripes', () => {
-    expect(rows({})).not.toMatch(/table--striped/);
-  });
-
-  it('stripes its rows when asked', () => {
-    expect(rows({ striped: true })).toMatch(/table--striped/);
-  });
-
   it('keeps regular rows by default', () => {
     expect(rows({})).not.toMatch(/table--comfortable/);
   });
