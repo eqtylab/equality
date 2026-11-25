@@ -100,33 +100,34 @@
     padding-block: calc((var(--eq-control-lg-height) - var(--eq-type-body-line-height)) / 2);
   }
 
-  .table-row
-    > :is(.table-cell, .table-head):has(
-      > [data-slot='title-block'],
-      > * > [data-slot='title-block']
-    ),
   .table--comfortable
     > .table-inner
     > *
     > .table-row
-    > :is(.table-cell, .table-head):has(
-      > [data-slot='title-block'],
-      > * > [data-slot='title-block']
+    > :is(.table-cell, .table-head):has([data-slot='title-block'][data-size='md']):not(
+      :has(.table-inner [data-slot='title-block'][data-size='md'])
     ) {
     padding-block: calc((var(--eq-control-md-height) - var(--eq-type-body-line-height)) / 2);
   }
+}
 
-  :is(.table-cell, .table-head)
-    :is(button, [role='button'], [data-slot='button'], [data-slot='icon-button']):not(
-      [role='switch'],
-      [role='checkbox'],
-      [role='radio'],
-      [data-slot='title-block'] *,
-      [data-slot='empty-table-state'] *,
-      [data-slot='segmented-controls'] *
-    ) {
-    margin-block: calc((var(--eq-type-body-line-height) - var(--eq-control-sm-height)) / 2);
-  }
+/* Unlayered so an unlayered reset such as button { margin: 0 } can't cancel the pull */
+:is(.table-cell, .table-head)
+  :is(
+    button,
+    [role='button'],
+    [data-slot='button'],
+    [data-slot='icon-button'],
+    [data-slot='title-block'][data-size='sm']
+  ):not(
+    [role='switch'],
+    [role='checkbox'],
+    [role='radio'],
+    [data-slot='title-block'] *,
+    [data-slot='empty-table-state'] *,
+    [data-slot='segmented-controls'] *
+  ) {
+  margin-block: calc((var(--eq-type-body-line-height) - var(--eq-control-sm-height)) / 2);
 }
 
 /* A border on the row itself would add 1px to its height and put it off the 36 scale */

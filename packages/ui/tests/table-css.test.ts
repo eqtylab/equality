@@ -81,14 +81,14 @@ describe('table-components.module.css', () => {
     expect(css).not.toMatch(/\.table-(cell|head)[^{]*:has\(\s*>\s*:is\(button/);
   });
 
-  it('pulls a button at any depth in a cell into its padding, but not a switch, checkbox or radio, or the buttons of a title block, empty state or segmented control', () => {
-    const pull = ruleBody(
-      flatten(css),
-      `${CELLS} :is(${BUTTONS}):not([role='switch'], [role='checkbox'], [role='radio'], [data-slot='title-block'] *, [data-slot='empty-table-state'] *, [data-slot='segmented-controls'] *)`
-    );
-    expect(pull).toMatch(
+  it('pulls a button or a small title block at any depth in a cell into its padding, outside the layer, but not a switch, checkbox or radio, or the buttons of a title block, empty state or segmented control', () => {
+    const flat = flatten(css);
+    const selector = `${CELLS} :is(${BUTTONS}, [data-slot='title-block'][data-size='sm']):not([role='switch'], [role='checkbox'], [role='radio'], [data-slot='title-block'] *, [data-slot='empty-table-state'] *, [data-slot='segmented-controls'] *)`;
+    expect(ruleBody(flat, selector)).toMatch(
       /margin-block:\s*calc\(\(var\(--eq-type-body-line-height\)\s*-\s*var\(--eq-control-sm-height\)\)\s*\/\s*2\);/
     );
+    const layer = flat.slice(flat.indexOf('@layer components {'), flat.indexOf(selector));
+    expect(layer).toMatch(/\n\}\s*$/);
   });
 
   it("pads cells in a layer, so an app's padding utilities on a cell still win", () => {
@@ -117,9 +117,9 @@ describe('table-components.module.css', () => {
     );
   });
 
-  it('pads a cell holding a title block 8 at either density, so a person row is 52', () => {
-    const TB = "[data-slot='title-block']";
-    const selector = `.table-row > ${CELLS}:has(> ${TB}, > * > ${TB}),\n  ${COMFORTABLE} * > .table-row > ${CELLS}:has(> ${TB}, > * > ${TB})`;
+  it('pads a comfortable cell holding a medium title block 8, so a person row is 52 at either density', () => {
+    const TB = "[data-slot='title-block'][data-size='md']";
+    const selector = `${COMFORTABLE} * > .table-row > ${CELLS}:has(${TB}):not(:has(.table-inner ${TB}))`;
     expect(ruleBody(flatten(css), selector)).toMatch(CELL_PADDING('md', 'type-body-line-height'));
   });
 

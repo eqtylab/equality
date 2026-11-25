@@ -60,8 +60,9 @@ const TitleBlock = forwardRef<HTMLDivElement, TitleBlockProps>(
           className
         )}
         {...props}
-        // data-slot: table cells select this; renaming it changes row heights
+        // data-slot and data-size: table cells select these; renaming them changes row heights
         data-slot="title-block"
+        data-size={size}
       >
         {mark && <div className={styles['mark-slot']}>{mark}</div>}
         <div className={styles.body}>
@@ -166,8 +167,9 @@ const TitleBlockSkeleton = forwardRef<HTMLDivElement, TitleBlockSkeletonProps>(
         className
       )}
       {...props}
-      // data-slot: table cells select this; renaming it changes row heights
+      // data-slot and data-size: table cells select these; renaming them changes row heights
       data-slot="title-block"
+      data-size={size}
     >
       {mark && (
         <div className={styles['mark-slot']}>
