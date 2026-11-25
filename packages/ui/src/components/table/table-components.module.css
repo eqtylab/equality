@@ -96,34 +96,8 @@
     padding-block: calc((var(--eq-control-md-height) - var(--eq-type-body-line-height)) / 2);
   }
 
-  :is(.table-cell, .table-head):is(
-    :has(> :is(button, [role='button'], [data-slot='button'], [data-slot='icon-button'])),
-    :has(> * > :is(button, [role='button'], [data-slot='button'], [data-slot='icon-button'])):not(
-      :has(
-        > * > :not(:is(button, [role='button'], [data-slot='button'], [data-slot='icon-button']))
-      )
-    )
-  ) {
-    padding-block: calc((var(--eq-control-md-height) - var(--eq-control-sm-height)) / 2);
-  }
-
   .table--comfortable > .table-inner > * > .table-row > :is(.table-cell, .table-head) {
     padding-block: calc((var(--eq-control-lg-height) - var(--eq-type-body-line-height)) / 2);
-  }
-
-  .table--comfortable
-    > .table-inner
-    > *
-    > .table-row
-    > :is(.table-cell, .table-head):is(
-      :has(> :is(button, [role='button'], [data-slot='button'], [data-slot='icon-button'])),
-      :has(> * > :is(button, [role='button'], [data-slot='button'], [data-slot='icon-button'])):not(
-        :has(
-          > * > :not(:is(button, [role='button'], [data-slot='button'], [data-slot='icon-button']))
-        )
-      )
-    ) {
-    padding-block: calc((var(--eq-control-lg-height) - var(--eq-control-sm-height)) / 2);
   }
 
   .table-row
@@ -140,6 +114,14 @@
       > * > [data-slot='title-block']
     ) {
     padding-block: calc((var(--eq-control-md-height) - var(--eq-type-body-line-height)) / 2);
+  }
+
+  :is(.table-cell, .table-head)
+    :is(button, [role='button'], [data-slot='button'], [data-slot='icon-button']):not(
+      [data-slot='title-block'] *,
+      [data-slot='empty-table-state'] *
+    ) {
+    margin-block: calc((var(--eq-type-body-line-height) - var(--eq-control-sm-height)) / 2);
   }
 }
 

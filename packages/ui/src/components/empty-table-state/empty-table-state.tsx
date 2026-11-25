@@ -26,7 +26,11 @@ const EmptyTableState = ({
   const showButton = showClearButton && onClear;
 
   return (
-    <div className={cn(styles['empty-table-state'], className)}>
+    <div
+      className={cn(styles['empty-table-state'], className)}
+      // data-slot: table cells select this; renaming it changes row heights
+      data-slot="empty-table-state"
+    >
       <div className={styles['icon-and-title-container']}>
         <Icon icon={icon} size="md" background="circle" elevation={elevation} />
         <span className={styles['title']}>{title}</span>

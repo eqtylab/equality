@@ -51,7 +51,6 @@ const TitleBlock = forwardRef<HTMLDivElement, TitleBlockProps>(
     <TitleBlockSizeContext.Provider value={size}>
       <div
         ref={ref}
-        data-slot="title-block"
         className={cn(
           styles['title-block'],
           styles[`size-${size}`],
@@ -61,6 +60,8 @@ const TitleBlock = forwardRef<HTMLDivElement, TitleBlockProps>(
           className
         )}
         {...props}
+        // data-slot: table cells select this; renaming it changes row heights
+        data-slot="title-block"
       >
         {mark && <div className={styles['mark-slot']}>{mark}</div>}
         <div className={styles.body}>
@@ -156,7 +157,6 @@ const TitleBlockSkeleton = forwardRef<HTMLDivElement, TitleBlockSkeletonProps>(
   ) => (
     <div
       ref={ref}
-      data-slot="title-block"
       className={cn(
         styles['title-block'],
         styles[`size-${size}`],
@@ -166,6 +166,8 @@ const TitleBlockSkeleton = forwardRef<HTMLDivElement, TitleBlockSkeletonProps>(
         className
       )}
       {...props}
+      // data-slot: table cells select this; renaming it changes row heights
+      data-slot="title-block"
     >
       {mark && (
         <div className={styles['mark-slot']}>

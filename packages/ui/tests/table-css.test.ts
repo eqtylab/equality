@@ -59,18 +59,12 @@ describe('table-components.module.css', () => {
     expect(ruleBody(css, '.table-body')).not.toMatch(/last-child/);
   });
 
-  const ROW_PADDING = (row: string) =>
-    new RegExp(
-      String.raw`padding-block:\s*calc\(\(var\(--eq-control-${row}-height\)\s*-\s*var\(--eq-control-sm-height\)\)\s*/\s*2\);`
-    );
-
   const CELL_PADDING = (row: string, part: string) =>
     new RegExp(
       String.raw`padding-block:\s*calc\(\(var\(--eq-control-${row}-height\)\s*-\s*var\(--eq-${part}\)\)\s*/\s*2\);`
     );
 
   const BUTTONS = "button, [role='button'], [data-slot='button'], [data-slot='icon-button']";
-  const HOLDS_A_BUTTON = `:is(:has(> :is(${BUTTONS})), :has(> * > :is(${BUTTONS})):not(:has(> * > :not(:is(${BUTTONS})))))`;
   const COMFORTABLE = '.table--comfortable > .table-inner >';
   const CELLS = ':is(.table-cell, .table-head)';
   const flatten = (text: string) =>
@@ -79,13 +73,22 @@ describe('table-components.module.css', () => {
       .replace(/\(\s+/g, '(')
       .replace(/,?\s+\)/g, ')');
 
-  it('holds a small control in a regular row by padding its cell less than a cell of text', () => {
-    const flat = flatten(css);
+  it('pads every cell for a line of text, whatever it holds', () => {
     const row = ruleBody(css, '\n.table-row');
     expect(row).toMatch(/min-height:\s*var\(--eq-control-md-height\);/);
     expect(row).not.toMatch(/padding-block/);
-    expect(ruleBody(flat, CELLS)).toMatch(CELL_PADDING('md', 'type-body-line-height'));
-    expect(ruleBody(flat, `${CELLS}${HOLDS_A_BUTTON}`)).toMatch(ROW_PADDING('md'));
+    expect(ruleBody(flatten(css), CELLS)).toMatch(CELL_PADDING('md', 'type-body-line-height'));
+    expect(css).not.toMatch(/\.table-(cell|head)[^{]*:has\(\s*>\s*:is\(button/);
+  });
+
+  it('pulls a button at any depth in a cell into its padding, but not a title block or empty state button', () => {
+    const pull = ruleBody(
+      flatten(css),
+      `${CELLS} :is(${BUTTONS}):not([data-slot='title-block'] *, [data-slot='empty-table-state'] *)`
+    );
+    expect(pull).toMatch(
+      /margin-block:\s*calc\(\(var\(--eq-type-body-line-height\)\s*-\s*var\(--eq-control-sm-height\)\)\s*\/\s*2\);/
+    );
   });
 
   it("pads cells in a layer, so an app's padding utilities on a cell still win", () => {
@@ -102,13 +105,9 @@ describe('table-components.module.css', () => {
     expect(body).not.toMatch(/padding-block/);
   });
 
-  it('pads a comfortable cell of text to the row, and one holding a button to a small control', () => {
-    const flat = flatten(css);
-    expect(ruleBody(flat, `${COMFORTABLE} * > .table-row > ${CELLS}`)).toMatch(
+  it('pads a comfortable cell for a line of text', () => {
+    expect(ruleBody(flatten(css), `${COMFORTABLE} * > .table-row > ${CELLS}`)).toMatch(
       CELL_PADDING('lg', 'type-body-line-height')
-    );
-    expect(ruleBody(flat, `${COMFORTABLE} * > .table-row > ${CELLS}${HOLDS_A_BUTTON}`)).toMatch(
-      ROW_PADDING('lg')
     );
   });
 
