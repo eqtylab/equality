@@ -15,15 +15,15 @@ Controls' size names are the step they sit on (`sm` 28, `md` 36). Avatar, Badge,
 
 <SizingDemo />
 
-| Step | Text line      | Control     | Also                    |
-| ---- | -------------- | ----------- | ----------------------- |
-| 16   | `text-caption` |             | Small badge             |
-| 20   | `text-body`    |             | Default badge           |
-| 24   | `text-section` | Extra small |                         |
-| 28   |                | Small       |                         |
-| 36   | `text-title`   | Default     |                         |
-| 44   |                | Large       |                         |
-| 52   |                |             | A large picture or mark |
+| Step | Text line      | Control     | Row         | Also                    |
+| ---- | -------------- | ----------- | ----------- | ----------------------- |
+| 16   | `text-caption` |             |             | Small badge             |
+| 20   | `text-body`    |             |             | Default badge           |
+| 24   | `text-section` | Extra small |             |                         |
+| 28   |                | Small       |             |                         |
+| 36   | `text-title`   | Default     | Regular     |                         |
+| 44   |                | Large       | Comfortable |                         |
+| 52   |                |             |             | A large picture or mark |
 
 ## When to Use Each Step
 
@@ -45,15 +45,19 @@ Small controls. A row holding a card or section title, centred, and the small bu
 
 ### 36
 
-Default controls. A row holding the page title, 30 on a 36 line, and the default controls beside it.
+Default controls. A row holding the page title, 30 on a 36 line, and the default controls beside it. Regular table rows.
 
 ### 44
 
-Large controls.
+Large controls. Comfortable table rows, for tables people read slowly or use mostly by touch.
 
 ### 52
 
 A picture or mark you build that should stand out more than a large control, such as a logo.
+
+## Rows
+
+A table row is 36, or 44 with `density="comfortable"`. Text that wraps makes the row taller.
 
 ## Building Your Own Component
 
