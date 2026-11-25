@@ -32,7 +32,7 @@ export const AvatarDemo = ({
   shape,
 }: {
   variant?: "default" | "fallback";
-  size?: "sm" | "md" | "lg" | "xl";
+  size?: "line" | "xs" | "sm" | "md" | "lg" | "xl";
   shape?: "circle" | "square";
 }) => {
   return (
@@ -53,17 +53,16 @@ export const AvatarSizesDemo = ({
   variant?: "default" | "fallback";
   shape?: "circle" | "square";
 }) => {
-  const sizes = ["sm", "md", "lg", "xl"] as const;
-  const labels = { sm: "SM", md: "MD", lg: "LG", xl: "XL" };
+  const sizes = ["line", "xs", "sm", "md", "lg", "xl"] as const;
   return (
-    <div className="mb-4 flex items-end gap-4">
+    <div className="mb-4 flex items-end gap-4 text-sm">
       {sizes.map((s) => (
         <Avatar key={s} size={s} shape={shape}>
           <AvatarImage
             src={variant === "default" ? IMAGE_SRC : undefined}
             alt="User avatar"
           />
-          <AvatarFallback>{labels[s]}</AvatarFallback>
+          <AvatarFallback>RG</AvatarFallback>
         </Avatar>
       ))}
     </div>
@@ -95,7 +94,7 @@ export const AvatarControlDemo = () => {
   return (
     <div className="mb-4 flex max-w-sm items-center gap-2">
       <SearchBar searchQuery={query} setSearchQuery={setQuery} />
-      <Avatar size="lg">
+      <Avatar size="md">
         <AvatarFallback>RG</AvatarFallback>
       </Avatar>
     </div>

@@ -215,7 +215,7 @@ Mix `fr` units for flexible columns with fixed pixel values for predictable sizi
 
 ### Content-Sized Columns
 
-Use `auto` for columns that should shrink to fit their content. This is useful for action columns or icon-only columns. In a regular row, an `IconButton` at its default `sm` size overhangs the row's padding, so a row with an actions menu is as tall as one without.
+Use `auto` for columns that should shrink to fit their content. This is useful for action columns or icon-only columns. A row has room for a default `IconButton`, so a row with an actions menu is as tall as one without.
 
 ```tsx
 <TableContainer columns="1fr 1fr auto auto auto">
@@ -291,12 +291,14 @@ Use [container queries](https://tailwindcss.com/docs/responsive-design#what-are-
 
 ## Inside a row
 
-A row is one line of text plus padding. These parts keep the row at its height:
+Every row has room for one part as tall as a small control, so a row with an avatar, a badge or a row action stays the same height as a row of plain text. Rows that hold these line up with rows that don't:
 
+- An avatar: `Avatar` with no `size`.
 - A badge: the default `Badge`.
 - A switch: `Switch` with `size="sm"`.
-- An icon button: `IconButton` at its default size, which overhangs a regular row's padding (see [Content-Sized Columns](#content-sized-columns)).
-- An avatar: `Avatar` at its default size.
+- A row action, such as a ⋮ menu: `IconButton` with no `size`.
+
+Anything taller, or text that wraps, makes its row taller.
 
 Show an ID as plain text when the row's menu or the view it opens can copy it. Keep a `CopyButton` in the cell only when neither can.
 

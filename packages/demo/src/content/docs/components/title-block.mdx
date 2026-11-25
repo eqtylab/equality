@@ -1,6 +1,6 @@
 ---
 title: "Title Block"
-description: "A title beside an icon, with a line under it and items at its end, in three sizes"
+description: "A title beside an icon or avatar, with a line under it and items at its end, in three sizes"
 ---
 
 import {
@@ -15,7 +15,7 @@ import {
 
 ## Overview
 
-Title Block sets a title beside a mark, such as an icon tile. A description can sit under the title. Trailing items, such as a badge or a status, and actions, such as a button or a menu, sit together at the end of the block, centred on it. Use it for a card's header, an item card, a person or thing with a line under it, and the top of a page section.
+Title Block sets a title beside a mark, such as an icon tile or an avatar. A description can sit under the title. Trailing items, such as a badge or a status, and actions, such as a button or a menu, sit together at the end of the block, centred on it. Use it for a card's header, an item card, a person or thing with a line under it, and the top of a page section.
 
 It is made of three parts: `TitleBlock` (the block), `TitleBlockMark` (the icon tile) and `TitleBlockSkeleton` (the placeholder while it loads).
 
@@ -29,6 +29,9 @@ Import the components:
 
 ```tsx
 import {
+  Avatar,
+  AvatarFallback,
+  AvatarImage,
   Badge,
   Button,
   ControlStatusBadge,
@@ -126,7 +129,11 @@ With no description, the title centres on the mark.
 Pick the mark by what the block names:
 
 - **The tile** for an icon. Pass a `TitleBlockMark` with a [Lucide](https://lucide.dev/icons/) icon name or a React element. Give it `shape="round"` for a circle, as a card's header does.
+- **An Avatar** for a person.
+- **A square Avatar** for a thing with its own picture or colour, such as a policy or an organization.
 - **No mark** when the title stands alone.
+
+An Avatar does not take the block's size. Pass the Avatar size with the same name: `sm` in a small block, `md` in a medium one and `lg` in a large one. The title names who or what it is, so hide the Avatar from screen readers with `aria-hidden`.
 
 <div className="my-4">
   <TitleBlockMarksDemo client:only="react" />
@@ -139,6 +146,27 @@ Pick the mark by what the block names:
   mark={<TitleBlockMark icon="Layers" />}
   title="Data Layer"
   description="Inputs every run reads from"
+/>
+
+<TitleBlock
+  mark={
+    <Avatar size="md" aria-hidden>
+      <AvatarImage src={user.image} alt="" />
+      <AvatarFallback>RG</AvatarFallback>
+    </Avatar>
+  }
+  title="Rosa García"
+  description="Project admin"
+/>
+
+<TitleBlock
+  mark={
+    <Avatar size="md" shape="square" aria-hidden>
+      <AvatarFallback>AI</AvatarFallback>
+    </Avatar>
+  }
+  title="AI Governance Baseline"
+  description="Policy, 24 controls"
 />
 
 <TitleBlock
@@ -225,7 +253,7 @@ Children render under the description, such as a row of badges or a progress bar
 
 ### Loading
 
-Show `TitleBlockSkeleton` while the block's data loads. It is as tall as the block it stands in for, when that block has nothing under its description, so the page doesn't jump when the data arrives. Give it the same `size`, a width for each line the block will have, and a placeholder for each trailing item and action. Set `mark={false}` when it has no mark.
+Show `TitleBlockSkeleton` while the block's data loads. It is as tall as the block it stands in for, when that block has nothing under its description, so the page doesn't jump when the data arrives. Give it the same `size`, a width for each line the block will have, and a placeholder for each trailing item and action. Set `mark="round"` when the block will show a round Avatar, and `mark={false}` when it has no mark.
 
 <div className="my-4">
   <TitleBlockSkeletonDemo client:only="react" />
@@ -289,7 +317,7 @@ A mark you build yourself, such as a logo, goes in `mark`. Put it in a box as ta
 | Name          | Description                                                  | Type                  | Default | Required |
 | ------------- | ------------------------------------------------------------ | --------------------- | ------- | -------- |
 | `size`        | How large the mark and title are                             | `sm`, `md`, `lg`      | `md`    | ❌       |
-| `mark`        | A `TitleBlockMark` shown before the title                    | `ReactNode`           | —       | ❌       |
+| `mark`        | A `TitleBlockMark` or an `Avatar` shown before the title     | `ReactNode`           | —       | ❌       |
 | `title`       | The block's title                                            | `ReactNode`           | —       | ❌       |
 | `description` | Supporting text under the title                              | `ReactNode`           | —       | ❌       |
 | `trailing`    | Badges or status at the end of the block, before the actions | `ReactNode`           | —       | ❌       |

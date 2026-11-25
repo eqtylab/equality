@@ -2,6 +2,49 @@
 
 Notable changes to Equality are recorded here, following [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## 7.0.0 - 2026-11-25
+
+### Breaking
+
+- `Avatar` sizes now match the control sizes: `xs` 24, `sm` 28, `md` 36 and `lg` 44. The new
+  default, `line`, is as tall as the line of text the avatar sits in: 20 in a table, menu or list
+  row. `xl` is now 52, for a profile or page hero. Initials show one letter at `line`, `xs` and
+  `sm`, and two at `md`, `lg` and `xl`; screen readers hear them all. A count such as `+3` shows
+  whole.
+
+  | You had                    | Use now                                                   |
+  | -------------------------- | --------------------------------------------------------- |
+  | `sm` (16)                  | no `size`                                                 |
+  | `md` or no `size` (24)     | no `size` in rows and lists, `md` elsewhere (grows to 36) |
+  | `lg` (36; 32 before 6.1.0) | `md`                                                      |
+  | `xl` (44; 40 before 6.1.0) | `lg` to keep 44; `xl` is now 52                           |
+
+  Every renamed size, `xl` included, still compiles but draws at its new size, so check each one
+  against the table.
+
+- The `control-row-overhang` utility is gone, so an app that applies it fails to build. Rows now
+  hold an avatar or icon button without it: remove it.
+
+### Changed
+
+- Regular Table rows, and `DropdownMenu`, `Select` and `Command` rows, hold an avatar, badge, small
+  switch or default `IconButton` and stay 36. A part taller than that, or text that wraps, makes its
+  row taller, by less than before: rows keep 4 above and below their content, from 8, so a two-line
+  row is 48, from 56. Comfortable Table rows are unchanged.
+- The `control-row-padding` utility pads 4 above and below, from 8, so a row keeps room for a 28
+  part. A row of your own that uses it without a minimum height is 8 shorter: give it a minimum
+  height of 36 to keep it where it was.
+- An icon you size yourself in a `CommandDialog` item, such as with `size-4`, keeps its size, as in
+  a `Command` outside a dialog; the dialog drew it at 20.
+- A `TitleBlock` takes an `Avatar` as its mark. Give it the Avatar size that matches the block's:
+  `sm`, `md` or `lg`.
+
+### Removed
+
+- The `control-row-overhang` utility.
+- The `data-avatar` attribute on `Avatar` and `data-icon-button` on `IconButton`. Nothing in
+  Equality reads them; style an avatar or icon button by its `className` instead.
+
 ## 6.5.0 - 2026-11-25
 
 ### Added

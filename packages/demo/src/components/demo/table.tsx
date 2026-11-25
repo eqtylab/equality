@@ -1,5 +1,7 @@
 import type { Elevation } from "@eqtylab/equality";
 import {
+  Avatar,
+  AvatarFallback,
   Badge,
   EmptyTableState,
   IconButton,
@@ -120,7 +122,14 @@ export const TableDemo = ({
         <TableBody>
           {longTableData.slice(0, 3).map((user) => (
             <TableRow key={user.email}>
-              <TableCell>{user.name}</TableCell>
+              <TableCell>
+                <div className="flex items-center gap-2">
+                  <Avatar aria-hidden>
+                    <AvatarFallback>{user.name.slice(0, 1)}</AvatarFallback>
+                  </Avatar>
+                  {user.name}
+                </div>
+              </TableCell>
               <TableCell>
                 <Badge variant={user.active ? "success" : "neutral"}>
                   {user.active ? "Active" : "Inactive"}
