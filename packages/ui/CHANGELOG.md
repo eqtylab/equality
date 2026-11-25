@@ -32,6 +32,8 @@ Notable changes to Equality are recorded here, following [Keep a Changelog](http
   button pads 4 above and below, so a row with a small `Button` is 36, from 44.
 - A cell holding a default control, such as a default `Button` or `Select`, pads 4 above and below,
   so its row is 44, from 52.
+- Table rows no longer pad; each cell does, by what it holds. Padding you set on a `TableCell` now
+  replaces Equality's, and padding on a `TableRow` adds to it.
 - An icon you size yourself in a `CommandDialog` item, such as with `size-4`, keeps its size, as in
   a `Command` outside a dialog; the dialog drew it at 20.
 - A `TitleBlock` takes an `Avatar` as its mark. Give it the Avatar size that matches the block's:
