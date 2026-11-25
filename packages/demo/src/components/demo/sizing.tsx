@@ -84,9 +84,14 @@ const STEPS = [
   {
     step: 52,
     parts: (
-      <Avatar size="xl">
-        <AvatarFallback>AB</AvatarFallback>
-      </Avatar>
+      <>
+        <div className="bg-background-sunken text-caption text-text-secondary w-(--eq-size-xl) flex h-full items-center justify-center rounded-md">
+          Logo
+        </div>
+        <Avatar size="xl">
+          <AvatarFallback>AB</AvatarFallback>
+        </Avatar>
+      </>
     ),
   },
 ];

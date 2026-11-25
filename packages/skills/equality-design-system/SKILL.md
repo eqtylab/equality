@@ -180,8 +180,8 @@ Never write `h-10`. Text lines, controls, rows and avatars share seven size step
 Equality allows. Control and text sizes are decisions chosen from them, and a
 part you build reads a decision where one fits. A picture or mark you build that
 isn't a control takes an option, `--eq-size-{3xs,2xs,xs,sm,md,lg,xl}`. Controls' and
-Avatar's size names are the step they sit on (`sm` 28, `md` 36). Badge, Icon,
-Switch, Checkbox and Timeline use their own size names.
+Avatar's sizes `xs` to `xl` are the step they sit on; Avatar's default follows
+its line. Badge, Icon, Switch, Checkbox and Timeline use their own size names.
 
 Text takes one of four styles: `text-title` for a page title, `text-section` for
 a card or section title, `text-body` for running text and `text-caption` for
