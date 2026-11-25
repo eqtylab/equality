@@ -125,7 +125,7 @@ With no description, the title centres on the mark.
 
 Pick the mark by what the block names:
 
-- **The tile** for an icon. Pass a `TitleBlockMark` with a [Lucide](https://lucide.dev/icons/) icon name or a React element.
+- **The tile** for an icon. Pass a `TitleBlockMark` with a [Lucide](https://lucide.dev/icons/) icon name or a React element. Give it `shape="round"` for a circle, as a card's header does.
 - **No mark** when the title stands alone.
 
 <div className="my-4">
@@ -293,9 +293,10 @@ A mark you build yourself, such as a logo, goes in `mark`. Put it in a box as ta
 
 ### TitleBlockMark
 
-| Name   | Description                                                               | Type                     | Default | Required |
-| ------ | ------------------------------------------------------------------------- | ------------------------ | ------- | -------- |
-| `icon` | A Lucide icon name or a React element, shown on a tile sized to the block | `string`, `ReactElement` | —       | ✅       |
+| Name    | Description                                                               | Type                     | Default  | Required |
+| ------- | ------------------------------------------------------------------------- | ------------------------ | -------- | -------- |
+| `icon`  | A Lucide icon name or a React element, shown on a tile sized to the block | `string`, `ReactElement` | —        | ✅       |
+| `shape` | A square tile, or a circle                                                | `square`, `round`        | `square` | ❌       |
 
 Outside a `TitleBlock`, the tile takes the medium size.
 
@@ -308,4 +309,4 @@ Outside a `TitleBlock`, the tile takes the medium size.
 | `descriptionWidth` | A width class for the description bar. Leave it out with no description | `string`                   | —        | ❌       |
 | `trailing`         | Placeholders for the trailing items                                     | `ReactNode`                | —        | ❌       |
 | `actions`          | Placeholders for the actions                                            | `ReactNode`                | —        | ❌       |
-| `mark`             | The mark's shape: a square tile, a round avatar, or none                | `square`, `round`, `false` | `square` | ❌       |
+| `mark`             | The mark's shape: a square tile, a circle, or none                      | `square`, `round`, `false` | `square` | ❌       |
