@@ -88,10 +88,10 @@ The `icon` prop accepts either a [Lucide](https://lucide.dev/icons/) icon name o
 
 ## Props
 
-| Name            | Description                                                                               | Type                     | Default | Required |
-| --------------- | ----------------------------------------------------------------------------------------- | ------------------------ | ------- | -------- |
-| `icon`          | Icon shown on the square tile. A Lucide icon name or a React element.                     | `string`, `ReactElement` | —       | ✅       |
-| `heading`       | Heading text rendered as an `h3`.                                                         | `string`                 | —       | ❌       |
-| `onButtonClick` | Handler for the "See All" button. Providing it renders the button and adjusts the layout. | `() => void`             | —       | ❌       |
+| Name            | Description                                                                     | Type                     | Default | Required |
+| --------------- | ------------------------------------------------------------------------------- | ------------------------ | ------- | -------- |
+| `icon`          | Icon shown on the square tile. A Lucide icon name or a React element.           | `string`, `ReactElement` | —       | ✅       |
+| `heading`       | Heading text rendered as an `h3`.                                               | `string`                 | —       | ❌       |
+| `onButtonClick` | Shows a "See All" button at the end of the header, and runs when it is clicked. | `() => void`             | —       | ❌       |
 
 > **Note:** The component renders `null` when neither `heading` nor `onButtonClick` is provided, since there would be nothing meaningful to show.

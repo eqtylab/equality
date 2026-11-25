@@ -5,6 +5,7 @@ import {
   CardContent,
   ControlStatusBadge,
   IconButton,
+  Progress,
   Skeleton,
   TitleBlock,
   TitleBlockMark,
@@ -169,6 +170,22 @@ export function TitleBlockTrailingDemo() {
         </CardContent>
       </Card>
     </div>
+  );
+}
+
+export function TitleBlockMoreContentDemo() {
+  return (
+    <Card className="max-w-sm">
+      <CardContent>
+        <TitleBlock
+          mark={<TitleBlockMark icon="Layers" />}
+          title="Data Layer"
+          description="Inputs every run reads from"
+        >
+          <Progress value={60} className="mt-2" aria-label="Sources read" />
+        </TitleBlock>
+      </CardContent>
+    </Card>
   );
 }
 

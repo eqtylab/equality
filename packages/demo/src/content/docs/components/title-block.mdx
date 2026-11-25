@@ -6,6 +6,7 @@ description: "A title beside an icon, with a line under it and items at its end,
 import {
   TitleBlockLongTitleDemo,
   TitleBlockMarksDemo,
+  TitleBlockMoreContentDemo,
   TitleBlockNoDescriptionDemo,
   TitleBlockSizeDemo,
   TitleBlockSkeletonDemo,
@@ -44,13 +45,15 @@ Basic usage with a mark, a title and a description:
 
 ### Sizes
 
-`size` sets how large the mark and the title are. A `TitleBlockMark` takes its size from the block around it.
+Pick the size by what the block holds. The mark sets the block's height, and a `TitleBlockMark` takes its size from the block around it.
 
-| Size           | Use it                                                  |
-| -------------- | ------------------------------------------------------- |
-| `sm`           | A card's header row, beside small buttons               |
-| `md` (default) | An item card, or a person or thing with a line under it |
-| `lg`           | The top of a page section, or a summary card            |
+| Size           | Use it for                                                                              |
+| -------------- | --------------------------------------------------------------------------------------- |
+| `sm`           | A title alone, such as a card's header beside small buttons                             |
+| `md` (default) | A name and a short fact, such as a person and their email. The fact is set as a caption |
+| `lg`           | A title and a sentence that describes it                                                |
+
+The larger `sm` title is for section and page headings. `md` and `lg` share one title size, so blocks side by side match, in a card or a table row.
 
 #### Small
 
@@ -178,9 +181,22 @@ Pick the mark by what the block names:
   <TitleBlockLongTitleDemo client:only="react" />
 </div>
 
+```tsx
+<TitleBlock
+  mark={<TitleBlockMark icon="ClipboardCheck" />}
+  title="Evaluations Awaiting Reviewer Sign-off Before Release"
+  description="Seven evaluations from the last run"
+  trailing={<Badge variant="warning">7</Badge>}
+/>
+```
+
 ### More Content
 
 Children render under the description, such as a row of badges or a progress bar.
+
+<div className="my-4">
+  <TitleBlockMoreContentDemo client:only="react" />
+</div>
 
 ```tsx
 <TitleBlock
