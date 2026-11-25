@@ -64,7 +64,7 @@ const MetricCard = ({
             icon={icon}
             size="md"
             background="circle"
-            className={cn(variantStyles.iconBg, variantStyles.text)}
+            className={cn(styles.icon, variantStyles.iconBg, variantStyles.text)}
           />
         )}
       </div>
