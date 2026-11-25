@@ -64,7 +64,7 @@ const STEPS = [
     step: 52,
     parts: (
       <div className="bg-background-sunken text-caption text-text-secondary w-(--eq-size-xl) flex h-full items-center justify-center rounded-md">
-        Rail
+        Logo
       </div>
     ),
   },
