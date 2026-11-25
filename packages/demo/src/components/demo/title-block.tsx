@@ -59,6 +59,30 @@ export function TitleBlockSizeDemo({ size }: { size: TitleBlockSize }) {
   );
 }
 
+export function TitleBlockNoDescriptionDemo() {
+  return (
+    <div className="grid gap-4 sm:grid-cols-2">
+      <Card>
+        <CardContent>
+          <TitleBlock
+            mark={<TitleBlockMark icon="Layers" />}
+            title="Data Layer"
+          />
+        </CardContent>
+      </Card>
+      <Card>
+        <CardContent>
+          <TitleBlock
+            size="lg"
+            mark={<TitleBlockMark icon="Settings2" />}
+            title="Configuration Summary"
+          />
+        </CardContent>
+      </Card>
+    </div>
+  );
+}
+
 export function TitleBlockMarksDemo() {
   return (
     <div className="grid gap-4 sm:grid-cols-2">

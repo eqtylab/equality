@@ -6,6 +6,7 @@ description: "A title beside an icon or avatar, with a line under it and items a
 import {
   TitleBlockLongTitleDemo,
   TitleBlockMarksDemo,
+  TitleBlockNoDescriptionDemo,
   TitleBlockSizeDemo,
   TitleBlockSkeletonDemo,
   TitleBlockTrailingDemo,
@@ -69,6 +70,14 @@ Basic usage with a mark, a title and a description:
   <TitleBlockSizeDemo client:only="react" size="lg" />
 </div>
 
+#### No Description
+
+With no description, the title centres on the mark.
+
+<div className="my-4">
+  <TitleBlockNoDescriptionDemo client:only="react" />
+</div>
+
 #### Usage
 
 ```tsx
@@ -99,8 +108,6 @@ Basic usage with a mark, a title and a description:
 />
 ```
 
-With no description, the title centres on the mark.
-
 ### Marks
 
 Pick the mark by what the block names:
@@ -110,7 +117,7 @@ Pick the mark by what the block names:
 - **A square Avatar** for a thing with its own picture or colour, such as a policy or an organization.
 - **No mark** when the title stands alone.
 
-An Avatar does not take the block's size. Pass the Avatar size with the same name: `sm` in a small block, `md` in a medium one and `lg` in a large one. The title names the person, so hide the Avatar from screen readers with `aria-hidden`.
+An Avatar does not take the block's size. Pass the Avatar size with the same name: `sm` in a small block, `md` in a medium one and `lg` in a large one. The title names who or what it is, so hide the Avatar from screen readers with `aria-hidden`.
 
 <div className="my-4">
   <TitleBlockMarksDemo client:only="react" />
@@ -244,7 +251,7 @@ The title renders as an `h3`. Set `titleAs` to fit the page's heading outline: `
 
 ## Building Your Own
 
-A mark you build yourself, such as a logo, goes in `mark`. Put it in a box as tall as the control of the block's size: 28 at `sm`, 36 at `md` and 44 at `lg`. A mark is not a control, so the box reads the size step: `size-(--eq-size-sm)`, `size-(--eq-size-md)` or `size-(--eq-size-lg)`. The block lines its title up with a mark of that size.
+A mark you build yourself, such as a logo, goes in `mark`. Put it in a box as tall as the block's size: 28 at `sm`, 36 at `md` and 44 at `lg`. Use the size step: `size-(--eq-size-sm)`, `size-(--eq-size-md)` or `size-(--eq-size-lg)`. The block lines its title up with a mark of that size.
 
 ```tsx
 <TitleBlock
