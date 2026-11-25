@@ -1,3 +1,4 @@
+import { readFile } from 'node:fs/promises';
 import { beforeAll, describe, expect, it } from 'vitest';
 
 import { compileCss, ruleBody } from './compile-css';
@@ -44,9 +45,11 @@ describe('nav.module.css', () => {
     );
   });
 
-  it('sizes the rail as its item plus 12 each side, on touch too', () => {
-    expect(ruleBody(css, '.nav-rail')).toMatch(
-      /width:\s*calc\(max\(var\(--eq-control-md-height\), var\(--eq-touch-target\)\) \+ calc\(0\.25rem \* 6\)\);/
+  it('sizes the rail as its item plus 12 each side, on touch too', async () => {
+    expect(ruleBody(css, '.nav-rail')).toMatch(/width:\s*var\(--eq-nav-rail-width\);/);
+    const decisions = await readFile('src/theme/theme-decisions.css', 'utf8');
+    expect(decisions).toMatch(
+      /--eq-nav-rail-width:\s*calc\(\s*max\(var\(--eq-control-md-height\), var\(--eq-touch-target\)\) \+ --spacing\(6\)\s*\);/
     );
   });
 

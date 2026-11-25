@@ -24,7 +24,7 @@
 }
 
 .nav-rail {
-  width: calc(max(var(--eq-control-md-height), var(--eq-touch-target)) + --spacing(6));
+  width: var(--eq-nav-rail-width);
 }
 
 .nav-panel {

@@ -9,7 +9,7 @@
    changing it, or tests/theme-css.test.ts fails. */
 html {
   /* list-item: one selectable row */
-  --eq-list-item-icon-size: --spacing(4); /* 16 */
+  --eq-list-item-icon-size: var(--eq-control-md-icon-size);
   --eq-list-item-muted-color: var(--color-text-tertiary);
   /* list: the rows together */
   --eq-list-gap: --spacing(0.5); /* 2, between items */
@@ -22,6 +22,10 @@ html {
   --eq-nav-motion-duration: 300ms;
   --eq-nav-motion-ease: cubic-bezier(0.2, 0.8, 0.2, 1);
   --eq-nav-motion-nudge: 12px;
+  /* nav-rail: the rail's width, its item plus 12 each side. A logo column above it reads this */
+  --eq-nav-rail-width: calc(
+    max(var(--eq-control-md-height), var(--eq-touch-target)) + --spacing(6)
+  );
   /* switcher: the fade on its name. It ends at secondary text, so the name is never dimmer than the
      rows below it. A site can set its own: the docs do */
   --eq-switcher-name-fade: linear-gradient(

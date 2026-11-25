@@ -435,7 +435,7 @@ function Rows({ nodes, top = false }) {
 
 ### Under a Sticky Header
 
-The rail and panel pin to the top of the viewport as the page scrolls. An app header above them keeps its own height; centre the app's logo on the rail's column, so it lines up with the rail's items. Under a sticky header, set `--eq-nav-offset` to the header's height on the element that wraps the rail and panel, and they pin below it instead. In the example, `--app-header-height` stands for your app's own header height; Equality doesn't define it. Don't set `--eq-nav-offset` on `:root`: a [Sheet](/components/sheet) holding the sidebar on a phone would inherit it and push the list down.
+The rail and panel pin to the top of the viewport as the page scrolls. An app header above them keeps its own height. Put the app's logo in a column as wide as the rail, `w-(--eq-nav-rail-width)`, and centre it there, so it lines up with the rail's items and follows the rail when it widens on a touch screen. Under a sticky header, set `--eq-nav-offset` to the header's height on the element that wraps the rail and panel, and they pin below it instead. In the example, `--app-header-height` stands for your app's own header height; Equality doesn't define it. Don't set `--eq-nav-offset` on `:root`: a [Sheet](/components/sheet) holding the sidebar on a phone would inherit it and push the list down.
 
 ```tsx
 <>

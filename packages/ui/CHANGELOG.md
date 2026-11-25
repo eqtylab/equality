@@ -16,17 +16,24 @@ Notable changes to Equality are recorded here, following [Keep a Changelog](http
 - If your app merges classes with tailwind-merge, register the four styles as font sizes, or a
   text colour beside them removes them. Extend its `font-size` group with `xxs`, `title`,
   `section`, `body` and `caption` through `extendTailwindMerge`; the Typography page has the snippet.
+- `--eq-nav-rail-width`, the nav rail's width: 60, or 68 on a touch screen.
 
 ### Changed
 
-- `NavRail` is 60 wide, from 52, or 68 on a touch screen. An app header above it keeps its height.
+- `NavRail` is 60 wide, from 52, or 68 on a touch screen. This replaces 6.2.0's advice to make
+  the app header as tall as the rail is wide: an app header keeps its height, and a logo column
+  above the rail takes `w-(--eq-nav-rail-width)`, so it follows the rail, touch screens included.
 
 ### Deprecated
 
 - `--eq-control-sm-font-size`, `--eq-control-md-font-size`, `--eq-control-lg-font-size` and their
-  `-line-height` pairs match the caption, body and section text styles in size and line height. Use
-  those styles instead. The control text names still work; a later major removes them. Equality's
-  own controls read the text styles, so overriding a style changes their text too.
+  `-line-height` pairs. In a class, use `text-caption`, `text-body` or `text-section`. In CSS, read
+  `--eq-type-caption-font-size`, `--eq-type-body-font-size` or `--eq-type-section-font-size`, and
+  the matching `--eq-type-*-line-height`. Sizes and line heights are the same. `text-title` and
+  `text-section` are also semibold, so a control label that moves to `text-section` turns
+  semibold unless it sets its own weight, such as `font-medium`. The control text names still work;
+  a later major removes them. Equality's own controls read the text styles, so overriding a style
+  changes their text too.
 
 ## 6.2.0 - 2026-11-24
 
