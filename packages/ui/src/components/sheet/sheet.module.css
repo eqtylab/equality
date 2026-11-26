@@ -85,7 +85,7 @@
 }
 
 .sheet-title {
-  @apply text-text-primary text-lg font-medium;
+  @apply text-text-primary text-title-2;
 }
 
 .sheet-description {

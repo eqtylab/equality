@@ -44,7 +44,7 @@
 }
 
 .dialog-title {
-  @apply text-lg font-medium leading-none tracking-tight;
+  @apply text-title-2;
 }
 
 .dialog-description {
