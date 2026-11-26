@@ -58,6 +58,8 @@ Basic usage:
 
 ### Default
 
+A thin line runs between rows, so rows stay easy to tell apart without adding weight. Use this for most tables, and for every table in a card.
+
 <TableDemo client:only="react" />
 
 ### Clickable Rows
@@ -213,7 +215,7 @@ Mix `fr` units for flexible columns with fixed pixel values for predictable sizi
 
 ### Content-Sized Columns
 
-Use `auto` for columns that should shrink to fit their content. This is useful for action columns or icon-only columns. An `IconButton` at its default `sm` size overhangs the row's padding, so a row with an actions menu or a `CopyButton` is as tall as one without.
+Use `auto` for columns that should shrink to fit their content. This is useful for action columns or icon-only columns. In a regular row, an `IconButton` at its default `sm` size overhangs the row's padding, so a row with an actions menu is as tall as one without.
 
 ```tsx
 <TableContainer columns="1fr 1fr auto auto auto">
@@ -293,10 +295,26 @@ A row is one line of text plus padding. These parts keep the row at its height:
 
 - A badge: the default `Badge`.
 - A switch: `Switch` with `size="sm"`.
-- An icon button: `IconButton` at its default size, which overhangs the row's padding (see [Content-Sized Columns](#content-sized-columns)).
+- An icon button: `IconButton` at its default size, which overhangs a regular row's padding (see [Content-Sized Columns](#content-sized-columns)).
 - An avatar: `Avatar` at its default size.
 
+Show an ID as plain text when the row's menu or the view it opens can copy it. Keep a `CopyButton` in the cell only when neither can.
+
 <TableDemo client:only="react" variant="with-actions" />
+
+## Density
+
+Rows are `regular` by default. Set `density="comfortable"` for taller rows and header when people read each row slowly, such as a short list of items to review, or when the table is mainly used on touch screens. Keep most tables, and every table in a card, `regular`.
+
+A comfortable row stays 44 with a `Button` or `IconButton` of any size, links included.
+
+<TableDemo client:only="react" variant="with-actions" density="comfortable" />
+
+```tsx
+<TableContainer density="comfortable" columns="1fr auto auto auto">
+  ...
+</TableContainer>
+```
 
 ## Elevations
 
@@ -320,11 +338,12 @@ A row is one line of text plus padding. These parts keep the row at its height:
 
 ### TableContainer
 
-| Name        | Description                                            | Type                                  | Default  | Required |
-| ----------- | ------------------------------------------------------ | ------------------------------------- | -------- | -------- |
-| `columns`   | CSS `grid-template-columns` value for column sizing    | `string`                              | —        | ❌       |
-| `elevation` | Controls the shadow and background styling             | `sunken`, `base`, `raised`, `overlay` | `raised` | ❌       |
-| `border`    | Applies an elevation-aware border with rounded corners | `boolean`                             | `false`  | ❌       |
+| Name        | Description                                            | Type                                  | Default   | Required |
+| ----------- | ------------------------------------------------------ | ------------------------------------- | --------- | -------- |
+| `columns`   | CSS `grid-template-columns` value for column sizing    | `string`                              | —         | ❌       |
+| `elevation` | Controls the shadow and background styling             | `sunken`, `base`, `raised`, `overlay` | `raised`  | ❌       |
+| `border`    | Applies an elevation-aware border with rounded corners | `boolean`                             | `false`   | ❌       |
+| `density`   | How tall rows and the header are                       | `regular`, `comfortable`              | `regular` | ❌       |
 
 ### TableHeader
 

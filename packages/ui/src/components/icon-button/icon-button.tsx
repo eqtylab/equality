@@ -24,13 +24,6 @@ const iconButtonVariants = cva(styles['icon-btn'], {
   },
 });
 
-const iconSizeMap = {
-  xs: 14,
-  sm: 16,
-  md: 22,
-  lg: 26,
-};
-
 export interface IconButtonProps
   extends
     Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, 'name'>,
@@ -59,14 +52,12 @@ const IconButton = React.forwardRef<HTMLButtonElement | HTMLAnchorElement, IconB
     ref
   ) {
     const Icon = LucideIcons[name] as LucideIcons.LucideIcon;
-    const iconSize = iconSizeMap[size || 'sm'];
-    const IconComponent = Icon as React.ComponentType<{ size?: number }>;
 
     if (!Icon) {
       throw new Error(`Icon "${name}" not found in lucide-react`);
     }
 
-    const content = <IconComponent size={iconSize} />;
+    const content = <Icon />;
 
     if (href && !disabled) {
       return (

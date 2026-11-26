@@ -13,20 +13,36 @@ const TableContainer = React.forwardRef<
     VariantProps<typeof tableElevationVariants> & {
       border?: boolean;
       columns?: string;
+      /** Row height: `regular` for most tables, `comfortable` for tables people scan slowly or touch */
+      density?: 'regular' | 'comfortable';
     }
->(({ className, style, elevation = ELEVATION.RAISED, border, columns, ...props }, ref) => (
-  <div
-    className={cn(
-      styles['table'],
-      tableElevationVariants({ elevation }),
-      border && styles['table-border'],
-      className
-    )}
-    style={columns ? ({ ...style, '--table-columns': columns } as React.CSSProperties) : style}
-  >
-    <table ref={ref} className={styles['table-inner']} {...props} />
-  </div>
-));
+>(
+  (
+    {
+      className,
+      style,
+      elevation = ELEVATION.RAISED,
+      border,
+      columns,
+      density = 'regular',
+      ...props
+    },
+    ref
+  ) => (
+    <div
+      className={cn(
+        styles['table'],
+        tableElevationVariants({ elevation }),
+        border && styles['table-border'],
+        density === 'comfortable' && styles['table--comfortable'],
+        className
+      )}
+      style={columns ? ({ ...style, '--table-columns': columns } as React.CSSProperties) : style}
+    >
+      <table ref={ref} className={styles['table-inner']} {...props} />
+    </div>
+  )
+);
 TableContainer.displayName = 'Table';
 
 const TableHeader = React.forwardRef<

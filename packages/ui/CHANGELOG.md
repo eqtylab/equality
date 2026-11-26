@@ -2,6 +2,32 @@
 
 Notable changes to Equality are recorded here, following [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## 6.4.0 - 2026-11-25
+
+### Added
+
+- `TableContainer` takes `density`. `regular`, the default, keeps rows and the header at 36;
+  `comfortable` makes them 44, for tables people read slowly or use mostly by touch. A
+  comfortable row stays 44 with a `Button` or `IconButton` of any size, links included.
+- `--eq-control-xs-icon-size`, the icon size in an extra-small control, and
+  `--eq-table-row-divider-color`, the colour of the line between table rows.
+- `Button` carries `data-button` with its size, and `SortButton` carries `data-sort-button`.
+
+### Changed
+
+- Table body rows draw a faint line between them instead of filling every other row. The last row
+  draws none.
+- The Table header draws its line inside its height, so it is 36, from 37, and grows when its text
+  wraps instead of spilling out. A header cell pads by the control it holds: a default-size
+  `Button` or `IconButton` keeps the header at 36, and a wrapped `SortButton` label sits as far from
+  the line as wrapped text.
+- `IconButton` icons match the icon beside text in the control of the same size: 16 at `md`, from
+  22, and 20 at `lg`, from 26. `xs` (14) and `sm` (16) are unchanged. The icon button's own size now
+  wins over an icon size set through `className`, such as `[&_svg]:size-5`; only an `!important`
+  size still wins. For another icon size, pass another `size`.
+- `--eq-control-lg-icon-size` is 20, from 16, so an icon in a large `Button`, and any icon your app
+  sizes with it, is 20.
+
 ## 6.3.0 - 2026-11-25
 
 ### Added

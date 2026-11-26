@@ -30,6 +30,7 @@ interface TableDemoProps {
     | "sticky-header-page-offset"
     | "with-actions";
   elevation?: Elevation;
+  density?: "regular" | "comfortable";
 }
 
 const defaultCols = "1fr 1fr auto auto auto";
@@ -45,6 +46,7 @@ const longTableData = Array.from({ length: 10 }, (_, i) => ({
 export const TableDemo = ({
   variant = "default",
   elevation,
+  density,
 }: TableDemoProps) => {
   const [selectedRow, setSelectedRow] = useState<number | null>(null);
   const toggleRow = (row: number) =>
@@ -102,7 +104,11 @@ export const TableDemo = ({
 
   if (variant === "with-actions") {
     return (
-      <TableContainer elevation={elevation} columns="1fr auto auto auto">
+      <TableContainer
+        elevation={elevation}
+        density={density}
+        columns="1fr auto auto auto"
+      >
         <TableHeader>
           <TableRow>
             <TableHead>Name</TableHead>
