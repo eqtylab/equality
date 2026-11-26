@@ -21,6 +21,7 @@ Notable changes to Equality are recorded here, following [Keep a Changelog](http
   does. They sat 0 and 8 under it.
 - The close button in a `Dialog` or `Sheet` header centres on the title's line. With a description
   under the title it sat level with the middle of both, 10 to 12 below the title.
+- `Progress`'s empty track follows the theme; it was near-black in light mode.
 
 ### Deprecated
 
