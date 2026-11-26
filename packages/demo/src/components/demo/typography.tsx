@@ -1,13 +1,10 @@
 import {
-  Avatar,
-  AvatarFallback,
   Badge,
   Button,
   Card,
   CardContent,
   CardContentHeader,
   IconButton,
-  TitleBlock,
 } from "@eqtylab/equality";
 import type { ReactNode } from "react";
 
@@ -55,22 +52,6 @@ const Line = ({
   </span>
 );
 
-const members = [
-  { name: "Ada Park", email: "ada@example.com", initials: "AP", role: "Owner" },
-  {
-    name: "Marcus Hale",
-    email: "marcus@example.com",
-    initials: "MH",
-    role: "Editor",
-  },
-  {
-    name: "Priya Shah",
-    email: "priya@example.com",
-    initials: "PS",
-    role: "Viewer",
-  },
-];
-
 const PageHeader = ({ badge = false }: { badge?: boolean }) => (
   <div className="flex flex-col gap-2">
     <div className="flex flex-wrap items-center justify-between gap-4">
@@ -111,30 +92,12 @@ const MembersCard = () => (
         heading="Members"
         onButtonClick={() => {}}
       />
-      <ul>
-        {members.map(({ name, email, initials, role }) => (
-          <li
-            key={email}
-            className="flex items-center justify-between gap-4 py-2 shadow-[inset_0_1px_var(--color-border)]"
-          >
-            <TitleBlock
-              titleAs="p"
-              mark={
-                <Avatar size="md" aria-hidden>
-                  <AvatarFallback>{initials}</AvatarFallback>
-                </Avatar>
-              }
-              title={name}
-              description={email}
-            />
-            {role === "Owner" ? (
-              <Badge>{role}</Badge>
-            ) : (
-              <p className="text-caption text-text-secondary">{role}</p>
-            )}
-          </li>
-        ))}
-      </ul>
+      <div className="flex flex-col">
+        <p className="text-body">Three people can open this project.</p>
+        <p className="text-caption text-text-secondary">
+          Ada Park joined 3 days ago
+        </p>
+      </div>
     </CardContent>
   </Card>
 );
@@ -154,8 +117,8 @@ function Example({ example }: { example: TypographyExample }) {
         <div className="flex flex-col gap-2">
           <div className="flex flex-wrap gap-2">
             <Tag>text-section · the card</Tag>
-            <Tag>text-body · each name</Tag>
-            <Tag>text-caption · each email and role</Tag>
+            <Tag>text-body · its text</Tag>
+            <Tag>text-caption · its note</Tag>
           </div>
           <MembersCard />
         </div>

@@ -167,7 +167,6 @@ Small supporting text, such as a timestamp, a count or a hint under a field.
 1. At the top of a card, use [Card Content Header](/components/card-content-header). For a section of a page, use [Section Heading](/components/section-heading).
 2. For a header you build, put `text-section` on its heading, with the description directly under it, without a gap.
 3. Put small buttons in a row with the title, centred.
-4. For a list of people in a card, use a `ul` inside the card's content, not a `Table`. Each item is a `TitleBlock` with an `md` Avatar, name over email, with a line between items.
 
 <div className="my-4">
   <TypographyDemo example="card-header" />
@@ -181,21 +180,12 @@ Small supporting text, such as a timestamp, a count or a hint under a field.
       heading="Members"
       onButtonClick={openMembers}
     />
-    <ul>
-      <li className="flex items-center justify-between gap-4 py-2 shadow-[inset_0_1px_var(--color-border)]">
-        <TitleBlock
-          titleAs="p"
-          mark={
-            <Avatar size="md" aria-hidden>
-              <AvatarFallback>MH</AvatarFallback>
-            </Avatar>
-          }
-          title="Marcus Hale"
-          description="marcus@example.com"
-        />
-        <p className="text-caption text-text-secondary">Editor</p>
-      </li>
-    </ul>
+    <div className="flex flex-col">
+      <p className="text-body">Three people can open this project.</p>
+      <p className="text-caption text-text-secondary">
+        Ada Park joined 3 days ago
+      </p>
+    </div>
   </CardContent>
 </Card>
 ```
