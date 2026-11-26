@@ -2,6 +2,73 @@
 
 Notable changes to Equality are recorded here, following [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## 7.0.0 - 2026-11-25
+
+### Breaking
+
+- `Avatar` sizes now match the control sizes: `xs` 24, `sm` 28, `md` 36 and `lg` 44. The new
+  default, `line`, is as tall as the line of text the avatar sits in: 20 in a table, menu or list
+  row. `xl` is now 52, for a profile or page hero. Initials show one letter at `line`, `xs` and
+  `sm`, and two at `md`, `lg` and `xl`; screen readers hear them all. A count such as `+3` shows
+  whole.
+
+  | You had                    | Use now                                                   |
+  | -------------------------- | --------------------------------------------------------- |
+  | `sm` (16)                  | no `size`                                                 |
+  | `md` or no `size` (24)     | no `size` in rows and lists, `md` elsewhere (grows to 36) |
+  | `lg` (36; 32 before 6.1.0) | `md`                                                      |
+  | `xl` (44; 40 before 6.1.0) | `lg` to keep 44; `xl` is now 52                           |
+
+  Every renamed size, `xl` included, still compiles but draws at its new size, so check each one
+  against the table.
+
+- The `control-row-overhang` utility is gone, so an app that applies it fails to build. Rows now
+  hold an avatar or icon button without it: remove it.
+
+- Import Equality's preflight, and any other CSS reset, in a layer before `components`, such as
+  `layer(base)`. A reset outside a layer removes table cell padding.
+
+- A block margin on a button in a table cell, such as `my-*`, `mt-*` or `mb-*`, is ignored unless
+  written with `!`, such as `my-0!`. Buttons you stack in one cell, or a row of them that wraps,
+  close up by 8, or 16 in a comfortable table, so they touch or overlap: give each `my-0!`.
+
+- Table cells pull an element with `data-slot="icon-button"` into their padding, not one with
+  `data-icon-button`. An element of your own that set `data-icon-button`, such as a placeholder for
+  a row menu, takes `data-slot="icon-button"`, or its row is 44, from 36.
+
+### Added
+
+- `Button`, `IconButton`, `TitleBlock`, `EmptyTableState`, `SegmentedControls`, `Pagination`,
+  `CodeBlock`, `MotionCollapsibleContent` and `TruncatedDescription` carry a `data-slot` attribute,
+  such as `data-slot="button"`. `TitleBlock` also carries its `data-size`.
+- `--eq-table-cell-padding` sets a table cell's padding above and below. Set it on a cell, such as
+  `[--eq-table-cell-padding:…]`, not `py-*`, so a button in the cell stays 4 from the row's lines.
+
+### Changed
+
+- Table cells pad 8 above and below, or 12 in a comfortable table. A button in a cell reaches into
+  that padding and stops 4 short of the row's lines, and a cell that hides its overflow doesn't
+  cut it off. A small button keeps a row 36, from 44, and an `IconButton` at its default size
+  keeps rows and headers 36. A default `Button`, an `IconButton` with `size="md"` or a `Select`
+  makes a regular row 44, from 52, and a default `Button` or an `md` `IconButton` makes a regular
+  header 44, from 36. Comfortable rows and headers stay 44 with a small or default button, and a
+  `Select` makes them 44, from 52. A large button makes a row 52, from 60 regular and 44
+  comfortable, and a header 52, from 44.
+- A `SortButton` in a header isn't pulled, so a wrapped sort label sits as far from the line as
+  wrapped text.
+- Table rows no longer pad; each cell does. Padding you set on a `TableCell` now replaces
+  Equality's, and padding on a `TableRow` adds to it.
+- Icons in a `CommandDialog` item draw at 16, as in a `Command`; they were 20. An icon you size
+  yourself, such as with `size-4`, keeps its size.
+- An `Avatar` no longer shrinks in a flex row.
+- A `TitleBlock` takes an `Avatar` as its mark. Give it the Avatar size that matches the block's:
+  `sm`, `md` or `lg`.
+
+### Removed
+
+- The `data-avatar` attribute on `Avatar`, and `data-icon-button` on `IconButton`, which is now
+  `data-slot="icon-button"`.
+
 ## 6.5.0 - 2026-11-25
 
 ### Added

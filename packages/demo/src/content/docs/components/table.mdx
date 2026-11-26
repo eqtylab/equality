@@ -3,6 +3,7 @@ title: "Table"
 description: "A data table for displaying structured information in rows and columns."
 ---
 
+import { AvatarRowDemo } from "@demo/components/demo/avatar";
 import { TableDemo } from "@demo/components/demo/table";
 import { ELEVATION } from "@eqtylab/equality";
 
@@ -215,7 +216,7 @@ Mix `fr` units for flexible columns with fixed pixel values for predictable sizi
 
 ### Content-Sized Columns
 
-Use `auto` for columns that should shrink to fit their content. This is useful for action columns or icon-only columns. In a regular row, an `IconButton` at its default `sm` size overhangs the row's padding, so a row with an actions menu is as tall as one without.
+Use `auto` for columns that should shrink to fit their content. This is useful for action columns or icon-only columns. A row has room for a default `IconButton`, so a row with an actions menu is as tall as one without.
 
 ```tsx
 <TableContainer columns="1fr 1fr auto auto auto">
@@ -291,12 +292,50 @@ Use [container queries](https://tailwindcss.com/docs/responsive-design#what-are-
 
 ## Inside a row
 
-A row is one line of text plus padding. These parts keep the row at its height:
+Every row has room for a small button, so a row with an avatar, a badge or a row action stays the same height as a row of plain text. Rows that hold these line up with rows that don't:
 
+- An avatar: `Avatar` with no `size`.
 - A badge: the default `Badge`.
 - A switch: `Switch` with `size="sm"`.
-- An icon button: `IconButton` at its default size, which overhangs a regular row's padding (see [Content-Sized Columns](#content-sized-columns)).
-- An avatar: `Avatar` at its default size.
+- A row action, such as a ⋮ menu: `IconButton` with no `size`.
+
+Anything taller, or text that wraps, makes its row taller. A default-size `Button` makes a regular row 44; a comfortable row stays 44 with a small or default-size button.
+
+A button in a cell reaches into the cell's padding, stopping 4 short of the row's lines. Buttons you stack in one cell, such as a button above a panel it opens, or a row of buttons that wraps onto a second line, then overlap. Give each of them `my-0!`:
+
+```tsx
+<TableCell>
+  <div className="flex flex-col gap-2">
+    <Button className="my-0!">Approve</Button>
+    <Button className="my-0!">Reject</Button>
+  </div>
+</TableCell>
+```
+
+To change how much room a cell leaves above and below its content, set `--eq-table-cell-padding` on the cell rather than `py-*`. A button in the cell then still stops 4 short of the row's lines; with `py-*` it can poke out of the cell, and a cell that truncates its text clips it.
+
+```tsx
+<TableCell className="[--eq-table-cell-padding:4px]">…</TableCell>
+```
+
+For a person with a subline, such as a name over an email, put a [Title Block](/components/title-block) in the cell with an `md` Avatar as its mark, so the avatar sits beside both lines. A medium block sets the email as a caption, so the row is 52 at either density.
+
+<AvatarRowDemo client:only="react" variant="person" />
+
+```tsx
+<TableCell>
+  <TitleBlock
+    titleAs="p"
+    mark={
+      <Avatar size="md" aria-hidden>
+        <AvatarFallback>AC</AvatarFallback>
+      </Avatar>
+    }
+    title="Alice Cooper"
+    description="alice@example.com"
+  />
+</TableCell>
+```
 
 Show an ID as plain text when the row's menu or the view it opens can copy it. Keep a `CopyButton` in the cell only when neither can.
 
@@ -306,7 +345,7 @@ Show an ID as plain text when the row's menu or the view it opens can copy it. K
 
 Rows are `regular` by default. Set `density="comfortable"` for taller rows and header when people read each row slowly, such as a short list of items to review, or when the table is mainly used on touch screens. Keep most tables, and every table in a card, `regular`.
 
-A comfortable row stays 44 with a `Button` or `IconButton` of any size, links included.
+A comfortable row stays 44 with a small or default-size `Button` or `IconButton`. A large one makes it 52.
 
 <TableDemo client:only="react" variant="with-actions" density="comfortable" />
 

@@ -27,12 +27,6 @@ describe('table-components.module.css', () => {
     expect(css).not.toContain(':has(button:hover');
   });
 
-  it('overhangs a small icon button into the row padding', () => {
-    expect(ruleBody(css, ".table-cell [data-icon-button='sm']")).toMatch(
-      /margin-block:\s*calc\(0\.25rem \* -1\);/
-    );
-  });
-
   it('names one row line colour: the border at 60%', async () => {
     const decisions = await readFile('src/theme/theme-decisions.css', 'utf8');
     expect(decisions).toMatch(
@@ -73,79 +67,141 @@ describe('table-components.module.css', () => {
     expect(ruleBody(css, '.table-body')).not.toMatch(/last-child/);
   });
 
-  const ROW_PADDING = (row: string) =>
-    new RegExp(
-      String.raw`padding-block:\s*calc\(\(var\(--eq-control-${row}-height\)\s*-\s*var\(--eq-control-sm-height\)\)\s*/\s*2\);`
-    );
-
   const CELL_PADDING = (row: string, part: string) =>
     new RegExp(
-      String.raw`padding-block:\s*calc\(\(var\(--eq-control-${row}-height\)\s*-\s*var\(--eq-${part}\)\)\s*/\s*2\);`
+      String.raw`--eq-table-cell-padding:\s*calc\(\(var\(--eq-control-${row}-height\)\s*-\s*var\(--eq-${part}\)\)\s*/\s*2\);`
     );
 
-  const BUTTON =
-    ":has(:is(button, [role='button'], [data-icon-button], [data-button]):not([data-sort-button]))";
-  const MEDIUM = ":has(:is([data-button='md'], [data-icon-button='md']):not([data-sort-button]))";
-  const LARGE = ":has(:is([data-button='lg'], [data-icon-button='lg']):not([data-sort-button]))";
+  const BUTTONS = "button, [role='button'], [data-slot='button'], [data-slot='icon-button']";
   const COMFORTABLE = '.table--comfortable > .table-inner >';
-  const COMFORTABLE_CELLS = (suffix = '') =>
-    `${COMFORTABLE} :is(.table-body, .table-footer) > .table-row > :is(.table-cell, .table-head)${suffix}`;
+  const CELLS = ':is(.table-cell, .table-head)';
   const flatten = (text: string) =>
     text
-      .replace(/\(\n\s+/g, '(')
-      .replace(/\n\s+\)/g, ')')
-      .replace(/\n\s+(?=[>[:])/g, ' ');
+      .replace(/\n\s+(?=[>[:\w)])/g, ' ')
+      .replace(/\(\s+/g, '(')
+      .replace(/,?\s+\)/g, ')');
+
+  it('pads every cell for a line of text, whatever it holds', () => {
+    const row = ruleBody(css, '\n.table-row');
+    expect(row).toMatch(/min-height:\s*var\(--eq-control-md-height\);/);
+    expect(row).not.toMatch(/padding-block/);
+    expect(ruleBody(flatten(css), CELLS)).toMatch(CELL_PADDING('md', 'type-body-line-height'));
+    expect(css).not.toMatch(/\.table-(cell|head)[^{]*:has\(\s*>\s*:is\(button/);
+  });
+
+  it('pulls a button or a small title block at any depth in a cell into its padding, outside the layer, but not a switch, checkbox, radio or tab, or a button inside an excluded component within that cell', () => {
+    const squash = (text: string) =>
+      text.replace(/\s+/g, ' ').replace(/\( /g, '(').replace(/,? \)/g, ')');
+    const flat = squash(css);
+    const excluded = [
+      'title-block',
+      'empty-table-state',
+      'segmented-controls',
+      'pagination',
+      'code-block',
+      'motion-collapsible',
+      'truncated-description',
+    ]
+      .map((slot) => `[data-slot='${slot}']`)
+      .join(', ');
+    const selector = `${CELLS} :is(${BUTTONS}, [data-slot='title-block'][data-size='sm']):not([role='switch'], [role='checkbox'], [role='radio'], [role='tab'], [data-sort-button], ${CELLS} :is(${excluded}) *:not(${CELLS} :is(${excluded}) ${CELLS} *))`;
+    expect(ruleBody(flat, selector)).toMatch(
+      /margin-block: calc\(\(var\(--eq-control-sm-height\) - var\(--eq-type-body-line-height\)\) \/ 2 - var\(--eq-table-cell-padding\)\);/
+    );
+    const layer = flat.slice(flat.indexOf('@layer components {'), flat.indexOf(selector));
+    expect(layer.split('{').length).toBe(layer.split('}').length);
+  });
+
+  it('pads a header or comfortable cell holding a switch, segmented control or a button the pull skips as a small control, as 6.5.0 did', () => {
+    const flat = flatten(css);
+    const held =
+      "[role='switch'], [data-slot='segmented-controls'], :is([data-slot='pagination'], [data-slot='code-block'], [data-slot='motion-collapsible'], [data-slot='empty-table-state'], [data-slot='truncated-description']) :is(button, [role='button'])";
+    const holds = `:has(${held}):not(:has(.table-inner :is(${held})))`;
+    expect(ruleBody(flat, `.table-header > .table-row > .table-head${holds}`)).toMatch(
+      CELL_PADDING('md', 'control-sm-height')
+    );
+    expect(ruleBody(flat, `${COMFORTABLE} * > .table-row > ${CELLS}${holds}`)).toMatch(
+      CELL_PADDING('lg', 'control-sm-height')
+    );
+  });
+
+  it('keeps a small button 4 inside a cell whatever --eq-table-cell-padding an app sets', () => {
+    const flat = flatten(css);
+    const margin = flat.slice(flat.indexOf('margin-block: calc(') + 'margin-block: '.length);
+    const expression = margin.slice(0, margin.indexOf(';'));
+    for (const padding of [4, 2, 8, 12]) {
+      const value = expression
+        .replace(/var\(--eq-control-sm-height\)/g, '28')
+        .replace(/var\(--eq-type-body-line-height\)/g, '20')
+        .replace(/var\(--eq-table-cell-padding\)/g, String(padding))
+        .replace(/calc\(/g, '(');
+      expect(value, expression).toMatch(/^[\d\s()+\-*/.]+$/);
+      expect(padding + Number(new Function(`return ${value}`)())).toBe(4);
+    }
+  });
+
+  it('registers --eq-table-cell-padding as a length, so a bare 0 keeps the pull valid', () => {
+    expect(ruleBody(css, '@property --eq-table-cell-padding')).toMatch(
+      /syntax:\s*'<length>';\s*inherits:\s*true;\s*initial-value:\s*0px;/
+    );
+  });
+
+  it('pads a header or comfortable cell by the size of a button the pull skips, as 6.5.0 did', () => {
+    const flat = flatten(css);
+    const excluded =
+      "[data-slot='pagination'], [data-slot='code-block'], [data-slot='motion-collapsible'], [data-slot='empty-table-state'], [data-slot='truncated-description']";
+    const held = `[role='switch'], [data-slot='segmented-controls'], :is(${excluded}) :is(button, [role='button'])`;
+    const guard = `:not(:has(.table-inner :is(${held})))`;
+    expect(
+      ruleBody(
+        flat,
+        `.table-header > .table-row > .table-head:has(:is(${excluded}) :is([data-button='md'], [data-button='lg']))${guard}`
+      )
+    ).toMatch(/--eq-table-cell-padding:\s*0px;/);
+    expect(
+      ruleBody(
+        flat,
+        `${COMFORTABLE} * > .table-row > ${CELLS}:has(:is(${excluded}) [data-button='md'])${guard}`
+      )
+    ).toMatch(CELL_PADDING('lg', 'control-md-height'));
+    expect(
+      ruleBody(
+        flat,
+        `${COMFORTABLE} * > .table-row > ${CELLS}:has(:is(${excluded}) [data-button='lg'])${guard}`
+      )
+    ).toMatch(/--eq-table-cell-padding:\s*0px;/);
+  });
+
+  it("pads cells in a layer, so an app's padding utilities on a cell still win", () => {
+    expect(flatten(css)).toMatch(/@layer components \{\s*:is\(\.table-cell, \.table-head\) \{/);
+    expect(ruleBody(css, '\n.table-cell')).not.toMatch(/padding-block/);
+    expect(ruleBody(css, '\n.table-head')).not.toMatch(/padding-block/);
+  });
 
   it('makes body and footer rows the large control height in a comfortable table', () => {
     const selector =
       '.table--comfortable > .table-inner > .table-body > .table-row,\n.table--comfortable > .table-inner > .table-footer > .table-row';
     const body = ruleBody(css, selector);
     expect(body).toMatch(/min-height:\s*var\(--eq-control-lg-height\);/);
-    expect(body).toMatch(/padding-block:\s*calc\(0\.25rem \* 0\);/);
+    expect(body).not.toMatch(/padding-block/);
   });
 
-  it('pads a comfortable cell of text to the row, and one holding a button by its size', () => {
-    const flat = flatten(css);
-    expect(ruleBody(flat, COMFORTABLE_CELLS())).toMatch(
+  it('pads a comfortable cell for a line of text', () => {
+    expect(ruleBody(flatten(css), `${COMFORTABLE} * > .table-row > ${CELLS}`)).toMatch(
       CELL_PADDING('lg', 'type-body-line-height')
     );
-    expect(ruleBody(flat, COMFORTABLE_CELLS(BUTTON))).toMatch(ROW_PADDING('lg'));
-    expect(ruleBody(flat, COMFORTABLE_CELLS(MEDIUM))).toMatch(
-      /padding-block:\s*calc\(\(var\(--eq-control-lg-height\) - var\(--eq-control-md-height\)\) \/ 2\);/
-    );
-    expect(ruleBody(flat, COMFORTABLE_CELLS(LARGE))).toMatch(/padding-block:\s*0;/);
-  });
-
-  it('pulls no icon button into a comfortable cell, however deep it sits', () => {
-    expect(
-      ruleBody(
-        flatten(css),
-        `${COMFORTABLE} :is(.table-body, .table-footer) > .table-row > .table-cell [data-icon-button='sm']`
-      )
-    ).toMatch(/margin-block:\s*calc\(0\.25rem \* 0\);/);
   });
 
   it('makes the header row the large control height in a comfortable table', () => {
-    const flat = flatten(css);
-    const head = ruleBody(flat, `${COMFORTABLE} .table-header > .table-row > .table-head`);
-    expect(head).toMatch(/height:\s*var\(--eq-control-lg-height\);/);
-    expect(head).toMatch(CELL_PADDING('lg', 'type-body-line-height'));
-    expect(
-      ruleBody(flat, `${COMFORTABLE} .table-header > .table-row > .table-head${BUTTON}`)
-    ).toMatch(ROW_PADDING('lg'));
+    expect(ruleBody(css, `${COMFORTABLE} .table-header > .table-row > .table-head`)).toMatch(
+      /height:\s*var\(--eq-control-lg-height\);/
+    );
   });
 
-  it('pads a header cell by the control it holds, and a sort button as text', () => {
-    expect(ruleBody(css, '.table-header > .table-row > .table-head')).toMatch(
-      CELL_PADDING('md', 'type-body-line-height')
-    );
-    expect(ruleBody(flatten(css), `.table-header > .table-row > .table-head${BUTTON}`)).toMatch(
-      ROW_PADDING('md')
-    );
-    expect(flatten(css)).toContain(`.table-header > .table-row > .table-head${MEDIUM},`);
-    expect(ruleBody(flatten(css), `.table-header > .table-row > .table-head${LARGE}`)).toMatch(
-      /padding-block:\s*0;/
-    );
+  it('pads a comfortable cell holding a medium title block 8, so a person row is 52 at either density', () => {
+    const TB = "[data-slot='title-block'][data-size='md']";
+    const selector = `${COMFORTABLE} * > .table-row > ${CELLS}:has(${TB}):not(:has(.table-inner ${TB}))`;
+    expect(ruleBody(flatten(css), selector)).toMatch(CELL_PADDING('md', 'type-body-line-height'));
   });
 
   it('lets every row grow with what it holds', () => {

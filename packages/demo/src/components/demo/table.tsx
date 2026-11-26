@@ -1,5 +1,7 @@
 import type { Elevation } from "@eqtylab/equality";
 import {
+  Avatar,
+  AvatarFallback,
   Badge,
   EmptyTableState,
   IconButton,
@@ -36,6 +38,12 @@ interface TableDemoProps {
 const defaultCols = "1fr 1fr auto auto auto";
 
 const roles = ["Admin", "User", "Viewer"] as const;
+const teamMembers = [
+  { name: "Alice Cooper", initials: "AC", active: false },
+  { name: "Bob Smith", initials: "BS", active: true },
+  { name: "Charlie Brown", initials: "CB", active: true },
+];
+
 const longTableData = Array.from({ length: 10 }, (_, i) => ({
   name: `User ${i + 1}`,
   email: `user${i + 1}@example.com`,
@@ -118,9 +126,16 @@ export const TableDemo = ({
           </TableRow>
         </TableHeader>
         <TableBody>
-          {longTableData.slice(0, 3).map((user) => (
-            <TableRow key={user.email}>
-              <TableCell>{user.name}</TableCell>
+          {teamMembers.map((user) => (
+            <TableRow key={user.name}>
+              <TableCell>
+                <div className="flex items-center gap-2">
+                  <Avatar aria-hidden>
+                    <AvatarFallback>{user.initials}</AvatarFallback>
+                  </Avatar>
+                  {user.name}
+                </div>
+              </TableCell>
               <TableCell>
                 <Badge variant={user.active ? "success" : "neutral"}>
                   {user.active ? "Active" : "Inactive"}

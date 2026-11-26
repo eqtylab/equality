@@ -13,7 +13,7 @@ const TitleBlockSizeContext = React.createContext<TitleBlockSize>('md');
 export interface TitleBlockProps extends Omit<React.HTMLAttributes<HTMLDivElement>, 'title'> {
   /** How large the mark and title are. */
   size?: TitleBlockSize;
-  /** A `TitleBlockMark` shown before the title. */
+  /** A `TitleBlockMark` or an `Avatar` shown before the title. */
   mark?: React.ReactNode;
   /** The block's title. Without one, trailing items still sit at the end of the block. */
   title?: React.ReactNode;
@@ -60,6 +60,9 @@ const TitleBlock = forwardRef<HTMLDivElement, TitleBlockProps>(
           className
         )}
         {...props}
+        // data-slot and data-size: table cells select these; renaming them changes row heights
+        data-slot="title-block"
+        data-size={size}
       >
         {mark && <div className={styles['mark-slot']}>{mark}</div>}
         <div className={styles.body}>
@@ -164,6 +167,9 @@ const TitleBlockSkeleton = forwardRef<HTMLDivElement, TitleBlockSkeletonProps>(
         className
       )}
       {...props}
+      // data-slot and data-size: table cells select these; renaming them changes row heights
+      data-slot="title-block"
+      data-size={size}
     >
       {mark && (
         <div className={styles['mark-slot']}>

@@ -46,9 +46,10 @@ describe('scoped build', () => {
 
 describe('global build', () => {
   it('reads no theme variable in its decisions, since a consumer build never defines them', () => {
-    const reads = rulesDeclaring(global, '--eq-[\\w-]+').flatMap(
-      (r) => r.body.match(/var\(--(spacing|text-[\w-]+)\)/g) ?? []
-    );
+    // Skips the utilities layer: Tailwind fills it from text it scans, so an --eq- example in the changelog would fail this
+    const reads = rulesDeclaring(global, '--eq-[\\w-]+')
+      .filter((r) => !r.selector.startsWith('@layer utilities'))
+      .flatMap((r) => r.body.match(/var\(--(spacing|text-[\w-]+)\)/g) ?? []);
     expect(reads).toEqual([]);
   });
 });

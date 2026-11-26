@@ -1,4 +1,7 @@
 import {
+  Avatar,
+  AvatarFallback,
+  AvatarImage,
   Badge,
   Button,
   Card,
@@ -12,6 +15,7 @@ import {
   TitleBlockSkeleton,
   type TitleBlockSize,
 } from "@eqtylab/equality";
+import avatarSrc from "@demo/assets/avatar.avif";
 import { useState } from "react";
 
 const SIZE_EXAMPLES: Record<
@@ -95,6 +99,33 @@ export function TitleBlockMarksDemo() {
             mark={<TitleBlockMark icon="Layers" />}
             title="Data Layer"
             description="Inputs every run reads from"
+          />
+        </CardContent>
+      </Card>
+      <Card>
+        <CardContent>
+          <TitleBlock
+            mark={
+              <Avatar size="md" aria-hidden>
+                <AvatarImage src={avatarSrc.src} alt="" />
+                <AvatarFallback>RG</AvatarFallback>
+              </Avatar>
+            }
+            title="Rosa García"
+            description="Project admin"
+          />
+        </CardContent>
+      </Card>
+      <Card>
+        <CardContent>
+          <TitleBlock
+            mark={
+              <Avatar size="md" shape="square" aria-hidden>
+                <AvatarFallback>AI</AvatarFallback>
+              </Avatar>
+            }
+            title="AI Governance Baseline"
+            description="Policy, 24 controls"
           />
         </CardContent>
       </Card>

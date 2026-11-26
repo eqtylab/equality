@@ -31,7 +31,11 @@ const TruncatedDescription = ({
   };
 
   return (
-    <div className={cn(styles['truncated-description'], className)}>
+    <div
+      className={cn(styles['truncated-description'], className)}
+      // data-slot: table cells select this; renaming it makes its button touch the text in a cell
+      data-slot="truncated-description"
+    >
       <div dangerouslySetInnerHTML={{ __html: displayDescription }} />
       {isLongDescription && (
         <Button variant="link" size="sm" onClick={handleToggle}>

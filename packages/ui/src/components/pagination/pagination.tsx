@@ -160,7 +160,11 @@ const Pagination = ({
   };
 
   return (
-    <div className={cn(styles['pagination'], className)}>
+    <div
+      className={cn(styles['pagination'], className)}
+      // data-slot: table cells select this; renaming it makes its buttons overlap in a cell
+      data-slot="pagination"
+    >
       <div className={styles['info-container']}>
         {showInfo && hasFilteredItems && (
           <span>

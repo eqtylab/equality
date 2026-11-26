@@ -1,7 +1,8 @@
 @reference '../../theme/theme.module.css';
 
+/* A text size on any root rule makes a line avatar's 1lh measure itself, not the line it sits in */
 .avatar {
-  @apply relative flex;
+  @apply relative flex shrink-0;
   @apply overflow-hidden;
   @apply aspect-square;
 }
@@ -19,46 +20,61 @@
   @apply flex-center;
 }
 
+.avatar-initials-full {
+  @apply sr-only;
+}
+
 /* Size Variants */
 
-/* .avatar.xs {
-  @apply size-3;
-} */
-
-.avatar.sm {
-  @apply size-4;
+.avatar.size-line {
+  width: var(--eq-size-2xs);
+  width: 1lh;
+  height: var(--eq-size-2xs);
+  height: 1lh;
 }
 
-.avatar.md {
-  @apply size-6;
+.avatar.size-xs {
+  @apply size-(--eq-control-xs-height);
 }
 
-.avatar.lg {
-  @apply size-9;
+.avatar.size-sm {
+  @apply size-(--eq-control-sm-height);
 }
 
-.avatar.xl {
-  @apply size-11;
+.avatar.size-md {
+  @apply size-(--eq-control-md-height);
 }
 
-/* .avatar.xs .avatar-fallback {
-  @apply text-[0.4rem];
-} */
-
-.avatar.sm .avatar-fallback {
-  @apply text-[0.5rem];
+.avatar.size-lg {
+  @apply size-(--eq-control-lg-height);
 }
 
-.avatar.md .avatar-fallback {
-  @apply text-[0.625rem];
+.avatar.size-xl {
+  @apply size-(--eq-size-xl);
 }
 
-.avatar.lg .avatar-fallback {
-  @apply text-sm;
+.avatar.size-line .avatar-fallback {
+  @apply text-[0.625rem] leading-none;
 }
 
-.avatar.xl .avatar-fallback {
-  @apply text-lg;
+.avatar.size-xs .avatar-fallback {
+  @apply text-xs leading-none;
+}
+
+.avatar.size-sm .avatar-fallback {
+  @apply text-sm leading-none;
+}
+
+.avatar.size-md .avatar-fallback {
+  @apply text-sm leading-none;
+}
+
+.avatar.size-lg .avatar-fallback {
+  @apply text-base leading-none;
+}
+
+.avatar.size-xl .avatar-fallback {
+  @apply text-lg leading-none;
 }
 
 /* Shape Variants */
@@ -68,22 +84,29 @@
   @apply rounded-full;
 }
 
-.avatar.square.sm,
-.avatar.square.sm .avatar-fallback {
+.avatar.square.size-line,
+.avatar.square.size-line .avatar-fallback {
   @apply rounded-sm;
 }
 
-.avatar.square.md,
-.avatar.square.md .avatar-fallback {
+.avatar.square.size-xs,
+.avatar.square.size-xs .avatar-fallback,
+.avatar.square.size-sm,
+.avatar.square.size-sm .avatar-fallback {
   @apply rounded-md;
 }
 
-.avatar.square.lg,
-.avatar.square.lg .avatar-fallback {
+.avatar.square.size-md,
+.avatar.square.size-md .avatar-fallback {
   @apply rounded-lg;
 }
 
-.avatar.square.xl,
-.avatar.square.xl .avatar-fallback {
+.avatar.square.size-lg,
+.avatar.square.size-lg .avatar-fallback {
   @apply rounded-xl;
+}
+
+.avatar.square.size-xl,
+.avatar.square.size-xl .avatar-fallback {
+  @apply rounded-2xl;
 }

@@ -45,7 +45,11 @@ const CodeBlock = ({
   }, [code, lineNumbers]);
 
   return (
-    <div className={cn(styles['code-block'], styles[variant], className)}>
+    <div
+      className={cn(styles['code-block'], styles[variant], className)}
+      // data-slot: table cells select this; renaming it makes its buttons overlap in a cell
+      data-slot="code-block"
+    >
       <div className={styles.header}>
         <div className={styles['header-left']}>
           {title && <span className={styles.title}>{title}</span>}

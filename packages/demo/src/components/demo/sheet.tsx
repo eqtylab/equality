@@ -23,7 +23,7 @@ export const SheetDemo = () => {
         <SheetContainer side="right">
           <SheetHeader>
             <SheetHeaderIcon>
-              <Avatar>
+              <Avatar size="md">
                 <AvatarFallback>JD</AvatarFallback>
               </Avatar>
             </SheetHeaderIcon>

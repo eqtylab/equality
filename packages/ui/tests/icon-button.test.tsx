@@ -21,6 +21,7 @@ describe('IconButton', () => {
     const ref = React.createRef<HTMLButtonElement | HTMLAnchorElement>();
     render(<IconButton ref={ref} name="ExternalLink" label="Open" href="/docs" />);
     expect(ref.current).toBe(screen.getByRole('link', { name: 'Open' }));
+    expect(ref.current?.getAttribute('data-slot')).toBe('icon-button');
   });
 
   it('takes a tooltip trigger’s props when it has href', () => {
@@ -42,7 +43,7 @@ describe('IconButton', () => {
     const button = screen.getByRole('button', { name: 'Clear' });
 
     expect(button.className).toMatch(/size--xs/);
-    expect(button.getAttribute('data-icon-button')).toBe('xs');
+    expect(button.hasAttribute('data-icon-button')).toBe(false);
     expect(button.querySelector('svg')!.getAttribute('width')).toBe('24');
   });
 });

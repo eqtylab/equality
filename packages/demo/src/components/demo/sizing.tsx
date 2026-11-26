@@ -1,4 +1,10 @@
-import { Badge, Button, IconButton } from "@eqtylab/equality";
+import {
+  Avatar,
+  AvatarFallback,
+  Badge,
+  Button,
+  IconButton,
+} from "@eqtylab/equality";
 
 const STEPS = [
   {
@@ -15,6 +21,9 @@ const STEPS = [
     parts: (
       <>
         <p className="text-body">Body</p>
+        <Avatar>
+          <AvatarFallback>AB</AvatarFallback>
+        </Avatar>
         <Badge>Badge</Badge>
       </>
     ),
@@ -25,6 +34,9 @@ const STEPS = [
       <>
         <p className="text-section">Section</p>
         <IconButton size="xs" name="X" label="Clear" />
+        <Avatar size="xs">
+          <AvatarFallback>AB</AvatarFallback>
+        </Avatar>
       </>
     ),
   },
@@ -38,6 +50,9 @@ const STEPS = [
             Small
           </Button>
         </div>
+        <Avatar size="sm">
+          <AvatarFallback>AB</AvatarFallback>
+        </Avatar>
       </>
     ),
   },
@@ -47,6 +62,9 @@ const STEPS = [
       <>
         <p className="text-title">Title</p>
         <Button variant="tertiary">Default</Button>
+        <Avatar size="md">
+          <AvatarFallback>AB</AvatarFallback>
+        </Avatar>
       </>
     ),
   },
@@ -57,15 +75,23 @@ const STEPS = [
         <Button size="lg" variant="tertiary">
           Large
         </Button>
+        <Avatar size="lg">
+          <AvatarFallback>AB</AvatarFallback>
+        </Avatar>
       </>
     ),
   },
   {
     step: 52,
     parts: (
-      <div className="bg-background-sunken text-caption text-text-secondary w-(--eq-size-xl) flex h-full items-center justify-center rounded-md">
-        Logo
-      </div>
+      <>
+        <div className="bg-background-sunken text-caption text-text-secondary w-(--eq-size-xl) flex h-full items-center justify-center rounded-md">
+          Logo
+        </div>
+        <Avatar size="xl">
+          <AvatarFallback>AB</AvatarFallback>
+        </Avatar>
+      </>
     ),
   },
 ];

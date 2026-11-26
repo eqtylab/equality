@@ -61,6 +61,7 @@ describe('TitleBlock', () => {
     );
 
     const row = screen.getByRole('heading', { name: 'Policies' }).parentElement;
+    expect(row?.closest('[data-slot="title-block"]')).not.toBeNull();
     const badge = screen.getByText('3 active');
     const button = screen.getByRole('button', { name: 'Edit' });
     expect(row?.contains(badge)).toBe(false);
