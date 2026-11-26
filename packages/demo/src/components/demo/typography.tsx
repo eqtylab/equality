@@ -105,7 +105,7 @@ const ActivityCard = () => (
         onButtonClick={() => {}}
       />
     </CardContent>
-    <TableContainer columns="auto 1fr auto">
+    <TableContainer columns="auto 1fr auto" className="[&_tr]:px-3!">
       <TableHeader>
         <TableRow>
           <TableHead>Project</TableHead>
