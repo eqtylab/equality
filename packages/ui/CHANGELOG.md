@@ -23,8 +23,7 @@ Notable changes to Equality are recorded here, following [Keep a Changelog](http
   does. They sat 0 and 8 under it.
 - The close button in a `Dialog` or `Sheet` header centres on the title's line. With a description
   under the title it sat level with the middle of both, 10 to 12 below the title.
-- `Progress`'s empty track and `RadialGraph`'s unfilled ticks follow the theme; they were near-black
-  in light mode.
+- `RadialGraph`'s unfilled ticks follow the theme; they were near-black in light mode.
 - `cn` uses tailwind-merge 3, so it merges Tailwind 4 classes such as `size-(--eq-size-sm)` and `p-2!`
   correctly.
 
