@@ -65,7 +65,7 @@
 
 .command-item {
   @apply outline-hidden rounded-sm;
-  @apply text-(length:--eq-control-md-font-size)/[var(--tw-leading,var(--eq-control-md-line-height))];
+  @apply text-(length:--eq-type-body-font-size)/[var(--tw-leading,var(--eq-type-body-line-height))];
   @apply flex items-center gap-2;
   @apply px-(--eq-control-padding-x-condensed) control-row-padding min-h-(--eq-control-md-height) relative;
   @apply cursor-pointer select-none;

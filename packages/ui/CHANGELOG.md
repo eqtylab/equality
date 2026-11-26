@@ -2,6 +2,39 @@
 
 Notable changes to Equality are recorded here, following [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## 6.3.0 - 2026-11-25
+
+### Added
+
+- Four text styles for hierarchy: `text-title` for the page title, `text-section` for a card or
+  section title, `text-body` for running text and descriptions, and `text-caption` for small
+  supporting text. Each is a Tailwind text size on its own line height, so plain `text-sm` matches
+  `text-body`. To line a title up with controls, put it in a row with them and centre it. See the
+  Typography page.
+- Seven size steps, 16 to 52, that Equality's own sizes choose from. Build a custom picture or mark
+  on one of them; the Sizing page lists them.
+- If your app merges classes with tailwind-merge, register the four styles as font sizes, or a
+  text colour beside them removes them. Extend its `font-size` group with `xxs`, `title`,
+  `section`, `body` and `caption` through `extendTailwindMerge`; the Typography page has the snippet.
+- `--eq-nav-rail-width`, the nav rail's width: 60, or 68 on a touch screen.
+
+### Changed
+
+- `NavRail` is 60 wide, from 52, or 68 on a touch screen. This replaces 6.2.0's advice to make
+  the app header as tall as the rail is wide: an app header keeps its height, and a logo column
+  above the rail takes `w-(--eq-nav-rail-width)`, so it follows the rail, touch screens included.
+
+### Deprecated
+
+- `--eq-control-sm-font-size`, `--eq-control-md-font-size`, `--eq-control-lg-font-size` and their
+  `-line-height` pairs. In a class, use `text-caption`, `text-body` or `text-section`. In CSS, read
+  `--eq-type-caption-font-size`, `--eq-type-body-font-size` or `--eq-type-section-font-size`, and
+  the matching `--eq-type-*-line-height`. Sizes and line heights are the same. `text-title` and
+  `text-section` are also semibold, so a control label that moves to `text-section` turns
+  semibold unless it sets its own weight, such as `font-medium`. The control text names still work;
+  a later major removes them. Equality's own controls read the text styles, so overriding a style
+  changes their text too.
+
 ## 6.2.0 - 2026-11-24
 
 ### Changed

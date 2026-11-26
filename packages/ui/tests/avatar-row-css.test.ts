@@ -3,7 +3,7 @@ import { describe, expect, it } from 'vitest';
 import { compileCss, ruleBody } from './compile-css';
 
 const OVERHANG =
-  /margin-block:\s*calc\(\(var\(--eq-control-md-line-height\)\s*-\s*[^;]+\)\s*\/\s*2\);/;
+  /margin-block:\s*calc\(\(var\(--eq-type-body-line-height\)\s*-\s*[^;]+\)\s*\/\s*2\);/;
 
 const ROWS: Record<string, string[]> = {
   'src/components/table/table-components.module.css': ['.table-cell'],

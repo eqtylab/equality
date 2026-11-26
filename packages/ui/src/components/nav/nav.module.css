@@ -24,7 +24,7 @@
 }
 
 .nav-rail {
-  width: calc(max(var(--eq-control-md-height), var(--eq-touch-target)) + --spacing(4));
+  width: var(--eq-nav-rail-width);
 }
 
 .nav-panel {
@@ -72,11 +72,11 @@
    the rows scrolling under it */
 .nav-panel-header {
   @apply text-text-primary z-3 sticky top-0 m-0 shrink-0 truncate px-2 font-semibold;
-  @apply text-(length:--eq-control-md-font-size)/[var(--tw-leading,var(--eq-control-md-line-height))];
+  @apply text-(length:--eq-type-body-font-size)/[var(--tw-leading,var(--eq-type-body-line-height))];
   --nav-title-padding: calc(
     (
         max(var(--eq-control-md-height), var(--eq-touch-target)) -
-          var(--tw-leading, var(--eq-control-md-line-height))
+          var(--tw-leading, var(--eq-type-body-line-height))
       ) /
       2
   );

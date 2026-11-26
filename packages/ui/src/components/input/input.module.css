@@ -6,7 +6,7 @@
   @apply px-(--eq-control-padding-x-condensed) py-0;
   @apply h-(--eq-control-md-height) flex w-full rounded-md;
   @apply text-text-primary placeholder:text-text-secondary;
-  @apply md:text-(length:--eq-control-md-font-size)/[var(--tw-leading,var(--eq-control-md-line-height))] text-ellipsis text-base;
+  @apply md:text-(length:--eq-type-body-font-size)/[var(--tw-leading,var(--eq-type-body-line-height))] text-ellipsis text-base;
   @apply file:text-text-primary file:font-medium;
   @apply file:border-0 file:bg-transparent file:text-sm;
   @apply disabled:cursor-not-allowed disabled:opacity-50;
@@ -37,7 +37,7 @@
   @apply bg-transparent;
   @apply flex-1;
   @apply text-text-primary placeholder:text-text-secondary;
-  @apply md:text-(length:--eq-control-md-font-size)/[var(--tw-leading,var(--eq-control-md-line-height))] text-ellipsis text-base;
+  @apply md:text-(length:--eq-type-body-font-size)/[var(--tw-leading,var(--eq-type-body-line-height))] text-ellipsis text-base;
   @apply file:text-text-primary file:font-medium;
   @apply file:border-0 file:bg-transparent file:text-sm;
   @apply disabled:cursor-not-allowed;

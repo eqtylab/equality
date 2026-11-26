@@ -33,7 +33,7 @@
 
 /* An icon-only Badge: its height, and its glyph */
 .timeline--sm .timeline-marker {
-  @apply size-5;
+  @apply size-(--eq-size-2xs);
 }
 
 .timeline--sm .timeline-marker > * {
