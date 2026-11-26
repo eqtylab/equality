@@ -38,7 +38,7 @@ Put the style on the heading element that fits the page's outline. A card title 
 
 ### Title 1
 
-A page's title, once per page, in a row with the page's default buttons.
+A page's title, once per page.
 
 <div className="my-4">
   <TypographyDemo example="title-1" />
@@ -50,46 +50,19 @@ A page's title, once per page, in a row with the page's default buttons.
 
 ### Title 2
 
-The title of a dialog, sheet or tab panel: a surface inside the page with its own title. Already styled in `DialogTitle`, `SheetTitle` and `AlertDialogTitle`:
-
-```tsx
-<Dialog>
-  <DialogContent>
-    <DialogHeader>
-      <DialogTitle>Edit Project</DialogTitle>
-      <DialogDescription>Change its name and owner.</DialogDescription>
-    </DialogHeader>
-  </DialogContent>
-</Dialog>
-```
-
-Use the class yourself only for a tab panel's title or a surface you build.
+The title of a dialog, sheet or tab panel: a surface inside the page with its own title. Already styled in `DialogTitle`, `SheetTitle` and `AlertDialogTitle`.
 
 <div className="my-4">
   <TypographyDemo example="title-2" />
 </div>
 
 ```tsx
-<h2 className="text-title-2">Edit Project</h2>
+<h2 className="text-title-2">New Project</h2>
 ```
 
 ### Section
 
 A card's title, or a title for a section of a page. Already styled in [Card Content Header](/components/card-content-header), [Section Heading](/components/section-heading) and [Title Block](/components/title-block) at `size="sm"`.
-
-<div className="my-4">
-  <TypographyDemo example="card-header" />
-</div>
-
-```tsx
-<CardContentHeader
-  icon="Activity"
-  heading="Recent Activity"
-  onButtonClick={openActivity}
-/>
-```
-
-For a header you build, put the class on the heading.
 
 <div className="my-4">
   <TypographyDemo example="section" />
@@ -109,7 +82,7 @@ Running text, descriptions, labels and table rows.
 
 ```tsx
 <p className="text-body">
-  Every model in this project is evaluated against its controls before release.
+  Every project your team can open, with who owns it and when it last changed.
 </p>
 ```
 
@@ -125,71 +98,107 @@ Small supporting text, such as a timestamp, a count or a hint under a field.
 <p className="text-caption text-text-secondary">Updated 2 hours ago</p>
 ```
 
-## Put a Description Under a Heading
+## Build a Page Header
 
-1. Put the heading and its description in a column.
-2. Set the gap by the heading: none under a section title, `gap-1` under title-2 and `gap-2` under title-1.
+1. Put `text-title-1` on the page's `h1`.
+2. Put the page's description under the title, in a column with `gap-2`.
+3. Put the page's buttons beside the title at their default size, aligned to the top of the header, so they centre on the title's line.
+4. To mark the page, such as Beta, put a `Badge` at its default size beside the title, in a row centred on the title's line.
 
 <div className="my-4">
-  <TypographyDemo example="spacing" />
+  <TypographyDemo example="page-header" />
+</div>
+
+```tsx
+<header className="flex flex-wrap items-start justify-between gap-4">
+  <div className="flex flex-col gap-2">
+    <div className="flex items-center gap-2">
+      <h1 className="text-title-1">Projects</h1>
+      <Badge variant="neutral">Beta</Badge>
+    </div>
+    <p className="text-body text-text-secondary">
+      Every project your team can open
+    </p>
+  </div>
+  <div className="flex gap-2">
+    <Button variant="tertiary">Import</Button>
+    <Button>New Project</Button>
+  </div>
+</header>
+```
+
+## Title a Dialog, Sheet or Tab Panel
+
+1. In a dialog, sheet or alert dialog, use its title and description components inside its header. The header places the description under the title, and in a dialog or sheet puts the close button on the title's line.
+2. For a tab panel or a surface you build, put `text-title-2` on its heading, with the description under it in a column with `gap-1`. Put any small buttons in a row with the title, centred.
+
+<div className="my-4">
+  <TypographyDemo example="dialog-header" />
+</div>
+
+```tsx
+<Dialog>
+  <DialogContent>
+    <DialogHeader>
+      <DialogTitle>New Project</DialogTitle>
+      <DialogDescription>
+        Name the project and choose who owns it.
+      </DialogDescription>
+    </DialogHeader>
+  </DialogContent>
+</Dialog>
+```
+
+```tsx
+<div className="flex flex-col gap-1">
+  <div className="flex items-center justify-between gap-4">
+    <h2 className="text-title-2">New Project</h2>
+    <IconButton name="X" label="Close" />
+  </div>
+  <p className="text-body text-text-secondary">
+    Name the project and choose who owns it.
+  </p>
+</div>
+```
+
+## Head a Card or Section
+
+1. At the top of a card, use [Card Content Header](/components/card-content-header). For a section of a page, use [Section Heading](/components/section-heading).
+2. For a header you build, put `text-section` on its heading, with the description directly under it, without a gap.
+3. Put small buttons in a row with the title, centred.
+
+<div className="my-4">
+  <TypographyDemo example="card-header" />
+</div>
+
+```tsx
+<CardContentHeader
+  icon="Activity"
+  heading="Recent Activity"
+  onButtonClick={openActivity}
+/>
+```
+
+<div className="my-4">
+  <TypographyDemo example="section-header" />
 </div>
 
 ```tsx
 <div className="flex flex-col">
-  <h2 className="text-section">Recent Activity</h2>
+  <div className="flex items-center justify-between gap-4">
+    <h2 className="text-section">Recent Activity</h2>
+    <Button variant="tertiary" size="sm">
+      See All
+    </Button>
+  </div>
   <p className="text-body text-text-secondary">What changed this week</p>
 </div>
-
-<div className="flex flex-col gap-1">
-  <h2 className="text-title-2">Edit Project</h2>
-  <p className="text-body text-text-secondary">Change its name and owner</p>
-</div>
-
-<div className="flex flex-col gap-2">
-  <h1 className="text-title-1">Projects</h1>
-  <p className="text-body text-text-secondary">Every project your team can open</p>
-</div>
 ```
 
-## Set a Title Beside Buttons
+## Set Up an App That Merges Classes
 
-1. Put the title and its controls in one row, centred: `flex items-center`.
-2. Use default buttons beside title-1, and small buttons or an `IconButton` at its default size beside title-2 and section.
-3. Keep a badge beside a title at its default size.
-
-<div className="my-4">
-  <TypographyDemo example="align" />
-</div>
-
-```tsx
-<div className="flex items-center justify-between gap-4">
-  <h1 className="text-title-1">Projects</h1>
-  <Button>New Project</Button>
-</div>
-
-<div className="flex items-center justify-between gap-4">
-  <h2 className="text-section">Recent Activity</h2>
-  <Button variant="tertiary" size="sm">
-    See All
-  </Button>
-</div>
-```
-
-<div className="my-4">
-  <TypographyDemo example="badge" />
-</div>
-
-```tsx
-<div className="flex items-center gap-2">
-  <h1 className="text-title-1">Model Registry</h1>
-  <Badge variant="neutral">Beta</Badge>
-</div>
-```
-
-## Use the Styles with tailwind-merge
-
-1. Register the five styles as font sizes, or a text colour beside them removes them.
-2. Keep `title` in the list while your app still uses `text-title`. It's deprecated: use `text-title-1`. 8.0 removes it.
+1. If your app merges classes with tailwind-merge, register the five styles as font sizes in its `cn`, or a text colour beside them removes them.
+2. Move any `text-title` to `text-title-1`. Keep `title` in the list until you have; `text-title` is deprecated, and 8.0 removes it.
 
 ```ts
 import { clsx, type ClassValue } from "clsx";
@@ -223,6 +232,12 @@ export function cn(...inputs: ClassValue[]) {
 ## How the Styles Line Up
 
 Each style's line is one of the [size steps](/getting-started/sizing), the same steps controls use, so text in a row with controls centres on them the way a button centres its label. The page title's line is as tall as a default control, so a page title sits level with the page's buttons without any extra spacing. Title-2's line is as tall as a small control, so a dialog's title sits level with its close button, and a section title's shorter line centres in the same row beside small buttons.
+
+Each line below is shaded, with its height beside it:
+
+<div className="my-4">
+  <TypographyDemo example="lines" />
+</div>
 
 ## Do and Don't
 

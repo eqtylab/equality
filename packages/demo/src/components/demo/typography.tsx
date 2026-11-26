@@ -10,217 +10,222 @@ import type { ReactNode } from "react";
 
 type TypographyExample =
   | "composite"
-  | "align"
-  | "spacing"
+  | "lines"
+  | "page-header"
+  | "dialog-header"
+  | "section-header"
   | "card-header"
   | "title-1"
   | "title-2"
   | "section"
   | "body"
-  | "caption"
-  | "badge";
+  | "caption";
 
-const Label = ({ children }: { children: ReactNode }) => (
-  <code className="text-caption text-text-tertiary font-mono">{children}</code>
+const Preview = ({ children }: { children: ReactNode }) => (
+  <div className="bg-background-base border-border rounded-lg border p-4 sm:p-6">
+    {children}
+  </div>
 );
 
-const Line = ({
-  className,
-  children,
-}: {
-  className: string;
-  children: ReactNode;
-}) => (
-  <span
-    className={`${className} bg-text-primary/5 outline-border inline-block outline-dashed outline-1`}
-  >
+const Tag = ({ children }: { children: ReactNode }) => (
+  <span className="bg-background-sunken border-border text-caption text-text-secondary inline-flex w-fit shrink-0 items-center rounded-md border px-2">
     {children}
   </span>
 );
 
-const rows = [
-  ["Claims Triage Assistant", "2 hours ago"],
-  ["Underwriting Copilot", "5 hours ago"],
-  ["Fraud Review Agent", "3 days ago"],
+const Line = ({
+  className,
+  height,
+  children,
+}: {
+  className: string;
+  height: number;
+  children: ReactNode;
+}) => (
+  <span className="flex items-center gap-2">
+    <span
+      className={`${className} bg-lilac-400/20 inline-block shadow-[inset_0_1px_0_var(--color-lilac-500),inset_0_-1px_0_var(--color-lilac-500)]`}
+    >
+      {children}
+    </span>
+    <Tag>{height}</Tag>
+  </span>
+);
+
+const activity = [
+  ["Website Redesign was renamed", "2 hours ago"],
+  ["Q3 Planning was created", "5 hours ago"],
+  ["Mobile App was archived", "3 days ago"],
 ];
 
-export function TypographyDemo({ example }: { example: TypographyExample }) {
+const PageHeader = ({ badge = false }: { badge?: boolean }) => (
+  <div className="flex flex-wrap items-start justify-between gap-4">
+    <div className="flex flex-col gap-2">
+      <div className="flex items-center gap-2">
+        <p className="text-title-1">Projects</p>
+        {badge && <Badge variant="neutral">Beta</Badge>}
+      </div>
+      <p className="text-body text-text-secondary">
+        Every project your team can open
+      </p>
+    </div>
+    <div className="flex gap-2">
+      <Button variant="tertiary">Import</Button>
+      <Button>New Project</Button>
+    </div>
+  </div>
+);
+
+const DialogHeaderLike = () => (
+  <Card>
+    <CardContent className="flex flex-col gap-1">
+      <div className="flex items-center justify-between gap-4">
+        <p className="text-title-2">New Project</p>
+        <IconButton name="X" label="Close" />
+      </div>
+      <p className="text-body text-text-secondary">
+        Name the project and choose who owns it.
+      </p>
+    </CardContent>
+  </Card>
+);
+
+const ActivityCard = () => (
+  <Card>
+    <CardContent className="flex flex-col gap-2">
+      <CardContentHeader
+        icon="Activity"
+        heading="Recent Activity"
+        onButtonClick={() => {}}
+      />
+      <ul className="flex flex-col">
+        {activity.map(([what, when]) => (
+          <li
+            key={what}
+            className="border-border flex items-center justify-between gap-4 border-t py-2"
+          >
+            <span className="text-body">{what}</span>
+            <span className="text-caption text-text-secondary">{when}</span>
+          </li>
+        ))}
+      </ul>
+    </CardContent>
+  </Card>
+);
+
+function Example({ example }: { example: TypographyExample }) {
   if (example === "composite") {
     return (
       <div className="flex flex-col gap-6">
         <div className="flex flex-col gap-2">
-          <Label>text-title-1 · a page</Label>
-          <div className="flex flex-wrap items-start justify-between gap-4">
-            <div className="flex flex-col gap-2">
-              <p className="text-title-1">Claims Processing</p>
-              <p className="text-body text-text-secondary">
-                Agents, policies and traffic for this project
-              </p>
-            </div>
-            <Button>Associate Agent</Button>
+          <Tag>text-title-1 · the page</Tag>
+          <PageHeader />
+        </div>
+        <div className="flex flex-col gap-2">
+          <Tag>text-title-2 · its dialog</Tag>
+          <DialogHeaderLike />
+        </div>
+        <div className="flex flex-col gap-2">
+          <div className="flex flex-wrap gap-2">
+            <Tag>text-section · the card</Tag>
+            <Tag>text-body · each row</Tag>
+            <Tag>text-caption · each time</Tag>
           </div>
-        </div>
-        <div className="flex flex-col gap-2">
-          <Label>text-title-2 · a dialog, sheet or tab panel</Label>
-          <Card>
-            <CardContent className="flex flex-col gap-1">
-              <div className="flex items-center justify-between gap-4">
-                <p className="text-title-2">Associate an Agent</p>
-                <IconButton name="X" label="Close" />
-              </div>
-              <p className="text-body text-text-secondary">
-                Pick an agent to track in Claims Processing.
-              </p>
-            </CardContent>
-          </Card>
-        </div>
-        <div className="flex flex-col gap-2">
-          <Label>
-            text-section · a card · text-body and text-caption · its rows
-          </Label>
-          <Card>
-            <CardContent className="flex flex-col gap-2">
-              <CardContentHeader
-                icon="Bot"
-                heading="Associated Agents"
-                onButtonClick={() => {}}
-              />
-              <ul className="flex flex-col">
-                {rows.map(([name, when]) => (
-                  <li
-                    key={name}
-                    className="border-border flex items-center justify-between gap-4 border-t py-2"
-                  >
-                    <span className="text-body">{name}</span>
-                    <span className="text-caption text-text-secondary">
-                      {when}
-                    </span>
-                  </li>
-                ))}
-              </ul>
-            </CardContent>
-          </Card>
+          <ActivityCard />
         </div>
       </div>
     );
   }
 
-  if (example === "align") {
+  if (example === "lines") {
     return (
       <div className="flex flex-col gap-4">
-        <div className="flex items-center gap-4">
-          <Line className="text-title-1">Projects</Line>
+        <div className="flex flex-wrap items-center gap-4">
+          <Line className="text-title-1" height={36}>
+            Projects
+          </Line>
           <Button>New Project</Button>
         </div>
-        <div className="flex items-center gap-4">
-          <Line className="text-title-2">Edit Project</Line>
+        <div className="flex flex-wrap items-center gap-4">
+          <Line className="text-title-2" height={28}>
+            New Project
+          </Line>
           <IconButton name="X" label="Close" />
         </div>
-        <div className="flex items-center gap-4">
-          <Line className="text-section">Recent Activity</Line>
+        <div className="flex flex-wrap items-center gap-4">
+          <Line className="text-section" height={24}>
+            Recent Activity
+          </Line>
           <Button variant="tertiary" size="sm">
             See All
           </Button>
         </div>
-        <div className="flex items-center gap-4">
-          <Line className="text-body">Claims Triage Assistant</Line>
+        <div className="flex flex-wrap items-center gap-4">
+          <Line className="text-body" height={20}>
+            Website Redesign
+          </Line>
           <Badge variant="success">Active</Badge>
         </div>
       </div>
     );
   }
 
-  if (example === "spacing") {
+  if (example === "page-header") {
+    return <PageHeader badge />;
+  }
+
+  if (example === "dialog-header") {
+    return <DialogHeaderLike />;
+  }
+
+  if (example === "section-header") {
     return (
-      <div className="grid gap-6 sm:grid-cols-3">
-        <div className="flex flex-col">
+      <div className="flex flex-col">
+        <div className="flex items-center justify-between gap-4">
           <p className="text-section">Recent Activity</p>
-          <p className="text-body text-text-secondary">
-            What changed this week
-          </p>
+          <Button variant="tertiary" size="sm">
+            See All
+          </Button>
         </div>
-        <div className="flex flex-col gap-1">
-          <p className="text-title-2">Edit Project</p>
-          <p className="text-body text-text-secondary">
-            Change its name and owner
-          </p>
-        </div>
-        <div className="flex flex-col gap-2">
-          <p className="text-title-1">Projects</p>
-          <p className="text-body text-text-secondary">
-            Every project your team can open
-          </p>
-        </div>
+        <p className="text-body text-text-secondary">What changed this week</p>
       </div>
     );
   }
 
   if (example === "card-header") {
-    return (
-      <Card>
-        <CardContent>
-          <CardContentHeader
-            icon="Activity"
-            heading="Recent Activity"
-            onButtonClick={() => {}}
-          />
-        </CardContent>
-      </Card>
-    );
+    return <ActivityCard />;
   }
 
   if (example === "title-1") {
-    return (
-      <div className="flex items-center justify-between gap-4">
-        <p className="text-title-1">Projects</p>
-        <Button>New Project</Button>
-      </div>
-    );
+    return <p className="text-title-1">Projects</p>;
   }
 
   if (example === "title-2") {
-    return (
-      <div className="flex items-center justify-between gap-4">
-        <p className="text-title-2">Edit Project</p>
-        <IconButton name="X" label="Close" />
-      </div>
-    );
+    return <p className="text-title-2">New Project</p>;
   }
 
   if (example === "section") {
-    return (
-      <Card>
-        <CardContent>
-          <div className="flex items-center justify-between gap-4">
-            <p className="text-section">Recent Activity</p>
-            <Button variant="tertiary" size="sm">
-              See All
-            </Button>
-          </div>
-        </CardContent>
-      </Card>
-    );
+    return <p className="text-section">Recent Activity</p>;
   }
 
   if (example === "body") {
     return (
       <p className="text-body">
-        Every model in this project is evaluated against its controls before
-        release.
+        Every project your team can open, with who owns it and when it last
+        changed.
       </p>
     );
   }
 
-  if (example === "caption") {
-    return (
-      <p className="text-caption text-text-secondary">Updated 2 hours ago</p>
-    );
-  }
-
   return (
-    <div className="flex items-center gap-2">
-      <p className="text-title-1">Model Registry</p>
-      <Badge variant="neutral">Beta</Badge>
-    </div>
+    <p className="text-caption text-text-secondary">Updated 2 hours ago</p>
+  );
+}
+
+export function TypographyDemo({ example }: { example: TypographyExample }) {
+  return (
+    <Preview>
+      <Example example={example} />
+    </Preview>
   );
 }
