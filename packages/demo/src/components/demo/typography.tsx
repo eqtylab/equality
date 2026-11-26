@@ -7,10 +7,6 @@ import {
   CardContent,
   CardContentHeader,
   IconButton,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableRow,
   TitleBlock,
 } from "@eqtylab/equality";
 import type { ReactNode } from "react";
@@ -115,36 +111,30 @@ const MembersCard = () => (
         heading="Members"
         onButtonClick={() => {}}
       />
-      <TableContainer
-        columns="1fr auto"
-        className="border-(--eq-table-row-divider-color) border-t [--eq-table-row-padding-inline:0]"
-      >
-        <TableBody>
-          {members.map(({ name, email, initials, role }) => (
-            <TableRow key={email}>
-              <TableCell>
-                <TitleBlock
-                  titleAs="p"
-                  mark={
-                    <Avatar size="md" aria-hidden>
-                      <AvatarFallback>{initials}</AvatarFallback>
-                    </Avatar>
-                  }
-                  title={name}
-                  description={email}
-                />
-              </TableCell>
-              <TableCell className="justify-self-end">
-                {role === "Owner" ? (
-                  <Badge>{role}</Badge>
-                ) : (
-                  <p className="text-caption text-text-secondary">{role}</p>
-                )}
-              </TableCell>
-            </TableRow>
-          ))}
-        </TableBody>
-      </TableContainer>
+      <ul>
+        {members.map(({ name, email, initials, role }) => (
+          <li
+            key={email}
+            className="flex items-center justify-between gap-4 py-2 shadow-[inset_0_1px_var(--color-border)]"
+          >
+            <TitleBlock
+              titleAs="p"
+              mark={
+                <Avatar size="md" aria-hidden>
+                  <AvatarFallback>{initials}</AvatarFallback>
+                </Avatar>
+              }
+              title={name}
+              description={email}
+            />
+            {role === "Owner" ? (
+              <Badge>{role}</Badge>
+            ) : (
+              <p className="text-caption text-text-secondary">{role}</p>
+            )}
+          </li>
+        ))}
+      </ul>
     </CardContent>
   </Card>
 );
