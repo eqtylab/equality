@@ -69,7 +69,7 @@ A card's title, or a title for a section of a page. Already styled in [Card Cont
 </div>
 
 ```tsx
-<h2 className="text-section">Recent Activity</h2>
+<h2 className="text-section">Members</h2>
 ```
 
 ### Body
@@ -95,7 +95,7 @@ Small supporting text, such as a timestamp, a count or a hint under a field.
 </div>
 
 ```tsx
-<p className="text-caption text-text-secondary">Updated 2 hours ago</p>
+<p className="text-caption text-text-secondary">Joined 3 days ago</p>
 ```
 
 ## Build a Page Header
@@ -167,7 +167,7 @@ Small supporting text, such as a timestamp, a count or a hint under a field.
 1. At the top of a card, use [Card Content Header](/components/card-content-header). For a section of a page, use [Section Heading](/components/section-heading).
 2. For a header you build, put `text-section` on its heading, with the description directly under it, without a gap.
 3. Put small buttons in a row with the title, centred.
-4. For rows under a card's header, put a `Table` inside the card's content and set `--eq-table-row-padding-inline` to 0, so the rows' text lines up with the header's icon and buttons.
+4. For rows under a card's header, such as its members, put a `Table` inside the card's content and set `--eq-table-row-padding-inline` to 0, so each row lines up with the header's icon and buttons. A person in a row is a `TitleBlock` with an `md` Avatar: name over email, 52 tall.
 
 <div className="my-4">
   <TypographyDemo example="card-header" />
@@ -177,9 +177,9 @@ Small supporting text, such as a timestamp, a count or a hint under a field.
 <Card>
   <CardContent className="flex flex-col gap-2">
     <CardContentHeader
-      icon="Activity"
-      heading="Recent Activity"
-      onButtonClick={openActivity}
+      icon="Users"
+      heading="Members"
+      onButtonClick={openMembers}
     />
     <TableContainer
       columns="1fr auto"
@@ -187,9 +187,20 @@ Small supporting text, such as a timestamp, a count or a hint under a field.
     >
       <TableBody>
         <TableRow>
-          <TableCell>Website Redesign was renamed</TableCell>
-          <TableCell className="text-caption text-text-secondary justify-self-end">
-            2 hours ago
+          <TableCell>
+            <TitleBlock
+              titleAs="p"
+              mark={
+                <Avatar size="md" aria-hidden>
+                  <AvatarFallback>MH</AvatarFallback>
+                </Avatar>
+              }
+              title="Marcus Hale"
+              description="marcus@example.com"
+            />
+          </TableCell>
+          <TableCell className="justify-self-end">
+            <p className="text-caption text-text-secondary">Editor</p>
           </TableCell>
         </TableRow>
       </TableBody>
@@ -205,12 +216,14 @@ Small supporting text, such as a timestamp, a count or a hint under a field.
 ```tsx
 <div className="flex flex-col">
   <div className="flex items-center justify-between gap-4">
-    <h2 className="text-section">Recent Activity</h2>
+    <h2 className="text-section">Members</h2>
     <Button variant="tertiary" size="sm">
       See All
     </Button>
   </div>
-  <p className="text-body text-text-secondary">What changed this week</p>
+  <p className="text-body text-text-secondary">
+    People who can open this project
+  </p>
 </div>
 ```
 

@@ -1,4 +1,6 @@
 import {
+  Avatar,
+  AvatarFallback,
   Badge,
   Button,
   Card,
@@ -9,6 +11,7 @@ import {
   TableCell,
   TableContainer,
   TableRow,
+  TitleBlock,
 } from "@eqtylab/equality";
 import type { ReactNode } from "react";
 
@@ -56,10 +59,20 @@ const Line = ({
   </span>
 );
 
-const activity = [
-  ["Website Redesign was renamed", "2 hours ago"],
-  ["Q3 Planning was created", "5 hours ago"],
-  ["Mobile App was archived", "3 days ago"],
+const members = [
+  { name: "Ada Park", email: "ada@example.com", initials: "AP", role: "Owner" },
+  {
+    name: "Marcus Hale",
+    email: "marcus@example.com",
+    initials: "MH",
+    role: "Editor",
+  },
+  {
+    name: "Priya Shah",
+    email: "priya@example.com",
+    initials: "PS",
+    role: "Viewer",
+  },
 ];
 
 const PageHeader = ({ badge = false }: { badge?: boolean }) => (
@@ -94,12 +107,12 @@ const DialogHeaderLike = () => (
   </Card>
 );
 
-const ActivityCard = () => (
+const MembersCard = () => (
   <Card>
     <CardContent className="flex flex-col gap-2">
       <CardContentHeader
-        icon="Activity"
-        heading="Recent Activity"
+        icon="Users"
+        heading="Members"
         onButtonClick={() => {}}
       />
       <TableContainer
@@ -107,11 +120,26 @@ const ActivityCard = () => (
         className="border-(--eq-table-row-divider-color) border-t [--eq-table-row-padding-inline:0]"
       >
         <TableBody>
-          {activity.map(([what, when]) => (
-            <TableRow key={what}>
-              <TableCell>{what}</TableCell>
-              <TableCell className="text-caption text-text-secondary justify-self-end">
-                {when}
+          {members.map(({ name, email, initials, role }) => (
+            <TableRow key={email}>
+              <TableCell>
+                <TitleBlock
+                  titleAs="p"
+                  mark={
+                    <Avatar size="md" aria-hidden>
+                      <AvatarFallback>{initials}</AvatarFallback>
+                    </Avatar>
+                  }
+                  title={name}
+                  description={email}
+                />
+              </TableCell>
+              <TableCell className="justify-self-end">
+                {role === "Owner" ? (
+                  <Badge>{role}</Badge>
+                ) : (
+                  <p className="text-caption text-text-secondary">{role}</p>
+                )}
               </TableCell>
             </TableRow>
           ))}
@@ -136,10 +164,10 @@ function Example({ example }: { example: TypographyExample }) {
         <div className="flex flex-col gap-2">
           <div className="flex flex-wrap gap-2">
             <Tag>text-section · the card</Tag>
-            <Tag>text-body · each row</Tag>
-            <Tag>text-caption · each time</Tag>
+            <Tag>text-body · each name</Tag>
+            <Tag>text-caption · each email and role</Tag>
           </div>
-          <ActivityCard />
+          <MembersCard />
         </div>
       </div>
     );
@@ -162,7 +190,7 @@ function Example({ example }: { example: TypographyExample }) {
         </div>
         <div className="flex flex-wrap items-center gap-4">
           <Line className="text-section" height={24}>
-            Recent Activity
+            Members
           </Line>
           <Button variant="tertiary" size="sm">
             See All
@@ -170,9 +198,9 @@ function Example({ example }: { example: TypographyExample }) {
         </div>
         <div className="flex flex-wrap items-center gap-4">
           <Line className="text-body" height={20}>
-            Website Redesign
+            Ada Park
           </Line>
-          <Badge variant="success">Active</Badge>
+          <Badge>Owner</Badge>
         </div>
       </div>
     );
@@ -190,18 +218,20 @@ function Example({ example }: { example: TypographyExample }) {
     return (
       <div className="flex flex-col">
         <div className="flex items-center justify-between gap-4">
-          <p className="text-section">Recent Activity</p>
+          <p className="text-section">Members</p>
           <Button variant="tertiary" size="sm">
             See All
           </Button>
         </div>
-        <p className="text-body text-text-secondary">What changed this week</p>
+        <p className="text-body text-text-secondary">
+          People who can open this project
+        </p>
       </div>
     );
   }
 
   if (example === "card-header") {
-    return <ActivityCard />;
+    return <MembersCard />;
   }
 
   if (example === "title-1") {
@@ -213,7 +243,7 @@ function Example({ example }: { example: TypographyExample }) {
   }
 
   if (example === "section") {
-    return <p className="text-section">Recent Activity</p>;
+    return <p className="text-section">Members</p>;
   }
 
   if (example === "body") {
@@ -225,9 +255,7 @@ function Example({ example }: { example: TypographyExample }) {
     );
   }
 
-  return (
-    <p className="text-caption text-text-secondary">Updated 2 hours ago</p>
-  );
+  return <p className="text-caption text-text-secondary">Joined 3 days ago</p>;
 }
 
 export function TypographyDemo({ example }: { example: TypographyExample }) {
