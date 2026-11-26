@@ -69,7 +69,7 @@ describe('table-components.module.css', () => {
 
   const CELL_PADDING = (row: string, part: string) =>
     new RegExp(
-      String.raw`--table-cell-padding:\s*calc\(\(var\(--eq-control-${row}-height\)\s*-\s*var\(--eq-${part}\)\)\s*/\s*2\);`
+      String.raw`--eq-table-cell-padding:\s*calc\(\(var\(--eq-control-${row}-height\)\s*-\s*var\(--eq-${part}\)\)\s*/\s*2\);`
     );
 
   const BUTTONS = "button, [role='button'], [data-slot='button'], [data-slot='icon-button']";
@@ -106,22 +106,38 @@ describe('table-components.module.css', () => {
       .join(', ');
     const selector = `${CELLS} :is(${BUTTONS}, [data-slot='title-block'][data-size='sm']):not([role='switch'], [role='checkbox'], [role='radio'], [role='tab'], [data-sort-button], ${CELLS} :is(${excluded}) *:not(${CELLS} :is(${excluded}) ${CELLS} *))`;
     expect(ruleBody(flat, selector)).toMatch(
-      /margin-block: calc\(\(var\(--eq-control-sm-height\) - var\(--eq-type-body-line-height\)\) \/ 2 - var\(--table-cell-padding\)\);/
+      /margin-block: calc\(\(var\(--eq-control-sm-height\) - var\(--eq-type-body-line-height\)\) \/ 2 - var\(--eq-table-cell-padding\)\);/
     );
     const layer = flat.slice(flat.indexOf('@layer components {'), flat.indexOf(selector));
     expect(layer.split('{').length).toBe(layer.split('}').length);
   });
 
-  it('pads a header or comfortable cell holding a switch or segmented control as a small control, as 6.5.0 did', () => {
+  it('pads a header or comfortable cell holding a switch, segmented control or a button the pull skips as a small control, as 6.5.0 did', () => {
     const flat = flatten(css);
-    const holds =
-      ":has([role='switch'], [data-slot='segmented-controls']):not(:has(.table-inner :is([role='switch'], [data-slot='segmented-controls'])))";
+    const held =
+      "[role='switch'], [data-slot='segmented-controls'], :is([data-slot='pagination'], [data-slot='code-block'], [data-slot='motion-collapsible'], [data-slot='empty-table-state'], [data-slot='truncated-description']) :is(button, [role='button'])";
+    const holds = `:has(${held}):not(:has(.table-inner :is(${held})))`;
     expect(ruleBody(flat, `.table-header > .table-row > .table-head${holds}`)).toMatch(
       CELL_PADDING('md', 'control-sm-height')
     );
     expect(ruleBody(flat, `${COMFORTABLE} * > .table-row > ${CELLS}${holds}`)).toMatch(
       CELL_PADDING('lg', 'control-sm-height')
     );
+  });
+
+  it('keeps a small button 4 inside a cell whatever --eq-table-cell-padding an app sets', () => {
+    const flat = flatten(css);
+    const margin = flat.slice(flat.indexOf('margin-block: calc(') + 'margin-block: '.length);
+    const expression = margin.slice(0, margin.indexOf(';'));
+    for (const padding of [4, 2, 8, 12]) {
+      const value = expression
+        .replace(/var\(--eq-control-sm-height\)/g, '28')
+        .replace(/var\(--eq-type-body-line-height\)/g, '20')
+        .replace(/var\(--eq-table-cell-padding\)/g, String(padding))
+        .replace(/calc\(/g, '(');
+      expect(value, expression).toMatch(/^[\d\s()+\-*/.]+$/);
+      expect(padding + Number(new Function(`return ${value}`)())).toBe(4);
+    }
   });
 
   it("pads cells in a layer, so an app's padding utilities on a cell still win", () => {

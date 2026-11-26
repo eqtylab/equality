@@ -41,6 +41,8 @@ Notable changes to Equality are recorded here, following [Keep a Changelog](http
 - `Button`, `IconButton`, `TitleBlock`, `EmptyTableState`, `SegmentedControls`, `Pagination`,
   `CodeBlock`, `MotionCollapsibleContent` and `TruncatedDescription` carry a `data-slot` attribute,
   such as `data-slot="button"`. `TitleBlock` also carries its `data-size`.
+- `--eq-table-cell-padding` sets a table cell's padding above and below. Set it on a cell, such as
+  `[--eq-table-cell-padding:…]`, not `py-*`, so a button in the cell stays 4 from the row's lines.
 
 ### Changed
 

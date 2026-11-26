@@ -93,13 +93,17 @@
 /* In a layer so an app's py-* utilities on a cell still win; unlayered, these would beat them */
 @layer components {
   :is(.table-cell, .table-head) {
-    --table-cell-padding: calc((var(--eq-control-md-height) - var(--eq-type-body-line-height)) / 2);
-    padding-block: var(--table-cell-padding);
+    --eq-table-cell-padding: calc(
+      (var(--eq-control-md-height) - var(--eq-type-body-line-height)) / 2
+    );
+    padding-block: var(--eq-table-cell-padding);
   }
 
   .table--comfortable > .table-inner > * > .table-row > :is(.table-cell, .table-head) {
-    --table-cell-padding: calc((var(--eq-control-lg-height) - var(--eq-type-body-line-height)) / 2);
-    padding-block: var(--table-cell-padding);
+    --eq-table-cell-padding: calc(
+      (var(--eq-control-lg-height) - var(--eq-type-body-line-height)) / 2
+    );
+    padding-block: var(--eq-table-cell-padding);
   }
 
   .table--comfortable
@@ -109,33 +113,85 @@
     > :is(.table-cell, .table-head):has([data-slot='title-block'][data-size='md']):not(
       :has(.table-inner [data-slot='title-block'][data-size='md'])
     ) {
-    --table-cell-padding: calc((var(--eq-control-md-height) - var(--eq-type-body-line-height)) / 2);
-    padding-block: var(--table-cell-padding);
+    --eq-table-cell-padding: calc(
+      (var(--eq-control-md-height) - var(--eq-type-body-line-height)) / 2
+    );
+    padding-block: var(--eq-table-cell-padding);
   }
 
   .table-header
     > .table-row
-    > .table-head:has([role='switch'], [data-slot='segmented-controls']):not(
-      :has(.table-inner :is([role='switch'], [data-slot='segmented-controls']))
+    > .table-head:has(
+      [role='switch'],
+      [data-slot='segmented-controls'],
+      :is(
+          [data-slot='pagination'],
+          [data-slot='code-block'],
+          [data-slot='motion-collapsible'],
+          [data-slot='empty-table-state'],
+          [data-slot='truncated-description']
+        )
+        :is(button, [role='button'])
+    ):not(
+      :has(
+        .table-inner
+          :is(
+            [role='switch'],
+            [data-slot='segmented-controls'],
+            :is(
+                [data-slot='pagination'],
+                [data-slot='code-block'],
+                [data-slot='motion-collapsible'],
+                [data-slot='empty-table-state'],
+                [data-slot='truncated-description']
+              )
+              :is(button, [role='button'])
+          )
+      )
     ) {
-    --table-cell-padding: calc((var(--eq-control-md-height) - var(--eq-control-sm-height)) / 2);
-    padding-block: var(--table-cell-padding);
+    --eq-table-cell-padding: calc((var(--eq-control-md-height) - var(--eq-control-sm-height)) / 2);
+    padding-block: var(--eq-table-cell-padding);
   }
 
   .table--comfortable
     > .table-inner
     > *
     > .table-row
-    > :is(.table-cell, .table-head):has([role='switch'], [data-slot='segmented-controls']):not(
-      :has(.table-inner :is([role='switch'], [data-slot='segmented-controls']))
+    > :is(.table-cell, .table-head):has(
+      [role='switch'],
+      [data-slot='segmented-controls'],
+      :is(
+          [data-slot='pagination'],
+          [data-slot='code-block'],
+          [data-slot='motion-collapsible'],
+          [data-slot='empty-table-state'],
+          [data-slot='truncated-description']
+        )
+        :is(button, [role='button'])
+    ):not(
+      :has(
+        .table-inner
+          :is(
+            [role='switch'],
+            [data-slot='segmented-controls'],
+            :is(
+                [data-slot='pagination'],
+                [data-slot='code-block'],
+                [data-slot='motion-collapsible'],
+                [data-slot='empty-table-state'],
+                [data-slot='truncated-description']
+              )
+              :is(button, [role='button'])
+          )
+      )
     ) {
-    --table-cell-padding: calc((var(--eq-control-lg-height) - var(--eq-control-sm-height)) / 2);
-    padding-block: var(--table-cell-padding);
+    --eq-table-cell-padding: calc((var(--eq-control-lg-height) - var(--eq-control-sm-height)) / 2);
+    padding-block: var(--eq-table-cell-padding);
   }
 }
 
 /* Unlayered so an unlayered reset such as button { margin: 0 } can't cancel the pull */
-/* Reads --table-cell-padding, so a cell rule that sets padding-block without it leaves a button 4 from the wrong line */
+/* Reads --eq-table-cell-padding, so a cell rule that sets padding-block without it leaves a button 4 from the wrong line */
 /* Both sides start at a cell; drop either and a component wrapped around the table turns the pull or its exclusions off */
 :is(.table-cell, .table-head)
   :is(
@@ -176,7 +232,8 @@
       )
   ) {
   margin-block: calc(
-    (var(--eq-control-sm-height) - var(--eq-type-body-line-height)) / 2 - var(--table-cell-padding)
+    (var(--eq-control-sm-height) - var(--eq-type-body-line-height)) / 2 -
+      var(--eq-table-cell-padding)
   );
 }
 
