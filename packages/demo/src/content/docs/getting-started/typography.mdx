@@ -101,29 +101,30 @@ Small supporting text, such as a timestamp, a count or a hint under a field.
 ## Build a Page Header
 
 1. Put `text-title-1` on the page's `h1`.
-2. Put the page's description under the title, in a column with `gap-2`.
-3. Put the page's buttons beside the title at their default size, aligned to the top of the header, so they centre on the title's line.
-4. To mark the page, such as Beta, put a `Badge` at its default size beside the title, in a row centred on the title's line.
+2. Put the title and the page's buttons in one row, centred on each other, with the buttons at their default size.
+3. To mark the page, such as Beta, put a `Badge` at its default size beside the title, in the same row.
+4. Put the description under that row, full width, at `gap-2`.
+5. On a narrow screen the buttons wrap under the title, before the description.
 
 <div className="my-4">
   <TypographyDemo example="page-header" />
 </div>
 
 ```tsx
-<header className="flex flex-wrap items-start justify-between gap-4">
-  <div className="flex flex-col gap-2">
+<header className="flex flex-col gap-2">
+  <div className="flex flex-wrap items-center justify-between gap-4">
     <div className="flex items-center gap-2">
       <h1 className="text-title-1">Projects</h1>
       <Badge variant="neutral">Beta</Badge>
     </div>
-    <p className="text-body text-text-secondary">
-      Every project your team can open
-    </p>
+    <div className="flex gap-2">
+      <Button variant="tertiary">Import</Button>
+      <Button>New Project</Button>
+    </div>
   </div>
-  <div className="flex gap-2">
-    <Button variant="tertiary">Import</Button>
-    <Button>New Project</Button>
-  </div>
+  <p className="text-body text-text-secondary">
+    Every project your team can open
+  </p>
 </header>
 ```
 
