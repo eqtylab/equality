@@ -312,6 +312,12 @@ A button in a cell reaches into the cell's padding, stopping 4 short of the row'
 </TableCell>
 ```
 
+To change how much room a cell leaves above and below its content, set `--eq-table-cell-padding` on the cell rather than `py-*`. A button in the cell then still stops 4 short of the row's lines; with `py-*` it can poke out of the cell, and a cell that truncates its text clips it.
+
+```tsx
+<TableCell className="[--eq-table-cell-padding:4px]">…</TableCell>
+```
+
 For a person with a subline, such as a name over an email, put a [Title Block](/components/title-block) in the cell with an `md` Avatar as its mark, so the avatar sits beside both lines. A medium block sets the email as a caption, so the row is 52 at either density.
 
 <AvatarRowDemo client:only="react" variant="person" />
