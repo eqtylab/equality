@@ -2,8 +2,10 @@ import { render, screen } from '@testing-library/react';
 import { beforeAll, describe, expect, it } from 'vitest';
 
 import { Button } from '@/components/button/button';
+import { EmptyTableState } from '@/components/empty-table-state/empty-table-state';
 import { IconButton } from '@/components/icon-button/icon-button';
 import { MotionCollapsibleContent } from '@/components/motion-collapsible/motion-collapsible';
+import { Pagination } from '@/components/pagination/pagination';
 import {
   TableBody,
   TableCell,
@@ -11,6 +13,7 @@ import {
   TableRow,
 } from '@/components/table/table-components';
 import styles from '@/components/table/table-components.module.css';
+import { TruncatedDescription } from '@/components/truncated-description/truncated-description';
 
 import { compileCss } from './compile-css';
 
@@ -70,5 +73,38 @@ describe('the button pull in a table cell', () => {
     );
 
     expect(screen.getByRole('button', { name: 'Approve' }).matches(pull)).toBe(false);
+  });
+
+  const inCollapsible = (cell: React.ReactNode) =>
+    render(<MotionCollapsibleContent isOpen>{table(cell)}</MotionCollapsibleContent>);
+
+  it("leaves an empty state's clear button where it sits, in a table inside a collapsible", () => {
+    inCollapsible(
+      <EmptyTableState icon="Search" title="No matches" showClearButton onClear={() => {}} />
+    );
+
+    for (const button of screen.getAllByRole('button')) expect(button.matches(pull)).toBe(false);
+  });
+
+  it("leaves a long description's toggle where it sits, in a table inside a collapsible", () => {
+    inCollapsible(<TruncatedDescription description={'A long description. '.repeat(20)} />);
+
+    for (const button of screen.getAllByRole('button')) expect(button.matches(pull)).toBe(false);
+  });
+
+  it("leaves pagination's buttons where they sit, in a table inside a collapsible", () => {
+    inCollapsible(
+      <Pagination
+        currentPage={1}
+        totalItems={50}
+        filteredItems={50}
+        itemsPerPage={10}
+        onPageChange={() => {}}
+      />
+    );
+
+    const buttons = screen.getAllByRole('button');
+    expect(buttons.length).toBeGreaterThan(0);
+    for (const button of buttons) expect(button.matches(pull)).toBe(false);
   });
 });

@@ -104,7 +104,7 @@ describe('table-components.module.css', () => {
     ]
       .map((slot) => `[data-slot='${slot}']`)
       .join(', ');
-    const selector = `${CELLS} :is(${BUTTONS}, [data-slot='title-block'][data-size='sm']):not([role='switch'], [role='checkbox'], [role='radio'], [role='tab'], [data-sort-button], :is(${excluded}) *:not(:is(${excluded}) ${CELLS} *))`;
+    const selector = `${CELLS} :is(${BUTTONS}, [data-slot='title-block'][data-size='sm']):not([role='switch'], [role='checkbox'], [role='radio'], [role='tab'], [data-sort-button], ${CELLS} :is(${excluded}) *:not(${CELLS} :is(${excluded}) ${CELLS} *))`;
     expect(ruleBody(flat, selector)).toMatch(
       /margin-block: calc\(\(var\(--eq-control-sm-height\) - var\(--eq-type-body-line-height\)\) \/ 2 - var\(--table-cell-padding\)\);/
     );

@@ -136,7 +136,7 @@
 
 /* Unlayered so an unlayered reset such as button { margin: 0 } can't cancel the pull */
 /* Reads --table-cell-padding, so a cell rule that sets padding-block without it leaves a button 4 from the wrong line */
-/* The inner :not keeps exclusions to the button's own cell; without it a table inside a collapsible grows to 44 rows */
+/* Both sides start at a cell; drop either and a component wrapped around the table turns the pull or its exclusions off */
 :is(.table-cell, .table-head)
   :is(
     button,
@@ -150,7 +150,8 @@
     [role='radio'],
     [role='tab'],
     [data-sort-button],
-    :is(
+    :is(.table-cell, .table-head)
+      :is(
         [data-slot='title-block'],
         [data-slot='empty-table-state'],
         [data-slot='segmented-controls'],
@@ -160,7 +161,8 @@
         [data-slot='truncated-description']
       )
       *:not(
-        :is(
+        :is(.table-cell, .table-head)
+          :is(
             [data-slot='title-block'],
             [data-slot='empty-table-state'],
             [data-slot='segmented-controls'],
