@@ -3,6 +3,7 @@ import { VariantProps } from 'class-variance-authority';
 
 import styles from '@/components/table/table-components.module.css';
 import { ELEVATION, generateElevationVariants } from '@/lib/elevations';
+import { useIsomorphicLayoutEffect } from '@/lib/use-isomorphic-layout-effect';
 import { cn } from '@/lib/utils';
 
 const tableElevationVariants = generateElevationVariants(styles, 'table', ELEVATION.RAISED);
@@ -64,12 +65,56 @@ const TableHeader = React.forwardRef<
 ));
 TableHeader.displayName = 'TableHeader';
 
+type RowFocusContextValue = {
+  activeRow: HTMLTableRowElement | null;
+  setActiveRow: (row: HTMLTableRowElement) => void;
+  rowsChanged: () => void;
+};
+
+const RowFocusContext = React.createContext<RowFocusContextValue | null>(null);
+
+const FOCUSABLE_ROW = 'tr[data-table-row-focusable]';
+
+const focusableRows = (body: HTMLTableSectionElement) =>
+  Array.from(body.querySelectorAll<HTMLTableRowElement>(FOCUSABLE_ROW)).filter(
+    (row) => row.parentElement === body
+  );
+
 const TableBody = React.forwardRef<
   HTMLTableSectionElement,
   React.HTMLAttributes<HTMLTableSectionElement>
->(({ className, ...props }, ref) => (
-  <tbody ref={ref} className={cn(styles['table-body'], className)} {...props} />
-));
+>(({ className, ...props }, ref) => {
+  const bodyRef = React.useRef<HTMLTableSectionElement | null>(null);
+  const [activeRow, setActiveRow] = React.useState<HTMLTableRowElement | null>(null);
+  const [, rowsChanged] = React.useReducer((count: number) => count + 1, 0);
+
+  const setRefs = React.useCallback(
+    (node: HTMLTableSectionElement | null) => {
+      bodyRef.current = node;
+      if (typeof ref === 'function') ref(node);
+      else if (ref) ref.current = node;
+    },
+    [ref]
+  );
+
+  // Without a row holding tabIndex 0, Tab skips the table entirely
+  useIsomorphicLayoutEffect(() => {
+    const body = bodyRef.current;
+    if (!body) return;
+    const rows = focusableRows(body);
+    if (activeRow && rows.includes(activeRow)) return;
+    const next = rows[0] ?? null;
+    if (next !== activeRow) setActiveRow(next);
+  });
+
+  const context = React.useMemo(() => ({ activeRow, setActiveRow, rowsChanged }), [activeRow]);
+
+  return (
+    <RowFocusContext.Provider value={context}>
+      <tbody ref={setRefs} className={cn(styles['table-body'], className)} {...props} />
+    </RowFocusContext.Provider>
+  );
+});
 TableBody.displayName = 'TableBody';
 
 const TableFooter = React.forwardRef<
@@ -80,52 +125,216 @@ const TableFooter = React.forwardRef<
 ));
 TableFooter.displayName = 'TableFooter';
 
+const ROW_KEYS = ['ArrowDown', 'ArrowUp', 'Home', 'End'];
+
+const ROW_ACTION = '[data-table-row-action]';
+const ROW_LINK = '[data-table-row-link]';
+const ROW_CONTROLS =
+  'a, button, input, select, textarea, label, [role="checkbox"], [role="switch"], [role="menuitem"], [contenteditable=""], [contenteditable="true"]';
+
+const rowTarget = (row: HTMLTableRowElement) =>
+  row.querySelector<HTMLElement>(`${ROW_ACTION}, :scope > ${ROW_LINK}`) ?? row;
+
+type RowActionContextValue = {
+  href?: string;
+  interactive: boolean;
+  tabIndex?: number;
+  registerAction: () => () => void;
+};
+
+const RowActionContext = React.createContext<RowActionContextValue | null>(null);
+
 const TableRow = React.forwardRef<
   HTMLTableRowElement,
   React.HTMLAttributes<HTMLTableRowElement> & {
+    /** Applies hover and pointer styles to a row with only `onClick` and no `TableRowAction`, and makes it reachable and openable from the keyboard. A row with `href` or a `TableRowAction` doesn't need it. */
     clickable?: boolean;
+    /** URL the row opens. With `onClick`, a plain click runs `onClick` instead, and a modified click opens the URL in a new tab or window. */
     href?: string;
+    /** Accessible name for the row's link when the row has no `TableRowAction`. */
     hrefLabel?: string;
   }
 >(
   (
-    { className, clickable, href, hrefLabel = 'View details', children, onClick, ...props },
+    {
+      className,
+      clickable,
+      href,
+      hrefLabel = 'View details',
+      children,
+      onClick,
+      onKeyDown,
+      onFocus,
+      tabIndex,
+      ...props
+    },
     ref
   ) => {
-    const isClickable = clickable || !!href;
+    const rowFocus = React.useContext(RowFocusContext);
+    const [row, setRow] = React.useState<HTMLTableRowElement | null>(null);
+    const [hasAction, setHasAction] = React.useState(false);
+    const rowsChanged = rowFocus?.rowsChanged;
+
+    const isInteractive = !!href || !!onClick;
+    const isClickable = clickable || !!href || (hasAction && isInteractive);
+    const focusTarget =
+      hasAction && isInteractive ? 'action' : href ? 'link' : clickable && onClick ? 'row' : null;
+    const isFocusable = focusTarget !== null;
+
+    useIsomorphicLayoutEffect(() => {
+      if (!isFocusable || !rowsChanged) return;
+      rowsChanged();
+      return rowsChanged;
+    }, [isFocusable, rowsChanged]);
+
+    const setRefs = React.useCallback(
+      (node: HTMLTableRowElement | null) => {
+        setRow(node);
+        if (typeof ref === 'function') ref(node);
+        else if (ref) ref.current = node;
+      },
+      [ref]
+    );
+
+    const registerAction = React.useCallback(() => {
+      setHasAction(true);
+      return () => setHasAction(false);
+    }, []);
 
     const handleClick = (e: React.MouseEvent<HTMLTableRowElement>) => {
-      // Don't trigger row click if an interactive element was clicked
       const target = e.target as HTMLElement;
-      if (target.closest('button, a:not([data-table-row-link])')) {
+      // Clicks inside a portal, such as a row's menu, bubble here through React but aren't in the row
+      if (!e.currentTarget.contains(target)) return;
+      const control = target.closest<HTMLElement>(ROW_CONTROLS);
+      if (
+        control &&
+        e.currentTarget.contains(control) &&
+        !control.matches(`${ROW_ACTION}, ${ROW_LINK}`)
+      ) {
         return;
+      }
+      if (href) {
+        if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+        e.preventDefault();
       }
       onClick?.(e);
     };
 
+    const handleKeyDown = (e: React.KeyboardEvent<HTMLTableRowElement>) => {
+      onKeyDown?.(e);
+      if (e.defaultPrevented || e.altKey || e.ctrlKey || e.metaKey || e.shiftKey) return;
+      const current = e.currentTarget;
+      if (e.target !== rowTarget(current)) return;
+
+      if (e.key === 'Enter') {
+        if (e.target !== current) return;
+        e.preventDefault();
+        current.click();
+        return;
+      }
+
+      if (!ROW_KEYS.includes(e.key)) return;
+      const body = current.parentElement;
+      if (!(body instanceof HTMLTableSectionElement)) return;
+      const rows = focusableRows(body);
+      const index = rows.indexOf(current);
+      const next =
+        e.key === 'ArrowDown'
+          ? rows[index + 1]
+          : e.key === 'ArrowUp'
+            ? rows[index - 1]
+            : e.key === 'Home'
+              ? rows[0]
+              : rows[rows.length - 1];
+      e.preventDefault();
+      if (next) rowTarget(next).focus();
+    };
+
+    const handleFocus = (e: React.FocusEvent<HTMLTableRowElement>) => {
+      onFocus?.(e);
+      if (e.currentTarget.contains(e.target)) rowFocus?.setActiveRow(e.currentTarget);
+    };
+
+    const rovingTabIndex = !rowFocus || (row && rowFocus.activeRow === row) ? 0 : -1;
+
+    const actionContext = React.useMemo(
+      () => ({
+        href,
+        interactive: isInteractive,
+        tabIndex: focusTarget === 'action' ? rovingTabIndex : undefined,
+        registerAction,
+      }),
+      [href, isInteractive, focusTarget, rovingTabIndex, registerAction]
+    );
+
     return (
-      <tr
-        ref={ref}
-        className={cn(
-          styles['table-row'],
-          isClickable && styles['table-row--clickable'],
-          href && styles['table-row--linked'],
-          className
-        )}
-        onClick={onClick ? handleClick : undefined}
-        {...props}
-      >
-        {href && (
-          <a href={href} className={styles['table-row-link']} data-table-row-link>
-            <span className={styles['table-row-link-label']}>{hrefLabel}</span>
-          </a>
-        )}
-        {children}
-      </tr>
+      <RowActionContext.Provider value={actionContext}>
+        <tr
+          ref={setRefs}
+          className={cn(
+            styles['table-row'],
+            isClickable && styles['table-row--clickable'],
+            (href || (hasAction && isInteractive)) && styles['table-row--linked'],
+            className
+          )}
+          onClick={onClick ? handleClick : undefined}
+          onKeyDown={isFocusable ? handleKeyDown : onKeyDown}
+          onFocus={isFocusable ? handleFocus : onFocus}
+          tabIndex={tabIndex ?? (focusTarget === 'row' ? rovingTabIndex : undefined)}
+          data-table-row-focusable={isFocusable ? '' : undefined}
+          {...props}
+        >
+          {href && !hasAction && (
+            <a
+              href={href}
+              className={styles['table-row-link']}
+              tabIndex={rovingTabIndex}
+              data-table-row-link
+            >
+              <span className={styles['table-row-link-label']}>{hrefLabel}</span>
+            </a>
+          )}
+          {children}
+        </tr>
+      </RowActionContext.Provider>
     );
   }
 );
 TableRow.displayName = 'TableRow';
+
+const TableRowAction = React.forwardRef<HTMLElement, React.HTMLAttributes<HTMLElement>>(
+  ({ className, children, ...props }, ref) => {
+    const action = React.useContext(RowActionContext);
+    const registerAction = action?.registerAction;
+
+    useIsomorphicLayoutEffect(() => registerAction?.(), [registerAction]);
+
+    if (!action?.interactive) {
+      return (
+        <span ref={ref} className={className} {...props}>
+          {children}
+        </span>
+      );
+    }
+
+    const shared = {
+      className: cn(styles['table-row-action'], className),
+      tabIndex: action.tabIndex,
+      'data-table-row-action': '',
+    };
+
+    return action.href ? (
+      <a ref={ref as React.Ref<HTMLAnchorElement>} href={action.href} {...shared} {...props}>
+        {children}
+      </a>
+    ) : (
+      <button ref={ref as React.Ref<HTMLButtonElement>} type="button" {...shared} {...props}>
+        {children}
+      </button>
+    );
+  }
+);
+TableRowAction.displayName = 'TableRowAction';
 
 const TableHead = React.forwardRef<
   HTMLTableCellElement,
@@ -160,4 +369,5 @@ export {
   TableHead,
   TableHeader,
   TableRow,
+  TableRowAction,
 };

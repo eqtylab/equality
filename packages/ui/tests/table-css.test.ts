@@ -11,7 +11,13 @@ beforeAll(async () => {
 
 describe('table-components.module.css', () => {
   it('draws a focused linked row in the focus-ring colour', () => {
-    expect(ruleBody(css, '.table-row--linked:has(.table-row-link:focus-visible)')).toMatch(
+    expect(
+      ruleBody(css, '.table-row--linked:has(:is(.table-row-link, .table-row-action):focus-visible)')
+    ).toMatch(/outline-color:\s*var\(--color-focus-ring\b/);
+  });
+
+  it('draws a focused clickable row in the focus-ring colour', () => {
+    expect(ruleBody(css, '.table-row--clickable[data-table-row-focusable]:focus-visible')).toMatch(
       /outline-color:\s*var\(--color-focus-ring\b/
     );
   });
@@ -25,6 +31,20 @@ describe('table-components.module.css', () => {
       /background-color:\s*var\(--color-list-item-hover\)/
     );
     expect(css).not.toContain(':has(button:hover');
+  });
+
+  it("stretches a row's action over the whole row", () => {
+    expect(ruleBody(css, '.table-row-action::after')).toMatch(/inset:\s*calc\(0\.25rem \* 0\);/);
+  });
+
+  it("draws no outline on the row's action, so focus shows as one line", () => {
+    expect(ruleBody(css, '.table-row-action')).toMatch(/outline-style:\s*none;/);
+  });
+
+  it('highlights a selected row whether or not it is clickable', () => {
+    expect(ruleBody(css, ".table-body .table-row[data-state='selected']")).toMatch(
+      /background-color:\s*var\(--color-list-item-current\b/
+    );
   });
 
   it('names one row line colour: the border at 60%', async () => {
@@ -42,8 +62,9 @@ describe('table-components.module.css', () => {
     expect(line).not.toMatch(/background-color/);
   });
 
-  it("hides the row line while a linked row shows its focus ring, so the ring's edge stays solid", () => {
-    const hide = '.table-row--linked:has(.table-row-link:focus-visible)::after';
+  it("hides the row line while a row shows its focus ring, so the ring's edge stays solid", () => {
+    const hide =
+      '.table-row--linked:has(:is(.table-row-link, .table-row-action):focus-visible)::after,\n.table-row--clickable[data-table-row-focusable]:focus-visible::after';
     expect(ruleBody(css, hide)).toMatch(/content:\s*none;/);
     expect(css.indexOf(`${hide} {`)).toBeGreaterThan(
       css.indexOf('.table-body > .table-row:not(:last-child)::after {')
@@ -104,7 +125,7 @@ describe('table-components.module.css', () => {
     ]
       .map((slot) => `[data-slot='${slot}']`)
       .join(', ');
-    const selector = `${CELLS} :is(${BUTTONS}, [data-slot='title-block'][data-size='sm']):not([role='switch'], [role='checkbox'], [role='radio'], [role='tab'], [data-sort-button], ${CELLS} :is(${excluded}) *:not(${CELLS} :is(${excluded}) ${CELLS} *))`;
+    const selector = `${CELLS} :is(${BUTTONS}, [data-slot='title-block'][data-size='sm']):not([role='switch'], [role='checkbox'], [role='radio'], [role='tab'], [data-sort-button], [data-table-row-action], ${CELLS} :is(${excluded}) *:not(${CELLS} :is(${excluded}) ${CELLS} *))`;
     expect(ruleBody(flat, selector)).toMatch(
       /margin-block: calc\(\(var\(--eq-control-sm-height\) - var\(--eq-type-body-line-height\)\) \/ 2 - var\(--eq-table-cell-padding\)\);/
     );

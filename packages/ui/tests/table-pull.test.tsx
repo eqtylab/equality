@@ -11,6 +11,7 @@ import {
   TableCell,
   TableContainer,
   TableRow,
+  TableRowAction,
 } from '@/components/table/table-components';
 import styles from '@/components/table/table-components.module.css';
 import { TruncatedDescription } from '@/components/truncated-description/truncated-description';
@@ -106,5 +107,21 @@ describe('the button pull in a table cell', () => {
     const buttons = screen.getAllByRole('button');
     expect(buttons.length).toBeGreaterThan(0);
     for (const button of buttons) expect(button.matches(pull)).toBe(false);
+  });
+
+  it("leaves a row's TableRowAction button where its text sits, as its link would be", () => {
+    render(
+      <TableContainer columns="1fr">
+        <TableBody>
+          <TableRow onClick={() => {}}>
+            <TableCell>
+              <TableRowAction>Alice Cooper</TableRowAction>
+            </TableCell>
+          </TableRow>
+        </TableBody>
+      </TableContainer>
+    );
+
+    expect(screen.getByRole('button', { name: 'Alice Cooper' }).matches(pull)).toBe(false);
   });
 });
