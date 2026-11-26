@@ -95,4 +95,5 @@
 
 .sheet-description {
   @apply text-text-secondary text-sm;
+  @apply mt-1;
 }

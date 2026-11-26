@@ -17,6 +17,8 @@ Notable changes to Equality are recorded here, following [Keep a Changelog](http
   losing its place beside the page's buttons. `text-title` draws it at 28 too.
 - `DialogTitle`, `SheetTitle` and `AlertDialogTitle` use `text-title-2`: 20 semibold on a 28 line, from
   18, medium in a dialog or sheet.
+- `SheetDescription` and `AlertDialogDescription` sit 4 under their title, as `DialogDescription`
+  does. They sat 0 and 8 under it.
 - The close button in a `Dialog` or `Sheet` header centres on the title's line. With a description
   under the title it sat level with the middle of both, 10 to 12 below the title.
 
