@@ -69,7 +69,7 @@ A card's title, or a title for a section of a page. Already styled in [Card Cont
 </div>
 
 ```tsx
-<h2 className="text-section">Members</h2>
+<h2 className="text-section">Storage</h2>
 ```
 
 ### Body
@@ -164,9 +164,9 @@ Small supporting text, such as a timestamp, a count or a hint under a field.
 
 ## Head a Card or Section
 
-1. At the top of a card, use [Card Content Header](/components/card-content-header). For a section of a page, use [Section Heading](/components/section-heading).
-2. For a header you build, put `text-section` on its heading, with the description directly under it, without a gap.
-3. Put small buttons in a row with the title, centred.
+1. For a card or section headed by a title alone, with a See All button, use [Card Content Header](/components/card-content-header) in a card or [Section Heading](/components/section-heading) on a page.
+2. For a header with a description, put `text-section` on its heading, with the description directly under it, without a gap.
+3. Put small buttons in a row with the title, centred on the title, not on the title and description together.
 
 <div className="my-4">
   <TypographyDemo example="card-header" />
@@ -174,38 +174,26 @@ Small supporting text, such as a timestamp, a count or a hint under a field.
 
 ```tsx
 <Card>
-  <CardContent className="flex flex-col gap-2">
-    <CardContentHeader
-      icon="Users"
-      heading="Members"
-      onButtonClick={openMembers}
-    />
+  <CardContent className="flex flex-col gap-4">
     <div className="flex flex-col">
-      <p className="text-body">Three people can open this project.</p>
-      <p className="text-caption text-text-secondary">
-        Ada Park joined 3 days ago
+      <div className="flex items-center justify-between gap-4">
+        <h2 className="text-section">Storage</h2>
+        <Button variant="tertiary" size="sm">
+          Manage
+        </Button>
+      </div>
+      <p className="text-body text-text-secondary">
+        Files uploaded to this project
       </p>
+    </div>
+    <Separator />
+    <div className="flex flex-col gap-2">
+      <p className="text-body">12.4 GB of 50 GB used</p>
+      <Progress value={25} aria-label="Storage used" />
+      <p className="text-caption text-text-secondary">Resets on 1 December</p>
     </div>
   </CardContent>
 </Card>
-```
-
-<div className="my-4">
-  <TypographyDemo example="section-header" />
-</div>
-
-```tsx
-<div className="flex flex-col">
-  <div className="flex items-center justify-between gap-4">
-    <h2 className="text-section">Members</h2>
-    <Button variant="tertiary" size="sm">
-      See All
-    </Button>
-  </div>
-  <p className="text-body text-text-secondary">
-    People who can open this project
-  </p>
-</div>
 ```
 
 ## Set Up an App That Merges Classes

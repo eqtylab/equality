@@ -3,8 +3,9 @@ import {
   Button,
   Card,
   CardContent,
-  CardContentHeader,
   IconButton,
+  Progress,
+  Separator,
 } from "@eqtylab/equality";
 import type { ReactNode } from "react";
 
@@ -13,7 +14,6 @@ type TypographyExample =
   | "lines"
   | "page-header"
   | "dialog-header"
-  | "section-header"
   | "card-header"
   | "title-1"
   | "title-2"
@@ -84,19 +84,29 @@ const DialogHeaderLike = () => (
   </Card>
 );
 
-const MembersCard = () => (
+const StorageHeader = () => (
+  <div className="flex flex-col">
+    <div className="flex items-center justify-between gap-4">
+      <p className="text-section">Storage</p>
+      <Button variant="tertiary" size="sm">
+        Manage
+      </Button>
+    </div>
+    <p className="text-body text-text-secondary">
+      Files uploaded to this project
+    </p>
+  </div>
+);
+
+const StorageCard = () => (
   <Card>
-    <CardContent className="flex flex-col gap-2">
-      <CardContentHeader
-        icon="Users"
-        heading="Members"
-        onButtonClick={() => {}}
-      />
-      <div className="flex flex-col">
-        <p className="text-body">Three people can open this project.</p>
-        <p className="text-caption text-text-secondary">
-          Ada Park joined 3 days ago
-        </p>
+    <CardContent className="flex flex-col gap-4">
+      <StorageHeader />
+      <Separator />
+      <div className="flex flex-col gap-2">
+        <p className="text-body">12.4 GB of 50 GB used</p>
+        <Progress value={25} aria-label="Storage used" />
+        <p className="text-caption text-text-secondary">Resets on 1 December</p>
       </div>
     </CardContent>
   </Card>
@@ -120,7 +130,7 @@ function Example({ example }: { example: TypographyExample }) {
             <Tag>text-body · its text</Tag>
             <Tag>text-caption · its note</Tag>
           </div>
-          <MembersCard />
+          <StorageCard />
         </div>
       </div>
     );
@@ -143,10 +153,10 @@ function Example({ example }: { example: TypographyExample }) {
         </div>
         <div className="flex flex-wrap items-center gap-4">
           <Line className="text-section" height={24}>
-            Members
+            Storage
           </Line>
           <Button variant="tertiary" size="sm">
-            See All
+            Manage
           </Button>
         </div>
         <div className="flex flex-wrap items-center gap-4">
@@ -167,24 +177,8 @@ function Example({ example }: { example: TypographyExample }) {
     return <DialogHeaderLike />;
   }
 
-  if (example === "section-header") {
-    return (
-      <div className="flex flex-col">
-        <div className="flex items-center justify-between gap-4">
-          <p className="text-section">Members</p>
-          <Button variant="tertiary" size="sm">
-            See All
-          </Button>
-        </div>
-        <p className="text-body text-text-secondary">
-          People who can open this project
-        </p>
-      </div>
-    );
-  }
-
   if (example === "card-header") {
-    return <MembersCard />;
+    return <StorageCard />;
   }
 
   if (example === "title-1") {
@@ -196,7 +190,7 @@ function Example({ example }: { example: TypographyExample }) {
   }
 
   if (example === "section") {
-    return <p className="text-section">Members</p>;
+    return <p className="text-section">Storage</p>;
   }
 
   if (example === "body") {
