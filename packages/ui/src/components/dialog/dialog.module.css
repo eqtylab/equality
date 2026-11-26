@@ -34,6 +34,11 @@
   @apply px-6 py-3;
 }
 
+/* Only with a line under the title: a lone title is centred, so a top-aligned close would sit above it */
+.dialog-header:has(> .dialog-header-content > :nth-child(2)) > .dialog-close {
+  @apply self-start;
+}
+
 .dialog-header-icon {
   @apply shrink-0;
   @apply flex items-center justify-center;

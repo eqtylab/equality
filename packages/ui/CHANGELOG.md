@@ -15,7 +15,10 @@ Notable changes to Equality are recorded here, following [Keep a Changelog](http
 
 - `text-title` is 28, from 30, on the same 36 line, so a page title steps down from the content
   without losing its place beside the page's buttons.
-- `DialogTitle` and `SheetTitle` use `text-title-2`: 20 semibold on a 28 line, from 18 medium.
+- `DialogTitle`, `SheetTitle` and `AlertDialogTitle` use `text-title-2`: 20 semibold on a 28 line, from
+  18, medium in a dialog or sheet.
+- The close button in a `Dialog` or `Sheet` header centres on the title's line. With a description
+  under the title it sat level with the middle of both, 10 to 12 below the title.
 
 ## Unreleased
 

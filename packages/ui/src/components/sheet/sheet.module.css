@@ -48,6 +48,11 @@
   @apply shrink-0;
 }
 
+/* Only with a line under the title: a lone title is centred, so a top-aligned close would sit above it */
+.sheet-header:has(> .sheet-header-text-content > :nth-child(2)) > .sheet-close {
+  @apply self-start;
+}
+
 .sheet-header {
   @apply flex w-fit w-full shrink-0 items-center;
   @apply gap-4 p-4;
