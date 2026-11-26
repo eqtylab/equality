@@ -12,6 +12,15 @@ Notable changes to Equality are recorded here, following [Keep a Changelog](http
 - `cn`, the class helper Equality's components use. It knows the text styles, so a text colour
   beside one doesn't remove it. Import it from `@eqtylab/equality` in place of your own; if you
   keep your own, add `title-1` and `title-2` to tailwind-merge's `font-size` group.
+- `TableRowAction` makes the text that names a row, such as a name, into the row's link when the
+  row has an `href`, or its button when it has only `onClick`. It covers the whole row, so a click
+  anywhere opens it, and screen readers announce it in place, as "Alice Cooper, link", with no
+  label of its own. A row with one takes hover and pointer styles without `clickable`, and draws
+  no hidden link, so `hrefLabel` isn't used.
+- Clickable rows work from the keyboard. Tab reaches each `TableBody`'s rows as one stop, Enter
+  opens the row, and Up, Down, Home and End move between rows. The stop is the row's
+  `TableRowAction` or link, or, for a `clickable` row with only `onClick`, the row itself, which
+  draws the focus ring.
 
 ### Changed
 
@@ -26,28 +35,6 @@ Notable changes to Equality are recorded here, following [Keep a Changelog](http
 - `RadialGraph`'s unfilled ticks follow the theme; they were near-black in light mode.
 - `cn` uses tailwind-merge 3, so it merges Tailwind 4 classes such as `size-(--eq-size-sm)` and `p-2!`
   correctly.
-
-### Deprecated
-
-- `text-title` and `--eq-type-title-font-size`, `-line-height` and `-font-weight`: use
-  `text-title-1` and `--eq-type-title-1-*`, with the same values. 8.0 removes them.
-
-## Unreleased
-
-### Added
-
-- `TableRowAction` makes the text that names a row, such as a name, into the row's link when the
-  row has an `href`, or its button when it has only `onClick`. It covers the whole row, so a click
-  anywhere opens it, and screen readers announce it in place, as "Alice Cooper, link", with no
-  label of its own. A row with one takes hover and pointer styles without `clickable`, and draws
-  no hidden link, so `hrefLabel` isn't used.
-- Clickable rows work from the keyboard. Tab reaches each `TableBody`'s rows as one stop, Enter
-  opens the row, and Up, Down, Home and End move between rows. The stop is the row's
-  `TableRowAction` or link, or, for a `clickable` row with only `onClick`, the row itself, which
-  draws the focus ring.
-
-### Changed
-
 - A `TableRow` with both `href` and `onClick` runs `onClick` on a plain click instead of following
   the link, so a router can open the row without reloading the page. A click with Cmd, Ctrl, Shift
   or Alt goes to the browser, to open the URL in a new tab or window, and doesn't run `onClick`.
@@ -56,6 +43,11 @@ Notable changes to Equality are recorded here, following [Keep a Changelog](http
   where each row's link used to be its own stop.
 - `data-state="selected"` highlights any `TableRow` in a `TableBody`, not only a `clickable` one,
   so a row selected with its checkbox shows as selected.
+
+### Deprecated
+
+- `text-title` and `--eq-type-title-font-size`, `-line-height` and `-font-weight`: use
+  `text-title-1` and `--eq-type-title-1-*`, with the same values. 8.0 removes them.
 
 ### Fixed
 
