@@ -72,7 +72,10 @@ const Button = React.forwardRef<HTMLButtonElement | HTMLAnchorElement, ButtonPro
           download={download}
           className={cn(buttonVariants({ variant, size, className }))}
           ref={ref as React.Ref<HTMLAnchorElement>}
+          data-button={size ?? 'md'}
           {...anchorProps}
+          // data-slot: table cells select this; renaming it changes row heights
+          data-slot="button"
         >
           {prefix}
           {children}
@@ -86,7 +89,10 @@ const Button = React.forwardRef<HTMLButtonElement | HTMLAnchorElement, ButtonPro
       <Comp
         className={cn(buttonVariants({ variant, size, className }))}
         ref={ref as React.Ref<HTMLButtonElement>}
+        data-button={size ?? 'md'}
         {...(props as ButtonBaseProps)}
+        // data-slot: table cells select this; renaming it changes row heights
+        data-slot="button"
       >
         {prefix}
         {children}

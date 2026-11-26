@@ -20,6 +20,7 @@ import {
   TableHead,
   TableHeader,
   TableRow,
+  TitleBlock,
 } from "@eqtylab/equality";
 import avatarSrc from "@demo/assets/avatar.avif";
 import { useState } from "react";
@@ -32,7 +33,7 @@ export const AvatarDemo = ({
   shape,
 }: {
   variant?: "default" | "fallback";
-  size?: "sm" | "md" | "lg" | "xl";
+  size?: "line" | "xs" | "sm" | "md" | "lg" | "xl";
   shape?: "circle" | "square";
 }) => {
   return (
@@ -53,17 +54,16 @@ export const AvatarSizesDemo = ({
   variant?: "default" | "fallback";
   shape?: "circle" | "square";
 }) => {
-  const sizes = ["sm", "md", "lg", "xl"] as const;
-  const labels = { sm: "SM", md: "MD", lg: "LG", xl: "XL" };
+  const sizes = ["line", "xs", "sm", "md", "lg", "xl"] as const;
   return (
-    <div className="mb-4 flex items-end gap-4">
+    <div className="mb-4 flex items-end gap-4 text-sm">
       {sizes.map((s) => (
         <Avatar key={s} size={s} shape={shape}>
           <AvatarImage
             src={variant === "default" ? IMAGE_SRC : undefined}
             alt="User avatar"
           />
-          <AvatarFallback>{labels[s]}</AvatarFallback>
+          <AvatarFallback>RG</AvatarFallback>
         </Avatar>
       ))}
     </div>
@@ -85,9 +85,24 @@ export const AvatarShapeDemo = ({ shape }: { shape: "circle" | "square" }) => {
 };
 
 const PEOPLE = [
-  { name: "Alice Cooper", initials: "AC", role: "Admin" },
-  { name: "Bob Smith", initials: "BS", role: "Member" },
-  { name: "Charlie Brown", initials: "CB", role: "Member" },
+  {
+    name: "Alice Cooper",
+    initials: "AC",
+    role: "Admin",
+    email: "alice@example.com",
+  },
+  {
+    name: "Bob Smith",
+    initials: "BS",
+    role: "Member",
+    email: "bob@example.com",
+  },
+  {
+    name: "Charlie Brown",
+    initials: "CB",
+    role: "Member",
+    email: "charlie@example.com",
+  },
 ];
 
 export const AvatarControlDemo = () => {
@@ -95,7 +110,7 @@ export const AvatarControlDemo = () => {
   return (
     <div className="mb-4 flex max-w-sm items-center gap-2">
       <SearchBar searchQuery={query} setSearchQuery={setQuery} />
-      <Avatar size="lg">
+      <Avatar size="md">
         <AvatarFallback>RG</AvatarFallback>
       </Avatar>
     </div>
@@ -105,7 +120,7 @@ export const AvatarControlDemo = () => {
 export const AvatarRowDemo = ({
   variant = "table",
 }: {
-  variant?: "table" | "menu" | "select";
+  variant?: "table" | "menu" | "select" | "person";
 }) => {
   const [person, setPerson] = useState("");
 
@@ -129,6 +144,40 @@ export const AvatarRowDemo = ({
             ))}
           </SelectContent>
         </Select>
+      </div>
+    );
+  }
+
+  if (variant === "person") {
+    return (
+      <div className="mb-4">
+        <TableContainer columns="1fr auto" border>
+          <TableHeader>
+            <TableRow>
+              <TableHead>Member</TableHead>
+              <TableHead>Role</TableHead>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            {PEOPLE.map((person) => (
+              <TableRow key={person.name}>
+                <TableCell>
+                  <TitleBlock
+                    titleAs="p"
+                    mark={
+                      <Avatar size="md" aria-hidden>
+                        <AvatarFallback>{person.initials}</AvatarFallback>
+                      </Avatar>
+                    }
+                    title={person.name}
+                    description={person.email}
+                  />
+                </TableCell>
+                <TableCell>{person.role}</TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </TableContainer>
       </div>
     );
   }

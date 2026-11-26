@@ -1,0 +1,140 @@
+@reference '../../theme/theme.module.css';
+
+.title-block {
+  @apply flex min-w-0 items-start;
+}
+
+.mark-slot {
+  @apply flex shrink-0;
+}
+
+/* Quadrupled class: it has to outrank Icon's padding, and a tripled one its glyph size and square radius */
+.mark.mark.mark.mark {
+  @apply p-0;
+}
+
+.mark.mark.mark-sm {
+  @apply size-(--eq-size-sm) rounded-md;
+}
+
+.mark.mark.mark-md {
+  @apply size-(--eq-size-md) rounded-lg;
+}
+
+.mark.mark.mark-lg {
+  @apply size-(--eq-size-lg) rounded-xl;
+}
+
+.mark.mark.mark-round {
+  @apply rounded-full;
+}
+
+.mark.mark.mark-sm > * {
+  @apply size-(--eq-size-3xs);
+}
+
+.mark.mark.mark-md > *,
+.mark.mark.mark-lg > * {
+  @apply size-(--eq-size-2xs);
+}
+
+.body {
+  @apply flex min-w-0 flex-1 flex-wrap items-start gap-y-2;
+  column-gap: inherit;
+}
+
+/* The basis is the narrowest the title gets beside the end group; raise it and one badge and one button no longer share a row at 360 */
+.stack {
+  @apply min-w-0 flex-[1_1_6rem];
+}
+
+.line {
+  @apply flex min-w-0 items-start;
+}
+
+.title {
+  @apply text-text-primary min-w-0 break-words;
+}
+
+.end {
+  @apply flex min-w-0 flex-wrap items-center gap-2 self-center;
+}
+
+.trailing {
+  @apply text-body flex flex-wrap items-center gap-2;
+}
+
+.actions {
+  @apply flex flex-wrap items-center gap-2;
+}
+
+.description {
+  @apply text-body text-text-secondary;
+}
+
+.placeholder-line {
+  @apply h-(--eq-type-body-line-height) flex min-w-0 items-center;
+}
+
+.placeholder-bar {
+  @apply h-3.5 max-w-full;
+}
+
+.size-sm {
+  @apply gap-2;
+}
+
+.size-sm > .body > .stack > .line > .title {
+  @apply text-section;
+  padding-block: calc((var(--eq-control-sm-height) - var(--eq-type-section-line-height)) / 2);
+}
+
+.size-md {
+  @apply gap-3;
+}
+
+.size-md > .body > .stack > .line > .title {
+  @apply text-body font-semibold;
+}
+
+.size-md > .body > .stack > .description {
+  @apply text-caption;
+}
+
+.size-md > .body > .stack > .placeholder-line {
+  @apply h-(--eq-type-caption-line-height);
+}
+
+.size-md.with-description > .mark-slot {
+  margin-top: calc(
+    (
+        var(--eq-type-body-line-height) + var(--eq-type-caption-line-height) -
+          var(--eq-control-md-height)
+      ) /
+      2
+  );
+}
+
+.size-md:not(.with-description):is(.with-mark, .with-actions) > .body > .stack > .line {
+  padding-block: calc((var(--eq-control-md-height) - var(--eq-type-body-line-height)) / 2);
+}
+
+.size-lg {
+  @apply gap-4;
+}
+
+.size-lg > .body > .stack > .line > .title {
+  @apply text-body font-semibold;
+}
+
+.size-sm > .body > .stack > .line > .title > .placeholder-line {
+  @apply h-(--eq-type-section-line-height);
+}
+
+.size-lg.with-description.with-mark > .body > .stack {
+  padding-block: calc((var(--eq-control-lg-height) - 2 * var(--eq-type-body-line-height)) / 2);
+}
+
+.size-lg:not(.with-description):is(.with-mark, .with-actions) > .body > .stack > .line {
+  padding-block: calc((var(--eq-control-lg-height) - var(--eq-type-body-line-height)) / 2);
+}

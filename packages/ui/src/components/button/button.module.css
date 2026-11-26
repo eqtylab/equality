@@ -2,14 +2,14 @@
 
 .button {
   @apply rounded-md;
-  @apply text-(length:--eq-control-md-font-size)/[var(--tw-leading,var(--eq-control-md-line-height))] whitespace-nowrap font-medium;
+  @apply text-(length:--eq-type-body-font-size)/[var(--tw-leading,var(--eq-type-body-line-height))] whitespace-nowrap font-medium;
   @apply transition-[color,background-color,border-color,box-shadow,text-decoration-color,text-underline-offset];
   @apply ease-control duration-250;
   @apply motion-reduce:transition-none;
   @apply flex-center gap-(--eq-control-md-gap);
   @apply cursor-pointer;
   @apply disabled:cursor-not-allowed disabled:opacity-50 disabled:shadow-none;
-  @apply [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0;
+  @apply [&_svg]:size-(--eq-control-md-icon-size) [&_svg]:pointer-events-none [&_svg]:shrink-0;
   @apply focus-ring;
 }
 
@@ -120,7 +120,8 @@
 }
 
 .size--sm {
-  @apply text-(length:--eq-control-sm-font-size)/[var(--tw-leading,var(--eq-control-sm-line-height))] gap-(--eq-control-sm-gap);
+  @apply text-(length:--eq-type-caption-font-size)/[var(--tw-leading,var(--eq-type-caption-line-height))] gap-(--eq-control-sm-gap);
+  @apply [&_svg]:size-(--eq-control-sm-icon-size);
 }
 
 .size--sm:not(.button--link) {
@@ -132,7 +133,8 @@
 }
 
 .size--lg {
-  @apply text-(length:--eq-control-lg-font-size)/[var(--tw-leading,var(--eq-control-lg-line-height))] gap-(--eq-control-lg-gap);
+  @apply text-(length:--eq-type-section-font-size)/[var(--tw-leading,var(--eq-type-section-line-height))] gap-(--eq-control-lg-gap);
+  @apply [&_svg]:size-(--eq-control-lg-icon-size);
 }
 
 .size--lg:not(.button--link) {

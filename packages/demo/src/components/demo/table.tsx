@@ -1,10 +1,13 @@
 import type { Elevation } from "@eqtylab/equality";
 import {
+  Avatar,
+  AvatarFallback,
   Badge,
   Checkbox,
   EmptyTableState,
   IconButton,
   SortButton,
+  Switch,
   TableBody,
   TableCell,
   TableContainer,
@@ -29,13 +32,21 @@ interface TableDemoProps {
     | "responsive"
     | "sticky-header"
     | "sticky-header-page"
-    | "sticky-header-page-offset";
+    | "sticky-header-page-offset"
+    | "with-actions";
   elevation?: Elevation;
+  density?: "regular" | "comfortable";
 }
 
 const defaultCols = "1fr 1fr auto auto auto";
 
 const roles = ["Admin", "User", "Viewer"] as const;
+const teamMembers = [
+  { name: "Alice Cooper", initials: "AC", active: false },
+  { name: "Bob Smith", initials: "BS", active: true },
+  { name: "Charlie Brown", initials: "CB", active: true },
+];
+
 const longTableData = Array.from({ length: 10 }, (_, i) => ({
   name: `User ${i + 1}`,
   email: `user${i + 1}@example.com`,
@@ -46,6 +57,7 @@ const longTableData = Array.from({ length: 10 }, (_, i) => ({
 export const TableDemo = ({
   variant = "default",
   elevation,
+  density,
 }: TableDemoProps) => {
   const [opened, setOpened] = useState<string | null>(null);
   const [selected, setSelected] = useState<string[]>([]);
@@ -185,6 +197,57 @@ export const TableDemo = ({
               <IconButton name="EllipsisVertical" label="Row actions" />
             </TableCell>
           </TableRow>
+        </TableBody>
+      </TableContainer>
+    );
+  }
+
+  if (variant === "with-actions") {
+    return (
+      <TableContainer
+        elevation={elevation}
+        density={density}
+        columns="1fr auto auto auto"
+      >
+        <TableHeader>
+          <TableRow>
+            <TableHead>Name</TableHead>
+            <TableHead>Status</TableHead>
+            <TableHead>Alerts</TableHead>
+            <TableHead />
+          </TableRow>
+        </TableHeader>
+        <TableBody>
+          {teamMembers.map((user) => (
+            <TableRow key={user.name}>
+              <TableCell>
+                <div className="flex items-center gap-2">
+                  <Avatar aria-hidden>
+                    <AvatarFallback>{user.initials}</AvatarFallback>
+                  </Avatar>
+                  {user.name}
+                </div>
+              </TableCell>
+              <TableCell>
+                <Badge variant={user.active ? "success" : "neutral"}>
+                  {user.active ? "Active" : "Inactive"}
+                </Badge>
+              </TableCell>
+              <TableCell>
+                <Switch
+                  size="sm"
+                  defaultChecked={user.active}
+                  aria-label={`Alerts for ${user.name}`}
+                />
+              </TableCell>
+              <TableCell>
+                <IconButton
+                  name="EllipsisVertical"
+                  label={`Actions for ${user.name}`}
+                />
+              </TableCell>
+            </TableRow>
+          ))}
         </TableBody>
       </TableContainer>
     );

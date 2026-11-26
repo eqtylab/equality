@@ -4,7 +4,7 @@
   --mix-color: var(--color-border);
   --hover-darken: 12%;
   --hover-lighten: 12%;
-  @apply text-(length:--eq-control-md-font-size)/[var(--tw-leading,var(--eq-control-md-line-height))];
+  @apply text-(length:--eq-type-body-font-size)/[var(--tw-leading,var(--eq-type-body-line-height))];
   @apply px-(--eq-control-padding-x-normal);
   @apply h-(--eq-control-md-height) w-full rounded-md;
   @apply border-border bg-background border;
@@ -26,7 +26,7 @@
 }
 
 .select-icon {
-  @apply size-4;
+  @apply size-(--eq-control-md-icon-size);
 }
 
 .select-trigger--inline .select-icon {
@@ -70,10 +70,6 @@
   @apply dropdown-item;
   @apply control-row-padding min-h-(--eq-control-md-height) px-(--eq-control-padding-x-condensed);
   @apply gap-(--eq-control-md-gap) relative;
-}
-
-.select-item [data-avatar='md'] {
-  @apply control-row-overhang;
 }
 
 .select-item-indicator {

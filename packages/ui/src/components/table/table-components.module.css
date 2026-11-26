@@ -1,5 +1,8 @@
 @reference '../../theme/theme.module.css';
 
+/* Declares the order before the layer below, or it lands under the app's base layer and preflight zeroes cell padding */
+@layer theme, base, components, utilities;
+
 .table {
   @apply w-full;
 }
@@ -15,14 +18,21 @@
 }
 
 .table-header {
-  @apply [&_tr]:border-b;
   @apply grid gap-4;
   grid-template-columns: subgrid;
   grid-column: 1 / -1;
+}
 
-  & .table-row {
-    @apply py-0;
-  }
+.table-header > .table-row {
+  @apply relative;
+}
+
+/* A border on the row itself would add 1px to its height and put it off the 36 scale */
+.table-header > .table-row::after {
+  content: '';
+  @apply pointer-events-none absolute;
+  inset: auto 0 0;
+  border-bottom: 1px solid var(--color-border);
 }
 
 /* Sticks to the top of the scrollable container (requires a constrained height). */
@@ -37,21 +47,20 @@
 }
 
 .table-body {
-  @apply [&_tr:last-child]:border-0;
   @apply grid;
   grid-template-columns: subgrid;
   grid-column: 1 / -1;
 }
 
 .table-footer {
-  @apply border-t last:[&>tr]:border-b-0;
+  @apply border-t;
   @apply grid font-medium;
   grid-template-columns: subgrid;
   grid-column: 1 / -1;
 }
 
 .table-head {
-  @apply h-(--eq-control-md-height);
+  @apply min-h-(--eq-control-md-height);
   @apply content-center;
   @apply text-text-primary text-left font-medium transition-colors;
   @apply [&:has([role=checkbox])]:pr-0;
@@ -61,27 +70,293 @@
   @apply [&:has([role=checkbox])]:pr-0;
 }
 
-.table-cell [data-icon-button='sm'] {
-  @apply -my-1;
-}
-
-.table-cell [data-avatar='md'] {
-  @apply control-row-overhang;
-}
-
 .table-row {
   @apply grid items-center gap-4;
   grid-template-columns: subgrid;
   grid-column: 1 / -1;
-  @apply control-row-padding min-h-(--eq-control-md-height) px-4;
+  @apply min-h-(--eq-control-md-height) px-4;
 }
 
-/* Keep at half the row hover in --color-list-item-hover or less, or a hovered row stops standing out */
-.table-body .table-row:nth-child(even) {
-  background-color: color-mix(in oklch, var(--color-text-primary) 3%, transparent);
-  @variant dark {
-    background-color: color-mix(in oklch, var(--color-text-primary) 4%, transparent);
+.table-body > .table-row {
+  @apply relative;
+}
+
+.table--comfortable > .table-inner > .table-body > .table-row,
+.table--comfortable > .table-inner > .table-footer > .table-row {
+  @apply min-h-(--eq-control-lg-height);
+}
+
+.table--comfortable > .table-inner > .table-header > .table-row > .table-head {
+  @apply min-h-(--eq-control-lg-height);
+}
+
+/* Keep it registered: unregistered, a bare 0 makes the pull's calc() invalid and a button sits on the row's lines */
+@property --eq-table-cell-padding {
+  syntax: '<length>';
+  inherits: true;
+  initial-value: 0px;
+}
+
+/* In a layer so an app's py-* utilities on a cell still win; unlayered, these would beat them */
+@layer components {
+  :is(.table-cell, .table-head) {
+    --eq-table-cell-padding: calc(
+      (var(--eq-control-md-height) - var(--eq-type-body-line-height)) / 2
+    );
+    padding-block: var(--eq-table-cell-padding);
   }
+
+  .table--comfortable > .table-inner > * > .table-row > :is(.table-cell, .table-head) {
+    --eq-table-cell-padding: calc(
+      (var(--eq-control-lg-height) - var(--eq-type-body-line-height)) / 2
+    );
+    padding-block: var(--eq-table-cell-padding);
+  }
+
+  .table--comfortable
+    > .table-inner
+    > *
+    > .table-row
+    > :is(.table-cell, .table-head):has([data-slot='title-block'][data-size='md']):not(
+      :has(.table-inner [data-slot='title-block'][data-size='md'])
+    ) {
+    --eq-table-cell-padding: calc(
+      (var(--eq-control-md-height) - var(--eq-type-body-line-height)) / 2
+    );
+    padding-block: var(--eq-table-cell-padding);
+  }
+
+  .table-header
+    > .table-row
+    > .table-head:has(
+      [role='switch'],
+      [data-slot='segmented-controls'],
+      :is(
+          [data-slot='pagination'],
+          [data-slot='code-block'],
+          [data-slot='motion-collapsible'],
+          [data-slot='empty-table-state'],
+          [data-slot='truncated-description']
+        )
+        :is(button, [role='button'])
+    ):not(
+      :has(
+        .table-inner
+          :is(
+            [role='switch'],
+            [data-slot='segmented-controls'],
+            :is(
+                [data-slot='pagination'],
+                [data-slot='code-block'],
+                [data-slot='motion-collapsible'],
+                [data-slot='empty-table-state'],
+                [data-slot='truncated-description']
+              )
+              :is(button, [role='button'])
+          )
+      )
+    ) {
+    --eq-table-cell-padding: calc((var(--eq-control-md-height) - var(--eq-control-sm-height)) / 2);
+    padding-block: var(--eq-table-cell-padding);
+  }
+
+  .table--comfortable
+    > .table-inner
+    > *
+    > .table-row
+    > :is(.table-cell, .table-head):has(
+      [role='switch'],
+      [data-slot='segmented-controls'],
+      :is(
+          [data-slot='pagination'],
+          [data-slot='code-block'],
+          [data-slot='motion-collapsible'],
+          [data-slot='empty-table-state'],
+          [data-slot='truncated-description']
+        )
+        :is(button, [role='button'])
+    ):not(
+      :has(
+        .table-inner
+          :is(
+            [role='switch'],
+            [data-slot='segmented-controls'],
+            :is(
+                [data-slot='pagination'],
+                [data-slot='code-block'],
+                [data-slot='motion-collapsible'],
+                [data-slot='empty-table-state'],
+                [data-slot='truncated-description']
+              )
+              :is(button, [role='button'])
+          )
+      )
+    ) {
+    --eq-table-cell-padding: calc((var(--eq-control-lg-height) - var(--eq-control-sm-height)) / 2);
+    padding-block: var(--eq-table-cell-padding);
+  }
+
+  .table-header
+    > .table-row
+    > .table-head:has(
+      :is(
+          [data-slot='pagination'],
+          [data-slot='code-block'],
+          [data-slot='motion-collapsible'],
+          [data-slot='empty-table-state'],
+          [data-slot='truncated-description']
+        )
+        :is([data-button='md'], [data-button='lg'])
+    ):not(
+      :has(
+        .table-inner
+          :is(
+            [role='switch'],
+            [data-slot='segmented-controls'],
+            :is(
+                [data-slot='pagination'],
+                [data-slot='code-block'],
+                [data-slot='motion-collapsible'],
+                [data-slot='empty-table-state'],
+                [data-slot='truncated-description']
+              )
+              :is(button, [role='button'])
+          )
+      )
+    ) {
+    --eq-table-cell-padding: 0px;
+    padding-block: var(--eq-table-cell-padding);
+  }
+
+  .table--comfortable
+    > .table-inner
+    > *
+    > .table-row
+    > :is(.table-cell, .table-head):has(
+      :is(
+          [data-slot='pagination'],
+          [data-slot='code-block'],
+          [data-slot='motion-collapsible'],
+          [data-slot='empty-table-state'],
+          [data-slot='truncated-description']
+        )
+        [data-button='md']
+    ):not(
+      :has(
+        .table-inner
+          :is(
+            [role='switch'],
+            [data-slot='segmented-controls'],
+            :is(
+                [data-slot='pagination'],
+                [data-slot='code-block'],
+                [data-slot='motion-collapsible'],
+                [data-slot='empty-table-state'],
+                [data-slot='truncated-description']
+              )
+              :is(button, [role='button'])
+          )
+      )
+    ) {
+    --eq-table-cell-padding: calc((var(--eq-control-lg-height) - var(--eq-control-md-height)) / 2);
+    padding-block: var(--eq-table-cell-padding);
+  }
+
+  .table--comfortable
+    > .table-inner
+    > *
+    > .table-row
+    > :is(.table-cell, .table-head):has(
+      :is(
+          [data-slot='pagination'],
+          [data-slot='code-block'],
+          [data-slot='motion-collapsible'],
+          [data-slot='empty-table-state'],
+          [data-slot='truncated-description']
+        )
+        [data-button='lg']
+    ):not(
+      :has(
+        .table-inner
+          :is(
+            [role='switch'],
+            [data-slot='segmented-controls'],
+            :is(
+                [data-slot='pagination'],
+                [data-slot='code-block'],
+                [data-slot='motion-collapsible'],
+                [data-slot='empty-table-state'],
+                [data-slot='truncated-description']
+              )
+              :is(button, [role='button'])
+          )
+      )
+    ) {
+    --eq-table-cell-padding: 0px;
+    padding-block: var(--eq-table-cell-padding);
+  }
+}
+
+/* Unlayered so an unlayered reset such as button { margin: 0 } can't cancel the pull */
+/* Reads --eq-table-cell-padding, so a cell rule that sets padding-block without it leaves a button 4 from the wrong line */
+/* Both sides start at a cell; drop either and a component wrapped around the table turns the pull or its exclusions off */
+:is(.table-cell, .table-head)
+  :is(
+    button,
+    [role='button'],
+    [data-slot='button'],
+    [data-slot='icon-button'],
+    [data-slot='title-block'][data-size='sm']
+  ):not(
+    [role='switch'],
+    [role='checkbox'],
+    [role='radio'],
+    [role='tab'],
+    [data-sort-button],
+    [data-table-row-action],
+    :is(.table-cell, .table-head)
+      :is(
+        [data-slot='title-block'],
+        [data-slot='empty-table-state'],
+        [data-slot='segmented-controls'],
+        [data-slot='pagination'],
+        [data-slot='code-block'],
+        [data-slot='motion-collapsible'],
+        [data-slot='truncated-description']
+      )
+      *:not(
+        :is(.table-cell, .table-head)
+          :is(
+            [data-slot='title-block'],
+            [data-slot='empty-table-state'],
+            [data-slot='segmented-controls'],
+            [data-slot='pagination'],
+            [data-slot='code-block'],
+            [data-slot='motion-collapsible'],
+            [data-slot='truncated-description']
+          )
+          :is(.table-cell, .table-head)
+          *
+      )
+  ) {
+  margin-block: calc(
+    (var(--eq-control-sm-height) - var(--eq-type-body-line-height)) / 2 -
+      var(--eq-table-cell-padding)
+  );
+}
+
+/* A border on the row itself would add 1px to its height and put it off the 36 scale */
+.table-body > .table-row:not(:last-child)::after {
+  content: '';
+  @apply pointer-events-none absolute;
+  inset: auto 0 0;
+  border-bottom: 1px solid var(--eq-table-row-divider-color);
+}
+
+/* After the row line rule: same weight, so moved above it the line tints the bottom of the focus ring */
+.table-row--linked:has(:is(.table-row-link, .table-row-action):focus-visible)::after,
+.table-row--clickable[data-table-row-focusable]:focus-visible::after {
+  content: none;
 }
 
 /* Clickable Variant */

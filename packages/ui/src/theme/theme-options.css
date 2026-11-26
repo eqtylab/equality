@@ -1,0 +1,19 @@
+/* Never declare @theme { --spacing } here: it rewrites every utility to var(--spacing, …) and
+   changes every component's compiled CSS. */
+/* Never read var(--spacing) or var(--text-*) here: the theme is inline, so consumer builds leave them undefined. */
+
+/* OPTIONS: the values Equality allows, named by position. Decisions name what a value is for.
+   Options read only Tailwind's unit; decisions read options; parts read decisions; a box that isn't
+   a control (Badge, a Timeline marker) may read an option. theme-options-scoped.css is
+   generated from this file: run `pnpm build:decisions` after changing it, or
+   tests/theme-css.test.ts fails. */
+html {
+  /* size: the scale. Each step is a line height or a box height */
+  --eq-size-3xs: --spacing(4); /* 16 */
+  --eq-size-2xs: --spacing(5); /* 20 */
+  --eq-size-xs: --spacing(6); /* 24 */
+  --eq-size-sm: --spacing(7); /* 28 */
+  --eq-size-md: --spacing(9); /* 36 */
+  --eq-size-lg: --spacing(11); /* 44 */
+  --eq-size-xl: --spacing(13); /* 52 */
+}

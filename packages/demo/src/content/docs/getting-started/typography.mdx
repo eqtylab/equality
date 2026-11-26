@@ -1,0 +1,102 @@
+---
+title: "Typography"
+description: "Four text styles for hierarchy, and how to line them up with controls"
+---
+
+import { TypographyDemo } from "@demo/components/demo/typography";
+
+## Overview
+
+Pick a text style for hierarchy: `text-title`, `text-section`, `text-body` or `text-caption`. Each style's line follows its size: caption 12 on 16, body 14 on 20, section 16 on 24 and title 30 on 36. Title and section are semibold; body and caption keep the weight of the text around them. For a label that should stay medium, add `font-medium` beside the style. Each is a Tailwind text size on one of the [size steps](/getting-started/sizing), so plain `text-sm` in your app is the same size as body. To line text up with controls, put it in a row with them and centre it, the way a button centres its label. [Sizing](/getting-started/sizing) shows what else sits on each step.
+
+Use `Heading` for headings in long-form content. Use these styles for a page, card or section title that shares a line with controls, on an `h1`–`h6`, such as `<h1 className="text-title">`. The examples on this page draw their titles as paragraphs to keep this page's outline clean; the code beside each shows the heading to use.
+
+## Text Styles
+
+### Title
+
+Use `text-title` for the page title, centred in a row with the page's default buttons.
+
+<TypographyDemo example="title" />
+
+```tsx
+<div className="flex items-center justify-between gap-4">
+  <h1 className="text-title">Projects</h1>
+  <Button>New Project</Button>
+</div>
+```
+
+### Section
+
+Use `text-section` for a card or section title, centred in a row with any small buttons beside it. [Card Content Header](/components/card-content-header), and [Section Heading](/components/section-heading) without a description, already do this.
+
+<TypographyDemo example="section" />
+
+```tsx
+<Card>
+  <CardContent>
+    <div className="flex items-center justify-between gap-4">
+      <h2 className="text-section">Recent Activity</h2>
+      <Button variant="tertiary" size="sm">
+        See All
+      </Button>
+    </div>
+  </CardContent>
+</Card>
+```
+
+### Body
+
+Use `text-body` for running text and descriptions.
+
+<TypographyDemo example="body" />
+
+```tsx
+<p className="text-body">
+  Every model in this project is evaluated against its controls before release.
+</p>
+```
+
+### Caption
+
+Use `text-caption` for small supporting text, such as a timestamp or a hint under a field.
+
+<TypographyDemo example="caption" />
+
+```tsx
+<p className="text-caption text-text-secondary">Updated 2 hours ago</p>
+```
+
+## Badge Beside a Title
+
+A badge beside a title keeps its default size and sits centred on the title's line.
+
+<TypographyDemo example="badge" />
+
+```tsx
+<div className="flex items-center gap-2">
+  <h1 className="text-title">Model Registry</h1>
+  <Badge variant="neutral">Beta</Badge>
+</div>
+```
+
+## Merging Classes
+
+If your app merges classes with tailwind-merge, register the four styles as font sizes, or a text colour beside them removes them.
+
+```ts
+import { clsx, type ClassValue } from "clsx";
+import { extendTailwindMerge } from "tailwind-merge";
+
+const twMerge = extendTailwindMerge({
+  extend: {
+    classGroups: {
+      "font-size": [{ text: ["xxs", "title", "section", "body", "caption"] }],
+    },
+  },
+});
+
+export function cn(...inputs: ClassValue[]) {
+  return twMerge(clsx(inputs));
+}
+```

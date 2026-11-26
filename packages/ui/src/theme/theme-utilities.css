@@ -7,11 +7,7 @@
 }
 
 @utility control-row-padding {
-  padding-block: calc((var(--eq-control-md-height) - var(--eq-control-md-line-height)) / 2);
-}
-
-@utility control-row-overhang {
-  margin-block: calc((var(--eq-control-md-line-height) - --spacing(6)) / 2);
+  padding-block: calc((var(--eq-control-md-height) - var(--eq-type-body-line-height)) / 2);
 }
 
 @utility control-track {
@@ -86,7 +82,7 @@
 @utility dropdown-item {
   @apply cursor-pointer;
   @apply flex items-center;
-  @apply text-(length:--eq-control-md-font-size)/[var(--tw-leading,var(--eq-control-md-line-height))];
+  @apply text-(length:--eq-type-body-font-size)/[var(--tw-leading,var(--eq-type-body-line-height))];
   @apply transition-colors;
   @apply relative rounded-sm;
   @apply outline-hidden select-none;

@@ -8,7 +8,7 @@
 
 .root {
   /* list-item: one selectable row */
-  --eq-list-item-icon-size: --spacing(4); /* 16 */
+  --eq-list-item-icon-size: var(--eq-control-md-icon-size);
   --eq-list-item-muted-color: var(--color-text-tertiary);
   /* list: the rows together */
   --eq-list-gap: --spacing(0.5); /* 2, between items */
@@ -16,11 +16,17 @@
   --eq-list-label-gap: --spacing(1); /* 4, label to its first item */
   --eq-list-label-font-size: --theme(--text-xs); /* 12 */
   --eq-list-indent: --spacing(3); /* 12, child indent when items have no icons */
+  /* table: a table row */
+  --eq-table-row-divider-color: color-mix(in oklab, var(--color-border) 60%, transparent);
   /* nav-motion: a drill-in and a folder opening share one motion. NavDrill reads these in
      JavaScript, folder groups in CSS */
   --eq-nav-motion-duration: 300ms;
   --eq-nav-motion-ease: cubic-bezier(0.2, 0.8, 0.2, 1);
   --eq-nav-motion-nudge: 12px;
+  /* nav-rail: the rail's width, its item plus 12 each side. A logo column above it reads this */
+  --eq-nav-rail-width: calc(
+    max(var(--eq-control-md-height), var(--eq-touch-target)) + --spacing(6)
+  );
   /* switcher: the fade on its name. It ends at secondary text, so the name is never dimmer than the
      rows below it. A site can set its own: the docs do */
   --eq-switcher-name-fade: linear-gradient(
@@ -28,24 +34,40 @@
     var(--color-text-primary),
     var(--color-text-secondary)
   );
-  /* control: a stand-alone element */
-  --eq-control-xs-height: --spacing(6); /* 24 */
-  --eq-control-sm-height: --spacing(7); /* 28 */
-  --eq-control-md-height: --spacing(9); /* 36 */
-  --eq-control-lg-height: --spacing(11); /* 44 */
+  /* type: a Tailwind text size on one of our steps */
+  --eq-type-title-font-size: --theme(--text-3xl); /* 30 */
+  --eq-type-title-line-height: var(--eq-size-md);
+  --eq-type-title-font-weight: --theme(--font-weight-semibold);
+  --eq-type-section-font-size: --theme(--text-base); /* 16 */
+  --eq-type-section-line-height: var(--eq-size-xs);
+  --eq-type-section-font-weight: --theme(--font-weight-semibold);
+  --eq-type-body-font-size: --theme(--text-sm); /* 14 */
+  --eq-type-body-line-height: var(--eq-size-2xs);
+  --eq-type-caption-font-size: --theme(--text-xs); /* 12 */
+  --eq-type-caption-line-height: var(--eq-size-3xs);
+  /* control: its box and label from the same options as the text styles */
+  --eq-control-xs-height: var(--eq-size-xs); /* 24 */
+  --eq-control-sm-height: var(--eq-size-sm); /* 28 */
+  --eq-control-md-height: var(--eq-size-md); /* 36 */
+  --eq-control-lg-height: var(--eq-size-lg); /* 44 */
+  /* Deprecated: same size and line height as caption, body, section; a later major removes them */
   /* Font size and line height change together: line heights are lengths, not ratios of the size. */
   --eq-control-sm-font-size: --theme(--text-xs); /* 12 */
-  --eq-control-sm-line-height: --spacing(4); /* 16 */
+  --eq-control-sm-line-height: var(--eq-size-3xs); /* 16 */
   --eq-control-md-font-size: --theme(--text-sm); /* 14 */
-  --eq-control-md-line-height: --spacing(5); /* 20 */
+  --eq-control-md-line-height: var(--eq-size-2xs); /* 20 */
   --eq-control-lg-font-size: --theme(--text-base); /* 16 */
-  --eq-control-lg-line-height: --spacing(6); /* 24 */
+  --eq-control-lg-line-height: var(--eq-size-xs); /* 24 */
   --eq-control-padding-x-condensed: --spacing(2); /* 8 */
   --eq-control-padding-x-normal: --spacing(3); /* 12 */
   --eq-control-padding-x-spacious: --spacing(4); /* 16 */
   --eq-control-sm-gap: --spacing(1.5); /* 6, icon to text */
   --eq-control-md-gap: --spacing(2); /* 8, icon to text */
   --eq-control-lg-gap: --spacing(2); /* 8, icon to text */
+  --eq-control-xs-icon-size: --spacing(3.5); /* 14 */
+  --eq-control-sm-icon-size: --spacing(4); /* 16 */
+  --eq-control-md-icon-size: --spacing(4); /* 16 */
+  --eq-control-lg-icon-size: --spacing(5); /* 20 */
   /* touch: the minimum tap target */
   --eq-touch-target: 0px;
 

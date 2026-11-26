@@ -12,7 +12,7 @@
 }
 
 .items-per-page-trigger.items-per-page-trigger {
-  @apply text-(length:--eq-control-sm-font-size)/[var(--tw-leading,var(--eq-control-sm-line-height))];
+  @apply text-(length:--eq-type-caption-font-size)/[var(--tw-leading,var(--eq-type-caption-line-height))];
   @apply h-(--eq-control-sm-height) px-(--eq-control-padding-x-condensed) w-auto py-0;
 }
 

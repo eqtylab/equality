@@ -1,7 +1,7 @@
 @reference '../../theme/theme.module.css';
 
 .display-field {
-  @apply text-text-primary text-(length:--eq-control-md-font-size)/[var(--tw-leading,var(--eq-control-md-line-height))] text-clip;
+  @apply text-text-primary text-(length:--eq-type-body-font-size)/[var(--tw-leading,var(--eq-type-body-line-height))] text-clip;
 }
 
 .display-field-inner {
@@ -29,7 +29,7 @@
 .prefix {
   @apply flex items-center gap-1;
   @apply px-2;
-  @apply text-(length:--eq-control-md-font-size)/[var(--tw-leading,var(--eq-control-md-line-height))] font-medium transition-colors;
+  @apply text-(length:--eq-type-body-font-size)/[var(--tw-leading,var(--eq-type-body-line-height))] font-medium transition-colors;
   @apply rounded-br-md rounded-tr-md;
 }
 

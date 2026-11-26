@@ -54,7 +54,7 @@
 .nav-list-item {
   @apply h-(--eq-control-md-height) min-h-(--eq-touch-target) gap-(--eq-control-md-gap) flex w-full min-w-0 items-center;
   @apply px-(--eq-control-padding-x-condensed) rounded-md border border-transparent bg-transparent text-left no-underline;
-  @apply text-(length:--eq-control-md-font-size) text-text-secondary;
+  @apply text-(length:--eq-type-body-font-size) text-text-secondary;
   @apply transition-colors duration-150 motion-reduce:transition-none;
 }
 

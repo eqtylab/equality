@@ -42,43 +42,56 @@ If you have no network access or web fetching fails, tell your user that you cou
 
 ### Name translation
 
-| If you're thinking of…                                     | Use in Equality                  | Don't hand-roll it from            |
-| ---------------------------------------------------------- | -------------------------------- | ---------------------------------- |
-| Combobox, searchable select, filterable single-select      | `Select` with `SelectSearch`     | `Popover` + `Command`              |
-| Command palette, ⌘K launcher                               | `Command`                        | `Dialog` + `Input` + a list        |
-| Modal, lightbox                                            | `Dialog`                         | A fixed-position `div`             |
-| Confirmation or destructive-action prompt                  | `AlertDialog`                    | `Dialog` with two buttons          |
-| Drawer, side panel, slide-over                             | `Sheet`                          | `Dialog` with custom styles        |
-| Snackbar, notification                                     | `Toast`                          | A timed, positioned `div`          |
-| Page status strip, archived or read-only banner            | `Banner`                         | A gradient `div` under the header  |
-| Activity feed, history, audit trail, event log             | `Timeline`                       | A list with a border for a rail    |
-| Toggle                                                     | `Switch`                         | A styled checkbox                  |
-| Chip, pill, tag, status label                              | `Badge`                          | A rounded `span`                   |
-| Loader, activity indicator                                 | `Spinner`                        | An animated SVG                    |
-| Button group or toggle group for mutually exclusive values | `SegmentedControls`              | A row of `Button`s                 |
-| Multi-select filter                                        | `FilterDropdown`                 | `DropdownMenu` with checkboxes     |
-| Footer action, "Select all" or "Other" while searching     | `persistent` items               | Buttons outside the list items     |
-| Title switcher, inline dropdown in a heading or text       | `SelectTrigger variant="inline"` | `SelectTrigger` with `!` overrides |
-| Radio card, selectable card in a set                       | `Card selected`                  | `Card` with `!` overrides          |
-| Pass/fail or status-tinted card                            | `Card variant="success"`         | `Card` with `!` overrides          |
-| Textarea inside an editor frame                            | `Textarea variant="bare"`        | `Textarea` with `!` overrides      |
-| Field-like trigger for a date or people picker             | `Button variant="field"`         | A tertiary `Button` with overrides |
-| Clear button inside a picker field                         | `IconButton size="xs"`           | `IconButton` with a size override  |
-| Avatar sized to match a control                            | `Avatar size="lg"`               | `Avatar` with `!size-9`            |
-| Sidebar rows, settings list, `NavItem`/`NavSection`        | `NavListItem` in `NavListGroup`  | Styled links in a `ul`             |
-| App sidebar, icon rail                                     | `NavPanel` + `NavRail`           | A fixed `aside` with links         |
-| Sliding sub-panel, drill-in nav                            | `NavDrill`                       | Swapped lists with CSS transitions |
-| Collapsible nav group, tree sidebar, folder rows           | `NavListExpandable`              | `<details>` or a toggled `ul`      |
+| If you're thinking of…                                                                     | Use in Equality                                                                                                                                                                  | Don't hand-roll it from                                |
+| ------------------------------------------------------------------------------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------ |
+| Combobox, searchable select, filterable single-select                                      | `Select` with `SelectSearch`                                                                                                                                                     | `Popover` + `Command`                                  |
+| Command palette, ⌘K launcher                                                               | `Command`                                                                                                                                                                        | `Dialog` + `Input` + a list                            |
+| Modal, lightbox                                                                            | `Dialog`                                                                                                                                                                         | A fixed-position `div`                                 |
+| Confirmation or destructive-action prompt                                                  | `AlertDialog`                                                                                                                                                                    | `Dialog` with two buttons                              |
+| Drawer, side panel, slide-over                                                             | `Sheet`                                                                                                                                                                          | `Dialog` with custom styles                            |
+| Snackbar, notification                                                                     | `Toast`                                                                                                                                                                          | A timed, positioned `div`                              |
+| Page status strip, archived or read-only banner                                            | `Banner`                                                                                                                                                                         | A gradient `div` under the header                      |
+| Activity feed, history, audit trail, event log                                             | `Timeline`                                                                                                                                                                       | A list with a border for a rail                        |
+| Toggle                                                                                     | `Switch`                                                                                                                                                                         | A styled checkbox                                      |
+| Chip, pill, tag, status label                                                              | `Badge`                                                                                                                                                                          | A rounded `span`                                       |
+| Loader, activity indicator                                                                 | `Spinner`                                                                                                                                                                        | An animated SVG                                        |
+| Button group or toggle group for mutually exclusive values                                 | `SegmentedControls`                                                                                                                                                              | A row of `Button`s                                     |
+| Multi-select filter                                                                        | `FilterDropdown`                                                                                                                                                                 | `DropdownMenu` with checkboxes                         |
+| Footer action, "Select all" or "Other" while searching                                     | `persistent` items                                                                                                                                                               | Buttons outside the list items                         |
+| Title switcher, inline dropdown in a heading or text                                       | `SelectTrigger variant="inline"`                                                                                                                                                 | `SelectTrigger` with `!` overrides                     |
+| Radio card, selectable card in a set                                                       | `Card selected`                                                                                                                                                                  | `Card` with `!` overrides                              |
+| Pass/fail or status-tinted card                                                            | `Card variant="success"`                                                                                                                                                         | `Card` with `!` overrides                              |
+| Textarea inside an editor frame                                                            | `Textarea variant="bare"`                                                                                                                                                        | `Textarea` with `!` overrides                          |
+| Field-like trigger for a date or people picker                                             | `Button variant="field"`                                                                                                                                                         | A tertiary `Button` with overrides                     |
+| Clear button inside a picker field                                                         | `IconButton size="xs"`                                                                                                                                                           | `IconButton` with a size override                      |
+| Avatar in a list or row, one line per person (even in a card)                              | `Avatar` with no `size`                                                                                                                                                          | `Avatar` with a negative margin                        |
+| Person with a subline (name over email) in a table or list row                             | `TitleBlock` with an `Avatar size="md"` mark                                                                                                                                     | An `Avatar` beside a hand-stacked name and email       |
+| Avatar for one person: card or page header, "Assigned to" field, name with a line under it | `Avatar size="md"`                                                                                                                                                               | `Avatar` with `!size-9`                                |
+| Avatar sized to match a control                                                            | `Avatar` with the control's size                                                                                                                                                 | `Avatar` with `!size-9`                                |
+| Row action, kebab or copy button at the end of a table row                                 | `IconButton` at its default size, in a `TableCell`                                                                                                                               | `IconButton` with a negative margin                    |
+| ID or hash in a table cell                                                                 | Plain text, when the row's menu or the view it opens can copy it                                                                                                                 | A `CopyButton` in the cell, unless neither can copy it |
+| Taller table rows, comfortable or touch-friendly table                                     | `TableContainer density="comfortable"`                                                                                                                                           | Extra padding on `TableRow`                            |
+| Sidebar rows, settings list, `NavItem`/`NavSection`                                        | `NavListItem` in `NavListGroup`                                                                                                                                                  | Styled links in a `ul`                                 |
+| App sidebar, icon rail                                                                     | `NavPanel` + `NavRail`                                                                                                                                                           | A fixed `aside` with links                             |
+| Sliding sub-panel, drill-in nav                                                            | `NavDrill`                                                                                                                                                                       | Swapped lists with CSS transitions                     |
+| Collapsible nav group, tree sidebar, folder rows                                           | `NavListExpandable`                                                                                                                                                              | `<details>` or a toggled `ul`                          |
+| Page title beside its actions                                                              | `text-title` on an `h1`, such as `<h1 className="text-title">`                                                                                                                   | `text-2xl` with a line height                          |
+| Card or section title beside a small button                                                | `CardContentHeader` for a card's top, `SectionHeading` for a page section, `TitleBlock size="sm"` when it also needs a badge or description, else `text-section` on an `h2`–`h6` | `text-lg` or `font-semibold` with a line height        |
+| Media object, icon or avatar beside a title and a line under it, list-item header          | `TitleBlock` with `TitleBlockMark`, or an `Avatar` of the block's size (sm, md or lg): `md` for a name and a short fact, `lg` for a title and a sentence                         | A flex row with a hand-sized icon box                  |
+| Icon tile, icon in a rounded square or circle beside a title                               | `TitleBlockMark`, with `shape="round"` for a circle                                                                                                                              | `Icon background="square"` with size overrides         |
+| Loading placeholder for a title block                                                      | `TitleBlockSkeleton`                                                                                                                                                             | `Skeleton` bars sized by hand                          |
 
 ## Common Mistakes
 
-- Headings should almost always go through the `Heading` component (`as` sets the tag, `displayAs` the visual level & styling), so semantic level and visual size can differ without custom CSS.
+- `Heading` sets the tag and a document heading's size (`as` sets the tag, `displayAs` the visual level), so semantic level and visual size can differ without custom CSS. A page, card or section title that sits on a line with controls takes `text-title` or `text-section` in place of `Heading`'s sizes, still on an `h1`–`h6`, such as `<h1 className="text-title">`.
 - Small label titles should use `Label` to describe
 - NEVER make custom badges!! There are more than enough properties in `Badge`
   - Use `ResourceBadge` when referencing integrity-backed resources and `ControlStatusBadge` when referencing control statuses.
   - Avoid using badge `size="sm"` except for specific scenarios where space is at a premium like within tables. Most badges should be the default `size="md"`
 - Icons should be used sparingly. Ensure consistency when using them, try not to conflate multiple concepts with the same icon
 - Nav: decide between drill in, expand and `NavSwitcher` with "Which One to Use" on the Nav docs page, and follow its "Best Practices". Statuses go in a row's `suffix`, never its `prefix`. Under a sticky header, set `--eq-nav-offset` to the header's height on the element around the rail and panel; never override the nav's own `top` or `max-height`.
+- Avatar: no `size` in a list or row with one line per person, even inside a card. `md` for a person on their own: card or page header, an "Assigned to" field, a name with a line under it. `lg` in profile headers, `xl` for a profile or page hero (the largest person on a page). `xs` only beside an extra-small control. As a `TitleBlock` mark, give the Avatar the block's size (`sm`, `md` or `lg`): it does not take it from the block.
+- Table: rows draw a thin line between them. Don't add an `nth-child` fill. A button in a cell reaches into the cell's padding, so buttons you stack in one cell, or a row of them that wraps, overlap: give each `my-0!`. To change a cell's padding, set `[--eq-table-cell-padding:4px]` on the `TableCell`, not `py-*`.
 - No custom hex codes, no `bg-{color}-{number}` palette classes.
 - Keep interactive and status colours apart. They are two different purples, and they clash side by side:
   - `button-*` tokens and the `primary` variants of controls are lilac, for things you can click, select or toggle and their states. Never use them to colour a non-interactive surface, label or decoration.
@@ -152,11 +165,53 @@ classes backed by tokens — `bg-background`, `bg-background-raised`,
 These flip correctly in dark mode; `bg-slate-800` and `#1e293b` do not.
 
 A control or row you build yourself takes its height, text and side padding from
-Equality's control decisions: `h-(--eq-control-md-height)` for height,
-`--eq-control-md-font-size` and `--eq-control-md-line-height` for text, and
-`--eq-control-padding-x-condensed`, `-normal` or `-spacious` (8, 12, 16) for side
-padding. Heights come in `xs` (24), `sm` (28), `md` (36) and `lg` (44); text
-comes in `sm`, `md` and `lg`. Never write `h-10`.
+Equality's control decisions: `h-(--eq-control-md-height)` for height, a text
+style for its label in medium weight at every size (`text-caption font-medium`
+at `sm`, `text-body font-medium` at `md`, `text-section font-medium` at `lg`),
+and `--eq-control-padding-x-condensed`, `-normal` or `-spacious` (8,
+12, 16) for side padding. Heights come in `xs` (24), `sm` (28), `md` (36) and
+`lg` (44). Use the text styles, not the control text names
+(`--eq-control-*-font-size` and `-line-height`): those are deprecated and a
+later major removes them. An icon beside the text takes
+`--eq-control-{xs,sm,md,lg}-icon-size`, such as `size-(--eq-control-md-icon-size)`.
+Never write `h-10`. Text lines, controls, rows and avatars share seven size steps
+(16, 20, 24, 28, 36, 44, 52); the Sizing page says what sits on each:
+<https://equality.eqtylab.io/getting-started/sizing>. The steps are options: the values
+Equality allows. Control and text sizes are decisions chosen from them, and a
+part you build reads a decision where one fits. A picture or mark you build that
+isn't a control takes an option, `--eq-size-{3xs,2xs,xs,sm,md,lg,xl}`. Control
+sizes `xs` to `lg`, and Avatar's `xs` to `xl`, are the step they sit on; Avatar's
+default follows its line. Badge, Icon, Switch, Checkbox and Timeline use their
+own size names.
+
+Text takes one of four styles: `text-title` for a page title, `text-section` for
+a card or section title, `text-body` for running text and `text-caption` for
+small supporting text. Put a title style on an `h1`–`h6`, such as
+`<h1 className="text-title">`, so the title stays a heading. Each line follows its size: caption 12 on 16, body 14 on
+20, section 16 on 24, title 30 on 36. To line a title up with controls, put it in
+a row with them and centre it: a section title in a 28 row with small buttons, a
+page title in a 36 row with default ones. Never pair a size with a hand-written
+line height, such as `text-2xl leading-(--eq-control-md-height)`.
+
+If your app merges classes with tailwind-merge, register the four styles as font
+sizes, or a text colour beside them removes them.
+
+```ts
+import { clsx, type ClassValue } from 'clsx';
+import { extendTailwindMerge } from 'tailwind-merge';
+
+const twMerge = extendTailwindMerge({
+  extend: {
+    classGroups: {
+      'font-size': [{ text: ['xxs', 'title', 'section', 'body', 'caption'] }],
+    },
+  },
+});
+
+export function cn(...inputs: ClassValue[]) {
+  return twMerge(clsx(inputs));
+}
+```
 
 **Accessibility is mostly free — don't undo it.** Radix gives you focus
 management, escape handling, and ARIA wiring. You still have to supply the text:

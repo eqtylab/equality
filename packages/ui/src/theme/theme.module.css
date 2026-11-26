@@ -10,6 +10,7 @@
 @import './tokens.css';
 
 @import './theme-base.css';
+@import './theme-options-scoped.css';
 @import './theme-decisions-scoped.css';
 @import './theme-preflight-scoped.css' layer(base);
 @import './theme-utilities.css';

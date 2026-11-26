@@ -106,7 +106,8 @@ attribute for you; you can also mark plain wrappers, as many per page as needed:
 
 Neither preflight declares a layer of its own, so `layer()` places the reset
 wherever the host cascade needs it — `layer(equality-reset)`, ordered against the
-host's own layers, for instance.
+host's own layers, for instance. Whichever layer you use, order it before `components`,
+and do the same for any other CSS reset: a reset outside a layer removes table cell padding.
 
 A host's theme toggle won't set `data-equality-theme`, so mirror its attribute:
 
@@ -124,6 +125,7 @@ new MutationObserver(() => {
 | Dropdowns, dialogs, tooltips render unstyled | No `ThemeProvider`, or a portal container is needed (shadow DOM, multiple roots) |
 | Host site's typography collapsed             | Global preflight used where the scoped one belongs                               |
 | Reset applied but tokens missing             | `preflight.css` imported before `theme-config.css`                               |
+| Table cells have no padding                  | A CSS reset outside a layer, or in a layer after `components`                    |
 | Dark mode does nothing                       | `html[data-equality-theme="dark"]` isn't being set; mirror the host's toggle     |
 | Components look right, custom markup doesn't | Custom markup is using palette or literal colours instead of semantic tokens     |
 

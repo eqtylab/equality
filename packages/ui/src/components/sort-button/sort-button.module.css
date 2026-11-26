@@ -4,7 +4,7 @@
   @apply text-left font-medium transition-colors;
   @apply flex items-center gap-2;
   @apply hover:text-text-link;
-  @apply [&>svg]:size-4;
+  @apply [&>svg]:size-(--eq-control-md-icon-size);
   @apply focus-ring rounded-sm;
 }
 

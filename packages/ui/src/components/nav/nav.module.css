@@ -9,13 +9,22 @@
 
 .nav-rail,
 .nav-panel {
-  @apply bg-background-raised border-border-raised flex shrink-0 flex-col border-r;
+  @apply bg-background-raised relative isolate flex shrink-0 flex-col;
   /* Without size containment a long list grows the row and stretches the page */
   contain: size;
 }
 
+/* A border on the rail itself would take 1px from its content box and put the items off-centre */
+.nav-rail::after,
+.nav-panel::after {
+  content: '';
+  @apply z-4 pointer-events-none absolute;
+  inset: 0 0 0 auto;
+  border-right: 1px solid var(--color-border-raised);
+}
+
 .nav-rail {
-  @apply w-[72px];
+  width: var(--eq-nav-rail-width);
 }
 
 .nav-panel {
@@ -31,11 +40,11 @@
 }
 
 .nav-rail .nav-scroller {
-  @apply items-center py-4;
+  @apply items-center py-2;
 }
 
 .nav-panel .nav-scroller {
-  @apply gap-(--eq-list-gap) px-2 py-4;
+  @apply gap-(--eq-list-gap) px-2 pb-4 pt-2;
 }
 
 .nav-rail-list {
@@ -49,7 +58,7 @@
 }
 
 .nav-rail-item svg {
-  @apply size-5;
+  @apply size-(--eq-control-md-icon-size);
 }
 
 /* The header takes the scroller's top padding, so it pins flush to the panel's top and its fill
@@ -63,21 +72,21 @@
    the rows scrolling under it */
 .nav-panel-header {
   @apply text-text-primary z-3 sticky top-0 m-0 shrink-0 truncate px-2 font-semibold;
-  @apply text-(length:--eq-control-md-font-size)/[var(--tw-leading,var(--eq-control-md-line-height))];
+  @apply text-(length:--eq-type-body-font-size)/[var(--tw-leading,var(--eq-type-body-line-height))];
   --nav-title-padding: calc(
     (
         max(var(--eq-control-md-height), var(--eq-touch-target)) -
-          var(--tw-leading, var(--eq-control-md-line-height))
+          var(--tw-leading, var(--eq-type-body-line-height))
       ) /
       2
   );
-  padding-top: calc(--spacing(4) + var(--nav-title-padding));
+  padding-top: calc(--spacing(2) + var(--nav-title-padding));
   padding-bottom: var(--nav-title-padding);
   background-color: inherit;
 }
 
 .nav-panel-header:has(> .nav-switcher-heading) {
-  @apply overflow-visible px-0 pb-0 pt-4;
+  @apply overflow-visible px-0 pb-0 pt-2;
 }
 
 /* Change this height and the switcher stops lining up with the rail's first item, and rows jump
@@ -106,7 +115,7 @@
 /* Under the heading, so it outranks the size, fill and border SelectTrigger sets at rest whatever
    order the two modules load in */
 .nav-switcher-heading .nav-switcher {
-  @apply min-h-(--eq-touch-target) h-(--eq-control-md-height) flex w-full min-w-0 items-center gap-2 rounded-md border border-transparent px-2;
+  @apply min-h-(--eq-touch-target) h-(--eq-control-md-height) flex w-full min-w-0 items-center gap-2 rounded-md border-0 px-2;
   @apply text-text-primary bg-transparent text-left text-sm font-semibold transition-colors duration-150;
   @apply motion-reduce:transition-none;
 }
@@ -135,7 +144,7 @@
 }
 
 .nav-switcher-icon {
-  @apply text-(color:--eq-list-item-muted-color) ml-auto size-4 shrink-0;
+  @apply text-(color:--eq-list-item-muted-color) size-(--eq-control-md-icon-size) ml-auto shrink-0;
 }
 
 /* The trigger draws ↕ itself, so SelectTrigger's ⌄ goes. SelectTrigger always renders lucide's
@@ -145,7 +154,7 @@
 }
 
 .nav-switcher-heading .nav-switcher:hover:not(:disabled) {
-  @apply bg-list-item-hover border-transparent;
+  @apply bg-list-item-hover;
 }
 
 @media (hover: hover) {
@@ -155,7 +164,8 @@
 }
 
 .nav-switcher-heading .nav-switcher[data-state='open']:not(:disabled) {
-  @apply bg-background border-brand-primary;
+  @apply bg-background inset-ring-brand-primary inset-ring;
+  @apply forced-colors:outline-2 forced-colors:-outline-offset-2 forced-colors:outline-[color:Highlight];
 }
 
 .nav-switcher-heading .nav-switcher:focus-visible {

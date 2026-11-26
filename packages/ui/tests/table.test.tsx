@@ -454,3 +454,24 @@ describe('a TableRow with a selection checkbox', () => {
     expect(onOpen).toHaveBeenCalledOnce();
   });
 });
+
+const rows = (props: { density?: 'regular' | 'comfortable' }) =>
+  render(
+    <TableContainer {...props}>
+      <TableBody>
+        <TableRow>
+          <TableCell>A</TableCell>
+        </TableRow>
+      </TableBody>
+    </TableContainer>
+  ).container.firstElementChild!.className;
+
+describe('TableContainer', () => {
+  it('keeps regular rows by default', () => {
+    expect(rows({})).not.toMatch(/table--comfortable/);
+  });
+
+  it('makes its rows comfortable when asked', () => {
+    expect(rows({ density: 'comfortable' })).toMatch(/table--comfortable/);
+  });
+});

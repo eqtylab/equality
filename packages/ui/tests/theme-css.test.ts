@@ -46,19 +46,23 @@ describe('scoped build', () => {
 
 describe('global build', () => {
   it('reads no theme variable in its decisions, since a consumer build never defines them', () => {
-    const reads = rulesDeclaring(global, '--eq-[\\w-]+').flatMap(
-      (r) => r.body.match(/var\(--(spacing|text-[\w-]+)\)/g) ?? []
-    );
+    // Skips the utilities layer: Tailwind fills it from text it scans, so an --eq- example in the changelog would fail this
+    const reads = rulesDeclaring(global, '--eq-[\\w-]+')
+      .filter((r) => !r.selector.startsWith('@layer utilities'))
+      .flatMap((r) => r.body.match(/var\(--(spacing|text-[\w-]+)\)/g) ?? []);
     expect(reads).toEqual([]);
   });
 });
 
-describe('theme-decisions-scoped.css', () => {
-  it('is up to date with theme-decisions.css; run pnpm build:decisions if not', async () => {
+describe.each([
+  ['options', 'theme-options.css'],
+  ['decisions', 'theme-decisions.css'],
+])('the scoped %s', (name, file) => {
+  it(`is up to date with ${file}; run pnpm build:decisions if not`, async () => {
     const [source, generated] = await Promise.all([
-      readFile('src/theme/theme-decisions.css', 'utf8'),
-      readFile('src/theme/theme-decisions-scoped.css', 'utf8'),
+      readFile(`src/theme/${file}`, 'utf8'),
+      readFile(`src/theme/${file.replace('.css', '-scoped.css')}`, 'utf8'),
     ]);
-    expect(generated).toBe(scopeDecisions(source));
+    expect(generated).toBe(scopeDecisions(source, name, file));
   });
 });

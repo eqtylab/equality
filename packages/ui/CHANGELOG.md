@@ -33,6 +33,186 @@ Notable changes to Equality are recorded here, following [Keep a Changelog](http
   `TableRow`, including an item in a menu opened from the row, no longer also runs the row's
   `onClick`.
 
+## 7.0.0 - 2026-11-25
+
+### Breaking
+
+- `Avatar` sizes now match the control sizes: `xs` 24, `sm` 28, `md` 36 and `lg` 44. The new
+  default, `line`, is as tall as the line of text the avatar sits in: 20 in a table, menu or list
+  row. `xl` is now 52, for a profile or page hero. Initials show one letter at `line`, `xs` and
+  `sm`, and two at `md`, `lg` and `xl`; screen readers hear them all. A count such as `+3` shows
+  whole.
+
+  | You had                    | Use now                                                   |
+  | -------------------------- | --------------------------------------------------------- |
+  | `sm` (16)                  | no `size`                                                 |
+  | `md` or no `size` (24)     | no `size` in rows and lists, `md` elsewhere (grows to 36) |
+  | `lg` (36; 32 before 6.1.0) | `md`                                                      |
+  | `xl` (44; 40 before 6.1.0) | `lg` to keep 44; `xl` is now 52                           |
+
+  Every renamed size, `xl` included, still compiles but draws at its new size, so check each one
+  against the table.
+
+- The `control-row-overhang` utility is gone, so an app that applies it fails to build. Rows now
+  hold an avatar or icon button without it: remove it.
+
+- Import Equality's preflight, and any other CSS reset, in a layer before `components`, such as
+  `layer(base)`. A reset outside a layer removes table cell padding.
+
+- A block margin on a button in a table cell, such as `my-*`, `mt-*` or `mb-*`, is ignored unless
+  written with `!`, such as `my-0!`. Buttons you stack in one cell, or a row of them that wraps,
+  close up by 8, or 16 in a comfortable table, so they touch or overlap: give each `my-0!`.
+
+- Table cells pull an element with `data-slot="icon-button"` into their padding, not one with
+  `data-icon-button`. An element of your own that set `data-icon-button`, such as a placeholder for
+  a row menu, takes `data-slot="icon-button"`, or its row is 44, from 36.
+
+### Added
+
+- `Button`, `IconButton`, `TitleBlock`, `EmptyTableState`, `SegmentedControls`, `Pagination`,
+  `CodeBlock`, `MotionCollapsibleContent` and `TruncatedDescription` carry a `data-slot` attribute,
+  such as `data-slot="button"`. `TitleBlock` also carries its `data-size`.
+- `--eq-table-cell-padding` sets a table cell's padding above and below. Set it on a cell, such as
+  `[--eq-table-cell-padding:…]`, not `py-*`, so a button in the cell stays 4 from the row's lines.
+
+### Changed
+
+- Table cells pad 8 above and below, or 12 in a comfortable table. A button in a cell reaches into
+  that padding and stops 4 short of the row's lines, and a cell that hides its overflow doesn't
+  cut it off. A small button keeps a row 36, from 44, and an `IconButton` at its default size
+  keeps rows and headers 36. A default `Button`, an `IconButton` with `size="md"` or a `Select`
+  makes a regular row 44, from 52, and a default `Button` or an `md` `IconButton` makes a regular
+  header 44, from 36. Comfortable rows and headers stay 44 with a small or default button, and a
+  `Select` makes them 44, from 52. A large button makes a row 52, from 60 regular and 44
+  comfortable, and a header 52, from 44.
+- A `SortButton` in a header isn't pulled, so a wrapped sort label sits as far from the line as
+  wrapped text.
+- Table rows no longer pad; each cell does. Padding you set on a `TableCell` now replaces
+  Equality's, and padding on a `TableRow` adds to it.
+- Icons in a `CommandDialog` item draw at 16, as in a `Command`; they were 20. An icon you size
+  yourself, such as with `size-4`, keeps its size.
+- An `Avatar` no longer shrinks in a flex row.
+- A `TitleBlock` takes an `Avatar` as its mark. Give it the Avatar size that matches the block's:
+  `sm`, `md` or `lg`.
+
+### Removed
+
+- The `data-avatar` attribute on `Avatar`, and `data-icon-button` on `IconButton`, which is now
+  `data-slot="icon-button"`.
+
+## 6.5.0 - 2026-11-25
+
+### Added
+
+- `TitleBlock` sets a title beside a mark, with an optional description under it. Badges and status
+  go in `trailing` and buttons and menus in `actions`; both sit at the end of the block on one line,
+  badges first, centred on the block, so a badge lines up with the button beside it and a control
+  never reaches above the block. It comes in three sizes, by what the block holds: `sm` for a title
+  alone, `md` (the default) for a name and a short fact, set as a caption, and `lg` for a title and
+  a sentence. The mark sets the block's height, and `md` and `lg` share one title size. A long title
+  wraps beside the mark, never under it. When the block is too narrow for its badges and actions
+  beside the title, they wrap under the title. A block placed inside another keeps its own size.
+- `TitleBlockMark` puts an icon on a square tile, or a circle with `shape="round"`, that takes its
+  size from the block.
+- `TitleBlockSkeleton` stands in for a title block while it loads, at the same height, so the page
+  doesn't jump when the data arrives.
+- `Skeleton` carries `data-slot="skeleton"`, so an app can restyle every placeholder, such as its
+  loading animation, in one rule.
+
+### Changed
+
+- `CardContentHeader` lays out like `TitleBlock`'s small size: its icon sits in a 28 circle, from
+  36, at 16, from 20, beside a 16 semibold title, from 18. The icon and title stay side by side at
+  every width; a long title wraps beside the icon. "See All" centres on the header and follows the
+  title for screen readers and keyboard. Its "See All" button is named by the heading, such as "See
+  All Activity Logs". Its props are unchanged.
+- `MetricCard`'s icon is 16, from 20, in the same circle.
+- `SectionHeading`'s title is 16 semibold, from 20 medium, and sits tighter over a description.
+
+## 6.4.0 - 2026-11-25
+
+### Added
+
+- `TableContainer` takes `density`. `regular`, the default, keeps rows and the header at 36;
+  `comfortable` makes them 44, for tables people read slowly or use mostly by touch. A
+  comfortable row stays 44 with a `Button` or `IconButton` of any size, links included.
+- `--eq-control-xs-icon-size`, the icon size in an extra-small control, and
+  `--eq-table-row-divider-color`, the colour of the line between table rows.
+- `Button` carries `data-button` with its size, and `SortButton` carries `data-sort-button`.
+
+### Changed
+
+- Table body rows draw a faint line between them instead of filling every other row. The last row
+  draws none.
+- The Table header draws its line inside its height, so it is 36, from 37, and grows when its text
+  wraps instead of spilling out. A header cell pads by the control it holds: a default-size
+  `Button` or `IconButton` keeps the header at 36, and a wrapped `SortButton` label sits as far from
+  the line as wrapped text.
+- `IconButton` icons match the icon beside text in the control of the same size: 16 at `md`, from
+  22, and 20 at `lg`, from 26. `xs` (14) and `sm` (16) are unchanged. The icon button's own size now
+  wins over an icon size set through `className`, such as `[&_svg]:size-5`; only an `!important`
+  size still wins. For another icon size, pass another `size`.
+- `--eq-control-lg-icon-size` is 20, from 16, so an icon in a large `Button`, and any icon your app
+  sizes with it, is 20.
+
+## 6.3.0 - 2026-11-25
+
+### Added
+
+- Four text styles for hierarchy: `text-title` for the page title, `text-section` for a card or
+  section title, `text-body` for running text and descriptions, and `text-caption` for small
+  supporting text. Each is a Tailwind text size on its own line height, so plain `text-sm` matches
+  `text-body`. To line a title up with controls, put it in a row with them and centre it. See the
+  Typography page.
+- Seven size steps, 16 to 52, that Equality's own sizes choose from. Build a custom picture or mark
+  on one of them; the Sizing page lists them.
+- If your app merges classes with tailwind-merge, register the four styles as font sizes, or a
+  text colour beside them removes them. Extend its `font-size` group with `xxs`, `title`,
+  `section`, `body` and `caption` through `extendTailwindMerge`; the Typography page has the snippet.
+- `--eq-nav-rail-width`, the nav rail's width: 60, or 68 on a touch screen.
+
+### Changed
+
+- `NavRail` is 60 wide, from 52, or 68 on a touch screen. This replaces 6.2.0's advice to make
+  the app header as tall as the rail is wide: an app header keeps its height, and a logo column
+  above the rail takes `w-(--eq-nav-rail-width)`, so it follows the rail, touch screens included.
+
+### Deprecated
+
+- `--eq-control-sm-font-size`, `--eq-control-md-font-size`, `--eq-control-lg-font-size` and their
+  `-line-height` pairs. In a class, use `text-caption`, `text-body` or `text-section`. In CSS, read
+  `--eq-type-caption-font-size`, `--eq-type-body-font-size` or `--eq-type-section-font-size`, and
+  the matching `--eq-type-*-line-height`. Sizes and line heights are the same. `text-title` and
+  `text-section` are also semibold, so a control label that moves to `text-section` turns
+  semibold unless it sets its own weight, such as `font-medium`. The control text names still work;
+  a later major removes them. Equality's own controls read the text styles, so overriding a style
+  changes their text too.
+
+## 6.2.0 - 2026-11-24
+
+### Changed
+
+- Small, default and large controls each name the size of the icon beside their text. Icons stay
+  the size they were.
+- `NavRail` is 52 wide, from 72: a default control with 8 on each side. Its icons are 16, from 20, the
+  same as the icon in any default control. On a touch screen its items grow to the 44 touch target,
+  so the rail is 60.
+- `NavRail` and `NavPanel` draw their edge line inside their width, so the rail is exactly 52 and
+  the panel exactly its width.
+- `NavRail` and `NavPanel` start their first item 8 from the top, from 16, so the switcher lines up
+  with the rail's first item under a 52 header.
+- `NavSwitcher` has no border, so its name sits 8 in from its edge. Open, it draws its outline inside.
+
+To keep an app header lined up with the rail, make it 52 (its 36 controls with 8 above and below,
+its bottom line drawn inside) and set `--eq-nav-offset` to `52px`. A header you size by hand at
+another height still works; it just no longer meets the rail at a square corner. An app used mostly
+on touch screens should make its header 60 there, to match the touch rail.
+
+### Fixed
+
+- A small `Switch` in a table row or a line of text keeps the row at its height. It sat on the text
+  baseline, which made the row 3 taller.
+
 ## 6.1.0 - 2026-11-20
 
 ### Changed
