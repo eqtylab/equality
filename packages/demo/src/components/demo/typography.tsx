@@ -7,7 +7,7 @@ import {
 } from "@eqtylab/equality";
 
 type TypographyExample =
-  | "title"
+  | "title-1"
   | "title-2"
   | "section"
   | "body"
@@ -15,10 +15,10 @@ type TypographyExample =
   | "badge";
 
 export function TypographyDemo({ example }: { example: TypographyExample }) {
-  if (example === "title") {
+  if (example === "title-1") {
     return (
       <div className="flex items-center justify-between gap-4">
-        <p className="text-title">Projects</p>
+        <p className="text-title-1">Projects</p>
         <Button>New Project</Button>
       </div>
     );
@@ -65,7 +65,7 @@ export function TypographyDemo({ example }: { example: TypographyExample }) {
 
   return (
     <div className="flex items-center gap-2">
-      <p className="text-title">Model Registry</p>
+      <p className="text-title-1">Model Registry</p>
       <Badge variant="neutral">Beta</Badge>
     </div>
   );
