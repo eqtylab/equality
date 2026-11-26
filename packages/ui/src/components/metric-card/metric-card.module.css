@@ -17,6 +17,15 @@
   @apply text-text-primary text-sm;
 }
 
+/* Quadrupled class: it has to outrank Icon's circle padding, and a tripled one its glyph size */
+.icon.icon.icon.icon {
+  @apply size-(--eq-control-md-height) p-0;
+}
+
+.icon.icon.icon > * {
+  @apply size-(--eq-control-md-icon-size);
+}
+
 .text-default {
   @apply bg-badge-text-neutral;
 }
