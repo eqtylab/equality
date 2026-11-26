@@ -7,30 +7,51 @@ import { TypographyDemo } from "@demo/components/demo/typography";
 
 ## Overview
 
-Use this page to pick a text style for product UI: a page's title, a card's title, a row, a hint. Long-form writing, such as an article or a help page, uses [Heading](/components/heading) instead.
+Equality has five text styles for product UI: a page's title, a dialog's title, a card's title, body text and captions. Pick a style by what the text heads; text inside a card is body or caption. Long-form writing, such as an article or a help page, uses [Heading](/components/heading) instead.
 
 <div className="my-4">
   <TypographyDemo example="composite" />
 </div>
 
-## The Scale
+## Scale
 
-| Style          | Size on line | Weight             | Use for                                        | Already applied by                                                                                                                                          |
-| -------------- | ------------ | ------------------ | ---------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `text-title-1` | 28 on 36     | Semibold           | A page's title, once per page                  | None                                                                                                                                                        |
-| `text-title-2` | 20 on 28     | Semibold           | The title of a dialog, sheet or tab panel      | The title in a Dialog, Sheet or Alert Dialog                                                                                                                |
-| `text-section` | 16 on 24     | Semibold           | A card or section title                        | [Card Content Header](/components/card-content-header), [Section Heading](/components/section-heading), [Title Block](/components/title-block) at size `sm` |
-| `text-body`    | 14 on 20     | The text around it | Text inside a card: rows, fields, descriptions | None                                                                                                                                                        |
-| `text-caption` | 12 on 16     | The text around it | Timestamps, counts and hints                   | None                                                                                                                                                        |
+| Style          | Size / line height | Weight    | Use for                                        | Already applied by                                                                                                                                          |
+| -------------- | ------------------ | --------- | ---------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `text-title-1` | 28 / 36            | Semibold  | A page's title, once per page                  | None                                                                                                                                                        |
+| `text-title-2` | 20 / 28            | Semibold  | The title of a dialog, sheet or tab panel      | The title in a Dialog, Sheet or Alert Dialog                                                                                                                |
+| `text-section` | 16 / 24            | Semibold  | A card or section title                        | [Card Content Header](/components/card-content-header), [Section Heading](/components/section-heading), [Title Block](/components/title-block) at size `sm` |
+| `text-body`    | 14 / 20            | Inherited | Text inside a card: rows, fields, descriptions | None                                                                                                                                                        |
+| `text-caption` | 12 / 16            | Inherited | Timestamps, counts and hints                   | None                                                                                                                                                        |
 
-Body is Tailwind's `text-sm`, so plain `text-sm` in your app is the same size.
+Sizes are in pixels. Body and caption take the weight of the text around them; add `font-medium` for a label that should stay medium. Body is Tailwind's `text-sm`. Put a style on the heading element that fits the page's outline: a card title can be an `h2` and still use section.
 
-Pick a style by the space the text heads; anything inside a card stays body or caption. Put the style on the heading element that fits the page's outline: a card title can be an `h2` and still use section.
+### How the Styles Line Up
+
+Each style's line height is a [size step](/getting-started/sizing), the same steps controls use. A text line is the height of one line of text; a row is the height of the controls beside it, and the text is vertically centred in it, so a 24 section line sits in a 28 row with small buttons.
+
+<div className="my-4">
+  <TypographyDemo example="lines" />
+</div>
+
+### Typeface
+
+Text is set in TWK Lausanne, falling back to Inter, then the system sans serif. Code is set in IBM Plex Mono.
+
+### Text Colour
+
+| Text                                    | Class                                   |
+| --------------------------------------- | --------------------------------------- |
+| Titles and content                      | `text-text-primary`                     |
+| Descriptions, captions and hints        | `text-text-secondary`                   |
+| Links                                   | `text-text-link`                        |
+| An error or a warning in a field or row | `text-text-danger`, `text-text-warning` |
+
+Text is primary unless you set a colour.
 
 ## Build a Page Header
 
 1. Put `text-title-1` on the page's `h1`.
-2. Put the title, any `Badge` and the page's buttons in one row, centred.
+2. Put the title, any `Badge` and the page's buttons, at their default size, in one row, vertically centred (`items-center`).
 3. Put the description under that row at `gap-2`.
 
 <div className="my-4">
@@ -38,10 +59,12 @@ Pick a style by the space the text heads; anything inside a card stays body or c
 </div>
 
 ```tsx
+import { Badge, Button } from "@eqtylab/equality";
+
 <header className="flex flex-col gap-2">
   <div className="flex flex-wrap items-center justify-between gap-4">
-    <div className="flex items-center gap-2">
-      <h1 className="text-title-1">Projects</h1>
+    <div className="flex min-w-0 items-center gap-2">
+      <h1 className="text-title-1 truncate">Projects</h1>
       <Badge variant="neutral">Beta</Badge>
     </div>
     <div className="flex gap-2">
@@ -52,13 +75,13 @@ Pick a style by the space the text heads; anything inside a card stays body or c
   <p className="text-body text-text-secondary">
     Every project your team can open
   </p>
-</header>
+</header>;
 ```
 
 ## Title a Dialog, Sheet or Tab Panel
 
-1. In a `Dialog`, `Sheet` or `AlertDialog`, use its title and description (`DialogTitle` and `DialogDescription`, `SheetTitle` and `SheetDescription`, `AlertDialogTitle` and `AlertDialogDescription`) inside its header; they're already styled and spaced.
-2. For a tab panel or a surface you build, put `text-title-2` on its heading, the description under it at `gap-1`, and small buttons in its row, centred.
+1. In a `Dialog`, `Sheet` or `AlertDialog`, use its title and description (`DialogTitle` and `DialogDescription`, `SheetTitle` and `SheetDescription`, `AlertDialogTitle` and `AlertDialogDescription`) inside its header. They're already styled and spaced, and a Dialog or Sheet adds its own close button.
+2. For a tab panel or a surface you build, put `text-title-2` on its heading, the description under it at `gap-1`, and any buttons at `size="sm"` in the title's row, vertically centred. `IconButton` is small by default.
 
 <div className="my-4">
   <TypographyDemo example="dialog-header" />
@@ -92,71 +115,56 @@ Pick a style by the space the text heads; anything inside a card stays body or c
 ## Head a Card or Section
 
 1. For a title with See All, use [Card Content Header](/components/card-content-header) in a card or [Section Heading](/components/section-heading) on a page.
-2. For a title with a description, put `text-section` on the heading, the description directly under it, and small buttons in the title's row, centred on the title.
+2. For a title with a description, put `text-section` on the heading, the description directly under it, and any buttons at `size="sm"` in the title's row, vertically centred on the title.
 
 <div className="my-4">
   <TypographyDemo example="card-header" />
 </div>
 
 ```tsx
-<div className="flex flex-col">
-  <div className="flex items-center justify-between gap-4">
-    <h2 className="text-section">Storage</h2>
-    <Button variant="tertiary" size="sm">
-      Manage
-    </Button>
-  </div>
-  <p className="text-body text-text-secondary">
-    Files uploaded to this project
-  </p>
-</div>
+<Card>
+  <CardContent>
+    <div className="flex flex-col">
+      <div className="flex items-center justify-between gap-4">
+        <h2 className="text-section">Storage</h2>
+        <Button variant="tertiary" size="sm">
+          Manage
+        </Button>
+      </div>
+      <p className="text-body text-text-secondary">
+        Files uploaded to this project
+      </p>
+    </div>
+  </CardContent>
+</Card>
 ```
 
-## Set Up an App That Merges Classes
+## Long Text
 
-1. Register the five styles as font sizes in your `cn`, or a text colour beside them removes them.
-2. Move any `text-title` to `text-title-1`. Keep `title` in the list until you have; `text-title` is deprecated, and 8.0 removes it.
+- A page or dialog title stays on one line: give it `truncate`, and its row `min-w-0`. A title in a `TitleBlock` wraps beside its mark instead.
+- Body text wraps. Keep running text to about 65 characters a line, with `max-w-prose`.
+
+## Numbers
+
+Use `tabular-nums` where numbers line up in a column, such as table cells, counts and metrics.
+
+## Accessibility
+
+Sizes are in rem, so text grows with the browser's zoom and font size. They don't change with screen width. Caption, 12, is the smallest size for text people need to read.
+
+## Merging Classes
+
+To combine classes in your app, use Equality's `cn`. It knows the text styles, so a colour beside one, such as `text-text-secondary`, doesn't remove it.
 
 ```ts
-import { clsx, type ClassValue } from "clsx";
-import { extendTailwindMerge } from "tailwind-merge";
+import { cn } from "@eqtylab/equality";
 
-const twMerge = extendTailwindMerge({
-  extend: {
-    classGroups: {
-      "font-size": [
-        {
-          text: [
-            "xxs",
-            "title",
-            "title-1",
-            "title-2",
-            "section",
-            "body",
-            "caption",
-          ],
-        },
-      ],
-    },
-  },
-});
-
-export function cn(...inputs: ClassValue[]) {
-  return twMerge(clsx(inputs));
-}
+<p className={cn("text-caption", "text-text-secondary")}>Joined 3 days ago</p>;
 ```
 
-## How the Styles Line Up
-
-Each style's line is a [size step](/getting-started/sizing), the same steps controls use, so text centres on the controls in its row.
-
-<div className="my-4">
-  <TypographyDemo example="lines" />
-</div>
+`text-title` is deprecated: use `text-title-1`. 8.0 removes it.
 
 ## Do and Don't
 
-- Don't put title-1 inside a card or dialog. It heads the page only.
 - Don't size a heading with `text-2xl`, `text-3xl` or a similar size, or add `font-bold`. Use one of the five styles.
-- Don't use `Heading` for app screens. It's for long-form writing.
-- Don't use `text-title`. It's deprecated: use `text-title-1`.
+- Don't put `text-title-1` inside a card or dialog.

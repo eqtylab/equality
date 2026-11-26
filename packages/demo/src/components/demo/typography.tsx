@@ -17,9 +17,7 @@ type TypographyExample =
   | "card-header";
 
 const Preview = ({ children }: { children: ReactNode }) => (
-  <div className="bg-background-sunken border-border rounded-lg border p-2 sm:p-6">
-    {children}
-  </div>
+  <div className="py-2">{children}</div>
 );
 
 const Tag = ({ children }: { children: ReactNode }) => (
@@ -50,8 +48,8 @@ const Line = ({
 const PageHeader = ({ badge = false }: { badge?: boolean }) => (
   <div className="flex flex-col gap-2">
     <div className="flex flex-wrap items-center justify-between gap-4">
-      <div className="flex items-center gap-2">
-        <p className="text-title-1">Projects</p>
+      <div className="flex min-w-0 items-center gap-2">
+        <p className="text-title-1 truncate">Projects</p>
         {badge && <Badge variant="neutral">Beta</Badge>}
       </div>
       <div className="flex gap-2">
