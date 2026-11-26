@@ -1,15 +1,54 @@
 ---
 title: "Typography"
-description: "Four text styles for hierarchy, and how to line them up with controls"
+description: "Five text styles for product UI, which one to pick, and how they line up with controls"
 ---
 
 import { TypographyDemo } from "@demo/components/demo/typography";
 
 ## Overview
 
-Pick a text style for hierarchy: `text-title-1`, `text-title-2`, `text-section`, `text-body` or `text-caption`. Each style's line follows its size: caption 12 on 16, body 14 on 20, section 16 on 24, title-2 20 on 28 and title-1 28 on 36. Title-1, title-2 and section are semibold; body and caption keep the weight of the text around them. For a label that should stay medium, add `font-medium` beside the style. Each line sits on one of the [size steps](/getting-started/sizing), and body is Tailwind's `text-sm`, so plain `text-sm` in your app is the same size as body. To line text up with controls, put it in a row with them and centre it, the way a button centres its label. [Sizing](/getting-started/sizing) shows what else sits on each step.
+Equality has five text styles for product UI. Each pairs a size with a line height, and each line sits on one of the [size steps](/getting-started/sizing).
 
-Use `Heading` for headings in long-form content. Use these styles for a page, card or section title that shares a line with controls, on an `h1`–`h6`, such as `<h1 className="text-title-1">`. The examples on this page draw their titles as paragraphs to keep this page's outline clean; the code beside each shows the heading to use.
+| Style          | Size on line | For                                                         |
+| -------------- | ------------ | ----------------------------------------------------------- |
+| `text-title-1` | 28 on 36     | A page's title                                              |
+| `text-title-2` | 20 on 28     | The title of a dialog, sheet or tab panel                   |
+| `text-section` | 16 on 24     | A card or section title                                     |
+| `text-body`    | 14 on 20     | Running text, descriptions, labels and table rows           |
+| `text-caption` | 12 on 16     | Small supporting text, such as timestamps, counts and hints |
+
+Title-1, title-2 and section are semibold; body and caption keep the weight of the text around them. For a label that should stay medium, add `font-medium` beside the style. Body is Tailwind's `text-sm`, so plain `text-sm` in your app is the same size.
+
+Long-form writing, such as an article or a help page, uses [Heading](/components/heading) instead.
+
+## Choosing a Style
+
+Pick a style by the space the text heads, not by its HTML level. A page takes title-1. A dialog, sheet or tab panel inside the page takes title-2. A card takes section, and anything inside a card stays body or caption.
+
+Keep the heading element that fits the page's outline, and put the style on it. A card title can be an `h2` and still use section:
+
+```tsx
+<h2 className="text-section">Recent Activity</h2>
+```
+
+The examples on this page draw their titles as paragraphs to keep this page's outline clean; the code beside each shows the heading to use.
+
+## Lining Up with Controls
+
+Each style's line is one of the size steps, so text in a row with controls centres on them, the way a button centres its label. The page title's line is as tall as a default control, so it sits level with the page's buttons. A card title sits beside a small button the same way, and a dialog's title beside its close button.
+
+## Space Under a Heading
+
+Put a heading's description close to it, and leave more room under bigger headings: none under a section title, 4 under title-2 and 8 under title-1.
+
+```tsx
+<div className="flex flex-col gap-2">
+  <h1 className="text-title-1">Projects</h1>
+  <p className="text-body text-text-secondary">
+    Every project your team can open.
+  </p>
+</div>
+```
 
 ## Text Styles
 

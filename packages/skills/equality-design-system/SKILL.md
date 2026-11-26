@@ -185,15 +185,17 @@ sizes `xs` to `lg`, and Avatar's `xs` to `xl`, are the step they sit on; Avatar'
 default follows its line. Badge, Icon, Switch, Checkbox and Timeline use their
 own size names.
 
-Text takes one of five styles: `text-title-1` for a page title, `text-title-2` for
-the title of a dialog, sheet or tab panel, `text-section` for a card or section
-title, `text-body` for running text and `text-caption` for small supporting
-text. Put a title style on an `h1`–`h6`, such as `<h1 className="text-title-1">`,
-so the title stays a heading. Each line follows its size: caption 12 on 16, body
-14 on 20, section 16 on 24, title-2 20 on 28, title-1 28 on 36. To line a title up
-with controls, put it in a row with them and centre it: a section title or a
-title-2 in a 28 row with small buttons, a page title in a 36 row with default
-ones. Never pair a size with a hand-written line height, such as `text-2xl
+Text takes one of five styles: `text-title-1` for a page title, `text-title-2`
+for the title of a dialog, sheet or tab panel, `text-section` for a card or
+section title, `text-body` for running text and `text-caption` for small
+supporting text. Put a title style on an `h1`–`h6`, such as `<h1
+className="text-title-1">`, so the title stays a heading. Each line follows its
+size: caption 12 on 16, body 14 on 20, section 16 on 24, title-2 20 on 28,
+title-1 28 on 36. To line a title up with controls, put it in a row with them
+and centre it: a section title or a title-2 in a 28 row with small buttons, a
+page title in a 36 row with default ones. Put a heading's description close
+under it: none under a section title, 4 under title-2 and 8 under title-1. Never
+pair a size with a hand-written line height, such as `text-2xl
 leading-(--eq-control-md-height)`.
 
 If your app merges classes with tailwind-merge, register the five styles as font
