@@ -29,7 +29,8 @@ Notable changes to Equality are recorded here, following [Keep a Changelog](http
   `layer(base)`. A reset outside a layer removes table cell padding.
 
 - A block margin on a button in a table cell, such as `my-*`, `mt-*` or `mb-*`, is ignored unless
-  written with `!`, such as `my-0!`.
+  written with `!`, such as `my-0!`. Buttons you stack in one cell, or a row of them that wraps,
+  close up by 8, or 16 in a comfortable table, so they touch or overlap: give each `my-0!`.
 
 - Table cells pull an element with `data-slot="icon-button"` into their padding, not one with
   `data-icon-button`. An element of your own that set `data-icon-button`, such as a placeholder for
@@ -43,12 +44,13 @@ Notable changes to Equality are recorded here, following [Keep a Changelog](http
 
 ### Changed
 
-- Table cells pad 8 above and below, or 12 in a comfortable table. A button in a cell reaches
-  into that padding and stops 4 short of the row's lines, and a cell that hides its overflow
-  doesn't cut it off. A small button keeps a row 36, from 44. A default `Button`, `IconButton` or
-  `Select` makes a regular row 44, from 52, and a default `Button` or `IconButton` makes a
-  regular header 44, from 36. Comfortable rows and headers stay 44 with a small or default
-  button. A large button makes a row 52, from 60 regular and 44 comfortable.
+- Table cells pad 8 above and below, or 12 in a comfortable table. A button in a cell reaches into
+  that padding and stops 4 short of the row's lines, and a cell that hides its overflow doesn't cut
+  it off. A small button keeps a row 36, from 44, and an `IconButton` at its default size keeps
+  rows and headers 36. A default `Button` or `Select` makes a regular row 44, from 52, and a
+  default `Button` makes a regular header 44, from 36. Comfortable rows and headers stay 44 with a
+  small or default button. A large button makes a row 52, from 60 regular and 44 comfortable, and a
+  header 52, from 44.
 - A `SortButton` in a header isn't pulled, so a wrapped sort label sits as far from the line as
   wrapped text.
 - Table rows no longer pad; each cell does. Padding you set on a `TableCell` now replaces
