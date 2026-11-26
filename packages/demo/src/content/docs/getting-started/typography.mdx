@@ -19,44 +19,96 @@ Equality has five text styles for product UI. Each pairs a size with a line heig
 
 Title-1, title-2 and section are semibold; body and caption keep the weight of the text around them. For a label that should stay medium, add `font-medium` beside the style. Body is Tailwind's `text-sm`, so plain `text-sm` in your app is the same size.
 
+All five on one screen: a page header, a dialog's header, and a card with its rows.
+
+<div className="my-4">
+  <TypographyDemo example="composite" />
+</div>
+
 Long-form writing, such as an article or a help page, uses [Heading](/components/heading) instead.
 
 ## Choosing a Style
 
-Pick a style by the space the text heads, not by its HTML level. A page takes title-1. A dialog, sheet or tab panel inside the page takes title-2. A card takes section, and anything inside a card stays body or caption.
+Pick a style by the space the text heads:
 
-Keep the heading element that fits the page's outline, and put the style on it. A card title can be an `h2` and still use section:
+| If the text heads…                                                   | Use                           |
+| -------------------------------------------------------------------- | ----------------------------- |
+| A page                                                               | `text-title-1`                |
+| A dialog, sheet or tab panel                                         | `text-title-2`                |
+| A card or a section of a page                                        | `text-section`                |
+| Nothing: it sits inside a card, as a row, field, empty state or tile | `text-body` or `text-caption` |
+
+Keep the heading element that fits the page's outline, and put the style on it. The style follows the space, not the element: a card title can be an `h2` and still use section.
 
 ```tsx
 <h2 className="text-section">Recent Activity</h2>
 ```
 
-The examples on this page draw their titles as paragraphs to keep this page's outline clean; the code beside each shows the heading to use.
+### Already Styled for You
+
+These components set their title's style already. Use them as they are, without adding a style:
+
+- `DialogTitle`, `SheetTitle` and `AlertDialogTitle` use title-2.
+- `CardContentHeader` and `SectionHeading` use section, and so does `TitleBlock` at `size="sm"`.
 
 ## Lining Up with Controls
 
-Each style's line is one of the size steps, so text in a row with controls centres on them, the way a button centres its label. The page title's line is as tall as a default control, so it sits level with the page's buttons. A card title sits beside a small button the same way, and a dialog's title beside its close button.
+Each style's line is one of the size steps, so text in a row with controls centres on them, the way a button centres its label. The page title's line is as tall as a default control, so it sits level with the page's buttons. A dialog's title sits level with its close button, a card title with a small button, and body text with a badge. Below, each line is shaded:
+
+<div className="my-4">
+  <TypographyDemo example="align" />
+</div>
+
+```tsx
+<div className="flex items-center gap-4">
+  <h1 className="text-title-1">Projects</h1>
+  <Button>New Project</Button>
+</div>
+```
 
 ## Space Under a Heading
 
-Put a heading's description close to it, and leave more room under bigger headings: none under a section title, 4 under title-2 and 8 under title-1.
+Put a heading's description close to it, and leave more room under bigger headings: none under a section title, `gap-1` under title-2 and `gap-2` under title-1.
+
+<div className="my-4">
+  <TypographyDemo example="spacing" />
+</div>
 
 ```tsx
+<div className="flex flex-col">
+  <h2 className="text-section">Recent Activity</h2>
+  <p className="text-body text-text-secondary">What changed this week</p>
+</div>
+
+<div className="flex flex-col gap-1">
+  <h2 className="text-title-2">Edit Project</h2>
+  <p className="text-body text-text-secondary">Change its name and owner</p>
+</div>
+
 <div className="flex flex-col gap-2">
   <h1 className="text-title-1">Projects</h1>
-  <p className="text-body text-text-secondary">
-    Every project your team can open.
-  </p>
+  <p className="text-body text-text-secondary">Every project your team can open</p>
 </div>
 ```
+
+## Do and Don't
+
+- Don't put title-1 inside a card or dialog. It heads the page only.
+- Don't size a heading with `text-2xl`, `text-3xl` or a similar size, or add `font-bold`. Use one of the five styles.
+- Don't use `Heading` for app screens. It's for long-form writing.
+- Don't pick a style by HTML level. Pick it by the space the text heads.
+- Don't add `text-title-2` to `DialogTitle`, `SheetTitle` or `AlertDialogTitle`. They have it already.
+- Don't use `text-title`. It's deprecated: use `text-title-1`.
 
 ## Text Styles
 
 ### Title 1
 
-Use `text-title-1` for the page title, centred in a row with the page's default buttons.
+Use `text-title-1` for the page title, in a row with the page's default buttons.
 
-<TypographyDemo example="title-1" />
+<div className="my-4">
+  <TypographyDemo example="title-1" />
+</div>
 
 ```tsx
 <div className="flex items-center justify-between gap-4">
@@ -67,9 +119,24 @@ Use `text-title-1` for the page title, centred in a row with the page's default 
 
 ### Title 2
 
-Use `text-title-2` for the title of a dialog, sheet or tab panel: a surface inside the page that needs its own title, a step below the page's. Centre it in a row with any small buttons beside it.
+A dialog, sheet or alert dialog sets its title in title-2 through its title component:
 
-<TypographyDemo example="title-2" />
+```tsx
+<Dialog>
+  <DialogContent>
+    <DialogHeader>
+      <DialogTitle>Edit Project</DialogTitle>
+      <DialogDescription>Change its name and owner.</DialogDescription>
+    </DialogHeader>
+  </DialogContent>
+</Dialog>
+```
+
+Use `text-title-2` yourself only for a tab panel's title or a surface you build, in a row with any small buttons beside it.
+
+<div className="my-4">
+  <TypographyDemo example="title-2" />
+</div>
 
 ```tsx
 <div className="flex items-center justify-between gap-4">
@@ -80,28 +147,46 @@ Use `text-title-2` for the title of a dialog, sheet or tab panel: a surface insi
 
 ### Section
 
-Use `text-section` for a card or section title, centred in a row with any small buttons beside it. [Card Content Header](/components/card-content-header), and [Section Heading](/components/section-heading) without a description, already do this.
+A card's header takes section through [Card Content Header](/components/card-content-header), and a page section's through [Section Heading](/components/section-heading).
 
-<TypographyDemo example="section" />
+<div className="my-4">
+  <TypographyDemo example="card-header" />
+</div>
 
 ```tsx
 <Card>
   <CardContent>
-    <div className="flex items-center justify-between gap-4">
-      <h2 className="text-section">Recent Activity</h2>
-      <Button variant="tertiary" size="sm">
-        See All
-      </Button>
-    </div>
+    <CardContentHeader
+      icon="Activity"
+      heading="Recent Activity"
+      onButtonClick={openActivity}
+    />
   </CardContent>
 </Card>
+```
+
+For a header you build, put `text-section` on the heading, in a row with any small buttons beside it:
+
+<div className="my-4">
+  <TypographyDemo example="section" />
+</div>
+
+```tsx
+<div className="flex items-center justify-between gap-4">
+  <h2 className="text-section">Recent Activity</h2>
+  <Button variant="tertiary" size="sm">
+    See All
+  </Button>
+</div>
 ```
 
 ### Body
 
 Use `text-body` for running text and descriptions.
 
-<TypographyDemo example="body" />
+<div className="my-4">
+  <TypographyDemo example="body" />
+</div>
 
 ```tsx
 <p className="text-body">
@@ -113,7 +198,9 @@ Use `text-body` for running text and descriptions.
 
 Use `text-caption` for small supporting text, such as a timestamp or a hint under a field.
 
-<TypographyDemo example="caption" />
+<div className="my-4">
+  <TypographyDemo example="caption" />
+</div>
 
 ```tsx
 <p className="text-caption text-text-secondary">Updated 2 hours ago</p>
@@ -123,7 +210,9 @@ Use `text-caption` for small supporting text, such as a timestamp or a hint unde
 
 A badge beside a title keeps its default size and sits centred on the title's line.
 
-<TypographyDemo example="badge" />
+<div className="my-4">
+  <TypographyDemo example="badge" />
+</div>
 
 ```tsx
 <div className="flex items-center gap-2">
@@ -134,7 +223,7 @@ A badge beside a title keeps its default size and sits centred on the title's li
 
 ## Merging Classes
 
-If your app merges classes with tailwind-merge, register the five styles as font sizes, or a text colour beside them removes them. Keep `title` in the list while your app still uses `text-title`.
+If your app merges classes with tailwind-merge, register the five styles as font sizes, or a text colour beside them removes them. Keep `title` in the list while your app still uses `text-title`, which is deprecated: use `text-title-1`. 8.0 removes it.
 
 ```ts
 import { clsx, type ClassValue } from "clsx";
