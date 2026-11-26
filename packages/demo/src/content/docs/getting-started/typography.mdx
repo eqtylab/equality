@@ -173,11 +173,33 @@ Small supporting text, such as a timestamp, a count or a hint under a field.
 </div>
 
 ```tsx
-<CardContentHeader
-  icon="Activity"
-  heading="Recent Activity"
-  onButtonClick={openActivity}
-/>
+<Card>
+  <CardContent>
+    <CardContentHeader
+      icon="Activity"
+      heading="Recent Activity"
+      onButtonClick={openActivity}
+    />
+  </CardContent>
+  <TableContainer columns="auto 1fr auto">
+    <TableHeader>
+      <TableRow>
+        <TableHead>Project</TableHead>
+        <TableHead>Change</TableHead>
+        <TableHead className="justify-self-end">When</TableHead>
+      </TableRow>
+    </TableHeader>
+    <TableBody>
+      <TableRow>
+        <TableCell className="font-medium">Website Redesign</TableCell>
+        <TableCell>Renamed</TableCell>
+        <TableCell className="text-caption text-text-secondary justify-self-end">
+          2 hours ago
+        </TableCell>
+      </TableRow>
+    </TableBody>
+  </TableContainer>
+</Card>
 ```
 
 <div className="my-4">

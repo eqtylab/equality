@@ -5,6 +5,12 @@ import {
   CardContent,
   CardContentHeader,
   IconButton,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableHeader,
+  TableRow,
 } from "@eqtylab/equality";
 import type { ReactNode } from "react";
 
@@ -22,13 +28,13 @@ type TypographyExample =
   | "caption";
 
 const Preview = ({ children }: { children: ReactNode }) => (
-  <div className="bg-background-base border-border rounded-lg border p-4 sm:p-6">
+  <div className="bg-background-sunken border-border rounded-lg border p-3 sm:p-6">
     {children}
   </div>
 );
 
 const Tag = ({ children }: { children: ReactNode }) => (
-  <span className="bg-background-sunken border-border text-caption text-text-secondary inline-flex w-fit shrink-0 items-center rounded-md border px-2">
+  <span className="bg-background-base border-border text-caption text-text-secondary inline-flex w-fit shrink-0 items-center rounded-md border px-2">
     {children}
   </span>
 );
@@ -53,9 +59,9 @@ const Line = ({
 );
 
 const activity = [
-  ["Website Redesign was renamed", "2 hours ago"],
-  ["Q3 Planning was created", "5 hours ago"],
-  ["Mobile App was archived", "3 days ago"],
+  ["Website Redesign", "Renamed", "2 hours ago"],
+  ["Q3 Planning", "Created", "5 hours ago"],
+  ["Mobile App", "Archived", "3 days ago"],
 ];
 
 const PageHeader = ({ badge = false }: { badge?: boolean }) => (
@@ -92,24 +98,33 @@ const DialogHeaderLike = () => (
 
 const ActivityCard = () => (
   <Card>
-    <CardContent className="flex flex-col gap-2">
+    <CardContent>
       <CardContentHeader
         icon="Activity"
         heading="Recent Activity"
         onButtonClick={() => {}}
       />
-      <ul className="flex flex-col">
-        {activity.map(([what, when]) => (
-          <li
-            key={what}
-            className="border-border flex items-center justify-between gap-4 border-t py-2"
-          >
-            <span className="text-body">{what}</span>
-            <span className="text-caption text-text-secondary">{when}</span>
-          </li>
-        ))}
-      </ul>
     </CardContent>
+    <TableContainer columns="auto 1fr auto">
+      <TableHeader>
+        <TableRow>
+          <TableHead>Project</TableHead>
+          <TableHead>Change</TableHead>
+          <TableHead className="justify-self-end">When</TableHead>
+        </TableRow>
+      </TableHeader>
+      <TableBody>
+        {activity.map(([project, change, when]) => (
+          <TableRow key={project}>
+            <TableCell className="font-medium">{project}</TableCell>
+            <TableCell>{change}</TableCell>
+            <TableCell className="text-caption text-text-secondary justify-self-end">
+              {when}
+            </TableCell>
+          </TableRow>
+        ))}
+      </TableBody>
+    </TableContainer>
   </Card>
 );
 
