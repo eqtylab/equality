@@ -388,6 +388,17 @@ To change how much room a cell leaves above and below its content, set `--eq-tab
 <TableCell className="[--eq-table-cell-padding:4px]">…</TableCell>
 ```
 
+To change how far a row's text sits from its sides, set `--eq-table-row-padding-inline` on the table or a row. Inside a card whose content already has padding, set it to 0, so the table's text lines up with the card's header:
+
+```tsx
+<TableContainer
+  columns="1fr auto"
+  className="[--eq-table-row-padding-inline:0]"
+>
+  …
+</TableContainer>
+```
+
 For a person with a subline, such as a name over an email, put a [Title Block](/components/title-block) in the cell with an `md` Avatar as its mark, so the avatar sits beside both lines. A medium block sets the email as a caption, so the row is 52 at either density.
 
 <AvatarRowDemo client:only="react" variant="person" />

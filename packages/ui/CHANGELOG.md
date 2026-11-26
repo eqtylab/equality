@@ -10,6 +10,9 @@ Notable changes to Equality are recorded here, following [Keep a Changelog](http
   dialog, sheet or tab panel, 20 semibold on a 28 line: a step below the page title, on the same
   line as small buttons. If your app merges classes with its own `cn`, add `title-1` and `title-2`
   to tailwind-merge's `font-size` group, or a text colour beside them removes them.
+- `--eq-table-row-padding-inline` sets a table row's padding at its sides, 16 unless you set it. Set
+  it on a `TableContainer` or a `TableRow`, such as `[--eq-table-row-padding-inline:0]` for a table
+  inside a card's padded content, so its text lines up with the content around it.
 
 ### Changed
 

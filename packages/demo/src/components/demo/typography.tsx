@@ -8,8 +8,6 @@ import {
   TableBody,
   TableCell,
   TableContainer,
-  TableHead,
-  TableHeader,
   TableRow,
 } from "@eqtylab/equality";
 import type { ReactNode } from "react";
@@ -28,7 +26,7 @@ type TypographyExample =
   | "caption";
 
 const Preview = ({ children }: { children: ReactNode }) => (
-  <div className="bg-background-sunken border-border rounded-lg border p-3 sm:p-6">
+  <div className="bg-background-sunken border-border rounded-lg border p-2 sm:p-6">
     {children}
   </div>
 );
@@ -59,9 +57,9 @@ const Line = ({
 );
 
 const activity = [
-  ["Website Redesign", "Renamed", "2 hours ago"],
-  ["Q3 Planning", "Created", "5 hours ago"],
-  ["Mobile App", "Archived", "3 days ago"],
+  ["Website Redesign was renamed", "2 hours ago"],
+  ["Q3 Planning was created", "5 hours ago"],
+  ["Mobile App was archived", "3 days ago"],
 ];
 
 const PageHeader = ({ badge = false }: { badge?: boolean }) => (
@@ -98,33 +96,28 @@ const DialogHeaderLike = () => (
 
 const ActivityCard = () => (
   <Card>
-    <CardContent>
+    <CardContent className="flex flex-col gap-2">
       <CardContentHeader
         icon="Activity"
         heading="Recent Activity"
         onButtonClick={() => {}}
       />
+      <TableContainer
+        columns="1fr auto"
+        className="border-(--eq-table-row-divider-color) border-t [--eq-table-row-padding-inline:0]"
+      >
+        <TableBody>
+          {activity.map(([what, when]) => (
+            <TableRow key={what}>
+              <TableCell>{what}</TableCell>
+              <TableCell className="text-caption text-text-secondary justify-self-end">
+                {when}
+              </TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      </TableContainer>
     </CardContent>
-    <TableContainer columns="auto 1fr auto" className="[&_tr]:px-3!">
-      <TableHeader>
-        <TableRow>
-          <TableHead>Project</TableHead>
-          <TableHead>Change</TableHead>
-          <TableHead className="justify-self-end">When</TableHead>
-        </TableRow>
-      </TableHeader>
-      <TableBody>
-        {activity.map(([project, change, when]) => (
-          <TableRow key={project}>
-            <TableCell className="font-medium">{project}</TableCell>
-            <TableCell>{change}</TableCell>
-            <TableCell className="text-caption text-text-secondary justify-self-end">
-              {when}
-            </TableCell>
-          </TableRow>
-        ))}
-      </TableBody>
-    </TableContainer>
   </Card>
 );
 

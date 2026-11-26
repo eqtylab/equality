@@ -167,6 +167,7 @@ Small supporting text, such as a timestamp, a count or a hint under a field.
 1. At the top of a card, use [Card Content Header](/components/card-content-header). For a section of a page, use [Section Heading](/components/section-heading).
 2. For a header you build, put `text-section` on its heading, with the description directly under it, without a gap.
 3. Put small buttons in a row with the title, centred.
+4. For rows under a card's header, put a `Table` inside the card's content and set `--eq-table-row-padding-inline` to 0, so the rows' text lines up with the header's icon and buttons.
 
 <div className="my-4">
   <TypographyDemo example="card-header" />
@@ -174,31 +175,26 @@ Small supporting text, such as a timestamp, a count or a hint under a field.
 
 ```tsx
 <Card>
-  <CardContent>
+  <CardContent className="flex flex-col gap-2">
     <CardContentHeader
       icon="Activity"
       heading="Recent Activity"
       onButtonClick={openActivity}
     />
+    <TableContainer
+      columns="1fr auto"
+      className="border-(--eq-table-row-divider-color) border-t [--eq-table-row-padding-inline:0]"
+    >
+      <TableBody>
+        <TableRow>
+          <TableCell>Website Redesign was renamed</TableCell>
+          <TableCell className="text-caption text-text-secondary justify-self-end">
+            2 hours ago
+          </TableCell>
+        </TableRow>
+      </TableBody>
+    </TableContainer>
   </CardContent>
-  <TableContainer columns="auto 1fr auto" className="[&_tr]:px-3!">
-    <TableHeader>
-      <TableRow>
-        <TableHead>Project</TableHead>
-        <TableHead>Change</TableHead>
-        <TableHead className="justify-self-end">When</TableHead>
-      </TableRow>
-    </TableHeader>
-    <TableBody>
-      <TableRow>
-        <TableCell className="font-medium">Website Redesign</TableCell>
-        <TableCell>Renamed</TableCell>
-        <TableCell className="text-caption text-text-secondary justify-self-end">
-          2 hours ago
-        </TableCell>
-      </TableRow>
-    </TableBody>
-  </TableContainer>
 </Card>
 ```
 

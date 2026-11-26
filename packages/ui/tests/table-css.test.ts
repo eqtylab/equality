@@ -161,6 +161,12 @@ describe('table-components.module.css', () => {
     }
   });
 
+  it('pads a row at its sides by --eq-table-row-padding-inline, 16 unless an app sets it', () => {
+    expect(ruleBody(css, '\n.table-row')).toMatch(
+      /padding-inline:\s*var\(--eq-table-row-padding-inline,\s*calc\(0\.25rem \* 4\)\);/
+    );
+  });
+
   it('registers --eq-table-cell-padding as a length, so a bare 0 keeps the pull valid', () => {
     expect(ruleBody(css, '@property --eq-table-cell-padding')).toMatch(
       /syntax:\s*'<length>';\s*inherits:\s*true;\s*initial-value:\s*0px;/
