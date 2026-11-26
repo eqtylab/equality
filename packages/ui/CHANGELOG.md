@@ -2,6 +2,21 @@
 
 Notable changes to Equality are recorded here, following [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## 7.1.0 - 2026-11-26
+
+### Added
+
+- `text-title-2`, 20 semibold on a 28 line, for the title of a dialog, sheet or tab panel: a step
+  below the page title, on the same line as small buttons. If your app merges classes with its own
+  `cn`, add `title-2` to tailwind-merge's `font-size` group beside `title`, or a text colour beside
+  it removes it.
+
+### Changed
+
+- `text-title` is 28, from 30, on the same 36 line, so a page title steps down from the content
+  without losing its place beside the page's buttons.
+- `DialogTitle` and `SheetTitle` use `text-title-2`: 20 semibold on a 28 line, from 18 medium.
+
 ## Unreleased
 
 ### Added

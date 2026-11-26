@@ -76,6 +76,7 @@ If you have no network access or web fetching fails, tell your user that you cou
 | Sliding sub-panel, drill-in nav                                                            | `NavDrill`                                                                                                                                                                       | Swapped lists with CSS transitions                     |
 | Collapsible nav group, tree sidebar, folder rows                                           | `NavListExpandable`                                                                                                                                                              | `<details>` or a toggled `ul`                          |
 | Page title beside its actions                                                              | `text-title` on an `h1`, such as `<h1 className="text-title">`                                                                                                                   | `text-2xl` with a line height                          |
+| Dialog, sheet or tab panel title                                                           | `DialogTitle` or `SheetTitle`, or `text-title-2` on an `h2`–`h6` for a tab panel                                                                                                 | `text-xl` or `text-lg font-medium` with a line height  |
 | Card or section title beside a small button                                                | `CardContentHeader` for a card's top, `SectionHeading` for a page section, `TitleBlock size="sm"` when it also needs a badge or description, else `text-section` on an `h2`–`h6` | `text-lg` or `font-semibold` with a line height        |
 | Media object, icon or avatar beside a title and a line under it, list-item header          | `TitleBlock` with `TitleBlockMark`, or an `Avatar` of the block's size (sm, md or lg): `md` for a name and a short fact, `lg` for a title and a sentence                         | A flex row with a hand-sized icon box                  |
 | Icon tile, icon in a rounded square or circle beside a title                               | `TitleBlockMark`, with `shape="round"` for a circle                                                                                                                              | `Icon background="square"` with size overrides         |
@@ -184,16 +185,18 @@ sizes `xs` to `lg`, and Avatar's `xs` to `xl`, are the step they sit on; Avatar'
 default follows its line. Badge, Icon, Switch, Checkbox and Timeline use their
 own size names.
 
-Text takes one of four styles: `text-title` for a page title, `text-section` for
-a card or section title, `text-body` for running text and `text-caption` for
-small supporting text. Put a title style on an `h1`–`h6`, such as
-`<h1 className="text-title">`, so the title stays a heading. Each line follows its size: caption 12 on 16, body 14 on
-20, section 16 on 24, title 30 on 36. To line a title up with controls, put it in
-a row with them and centre it: a section title in a 28 row with small buttons, a
-page title in a 36 row with default ones. Never pair a size with a hand-written
-line height, such as `text-2xl leading-(--eq-control-md-height)`.
+Text takes one of five styles: `text-title` for a page title, `text-title-2` for
+the title of a dialog, sheet or tab panel, `text-section` for a card or section
+title, `text-body` for running text and `text-caption` for small supporting
+text. Put a title style on an `h1`–`h6`, such as `<h1 className="text-title">`,
+so the title stays a heading. Each line follows its size: caption 12 on 16, body
+14 on 20, section 16 on 24, title-2 20 on 28, title 28 on 36. To line a title up
+with controls, put it in a row with them and centre it: a section title or a
+title-2 in a 28 row with small buttons, a page title in a 36 row with default
+ones. Never pair a size with a hand-written line height, such as `text-2xl
+leading-(--eq-control-md-height)`.
 
-If your app merges classes with tailwind-merge, register the four styles as font
+If your app merges classes with tailwind-merge, register the five styles as font
 sizes, or a text colour beside them removes them.
 
 ```ts
@@ -203,7 +206,7 @@ import { extendTailwindMerge } from 'tailwind-merge';
 const twMerge = extendTailwindMerge({
   extend: {
     classGroups: {
-      'font-size': [{ text: ['xxs', 'title', 'section', 'body', 'caption'] }],
+      'font-size': [{ text: ['xxs', 'title', 'title-2', 'section', 'body', 'caption'] }],
     },
   },
 });

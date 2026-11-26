@@ -1,6 +1,18 @@
-import { Badge, Button, Card, CardContent } from "@eqtylab/equality";
+import {
+  Badge,
+  Button,
+  Card,
+  CardContent,
+  IconButton,
+} from "@eqtylab/equality";
 
-type TypographyExample = "title" | "section" | "body" | "caption" | "badge";
+type TypographyExample =
+  | "title"
+  | "title-2"
+  | "section"
+  | "body"
+  | "caption"
+  | "badge";
 
 export function TypographyDemo({ example }: { example: TypographyExample }) {
   if (example === "title") {
@@ -8,6 +20,15 @@ export function TypographyDemo({ example }: { example: TypographyExample }) {
       <div className="flex items-center justify-between gap-4">
         <p className="text-title">Projects</p>
         <Button>New Project</Button>
+      </div>
+    );
+  }
+
+  if (example === "title-2") {
+    return (
+      <div className="flex items-center justify-between gap-4">
+        <p className="text-title-2">Edit Project</p>
+        <IconButton name="X" label="Close" />
       </div>
     );
   }

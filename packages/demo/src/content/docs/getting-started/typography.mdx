@@ -7,7 +7,7 @@ import { TypographyDemo } from "@demo/components/demo/typography";
 
 ## Overview
 
-Pick a text style for hierarchy: `text-title`, `text-section`, `text-body` or `text-caption`. Each style's line follows its size: caption 12 on 16, body 14 on 20, section 16 on 24 and title 30 on 36. Title and section are semibold; body and caption keep the weight of the text around them. For a label that should stay medium, add `font-medium` beside the style. Each is a Tailwind text size on one of the [size steps](/getting-started/sizing), so plain `text-sm` in your app is the same size as body. To line text up with controls, put it in a row with them and centre it, the way a button centres its label. [Sizing](/getting-started/sizing) shows what else sits on each step.
+Pick a text style for hierarchy: `text-title`, `text-title-2`, `text-section`, `text-body` or `text-caption`. Each style's line follows its size: caption 12 on 16, body 14 on 20, section 16 on 24, title-2 20 on 28 and title 28 on 36. Title, title-2 and section are semibold; body and caption keep the weight of the text around them. For a label that should stay medium, add `font-medium` beside the style. Each line sits on one of the [size steps](/getting-started/sizing), and body is Tailwind's `text-sm`, so plain `text-sm` in your app is the same size as body. To line text up with controls, put it in a row with them and centre it, the way a button centres its label. [Sizing](/getting-started/sizing) shows what else sits on each step.
 
 Use `Heading` for headings in long-form content. Use these styles for a page, card or section title that shares a line with controls, on an `h1`–`h6`, such as `<h1 className="text-title">`. The examples on this page draw their titles as paragraphs to keep this page's outline clean; the code beside each shows the heading to use.
 
@@ -23,6 +23,19 @@ Use `text-title` for the page title, centred in a row with the page's default bu
 <div className="flex items-center justify-between gap-4">
   <h1 className="text-title">Projects</h1>
   <Button>New Project</Button>
+</div>
+```
+
+### Title 2
+
+Use `text-title-2` for the title of a dialog, sheet or tab panel: a surface inside the page that needs its own title, a step below the page's. Centre it in a row with any small buttons beside it.
+
+<TypographyDemo example="title-2" />
+
+```tsx
+<div className="flex items-center justify-between gap-4">
+  <h2 className="text-title-2">Edit Project</h2>
+  <IconButton name="X" label="Close" />
 </div>
 ```
 
@@ -91,7 +104,9 @@ import { extendTailwindMerge } from "tailwind-merge";
 const twMerge = extendTailwindMerge({
   extend: {
     classGroups: {
-      "font-size": [{ text: ["xxs", "title", "section", "body", "caption"] }],
+      "font-size": [
+        { text: ["xxs", "title", "title-2", "section", "body", "caption"] },
+      ],
     },
   },
 });
