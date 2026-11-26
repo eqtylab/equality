@@ -14,12 +14,7 @@ type TypographyExample =
   | "lines"
   | "page-header"
   | "dialog-header"
-  | "card-header"
-  | "title-1"
-  | "title-2"
-  | "section"
-  | "body"
-  | "caption";
+  | "card-header";
 
 const Preview = ({ children }: { children: ReactNode }) => (
   <div className="bg-background-sunken border-border rounded-lg border p-2 sm:p-6">
@@ -177,32 +172,7 @@ function Example({ example }: { example: TypographyExample }) {
     return <DialogHeaderLike />;
   }
 
-  if (example === "card-header") {
-    return <StorageCard />;
-  }
-
-  if (example === "title-1") {
-    return <p className="text-title-1">Projects</p>;
-  }
-
-  if (example === "title-2") {
-    return <p className="text-title-2">New Project</p>;
-  }
-
-  if (example === "section") {
-    return <p className="text-section">Storage</p>;
-  }
-
-  if (example === "body") {
-    return (
-      <p className="text-body">
-        Every project your team can open, with who owns it and when it last
-        changed.
-      </p>
-    );
-  }
-
-  return <p className="text-caption text-text-secondary">Joined 3 days ago</p>;
+  return <StorageCard />;
 }
 
 export function TypographyDemo({ example }: { example: TypographyExample }) {
