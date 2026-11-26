@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest';
 
+import { cn as publicCn } from '@/index';
 import { cn } from '@/lib/utils';
 
 describe('cn', () => {
@@ -13,5 +14,11 @@ describe('cn', () => {
   it('still lets one text style replace another', () => {
     expect(cn('text-body text-caption')).toBe('text-caption');
     expect(cn('text-title-1 text-title-2')).toBe('text-title-2');
+  });
+});
+
+describe('the cn apps import', () => {
+  it('is the same helper, so it keeps the text styles too', () => {
+    expect(publicCn).toBe(cn);
   });
 });

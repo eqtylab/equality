@@ -14,3 +14,4 @@ export * from './hooks';
 export { ELEVATION } from './lib/elevations';
 export type { Elevation } from './lib/elevations';
 export { CODE_BLOCK_ATTRIBUTE, scheduleHighlight } from './lib/highlight';
+export { cn } from './lib/utils';

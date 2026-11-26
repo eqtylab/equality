@@ -198,26 +198,9 @@ under it: none under a section title, 4 under title-2 and 8 under title-1. Never
 pair a size with a hand-written line height, such as `text-2xl
 leading-(--eq-control-md-height)`.
 
-If your app merges classes with tailwind-merge, register the five styles as font
-sizes, or a text colour beside them removes them. Keep `title` in the list while
-your app still uses `text-title`, which 8.0 removes.
-
-```ts
-import { clsx, type ClassValue } from 'clsx';
-import { extendTailwindMerge } from 'tailwind-merge';
-
-const twMerge = extendTailwindMerge({
-  extend: {
-    classGroups: {
-      'font-size': [{ text: ['xxs', 'title', 'title-1', 'title-2', 'section', 'body', 'caption'] }],
-    },
-  },
-});
-
-export function cn(...inputs: ClassValue[]) {
-  return twMerge(clsx(inputs));
-}
-```
+Merge classes with Equality's `cn` (`import { cn } from '@eqtylab/equality'`).
+It knows the text styles; a `cn` of your own built on tailwind-merge drops a
+style that sits beside a text colour.
 
 **Accessibility is mostly free — don't undo it.** Radix gives you focus
 management, escape handling, and ARIA wiring. You still have to supply the text:

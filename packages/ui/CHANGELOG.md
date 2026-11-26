@@ -8,8 +8,10 @@ Notable changes to Equality are recorded here, following [Keep a Changelog](http
 
 - `text-title-1` for a page title, 28 semibold on a 36 line, and `text-title-2` for the title of a
   dialog, sheet or tab panel, 20 semibold on a 28 line: a step below the page title, on the same
-  line as small buttons. If your app merges classes with its own `cn`, add `title-1` and `title-2`
-  to tailwind-merge's `font-size` group, or a text colour beside them removes them.
+  line as small buttons.
+- `cn`, the class helper Equality's components use. It knows the text styles, so a text colour
+  beside one doesn't remove it. Import it from `@eqtylab/equality` in place of your own; if you
+  keep your own, add `title-1` and `title-2` to tailwind-merge's `font-size` group.
 
 ### Changed
 
