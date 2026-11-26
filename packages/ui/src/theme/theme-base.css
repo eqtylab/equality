@@ -13,6 +13,9 @@
   /* FONT SIZE */
   --text-xxs: 0.625rem;
 
+  --text-title-1: var(--eq-type-title-1-font-size);
+  --text-title-1--line-height: var(--eq-type-title-1-line-height);
+  --text-title-1--font-weight: var(--eq-type-title-1-font-weight);
   --text-title: var(--eq-type-title-font-size);
   --text-title--line-height: var(--eq-type-title-line-height);
   --text-title--font-weight: var(--eq-type-title-font-weight);

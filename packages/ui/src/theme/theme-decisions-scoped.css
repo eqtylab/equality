@@ -35,12 +35,16 @@
     var(--color-text-secondary)
   );
   /* type: a text size on one of our steps */
-  --eq-type-title-font-size: var(--eq-size-sm); /* 28 */
-  --eq-type-title-line-height: var(--eq-size-md);
-  --eq-type-title-font-weight: --theme(--font-weight-semibold);
+  --eq-type-title-1-font-size: var(--eq-size-sm); /* 28 */
+  --eq-type-title-1-line-height: var(--eq-size-md);
+  --eq-type-title-1-font-weight: --theme(--font-weight-semibold);
   --eq-type-title-2-font-size: --theme(--text-xl); /* 20 */
   --eq-type-title-2-line-height: var(--eq-size-sm);
   --eq-type-title-2-font-weight: --theme(--font-weight-semibold);
+  /* Deprecated: text-title, the same as title-1; 8.0 removes it */
+  --eq-type-title-font-size: var(--eq-type-title-1-font-size);
+  --eq-type-title-line-height: var(--eq-type-title-1-line-height);
+  --eq-type-title-font-weight: var(--eq-type-title-1-font-weight);
   --eq-type-section-font-size: --theme(--text-base); /* 16 */
   --eq-type-section-line-height: var(--eq-size-xs);
   --eq-type-section-font-weight: --theme(--font-weight-semibold);
