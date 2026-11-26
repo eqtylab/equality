@@ -47,12 +47,13 @@ Notable changes to Equality are recorded here, following [Keep a Changelog](http
 ### Changed
 
 - Table cells pad 8 above and below, or 12 in a comfortable table. A button in a cell reaches into
-  that padding and stops 4 short of the row's lines, and a cell that hides its overflow doesn't cut
-  it off. A small button keeps a row 36, from 44, and an `IconButton` at its default size keeps
-  rows and headers 36. A default `Button` or `Select` makes a regular row 44, from 52, and a
-  default `Button` makes a regular header 44, from 36. Comfortable rows and headers stay 44 with a
-  small or default button. A large button makes a row 52, from 60 regular and 44 comfortable, and a
-  header 52, from 44.
+  that padding and stops 4 short of the row's lines, and a cell that hides its overflow doesn't
+  cut it off. A small button keeps a row 36, from 44, and an `IconButton` at its default size
+  keeps rows and headers 36. A default `Button`, an `IconButton` with `size="md"` or a `Select`
+  makes a regular row 44, from 52, and a default `Button` or an `md` `IconButton` makes a regular
+  header 44, from 36. Comfortable rows and headers stay 44 with a small or default button, and a
+  `Select` makes them 44, from 52. A large button makes a row 52, from 60 regular and 44
+  comfortable, and a header 52, from 44.
 - A `SortButton` in a header isn't pulled, so a wrapped sort label sits as far from the line as
   wrapped text.
 - Table rows no longer pad; each cell does. Padding you set on a `TableCell` now replaces

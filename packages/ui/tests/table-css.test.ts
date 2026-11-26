@@ -140,6 +140,38 @@ describe('table-components.module.css', () => {
     }
   });
 
+  it('registers --eq-table-cell-padding as a length, so a bare 0 keeps the pull valid', () => {
+    expect(ruleBody(css, '@property --eq-table-cell-padding')).toMatch(
+      /syntax:\s*'<length>';\s*inherits:\s*true;\s*initial-value:\s*0px;/
+    );
+  });
+
+  it('pads a header or comfortable cell by the size of a button the pull skips, as 6.5.0 did', () => {
+    const flat = flatten(css);
+    const excluded =
+      "[data-slot='pagination'], [data-slot='code-block'], [data-slot='motion-collapsible'], [data-slot='empty-table-state'], [data-slot='truncated-description']";
+    const held = `[role='switch'], [data-slot='segmented-controls'], :is(${excluded}) :is(button, [role='button'])`;
+    const guard = `:not(:has(.table-inner :is(${held})))`;
+    expect(
+      ruleBody(
+        flat,
+        `.table-header > .table-row > .table-head:has(:is(${excluded}) :is([data-button='md'], [data-button='lg']))${guard}`
+      )
+    ).toMatch(/--eq-table-cell-padding:\s*0px;/);
+    expect(
+      ruleBody(
+        flat,
+        `${COMFORTABLE} * > .table-row > ${CELLS}:has(:is(${excluded}) [data-button='md'])${guard}`
+      )
+    ).toMatch(CELL_PADDING('lg', 'control-md-height'));
+    expect(
+      ruleBody(
+        flat,
+        `${COMFORTABLE} * > .table-row > ${CELLS}:has(:is(${excluded}) [data-button='lg'])${guard}`
+      )
+    ).toMatch(/--eq-table-cell-padding:\s*0px;/);
+  });
+
   it("pads cells in a layer, so an app's padding utilities on a cell still win", () => {
     expect(flatten(css)).toMatch(/@layer components \{\s*:is\(\.table-cell, \.table-head\) \{/);
     expect(ruleBody(css, '\n.table-cell')).not.toMatch(/padding-block/);

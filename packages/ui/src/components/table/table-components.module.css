@@ -90,6 +90,13 @@
   @apply min-h-(--eq-control-lg-height);
 }
 
+/* Keep it registered: unregistered, a bare 0 makes the pull's calc() invalid and a button sits on the row's lines */
+@property --eq-table-cell-padding {
+  syntax: '<length>';
+  inherits: true;
+  initial-value: 0px;
+}
+
 /* In a layer so an app's py-* utilities on a cell still win; unlayered, these would beat them */
 @layer components {
   :is(.table-cell, .table-head) {
@@ -186,6 +193,106 @@
       )
     ) {
     --eq-table-cell-padding: calc((var(--eq-control-lg-height) - var(--eq-control-sm-height)) / 2);
+    padding-block: var(--eq-table-cell-padding);
+  }
+
+  .table-header
+    > .table-row
+    > .table-head:has(
+      :is(
+          [data-slot='pagination'],
+          [data-slot='code-block'],
+          [data-slot='motion-collapsible'],
+          [data-slot='empty-table-state'],
+          [data-slot='truncated-description']
+        )
+        :is([data-button='md'], [data-button='lg'])
+    ):not(
+      :has(
+        .table-inner
+          :is(
+            [role='switch'],
+            [data-slot='segmented-controls'],
+            :is(
+                [data-slot='pagination'],
+                [data-slot='code-block'],
+                [data-slot='motion-collapsible'],
+                [data-slot='empty-table-state'],
+                [data-slot='truncated-description']
+              )
+              :is(button, [role='button'])
+          )
+      )
+    ) {
+    --eq-table-cell-padding: 0px;
+    padding-block: var(--eq-table-cell-padding);
+  }
+
+  .table--comfortable
+    > .table-inner
+    > *
+    > .table-row
+    > :is(.table-cell, .table-head):has(
+      :is(
+          [data-slot='pagination'],
+          [data-slot='code-block'],
+          [data-slot='motion-collapsible'],
+          [data-slot='empty-table-state'],
+          [data-slot='truncated-description']
+        )
+        [data-button='md']
+    ):not(
+      :has(
+        .table-inner
+          :is(
+            [role='switch'],
+            [data-slot='segmented-controls'],
+            :is(
+                [data-slot='pagination'],
+                [data-slot='code-block'],
+                [data-slot='motion-collapsible'],
+                [data-slot='empty-table-state'],
+                [data-slot='truncated-description']
+              )
+              :is(button, [role='button'])
+          )
+      )
+    ) {
+    --eq-table-cell-padding: calc((var(--eq-control-lg-height) - var(--eq-control-md-height)) / 2);
+    padding-block: var(--eq-table-cell-padding);
+  }
+
+  .table--comfortable
+    > .table-inner
+    > *
+    > .table-row
+    > :is(.table-cell, .table-head):has(
+      :is(
+          [data-slot='pagination'],
+          [data-slot='code-block'],
+          [data-slot='motion-collapsible'],
+          [data-slot='empty-table-state'],
+          [data-slot='truncated-description']
+        )
+        [data-button='lg']
+    ):not(
+      :has(
+        .table-inner
+          :is(
+            [role='switch'],
+            [data-slot='segmented-controls'],
+            :is(
+                [data-slot='pagination'],
+                [data-slot='code-block'],
+                [data-slot='motion-collapsible'],
+                [data-slot='empty-table-state'],
+                [data-slot='truncated-description']
+              )
+              :is(button, [role='button'])
+          )
+      )
+    ) {
+    --eq-table-cell-padding: 0px;
     padding-block: var(--eq-table-cell-padding);
   }
 }
