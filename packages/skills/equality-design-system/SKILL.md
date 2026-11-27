@@ -85,7 +85,7 @@ If you have no network access or web fetching fails, tell your user that you cou
 
 ## Common Mistakes
 
-- `Heading` is for long-form writing: on a docs or marketing page start at `h1`; inside an app the page title is `text-title-1`, so start at `h2`. It sets the tag and a heading's style (`as` sets the tag, `displayAs` the visual level): `h1` is `text-display`, `h2` `text-title-1`, `h3` `text-title-2` and `h4` to `h6` `text-section`. A page, card or section title that sits on a line with controls takes `text-title-1` or `text-section` in place of `Heading`'s sizes, still on an `h1`–`h6`, such as `<h1 className="text-title-1">`.
+- `Heading` is for long-form writing: on a docs or marketing page start at `h1`; inside an app the page already has its title on an `h1`, so start at `h2`. It sets the tag and a heading's style (`as` sets the tag, `displayAs` the visual level): `h1` is `text-title-1`, `h2` `text-title-2` and `h3` to `h6` `text-section`; no level uses a display style. A page, card or section title that sits on a line with controls takes `text-title-1` or `text-section` in place of `Heading`'s sizes, still on an `h1`–`h6`, such as `<h1 className="text-title-1">`.
 - Small label titles should use `Label` to describe
 - NEVER make custom badges!! There are more than enough properties in `Badge`
   - Use `ResourceBadge` when referencing integrity-backed resources and `ControlStatusBadge` when referencing control statuses.
@@ -190,7 +190,7 @@ Product UI text takes one of four styles: `text-title-1` for a page title,
 `text-section` for the title of a card, a section, or a tab panel (Dialog, Sheet
 and AlertDialog titles already have it), `text-body` for running text and
 `text-caption` for small supporting text. `text-title-2` is for long-form
-writing, where `Heading`'s `h3` uses it. Put a title style on an `h1`–`h6`, such
+writing, where `Heading`'s `h2` uses it. Put a title style on an `h1`–`h6`, such
 as `<h1 className="text-title-1">`, so the title stays a heading. Each line
 follows its size: caption 12 on 16, body 14 on 20, section 16 on 24, title-2 20
 on 28, title-1 28 on 36. Docs and marketing pages, never app screens, add

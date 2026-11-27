@@ -1,17 +1,14 @@
 @reference '../../theme/theme.module.css';
 
 .h1 {
-  @apply text-display;
-}
-
-.h2 {
   @apply text-title-1;
 }
 
-.h3 {
+.h2 {
   @apply text-title-2;
 }
 
+.h3,
 .h4,
 .h5,
 .h6 {

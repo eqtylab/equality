@@ -15,13 +15,13 @@ Product UI uses four text styles: title-1 for a page's title, section for a dial
 
 ## Scale
 
-| Style          | Size / line height | Weight    | Use for                                        | Already applied by                                                                                                                                                                                        |
-| -------------- | ------------------ | --------- | ---------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `text-title-1` | 28 / 36            | Semibold  | A page's title, once per page                  | None                                                                                                                                                                                                      |
-| `text-title-2` | 20 / 28            | Semibold  | An `h3` in long-form writing                   | [Heading](/components/heading) `h3`                                                                                                                                                                       |
-| `text-section` | 16 / 24            | Semibold  | A dialog, sheet, card or section title         | The title in a Dialog, Sheet or Alert Dialog, [Card Content Header](/components/card-content-header), [Section Heading](/components/section-heading), [Title Block](/components/title-block) at size `sm` |
-| `text-body`    | 14 / 20            | Inherited | Text inside a card: rows, fields, descriptions | None                                                                                                                                                                                                      |
-| `text-caption` | 12 / 16            | Inherited | Timestamps, counts and hints                   | None                                                                                                                                                                                                      |
+| Style          | Size / line height | Weight    | Use for                                        | Already applied by                                                                                                                                                                                                                                     |
+| -------------- | ------------------ | --------- | ---------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `text-title-1` | 28 / 36            | Semibold  | A page's title, once per page                  | [Heading](/components/heading) `h1`                                                                                                                                                                                                                    |
+| `text-title-2` | 20 / 28            | Semibold  | An `h2` in long-form writing                   | [Heading](/components/heading) `h2`                                                                                                                                                                                                                    |
+| `text-section` | 16 / 24            | Semibold  | A dialog, sheet, card or section title         | The title in a Dialog, Sheet or Alert Dialog, [Card Content Header](/components/card-content-header), [Section Heading](/components/section-heading), [Title Block](/components/title-block) at size `sm`, [Heading](/components/heading) `h3` to `h6` |
+| `text-body`    | 14 / 20            | Inherited | Text inside a card: rows, fields, descriptions | None                                                                                                                                                                                                                                                   |
+| `text-caption` | 12 / 16            | Inherited | Timestamps, counts and hints                   | None                                                                                                                                                                                                                                                   |
 
 Sizes are in pixels. Body and caption take the weight of the text around them; add `font-medium` for a label that should stay medium. Body is Tailwind's `text-sm`. Put a style on the heading element that fits the page's outline: a card title can be an `h2` and still use section.
 
@@ -57,7 +57,7 @@ Two larger styles for docs and marketing pages only. Never use them in app scree
 | `text-display-lg` | 48 / 52            | Semibold | A landing page's hero, once per page              |
 | `text-display`    | 36 / 44            | Semibold | A docs page's title, or a marketing section title |
 
-Heading's `h1` uses `text-display`, so a long-form page's title matches.
+Choose them on purpose, on the page that needs them: Heading never applies them.
 
 <div className="my-4">
   <TypographyDemo example="display" />
