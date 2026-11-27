@@ -6,7 +6,21 @@ import { PORTAL_ROOT_ID } from '@/theme/portal-container';
 const twMerge = extendTailwindMerge({
   extend: {
     classGroups: {
-      'font-size': [{ text: ['xxs', 'title', 'title-1', 'title-2', 'section', 'body', 'caption'] }],
+      'font-size': [
+        {
+          text: [
+            'xxs',
+            'display-lg',
+            'display',
+            'title',
+            'title-1',
+            'title-2',
+            'section',
+            'body',
+            'caption',
+          ],
+        },
+      ],
     },
   },
 });
