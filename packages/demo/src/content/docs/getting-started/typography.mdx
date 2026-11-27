@@ -1,13 +1,13 @@
 ---
 title: "Typography"
-description: "Five text styles for product UI, which one to pick, and how they line up with controls"
+description: "Five text styles for product UI, two display styles for docs and marketing pages, which one to pick, and how they line up with controls"
 ---
 
 import { TypographyDemo } from "@demo/components/demo/typography";
 
 ## Overview
 
-Equality has five text styles for product UI: a page's title, a dialog's title, a card's title, body text and captions. Pick a style by what the text heads; text inside a card is body or caption. Long-form writing, such as an article or a help page, uses [Heading](/components/heading) instead.
+Equality has five text styles for product UI: a page's title, a dialog's title, a card's title, body text and captions. Pick a style by what the text heads; text inside a card is body or caption. Docs and marketing pages add two [display styles](#display-styles) above them. Long-form writing, such as an article or a help page, uses [Heading](/components/heading).
 
 <div className="my-4">
   <TypographyDemo example="composite" />
@@ -47,6 +47,25 @@ Text is set in TWK Lausanne, falling back to Inter, then the system sans serif. 
 | An error or a warning in a field or row | `text-text-danger`, `text-text-warning` |
 
 Text is primary unless you set a colour.
+
+## Display Styles
+
+Two larger styles for docs and marketing pages only. Never use them in app screens: a product page's title is `text-title-1`.
+
+| Style             | Size / line height | Weight   | Use for                                           |
+| ----------------- | ------------------ | -------- | ------------------------------------------------- |
+| `text-display-lg` | 48 / 52            | Semibold | A landing page's hero, once per page              |
+| `text-display`    | 36 / 44            | Semibold | A docs page's title, or a marketing section title |
+
+Heading's `h1` uses `text-display`, so a long-form page's title matches.
+
+<div className="my-4">
+  <TypographyDemo example="display" />
+</div>
+
+```tsx
+<h1 className="text-display-lg">Build with Equality</h1>
+```
 
 ## Build a Page Header
 
@@ -154,10 +173,10 @@ Sizes are in rem, so text grows with the browser's zoom and font size. They don'
 
 ## Merging Classes
 
-To combine classes in your app, use Equality's `cn`. It knows the text styles, so a colour beside one, such as `text-text-secondary`, doesn't remove it.
+To combine classes in your app, use Equality's `cn`. It knows the text styles, so a colour beside one, such as `text-text-secondary`, doesn't remove it. Import it from `@eqtylab/equality/cn`: it loads no CSS, so it also works in tests and scripts that run without a bundler.
 
 ```ts
-import { cn } from "@eqtylab/equality";
+import { cn } from "@eqtylab/equality/cn";
 
 <p className={cn("text-caption", "text-text-secondary")}>Joined 3 days ago</p>;
 ```
@@ -166,5 +185,6 @@ import { cn } from "@eqtylab/equality";
 
 ## Do and Don't
 
-- Don't size a heading with `text-2xl`, `text-3xl` or a similar size, or add `font-bold`. Use one of the five styles.
+- Don't size a heading with `text-2xl`, `text-3xl` or a similar size, or add `font-bold`. Use one of the styles.
+- Don't use `text-display` or `text-display-lg` in app screens.
 - Don't put `text-title-1` inside a card or dialog.

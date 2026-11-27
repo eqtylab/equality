@@ -13,15 +13,15 @@ Every text line, control, table row and avatar in Equality is one of seven heigh
 
 ## Scale
 
-| Step | Name  | What sits on it                                           | Use it for                                                           |
-| ---- | ----- | --------------------------------------------------------- | -------------------------------------------------------------------- |
-| 16   | `3xs` | `text-caption`, small badge                               | A small badge only where space is tight.                             |
-| 20   | `2xs` | `text-body`, default badge, an avatar with no `size`      | Anything in a line of text, such as an avatar in a row.              |
-| 24   | `xs`  | `text-section`, extra-small control, `xs` avatar          | A control inside a field, such as a picker's clear button.           |
-| 28   | `sm`  | `text-title-2`, small control, `sm` avatar                | A card header's row. A button in a table row.                        |
-| 36   | `md`  | `text-title-1`, default control, regular row, `md` avatar | A page title's row. One avatar on its own, such as on a person card. |
-| 44   | `lg`  | Large control, comfortable row, `lg` avatar               | Tables people read slowly or use by touch. A profile header.         |
-| 52   | `xl`  | `xl` avatar                                               | A profile or page hero.                                              |
+| Step | Name  | What sits on it                                             | Use it for                                                           |
+| ---- | ----- | ----------------------------------------------------------- | -------------------------------------------------------------------- |
+| 16   | `3xs` | `text-caption`, small badge                                 | A small badge only where space is tight.                             |
+| 20   | `2xs` | `text-body`, default badge, an avatar with no `size`        | Anything in a line of text, such as an avatar in a row.              |
+| 24   | `xs`  | `text-section`, extra-small control, `xs` avatar            | A control inside a field, such as a picker's clear button.           |
+| 28   | `sm`  | `text-title-2`, small control, `sm` avatar                  | A card header's row. A button in a table row.                        |
+| 36   | `md`  | `text-title-1`, default control, regular row, `md` avatar   | A page title's row. One avatar on its own, such as on a person card. |
+| 44   | `lg`  | `text-display`, large control, comfortable row, `lg` avatar | Tables people read slowly or use by touch. A profile header.         |
+| 52   | `xl`  | `text-display-lg`, `xl` avatar                              | A profile or page hero.                                              |
 
 Sizes are in pixels. A control's `size` and an Avatar's `size` use the same names. Which text style goes where is on the [Typography](/getting-started/typography) page. Badge, Icon, Switch, Checkbox and Timeline have their own sizes; see each component's page.
 
@@ -31,7 +31,7 @@ Put it on a step, not a pixel value. These classes use Tailwind v4's `(--variabl
 
 - A control's height: `h-(--eq-control-sm-height)`, with `xs`, `sm`, `md` or `lg`.
 - A picture or mark that isn't a control, such as a logo: `size-(--eq-size-sm)`, with any name from the table. Add `rounded-full` for a round one. For an icon in a circle, use `Icon` with `background="circle"`; for a person, use `Avatar`.
-- Text: one of the five styles on the [Typography](/getting-started/typography) page.
+- Text: one of the styles on the [Typography](/getting-started/typography) page.
 
 ```tsx
 <img src="/logo.svg" alt="Acme" className="size-(--eq-size-sm) rounded-full" />
