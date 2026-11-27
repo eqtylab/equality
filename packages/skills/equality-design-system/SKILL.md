@@ -85,7 +85,7 @@ If you have no network access or web fetching fails, tell your user that you cou
 
 ## Common Mistakes
 
-- `Heading` is for long-form writing. It sets the tag and a heading's style (`as` sets the tag, `displayAs` the visual level): `h1` is `text-display`, `h2` `text-title-1`, `h3` `text-title-2` and `h4` to `h6` `text-section`. A page, card or section title that sits on a line with controls takes `text-title-1` or `text-section` in place of `Heading`'s sizes, still on an `h1`–`h6`, such as `<h1 className="text-title-1">`.
+- `Heading` is for long-form writing: on a docs or marketing page start at `h1`; inside an app the page title is `text-title-1`, so start at `h2`. It sets the tag and a heading's style (`as` sets the tag, `displayAs` the visual level): `h1` is `text-display`, `h2` `text-title-1`, `h3` `text-title-2` and `h4` to `h6` `text-section`. A page, card or section title that sits on a line with controls takes `text-title-1` or `text-section` in place of `Heading`'s sizes, still on an `h1`–`h6`, such as `<h1 className="text-title-1">`.
 - Small label titles should use `Label` to describe
 - NEVER make custom badges!! There are more than enough properties in `Badge`
   - Use `ResourceBadge` when referencing integrity-backed resources and `ControlStatusBadge` when referencing control statuses.
