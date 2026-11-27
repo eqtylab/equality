@@ -1,33 +1,6 @@
-import { clsx, type ClassValue } from 'clsx';
-import { extendTailwindMerge } from 'tailwind-merge';
-
 import { PORTAL_ROOT_ID } from '@/theme/portal-container';
 
-const twMerge = extendTailwindMerge({
-  extend: {
-    classGroups: {
-      'font-size': [
-        {
-          text: [
-            'xxs',
-            'display-lg',
-            'display',
-            'title',
-            'title-1',
-            'title-2',
-            'section',
-            'body',
-            'caption',
-          ],
-        },
-      ],
-    },
-  },
-});
-
-export function cn(...inputs: ClassValue[]) {
-  return twMerge(clsx(inputs));
-}
+export { cn } from '@/lib/cn';
 
 /**
  * @deprecated Prefer the `usePortalContainer` hook, which respects a
