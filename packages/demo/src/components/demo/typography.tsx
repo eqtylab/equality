@@ -120,7 +120,7 @@ function Example({ example }: { example: TypographyExample }) {
         </div>
         <div className="flex flex-col gap-2">
           <Tag>text-display-2 · a docs home title</Tag>
-          <p className="text-display-2">Typography</p>
+          <p className="text-display-2">Components</p>
         </div>
       </div>
     );
