@@ -72,7 +72,7 @@ const DialogHeader = ({ className, children, ...props }: React.HTMLAttributes<HT
       {icon}
       <div className={styles['dialog-header-content']}>{otherChildren}</div>
       <DialogPrimitive.Close asChild>
-        <IconButton name="X" label="Close" size="sm" />
+        <IconButton name="X" label="Close" size="sm" className={styles['dialog-close']} />
       </DialogPrimitive.Close>
     </div>
   );

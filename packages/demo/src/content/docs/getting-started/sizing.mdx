@@ -7,62 +7,32 @@ import { SizingDemo } from "@demo/components/demo/sizing";
 
 ## Overview
 
-Use this page to pick a size for a part you build, so it lines up with Equality's own. Equality sizes text lines, controls, rows and avatars on one scale of seven steps: 16, 20, 24, 28, 36, 44 and 52. Each step is the height of a line of text or of a box. The four [text styles](/getting-started/typography) are Tailwind text sizes, each on the step that is its line height. A text line follows its own size, and a row centres it among the controls beside it: a 24 section line sits in a 28 row with small buttons. Pick the step that fits what the part is. Give text lines, controls, rows and avatars a step; icons have their own sizes.
-
-Control sizes `xs` to `lg`, and Avatar's `xs` to `xl`, are the step they sit on; Avatar's default follows its line. Badge, Icon, Switch, Checkbox and Timeline use their own size names.
-
-## The Scale
+Every text line, control, table row and avatar in Equality is one of seven heights, from 16 to 52. Use this page to size a part you build so it lines up with Equality's own.
 
 <SizingDemo />
 
-| Step | Text line      | Control     | Row                     | Avatar              | Also                    |
-| ---- | -------------- | ----------- | ----------------------- | ------------------- | ----------------------- |
-| 16   | `text-caption` |             |                         |                     | Small badge             |
-| 20   | `text-body`    |             |                         | No `size`, in a row | Default badge           |
-| 24   | `text-section` | Extra small |                         | `xs`                |                         |
-| 28   |                | Small       | A button in a table row | `sm`                | A section title's row   |
-| 36   | `text-title`   | Default     | Regular                 | `md`                |                         |
-| 44   |                | Large       | Comfortable             | `lg`                |                         |
-| 52   |                |             |                         | `xl`                | A large picture or mark |
+## Scale
 
-## When to Use Each Step
+| Step | Name  | What sits on it                                           | Use it for                                                           |
+| ---- | ----- | --------------------------------------------------------- | -------------------------------------------------------------------- |
+| 16   | `3xs` | `text-caption`, small badge                               | A small badge only where space is tight.                             |
+| 20   | `2xs` | `text-body`, default badge, an avatar with no `size`      | Anything in a line of text, such as an avatar in a row.              |
+| 24   | `xs`  | `text-section`, extra-small control, `xs` avatar          | A control inside a field, such as a picker's clear button.           |
+| 28   | `sm`  | `text-title-2`, small control, `sm` avatar                | A card header's row. A button in a table row.                        |
+| 36   | `md`  | `text-title-1`, default control, regular row, `md` avatar | A page title's row. One avatar on its own, such as on a person card. |
+| 44   | `lg`  | Large control, comfortable row, `lg` avatar               | Tables people read slowly or use by touch. A profile header.         |
+| 52   | `xl`  | `xl` avatar                                               | A profile or page hero.                                              |
 
-### 16
+Sizes are in pixels. A control's `size` and an Avatar's `size` use the same names. Which text style goes where is on the [Typography](/getting-started/typography) page. Badge, Icon, Switch, Checkbox and Timeline have their own sizes; see each component's page.
 
-Small supporting text, such as a timestamp or a hint under a field. A small badge, only where space is tight.
+## Size a Part You Build
 
-### 20
+Put it on a step, not a pixel value. These classes use Tailwind v4's `(--variable)` syntax.
 
-Running text and descriptions, and anything that sits in a line of text: a default badge, or an avatar in a table, menu or list row.
+- A control's height: `h-(--eq-control-sm-height)`, with `xs`, `sm`, `md` or `lg`.
+- A picture or mark that isn't a control, such as a logo: `size-(--eq-size-sm)`, with any name from the table. Add `rounded-full` for a round one. For an icon in a circle, use `Icon` with `background="circle"`; for a person, use `Avatar`.
+- Text: one of the five styles on the [Typography](/getting-started/typography) page.
 
-### 24
-
-A card or section title's line. An extra-small control beside a field, such as the clear button inside a picker. An `xs` avatar only beside an extra-small control.
-
-### 28
-
-Small controls. A row holding a card or section title, centred, and the small buttons beside it, such as the header of `CardContentHeader`. A button in a table row: a default `IconButton` or a small `Button` fits without growing the row.
-
-### 36
-
-Default controls. A row holding the page title, 30 on a 36 line, and the default controls beside it. Regular table rows. An `md` avatar for one person on their own, such as a person's card or page header, or an "Assigned to" field.
-
-### 44
-
-Large controls. Comfortable table rows, for tables people read slowly or use mostly by touch. An `lg` avatar in a profile header.
-
-### 52
-
-The `xl` avatar for a profile or page hero, and a picture or mark you build that should stand out more than a large control, such as a logo.
-
-## Rows
-
-A table row is 36, or 44 with `density="comfortable"`. Either holds a small button without growing. Text that wraps, or a taller part, makes the row taller.
-
-## Building Your Own Component
-
-Put a part you build yourself on a step, not a pixel value. The steps are options: the values Equality allows. The sizes chosen from them for controls and text are decisions. Read a decision where one fits:
-
-- A control takes its height from `--eq-control-{xs,sm,md,lg}-height` (24, 28, 36, 44), such as `h-(--eq-control-md-height)`.
-- Text takes one of the four styles on the [Typography](/getting-started/typography) page.
-- A picture or mark that isn't a control, such as a logo or an icon in a circle, takes `--eq-size-{3xs,2xs,xs,sm,md,lg,xl}` (16 to 52), such as `size-(--eq-size-sm)`.
+```tsx
+<img src="/logo.svg" alt="Acme" className="size-(--eq-size-sm) rounded-full" />
+```

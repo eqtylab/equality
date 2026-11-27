@@ -2,10 +2,16 @@
 
 Notable changes to Equality are recorded here, following [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
-## Unreleased
+## 7.1.0 - 2026-11-26
 
 ### Added
 
+- `text-title-1` for a page title, 28 semibold on a 36 line, and `text-title-2` for the title of a
+  dialog, sheet or tab panel, 20 semibold on a 28 line: a step below the page title, on the same
+  line as small buttons.
+- `cn`, the class helper Equality's components use. It knows the text styles, so a text colour
+  beside one doesn't remove it. Import it from `@eqtylab/equality` in place of your own; if you
+  keep your own, add `title-1` and `title-2` to tailwind-merge's `font-size` group.
 - `TableRowAction` makes the text that names a row, such as a name, into the row's link when the
   row has an `href`, or its button when it has only `onClick`. It covers the whole row, so a click
   anywhere opens it, and screen readers announce it in place, as "Alice Cooper, link", with no
@@ -18,6 +24,17 @@ Notable changes to Equality are recorded here, following [Keep a Changelog](http
 
 ### Changed
 
+- The page title is 28, from 30, on the same 36 line, so it steps down from the content without
+  losing its place beside the page's buttons. `text-title` draws it at 28 too.
+- `DialogTitle`, `SheetTitle` and `AlertDialogTitle` use `text-title-2`: 20 semibold on a 28 line, from
+  18, medium in a dialog or sheet.
+- `SheetDescription` and `AlertDialogDescription` sit 4 under their title, as `DialogDescription`
+  does. They sat 0 and 8 under it.
+- The close button in a `Dialog` or `Sheet` header centres on the title's line. With a description
+  under the title it sat level with the middle of both, 10 to 12 below the title.
+- `RadialGraph`'s unfilled ticks follow the theme; they were near-black in light mode.
+- `cn` uses tailwind-merge 3, so it merges Tailwind 4 classes such as `size-(--eq-size-sm)` and `p-2!`
+  correctly.
 - A `TableRow` with both `href` and `onClick` runs `onClick` on a plain click instead of following
   the link, so a router can open the row without reloading the page. A click with Cmd, Ctrl, Shift
   or Alt goes to the browser, to open the URL in a new tab or window, and doesn't run `onClick`.
@@ -26,6 +43,11 @@ Notable changes to Equality are recorded here, following [Keep a Changelog](http
   where each row's link used to be its own stop.
 - `data-state="selected"` highlights any `TableRow` in a `TableBody`, not only a `clickable` one,
   so a row selected with its checkbox shows as selected.
+
+### Deprecated
+
+- `text-title` and `--eq-type-title-font-size`, `-line-height` and `-font-weight`: use
+  `text-title-1` and `--eq-type-title-1-*`, with the same values. 8.0 removes them.
 
 ### Fixed
 

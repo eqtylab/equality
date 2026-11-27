@@ -60,7 +60,7 @@ const STEPS = [
     step: 36,
     parts: (
       <>
-        <p className="text-title">Title</p>
+        <p className="text-title-1">Title</p>
         <Button variant="tertiary">Default</Button>
         <Avatar size="md">
           <AvatarFallback>AB</AvatarFallback>
