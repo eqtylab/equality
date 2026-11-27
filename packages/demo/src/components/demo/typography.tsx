@@ -68,10 +68,12 @@ const PageHeader = ({ badge = false }: { badge?: boolean }) => (
 );
 
 const DialogHeaderLike = () => (
-  <Card className="overflow-hidden">
+  <Card className="overflow-hidden" inert>
     <Dialog>
       <DialogHeader>
-        <DialogTitle>New Project</DialogTitle>
+        <DialogTitle asChild>
+          <p>New Project</p>
+        </DialogTitle>
         <DialogDescription>
           Name the project and choose who owns it.
         </DialogDescription>
