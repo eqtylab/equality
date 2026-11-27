@@ -18,6 +18,9 @@ Notable changes to Equality are recorded here, following [Keep a Changelog](http
 - `Heading` uses the text styles, all semibold: `h1` is `text-display` (36 on 44, from 36 bold on
   40), `h2` is `text-title-1` (28 on 36, from 24 on 32), `h3` is `text-title-2` (20 on 28, from 20
   medium), and `h4` to `h6` are `text-section` (16 on 24, from 18, 16 and 14 medium).
+- `DialogTitle`, `SheetTitle` and `AlertDialogTitle` are 16 semibold on a 24 line, down from 20 on 28
+  in 7.1.0, the size dense product apps title their dialogs at. The close button still centres on
+  the title's line, and the description still sits 4 under the title.
 
 ## 7.1.0 - 2026-11-26
 

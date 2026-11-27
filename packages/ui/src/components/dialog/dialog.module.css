@@ -37,6 +37,7 @@
 /* Only with a line under the title: a lone title is centred, so a top-aligned close would sit above it */
 .dialog-header:has(> .dialog-header-content > :nth-child(2)) > .dialog-close {
   @apply self-start;
+  margin-top: calc((var(--eq-type-section-line-height) - var(--eq-control-sm-height)) / 2);
 }
 
 .dialog-header-icon {
@@ -49,7 +50,7 @@
 }
 
 .dialog-title {
-  @apply text-title-2;
+  @apply text-section;
 }
 
 .dialog-description {
