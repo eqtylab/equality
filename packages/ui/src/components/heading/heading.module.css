@@ -1,25 +1,19 @@
 @reference '../../theme/theme.module.css';
 
 .h1 {
-  @apply text-4xl font-bold;
+  @apply text-display;
 }
 
 .h2 {
-  @apply text-2xl font-semibold;
+  @apply text-title-1;
 }
 
 .h3 {
-  @apply text-xl font-medium;
+  @apply text-title-2;
 }
 
-.h4 {
-  @apply text-lg font-medium;
-}
-
-.h5 {
-  @apply text-base font-medium;
-}
-
+.h4,
+.h5,
 .h6 {
-  @apply text-sm font-medium;
+  @apply text-section;
 }
