@@ -51,6 +51,7 @@
 /* Only with a line under the title: a lone title is centred, so a top-aligned close would sit above it */
 .sheet-header:has(> .sheet-header-text-content > :nth-child(2)) > .sheet-close {
   @apply self-start;
+  margin-top: calc((var(--eq-type-section-line-height) - var(--eq-control-sm-height)) / 2);
 }
 
 .sheet-header {
@@ -90,7 +91,7 @@
 }
 
 .sheet-title {
-  @apply text-text-primary text-title-2;
+  @apply text-text-primary text-section;
 }
 
 .sheet-description {

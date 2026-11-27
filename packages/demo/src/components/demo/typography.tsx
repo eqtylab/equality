@@ -3,7 +3,10 @@ import {
   Button,
   Card,
   CardContent,
-  IconButton,
+  Dialog,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
   Progress,
   Separator,
 } from "@eqtylab/equality";
@@ -14,7 +17,8 @@ type TypographyExample =
   | "lines"
   | "page-header"
   | "dialog-header"
-  | "card-header";
+  | "card-header"
+  | "display";
 
 const Preview = ({ children }: { children: ReactNode }) => (
   <div className="py-2">{children}</div>
@@ -64,16 +68,17 @@ const PageHeader = ({ badge = false }: { badge?: boolean }) => (
 );
 
 const DialogHeaderLike = () => (
-  <Card>
-    <CardContent className="flex flex-col gap-1">
-      <div className="flex items-center justify-between gap-4">
-        <p className="text-title-2">New Project</p>
-        <IconButton name="X" label="Close" />
-      </div>
-      <p className="text-body text-text-secondary">
-        Name the project and choose who owns it.
-      </p>
-    </CardContent>
+  <Card className="overflow-hidden" inert>
+    <Dialog>
+      <DialogHeader>
+        <DialogTitle asChild>
+          <p>New Project</p>
+        </DialogTitle>
+        <DialogDescription>
+          Name the project and choose who owns it.
+        </DialogDescription>
+      </DialogHeader>
+    </Dialog>
   </Card>
 );
 
@@ -106,6 +111,21 @@ const StorageCard = () => (
 );
 
 function Example({ example }: { example: TypographyExample }) {
+  if (example === "display") {
+    return (
+      <div className="flex flex-col gap-6">
+        <div className="flex flex-col gap-2">
+          <Tag>text-display-1 · a landing page hero</Tag>
+          <p className="text-display-1">Build with Equality</p>
+        </div>
+        <div className="flex flex-col gap-2">
+          <Tag>text-display-2 · a docs home title</Tag>
+          <p className="text-display-2">Components</p>
+        </div>
+      </div>
+    );
+  }
+
   if (example === "composite") {
     return (
       <div className="flex flex-col gap-6">
@@ -114,7 +134,7 @@ function Example({ example }: { example: TypographyExample }) {
           <PageHeader />
         </div>
         <div className="flex flex-col gap-2">
-          <Tag>text-title-2 · its dialog</Tag>
+          <Tag>text-section · its dialog</Tag>
           <DialogHeaderLike />
         </div>
         <div className="flex flex-col gap-2">
@@ -140,9 +160,8 @@ function Example({ example }: { example: TypographyExample }) {
         </div>
         <div className="flex flex-wrap items-center gap-4">
           <Line className="text-title-2" height={28}>
-            New Project
+            Choosing a Style
           </Line>
-          <IconButton name="X" label="Close" />
         </div>
         <div className="flex flex-wrap items-center gap-4">
           <Line className="text-section" height={24}>

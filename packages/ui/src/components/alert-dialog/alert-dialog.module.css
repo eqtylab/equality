@@ -25,7 +25,7 @@
 }
 
 .alert-dialog-title {
-  @apply text-title-2;
+  @apply text-section;
 }
 
 .alert-dialog-description {

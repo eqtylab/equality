@@ -5,6 +5,7 @@ export default defineConfig({
     'src/index.ts',
     'src/scripts.ts',
     'src/lib/syntax-language.ts',
+    'src/lib/cn.ts',
     'src/theme/lib/utils.ts', // This is to avoid shared files (shared in both index.ts and scripts.ts) being output with hashed filenames
   ],
   format: ['esm', 'cjs'],

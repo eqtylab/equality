@@ -188,7 +188,9 @@ const ColorTokensDemo = () => {
                             <Heading as="h5">
                               {color.name.replace(/\./g, "-")}
                             </Heading>
-                            <Heading as="h6">{color.hex}</Heading>
+                            <p className="text-body text-text-secondary">
+                              {color.hex}
+                            </p>
                           </div>
                         </div>
                       ))}

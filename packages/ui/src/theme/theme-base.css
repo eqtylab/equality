@@ -13,6 +13,12 @@
   /* FONT SIZE */
   --text-xxs: 0.625rem;
 
+  --text-display-1: var(--eq-type-display-1-font-size);
+  --text-display-1--line-height: var(--eq-type-display-1-line-height);
+  --text-display-1--font-weight: var(--eq-type-display-1-font-weight);
+  --text-display-2: var(--eq-type-display-2-font-size);
+  --text-display-2--line-height: var(--eq-type-display-2-line-height);
+  --text-display-2--font-weight: var(--eq-type-display-2-font-weight);
   --text-title-1: var(--eq-type-title-1-font-size);
   --text-title-1--line-height: var(--eq-type-title-1-line-height);
   --text-title-1--font-weight: var(--eq-type-title-1-font-weight);

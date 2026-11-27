@@ -36,6 +36,12 @@ html {
     var(--color-text-secondary)
   );
   /* type: a text size on one of our steps */
+  --eq-type-display-1-font-size: --theme(--text-5xl); /* 48 */
+  --eq-type-display-1-line-height: var(--eq-size-xl);
+  --eq-type-display-1-font-weight: --theme(--font-weight-semibold);
+  --eq-type-display-2-font-size: var(--eq-size-md); /* 36 */
+  --eq-type-display-2-line-height: var(--eq-size-lg);
+  --eq-type-display-2-font-weight: --theme(--font-weight-semibold);
   --eq-type-title-1-font-size: var(--eq-size-sm); /* 28 */
   --eq-type-title-1-line-height: var(--eq-size-md);
   --eq-type-title-1-font-weight: --theme(--font-weight-semibold);

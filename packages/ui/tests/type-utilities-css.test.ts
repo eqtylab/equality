@@ -5,11 +5,20 @@ import { beforeAll, describe, expect, it } from 'vitest';
 
 import { ruleBody } from './compile-css';
 
-const roles = ['title-1', 'title-2', 'section', 'body', 'caption', 'title'];
-const weighted = ['title-1', 'title-2', 'section', 'title'];
+const roles = [
+  'display-1',
+  'display-2',
+  'title-1',
+  'title-2',
+  'section',
+  'body',
+  'caption',
+  'title',
+];
+const weighted = ['display-1', 'display-2', 'title-1', 'title-2', 'section', 'title'];
 
 const source =
-  '@source inline("text-title-1 text-title-2 text-section text-body text-caption text-title");';
+  '@source inline("text-display-1 text-display-2 text-title-1 text-title-2 text-section text-body text-caption text-title");';
 const entries = {
   global: `@import 'tailwindcss/theme.css';\n@import '../src/theme/global-theme-config.css';\n${source}`,
   scoped: `@import '../src/theme/theme.module.css';\n${source}`,

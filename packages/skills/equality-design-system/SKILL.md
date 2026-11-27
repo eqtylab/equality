@@ -76,7 +76,8 @@ If you have no network access or web fetching fails, tell your user that you cou
 | Sliding sub-panel, drill-in nav                                                            | `NavDrill`                                                                                                                                                                       | Swapped lists with CSS transitions                     |
 | Collapsible nav group, tree sidebar, folder rows                                           | `NavListExpandable`                                                                                                                                                              | `<details>` or a toggled `ul`                          |
 | Page title beside its actions                                                              | `text-title-1` on an `h1`, such as `<h1 className="text-title-1">`                                                                                                               | `text-2xl` with a line height                          |
-| Dialog, sheet or tab panel title                                                           | `DialogTitle` or `SheetTitle`, or `text-title-2` on an `h2`–`h6` for a tab panel                                                                                                 | `text-xl` or `text-lg font-medium` with a line height  |
+| Docs home or marketing section title, landing page hero                                    | `text-display-2` for a docs home or marketing section, `text-display-1` for a landing hero; never in app screens. A regular docs page's title is `Heading` `h1`                  | `text-4xl` or `text-5xl` with `font-bold`              |
+| Dialog, sheet or tab panel title                                                           | `DialogTitle`, `SheetTitle` or `AlertDialogTitle`; for a tab panel, `text-section` on an `h2`–`h6`, as for a card                                                                | `text-xl` or `text-lg font-medium` with a line height  |
 | Card or section title beside a small button                                                | `CardContentHeader` for a card's top, `SectionHeading` for a page section, `TitleBlock size="sm"` when it also needs a badge or description, else `text-section` on an `h2`–`h6` | `text-lg` or `font-semibold` with a line height        |
 | Media object, icon or avatar beside a title and a line under it, list-item header          | `TitleBlock` with `TitleBlockMark`, or an `Avatar` of the block's size (sm, md or lg): `md` for a name and a short fact, `lg` for a title and a sentence                         | A flex row with a hand-sized icon box                  |
 | Icon tile, icon in a rounded square or circle beside a title                               | `TitleBlockMark`, with `shape="round"` for a circle                                                                                                                              | `Icon background="square"` with size overrides         |
@@ -84,7 +85,7 @@ If you have no network access or web fetching fails, tell your user that you cou
 
 ## Common Mistakes
 
-- `Heading` sets the tag and a document heading's size (`as` sets the tag, `displayAs` the visual level), so semantic level and visual size can differ without custom CSS. A page, card or section title that sits on a line with controls takes `text-title-1` or `text-section` in place of `Heading`'s sizes, still on an `h1`–`h6`, such as `<h1 className="text-title-1">`.
+- `Heading` is for long-form writing: on a docs or marketing page start at `h1`; inside an app the page already has its title on an `h1`, so start at `h2`. It sets the tag and a heading's style (`as` sets the tag, `displayAs` the visual level): `h1` is `text-title-1`, `h2` `text-title-2` and `h3` to `h6` `text-section`; no level uses a display style. A page, card or section title that sits on a line with controls takes `text-title-1` or `text-section` in place of `Heading`'s sizes, still on an `h1`–`h6`, such as `<h1 className="text-title-1">`.
 - Small label titles should use `Label` to describe
 - NEVER make custom badges!! There are more than enough properties in `Badge`
   - Use `ResourceBadge` when referencing integrity-backed resources and `ControlStatusBadge` when referencing control statuses.
@@ -185,22 +186,28 @@ sizes `xs` to `lg`, and Avatar's `xs` to `xl`, are the step they sit on; Avatar'
 default follows its line. Badge, Icon, Switch, Checkbox and Timeline use their
 own size names.
 
-Text takes one of five styles: `text-title-1` for a page title, `text-title-2`
-for the title of a dialog, sheet or tab panel, `text-section` for a card or
-section title, `text-body` for running text and `text-caption` for small
-supporting text. Put a title style on an `h1`–`h6`, such as `<h1
-className="text-title-1">`, so the title stays a heading. Each line follows its
-size: caption 12 on 16, body 14 on 20, section 16 on 24, title-2 20 on 28,
-title-1 28 on 36. To line a title up with controls, put it in a row with them
-and centre it: a section title or a title-2 in a 28 row with small buttons, a
-page title in a 36 row with default ones. Put a heading's description close
-under it: none under a section title, 4 under title-2 and 8 under title-1. Never
-pair a size with a hand-written line height, such as `text-2xl
-leading-(--eq-control-md-height)`.
+Product UI text takes one of four styles: `text-title-1` for a page title,
+`text-section` for the title of a card, a section, or a tab panel (Dialog, Sheet
+and AlertDialog titles already have it), `text-body` for running text and
+`text-caption` for small supporting text. `text-title-2` is for long-form
+writing, where `Heading`'s `h2` uses it. Put a title style on an `h1`–`h6`, such
+as `<h1 className="text-title-1">`, so the title stays a heading. Each line
+follows its size: caption 12 on 16, body 14 on 20, section 16 on 24, title-2 20
+on 28, title-1 28 on 36. Docs and marketing pages, never app screens, add
+`text-display-2` 36 on 44 for a docs home or marketing section title and `text-display-1` 48 on 52 for a
+landing page's hero. To line a title up with controls, put it in a row with them
+and centre it: a section title in a 28 row with small buttons, a page title in a
+36 row with default ones. Put a heading's description close under it: none under
+a section title and 8 under title-1; a dialog or sheet spaces its own. Never pair
+a size with a hand-written line height, such as
+`text-2xl leading-(--eq-control-md-height)`.
 
-Merge classes with Equality's `cn` (`import { cn } from '@eqtylab/equality'`).
-It knows the text styles; a `cn` of your own built on tailwind-merge drops a
-style that sits beside a text colour.
+Merge classes with Equality's `cn` (`import { cn } from '@eqtylab/equality/cn'`).
+That path loads no CSS, so it works in tests and scripts too, and needs Equality
+7.2.0 or later: check the app's version first. On 7.1.0, import `cn` from
+`@eqtylab/equality`; earlier versions don't export it. It knows the text styles;
+a `cn` of your own built on tailwind-merge drops a style that sits beside a text
+colour.
 
 **Accessibility is mostly free — don't undo it.** Radix gives you focus
 management, escape handling, and ARIA wiring. You still have to supply the text:

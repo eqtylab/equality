@@ -7,7 +7,7 @@
     "url": "git+https://github.com/eqtylab/equality.git",
     "directory": "packages/ui"
   },
-  "version": "7.1.0",
+  "version": "7.2.0",
   "license": "Apache-2.0",
   "keywords": [
     "component library",
@@ -19,6 +19,13 @@
   "main": "./dist/index.cjs",
   "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
+  "typesVersions": {
+    "*": {
+      "cn": [
+        "./dist/lib/cn.d.ts"
+      ]
+    }
+  },
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
@@ -29,6 +36,16 @@
       "types": "./dist/scripts.d.ts",
       "import": "./dist/scripts.js",
       "require": "./dist/scripts.cjs"
+    },
+    "./cn": {
+      "import": {
+        "types": "./dist/lib/cn.d.ts",
+        "default": "./dist/lib/cn.js"
+      },
+      "require": {
+        "types": "./dist/lib/cn.d.cts",
+        "default": "./dist/lib/cn.cjs"
+      }
     },
     "./syntax-language": {
       "types": "./dist/lib/syntax-language.d.ts",
