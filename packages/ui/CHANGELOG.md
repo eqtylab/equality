@@ -6,10 +6,10 @@ Notable changes to Equality are recorded here, following [Keep a Changelog](http
 
 ### Added
 
-- `text-display`, 36 semibold on a 44 line, for a docs page's title or a marketing section title,
-  and `text-display-lg`, 48 semibold on a 52 line, for a landing page's hero. They're for docs and
+- `text-display-2`, 36 semibold on a 44 line, for a docs page's title or a marketing section title,
+  and `text-display-1`, 48 semibold on a 52 line, for a landing page's hero. They're for docs and
   marketing pages only, never app screens. Equality's `cn` keeps them beside a text colour; if you
-  keep your own, add `display` and `display-lg` to tailwind-merge's `font-size` group.
+  keep your own, add `display-1` and `display-2` to tailwind-merge's `font-size` group.
 - `@eqtylab/equality/cn`, the same `cn` with no CSS behind it, so it loads in tests, scripts and
   Playwright specs that can't import CSS. The main entry still exports `cn`.
 

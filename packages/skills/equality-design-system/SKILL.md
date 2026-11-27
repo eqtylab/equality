@@ -76,7 +76,7 @@ If you have no network access or web fetching fails, tell your user that you cou
 | Sliding sub-panel, drill-in nav                                                            | `NavDrill`                                                                                                                                                                       | Swapped lists with CSS transitions                     |
 | Collapsible nav group, tree sidebar, folder rows                                           | `NavListExpandable`                                                                                                                                                              | `<details>` or a toggled `ul`                          |
 | Page title beside its actions                                                              | `text-title-1` on an `h1`, such as `<h1 className="text-title-1">`                                                                                                               | `text-2xl` with a line height                          |
-| Docs page title, marketing section title, landing page hero                                | `text-display` on a docs page's `h1`, `text-display-lg` for a landing hero; never in app screens                                                                                 | `text-4xl` or `text-5xl` with `font-bold`              |
+| Docs page title, marketing section title, landing page hero                                | `text-display-2` on a docs page's `h1`, `text-display-1` for a landing hero; never in app screens                                                                                | `text-4xl` or `text-5xl` with `font-bold`              |
 | Dialog, sheet or tab panel title                                                           | `DialogTitle`, `SheetTitle` or `AlertDialogTitle`; for a tab panel, `text-section` on an `h2`–`h6`, as for a card                                                                | `text-xl` or `text-lg font-medium` with a line height  |
 | Card or section title beside a small button                                                | `CardContentHeader` for a card's top, `SectionHeading` for a page section, `TitleBlock size="sm"` when it also needs a badge or description, else `text-section` on an `h2`–`h6` | `text-lg` or `font-semibold` with a line height        |
 | Media object, icon or avatar beside a title and a line under it, list-item header          | `TitleBlock` with `TitleBlockMark`, or an `Avatar` of the block's size (sm, md or lg): `md` for a name and a short fact, `lg` for a title and a sentence                         | A flex row with a hand-sized icon box                  |
@@ -194,7 +194,7 @@ writing, where `Heading`'s `h2` uses it. Put a title style on an `h1`–`h6`, su
 as `<h1 className="text-title-1">`, so the title stays a heading. Each line
 follows its size: caption 12 on 16, body 14 on 20, section 16 on 24, title-2 20
 on 28, title-1 28 on 36. Docs and marketing pages, never app screens, add
-`text-display` 36 on 44 for a page title and `text-display-lg` 48 on 52 for a
+`text-display-2` 36 on 44 for a page title and `text-display-1` 48 on 52 for a
 landing page's hero. To line a title up with controls, put it in a row with them
 and centre it: a section title in a 28 row with small buttons, a page title in a
 36 row with default ones. Put a heading's description close under it: none under

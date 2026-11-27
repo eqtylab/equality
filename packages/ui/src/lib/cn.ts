@@ -8,8 +8,8 @@ const twMerge = extendTailwindMerge({
         {
           text: [
             'xxs',
-            'display-lg',
-            'display',
+            'display-1',
+            'display-2',
             'title',
             'title-1',
             'title-2',

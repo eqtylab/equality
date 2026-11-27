@@ -24,9 +24,9 @@ describe('@eqtylab/equality/cn in plain Node', () => {
     const out = runPlainNode([
       '--input-type=module',
       '-e',
-      "import { cn } from '@eqtylab/equality/cn'; console.log(cn('text-display', 'text-text-secondary'));",
+      "import { cn } from '@eqtylab/equality/cn'; console.log(cn('text-display-2', 'text-text-secondary'));",
     ]);
-    expect(out).toBe('text-display text-text-secondary');
+    expect(out).toBe('text-display-2 text-text-secondary');
   });
 
   it('requires as CommonJS with no CSS handling', () => {

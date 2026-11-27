@@ -9,14 +9,14 @@ describe('cn', () => {
     expect(cn('text-text-primary text-title-1')).toBe('text-text-primary text-title-1');
     expect(cn('text-text-primary text-title')).toBe('text-text-primary text-title');
     expect(cn('text-text-primary text-title-2')).toBe('text-text-primary text-title-2');
-    expect(cn('text-text-primary text-display')).toBe('text-text-primary text-display');
-    expect(cn('text-text-primary text-display-lg')).toBe('text-text-primary text-display-lg');
+    expect(cn('text-text-primary text-display-2')).toBe('text-text-primary text-display-2');
+    expect(cn('text-text-primary text-display-1')).toBe('text-text-primary text-display-1');
   });
 
   it('still lets one text style replace another', () => {
     expect(cn('text-body text-caption')).toBe('text-caption');
     expect(cn('text-title-1 text-title-2')).toBe('text-title-2');
-    expect(cn('text-display', 'text-display-lg')).toBe('text-display-lg');
+    expect(cn('text-display-2', 'text-display-1')).toBe('text-display-1');
   });
 
   it('lets a Tailwind 4 variable size replace a fixed one', () => {

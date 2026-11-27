@@ -52,10 +52,10 @@ Text is primary unless you set a colour.
 
 Two larger styles for docs and marketing pages only. Never use them in app screens: a product page's title is `text-title-1`.
 
-| Style             | Size / line height | Weight   | Use for                                           |
-| ----------------- | ------------------ | -------- | ------------------------------------------------- |
-| `text-display-lg` | 48 / 52            | Semibold | A landing page's hero, once per page              |
-| `text-display`    | 36 / 44            | Semibold | A docs page's title, or a marketing section title |
+| Style            | Size / line height | Weight   | Use for                                           |
+| ---------------- | ------------------ | -------- | ------------------------------------------------- |
+| `text-display-1` | 48 / 52            | Semibold | A landing page's hero, once per page              |
+| `text-display-2` | 36 / 44            | Semibold | A docs page's title, or a marketing section title |
 
 Choose them on purpose, on the page that needs them: Heading never applies them.
 
@@ -64,7 +64,7 @@ Choose them on purpose, on the page that needs them: Heading never applies them.
 </div>
 
 ```tsx
-<h1 className="text-display-lg">Build with Equality</h1>
+<h1 className="text-display-1">Build with Equality</h1>
 ```
 
 ## Build a Page Header
@@ -174,5 +174,5 @@ import { cn } from "@eqtylab/equality/cn";
 ## Do and Don't
 
 - Don't size a heading with `text-2xl`, `text-3xl` or a similar size, or add `font-bold`. Use one of the styles.
-- Don't use `text-display` or `text-display-lg` in app screens.
+- Don't use `text-display-2` or `text-display-1` in app screens.
 - Don't put `text-title-1` inside a card or dialog.

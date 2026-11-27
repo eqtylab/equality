@@ -113,12 +113,12 @@ function Example({ example }: { example: TypographyExample }) {
     return (
       <div className="flex flex-col gap-6">
         <div className="flex flex-col gap-2">
-          <Tag>text-display-lg · a landing page hero</Tag>
-          <p className="text-display-lg">Build with Equality</p>
+          <Tag>text-display-1 · a landing page hero</Tag>
+          <p className="text-display-1">Build with Equality</p>
         </div>
         <div className="flex flex-col gap-2">
-          <Tag>text-display · a docs page title</Tag>
-          <p className="text-display">Typography</p>
+          <Tag>text-display-2 · a docs page title</Tag>
+          <p className="text-display-2">Typography</p>
         </div>
       </div>
     );
