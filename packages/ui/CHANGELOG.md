@@ -2,6 +2,23 @@
 
 Notable changes to Equality are recorded here, following [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## 7.2.0 - 2026-11-27
+
+### Added
+
+- `text-display`, 36 semibold on a 44 line, for a docs page's title or a marketing section title,
+  and `text-display-lg`, 48 semibold on a 52 line, for a landing page's hero. They're for docs and
+  marketing pages only, never app screens. Equality's `cn` keeps them beside a text colour; if you
+  keep your own, add `display` and `display-lg` to tailwind-merge's `font-size` group.
+- `@eqtylab/equality/cn`, the same `cn` with no CSS behind it, so it loads in tests, scripts and
+  Playwright specs that can't import CSS. The main entry still exports `cn`.
+
+### Changed
+
+- `Heading` uses the text styles, all semibold: `h1` is `text-display` (36 on 44, from 36 bold on
+  40), `h2` is `text-title-1` (28 on 36, from 24 on 32), `h3` is `text-title-2` (20 on 28, from 20
+  medium), and `h4` to `h6` are `text-section` (16 on 24, from 18, 16 and 14 medium).
+
 ## 7.1.0 - 2026-11-26
 
 ### Added
