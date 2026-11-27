@@ -203,9 +203,11 @@ a size with a hand-written line height, such as
 `text-2xl leading-(--eq-control-md-height)`.
 
 Merge classes with Equality's `cn` (`import { cn } from '@eqtylab/equality/cn'`).
-That path loads no CSS, so it works in tests and scripts too. It knows the text
-styles; a `cn` of your own built on tailwind-merge drops a
-style that sits beside a text colour.
+That path loads no CSS, so it works in tests and scripts too, and needs Equality
+7.2.0 or later: check the app's version first. On 7.1.0, import `cn` from
+`@eqtylab/equality`; earlier versions don't export it. It knows the text styles;
+a `cn` of your own built on tailwind-merge drops a style that sits beside a text
+colour.
 
 **Accessibility is mostly free — don't undo it.** Radix gives you focus
 management, escape handling, and ARIA wiring. You still have to supply the text:
