@@ -117,7 +117,7 @@ function Example({ example }: { example: TypographyExample }) {
           <p className="text-display-1">Build with Equality</p>
         </div>
         <div className="flex flex-col gap-2">
-          <Tag>text-display-2 · a docs page title</Tag>
+          <Tag>text-display-2 · a docs home title</Tag>
           <p className="text-display-2">Typography</p>
         </div>
       </div>
