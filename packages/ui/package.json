@@ -31,9 +31,14 @@
       "require": "./dist/scripts.cjs"
     },
     "./cn": {
-      "types": "./dist/lib/cn.d.ts",
-      "import": "./dist/lib/cn.js",
-      "require": "./dist/lib/cn.cjs"
+      "import": {
+        "types": "./dist/lib/cn.d.ts",
+        "default": "./dist/lib/cn.js"
+      },
+      "require": {
+        "types": "./dist/lib/cn.d.cts",
+        "default": "./dist/lib/cn.cjs"
+      }
     },
     "./syntax-language": {
       "types": "./dist/lib/syntax-language.d.ts",
